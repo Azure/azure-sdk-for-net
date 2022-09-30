@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = await _postgreSqlFlexibleServerFirewallRuleFirewallRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _postgreSqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _postgreSqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = _postgreSqlFlexibleServerFirewallRuleFirewallRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _postgreSqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _postgreSqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = await _postgreSqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerFirewallRuleResource>(new PostgreSqlFlexibleServerFirewallRuleOperationSource(Client), _postgreSqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _postgreSqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerFirewallRuleResource>(new PostgreSqlFlexibleServerFirewallRuleOperationSource(Client), _postgreSqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _postgreSqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = _postgreSqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerFirewallRuleResource>(new PostgreSqlFlexibleServerFirewallRuleOperationSource(Client), _postgreSqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _postgreSqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerFirewallRuleResource>(new PostgreSqlFlexibleServerFirewallRuleOperationSource(Client), _postgreSqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _postgreSqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

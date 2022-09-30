@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
             try
             {
                 var response = await _operationalizationClusterRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteAll, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningComputeArmOperation(_operationalizationClusterClientDiagnostics, Pipeline, _operationalizationClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteAll).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningComputeArmOperation(_operationalizationClusterClientDiagnostics, Pipeline, _operationalizationClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteAll).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
             try
             {
                 var response = _operationalizationClusterRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteAll, cancellationToken);
-                var operation = new MachineLearningComputeArmOperation(_operationalizationClusterClientDiagnostics, Pipeline, _operationalizationClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteAll).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningComputeArmOperation(_operationalizationClusterClientDiagnostics, Pipeline, _operationalizationClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteAll).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
             try
             {
                 var response = await _operationalizationClusterRestClient.UpdateSystemServicesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningComputeArmOperation<UpdateSystemServicesResponse>(new UpdateSystemServicesResponseOperationSource(), _operationalizationClusterClientDiagnostics, Pipeline, _operationalizationClusterRestClient.CreateUpdateSystemServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningComputeArmOperation<UpdateSystemServicesResponse>(new UpdateSystemServicesResponseOperationSource(), _operationalizationClusterClientDiagnostics, Pipeline, _operationalizationClusterRestClient.CreateUpdateSystemServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
             try
             {
                 var response = _operationalizationClusterRestClient.UpdateSystemServices(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MachineLearningComputeArmOperation<UpdateSystemServicesResponse>(new UpdateSystemServicesResponseOperationSource(), _operationalizationClusterClientDiagnostics, Pipeline, _operationalizationClusterRestClient.CreateUpdateSystemServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningComputeArmOperation<UpdateSystemServicesResponse>(new UpdateSystemServicesResponseOperationSource(), _operationalizationClusterClientDiagnostics, Pipeline, _operationalizationClusterRestClient.CreateUpdateSystemServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

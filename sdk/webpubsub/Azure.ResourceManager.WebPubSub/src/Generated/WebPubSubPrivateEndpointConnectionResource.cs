@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var response = await _webPubSubPrivateEndpointConnectionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubArmOperation(_webPubSubPrivateEndpointConnectionClientDiagnostics, Pipeline, _webPubSubPrivateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WebPubSubArmOperation(_webPubSubPrivateEndpointConnectionClientDiagnostics, Pipeline, _webPubSubPrivateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var response = _webPubSubPrivateEndpointConnectionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new WebPubSubArmOperation(_webPubSubPrivateEndpointConnectionClientDiagnostics, Pipeline, _webPubSubPrivateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WebPubSubArmOperation(_webPubSubPrivateEndpointConnectionClientDiagnostics, Pipeline, _webPubSubPrivateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

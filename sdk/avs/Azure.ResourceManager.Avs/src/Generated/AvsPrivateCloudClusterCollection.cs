@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _avsPrivateCloudClusterClustersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clusterName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<AvsPrivateCloudClusterResource>(new AvsPrivateCloudClusterOperationSource(Client), _avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, _avsPrivateCloudClusterClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clusterName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<AvsPrivateCloudClusterResource>(new AvsPrivateCloudClusterOperationSource(Client), _avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, _avsPrivateCloudClusterClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clusterName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _avsPrivateCloudClusterClustersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clusterName, data, cancellationToken);
-                var operation = new AvsArmOperation<AvsPrivateCloudClusterResource>(new AvsPrivateCloudClusterOperationSource(Client), _avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, _avsPrivateCloudClusterClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clusterName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<AvsPrivateCloudClusterResource>(new AvsPrivateCloudClusterOperationSource(Client), _avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, _avsPrivateCloudClusterClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clusterName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

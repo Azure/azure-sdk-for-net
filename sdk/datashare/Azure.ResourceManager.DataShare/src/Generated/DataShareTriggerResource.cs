@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _dataShareTriggerTriggersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _dataShareTriggerTriggersClientDiagnostics, Pipeline, _dataShareTriggerTriggersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _dataShareTriggerTriggersClientDiagnostics, Pipeline, _dataShareTriggerTriggersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _dataShareTriggerTriggersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _dataShareTriggerTriggersClientDiagnostics, Pipeline, _dataShareTriggerTriggersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _dataShareTriggerTriggersClientDiagnostics, Pipeline, _dataShareTriggerTriggersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _dataShareTriggerTriggersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<DataShareTriggerResource>(new DataShareTriggerOperationSource(Client), _dataShareTriggerTriggersClientDiagnostics, Pipeline, _dataShareTriggerTriggersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataShareArmOperation<DataShareTriggerResource>(new DataShareTriggerOperationSource(Client), _dataShareTriggerTriggersClientDiagnostics, Pipeline, _dataShareTriggerTriggersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _dataShareTriggerTriggersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new DataShareArmOperation<DataShareTriggerResource>(new DataShareTriggerOperationSource(Client), _dataShareTriggerTriggersClientDiagnostics, Pipeline, _dataShareTriggerTriggersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataShareArmOperation<DataShareTriggerResource>(new DataShareTriggerOperationSource(Client), _dataShareTriggerTriggersClientDiagnostics, Pipeline, _dataShareTriggerTriggersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

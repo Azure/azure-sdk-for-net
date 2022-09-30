@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _globalReachConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalReachConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<GlobalReachConnectionResource>(new GlobalReachConnectionOperationSource(Client), _globalReachConnectionClientDiagnostics, Pipeline, _globalReachConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalReachConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<GlobalReachConnectionResource>(new GlobalReachConnectionOperationSource(Client), _globalReachConnectionClientDiagnostics, Pipeline, _globalReachConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalReachConnectionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _globalReachConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalReachConnectionName, data, cancellationToken);
-                var operation = new AvsArmOperation<GlobalReachConnectionResource>(new GlobalReachConnectionOperationSource(Client), _globalReachConnectionClientDiagnostics, Pipeline, _globalReachConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalReachConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<GlobalReachConnectionResource>(new GlobalReachConnectionOperationSource(Client), _globalReachConnectionClientDiagnostics, Pipeline, _globalReachConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalReachConnectionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

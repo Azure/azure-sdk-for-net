@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBSqlStoredProcedureSqlResourcesRestClient.CreateUpdateSqlStoredProcedureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlStoredProcedureResource>(new CosmosDBSqlStoredProcedureOperationSource(Client), _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlStoredProcedureSqlResourcesRestClient.CreateCreateUpdateSqlStoredProcedureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlStoredProcedureResource>(new CosmosDBSqlStoredProcedureOperationSource(Client), _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlStoredProcedureSqlResourcesRestClient.CreateCreateUpdateSqlStoredProcedureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBSqlStoredProcedureSqlResourcesRestClient.CreateUpdateSqlStoredProcedure(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlStoredProcedureResource>(new CosmosDBSqlStoredProcedureOperationSource(Client), _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlStoredProcedureSqlResourcesRestClient.CreateCreateUpdateSqlStoredProcedureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlStoredProcedureResource>(new CosmosDBSqlStoredProcedureOperationSource(Client), _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlStoredProcedureSqlResourcesRestClient.CreateCreateUpdateSqlStoredProcedureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

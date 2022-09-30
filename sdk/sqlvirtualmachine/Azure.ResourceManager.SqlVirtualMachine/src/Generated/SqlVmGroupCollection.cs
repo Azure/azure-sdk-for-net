@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             try
             {
                 var response = await _sqlVmGroupSqlVmGroupsRestClient.CreateOrUpdateAsync(sqlVmGroupName, Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlVirtualMachineArmOperation<SqlVmGroupResource>(new SqlVmGroupOperationSource(Client), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, _sqlVmGroupSqlVmGroupsRestClient.CreateCreateOrUpdateRequest(sqlVmGroupName, Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlVirtualMachineArmOperation<SqlVmGroupResource>(new SqlVmGroupOperationSource(Client), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, _sqlVmGroupSqlVmGroupsRestClient.CreateCreateOrUpdateRequest(sqlVmGroupName, Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             try
             {
                 var response = _sqlVmGroupSqlVmGroupsRestClient.CreateOrUpdate(sqlVmGroupName, Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken);
-                var operation = new SqlVirtualMachineArmOperation<SqlVmGroupResource>(new SqlVmGroupOperationSource(Client), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, _sqlVmGroupSqlVmGroupsRestClient.CreateCreateOrUpdateRequest(sqlVmGroupName, Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlVirtualMachineArmOperation<SqlVmGroupResource>(new SqlVmGroupOperationSource(Client), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, _sqlVmGroupSqlVmGroupsRestClient.CreateCreateOrUpdateRequest(sqlVmGroupName, Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

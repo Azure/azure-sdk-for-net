@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = await _integrationServiceEnvironmentManagedApiRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LogicArmOperation<IntegrationServiceEnvironmentManagedApiResource>(new IntegrationServiceEnvironmentManagedApiOperationSource(Client), _integrationServiceEnvironmentManagedApiClientDiagnostics, Pipeline, _integrationServiceEnvironmentManagedApiRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new LogicArmOperation<IntegrationServiceEnvironmentManagedApiResource>(new IntegrationServiceEnvironmentManagedApiOperationSource(Client), _integrationServiceEnvironmentManagedApiClientDiagnostics, Pipeline, _integrationServiceEnvironmentManagedApiRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = _integrationServiceEnvironmentManagedApiRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, data, cancellationToken);
-                var operation = new LogicArmOperation<IntegrationServiceEnvironmentManagedApiResource>(new IntegrationServiceEnvironmentManagedApiOperationSource(Client), _integrationServiceEnvironmentManagedApiClientDiagnostics, Pipeline, _integrationServiceEnvironmentManagedApiRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new LogicArmOperation<IntegrationServiceEnvironmentManagedApiResource>(new IntegrationServiceEnvironmentManagedApiOperationSource(Client), _integrationServiceEnvironmentManagedApiClientDiagnostics, Pipeline, _integrationServiceEnvironmentManagedApiRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

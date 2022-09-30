@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _deletedServerRestClient.RecoverAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<DeletedServerResource>(new DeletedServerOperationSource(Client), _deletedServerClientDiagnostics, Pipeline, _deletedServerRestClient.CreateRecoverRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<DeletedServerResource>(new DeletedServerOperationSource(Client), _deletedServerClientDiagnostics, Pipeline, _deletedServerRestClient.CreateRecoverRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _deletedServerRestClient.Recover(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
-                var operation = new SqlArmOperation<DeletedServerResource>(new DeletedServerOperationSource(Client), _deletedServerClientDiagnostics, Pipeline, _deletedServerRestClient.CreateRecoverRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<DeletedServerResource>(new DeletedServerOperationSource(Client), _deletedServerClientDiagnostics, Pipeline, _deletedServerRestClient.CreateRecoverRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

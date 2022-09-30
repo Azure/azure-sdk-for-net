@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Billing
             try
             {
                 var response = await _paymentMethodLinkPaymentMethodsRestClient.DeleteAtBillingProfileAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation(_paymentMethodLinkPaymentMethodsClientDiagnostics, Pipeline, _paymentMethodLinkPaymentMethodsRestClient.CreateDeleteAtBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new BillingArmOperation(_paymentMethodLinkPaymentMethodsClientDiagnostics, Pipeline, _paymentMethodLinkPaymentMethodsRestClient.CreateDeleteAtBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Billing
             try
             {
                 var response = _paymentMethodLinkPaymentMethodsRestClient.DeleteAtBillingProfile(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BillingArmOperation(_paymentMethodLinkPaymentMethodsClientDiagnostics, Pipeline, _paymentMethodLinkPaymentMethodsRestClient.CreateDeleteAtBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new BillingArmOperation(_paymentMethodLinkPaymentMethodsClientDiagnostics, Pipeline, _paymentMethodLinkPaymentMethodsRestClient.CreateDeleteAtBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

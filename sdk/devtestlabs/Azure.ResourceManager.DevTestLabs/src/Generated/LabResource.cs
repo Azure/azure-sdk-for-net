@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _labRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _labRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _labRestClient.ClaimAnyVmAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateClaimAnyVmRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateClaimAnyVmRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _labRestClient.ClaimAnyVm(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateClaimAnyVmRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateClaimAnyVmRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _labRestClient.CreateEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, labVirtualMachineCreationParameter, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateCreateEnvironmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, labVirtualMachineCreationParameter).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateCreateEnvironmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, labVirtualMachineCreationParameter).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _labRestClient.CreateEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, labVirtualMachineCreationParameter, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateCreateEnvironmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, labVirtualMachineCreationParameter).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateCreateEnvironmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, labVirtualMachineCreationParameter).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _labRestClient.ExportResourceUsageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateExportResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateExportResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _labRestClient.ExportResourceUsage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateExportResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateExportResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -928,7 +928,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _labRestClient.ImportVirtualMachineAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateImportVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateImportVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _labRestClient.ImportVirtualMachine(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateImportVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation(_labClientDiagnostics, Pipeline, _labRestClient.CreateImportVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

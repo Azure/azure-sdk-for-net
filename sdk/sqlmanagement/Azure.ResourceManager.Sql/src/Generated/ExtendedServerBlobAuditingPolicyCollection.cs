@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _extendedServerBlobAuditingPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ExtendedServerBlobAuditingPolicyResource>(new ExtendedServerBlobAuditingPolicyOperationSource(Client), _extendedServerBlobAuditingPolicyClientDiagnostics, Pipeline, _extendedServerBlobAuditingPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ExtendedServerBlobAuditingPolicyResource>(new ExtendedServerBlobAuditingPolicyOperationSource(Client), _extendedServerBlobAuditingPolicyClientDiagnostics, Pipeline, _extendedServerBlobAuditingPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _extendedServerBlobAuditingPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, data, cancellationToken);
-                var operation = new SqlArmOperation<ExtendedServerBlobAuditingPolicyResource>(new ExtendedServerBlobAuditingPolicyOperationSource(Client), _extendedServerBlobAuditingPolicyClientDiagnostics, Pipeline, _extendedServerBlobAuditingPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ExtendedServerBlobAuditingPolicyResource>(new ExtendedServerBlobAuditingPolicyOperationSource(Client), _extendedServerBlobAuditingPolicyClientDiagnostics, Pipeline, _extendedServerBlobAuditingPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

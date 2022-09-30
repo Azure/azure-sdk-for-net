@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = await _netAppVolumeVolumesRestClient.ResetCifsPasswordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation(_netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateResetCifsPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation(_netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateResetCifsPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = _netAppVolumeVolumesRestClient.ResetCifsPassword(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetAppArmOperation(_netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateResetCifsPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation(_netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateResetCifsPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1018,7 +1018,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = await _netAppVolumeVolumesRestClient.RelocateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation(_netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateRelocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation(_netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateRelocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1045,7 +1045,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = _netAppVolumeVolumesRestClient.Relocate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new NetAppArmOperation(_netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateRelocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation(_netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateRelocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1071,7 +1071,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = await _netAppVolumeVolumesRestClient.FinalizeRelocationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation(_netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateFinalizeRelocationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation(_netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateFinalizeRelocationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1097,7 +1097,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = _netAppVolumeVolumesRestClient.FinalizeRelocation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetAppArmOperation(_netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateFinalizeRelocationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation(_netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateFinalizeRelocationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1123,7 +1123,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = await _netAppVolumeVolumesRestClient.RevertRelocationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation(_netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateRevertRelocationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation(_netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateRevertRelocationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = _netAppVolumeVolumesRestClient.RevertRelocation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetAppArmOperation(_netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateRevertRelocationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation(_netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateRevertRelocationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

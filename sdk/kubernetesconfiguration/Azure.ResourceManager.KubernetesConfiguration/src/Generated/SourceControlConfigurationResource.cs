@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             try
             {
                 var response = await _sourceControlConfigurationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new KubernetesConfigurationArmOperation(_sourceControlConfigurationClientDiagnostics, Pipeline, _sourceControlConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new KubernetesConfigurationArmOperation(_sourceControlConfigurationClientDiagnostics, Pipeline, _sourceControlConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             try
             {
                 var response = _sourceControlConfigurationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new KubernetesConfigurationArmOperation(_sourceControlConfigurationClientDiagnostics, Pipeline, _sourceControlConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new KubernetesConfigurationArmOperation(_sourceControlConfigurationClientDiagnostics, Pipeline, _sourceControlConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

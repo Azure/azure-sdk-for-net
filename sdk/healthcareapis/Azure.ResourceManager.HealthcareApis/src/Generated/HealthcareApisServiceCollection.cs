@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HealthcareApis
             try
             {
                 var response = await _healthcareApisServiceServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HealthcareApisArmOperation<HealthcareApisServiceResource>(new HealthcareApisServiceOperationSource(Client), _healthcareApisServiceServicesClientDiagnostics, Pipeline, _healthcareApisServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new HealthcareApisArmOperation<HealthcareApisServiceResource>(new HealthcareApisServiceOperationSource(Client), _healthcareApisServiceServicesClientDiagnostics, Pipeline, _healthcareApisServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HealthcareApis
             try
             {
                 var response = _healthcareApisServiceServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
-                var operation = new HealthcareApisArmOperation<HealthcareApisServiceResource>(new HealthcareApisServiceOperationSource(Client), _healthcareApisServiceServicesClientDiagnostics, Pipeline, _healthcareApisServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new HealthcareApisArmOperation<HealthcareApisServiceResource>(new HealthcareApisServiceOperationSource(Client), _healthcareApisServiceServicesClientDiagnostics, Pipeline, _healthcareApisServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

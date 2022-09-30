@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DigitalTwins
             try
             {
                 var response = await _timeSeriesDatabaseConnectionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DigitalTwinsArmOperation<TimeSeriesDatabaseConnectionResource>(new TimeSeriesDatabaseConnectionOperationSource(Client), _timeSeriesDatabaseConnectionClientDiagnostics, Pipeline, _timeSeriesDatabaseConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DigitalTwinsArmOperation<TimeSeriesDatabaseConnectionResource>(new TimeSeriesDatabaseConnectionOperationSource(Client), _timeSeriesDatabaseConnectionClientDiagnostics, Pipeline, _timeSeriesDatabaseConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DigitalTwins
             try
             {
                 var response = _timeSeriesDatabaseConnectionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DigitalTwinsArmOperation<TimeSeriesDatabaseConnectionResource>(new TimeSeriesDatabaseConnectionOperationSource(Client), _timeSeriesDatabaseConnectionClientDiagnostics, Pipeline, _timeSeriesDatabaseConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DigitalTwinsArmOperation<TimeSeriesDatabaseConnectionResource>(new TimeSeriesDatabaseConnectionOperationSource(Client), _timeSeriesDatabaseConnectionClientDiagnostics, Pipeline, _timeSeriesDatabaseConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DigitalTwins
             try
             {
                 var response = await _timeSeriesDatabaseConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DigitalTwinsArmOperation<TimeSeriesDatabaseConnectionResource>(new TimeSeriesDatabaseConnectionOperationSource(Client), _timeSeriesDatabaseConnectionClientDiagnostics, Pipeline, _timeSeriesDatabaseConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DigitalTwinsArmOperation<TimeSeriesDatabaseConnectionResource>(new TimeSeriesDatabaseConnectionOperationSource(Client), _timeSeriesDatabaseConnectionClientDiagnostics, Pipeline, _timeSeriesDatabaseConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DigitalTwins
             try
             {
                 var response = _timeSeriesDatabaseConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new DigitalTwinsArmOperation<TimeSeriesDatabaseConnectionResource>(new TimeSeriesDatabaseConnectionOperationSource(Client), _timeSeriesDatabaseConnectionClientDiagnostics, Pipeline, _timeSeriesDatabaseConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DigitalTwinsArmOperation<TimeSeriesDatabaseConnectionResource>(new TimeSeriesDatabaseConnectionOperationSource(Client), _timeSeriesDatabaseConnectionClientDiagnostics, Pipeline, _timeSeriesDatabaseConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

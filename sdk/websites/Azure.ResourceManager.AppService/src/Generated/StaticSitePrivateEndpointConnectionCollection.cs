@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _staticSitePrivateEndpointConnectionStaticSitesRestClient.ApproveOrRejectPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, info, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<StaticSitePrivateEndpointConnectionResource>(new StaticSitePrivateEndpointConnectionOperationSource(Client), _staticSitePrivateEndpointConnectionStaticSitesClientDiagnostics, Pipeline, _staticSitePrivateEndpointConnectionStaticSitesRestClient.CreateApproveOrRejectPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, info).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<StaticSitePrivateEndpointConnectionResource>(new StaticSitePrivateEndpointConnectionOperationSource(Client), _staticSitePrivateEndpointConnectionStaticSitesClientDiagnostics, Pipeline, _staticSitePrivateEndpointConnectionStaticSitesRestClient.CreateApproveOrRejectPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, info).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSitePrivateEndpointConnectionStaticSitesRestClient.ApproveOrRejectPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, info, cancellationToken);
-                var operation = new AppServiceArmOperation<StaticSitePrivateEndpointConnectionResource>(new StaticSitePrivateEndpointConnectionOperationSource(Client), _staticSitePrivateEndpointConnectionStaticSitesClientDiagnostics, Pipeline, _staticSitePrivateEndpointConnectionStaticSitesRestClient.CreateApproveOrRejectPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, info).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<StaticSitePrivateEndpointConnectionResource>(new StaticSitePrivateEndpointConnectionOperationSource(Client), _staticSitePrivateEndpointConnectionStaticSitesClientDiagnostics, Pipeline, _staticSitePrivateEndpointConnectionStaticSitesRestClient.CreateApproveOrRejectPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, info).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

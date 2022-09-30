@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = await _kustoClusterClustersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation<KustoClusterResource>(new KustoClusterOperationSource(Client), _kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation<KustoClusterResource>(new KustoClusterOperationSource(Client), _kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = _kustoClusterClustersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new KustoArmOperation<KustoClusterResource>(new KustoClusterOperationSource(Client), _kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation<KustoClusterResource>(new KustoClusterOperationSource(Client), _kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _systemTopicEventSubscriptionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventSubscriptionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<SystemTopicEventSubscriptionResource>(new SystemTopicEventSubscriptionOperationSource(Client), _systemTopicEventSubscriptionClientDiagnostics, Pipeline, _systemTopicEventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventSubscriptionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<SystemTopicEventSubscriptionResource>(new SystemTopicEventSubscriptionOperationSource(Client), _systemTopicEventSubscriptionClientDiagnostics, Pipeline, _systemTopicEventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventSubscriptionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _systemTopicEventSubscriptionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventSubscriptionName, data, cancellationToken);
-                var operation = new EventGridArmOperation<SystemTopicEventSubscriptionResource>(new SystemTopicEventSubscriptionOperationSource(Client), _systemTopicEventSubscriptionClientDiagnostics, Pipeline, _systemTopicEventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventSubscriptionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<SystemTopicEventSubscriptionResource>(new SystemTopicEventSubscriptionOperationSource(Client), _systemTopicEventSubscriptionClientDiagnostics, Pipeline, _systemTopicEventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventSubscriptionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

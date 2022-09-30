@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = await _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation(_mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation(_mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MySqlArmOperation(_mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation(_mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = await _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation<MySqlPrivateEndpointConnectionResource>(new MySqlPrivateEndpointConnectionOperationSource(Client), _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<MySqlPrivateEndpointConnectionResource>(new MySqlPrivateEndpointConnectionOperationSource(Client), _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new MySqlArmOperation<MySqlPrivateEndpointConnectionResource>(new MySqlPrivateEndpointConnectionOperationSource(Client), _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<MySqlPrivateEndpointConnectionResource>(new MySqlPrivateEndpointConnectionOperationSource(Client), _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

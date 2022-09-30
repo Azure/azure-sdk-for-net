@@ -735,7 +735,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateStartAnalyzeConversationRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.StartAnalyzeConversation", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.StartAnalyzeConversation", OperationFinalStateVia.NotSpecified, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -933,7 +933,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateStartAnalyzeConversationRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.StartAnalyzeConversation", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.StartAnalyzeConversation", OperationFinalStateVia.NotSpecified, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -969,7 +969,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateCancelAnalyzeConversationJobRequest(jobId, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.CancelAnalyzeConversationJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.CancelAnalyzeConversationJob", OperationFinalStateVia.NotSpecified, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1005,7 +1005,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateCancelAnalyzeConversationJobRequest(jobId, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.CancelAnalyzeConversationJob", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.CancelAnalyzeConversationJob", OperationFinalStateVia.NotSpecified, context, waitUntil);
             }
             catch (Exception e)
             {

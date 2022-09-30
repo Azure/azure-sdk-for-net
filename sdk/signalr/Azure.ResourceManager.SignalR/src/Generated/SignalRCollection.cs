@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SignalR
             try
             {
                 var response = await _signalRRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SignalRArmOperation<SignalRResource>(new SignalROperationSource(Client), _signalRClientDiagnostics, Pipeline, _signalRRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SignalRArmOperation<SignalRResource>(new SignalROperationSource(Client), _signalRClientDiagnostics, Pipeline, _signalRRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SignalR
             try
             {
                 var response = _signalRRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
-                var operation = new SignalRArmOperation<SignalRResource>(new SignalROperationSource(Client), _signalRClientDiagnostics, Pipeline, _signalRRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SignalRArmOperation<SignalRResource>(new SignalROperationSource(Client), _signalRClientDiagnostics, Pipeline, _signalRRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

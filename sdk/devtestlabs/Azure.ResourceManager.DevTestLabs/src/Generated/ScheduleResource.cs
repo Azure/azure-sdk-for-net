@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _scheduleGlobalSchedulesRestClient.ExecuteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_scheduleGlobalSchedulesClientDiagnostics, Pipeline, _scheduleGlobalSchedulesRestClient.CreateExecuteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation(_scheduleGlobalSchedulesClientDiagnostics, Pipeline, _scheduleGlobalSchedulesRestClient.CreateExecuteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _scheduleGlobalSchedulesRestClient.Execute(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_scheduleGlobalSchedulesClientDiagnostics, Pipeline, _scheduleGlobalSchedulesRestClient.CreateExecuteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation(_scheduleGlobalSchedulesClientDiagnostics, Pipeline, _scheduleGlobalSchedulesRestClient.CreateExecuteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _scheduleGlobalSchedulesRestClient.RetargetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, retargetScheduleProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_scheduleGlobalSchedulesClientDiagnostics, Pipeline, _scheduleGlobalSchedulesRestClient.CreateRetargetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, retargetScheduleProperties).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation(_scheduleGlobalSchedulesClientDiagnostics, Pipeline, _scheduleGlobalSchedulesRestClient.CreateRetargetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, retargetScheduleProperties).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _scheduleGlobalSchedulesRestClient.Retarget(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, retargetScheduleProperties, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_scheduleGlobalSchedulesClientDiagnostics, Pipeline, _scheduleGlobalSchedulesRestClient.CreateRetargetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, retargetScheduleProperties).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation(_scheduleGlobalSchedulesClientDiagnostics, Pipeline, _scheduleGlobalSchedulesRestClient.CreateRetargetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, retargetScheduleProperties).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

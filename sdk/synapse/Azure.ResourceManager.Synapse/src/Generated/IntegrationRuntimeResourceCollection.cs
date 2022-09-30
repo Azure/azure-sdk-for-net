@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<IntegrationRuntimeResource>(new IntegrationRuntimeResourceOperationSource(Client), _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<IntegrationRuntimeResource>(new IntegrationRuntimeResourceOperationSource(Client), _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _integrationRuntimeResourceIntegrationRuntimesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch, cancellationToken);
-                var operation = new SynapseArmOperation<IntegrationRuntimeResource>(new IntegrationRuntimeResourceOperationSource(Client), _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<IntegrationRuntimeResource>(new IntegrationRuntimeResourceOperationSource(Client), _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

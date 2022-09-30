@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = await _profileResourceFormatProfilesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation<ProfileResourceFormatResource>(new ProfileResourceFormatOperationSource(Client), _profileResourceFormatProfilesClientDiagnostics, Pipeline, _profileResourceFormatProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation<ProfileResourceFormatResource>(new ProfileResourceFormatOperationSource(Client), _profileResourceFormatProfilesClientDiagnostics, Pipeline, _profileResourceFormatProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = _profileResourceFormatProfilesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data, cancellationToken);
-                var operation = new CustomerInsightsArmOperation<ProfileResourceFormatResource>(new ProfileResourceFormatOperationSource(Client), _profileResourceFormatProfilesClientDiagnostics, Pipeline, _profileResourceFormatProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation<ProfileResourceFormatResource>(new ProfileResourceFormatOperationSource(Client), _profileResourceFormatProfilesClientDiagnostics, Pipeline, _profileResourceFormatProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

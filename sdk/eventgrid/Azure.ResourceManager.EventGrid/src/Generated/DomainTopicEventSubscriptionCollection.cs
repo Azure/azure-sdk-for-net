@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _domainTopicEventSubscriptionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<DomainTopicEventSubscriptionResource>(new DomainTopicEventSubscriptionOperationSource(Client), _domainTopicEventSubscriptionClientDiagnostics, Pipeline, _domainTopicEventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<DomainTopicEventSubscriptionResource>(new DomainTopicEventSubscriptionOperationSource(Client), _domainTopicEventSubscriptionClientDiagnostics, Pipeline, _domainTopicEventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _domainTopicEventSubscriptionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data, cancellationToken);
-                var operation = new EventGridArmOperation<DomainTopicEventSubscriptionResource>(new DomainTopicEventSubscriptionOperationSource(Client), _domainTopicEventSubscriptionClientDiagnostics, Pipeline, _domainTopicEventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<DomainTopicEventSubscriptionResource>(new DomainTopicEventSubscriptionOperationSource(Client), _domainTopicEventSubscriptionClientDiagnostics, Pipeline, _domainTopicEventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

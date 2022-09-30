@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _encryptionProtectorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<EncryptionProtectorResource>(new EncryptionProtectorOperationSource(Client), _encryptionProtectorClientDiagnostics, Pipeline, _encryptionProtectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<EncryptionProtectorResource>(new EncryptionProtectorOperationSource(Client), _encryptionProtectorClientDiagnostics, Pipeline, _encryptionProtectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _encryptionProtectorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, data, cancellationToken);
-                var operation = new SqlArmOperation<EncryptionProtectorResource>(new EncryptionProtectorOperationSource(Client), _encryptionProtectorClientDiagnostics, Pipeline, _encryptionProtectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<EncryptionProtectorResource>(new EncryptionProtectorOperationSource(Client), _encryptionProtectorClientDiagnostics, Pipeline, _encryptionProtectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

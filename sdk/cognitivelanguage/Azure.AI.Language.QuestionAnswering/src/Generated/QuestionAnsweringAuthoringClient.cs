@@ -2436,7 +2436,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.NotSpecified, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2499,7 +2499,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.NotSpecified, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2578,7 +2578,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Export", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Export", OperationFinalStateVia.NotSpecified, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2657,7 +2657,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Export", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Export", OperationFinalStateVia.NotSpecified, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2882,7 +2882,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Import", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Import", OperationFinalStateVia.NotSpecified, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3107,7 +3107,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Import", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Import", OperationFinalStateVia.NotSpecified, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -3165,7 +3165,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProject", OperationFinalStateVia.NotSpecified, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3223,7 +3223,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProject", OperationFinalStateVia.NotSpecified, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -3318,7 +3318,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSources", OperationFinalStateVia.Location, context, waitUntil, CreateEnumerableAsync).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSources", OperationFinalStateVia.NotSpecified, context, waitUntil, CreateEnumerableAsync).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3431,7 +3431,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSources", OperationFinalStateVia.Location, context, waitUntil, CreateEnumerable);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSources", OperationFinalStateVia.NotSpecified, context, waitUntil, CreateEnumerable);
             }
             catch (Exception e)
             {
@@ -3641,7 +3641,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateQnas", OperationFinalStateVia.Location, context, waitUntil, CreateEnumerableAsync).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateQnas", OperationFinalStateVia.NotSpecified, context, waitUntil, CreateEnumerableAsync).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3851,7 +3851,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateQnas", OperationFinalStateVia.Location, context, waitUntil, CreateEnumerable);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateQnas", OperationFinalStateVia.NotSpecified, context, waitUntil, CreateEnumerable);
             }
             catch (Exception e)
             {

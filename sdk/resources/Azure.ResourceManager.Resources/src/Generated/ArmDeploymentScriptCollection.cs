@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _armDeploymentScriptDeploymentScriptsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, scriptName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<ArmDeploymentScriptResource>(new ArmDeploymentScriptOperationSource(Client), _armDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, _armDeploymentScriptDeploymentScriptsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmDeploymentScriptResource>(new ArmDeploymentScriptOperationSource(Client), _armDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, _armDeploymentScriptDeploymentScriptsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _armDeploymentScriptDeploymentScriptsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, scriptName, data, cancellationToken);
-                var operation = new ResourcesArmOperation<ArmDeploymentScriptResource>(new ArmDeploymentScriptOperationSource(Client), _armDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, _armDeploymentScriptDeploymentScriptsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmDeploymentScriptResource>(new ArmDeploymentScriptOperationSource(Client), _armDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, _armDeploymentScriptDeploymentScriptsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

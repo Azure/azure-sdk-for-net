@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CognitiveServices
             try
             {
                 var response = await _cognitiveServicesAccountAccountsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CognitiveServicesArmOperation<CognitiveServicesAccountResource>(new CognitiveServicesAccountOperationSource(Client), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, _cognitiveServicesAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CognitiveServicesArmOperation<CognitiveServicesAccountResource>(new CognitiveServicesAccountOperationSource(Client), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, _cognitiveServicesAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CognitiveServices
             try
             {
                 var response = _cognitiveServicesAccountAccountsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken);
-                var operation = new CognitiveServicesArmOperation<CognitiveServicesAccountResource>(new CognitiveServicesAccountOperationSource(Client), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, _cognitiveServicesAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CognitiveServicesArmOperation<CognitiveServicesAccountResource>(new CognitiveServicesAccountOperationSource(Client), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, _cognitiveServicesAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

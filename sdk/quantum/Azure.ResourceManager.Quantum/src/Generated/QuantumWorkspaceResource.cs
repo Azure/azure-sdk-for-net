@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Quantum
             try
             {
                 var response = await _quantumWorkspaceWorkspacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new QuantumArmOperation(_quantumWorkspaceWorkspacesClientDiagnostics, Pipeline, _quantumWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new QuantumArmOperation(_quantumWorkspaceWorkspacesClientDiagnostics, Pipeline, _quantumWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Quantum
             try
             {
                 var response = _quantumWorkspaceWorkspacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new QuantumArmOperation(_quantumWorkspaceWorkspacesClientDiagnostics, Pipeline, _quantumWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new QuantumArmOperation(_quantumWorkspaceWorkspacesClientDiagnostics, Pipeline, _quantumWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

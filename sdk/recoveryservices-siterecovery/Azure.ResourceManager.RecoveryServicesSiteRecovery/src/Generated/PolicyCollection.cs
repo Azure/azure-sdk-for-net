@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _policyReplicationPoliciesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<PolicyResource>(new PolicyOperationSource(Client), _policyReplicationPoliciesClientDiagnostics, Pipeline, _policyReplicationPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<PolicyResource>(new PolicyOperationSource(Client), _policyReplicationPoliciesClientDiagnostics, Pipeline, _policyReplicationPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _policyReplicationPoliciesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<PolicyResource>(new PolicyOperationSource(Client), _policyReplicationPoliciesClientDiagnostics, Pipeline, _policyReplicationPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<PolicyResource>(new PolicyOperationSource(Client), _policyReplicationPoliciesClientDiagnostics, Pipeline, _policyReplicationPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

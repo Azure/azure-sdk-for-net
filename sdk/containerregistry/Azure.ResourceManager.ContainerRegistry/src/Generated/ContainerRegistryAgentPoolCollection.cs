@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _containerRegistryAgentPoolAgentPoolsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryAgentPoolResource>(new ContainerRegistryAgentPoolOperationSource(Client), _containerRegistryAgentPoolAgentPoolsClientDiagnostics, Pipeline, _containerRegistryAgentPoolAgentPoolsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ContainerRegistryAgentPoolResource>(new ContainerRegistryAgentPoolOperationSource(Client), _containerRegistryAgentPoolAgentPoolsClientDiagnostics, Pipeline, _containerRegistryAgentPoolAgentPoolsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _containerRegistryAgentPoolAgentPoolsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryAgentPoolResource>(new ContainerRegistryAgentPoolOperationSource(Client), _containerRegistryAgentPoolAgentPoolsClientDiagnostics, Pipeline, _containerRegistryAgentPoolAgentPoolsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ContainerRegistryAgentPoolResource>(new ContainerRegistryAgentPoolOperationSource(Client), _containerRegistryAgentPoolAgentPoolsClientDiagnostics, Pipeline, _containerRegistryAgentPoolAgentPoolsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

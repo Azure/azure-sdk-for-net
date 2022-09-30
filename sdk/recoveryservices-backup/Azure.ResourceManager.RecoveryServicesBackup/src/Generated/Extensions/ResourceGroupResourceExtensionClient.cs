@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = await ValidateOperationRestClient.TriggerAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, validateOperationRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation(ValidateOperationClientDiagnostics, Pipeline, ValidateOperationRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, validateOperationRequest).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesBackupArmOperation(ValidateOperationClientDiagnostics, Pipeline, ValidateOperationRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, validateOperationRequest).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = ValidateOperationRestClient.Trigger(Id.SubscriptionId, Id.ResourceGroupName, vaultName, validateOperationRequest, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation(ValidateOperationClientDiagnostics, Pipeline, ValidateOperationRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, validateOperationRequest).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesBackupArmOperation(ValidateOperationClientDiagnostics, Pipeline, ValidateOperationRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, validateOperationRequest).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ManagedServices
             try
             {
                 var response = await _registrationDefinitionRestClient.CreateOrUpdateAsync(Id, registrationDefinitionId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedServicesArmOperation<RegistrationDefinitionResource>(new RegistrationDefinitionOperationSource(Client), _registrationDefinitionClientDiagnostics, Pipeline, _registrationDefinitionRestClient.CreateCreateOrUpdateRequest(Id, registrationDefinitionId, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedServicesArmOperation<RegistrationDefinitionResource>(new RegistrationDefinitionOperationSource(Client), _registrationDefinitionClientDiagnostics, Pipeline, _registrationDefinitionRestClient.CreateCreateOrUpdateRequest(Id, registrationDefinitionId, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ManagedServices
             try
             {
                 var response = _registrationDefinitionRestClient.CreateOrUpdate(Id, registrationDefinitionId, data, cancellationToken);
-                var operation = new ManagedServicesArmOperation<RegistrationDefinitionResource>(new RegistrationDefinitionOperationSource(Client), _registrationDefinitionClientDiagnostics, Pipeline, _registrationDefinitionRestClient.CreateCreateOrUpdateRequest(Id, registrationDefinitionId, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedServicesArmOperation<RegistrationDefinitionResource>(new RegistrationDefinitionOperationSource(Client), _registrationDefinitionClientDiagnostics, Pipeline, _registrationDefinitionRestClient.CreateCreateOrUpdateRequest(Id, registrationDefinitionId, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

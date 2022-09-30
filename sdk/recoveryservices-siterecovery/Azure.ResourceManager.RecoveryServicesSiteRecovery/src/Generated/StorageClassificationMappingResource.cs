@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation(_storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation(_storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<StorageClassificationMappingResource>(new StorageClassificationMappingOperationSource(Client), _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<StorageClassificationMappingResource>(new StorageClassificationMappingOperationSource(Client), _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<StorageClassificationMappingResource>(new StorageClassificationMappingOperationSource(Client), _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<StorageClassificationMappingResource>(new StorageClassificationMappingOperationSource(Client), _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

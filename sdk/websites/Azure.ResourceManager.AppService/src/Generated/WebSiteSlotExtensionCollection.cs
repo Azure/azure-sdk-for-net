@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotExtensionWebAppsRestClient.InstallSiteExtensionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSiteSlotExtensionResource>(new WebSiteSlotExtensionOperationSource(Client), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, _webSiteSlotExtensionWebAppsRestClient.CreateInstallSiteExtensionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<WebSiteSlotExtensionResource>(new WebSiteSlotExtensionOperationSource(Client), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, _webSiteSlotExtensionWebAppsRestClient.CreateInstallSiteExtensionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotExtensionWebAppsRestClient.InstallSiteExtensionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSiteSlotExtensionResource>(new WebSiteSlotExtensionOperationSource(Client), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, _webSiteSlotExtensionWebAppsRestClient.CreateInstallSiteExtensionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<WebSiteSlotExtensionResource>(new WebSiteSlotExtensionOperationSource(Client), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, _webSiteSlotExtensionWebAppsRestClient.CreateInstallSiteExtensionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

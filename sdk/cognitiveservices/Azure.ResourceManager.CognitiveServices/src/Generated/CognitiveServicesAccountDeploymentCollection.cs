@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CognitiveServices
             try
             {
                 var response = await _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CognitiveServicesArmOperation<CognitiveServicesAccountDeploymentResource>(new CognitiveServicesAccountDeploymentOperationSource(Client), _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics, Pipeline, _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CognitiveServicesArmOperation<CognitiveServicesAccountDeploymentResource>(new CognitiveServicesAccountDeploymentOperationSource(Client), _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics, Pipeline, _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CognitiveServices
             try
             {
                 var response = _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, data, cancellationToken);
-                var operation = new CognitiveServicesArmOperation<CognitiveServicesAccountDeploymentResource>(new CognitiveServicesAccountDeploymentOperationSource(Client), _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics, Pipeline, _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CognitiveServicesArmOperation<CognitiveServicesAccountDeploymentResource>(new CognitiveServicesAccountDeploymentOperationSource(Client), _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics, Pipeline, _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

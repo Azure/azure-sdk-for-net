@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = await _mySqlConfigurationConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation<MySqlConfigurationResource>(new MySqlConfigurationOperationSource(Client), _mySqlConfigurationConfigurationsClientDiagnostics, Pipeline, _mySqlConfigurationConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<MySqlConfigurationResource>(new MySqlConfigurationOperationSource(Client), _mySqlConfigurationConfigurationsClientDiagnostics, Pipeline, _mySqlConfigurationConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = _mySqlConfigurationConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MySqlArmOperation<MySqlConfigurationResource>(new MySqlConfigurationOperationSource(Client), _mySqlConfigurationConfigurationsClientDiagnostics, Pipeline, _mySqlConfigurationConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<MySqlConfigurationResource>(new MySqlConfigurationOperationSource(Client), _mySqlConfigurationConfigurationsClientDiagnostics, Pipeline, _mySqlConfigurationConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

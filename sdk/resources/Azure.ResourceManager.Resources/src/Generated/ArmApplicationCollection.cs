@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _armApplicationApplicationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<ArmApplicationResource>(new ArmApplicationOperationSource(Client), _armApplicationApplicationsClientDiagnostics, Pipeline, _armApplicationApplicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmApplicationResource>(new ArmApplicationOperationSource(Client), _armApplicationApplicationsClientDiagnostics, Pipeline, _armApplicationApplicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _armApplicationApplicationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, applicationName, data, cancellationToken);
-                var operation = new ResourcesArmOperation<ArmApplicationResource>(new ArmApplicationOperationSource(Client), _armApplicationApplicationsClientDiagnostics, Pipeline, _armApplicationApplicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmApplicationResource>(new ArmApplicationOperationSource(Client), _armApplicationApplicationsClientDiagnostics, Pipeline, _armApplicationApplicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

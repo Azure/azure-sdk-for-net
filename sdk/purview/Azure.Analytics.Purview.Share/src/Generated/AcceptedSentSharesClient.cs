@@ -481,7 +481,7 @@ namespace Azure.Analytics.Purview.Share
             try
             {
                 using HttpMessage message = CreateReinstateRequest(sentShareName, acceptedSentShareName, content, repeatabilityRequestId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "AcceptedSentSharesClient.Reinstate", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "AcceptedSentSharesClient.Reinstate", OperationFinalStateVia.NotSpecified, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -608,7 +608,7 @@ namespace Azure.Analytics.Purview.Share
             try
             {
                 using HttpMessage message = CreateReinstateRequest(sentShareName, acceptedSentShareName, content, repeatabilityRequestId, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "AcceptedSentSharesClient.Reinstate", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "AcceptedSentSharesClient.Reinstate", OperationFinalStateVia.NotSpecified, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -696,7 +696,7 @@ namespace Azure.Analytics.Purview.Share
             try
             {
                 using HttpMessage message = CreateRevokeRequest(sentShareName, acceptedSentShareName, repeatabilityRequestId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "AcceptedSentSharesClient.Revoke", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "AcceptedSentSharesClient.Revoke", OperationFinalStateVia.NotSpecified, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -784,7 +784,7 @@ namespace Azure.Analytics.Purview.Share
             try
             {
                 using HttpMessage message = CreateRevokeRequest(sentShareName, acceptedSentShareName, repeatabilityRequestId, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "AcceptedSentSharesClient.Revoke", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "AcceptedSentSharesClient.Revoke", OperationFinalStateVia.NotSpecified, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -911,7 +911,7 @@ namespace Azure.Analytics.Purview.Share
             try
             {
                 using HttpMessage message = CreateUpdateExpirationRequest(sentShareName, acceptedSentShareName, content, repeatabilityRequestId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "AcceptedSentSharesClient.UpdateExpiration", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "AcceptedSentSharesClient.UpdateExpiration", OperationFinalStateVia.NotSpecified, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1038,7 +1038,7 @@ namespace Azure.Analytics.Purview.Share
             try
             {
                 using HttpMessage message = CreateUpdateExpirationRequest(sentShareName, acceptedSentShareName, content, repeatabilityRequestId, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "AcceptedSentSharesClient.UpdateExpiration", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "AcceptedSentSharesClient.UpdateExpiration", OperationFinalStateVia.NotSpecified, context, waitUntil);
             }
             catch (Exception e)
             {

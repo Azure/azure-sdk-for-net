@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _workloadClassifierSqlPoolWorkloadClassifierRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<WorkloadClassifierResource>(new WorkloadClassifierOperationSource(Client), _workloadClassifierSqlPoolWorkloadClassifierClientDiagnostics, Pipeline, _workloadClassifierSqlPoolWorkloadClassifierRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<WorkloadClassifierResource>(new WorkloadClassifierOperationSource(Client), _workloadClassifierSqlPoolWorkloadClassifierClientDiagnostics, Pipeline, _workloadClassifierSqlPoolWorkloadClassifierRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _workloadClassifierSqlPoolWorkloadClassifierRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, data, cancellationToken);
-                var operation = new SynapseArmOperation<WorkloadClassifierResource>(new WorkloadClassifierOperationSource(Client), _workloadClassifierSqlPoolWorkloadClassifierClientDiagnostics, Pipeline, _workloadClassifierSqlPoolWorkloadClassifierRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<WorkloadClassifierResource>(new WorkloadClassifierOperationSource(Client), _workloadClassifierSqlPoolWorkloadClassifierClientDiagnostics, Pipeline, _workloadClassifierSqlPoolWorkloadClassifierRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

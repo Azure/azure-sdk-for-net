@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal TriggerCreateOrUpdateTriggerOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            IOperation<TriggerResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
+            IOperation<TriggerResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.NotSpecified);
             _operation = new OperationInternal<TriggerResource>(clientDiagnostics, nextLinkOperation, response, "TriggerCreateOrUpdateTriggerOperation");
         }
 

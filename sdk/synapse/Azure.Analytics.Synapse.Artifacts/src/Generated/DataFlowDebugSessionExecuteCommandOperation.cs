@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal DataFlowDebugSessionExecuteCommandOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            IOperation<DataFlowDebugCommandResponse> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
+            IOperation<DataFlowDebugCommandResponse> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.NotSpecified);
             _operation = new OperationInternal<DataFlowDebugCommandResponse>(clientDiagnostics, nextLinkOperation, response, "DataFlowDebugSessionExecuteCommandOperation");
         }
 

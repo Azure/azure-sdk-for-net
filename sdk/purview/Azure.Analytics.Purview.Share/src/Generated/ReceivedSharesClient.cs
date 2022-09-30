@@ -701,7 +701,7 @@ namespace Azure.Analytics.Purview.Share
             try
             {
                 using HttpMessage message = CreateDeleteRequest(receivedShareName, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ReceivedSharesClient.Delete", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ReceivedSharesClient.Delete", OperationFinalStateVia.NotSpecified, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -740,7 +740,7 @@ namespace Azure.Analytics.Purview.Share
             try
             {
                 using HttpMessage message = CreateDeleteRequest(receivedShareName, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ReceivedSharesClient.Delete", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ReceivedSharesClient.Delete", OperationFinalStateVia.NotSpecified, context, waitUntil);
             }
             catch (Exception e)
             {

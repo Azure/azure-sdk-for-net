@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerAzureADAdministratorResource>(new SqlServerAzureADAdministratorOperationSource(Client), _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics, Pipeline, _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerAzureADAdministratorResource>(new SqlServerAzureADAdministratorOperationSource(Client), _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics, Pipeline, _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerAzureADAdministratorResource>(new SqlServerAzureADAdministratorOperationSource(Client), _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics, Pipeline, _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerAzureADAdministratorResource>(new SqlServerAzureADAdministratorOperationSource(Client), _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics, Pipeline, _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _labRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation<LabResource>(new LabOperationSource(Client), _labClientDiagnostics, Pipeline, _labRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation<LabResource>(new LabOperationSource(Client), _labClientDiagnostics, Pipeline, _labRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _labRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken);
-                var operation = new DevTestLabsArmOperation<LabResource>(new LabOperationSource(Client), _labClientDiagnostics, Pipeline, _labRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation<LabResource>(new LabOperationSource(Client), _labClientDiagnostics, Pipeline, _labRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

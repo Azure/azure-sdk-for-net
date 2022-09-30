@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedInstanceDtcRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedInstanceDtcResource>(new ManagedInstanceDtcOperationSource(Client), _managedInstanceDtcClientDiagnostics, Pipeline, _managedInstanceDtcRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedInstanceDtcResource>(new ManagedInstanceDtcOperationSource(Client), _managedInstanceDtcClientDiagnostics, Pipeline, _managedInstanceDtcRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstanceDtcRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data, cancellationToken);
-                var operation = new SqlArmOperation<ManagedInstanceDtcResource>(new ManagedInstanceDtcOperationSource(Client), _managedInstanceDtcClientDiagnostics, Pipeline, _managedInstanceDtcRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedInstanceDtcResource>(new ManagedInstanceDtcOperationSource(Client), _managedInstanceDtcClientDiagnostics, Pipeline, _managedInstanceDtcRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

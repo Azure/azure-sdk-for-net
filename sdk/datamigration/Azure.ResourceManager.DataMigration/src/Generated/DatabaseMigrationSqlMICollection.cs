@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = await _databaseMigrationSqlMIDatabaseMigrationsSqlMIRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, targetDBName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMigrationArmOperation<DatabaseMigrationSqlMIResource>(new DatabaseMigrationSqlMIOperationSource(Client), _databaseMigrationSqlMIDatabaseMigrationsSqlMIClientDiagnostics, Pipeline, _databaseMigrationSqlMIDatabaseMigrationsSqlMIRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, targetDBName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataMigrationArmOperation<DatabaseMigrationSqlMIResource>(new DatabaseMigrationSqlMIOperationSource(Client), _databaseMigrationSqlMIDatabaseMigrationsSqlMIClientDiagnostics, Pipeline, _databaseMigrationSqlMIDatabaseMigrationsSqlMIRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, targetDBName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = _databaseMigrationSqlMIDatabaseMigrationsSqlMIRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, targetDBName, data, cancellationToken);
-                var operation = new DataMigrationArmOperation<DatabaseMigrationSqlMIResource>(new DatabaseMigrationSqlMIOperationSource(Client), _databaseMigrationSqlMIDatabaseMigrationsSqlMIClientDiagnostics, Pipeline, _databaseMigrationSqlMIDatabaseMigrationsSqlMIRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, targetDBName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataMigrationArmOperation<DatabaseMigrationSqlMIResource>(new DatabaseMigrationSqlMIOperationSource(Client), _databaseMigrationSqlMIDatabaseMigrationsSqlMIClientDiagnostics, Pipeline, _databaseMigrationSqlMIDatabaseMigrationsSqlMIRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, targetDBName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

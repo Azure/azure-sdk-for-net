@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedInstanceAzureADOnlyAuthenticationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedInstanceAzureADOnlyAuthenticationResource>(new ManagedInstanceAzureADOnlyAuthenticationOperationSource(Client), _managedInstanceAzureADOnlyAuthenticationClientDiagnostics, Pipeline, _managedInstanceAzureADOnlyAuthenticationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedInstanceAzureADOnlyAuthenticationResource>(new ManagedInstanceAzureADOnlyAuthenticationOperationSource(Client), _managedInstanceAzureADOnlyAuthenticationClientDiagnostics, Pipeline, _managedInstanceAzureADOnlyAuthenticationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstanceAzureADOnlyAuthenticationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, data, cancellationToken);
-                var operation = new SqlArmOperation<ManagedInstanceAzureADOnlyAuthenticationResource>(new ManagedInstanceAzureADOnlyAuthenticationOperationSource(Client), _managedInstanceAzureADOnlyAuthenticationClientDiagnostics, Pipeline, _managedInstanceAzureADOnlyAuthenticationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedInstanceAzureADOnlyAuthenticationResource>(new ManagedInstanceAzureADOnlyAuthenticationOperationSource(Client), _managedInstanceAzureADOnlyAuthenticationClientDiagnostics, Pipeline, _managedInstanceAzureADOnlyAuthenticationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

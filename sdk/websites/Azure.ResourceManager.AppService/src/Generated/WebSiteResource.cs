@@ -2332,7 +2332,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.ListPublishingCredentialsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<PublishingUserResource>(new PublishingUserOperationSource(Client), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateListPublishingCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<PublishingUserResource>(new PublishingUserOperationSource(Client), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateListPublishingCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2358,7 +2358,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.ListPublishingCredentials(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AppServiceArmOperation<PublishingUserResource>(new PublishingUserOperationSource(Client), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateListPublishingCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<PublishingUserResource>(new PublishingUserOperationSource(Client), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateListPublishingCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -3010,7 +3010,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.MigrateStorageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<StorageMigrationResult>(new StorageMigrationResultOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateStorageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<StorageMigrationResult>(new StorageMigrationResultOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateStorageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3042,7 +3042,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.MigrateStorage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, content, cancellationToken);
-                var operation = new AppServiceArmOperation<StorageMigrationResult>(new StorageMigrationResultOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateStorageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<StorageMigrationResult>(new StorageMigrationResultOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateStorageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -3072,7 +3072,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.MigrateMySqlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<AppServiceOperation>(new AppServiceOperationOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateMySqlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<AppServiceOperation>(new AppServiceOperationOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateMySqlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3102,7 +3102,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.MigrateMySql(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new AppServiceArmOperation<AppServiceOperation>(new AppServiceOperationOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateMySqlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<AppServiceOperation>(new AppServiceOperationOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateMySqlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -3343,7 +3343,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.StartWebSiteNetworkTraceOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3372,7 +3372,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.StartWebSiteNetworkTraceOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
-                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -4010,7 +4010,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.RestoreFromBackupBlobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, info, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromBackupBlobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, info).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromBackupBlobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, info).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -4040,7 +4040,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.RestoreFromBackupBlob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, info, cancellationToken);
-                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromBackupBlobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, info).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromBackupBlobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, info).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -4070,7 +4070,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.RestoreFromDeletedAppAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromDeletedAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromDeletedAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -4100,7 +4100,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.RestoreFromDeletedApp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromDeletedAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromDeletedAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -4130,7 +4130,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.RestoreSnapshotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreSnapshotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreSnapshotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -4160,7 +4160,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.RestoreSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest, cancellationToken);
-                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreSnapshotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreSnapshotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -4282,7 +4282,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.SwapSlotWithProductionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateSwapSlotWithProductionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateSwapSlotWithProductionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -4312,7 +4312,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.SwapSlotWithProduction(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken);
-                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateSwapSlotWithProductionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateSwapSlotWithProductionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -4553,7 +4553,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.StartNetworkTraceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartNetworkTraceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartNetworkTraceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -4582,7 +4582,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.StartNetworkTrace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
-                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartNetworkTraceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartNetworkTraceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

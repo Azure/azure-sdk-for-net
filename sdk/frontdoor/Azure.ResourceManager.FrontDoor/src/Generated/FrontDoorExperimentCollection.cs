@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = await _frontDoorExperimentExperimentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation<FrontDoorExperimentResource>(new FrontDoorExperimentOperationSource(Client), _frontDoorExperimentExperimentsClientDiagnostics, Pipeline, _frontDoorExperimentExperimentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new FrontDoorArmOperation<FrontDoorExperimentResource>(new FrontDoorExperimentOperationSource(Client), _frontDoorExperimentExperimentsClientDiagnostics, Pipeline, _frontDoorExperimentExperimentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = _frontDoorExperimentExperimentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, data, cancellationToken);
-                var operation = new FrontDoorArmOperation<FrontDoorExperimentResource>(new FrontDoorExperimentOperationSource(Client), _frontDoorExperimentExperimentsClientDiagnostics, Pipeline, _frontDoorExperimentExperimentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new FrontDoorArmOperation<FrontDoorExperimentResource>(new FrontDoorExperimentOperationSource(Client), _frontDoorExperimentExperimentsClientDiagnostics, Pipeline, _frontDoorExperimentExperimentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

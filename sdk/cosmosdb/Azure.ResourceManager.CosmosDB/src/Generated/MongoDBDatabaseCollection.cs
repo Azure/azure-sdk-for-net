@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _mongoDBDatabaseMongoDBResourcesRestClient.CreateUpdateMongoDBDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<MongoDBDatabaseResource>(new MongoDBDatabaseOperationSource(Client), _mongoDBDatabaseMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseMongoDBResourcesRestClient.CreateCreateUpdateMongoDBDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<MongoDBDatabaseResource>(new MongoDBDatabaseOperationSource(Client), _mongoDBDatabaseMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseMongoDBResourcesRestClient.CreateCreateUpdateMongoDBDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _mongoDBDatabaseMongoDBResourcesRestClient.CreateUpdateMongoDBDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<MongoDBDatabaseResource>(new MongoDBDatabaseOperationSource(Client), _mongoDBDatabaseMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseMongoDBResourcesRestClient.CreateCreateUpdateMongoDBDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<MongoDBDatabaseResource>(new MongoDBDatabaseOperationSource(Client), _mongoDBDatabaseMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseMongoDBResourcesRestClient.CreateCreateUpdateMongoDBDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = await _dataBoxEdgeStorageContainerContainersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageContainerResource>(new DataBoxEdgeStorageContainerOperationSource(Client), _dataBoxEdgeStorageContainerContainersClientDiagnostics, Pipeline, _dataBoxEdgeStorageContainerContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageContainerResource>(new DataBoxEdgeStorageContainerOperationSource(Client), _dataBoxEdgeStorageContainerContainersClientDiagnostics, Pipeline, _dataBoxEdgeStorageContainerContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = _dataBoxEdgeStorageContainerContainersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, data, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageContainerResource>(new DataBoxEdgeStorageContainerOperationSource(Client), _dataBoxEdgeStorageContainerContainersClientDiagnostics, Pipeline, _dataBoxEdgeStorageContainerContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageContainerResource>(new DataBoxEdgeStorageContainerOperationSource(Client), _dataBoxEdgeStorageContainerContainersClientDiagnostics, Pipeline, _dataBoxEdgeStorageContainerContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

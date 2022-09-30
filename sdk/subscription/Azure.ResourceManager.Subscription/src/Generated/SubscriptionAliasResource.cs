@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Subscription
             try
             {
                 var response = await _subscriptionAliasAliasRestClient.CreateAsync(Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new SubscriptionArmOperation<SubscriptionAliasResource>(new SubscriptionAliasOperationSource(Client), _subscriptionAliasAliasClientDiagnostics, Pipeline, _subscriptionAliasAliasRestClient.CreateCreateRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new SubscriptionArmOperation<SubscriptionAliasResource>(new SubscriptionAliasOperationSource(Client), _subscriptionAliasAliasClientDiagnostics, Pipeline, _subscriptionAliasAliasRestClient.CreateCreateRequest(Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Subscription
             try
             {
                 var response = _subscriptionAliasAliasRestClient.Create(Id.Name, content, cancellationToken);
-                var operation = new SubscriptionArmOperation<SubscriptionAliasResource>(new SubscriptionAliasOperationSource(Client), _subscriptionAliasAliasClientDiagnostics, Pipeline, _subscriptionAliasAliasRestClient.CreateCreateRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new SubscriptionArmOperation<SubscriptionAliasResource>(new SubscriptionAliasOperationSource(Client), _subscriptionAliasAliasClientDiagnostics, Pipeline, _subscriptionAliasAliasRestClient.CreateCreateRequest(Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

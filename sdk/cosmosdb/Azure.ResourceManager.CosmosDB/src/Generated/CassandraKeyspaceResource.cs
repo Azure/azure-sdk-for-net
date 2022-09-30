@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cassandraKeyspaceCassandraResourcesRestClient.DeleteCassandraKeyspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, _cassandraKeyspaceCassandraResourcesRestClient.CreateDeleteCassandraKeyspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, _cassandraKeyspaceCassandraResourcesRestClient.CreateDeleteCassandraKeyspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cassandraKeyspaceCassandraResourcesRestClient.DeleteCassandraKeyspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation(_cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, _cassandraKeyspaceCassandraResourcesRestClient.CreateDeleteCassandraKeyspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, _cassandraKeyspaceCassandraResourcesRestClient.CreateDeleteCassandraKeyspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cassandraKeyspaceCassandraResourcesRestClient.CreateUpdateCassandraKeyspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CassandraKeyspaceResource>(new CassandraKeyspaceOperationSource(Client), _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, _cassandraKeyspaceCassandraResourcesRestClient.CreateCreateUpdateCassandraKeyspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraKeyspaceResource>(new CassandraKeyspaceOperationSource(Client), _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, _cassandraKeyspaceCassandraResourcesRestClient.CreateCreateUpdateCassandraKeyspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cassandraKeyspaceCassandraResourcesRestClient.CreateUpdateCassandraKeyspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<CassandraKeyspaceResource>(new CassandraKeyspaceOperationSource(Client), _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, _cassandraKeyspaceCassandraResourcesRestClient.CreateCreateUpdateCassandraKeyspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraKeyspaceResource>(new CassandraKeyspaceOperationSource(Client), _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, _cassandraKeyspaceCassandraResourcesRestClient.CreateCreateUpdateCassandraKeyspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

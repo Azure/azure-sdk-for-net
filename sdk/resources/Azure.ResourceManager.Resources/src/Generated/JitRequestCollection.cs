@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _jitRequestRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<JitRequestResource>(new JitRequestOperationSource(Client), _jitRequestClientDiagnostics, Pipeline, _jitRequestRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<JitRequestResource>(new JitRequestOperationSource(Client), _jitRequestClientDiagnostics, Pipeline, _jitRequestRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _jitRequestRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, data, cancellationToken);
-                var operation = new ResourcesArmOperation<JitRequestResource>(new JitRequestOperationSource(Client), _jitRequestClientDiagnostics, Pipeline, _jitRequestRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<JitRequestResource>(new JitRequestOperationSource(Client), _jitRequestClientDiagnostics, Pipeline, _jitRequestRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

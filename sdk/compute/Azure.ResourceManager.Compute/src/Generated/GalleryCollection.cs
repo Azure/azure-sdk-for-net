@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _galleryRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<GalleryResource>(new GalleryOperationSource(Client), _galleryClientDiagnostics, Pipeline, _galleryRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, galleryName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<GalleryResource>(new GalleryOperationSource(Client), _galleryClientDiagnostics, Pipeline, _galleryRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, galleryName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _galleryRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, galleryName, data, cancellationToken);
-                var operation = new ComputeArmOperation<GalleryResource>(new GalleryOperationSource(Client), _galleryClientDiagnostics, Pipeline, _galleryRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, galleryName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<GalleryResource>(new GalleryOperationSource(Client), _galleryClientDiagnostics, Pipeline, _galleryRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, galleryName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _managedEnvironmentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, environmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ManagedEnvironmentResource>(new ManagedEnvironmentOperationSource(Client), _managedEnvironmentClientDiagnostics, Pipeline, _managedEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, environmentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation<ManagedEnvironmentResource>(new ManagedEnvironmentOperationSource(Client), _managedEnvironmentClientDiagnostics, Pipeline, _managedEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, environmentName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _managedEnvironmentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, environmentName, data, cancellationToken);
-                var operation = new AppContainersArmOperation<ManagedEnvironmentResource>(new ManagedEnvironmentOperationSource(Client), _managedEnvironmentClientDiagnostics, Pipeline, _managedEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, environmentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation<ManagedEnvironmentResource>(new ManagedEnvironmentOperationSource(Client), _managedEnvironmentClientDiagnostics, Pipeline, _managedEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, environmentName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

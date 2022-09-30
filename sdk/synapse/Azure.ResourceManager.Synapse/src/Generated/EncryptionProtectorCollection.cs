@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _encryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<EncryptionProtectorResource>(new EncryptionProtectorOperationSource(Client), _encryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics, Pipeline, _encryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<EncryptionProtectorResource>(new EncryptionProtectorOperationSource(Client), _encryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics, Pipeline, _encryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _encryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, data, cancellationToken);
-                var operation = new SynapseArmOperation<EncryptionProtectorResource>(new EncryptionProtectorOperationSource(Client), _encryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics, Pipeline, _encryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<EncryptionProtectorResource>(new EncryptionProtectorOperationSource(Client), _encryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics, Pipeline, _encryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

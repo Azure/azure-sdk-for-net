@@ -1656,7 +1656,7 @@ namespace Azure.IoT.DeviceUpdate
             try
             {
                 using HttpMessage message = CreateDeleteUpdateRequest(provider, name, version, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.DeleteUpdate", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.DeleteUpdate", OperationFinalStateVia.NotSpecified, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1699,7 +1699,7 @@ namespace Azure.IoT.DeviceUpdate
             try
             {
                 using HttpMessage message = CreateDeleteUpdateRequest(provider, name, version, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.DeleteUpdate", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.DeleteUpdate", OperationFinalStateVia.NotSpecified, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1779,7 +1779,7 @@ namespace Azure.IoT.DeviceUpdate
             try
             {
                 using HttpMessage message = CreateStartImportUpdateRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.StartImportUpdate", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.StartImportUpdate", OperationFinalStateVia.NotSpecified, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1859,7 +1859,7 @@ namespace Azure.IoT.DeviceUpdate
             try
             {
                 using HttpMessage message = CreateStartImportUpdateRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.StartImportUpdate", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.StartImportUpdate", OperationFinalStateVia.NotSpecified, context, waitUntil);
             }
             catch (Exception e)
             {

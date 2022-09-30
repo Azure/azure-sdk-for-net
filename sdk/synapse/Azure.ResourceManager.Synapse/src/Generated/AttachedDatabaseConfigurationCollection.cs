@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _attachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, attachedDatabaseConfigurationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<AttachedDatabaseConfigurationResource>(new AttachedDatabaseConfigurationOperationSource(Client), _attachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, _attachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, attachedDatabaseConfigurationName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<AttachedDatabaseConfigurationResource>(new AttachedDatabaseConfigurationOperationSource(Client), _attachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, _attachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, attachedDatabaseConfigurationName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _attachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, attachedDatabaseConfigurationName, data, cancellationToken);
-                var operation = new SynapseArmOperation<AttachedDatabaseConfigurationResource>(new AttachedDatabaseConfigurationOperationSource(Client), _attachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, _attachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, attachedDatabaseConfigurationName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<AttachedDatabaseConfigurationResource>(new AttachedDatabaseConfigurationOperationSource(Client), _attachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, _attachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, attachedDatabaseConfigurationName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

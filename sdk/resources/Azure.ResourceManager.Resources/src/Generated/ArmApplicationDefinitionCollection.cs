@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _armApplicationDefinitionApplicationDefinitionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<ArmApplicationDefinitionResource>(new ArmApplicationDefinitionOperationSource(Client), _armApplicationDefinitionApplicationDefinitionsClientDiagnostics, Pipeline, _armApplicationDefinitionApplicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmApplicationDefinitionResource>(new ArmApplicationDefinitionOperationSource(Client), _armApplicationDefinitionApplicationDefinitionsClientDiagnostics, Pipeline, _armApplicationDefinitionApplicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _armApplicationDefinitionApplicationDefinitionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, data, cancellationToken);
-                var operation = new ResourcesArmOperation<ArmApplicationDefinitionResource>(new ArmApplicationDefinitionOperationSource(Client), _armApplicationDefinitionApplicationDefinitionsClientDiagnostics, Pipeline, _armApplicationDefinitionApplicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmApplicationDefinitionResource>(new ArmApplicationDefinitionOperationSource(Client), _armApplicationDefinitionApplicationDefinitionsClientDiagnostics, Pipeline, _armApplicationDefinitionApplicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

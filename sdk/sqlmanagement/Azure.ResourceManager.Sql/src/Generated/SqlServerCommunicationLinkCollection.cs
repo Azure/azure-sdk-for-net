@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerCommunicationLinkResource>(new SqlServerCommunicationLinkOperationSource(Client), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerCommunicationLinkResource>(new SqlServerCommunicationLinkOperationSource(Client), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerCommunicationLinkResource>(new SqlServerCommunicationLinkOperationSource(Client), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerCommunicationLinkResource>(new SqlServerCommunicationLinkOperationSource(Client), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

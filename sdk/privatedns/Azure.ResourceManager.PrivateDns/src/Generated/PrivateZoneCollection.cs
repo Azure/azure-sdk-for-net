@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.PrivateDns
             try
             {
                 var response = await _privateZoneRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateDnsArmOperation<PrivateZoneResource>(new PrivateZoneOperationSource(Client), _privateZoneClientDiagnostics, Pipeline, _privateZoneRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new PrivateDnsArmOperation<PrivateZoneResource>(new PrivateZoneOperationSource(Client), _privateZoneClientDiagnostics, Pipeline, _privateZoneRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.PrivateDns
             try
             {
                 var response = _privateZoneRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new PrivateDnsArmOperation<PrivateZoneResource>(new PrivateZoneOperationSource(Client), _privateZoneClientDiagnostics, Pipeline, _privateZoneRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new PrivateDnsArmOperation<PrivateZoneResource>(new PrivateZoneOperationSource(Client), _privateZoneClientDiagnostics, Pipeline, _privateZoneRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

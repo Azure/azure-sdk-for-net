@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedBackupShortTermRetentionPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedBackupShortTermRetentionPolicyResource>(new ManagedBackupShortTermRetentionPolicyOperationSource(Client), _managedBackupShortTermRetentionPolicyClientDiagnostics, Pipeline, _managedBackupShortTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedBackupShortTermRetentionPolicyResource>(new ManagedBackupShortTermRetentionPolicyOperationSource(Client), _managedBackupShortTermRetentionPolicyClientDiagnostics, Pipeline, _managedBackupShortTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedBackupShortTermRetentionPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, data, cancellationToken);
-                var operation = new SqlArmOperation<ManagedBackupShortTermRetentionPolicyResource>(new ManagedBackupShortTermRetentionPolicyOperationSource(Client), _managedBackupShortTermRetentionPolicyClientDiagnostics, Pipeline, _managedBackupShortTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedBackupShortTermRetentionPolicyResource>(new ManagedBackupShortTermRetentionPolicyOperationSource(Client), _managedBackupShortTermRetentionPolicyClientDiagnostics, Pipeline, _managedBackupShortTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _importPipelineRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation(_importPipelineClientDiagnostics, Pipeline, _importPipelineRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation(_importPipelineClientDiagnostics, Pipeline, _importPipelineRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _importPipelineRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ContainerRegistryArmOperation(_importPipelineClientDiagnostics, Pipeline, _importPipelineRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation(_importPipelineClientDiagnostics, Pipeline, _importPipelineRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _importPipelineRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ImportPipelineResource>(new ImportPipelineOperationSource(Client), _importPipelineClientDiagnostics, Pipeline, _importPipelineRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ImportPipelineResource>(new ImportPipelineOperationSource(Client), _importPipelineClientDiagnostics, Pipeline, _importPipelineRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _importPipelineRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ImportPipelineResource>(new ImportPipelineOperationSource(Client), _importPipelineClientDiagnostics, Pipeline, _importPipelineRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ImportPipelineResource>(new ImportPipelineOperationSource(Client), _importPipelineClientDiagnostics, Pipeline, _importPipelineRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

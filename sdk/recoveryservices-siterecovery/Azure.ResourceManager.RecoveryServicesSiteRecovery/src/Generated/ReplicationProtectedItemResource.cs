@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _replicationProtectedItemRestClient.PurgeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreatePurgeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation(_replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreatePurgeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _replicationProtectedItemRestClient.Purge(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreatePurgeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation(_replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreatePurgeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _replicationProtectedItemRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _replicationProtectedItemRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _replicationProtectedItemRestClient.AddDisksAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateAddDisksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateAddDisksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _replicationProtectedItemRestClient.AddDisks(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateAddDisksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateAddDisksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _replicationProtectedItemRestClient.ApplyRecoveryPointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateApplyRecoveryPointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateApplyRecoveryPointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _replicationProtectedItemRestClient.ApplyRecoveryPoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateApplyRecoveryPointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateApplyRecoveryPointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _replicationProtectedItemRestClient.FailoverCancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateFailoverCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateFailoverCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _replicationProtectedItemRestClient.FailoverCancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateFailoverCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateFailoverCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _replicationProtectedItemRestClient.FailoverCommitAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateFailoverCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateFailoverCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _replicationProtectedItemRestClient.FailoverCommit(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateFailoverCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateFailoverCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _replicationProtectedItemRestClient.PlannedFailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreatePlannedFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreatePlannedFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _replicationProtectedItemRestClient.PlannedFailover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreatePlannedFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreatePlannedFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _replicationProtectedItemRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation(_replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _replicationProtectedItemRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation(_replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _replicationProtectedItemRestClient.RemoveDisksAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateRemoveDisksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateRemoveDisksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _replicationProtectedItemRestClient.RemoveDisks(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateRemoveDisksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateRemoveDisksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _replicationProtectedItemRestClient.RepairReplicationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateRepairReplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateRepairReplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _replicationProtectedItemRestClient.RepairReplication(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateRepairReplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateRepairReplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _replicationProtectedItemRestClient.ReprotectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateReprotectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateReprotectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _replicationProtectedItemRestClient.Reprotect(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateReprotectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateReprotectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _replicationProtectedItemRestClient.ResolveHealthErrorsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateResolveHealthErrorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateResolveHealthErrorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _replicationProtectedItemRestClient.ResolveHealthErrors(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateResolveHealthErrorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateResolveHealthErrorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _replicationProtectedItemRestClient.TestFailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateTestFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateTestFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -972,7 +972,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _replicationProtectedItemRestClient.TestFailover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateTestFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateTestFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1002,7 +1002,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _replicationProtectedItemRestClient.TestFailoverCleanupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateTestFailoverCleanupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateTestFailoverCleanupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1032,7 +1032,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _replicationProtectedItemRestClient.TestFailoverCleanup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateTestFailoverCleanupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateTestFailoverCleanupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1062,7 +1062,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _replicationProtectedItemRestClient.UnplannedFailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateUnplannedFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateUnplannedFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1092,7 +1092,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _replicationProtectedItemRestClient.UnplannedFailover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateUnplannedFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateUnplannedFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1122,7 +1122,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _replicationProtectedItemRestClient.UpdateApplianceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateUpdateApplianceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateUpdateApplianceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1152,7 +1152,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _replicationProtectedItemRestClient.UpdateAppliance(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateUpdateApplianceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateUpdateApplianceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1182,7 +1182,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _replicationProtectedItemRestClient.UpdateMobilityServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateUpdateMobilityServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateUpdateMobilityServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1212,7 +1212,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _replicationProtectedItemRestClient.UpdateMobilityService(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateUpdateMobilityServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(new ReplicationProtectedItemOperationSource(Client), _replicationProtectedItemClientDiagnostics, Pipeline, _replicationProtectedItemRestClient.CreateUpdateMobilityServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

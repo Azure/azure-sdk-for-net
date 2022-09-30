@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _privateLinkHubRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_privateLinkHubClientDiagnostics, Pipeline, _privateLinkHubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_privateLinkHubClientDiagnostics, Pipeline, _privateLinkHubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _privateLinkHubRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation(_privateLinkHubClientDiagnostics, Pipeline, _privateLinkHubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_privateLinkHubClientDiagnostics, Pipeline, _privateLinkHubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _instancePoolRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<InstancePoolResource>(new InstancePoolOperationSource(Client), _instancePoolClientDiagnostics, Pipeline, _instancePoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<InstancePoolResource>(new InstancePoolOperationSource(Client), _instancePoolClientDiagnostics, Pipeline, _instancePoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _instancePoolRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, data, cancellationToken);
-                var operation = new SqlArmOperation<InstancePoolResource>(new InstancePoolOperationSource(Client), _instancePoolClientDiagnostics, Pipeline, _instancePoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<InstancePoolResource>(new InstancePoolOperationSource(Client), _instancePoolClientDiagnostics, Pipeline, _instancePoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

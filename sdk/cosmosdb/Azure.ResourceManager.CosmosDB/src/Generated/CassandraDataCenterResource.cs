@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cassandraDataCenterRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_cassandraDataCenterClientDiagnostics, Pipeline, _cassandraDataCenterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cassandraDataCenterClientDiagnostics, Pipeline, _cassandraDataCenterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cassandraDataCenterRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation(_cassandraDataCenterClientDiagnostics, Pipeline, _cassandraDataCenterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cassandraDataCenterClientDiagnostics, Pipeline, _cassandraDataCenterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cassandraDataCenterRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CassandraDataCenterResource>(new CassandraDataCenterOperationSource(Client), _cassandraDataCenterClientDiagnostics, Pipeline, _cassandraDataCenterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraDataCenterResource>(new CassandraDataCenterOperationSource(Client), _cassandraDataCenterClientDiagnostics, Pipeline, _cassandraDataCenterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cassandraDataCenterRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new CosmosDBArmOperation<CassandraDataCenterResource>(new CassandraDataCenterOperationSource(Client), _cassandraDataCenterClientDiagnostics, Pipeline, _cassandraDataCenterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraDataCenterResource>(new CassandraDataCenterOperationSource(Client), _cassandraDataCenterClientDiagnostics, Pipeline, _cassandraDataCenterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

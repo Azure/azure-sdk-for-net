@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = await _kustoClusterClustersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = _kustoClusterClustersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = await _kustoClusterClustersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation<KustoClusterResource>(new KustoClusterOperationSource(Client), _kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation<KustoClusterResource>(new KustoClusterOperationSource(Client), _kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = _kustoClusterClustersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken);
-                var operation = new KustoArmOperation<KustoClusterResource>(new KustoClusterOperationSource(Client), _kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation<KustoClusterResource>(new KustoClusterOperationSource(Client), _kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = await _kustoClusterClustersRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = _kustoClusterClustersRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = await _kustoClusterClustersRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = _kustoClusterClustersRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = await _kustoClusterClustersRestClient.DetachFollowerDatabasesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, followerDatabaseToRemove, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateDetachFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, followerDatabaseToRemove).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateDetachFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, followerDatabaseToRemove).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = _kustoClusterClustersRestClient.DetachFollowerDatabases(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, followerDatabaseToRemove, cancellationToken);
-                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateDetachFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, followerDatabaseToRemove).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateDetachFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, followerDatabaseToRemove).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -973,7 +973,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = await _kustoClusterClustersRestClient.AddLanguageExtensionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, languageExtensionsToAdd, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateAddLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, languageExtensionsToAdd).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateAddLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, languageExtensionsToAdd).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1003,7 +1003,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = _kustoClusterClustersRestClient.AddLanguageExtensions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, languageExtensionsToAdd, cancellationToken);
-                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateAddLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, languageExtensionsToAdd).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateAddLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, languageExtensionsToAdd).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1033,7 +1033,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = await _kustoClusterClustersRestClient.RemoveLanguageExtensionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, languageExtensionsToRemove, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateRemoveLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, languageExtensionsToRemove).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateRemoveLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, languageExtensionsToRemove).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1063,7 +1063,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = _kustoClusterClustersRestClient.RemoveLanguageExtensions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, languageExtensionsToRemove, cancellationToken);
-                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateRemoveLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, languageExtensionsToRemove).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateRemoveLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, languageExtensionsToRemove).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

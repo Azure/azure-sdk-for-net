@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.SignalR
             try
             {
                 var response = await _customCertificateSignalRCustomCertificatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SignalRArmOperation<CustomCertificateResource>(new CustomCertificateOperationSource(Client), _customCertificateSignalRCustomCertificatesClientDiagnostics, Pipeline, _customCertificateSignalRCustomCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SignalRArmOperation<CustomCertificateResource>(new CustomCertificateOperationSource(Client), _customCertificateSignalRCustomCertificatesClientDiagnostics, Pipeline, _customCertificateSignalRCustomCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.SignalR
             try
             {
                 var response = _customCertificateSignalRCustomCertificatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SignalRArmOperation<CustomCertificateResource>(new CustomCertificateOperationSource(Client), _customCertificateSignalRCustomCertificatesClientDiagnostics, Pipeline, _customCertificateSignalRCustomCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SignalRArmOperation<CustomCertificateResource>(new CustomCertificateOperationSource(Client), _customCertificateSignalRCustomCertificatesClientDiagnostics, Pipeline, _customCertificateSignalRCustomCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

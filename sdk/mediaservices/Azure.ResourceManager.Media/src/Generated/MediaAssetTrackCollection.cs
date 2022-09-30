@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaAssetTrackTracksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, trackName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<MediaAssetTrackResource>(new MediaAssetTrackOperationSource(Client), _mediaAssetTrackTracksClientDiagnostics, Pipeline, _mediaAssetTrackTracksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, trackName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation<MediaAssetTrackResource>(new MediaAssetTrackOperationSource(Client), _mediaAssetTrackTracksClientDiagnostics, Pipeline, _mediaAssetTrackTracksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, trackName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaAssetTrackTracksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, trackName, data, cancellationToken);
-                var operation = new MediaArmOperation<MediaAssetTrackResource>(new MediaAssetTrackOperationSource(Client), _mediaAssetTrackTracksClientDiagnostics, Pipeline, _mediaAssetTrackTracksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, trackName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation<MediaAssetTrackResource>(new MediaAssetTrackOperationSource(Client), _mediaAssetTrackTracksClientDiagnostics, Pipeline, _mediaAssetTrackTracksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, trackName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

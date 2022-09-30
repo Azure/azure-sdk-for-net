@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.IotCentral
             try
             {
                 var response = await _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new IotCentralArmOperation(_iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new IotCentralArmOperation(_iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.IotCentral
             try
             {
                 var response = _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new IotCentralArmOperation(_iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new IotCentralArmOperation(_iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.IotCentral
             try
             {
                 var response = await _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new IotCentralArmOperation<IotCentralPrivateEndpointConnectionResource>(new IotCentralPrivateEndpointConnectionOperationSource(Client), _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new IotCentralArmOperation<IotCentralPrivateEndpointConnectionResource>(new IotCentralPrivateEndpointConnectionOperationSource(Client), _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.IotCentral
             try
             {
                 var response = _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new IotCentralArmOperation<IotCentralPrivateEndpointConnectionResource>(new IotCentralPrivateEndpointConnectionOperationSource(Client), _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new IotCentralArmOperation<IotCentralPrivateEndpointConnectionResource>(new IotCentralPrivateEndpointConnectionOperationSource(Client), _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

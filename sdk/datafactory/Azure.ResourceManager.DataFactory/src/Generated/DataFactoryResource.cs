@@ -1212,7 +1212,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _dataFlowDebugSessionRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<FactoryDataFlowCreateDebugSessionResult>(new FactoryDataFlowCreateDebugSessionResultOperationSource(), _dataFlowDebugSessionClientDiagnostics, Pipeline, _dataFlowDebugSessionRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<FactoryDataFlowCreateDebugSessionResult>(new FactoryDataFlowCreateDebugSessionResultOperationSource(), _dataFlowDebugSessionClientDiagnostics, Pipeline, _dataFlowDebugSessionRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1242,7 +1242,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _dataFlowDebugSessionRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new DataFactoryArmOperation<FactoryDataFlowCreateDebugSessionResult>(new FactoryDataFlowCreateDebugSessionResultOperationSource(), _dataFlowDebugSessionClientDiagnostics, Pipeline, _dataFlowDebugSessionRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<FactoryDataFlowCreateDebugSessionResult>(new FactoryDataFlowCreateDebugSessionResultOperationSource(), _dataFlowDebugSessionClientDiagnostics, Pipeline, _dataFlowDebugSessionRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1460,7 +1460,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _dataFlowDebugSessionRestClient.ExecuteCommandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<FactoryDataFlowDebugCommandResult>(new FactoryDataFlowDebugCommandResultOperationSource(), _dataFlowDebugSessionClientDiagnostics, Pipeline, _dataFlowDebugSessionRestClient.CreateExecuteCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<FactoryDataFlowDebugCommandResult>(new FactoryDataFlowDebugCommandResultOperationSource(), _dataFlowDebugSessionClientDiagnostics, Pipeline, _dataFlowDebugSessionRestClient.CreateExecuteCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1490,7 +1490,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _dataFlowDebugSessionRestClient.ExecuteCommand(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new DataFactoryArmOperation<FactoryDataFlowDebugCommandResult>(new FactoryDataFlowDebugCommandResultOperationSource(), _dataFlowDebugSessionClientDiagnostics, Pipeline, _dataFlowDebugSessionRestClient.CreateExecuteCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<FactoryDataFlowDebugCommandResult>(new FactoryDataFlowDebugCommandResultOperationSource(), _dataFlowDebugSessionClientDiagnostics, Pipeline, _dataFlowDebugSessionRestClient.CreateExecuteCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

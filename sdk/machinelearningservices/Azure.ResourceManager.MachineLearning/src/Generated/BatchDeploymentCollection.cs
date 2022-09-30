@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _batchDeploymentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<BatchDeploymentResource>(new BatchDeploymentOperationSource(Client), _batchDeploymentClientDiagnostics, Pipeline, _batchDeploymentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<BatchDeploymentResource>(new BatchDeploymentOperationSource(Client), _batchDeploymentClientDiagnostics, Pipeline, _batchDeploymentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _batchDeploymentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<BatchDeploymentResource>(new BatchDeploymentOperationSource(Client), _batchDeploymentClientDiagnostics, Pipeline, _batchDeploymentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<BatchDeploymentResource>(new BatchDeploymentOperationSource(Client), _batchDeploymentClientDiagnostics, Pipeline, _batchDeploymentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

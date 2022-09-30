@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _dataShareSynchronizationSettingSynchronizationSettingsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics, Pipeline, _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics, Pipeline, _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _dataShareSynchronizationSettingSynchronizationSettingsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics, Pipeline, _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics, Pipeline, _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

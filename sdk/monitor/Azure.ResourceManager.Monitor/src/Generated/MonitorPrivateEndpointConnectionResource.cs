@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation(_monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MonitorArmOperation(_monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MonitorArmOperation(_monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MonitorArmOperation(_monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<MonitorPrivateEndpointConnectionResource>(new MonitorPrivateEndpointConnectionOperationSource(Client), _monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MonitorArmOperation<MonitorPrivateEndpointConnectionResource>(new MonitorPrivateEndpointConnectionOperationSource(Client), _monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MonitorArmOperation<MonitorPrivateEndpointConnectionResource>(new MonitorPrivateEndpointConnectionOperationSource(Client), _monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MonitorArmOperation<MonitorPrivateEndpointConnectionResource>(new MonitorPrivateEndpointConnectionOperationSource(Client), _monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

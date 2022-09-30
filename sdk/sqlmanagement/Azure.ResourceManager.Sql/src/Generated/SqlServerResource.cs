@@ -1183,7 +1183,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerServersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1209,7 +1209,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerServersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation(_sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1239,7 +1239,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerServersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerResource>(new SqlServerOperationSource(Client), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerResource>(new SqlServerOperationSource(Client), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1269,7 +1269,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerServersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerResource>(new SqlServerOperationSource(Client), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerResource>(new SqlServerOperationSource(Client), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1437,7 +1437,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _tdeCertificatesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_tdeCertificatesClientDiagnostics, Pipeline, _tdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_tdeCertificatesClientDiagnostics, Pipeline, _tdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1467,7 +1467,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _tdeCertificatesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate, cancellationToken);
-                var operation = new SqlArmOperation(_tdeCertificatesClientDiagnostics, Pipeline, _tdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_tdeCertificatesClientDiagnostics, Pipeline, _tdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1497,7 +1497,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerServersRestClient.ImportDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseImportDefinition, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateImportDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseImportDefinition).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateImportDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseImportDefinition).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1527,7 +1527,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerServersRestClient.ImportDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseImportDefinition, cancellationToken);
-                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateImportDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseImportDefinition).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateImportDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseImportDefinition).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

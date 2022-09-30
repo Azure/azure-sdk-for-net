@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateOrUpdateCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<AppServiceCertificateResource>(new AppServiceCertificateOperationSource(Client), _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics, Pipeline, _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<AppServiceCertificateResource>(new AppServiceCertificateOperationSource(Client), _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics, Pipeline, _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateOrUpdateCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<AppServiceCertificateResource>(new AppServiceCertificateOperationSource(Client), _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics, Pipeline, _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<AppServiceCertificateResource>(new AppServiceCertificateOperationSource(Client), _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics, Pipeline, _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

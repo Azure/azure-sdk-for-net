@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = await _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation<RoleAssignmentResourceFormatResource>(new RoleAssignmentResourceFormatOperationSource(Client), _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics, Pipeline, _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation<RoleAssignmentResourceFormatResource>(new RoleAssignmentResourceFormatOperationSource(Client), _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics, Pipeline, _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new CustomerInsightsArmOperation<RoleAssignmentResourceFormatResource>(new RoleAssignmentResourceFormatOperationSource(Client), _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics, Pipeline, _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation<RoleAssignmentResourceFormatResource>(new RoleAssignmentResourceFormatOperationSource(Client), _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics, Pipeline, _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

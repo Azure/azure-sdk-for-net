@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _restorePointRestClient.DeleteAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateDeleteRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateDeleteRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _restorePointRestClient.Delete(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ComputeArmOperation(_restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateDeleteRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateDeleteRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _restorePointRestClient.CreateAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<RestorePointResource>(new RestorePointOperationSource(Client), _restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateCreateRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<RestorePointResource>(new RestorePointOperationSource(Client), _restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateCreateRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _restorePointRestClient.Create(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new ComputeArmOperation<RestorePointResource>(new RestorePointOperationSource(Client), _restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateCreateRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<RestorePointResource>(new RestorePointOperationSource(Client), _restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateCreateRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

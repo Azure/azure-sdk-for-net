@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _containerRegistryTaskTasksRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation(_containerRegistryTaskTasksClientDiagnostics, Pipeline, _containerRegistryTaskTasksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation(_containerRegistryTaskTasksClientDiagnostics, Pipeline, _containerRegistryTaskTasksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _containerRegistryTaskTasksRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ContainerRegistryArmOperation(_containerRegistryTaskTasksClientDiagnostics, Pipeline, _containerRegistryTaskTasksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation(_containerRegistryTaskTasksClientDiagnostics, Pipeline, _containerRegistryTaskTasksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _containerRegistryTaskTasksRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryTaskResource>(new ContainerRegistryTaskOperationSource(Client), _containerRegistryTaskTasksClientDiagnostics, Pipeline, _containerRegistryTaskTasksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ContainerRegistryTaskResource>(new ContainerRegistryTaskOperationSource(Client), _containerRegistryTaskTasksClientDiagnostics, Pipeline, _containerRegistryTaskTasksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _containerRegistryTaskTasksRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryTaskResource>(new ContainerRegistryTaskOperationSource(Client), _containerRegistryTaskTasksClientDiagnostics, Pipeline, _containerRegistryTaskTasksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ContainerRegistryTaskResource>(new ContainerRegistryTaskOperationSource(Client), _containerRegistryTaskTasksClientDiagnostics, Pipeline, _containerRegistryTaskTasksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

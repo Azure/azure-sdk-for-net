@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             try
             {
                 var response = await _sqlVmSqlVirtualMachinesRestClient.CreateOrUpdateAsync(sqlVmName, Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlVirtualMachineArmOperation<SqlVmResource>(new SqlVmOperationSource(Client), _sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(sqlVmName, Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlVirtualMachineArmOperation<SqlVmResource>(new SqlVmOperationSource(Client), _sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(sqlVmName, Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             try
             {
                 var response = _sqlVmSqlVirtualMachinesRestClient.CreateOrUpdate(sqlVmName, Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken);
-                var operation = new SqlVirtualMachineArmOperation<SqlVmResource>(new SqlVmOperationSource(Client), _sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(sqlVmName, Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlVirtualMachineArmOperation<SqlVmResource>(new SqlVmOperationSource(Client), _sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(sqlVmName, Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerJobExecutionJobExecutionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerJobExecutionResource>(new SqlServerJobExecutionOperationSource(Client), _sqlServerJobExecutionJobExecutionsClientDiagnostics, Pipeline, _sqlServerJobExecutionJobExecutionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerJobExecutionResource>(new SqlServerJobExecutionOperationSource(Client), _sqlServerJobExecutionJobExecutionsClientDiagnostics, Pipeline, _sqlServerJobExecutionJobExecutionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerJobExecutionJobExecutionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerJobExecutionResource>(new SqlServerJobExecutionOperationSource(Client), _sqlServerJobExecutionJobExecutionsClientDiagnostics, Pipeline, _sqlServerJobExecutionJobExecutionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerJobExecutionResource>(new SqlServerJobExecutionOperationSource(Client), _sqlServerJobExecutionJobExecutionsClientDiagnostics, Pipeline, _sqlServerJobExecutionJobExecutionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

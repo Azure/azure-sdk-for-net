@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = await _kustoScriptScriptsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation<KustoScriptResource>(new KustoScriptOperationSource(Client), _kustoScriptScriptsClientDiagnostics, Pipeline, _kustoScriptScriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation<KustoScriptResource>(new KustoScriptOperationSource(Client), _kustoScriptScriptsClientDiagnostics, Pipeline, _kustoScriptScriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = _kustoScriptScriptsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, data, cancellationToken);
-                var operation = new KustoArmOperation<KustoScriptResource>(new KustoScriptOperationSource(Client), _kustoScriptScriptsClientDiagnostics, Pipeline, _kustoScriptScriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation<KustoScriptResource>(new KustoScriptOperationSource(Client), _kustoScriptScriptsClientDiagnostics, Pipeline, _kustoScriptScriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

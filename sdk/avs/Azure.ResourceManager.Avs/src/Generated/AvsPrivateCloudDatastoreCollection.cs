@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _avsPrivateCloudDatastoreDatastoresRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<AvsPrivateCloudDatastoreResource>(new AvsPrivateCloudDatastoreOperationSource(Client), _avsPrivateCloudDatastoreDatastoresClientDiagnostics, Pipeline, _avsPrivateCloudDatastoreDatastoresRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<AvsPrivateCloudDatastoreResource>(new AvsPrivateCloudDatastoreOperationSource(Client), _avsPrivateCloudDatastoreDatastoresClientDiagnostics, Pipeline, _avsPrivateCloudDatastoreDatastoresRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _avsPrivateCloudDatastoreDatastoresRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, data, cancellationToken);
-                var operation = new AvsArmOperation<AvsPrivateCloudDatastoreResource>(new AvsPrivateCloudDatastoreOperationSource(Client), _avsPrivateCloudDatastoreDatastoresClientDiagnostics, Pipeline, _avsPrivateCloudDatastoreDatastoresRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<AvsPrivateCloudDatastoreResource>(new AvsPrivateCloudDatastoreOperationSource(Client), _avsPrivateCloudDatastoreDatastoresClientDiagnostics, Pipeline, _avsPrivateCloudDatastoreDatastoresRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

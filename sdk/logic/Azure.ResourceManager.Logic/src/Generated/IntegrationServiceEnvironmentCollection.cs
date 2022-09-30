@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = await _integrationServiceEnvironmentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, integrationServiceEnvironmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LogicArmOperation<IntegrationServiceEnvironmentResource>(new IntegrationServiceEnvironmentOperationSource(Client), _integrationServiceEnvironmentClientDiagnostics, Pipeline, _integrationServiceEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, integrationServiceEnvironmentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new LogicArmOperation<IntegrationServiceEnvironmentResource>(new IntegrationServiceEnvironmentOperationSource(Client), _integrationServiceEnvironmentClientDiagnostics, Pipeline, _integrationServiceEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, integrationServiceEnvironmentName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = _integrationServiceEnvironmentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, integrationServiceEnvironmentName, data, cancellationToken);
-                var operation = new LogicArmOperation<IntegrationServiceEnvironmentResource>(new IntegrationServiceEnvironmentOperationSource(Client), _integrationServiceEnvironmentClientDiagnostics, Pipeline, _integrationServiceEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, integrationServiceEnvironmentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new LogicArmOperation<IntegrationServiceEnvironmentResource>(new IntegrationServiceEnvironmentOperationSource(Client), _integrationServiceEnvironmentClientDiagnostics, Pipeline, _integrationServiceEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, integrationServiceEnvironmentName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

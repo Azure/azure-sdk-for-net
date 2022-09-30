@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var response = await _webPubSubRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubArmOperation(_webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WebPubSubArmOperation(_webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var response = _webPubSubRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new WebPubSubArmOperation(_webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WebPubSubArmOperation(_webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var response = await _webPubSubRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubArmOperation<WebPubSubResource>(new WebPubSubOperationSource(Client), _webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new WebPubSubArmOperation<WebPubSubResource>(new WebPubSubOperationSource(Client), _webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var response = _webPubSubRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new WebPubSubArmOperation<WebPubSubResource>(new WebPubSubOperationSource(Client), _webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new WebPubSubArmOperation<WebPubSubResource>(new WebPubSubOperationSource(Client), _webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

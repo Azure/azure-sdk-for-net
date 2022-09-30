@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal SparkConfigurationCreateOrUpdateSparkConfigurationOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            IOperation<SparkConfigurationResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
+            IOperation<SparkConfigurationResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.NotSpecified);
             _operation = new OperationInternal<SparkConfigurationResource>(clientDiagnostics, nextLinkOperation, response, "SparkConfigurationCreateOrUpdateSparkConfigurationOperation");
         }
 

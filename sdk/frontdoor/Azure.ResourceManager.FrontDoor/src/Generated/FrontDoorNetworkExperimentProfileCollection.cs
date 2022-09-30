@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = await _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, profileName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource>(new FrontDoorNetworkExperimentProfileOperationSource(Client), _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource>(new FrontDoorNetworkExperimentProfileOperationSource(Client), _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, profileName, data, cancellationToken);
-                var operation = new FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource>(new FrontDoorNetworkExperimentProfileOperationSource(Client), _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource>(new FrontDoorNetworkExperimentProfileOperationSource(Client), _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedInstanceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedInstanceResource>(new ManagedInstanceOperationSource(Client), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedInstanceResource>(new ManagedInstanceOperationSource(Client), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstanceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, data, cancellationToken);
-                var operation = new SqlArmOperation<ManagedInstanceResource>(new ManagedInstanceOperationSource(Client), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedInstanceResource>(new ManagedInstanceOperationSource(Client), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

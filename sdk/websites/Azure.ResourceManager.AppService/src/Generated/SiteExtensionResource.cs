@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteExtensionWebAppsRestClient.CreateMSDeployOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, msDeploy, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteExtensionResource>(new SiteExtensionOperationSource(Client), _siteExtensionWebAppsClientDiagnostics, Pipeline, _siteExtensionWebAppsRestClient.CreateCreateMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, msDeploy).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<SiteExtensionResource>(new SiteExtensionOperationSource(Client), _siteExtensionWebAppsClientDiagnostics, Pipeline, _siteExtensionWebAppsRestClient.CreateCreateMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, msDeploy).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteExtensionWebAppsRestClient.CreateMSDeployOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, msDeploy, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteExtensionResource>(new SiteExtensionOperationSource(Client), _siteExtensionWebAppsClientDiagnostics, Pipeline, _siteExtensionWebAppsRestClient.CreateCreateMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, msDeploy).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<SiteExtensionResource>(new SiteExtensionOperationSource(Client), _siteExtensionWebAppsClientDiagnostics, Pipeline, _siteExtensionWebAppsRestClient.CreateCreateMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, msDeploy).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

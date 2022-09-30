@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = await _mySqlServerKeyServerKeysRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation<MySqlServerKeyResource>(new MySqlServerKeyOperationSource(Client), _mySqlServerKeyServerKeysClientDiagnostics, Pipeline, _mySqlServerKeyServerKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<MySqlServerKeyResource>(new MySqlServerKeyOperationSource(Client), _mySqlServerKeyServerKeysClientDiagnostics, Pipeline, _mySqlServerKeyServerKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = _mySqlServerKeyServerKeysRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data, cancellationToken);
-                var operation = new MySqlArmOperation<MySqlServerKeyResource>(new MySqlServerKeyOperationSource(Client), _mySqlServerKeyServerKeysClientDiagnostics, Pipeline, _mySqlServerKeyServerKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<MySqlServerKeyResource>(new MySqlServerKeyOperationSource(Client), _mySqlServerKeyServerKeysClientDiagnostics, Pipeline, _mySqlServerKeyServerKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

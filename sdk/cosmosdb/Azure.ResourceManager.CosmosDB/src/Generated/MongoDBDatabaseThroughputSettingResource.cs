@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.UpdateMongoDBDatabaseThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(new MongoDBDatabaseThroughputSettingOperationSource(Client), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateUpdateMongoDBDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(new MongoDBDatabaseThroughputSettingOperationSource(Client), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateUpdateMongoDBDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.UpdateMongoDBDatabaseThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
-                var operation = new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(new MongoDBDatabaseThroughputSettingOperationSource(Client), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateUpdateMongoDBDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(new MongoDBDatabaseThroughputSettingOperationSource(Client), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateUpdateMongoDBDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.MigrateMongoDBDatabaseToAutoscaleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(new MongoDBDatabaseThroughputSettingOperationSource(Client), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateMigrateMongoDBDatabaseToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(new MongoDBDatabaseThroughputSettingOperationSource(Client), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateMigrateMongoDBDatabaseToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.MigrateMongoDBDatabaseToAutoscale(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(new MongoDBDatabaseThroughputSettingOperationSource(Client), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateMigrateMongoDBDatabaseToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(new MongoDBDatabaseThroughputSettingOperationSource(Client), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateMigrateMongoDBDatabaseToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.MigrateMongoDBDatabaseToManualThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(new MongoDBDatabaseThroughputSettingOperationSource(Client), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateMigrateMongoDBDatabaseToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(new MongoDBDatabaseThroughputSettingOperationSource(Client), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateMigrateMongoDBDatabaseToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.MigrateMongoDBDatabaseToManualThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(new MongoDBDatabaseThroughputSettingOperationSource(Client), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateMigrateMongoDBDatabaseToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(new MongoDBDatabaseThroughputSettingOperationSource(Client), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateMigrateMongoDBDatabaseToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

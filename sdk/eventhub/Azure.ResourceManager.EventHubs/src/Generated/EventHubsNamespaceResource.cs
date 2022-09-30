@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = await _eventHubsNamespaceNamespacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation(_eventHubsNamespaceNamespacesClientDiagnostics, Pipeline, _eventHubsNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventHubsArmOperation(_eventHubsNamespaceNamespacesClientDiagnostics, Pipeline, _eventHubsNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _eventHubsNamespaceNamespacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new EventHubsArmOperation(_eventHubsNamespaceNamespacesClientDiagnostics, Pipeline, _eventHubsNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventHubsArmOperation(_eventHubsNamespaceNamespacesClientDiagnostics, Pipeline, _eventHubsNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

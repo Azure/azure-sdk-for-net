@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerBlobAuditingPolicyResource>(new SqlServerBlobAuditingPolicyOperationSource(Client), _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesClientDiagnostics, Pipeline, _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerBlobAuditingPolicyResource>(new SqlServerBlobAuditingPolicyOperationSource(Client), _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesClientDiagnostics, Pipeline, _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerBlobAuditingPolicyResource>(new SqlServerBlobAuditingPolicyOperationSource(Client), _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesClientDiagnostics, Pipeline, _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerBlobAuditingPolicyResource>(new SqlServerBlobAuditingPolicyOperationSource(Client), _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesClientDiagnostics, Pipeline, _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

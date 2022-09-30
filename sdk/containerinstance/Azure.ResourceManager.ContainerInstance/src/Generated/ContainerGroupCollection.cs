@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ContainerInstance
             try
             {
                 var response = await _containerGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, containerGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerInstanceArmOperation<ContainerGroupResource>(new ContainerGroupOperationSource(Client), _containerGroupClientDiagnostics, Pipeline, _containerGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, containerGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerInstanceArmOperation<ContainerGroupResource>(new ContainerGroupOperationSource(Client), _containerGroupClientDiagnostics, Pipeline, _containerGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, containerGroupName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerInstance
             try
             {
                 var response = _containerGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, containerGroupName, data, cancellationToken);
-                var operation = new ContainerInstanceArmOperation<ContainerGroupResource>(new ContainerGroupOperationSource(Client), _containerGroupClientDiagnostics, Pipeline, _containerGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, containerGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerInstanceArmOperation<ContainerGroupResource>(new ContainerGroupOperationSource(Client), _containerGroupClientDiagnostics, Pipeline, _containerGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, containerGroupName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

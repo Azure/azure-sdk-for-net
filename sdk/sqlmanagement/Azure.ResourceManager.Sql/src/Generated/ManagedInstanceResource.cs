@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedInstanceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstanceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation(_managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedInstanceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedInstanceResource>(new ManagedInstanceOperationSource(Client), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedInstanceResource>(new ManagedInstanceOperationSource(Client), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -895,7 +895,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstanceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new SqlArmOperation<ManagedInstanceResource>(new ManagedInstanceOperationSource(Client), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedInstanceResource>(new ManagedInstanceOperationSource(Client), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1009,7 +1009,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedInstanceTdeCertificatesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_managedInstanceTdeCertificatesClientDiagnostics, Pipeline, _managedInstanceTdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_managedInstanceTdeCertificatesClientDiagnostics, Pipeline, _managedInstanceTdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1039,7 +1039,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstanceTdeCertificatesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate, cancellationToken);
-                var operation = new SqlArmOperation(_managedInstanceTdeCertificatesClientDiagnostics, Pipeline, _managedInstanceTdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_managedInstanceTdeCertificatesClientDiagnostics, Pipeline, _managedInstanceTdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1248,7 +1248,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedInstanceRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaType, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaType).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaType).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1275,7 +1275,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstanceRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaType, cancellationToken);
-                var operation = new SqlArmOperation(_managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaType).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaType).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

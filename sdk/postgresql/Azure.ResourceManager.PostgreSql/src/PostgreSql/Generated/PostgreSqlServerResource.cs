@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = await _postgreSqlServerServersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PostgreSqlArmOperation(_postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation(_postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = _postgreSqlServerServersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new PostgreSqlArmOperation(_postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation(_postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = await _postgreSqlServerServersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new PostgreSqlArmOperation<PostgreSqlServerResource>(new PostgreSqlServerOperationSource(Client), _postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation<PostgreSqlServerResource>(new PostgreSqlServerOperationSource(Client), _postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = _postgreSqlServerServersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new PostgreSqlArmOperation<PostgreSqlServerResource>(new PostgreSqlServerOperationSource(Client), _postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation<PostgreSqlServerResource>(new PostgreSqlServerOperationSource(Client), _postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = await _postgreSqlServerServersRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PostgreSqlArmOperation(_postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation(_postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = _postgreSqlServerServersRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new PostgreSqlArmOperation(_postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation(_postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = await _kustoPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation(_kustoPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _kustoPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation(_kustoPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _kustoPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = _kustoPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new KustoArmOperation(_kustoPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _kustoPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation(_kustoPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _kustoPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = await _kustoPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation<KustoPrivateEndpointConnectionResource>(new KustoPrivateEndpointConnectionOperationSource(Client), _kustoPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _kustoPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation<KustoPrivateEndpointConnectionResource>(new KustoPrivateEndpointConnectionOperationSource(Client), _kustoPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _kustoPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = _kustoPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new KustoArmOperation<KustoPrivateEndpointConnectionResource>(new KustoPrivateEndpointConnectionOperationSource(Client), _kustoPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _kustoPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation<KustoPrivateEndpointConnectionResource>(new KustoPrivateEndpointConnectionOperationSource(Client), _kustoPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _kustoPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

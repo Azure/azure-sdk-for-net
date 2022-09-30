@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _privateEndpointConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, "topics", parentName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation(_privateEndpointConnectionsClientDiagnostics, Pipeline, _privateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", parentName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation(_privateEndpointConnectionsClientDiagnostics, Pipeline, _privateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", parentName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _privateEndpointConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, "topics", parentName, Id.Name, cancellationToken);
-                var operation = new EventGridArmOperation(_privateEndpointConnectionsClientDiagnostics, Pipeline, _privateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", parentName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation(_privateEndpointConnectionsClientDiagnostics, Pipeline, _privateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", parentName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _privateEndpointConnectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<EventGridPrivateEndpointConnectionData>(new EventGridPrivateEndpointConnectionDataOperationSource(), _privateEndpointConnectionsClientDiagnostics, Pipeline, _privateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<EventGridPrivateEndpointConnectionData>(new EventGridPrivateEndpointConnectionDataOperationSource(), _privateEndpointConnectionsClientDiagnostics, Pipeline, _privateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _privateEndpointConnectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new EventGridArmOperation<EventGridPrivateEndpointConnectionData>(new EventGridPrivateEndpointConnectionDataOperationSource(), _privateEndpointConnectionsClientDiagnostics, Pipeline, _privateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<EventGridPrivateEndpointConnectionData>(new EventGridPrivateEndpointConnectionDataOperationSource(), _privateEndpointConnectionsClientDiagnostics, Pipeline, _privateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

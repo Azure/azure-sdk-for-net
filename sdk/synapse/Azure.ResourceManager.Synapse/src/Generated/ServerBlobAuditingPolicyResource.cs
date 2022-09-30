@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _serverBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<ServerBlobAuditingPolicyResource>(new ServerBlobAuditingPolicyOperationSource(Client), _serverBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesClientDiagnostics, Pipeline, _serverBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<ServerBlobAuditingPolicyResource>(new ServerBlobAuditingPolicyOperationSource(Client), _serverBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesClientDiagnostics, Pipeline, _serverBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _serverBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SynapseArmOperation<ServerBlobAuditingPolicyResource>(new ServerBlobAuditingPolicyOperationSource(Client), _serverBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesClientDiagnostics, Pipeline, _serverBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<ServerBlobAuditingPolicyResource>(new ServerBlobAuditingPolicyOperationSource(Client), _serverBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesClientDiagnostics, Pipeline, _serverBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

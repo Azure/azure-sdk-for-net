@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBSqlUserDefinedFunctionSqlResourcesRestClient.DeleteSqlUserDefinedFunctionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlUserDefinedFunctionSqlResourcesRestClient.CreateDeleteSqlUserDefinedFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlUserDefinedFunctionSqlResourcesRestClient.CreateDeleteSqlUserDefinedFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBSqlUserDefinedFunctionSqlResourcesRestClient.DeleteSqlUserDefinedFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation(_cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlUserDefinedFunctionSqlResourcesRestClient.CreateDeleteSqlUserDefinedFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlUserDefinedFunctionSqlResourcesRestClient.CreateDeleteSqlUserDefinedFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBSqlUserDefinedFunctionSqlResourcesRestClient.CreateUpdateSqlUserDefinedFunctionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlUserDefinedFunctionResource>(new CosmosDBSqlUserDefinedFunctionOperationSource(Client), _cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlUserDefinedFunctionSqlResourcesRestClient.CreateCreateUpdateSqlUserDefinedFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlUserDefinedFunctionResource>(new CosmosDBSqlUserDefinedFunctionOperationSource(Client), _cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlUserDefinedFunctionSqlResourcesRestClient.CreateCreateUpdateSqlUserDefinedFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBSqlUserDefinedFunctionSqlResourcesRestClient.CreateUpdateSqlUserDefinedFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlUserDefinedFunctionResource>(new CosmosDBSqlUserDefinedFunctionOperationSource(Client), _cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlUserDefinedFunctionSqlResourcesRestClient.CreateCreateUpdateSqlUserDefinedFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlUserDefinedFunctionResource>(new CosmosDBSqlUserDefinedFunctionOperationSource(Client), _cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlUserDefinedFunctionSqlResourcesRestClient.CreateCreateUpdateSqlUserDefinedFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

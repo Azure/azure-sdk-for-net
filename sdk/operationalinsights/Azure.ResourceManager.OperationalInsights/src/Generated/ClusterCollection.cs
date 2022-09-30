@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _clusterRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<ClusterResource>(new ClusterOperationSource(Client), _clusterClientDiagnostics, Pipeline, _clusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new OperationalInsightsArmOperation<ClusterResource>(new ClusterOperationSource(Client), _clusterClientDiagnostics, Pipeline, _clusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _clusterRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<ClusterResource>(new ClusterOperationSource(Client), _clusterClientDiagnostics, Pipeline, _clusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new OperationalInsightsArmOperation<ClusterResource>(new ClusterOperationSource(Client), _clusterClientDiagnostics, Pipeline, _clusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

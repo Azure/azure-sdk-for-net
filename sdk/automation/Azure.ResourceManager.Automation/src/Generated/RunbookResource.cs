@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _runbookDraftRestClient.ReplaceContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runbookContent, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation(_runbookDraftClientDiagnostics, Pipeline, _runbookDraftRestClient.CreateReplaceContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runbookContent).Request, response, OperationFinalStateVia.Location);
+                var operation = new AutomationArmOperation(_runbookDraftClientDiagnostics, Pipeline, _runbookDraftRestClient.CreateReplaceContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runbookContent).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _runbookDraftRestClient.ReplaceContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runbookContent, cancellationToken);
-                var operation = new AutomationArmOperation(_runbookDraftClientDiagnostics, Pipeline, _runbookDraftRestClient.CreateReplaceContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runbookContent).Request, response, OperationFinalStateVia.Location);
+                var operation = new AutomationArmOperation(_runbookDraftClientDiagnostics, Pipeline, _runbookDraftRestClient.CreateReplaceContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runbookContent).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _runbookRestClient.PublishAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation(_runbookClientDiagnostics, Pipeline, _runbookRestClient.CreatePublishRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AutomationArmOperation(_runbookClientDiagnostics, Pipeline, _runbookRestClient.CreatePublishRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _runbookRestClient.Publish(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AutomationArmOperation(_runbookClientDiagnostics, Pipeline, _runbookRestClient.CreatePublishRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AutomationArmOperation(_runbookClientDiagnostics, Pipeline, _runbookRestClient.CreatePublishRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

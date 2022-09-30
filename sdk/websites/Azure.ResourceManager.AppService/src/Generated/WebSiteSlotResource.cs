@@ -2017,7 +2017,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotWebAppsRestClient.ListPublishingCredentialsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<PublishingUserResource>(new PublishingUserOperationSource(Client), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateListPublishingCredentialsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<PublishingUserResource>(new PublishingUserOperationSource(Client), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateListPublishingCredentialsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2043,7 +2043,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotWebAppsRestClient.ListPublishingCredentialsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppServiceArmOperation<PublishingUserResource>(new PublishingUserOperationSource(Client), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateListPublishingCredentialsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<PublishingUserResource>(new PublishingUserOperationSource(Client), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateListPublishingCredentialsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -2806,7 +2806,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotWebAppsRestClient.StartWebSiteNetworkTraceOperationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateStartWebSiteNetworkTraceOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateStartWebSiteNetworkTraceOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2835,7 +2835,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotWebAppsRestClient.StartWebSiteNetworkTraceOperationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
-                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateStartWebSiteNetworkTraceOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateStartWebSiteNetworkTraceOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -3473,7 +3473,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotWebAppsRestClient.RestoreFromBackupBlobSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(_webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateRestoreFromBackupBlobSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateRestoreFromBackupBlobSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3503,7 +3503,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotWebAppsRestClient.RestoreFromBackupBlobSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info, cancellationToken);
-                var operation = new AppServiceArmOperation(_webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateRestoreFromBackupBlobSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateRestoreFromBackupBlobSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -3533,7 +3533,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotWebAppsRestClient.RestoreFromDeletedAppSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(_webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateRestoreFromDeletedAppSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateRestoreFromDeletedAppSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3563,7 +3563,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotWebAppsRestClient.RestoreFromDeletedAppSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new AppServiceArmOperation(_webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateRestoreFromDeletedAppSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateRestoreFromDeletedAppSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -3593,7 +3593,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotWebAppsRestClient.RestoreSnapshotSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restoreRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(_webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateRestoreSnapshotSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restoreRequest).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateRestoreSnapshotSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restoreRequest).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3623,7 +3623,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotWebAppsRestClient.RestoreSnapshotSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restoreRequest, cancellationToken);
-                var operation = new AppServiceArmOperation(_webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateRestoreSnapshotSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restoreRequest).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateRestoreSnapshotSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restoreRequest).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -3745,7 +3745,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotWebAppsRestClient.SwapSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, slotSwapEntity, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(_webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateSwapSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, slotSwapEntity).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateSwapSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, slotSwapEntity).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3775,7 +3775,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotWebAppsRestClient.SwapSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, slotSwapEntity, cancellationToken);
-                var operation = new AppServiceArmOperation(_webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateSwapSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, slotSwapEntity).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateSwapSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, slotSwapEntity).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -4016,7 +4016,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotWebAppsRestClient.StartNetworkTraceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateStartNetworkTraceSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateStartNetworkTraceSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -4045,7 +4045,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotWebAppsRestClient.StartNetworkTraceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
-                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateStartNetworkTraceSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(new IListOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateStartNetworkTraceSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

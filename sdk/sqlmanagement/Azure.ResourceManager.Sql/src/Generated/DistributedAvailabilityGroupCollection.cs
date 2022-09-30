@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _distributedAvailabilityGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<DistributedAvailabilityGroupResource>(new DistributedAvailabilityGroupOperationSource(Client), _distributedAvailabilityGroupClientDiagnostics, Pipeline, _distributedAvailabilityGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<DistributedAvailabilityGroupResource>(new DistributedAvailabilityGroupOperationSource(Client), _distributedAvailabilityGroupClientDiagnostics, Pipeline, _distributedAvailabilityGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _distributedAvailabilityGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, data, cancellationToken);
-                var operation = new SqlArmOperation<DistributedAvailabilityGroupResource>(new DistributedAvailabilityGroupOperationSource(Client), _distributedAvailabilityGroupClientDiagnostics, Pipeline, _distributedAvailabilityGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<DistributedAvailabilityGroupResource>(new DistributedAvailabilityGroupOperationSource(Client), _distributedAvailabilityGroupClientDiagnostics, Pipeline, _distributedAvailabilityGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, distributedAvailabilityGroupName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

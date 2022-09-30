@@ -565,7 +565,7 @@ namespace Azure.Analytics.Purview.Share
             try
             {
                 using HttpMessage message = CreateCreateRequest(receivedShareName, assetMappingName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "AssetMappingsClient.Create", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "AssetMappingsClient.Create", OperationFinalStateVia.NotSpecified, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -736,7 +736,7 @@ namespace Azure.Analytics.Purview.Share
             try
             {
                 using HttpMessage message = CreateCreateRequest(receivedShareName, assetMappingName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "AssetMappingsClient.Create", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "AssetMappingsClient.Create", OperationFinalStateVia.NotSpecified, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -777,7 +777,7 @@ namespace Azure.Analytics.Purview.Share
             try
             {
                 using HttpMessage message = CreateDeleteRequest(receivedShareName, assetMappingName, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "AssetMappingsClient.Delete", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "AssetMappingsClient.Delete", OperationFinalStateVia.NotSpecified, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -818,7 +818,7 @@ namespace Azure.Analytics.Purview.Share
             try
             {
                 using HttpMessage message = CreateDeleteRequest(receivedShareName, assetMappingName, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "AssetMappingsClient.Delete", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "AssetMappingsClient.Delete", OperationFinalStateVia.NotSpecified, context, waitUntil);
             }
             catch (Exception e)
             {

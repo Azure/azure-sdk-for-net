@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotFunctionWebAppsRestClient.CreateInstanceFunctionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteSlotFunctionResource>(new SiteSlotFunctionOperationSource(Client), _siteSlotFunctionWebAppsClientDiagnostics, Pipeline, _siteSlotFunctionWebAppsRestClient.CreateCreateInstanceFunctionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<SiteSlotFunctionResource>(new SiteSlotFunctionOperationSource(Client), _siteSlotFunctionWebAppsClientDiagnostics, Pipeline, _siteSlotFunctionWebAppsRestClient.CreateCreateInstanceFunctionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotFunctionWebAppsRestClient.CreateInstanceFunctionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteSlotFunctionResource>(new SiteSlotFunctionOperationSource(Client), _siteSlotFunctionWebAppsClientDiagnostics, Pipeline, _siteSlotFunctionWebAppsRestClient.CreateCreateInstanceFunctionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<SiteSlotFunctionResource>(new SiteSlotFunctionOperationSource(Client), _siteSlotFunctionWebAppsClientDiagnostics, Pipeline, _siteSlotFunctionWebAppsRestClient.CreateCreateInstanceFunctionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

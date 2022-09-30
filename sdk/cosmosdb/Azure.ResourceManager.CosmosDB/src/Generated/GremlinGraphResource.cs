@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _gremlinGraphGremlinResourcesRestClient.DeleteGremlinGraphAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, _gremlinGraphGremlinResourcesRestClient.CreateDeleteGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, _gremlinGraphGremlinResourcesRestClient.CreateDeleteGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _gremlinGraphGremlinResourcesRestClient.DeleteGremlinGraph(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation(_gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, _gremlinGraphGremlinResourcesRestClient.CreateDeleteGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, _gremlinGraphGremlinResourcesRestClient.CreateDeleteGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _gremlinGraphGremlinResourcesRestClient.CreateUpdateGremlinGraphAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<GremlinGraphResource>(new GremlinGraphOperationSource(Client), _gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, _gremlinGraphGremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<GremlinGraphResource>(new GremlinGraphOperationSource(Client), _gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, _gremlinGraphGremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _gremlinGraphGremlinResourcesRestClient.CreateUpdateGremlinGraph(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<GremlinGraphResource>(new GremlinGraphOperationSource(Client), _gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, _gremlinGraphGremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<GremlinGraphResource>(new GremlinGraphOperationSource(Client), _gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, _gremlinGraphGremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ServiceFabric
             try
             {
                 var response = await _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceFabricArmOperation(_serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ServiceFabricArmOperation(_serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ServiceFabric
             try
             {
                 var response = _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ServiceFabricArmOperation(_serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ServiceFabricArmOperation(_serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ServiceFabric
             try
             {
                 var response = await _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceFabricArmOperation<ServiceFabricApplicationTypeVersionResource>(new ServiceFabricApplicationTypeVersionOperationSource(Client), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ServiceFabricArmOperation<ServiceFabricApplicationTypeVersionResource>(new ServiceFabricApplicationTypeVersionOperationSource(Client), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ServiceFabric
             try
             {
                 var response = _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new ServiceFabricArmOperation<ServiceFabricApplicationTypeVersionResource>(new ServiceFabricApplicationTypeVersionOperationSource(Client), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ServiceFabricArmOperation<ServiceFabricApplicationTypeVersionResource>(new ServiceFabricApplicationTypeVersionOperationSource(Client), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

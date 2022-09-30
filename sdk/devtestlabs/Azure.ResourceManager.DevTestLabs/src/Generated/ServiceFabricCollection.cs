@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _serviceFabricRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation<ServiceFabricResource>(new ServiceFabricOperationSource(Client), _serviceFabricClientDiagnostics, Pipeline, _serviceFabricRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation<ServiceFabricResource>(new ServiceFabricOperationSource(Client), _serviceFabricClientDiagnostics, Pipeline, _serviceFabricRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _serviceFabricRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data, cancellationToken);
-                var operation = new DevTestLabsArmOperation<ServiceFabricResource>(new ServiceFabricOperationSource(Client), _serviceFabricClientDiagnostics, Pipeline, _serviceFabricRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation<ServiceFabricResource>(new ServiceFabricOperationSource(Client), _serviceFabricClientDiagnostics, Pipeline, _serviceFabricRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

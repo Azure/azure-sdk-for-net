@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedInstancePrivateEndpointConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedInstancePrivateEndpointConnectionResource>(new ManagedInstancePrivateEndpointConnectionOperationSource(Client), _managedInstancePrivateEndpointConnectionClientDiagnostics, Pipeline, _managedInstancePrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedInstancePrivateEndpointConnectionResource>(new ManagedInstancePrivateEndpointConnectionOperationSource(Client), _managedInstancePrivateEndpointConnectionClientDiagnostics, Pipeline, _managedInstancePrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstancePrivateEndpointConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new SqlArmOperation<ManagedInstancePrivateEndpointConnectionResource>(new ManagedInstancePrivateEndpointConnectionOperationSource(Client), _managedInstancePrivateEndpointConnectionClientDiagnostics, Pipeline, _managedInstancePrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedInstancePrivateEndpointConnectionResource>(new ManagedInstancePrivateEndpointConnectionOperationSource(Client), _managedInstancePrivateEndpointConnectionClientDiagnostics, Pipeline, _managedInstancePrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

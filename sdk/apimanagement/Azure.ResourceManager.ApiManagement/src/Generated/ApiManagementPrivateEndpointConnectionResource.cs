@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation(_apiManagementPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation(_apiManagementPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ApiManagementArmOperation(_apiManagementPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation(_apiManagementPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementPrivateEndpointConnectionResource>(new ApiManagementPrivateEndpointConnectionOperationSource(Client), _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiManagementPrivateEndpointConnectionResource>(new ApiManagementPrivateEndpointConnectionOperationSource(Client), _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementPrivateEndpointConnectionResource>(new ApiManagementPrivateEndpointConnectionOperationSource(Client), _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiManagementPrivateEndpointConnectionResource>(new ApiManagementPrivateEndpointConnectionOperationSource(Client), _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

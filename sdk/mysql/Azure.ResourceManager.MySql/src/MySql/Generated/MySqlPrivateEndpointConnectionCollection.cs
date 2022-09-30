@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = await _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation<MySqlPrivateEndpointConnectionResource>(new MySqlPrivateEndpointConnectionOperationSource(Client), _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<MySqlPrivateEndpointConnectionResource>(new MySqlPrivateEndpointConnectionOperationSource(Client), _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new MySqlArmOperation<MySqlPrivateEndpointConnectionResource>(new MySqlPrivateEndpointConnectionOperationSource(Client), _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<MySqlPrivateEndpointConnectionResource>(new MySqlPrivateEndpointConnectionOperationSource(Client), _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

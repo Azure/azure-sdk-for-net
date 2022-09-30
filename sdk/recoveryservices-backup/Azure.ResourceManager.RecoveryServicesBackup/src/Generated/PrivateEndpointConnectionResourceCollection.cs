@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = await _privateEndpointConnectionResourcePrivateEndpointConnectionRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation<PrivateEndpointConnectionResource>(new PrivateEndpointConnectionResourceOperationSource(Client), _privateEndpointConnectionResourcePrivateEndpointConnectionClientDiagnostics, Pipeline, _privateEndpointConnectionResourcePrivateEndpointConnectionRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesBackupArmOperation<PrivateEndpointConnectionResource>(new PrivateEndpointConnectionResourceOperationSource(Client), _privateEndpointConnectionResourcePrivateEndpointConnectionClientDiagnostics, Pipeline, _privateEndpointConnectionResourcePrivateEndpointConnectionRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = _privateEndpointConnectionResourcePrivateEndpointConnectionRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation<PrivateEndpointConnectionResource>(new PrivateEndpointConnectionResourceOperationSource(Client), _privateEndpointConnectionResourcePrivateEndpointConnectionClientDiagnostics, Pipeline, _privateEndpointConnectionResourcePrivateEndpointConnectionRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesBackupArmOperation<PrivateEndpointConnectionResource>(new PrivateEndpointConnectionResourceOperationSource(Client), _privateEndpointConnectionResourcePrivateEndpointConnectionClientDiagnostics, Pipeline, _privateEndpointConnectionResourcePrivateEndpointConnectionRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

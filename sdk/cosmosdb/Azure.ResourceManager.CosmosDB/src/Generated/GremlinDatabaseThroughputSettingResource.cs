@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.UpdateGremlinDatabaseThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(new GremlinDatabaseThroughputSettingOperationSource(Client), _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.CreateUpdateGremlinDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(new GremlinDatabaseThroughputSettingOperationSource(Client), _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.CreateUpdateGremlinDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.UpdateGremlinDatabaseThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
-                var operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(new GremlinDatabaseThroughputSettingOperationSource(Client), _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.CreateUpdateGremlinDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(new GremlinDatabaseThroughputSettingOperationSource(Client), _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.CreateUpdateGremlinDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.MigrateGremlinDatabaseToAutoscaleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(new GremlinDatabaseThroughputSettingOperationSource(Client), _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.CreateMigrateGremlinDatabaseToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(new GremlinDatabaseThroughputSettingOperationSource(Client), _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.CreateMigrateGremlinDatabaseToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.MigrateGremlinDatabaseToAutoscale(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(new GremlinDatabaseThroughputSettingOperationSource(Client), _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.CreateMigrateGremlinDatabaseToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(new GremlinDatabaseThroughputSettingOperationSource(Client), _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.CreateMigrateGremlinDatabaseToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.MigrateGremlinDatabaseToManualThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(new GremlinDatabaseThroughputSettingOperationSource(Client), _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.CreateMigrateGremlinDatabaseToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(new GremlinDatabaseThroughputSettingOperationSource(Client), _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.CreateMigrateGremlinDatabaseToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.MigrateGremlinDatabaseToManualThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(new GremlinDatabaseThroughputSettingOperationSource(Client), _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.CreateMigrateGremlinDatabaseToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(new GremlinDatabaseThroughputSettingOperationSource(Client), _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.CreateMigrateGremlinDatabaseToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

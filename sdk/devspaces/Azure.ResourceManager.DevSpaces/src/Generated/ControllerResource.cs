@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevSpaces
             try
             {
                 var response = await _controllerRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevSpacesArmOperation(_controllerClientDiagnostics, Pipeline, _controllerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevSpacesArmOperation(_controllerClientDiagnostics, Pipeline, _controllerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DevSpaces
             try
             {
                 var response = _controllerRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DevSpacesArmOperation(_controllerClientDiagnostics, Pipeline, _controllerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevSpacesArmOperation(_controllerClientDiagnostics, Pipeline, _controllerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

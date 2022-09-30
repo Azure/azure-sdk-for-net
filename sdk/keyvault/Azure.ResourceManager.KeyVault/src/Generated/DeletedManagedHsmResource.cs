@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = await _deletedManagedHsmManagedHsmsRestClient.PurgeDeletedAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new KeyVaultArmOperation(_deletedManagedHsmManagedHsmsClientDiagnostics, Pipeline, _deletedManagedHsmManagedHsmsRestClient.CreatePurgeDeletedRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new KeyVaultArmOperation(_deletedManagedHsmManagedHsmsClientDiagnostics, Pipeline, _deletedManagedHsmManagedHsmsRestClient.CreatePurgeDeletedRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = _deletedManagedHsmManagedHsmsRestClient.PurgeDeleted(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
-                var operation = new KeyVaultArmOperation(_deletedManagedHsmManagedHsmsClientDiagnostics, Pipeline, _deletedManagedHsmManagedHsmsRestClient.CreatePurgeDeletedRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new KeyVaultArmOperation(_deletedManagedHsmManagedHsmsClientDiagnostics, Pipeline, _deletedManagedHsmManagedHsmsRestClient.CreatePurgeDeletedRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _monitorPrivateLinkScopePrivateLinkScopesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation(_monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MonitorArmOperation(_monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _monitorPrivateLinkScopePrivateLinkScopesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MonitorArmOperation(_monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MonitorArmOperation(_monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

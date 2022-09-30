@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateOrUpdateStaticSiteCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<StaticSiteCustomDomainOverviewResource>(new StaticSiteCustomDomainOverviewOperationSource(Client), _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics, Pipeline, _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<StaticSiteCustomDomainOverviewResource>(new StaticSiteCustomDomainOverviewOperationSource(Client), _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics, Pipeline, _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateOrUpdateStaticSiteCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, content, cancellationToken);
-                var operation = new AppServiceArmOperation<StaticSiteCustomDomainOverviewResource>(new StaticSiteCustomDomainOverviewOperationSource(Client), _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics, Pipeline, _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<StaticSiteCustomDomainOverviewResource>(new StaticSiteCustomDomainOverviewOperationSource(Client), _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics, Pipeline, _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

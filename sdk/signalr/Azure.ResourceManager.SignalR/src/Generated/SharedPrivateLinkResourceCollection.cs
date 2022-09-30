@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SignalR
             try
             {
                 var response = await _sharedPrivateLinkResourceSignalRSharedPrivateLinkResourcesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SignalRArmOperation<SharedPrivateLinkResource>(new SharedPrivateLinkResourceOperationSource(Client), _sharedPrivateLinkResourceSignalRSharedPrivateLinkResourcesClientDiagnostics, Pipeline, _sharedPrivateLinkResourceSignalRSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SignalRArmOperation<SharedPrivateLinkResource>(new SharedPrivateLinkResourceOperationSource(Client), _sharedPrivateLinkResourceSignalRSharedPrivateLinkResourcesClientDiagnostics, Pipeline, _sharedPrivateLinkResourceSignalRSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SignalR
             try
             {
                 var response = _sharedPrivateLinkResourceSignalRSharedPrivateLinkResourcesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, data, cancellationToken);
-                var operation = new SignalRArmOperation<SharedPrivateLinkResource>(new SharedPrivateLinkResourceOperationSource(Client), _sharedPrivateLinkResourceSignalRSharedPrivateLinkResourcesClientDiagnostics, Pipeline, _sharedPrivateLinkResourceSignalRSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SignalRArmOperation<SharedPrivateLinkResource>(new SharedPrivateLinkResourceOperationSource(Client), _sharedPrivateLinkResourceSignalRSharedPrivateLinkResourcesClientDiagnostics, Pipeline, _sharedPrivateLinkResourceSignalRSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

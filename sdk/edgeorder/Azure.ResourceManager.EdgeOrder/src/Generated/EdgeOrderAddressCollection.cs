@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = await _edgeOrderAddressRestClient.CreateAddressAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(new EdgeOrderAddressOperationSource(Client), _edgeOrderAddressClientDiagnostics, Pipeline, _edgeOrderAddressRestClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(new EdgeOrderAddressOperationSource(Client), _edgeOrderAddressClientDiagnostics, Pipeline, _edgeOrderAddressRestClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = _edgeOrderAddressRestClient.CreateAddress(Id.SubscriptionId, Id.ResourceGroupName, addressName, data, cancellationToken);
-                var operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(new EdgeOrderAddressOperationSource(Client), _edgeOrderAddressClientDiagnostics, Pipeline, _edgeOrderAddressRestClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(new EdgeOrderAddressOperationSource(Client), _edgeOrderAddressClientDiagnostics, Pipeline, _edgeOrderAddressRestClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

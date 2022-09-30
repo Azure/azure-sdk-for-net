@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = await _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation<KustoClusterPrincipalAssignmentResource>(new KustoClusterPrincipalAssignmentOperationSource(Client), _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics, Pipeline, _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation<KustoClusterPrincipalAssignmentResource>(new KustoClusterPrincipalAssignmentOperationSource(Client), _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics, Pipeline, _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, data, cancellationToken);
-                var operation = new KustoArmOperation<KustoClusterPrincipalAssignmentResource>(new KustoClusterPrincipalAssignmentOperationSource(Client), _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics, Pipeline, _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation<KustoClusterPrincipalAssignmentResource>(new KustoClusterPrincipalAssignmentOperationSource(Client), _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics, Pipeline, _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Redis
             try
             {
                 var response = await _redisRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisArmOperation<RedisResource>(new RedisOperationSource(Client), _redisClientDiagnostics, Pipeline, _redisRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RedisArmOperation<RedisResource>(new RedisOperationSource(Client), _redisClientDiagnostics, Pipeline, _redisRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Redis
             try
             {
                 var response = _redisRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, name, content, cancellationToken);
-                var operation = new RedisArmOperation<RedisResource>(new RedisOperationSource(Client), _redisClientDiagnostics, Pipeline, _redisRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RedisArmOperation<RedisResource>(new RedisOperationSource(Client), _redisClientDiagnostics, Pipeline, _redisRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _topicEventSubscriptionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventSubscriptionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<TopicEventSubscriptionResource>(new TopicEventSubscriptionOperationSource(Client), _topicEventSubscriptionClientDiagnostics, Pipeline, _topicEventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventSubscriptionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<TopicEventSubscriptionResource>(new TopicEventSubscriptionOperationSource(Client), _topicEventSubscriptionClientDiagnostics, Pipeline, _topicEventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventSubscriptionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _topicEventSubscriptionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventSubscriptionName, data, cancellationToken);
-                var operation = new EventGridArmOperation<TopicEventSubscriptionResource>(new TopicEventSubscriptionOperationSource(Client), _topicEventSubscriptionClientDiagnostics, Pipeline, _topicEventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventSubscriptionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<TopicEventSubscriptionResource>(new TopicEventSubscriptionOperationSource(Client), _topicEventSubscriptionClientDiagnostics, Pipeline, _topicEventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventSubscriptionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

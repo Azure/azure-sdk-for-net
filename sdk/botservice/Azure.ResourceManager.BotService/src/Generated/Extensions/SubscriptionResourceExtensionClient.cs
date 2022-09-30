@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.BotService
             try
             {
                 var response = await OperationResultsRestClient.GetAsync(Id.SubscriptionId, operationResultId, cancellationToken).ConfigureAwait(false);
-                var operation = new BotServiceArmOperation<OperationResultsDescription>(new OperationResultsDescriptionOperationSource(), OperationResultsClientDiagnostics, Pipeline, OperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, operationResultId).Request, response, OperationFinalStateVia.Location);
+                var operation = new BotServiceArmOperation<OperationResultsDescription>(new OperationResultsDescriptionOperationSource(), OperationResultsClientDiagnostics, Pipeline, OperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, operationResultId).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.BotService
             try
             {
                 var response = OperationResultsRestClient.Get(Id.SubscriptionId, operationResultId, cancellationToken);
-                var operation = new BotServiceArmOperation<OperationResultsDescription>(new OperationResultsDescriptionOperationSource(), OperationResultsClientDiagnostics, Pipeline, OperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, operationResultId).Request, response, OperationFinalStateVia.Location);
+                var operation = new BotServiceArmOperation<OperationResultsDescription>(new OperationResultsDescriptionOperationSource(), OperationResultsClientDiagnostics, Pipeline, OperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, operationResultId).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

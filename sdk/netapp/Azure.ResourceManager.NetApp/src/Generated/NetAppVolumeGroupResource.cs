@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = await _netAppVolumeGroupVolumeGroupsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation(_netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, _netAppVolumeGroupVolumeGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation(_netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, _netAppVolumeGroupVolumeGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = _netAppVolumeGroupVolumeGroupsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetAppArmOperation(_netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, _netAppVolumeGroupVolumeGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation(_netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, _netAppVolumeGroupVolumeGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = await _netAppVolumeGroupVolumeGroupsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<NetAppVolumeGroupResource>(new NetAppVolumeGroupOperationSource(Client), _netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, _netAppVolumeGroupVolumeGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation<NetAppVolumeGroupResource>(new NetAppVolumeGroupOperationSource(Client), _netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, _netAppVolumeGroupVolumeGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = _netAppVolumeGroupVolumeGroupsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new NetAppArmOperation<NetAppVolumeGroupResource>(new NetAppVolumeGroupOperationSource(Client), _netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, _netAppVolumeGroupVolumeGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation<NetAppVolumeGroupResource>(new NetAppVolumeGroupOperationSource(Client), _netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, _netAppVolumeGroupVolumeGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

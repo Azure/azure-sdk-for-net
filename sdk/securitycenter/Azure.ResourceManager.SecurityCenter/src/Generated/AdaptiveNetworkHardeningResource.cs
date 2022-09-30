@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _adaptiveNetworkHardeningRestClient.EnforceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation(_adaptiveNetworkHardeningClientDiagnostics, Pipeline, _adaptiveNetworkHardeningRestClient.CreateEnforceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new SecurityCenterArmOperation(_adaptiveNetworkHardeningClientDiagnostics, Pipeline, _adaptiveNetworkHardeningRestClient.CreateEnforceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _adaptiveNetworkHardeningRestClient.Enforce(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new SecurityCenterArmOperation(_adaptiveNetworkHardeningClientDiagnostics, Pipeline, _adaptiveNetworkHardeningRestClient.CreateEnforceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new SecurityCenterArmOperation(_adaptiveNetworkHardeningClientDiagnostics, Pipeline, _adaptiveNetworkHardeningRestClient.CreateEnforceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

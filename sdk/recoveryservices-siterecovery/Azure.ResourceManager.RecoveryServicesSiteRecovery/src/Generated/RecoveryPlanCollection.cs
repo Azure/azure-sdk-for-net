@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _recoveryPlanReplicationRecoveryPlansRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, recoveryPlanName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<RecoveryPlanResource>(new RecoveryPlanOperationSource(Client), _recoveryPlanReplicationRecoveryPlansClientDiagnostics, Pipeline, _recoveryPlanReplicationRecoveryPlansRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, recoveryPlanName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<RecoveryPlanResource>(new RecoveryPlanOperationSource(Client), _recoveryPlanReplicationRecoveryPlansClientDiagnostics, Pipeline, _recoveryPlanReplicationRecoveryPlansRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, recoveryPlanName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _recoveryPlanReplicationRecoveryPlansRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, recoveryPlanName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<RecoveryPlanResource>(new RecoveryPlanOperationSource(Client), _recoveryPlanReplicationRecoveryPlansClientDiagnostics, Pipeline, _recoveryPlanReplicationRecoveryPlansRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, recoveryPlanName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<RecoveryPlanResource>(new RecoveryPlanOperationSource(Client), _recoveryPlanReplicationRecoveryPlansClientDiagnostics, Pipeline, _recoveryPlanReplicationRecoveryPlansRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, recoveryPlanName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

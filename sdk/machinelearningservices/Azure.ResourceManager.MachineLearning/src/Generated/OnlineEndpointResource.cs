@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _onlineEndpointRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation(_onlineEndpointClientDiagnostics, Pipeline, _onlineEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_onlineEndpointClientDiagnostics, Pipeline, _onlineEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _onlineEndpointRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MachineLearningArmOperation(_onlineEndpointClientDiagnostics, Pipeline, _onlineEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_onlineEndpointClientDiagnostics, Pipeline, _onlineEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _onlineEndpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<OnlineEndpointResource>(new OnlineEndpointOperationSource(Client), _onlineEndpointClientDiagnostics, Pipeline, _onlineEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<OnlineEndpointResource>(new OnlineEndpointOperationSource(Client), _onlineEndpointClientDiagnostics, Pipeline, _onlineEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _onlineEndpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new MachineLearningArmOperation<OnlineEndpointResource>(new OnlineEndpointOperationSource(Client), _onlineEndpointClientDiagnostics, Pipeline, _onlineEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<OnlineEndpointResource>(new OnlineEndpointOperationSource(Client), _onlineEndpointClientDiagnostics, Pipeline, _onlineEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

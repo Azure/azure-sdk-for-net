@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.PrivateDns
             try
             {
                 var response = await _virtualNetworkLinkRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateDnsArmOperation<VirtualNetworkLinkResource>(new VirtualNetworkLinkOperationSource(Client), _virtualNetworkLinkClientDiagnostics, Pipeline, _virtualNetworkLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new PrivateDnsArmOperation<VirtualNetworkLinkResource>(new VirtualNetworkLinkOperationSource(Client), _virtualNetworkLinkClientDiagnostics, Pipeline, _virtualNetworkLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PrivateDns
             try
             {
                 var response = _virtualNetworkLinkRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new PrivateDnsArmOperation<VirtualNetworkLinkResource>(new VirtualNetworkLinkOperationSource(Client), _virtualNetworkLinkClientDiagnostics, Pipeline, _virtualNetworkLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new PrivateDnsArmOperation<VirtualNetworkLinkResource>(new VirtualNetworkLinkOperationSource(Client), _virtualNetworkLinkClientDiagnostics, Pipeline, _virtualNetworkLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

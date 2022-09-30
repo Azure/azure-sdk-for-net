@@ -1231,7 +1231,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await ReplicationVaultHealthRestClient.RefreshAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<VaultHealthDetails>(new VaultHealthDetailsOperationSource(), ReplicationVaultHealthClientDiagnostics, Pipeline, ReplicationVaultHealthRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<VaultHealthDetails>(new VaultHealthDetailsOperationSource(), ReplicationVaultHealthClientDiagnostics, Pipeline, ReplicationVaultHealthRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1258,7 +1258,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = ReplicationVaultHealthRestClient.Refresh(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<VaultHealthDetails>(new VaultHealthDetailsOperationSource(), ReplicationVaultHealthClientDiagnostics, Pipeline, ReplicationVaultHealthRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<VaultHealthDetails>(new VaultHealthDetailsOperationSource(), ReplicationVaultHealthClientDiagnostics, Pipeline, ReplicationVaultHealthRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = await _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMigrationArmOperation(_databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataMigrationArmOperation(_databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, cancellationToken);
-                var operation = new DataMigrationArmOperation(_databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataMigrationArmOperation(_databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = await _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(new DatabaseMigrationSqlDBOperationSource(Client), _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(new DatabaseMigrationSqlDBOperationSource(Client), _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(new DatabaseMigrationSqlDBOperationSource(Client), _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(new DatabaseMigrationSqlDBOperationSource(Client), _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = await _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMigrationArmOperation(_databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataMigrationArmOperation(_databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.Cancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input, cancellationToken);
-                var operation = new DataMigrationArmOperation(_databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataMigrationArmOperation(_databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = await _sapProviderInstanceProviderInstancesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapProviderInstanceProviderInstancesClientDiagnostics, Pipeline, _sapProviderInstanceProviderInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapProviderInstanceProviderInstancesClientDiagnostics, Pipeline, _sapProviderInstanceProviderInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = _sapProviderInstanceProviderInstancesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapProviderInstanceProviderInstancesClientDiagnostics, Pipeline, _sapProviderInstanceProviderInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapProviderInstanceProviderInstancesClientDiagnostics, Pipeline, _sapProviderInstanceProviderInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

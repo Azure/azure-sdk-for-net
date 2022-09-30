@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Relay
             try
             {
                 var response = await _relayNamespaceNamespacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RelayArmOperation<RelayNamespaceResource>(new RelayNamespaceOperationSource(Client), _relayNamespaceNamespacesClientDiagnostics, Pipeline, _relayNamespaceNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new RelayArmOperation<RelayNamespaceResource>(new RelayNamespaceOperationSource(Client), _relayNamespaceNamespacesClientDiagnostics, Pipeline, _relayNamespaceNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Relay
             try
             {
                 var response = _relayNamespaceNamespacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data, cancellationToken);
-                var operation = new RelayArmOperation<RelayNamespaceResource>(new RelayNamespaceOperationSource(Client), _relayNamespaceNamespacesClientDiagnostics, Pipeline, _relayNamespaceNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new RelayArmOperation<RelayNamespaceResource>(new RelayNamespaceOperationSource(Client), _relayNamespaceNamespacesClientDiagnostics, Pipeline, _relayNamespaceNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

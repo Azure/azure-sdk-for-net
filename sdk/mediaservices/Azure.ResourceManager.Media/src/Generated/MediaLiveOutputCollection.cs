@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaLiveOutputLiveOutputsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<MediaLiveOutputResource>(new MediaLiveOutputOperationSource(Client), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, _mediaLiveOutputLiveOutputsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation<MediaLiveOutputResource>(new MediaLiveOutputOperationSource(Client), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, _mediaLiveOutputLiveOutputsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaLiveOutputLiveOutputsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, data, cancellationToken);
-                var operation = new MediaArmOperation<MediaLiveOutputResource>(new MediaLiveOutputOperationSource(Client), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, _mediaLiveOutputLiveOutputsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation<MediaLiveOutputResource>(new MediaLiveOutputOperationSource(Client), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, _mediaLiveOutputLiveOutputsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

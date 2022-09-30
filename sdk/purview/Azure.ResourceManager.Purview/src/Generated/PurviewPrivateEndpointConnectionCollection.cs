@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Purview
             try
             {
                 var response = await _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PurviewArmOperation<PurviewPrivateEndpointConnectionResource>(new PurviewPrivateEndpointConnectionOperationSource(Client), _purviewPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new PurviewArmOperation<PurviewPrivateEndpointConnectionResource>(new PurviewPrivateEndpointConnectionOperationSource(Client), _purviewPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Purview
             try
             {
                 var response = _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new PurviewArmOperation<PurviewPrivateEndpointConnectionResource>(new PurviewPrivateEndpointConnectionOperationSource(Client), _purviewPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new PurviewArmOperation<PurviewPrivateEndpointConnectionResource>(new PurviewPrivateEndpointConnectionOperationSource(Client), _purviewPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

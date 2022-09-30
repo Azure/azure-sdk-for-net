@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = await _dataBoxEdgeRoleAddonAddonsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeRoleAddonResource>(new DataBoxEdgeRoleAddonOperationSource(Client), _dataBoxEdgeRoleAddonAddonsClientDiagnostics, Pipeline, _dataBoxEdgeRoleAddonAddonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeRoleAddonResource>(new DataBoxEdgeRoleAddonOperationSource(Client), _dataBoxEdgeRoleAddonAddonsClientDiagnostics, Pipeline, _dataBoxEdgeRoleAddonAddonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = _dataBoxEdgeRoleAddonAddonsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, data, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeRoleAddonResource>(new DataBoxEdgeRoleAddonOperationSource(Client), _dataBoxEdgeRoleAddonAddonsClientDiagnostics, Pipeline, _dataBoxEdgeRoleAddonAddonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeRoleAddonResource>(new DataBoxEdgeRoleAddonOperationSource(Client), _dataBoxEdgeRoleAddonAddonsClientDiagnostics, Pipeline, _dataBoxEdgeRoleAddonAddonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

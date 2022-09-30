@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _subscriptionGovernanceRuleGovernanceRulesRestClient.RuleIdExecuteSingleSubscriptionAsync(Id.SubscriptionId, Id.Name, executeGovernanceRuleParams, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation(_subscriptionGovernanceRuleGovernanceRulesClientDiagnostics, Pipeline, _subscriptionGovernanceRuleGovernanceRulesRestClient.CreateRuleIdExecuteSingleSubscriptionRequest(Id.SubscriptionId, Id.Name, executeGovernanceRuleParams).Request, response, OperationFinalStateVia.Location);
+                var operation = new SecurityCenterArmOperation(_subscriptionGovernanceRuleGovernanceRulesClientDiagnostics, Pipeline, _subscriptionGovernanceRuleGovernanceRulesRestClient.CreateRuleIdExecuteSingleSubscriptionRequest(Id.SubscriptionId, Id.Name, executeGovernanceRuleParams).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _subscriptionGovernanceRuleGovernanceRulesRestClient.RuleIdExecuteSingleSubscription(Id.SubscriptionId, Id.Name, executeGovernanceRuleParams, cancellationToken);
-                var operation = new SecurityCenterArmOperation(_subscriptionGovernanceRuleGovernanceRulesClientDiagnostics, Pipeline, _subscriptionGovernanceRuleGovernanceRulesRestClient.CreateRuleIdExecuteSingleSubscriptionRequest(Id.SubscriptionId, Id.Name, executeGovernanceRuleParams).Request, response, OperationFinalStateVia.Location);
+                var operation = new SecurityCenterArmOperation(_subscriptionGovernanceRuleGovernanceRulesClientDiagnostics, Pipeline, _subscriptionGovernanceRuleGovernanceRulesRestClient.CreateRuleIdExecuteSingleSubscriptionRequest(Id.SubscriptionId, Id.Name, executeGovernanceRuleParams).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _subscriptionGovernanceRulesExecuteStatusRestClient.GetAsync(Id.SubscriptionId, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<ExecuteRuleStatus>(new ExecuteRuleStatusOperationSource(), _subscriptionGovernanceRulesExecuteStatusClientDiagnostics, Pipeline, _subscriptionGovernanceRulesExecuteStatusRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, operationId).Request, response, OperationFinalStateVia.Location);
+                var operation = new SecurityCenterArmOperation<ExecuteRuleStatus>(new ExecuteRuleStatusOperationSource(), _subscriptionGovernanceRulesExecuteStatusClientDiagnostics, Pipeline, _subscriptionGovernanceRulesExecuteStatusRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, operationId).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _subscriptionGovernanceRulesExecuteStatusRestClient.Get(Id.SubscriptionId, Id.Name, operationId, cancellationToken);
-                var operation = new SecurityCenterArmOperation<ExecuteRuleStatus>(new ExecuteRuleStatusOperationSource(), _subscriptionGovernanceRulesExecuteStatusClientDiagnostics, Pipeline, _subscriptionGovernanceRulesExecuteStatusRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, operationId).Request, response, OperationFinalStateVia.Location);
+                var operation = new SecurityCenterArmOperation<ExecuteRuleStatus>(new ExecuteRuleStatusOperationSource(), _subscriptionGovernanceRulesExecuteStatusClientDiagnostics, Pipeline, _subscriptionGovernanceRulesExecuteStatusRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, operationId).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

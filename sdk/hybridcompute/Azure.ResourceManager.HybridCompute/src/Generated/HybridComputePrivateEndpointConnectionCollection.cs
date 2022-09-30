@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridCompute
             try
             {
                 var response = await _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridComputeArmOperation<HybridComputePrivateEndpointConnectionResource>(new HybridComputePrivateEndpointConnectionOperationSource(Client), _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new HybridComputeArmOperation<HybridComputePrivateEndpointConnectionResource>(new HybridComputePrivateEndpointConnectionOperationSource(Client), _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridCompute
             try
             {
                 var response = _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new HybridComputeArmOperation<HybridComputePrivateEndpointConnectionResource>(new HybridComputePrivateEndpointConnectionOperationSource(Client), _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new HybridComputeArmOperation<HybridComputePrivateEndpointConnectionResource>(new HybridComputePrivateEndpointConnectionOperationSource(Client), _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

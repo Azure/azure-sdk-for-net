@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBAccountDatabaseAccountsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBAccountDatabaseAccountsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBAccountDatabaseAccountsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBAccountResource>(new CosmosDBAccountOperationSource(Client), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBAccountResource>(new CosmosDBAccountOperationSource(Client), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBAccountDatabaseAccountsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBAccountResource>(new CosmosDBAccountOperationSource(Client), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBAccountResource>(new CosmosDBAccountOperationSource(Client), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBAccountDatabaseAccountsRestClient.FailoverPriorityChangeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateFailoverPriorityChangeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverParameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateFailoverPriorityChangeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverParameters).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBAccountDatabaseAccountsRestClient.FailoverPriorityChange(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverParameters, cancellationToken);
-                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateFailoverPriorityChangeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverParameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateFailoverPriorityChangeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverParameters).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBAccountDatabaseAccountsRestClient.OfflineRegionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOffline, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateOfflineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOffline).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateOfflineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOffline).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBAccountDatabaseAccountsRestClient.OfflineRegion(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOffline, cancellationToken);
-                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateOfflineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOffline).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateOfflineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOffline).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBAccountDatabaseAccountsRestClient.OnlineRegionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOnline, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateOnlineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOnline).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateOnlineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOnline).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -929,7 +929,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBAccountDatabaseAccountsRestClient.OnlineRegion(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOnline, cancellationToken);
-                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateOnlineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOnline).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateOnlineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOnline).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1003,7 +1003,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBAccountDatabaseAccountsRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1033,7 +1033,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBAccountDatabaseAccountsRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

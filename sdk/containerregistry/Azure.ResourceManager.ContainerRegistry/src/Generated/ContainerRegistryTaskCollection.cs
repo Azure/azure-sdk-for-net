@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _containerRegistryTaskTasksRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryTaskResource>(new ContainerRegistryTaskOperationSource(Client), _containerRegistryTaskTasksClientDiagnostics, Pipeline, _containerRegistryTaskTasksRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ContainerRegistryTaskResource>(new ContainerRegistryTaskOperationSource(Client), _containerRegistryTaskTasksClientDiagnostics, Pipeline, _containerRegistryTaskTasksRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _containerRegistryTaskTasksRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskName, data, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryTaskResource>(new ContainerRegistryTaskOperationSource(Client), _containerRegistryTaskTasksClientDiagnostics, Pipeline, _containerRegistryTaskTasksRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ContainerRegistryTaskResource>(new ContainerRegistryTaskOperationSource(Client), _containerRegistryTaskTasksClientDiagnostics, Pipeline, _containerRegistryTaskTasksRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Relay
             try
             {
                 var response = await _relayNamespaceNamespacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RelayArmOperation(_relayNamespaceNamespacesClientDiagnostics, Pipeline, _relayNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new RelayArmOperation(_relayNamespaceNamespacesClientDiagnostics, Pipeline, _relayNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Relay
             try
             {
                 var response = _relayNamespaceNamespacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new RelayArmOperation(_relayNamespaceNamespacesClientDiagnostics, Pipeline, _relayNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new RelayArmOperation(_relayNamespaceNamespacesClientDiagnostics, Pipeline, _relayNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

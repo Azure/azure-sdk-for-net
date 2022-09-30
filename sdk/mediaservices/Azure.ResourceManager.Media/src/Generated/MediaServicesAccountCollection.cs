@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaServicesAccountMediaservicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<MediaServicesAccountResource>(new MediaServicesAccountOperationSource(Client), _mediaServicesAccountMediaservicesClientDiagnostics, Pipeline, _mediaServicesAccountMediaservicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation<MediaServicesAccountResource>(new MediaServicesAccountOperationSource(Client), _mediaServicesAccountMediaservicesClientDiagnostics, Pipeline, _mediaServicesAccountMediaservicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaServicesAccountMediaservicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken);
-                var operation = new MediaArmOperation<MediaServicesAccountResource>(new MediaServicesAccountOperationSource(Client), _mediaServicesAccountMediaservicesClientDiagnostics, Pipeline, _mediaServicesAccountMediaservicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation<MediaServicesAccountResource>(new MediaServicesAccountOperationSource(Client), _mediaServicesAccountMediaservicesClientDiagnostics, Pipeline, _mediaServicesAccountMediaservicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

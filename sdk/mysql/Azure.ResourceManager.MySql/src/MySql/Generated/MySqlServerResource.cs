@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = await _mySqlServerServersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation(_mySqlServerServersClientDiagnostics, Pipeline, _mySqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation(_mySqlServerServersClientDiagnostics, Pipeline, _mySqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = _mySqlServerServersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MySqlArmOperation(_mySqlServerServersClientDiagnostics, Pipeline, _mySqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation(_mySqlServerServersClientDiagnostics, Pipeline, _mySqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = await _mySqlServerServersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation<MySqlServerResource>(new MySqlServerOperationSource(Client), _mySqlServerServersClientDiagnostics, Pipeline, _mySqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<MySqlServerResource>(new MySqlServerOperationSource(Client), _mySqlServerServersClientDiagnostics, Pipeline, _mySqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = _mySqlServerServersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new MySqlArmOperation<MySqlServerResource>(new MySqlServerOperationSource(Client), _mySqlServerServersClientDiagnostics, Pipeline, _mySqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<MySqlServerResource>(new MySqlServerOperationSource(Client), _mySqlServerServersClientDiagnostics, Pipeline, _mySqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = await _mySqlServerServersRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation(_mySqlServerServersClientDiagnostics, Pipeline, _mySqlServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation(_mySqlServerServersClientDiagnostics, Pipeline, _mySqlServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = _mySqlServerServersRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MySqlArmOperation(_mySqlServerServersClientDiagnostics, Pipeline, _mySqlServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation(_mySqlServerServersClientDiagnostics, Pipeline, _mySqlServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1042,7 +1042,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = await _mySqlServersRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation(_mySqlServersClientDiagnostics, Pipeline, _mySqlServersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation(_mySqlServersClientDiagnostics, Pipeline, _mySqlServersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1068,7 +1068,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = _mySqlServersRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MySqlArmOperation(_mySqlServersClientDiagnostics, Pipeline, _mySqlServersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation(_mySqlServersClientDiagnostics, Pipeline, _mySqlServersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1094,7 +1094,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = await _mySqlServersRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation(_mySqlServersClientDiagnostics, Pipeline, _mySqlServersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation(_mySqlServersClientDiagnostics, Pipeline, _mySqlServersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1120,7 +1120,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = _mySqlServersRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MySqlArmOperation(_mySqlServersClientDiagnostics, Pipeline, _mySqlServersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation(_mySqlServersClientDiagnostics, Pipeline, _mySqlServersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1150,7 +1150,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = await _mySqlServersRestClient.UpgradeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation(_mySqlServersClientDiagnostics, Pipeline, _mySqlServersRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation(_mySqlServersClientDiagnostics, Pipeline, _mySqlServersRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1180,7 +1180,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = _mySqlServersRestClient.Upgrade(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new MySqlArmOperation(_mySqlServersClientDiagnostics, Pipeline, _mySqlServersRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation(_mySqlServersClientDiagnostics, Pipeline, _mySqlServersRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

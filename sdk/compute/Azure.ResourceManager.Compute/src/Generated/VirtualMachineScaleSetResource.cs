@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.DeleteAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, forceDeletion, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeleteRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, forceDeletion).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeleteRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, forceDeletion).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRestClient.Delete(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, forceDeletion, cancellationToken);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeleteRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, forceDeletion).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeleteRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, forceDeletion).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.UpdateAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<VirtualMachineScaleSetResource>(new VirtualMachineScaleSetOperationSource(Client), _virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateUpdateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<VirtualMachineScaleSetResource>(new VirtualMachineScaleSetOperationSource(Client), _virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateUpdateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRestClient.Update(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, patch, cancellationToken);
-                var operation = new ComputeArmOperation<VirtualMachineScaleSetResource>(new VirtualMachineScaleSetOperationSource(Client), _virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateUpdateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<VirtualMachineScaleSetResource>(new VirtualMachineScaleSetOperationSource(Client), _virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateUpdateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.DeallocateAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeallocateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeallocateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRestClient.Deallocate(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, cancellationToken);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeallocateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeallocateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.DeleteInstancesAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, forceDeletion, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeleteInstancesRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, forceDeletion).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeleteInstancesRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, forceDeletion).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRestClient.DeleteInstances(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, forceDeletion, cancellationToken);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeleteInstancesRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, forceDeletion).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeleteInstancesRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, forceDeletion).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.PowerOffAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, skipShutdown, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreatePowerOffRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, skipShutdown).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreatePowerOffRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, skipShutdown).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRestClient.PowerOff(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, skipShutdown, cancellationToken);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreatePowerOffRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, skipShutdown).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreatePowerOffRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, skipShutdown).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.RestartAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateRestartRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateRestartRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRestClient.Restart(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, cancellationToken);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateRestartRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateRestartRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.StartAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateStartRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateStartRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -823,7 +823,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRestClient.Start(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, cancellationToken);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateStartRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateStartRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -850,7 +850,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.RedeployAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateRedeployRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateRedeployRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -877,7 +877,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRestClient.Redeploy(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, cancellationToken);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateRedeployRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateRedeployRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.PerformMaintenanceAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreatePerformMaintenanceRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreatePerformMaintenanceRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -931,7 +931,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRestClient.PerformMaintenance(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, cancellationToken);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreatePerformMaintenanceRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreatePerformMaintenanceRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -961,7 +961,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.UpdateInstancesAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateUpdateInstancesRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateUpdateInstancesRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -991,7 +991,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRestClient.UpdateInstances(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, cancellationToken);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateUpdateInstancesRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateUpdateInstancesRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1018,7 +1018,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.ReimageAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateReimageRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateReimageRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1045,7 +1045,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRestClient.Reimage(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateReimageRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateReimageRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1072,7 +1072,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.ReimageAllAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateReimageAllRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateReimageAllRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1099,7 +1099,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRestClient.ReimageAll(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds, cancellationToken);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateReimageAllRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateReimageAllRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, vmInstanceIds).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1231,7 +1231,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.SetOrchestrationServiceStateAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateSetOrchestrationServiceStateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateSetOrchestrationServiceStateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1261,7 +1261,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRestClient.SetOrchestrationServiceState(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateSetOrchestrationServiceStateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateSetOrchestrationServiceStateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1287,7 +1287,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRollingUpgradeRestClient.CancelAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateCancelRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateCancelRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1313,7 +1313,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRollingUpgradeRestClient.Cancel(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateCancelRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateCancelRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1339,7 +1339,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRollingUpgradeRestClient.StartOSUpgradeAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateStartOSUpgradeRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateStartOSUpgradeRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1365,7 +1365,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRollingUpgradeRestClient.StartOSUpgrade(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateStartOSUpgradeRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateStartOSUpgradeRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1391,7 +1391,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRollingUpgradeRestClient.StartExtensionUpgradeAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateStartExtensionUpgradeRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateStartExtensionUpgradeRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1417,7 +1417,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRollingUpgradeRestClient.StartExtensionUpgrade(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateStartExtensionUpgradeRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateStartExtensionUpgradeRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

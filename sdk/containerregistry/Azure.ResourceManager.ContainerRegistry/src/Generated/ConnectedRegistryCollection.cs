@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _connectedRegistryRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ConnectedRegistryResource>(new ConnectedRegistryOperationSource(Client), _connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ConnectedRegistryResource>(new ConnectedRegistryOperationSource(Client), _connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _connectedRegistryRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, data, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ConnectedRegistryResource>(new ConnectedRegistryOperationSource(Client), _connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ConnectedRegistryResource>(new ConnectedRegistryOperationSource(Client), _connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

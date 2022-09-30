@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = await _dnsForwardingRulesetRestClient.CreateOrUpdateAsync(rulesetName, Id.SubscriptionId, Id.ResourceGroupName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(new DnsForwardingRulesetOperationSource(Client), _dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateCreateOrUpdateRequest(rulesetName, Id.SubscriptionId, Id.ResourceGroupName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(new DnsForwardingRulesetOperationSource(Client), _dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateCreateOrUpdateRequest(rulesetName, Id.SubscriptionId, Id.ResourceGroupName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = _dnsForwardingRulesetRestClient.CreateOrUpdate(rulesetName, Id.SubscriptionId, Id.ResourceGroupName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(new DnsForwardingRulesetOperationSource(Client), _dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateCreateOrUpdateRequest(rulesetName, Id.SubscriptionId, Id.ResourceGroupName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(new DnsForwardingRulesetOperationSource(Client), _dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateCreateOrUpdateRequest(rulesetName, Id.SubscriptionId, Id.ResourceGroupName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _virtualClusterRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_virtualClusterClientDiagnostics, Pipeline, _virtualClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_virtualClusterClientDiagnostics, Pipeline, _virtualClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _virtualClusterRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation(_virtualClusterClientDiagnostics, Pipeline, _virtualClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_virtualClusterClientDiagnostics, Pipeline, _virtualClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _virtualClusterRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<VirtualClusterResource>(new VirtualClusterOperationSource(Client), _virtualClusterClientDiagnostics, Pipeline, _virtualClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<VirtualClusterResource>(new VirtualClusterOperationSource(Client), _virtualClusterClientDiagnostics, Pipeline, _virtualClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _virtualClusterRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new SqlArmOperation<VirtualClusterResource>(new VirtualClusterOperationSource(Client), _virtualClusterClientDiagnostics, Pipeline, _virtualClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<VirtualClusterResource>(new VirtualClusterOperationSource(Client), _virtualClusterClientDiagnostics, Pipeline, _virtualClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

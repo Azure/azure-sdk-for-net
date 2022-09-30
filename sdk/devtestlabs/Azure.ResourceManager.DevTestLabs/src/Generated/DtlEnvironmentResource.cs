@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _dtlEnvironmentEnvironmentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_dtlEnvironmentEnvironmentsClientDiagnostics, Pipeline, _dtlEnvironmentEnvironmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation(_dtlEnvironmentEnvironmentsClientDiagnostics, Pipeline, _dtlEnvironmentEnvironmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _dtlEnvironmentEnvironmentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_dtlEnvironmentEnvironmentsClientDiagnostics, Pipeline, _dtlEnvironmentEnvironmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation(_dtlEnvironmentEnvironmentsClientDiagnostics, Pipeline, _dtlEnvironmentEnvironmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

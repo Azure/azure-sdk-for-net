@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _armDeploymentDeploymentsRestClient.DeleteAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation(_armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation(_armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _armDeploymentDeploymentsRestClient.DeleteAtScope(Id.Parent, Id.Name, cancellationToken);
-                var operation = new ResourcesArmOperation(_armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation(_armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _armDeploymentDeploymentsRestClient.CreateOrUpdateAtScopeAsync(Id.Parent, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<ArmDeploymentResource>(new ArmDeploymentOperationSource(Client), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmDeploymentResource>(new ArmDeploymentOperationSource(Client), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _armDeploymentDeploymentsRestClient.CreateOrUpdateAtScope(Id.Parent, Id.Name, content, cancellationToken);
-                var operation = new ResourcesArmOperation<ArmDeploymentResource>(new ArmDeploymentOperationSource(Client), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmDeploymentResource>(new ArmDeploymentOperationSource(Client), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _armDeploymentDeploymentsRestClient.ValidateAtScopeAsync(Id.Parent, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(new ArmDeploymentValidateResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(new ArmDeploymentValidateResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _armDeploymentDeploymentsRestClient.ValidateAtScope(Id.Parent, Id.Name, content, cancellationToken);
-                var operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(new ArmDeploymentValidateResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(new ArmDeploymentValidateResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

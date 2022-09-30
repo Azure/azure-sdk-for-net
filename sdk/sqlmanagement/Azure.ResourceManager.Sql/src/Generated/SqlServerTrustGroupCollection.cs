@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerTrustGroupServerTrustGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName), serverTrustGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerTrustGroupResource>(new SqlServerTrustGroupOperationSource(Client), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, _sqlServerTrustGroupServerTrustGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName), serverTrustGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerTrustGroupResource>(new SqlServerTrustGroupOperationSource(Client), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, _sqlServerTrustGroupServerTrustGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName), serverTrustGroupName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerTrustGroupServerTrustGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName), serverTrustGroupName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerTrustGroupResource>(new SqlServerTrustGroupOperationSource(Client), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, _sqlServerTrustGroupServerTrustGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName), serverTrustGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerTrustGroupResource>(new SqlServerTrustGroupOperationSource(Client), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, _sqlServerTrustGroupServerTrustGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName), serverTrustGroupName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

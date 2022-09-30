@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PrivateDns
             try
             {
                 var response = await _privateZoneRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateDnsArmOperation(_privateZoneClientDiagnostics, Pipeline, _privateZoneRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new PrivateDnsArmOperation(_privateZoneClientDiagnostics, Pipeline, _privateZoneRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.PrivateDns
             try
             {
                 var response = _privateZoneRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, cancellationToken);
-                var operation = new PrivateDnsArmOperation(_privateZoneClientDiagnostics, Pipeline, _privateZoneRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new PrivateDnsArmOperation(_privateZoneClientDiagnostics, Pipeline, _privateZoneRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.PrivateDns
             try
             {
                 var response = await _privateZoneRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateDnsArmOperation<PrivateZoneResource>(new PrivateZoneOperationSource(Client), _privateZoneClientDiagnostics, Pipeline, _privateZoneRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new PrivateDnsArmOperation<PrivateZoneResource>(new PrivateZoneOperationSource(Client), _privateZoneClientDiagnostics, Pipeline, _privateZoneRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.PrivateDns
             try
             {
                 var response = _privateZoneRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new PrivateDnsArmOperation<PrivateZoneResource>(new PrivateZoneOperationSource(Client), _privateZoneClientDiagnostics, Pipeline, _privateZoneRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new PrivateDnsArmOperation<PrivateZoneResource>(new PrivateZoneOperationSource(Client), _privateZoneClientDiagnostics, Pipeline, _privateZoneRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

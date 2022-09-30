@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceFabric
             try
             {
                 var response = await _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceFabricArmOperation<ServiceFabricApplicationTypeVersionResource>(new ServiceFabricApplicationTypeVersionOperationSource(Client), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ServiceFabricArmOperation<ServiceFabricApplicationTypeVersionResource>(new ServiceFabricApplicationTypeVersionOperationSource(Client), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ServiceFabric
             try
             {
                 var response = _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken);
-                var operation = new ServiceFabricArmOperation<ServiceFabricApplicationTypeVersionResource>(new ServiceFabricApplicationTypeVersionOperationSource(Client), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ServiceFabricArmOperation<ServiceFabricApplicationTypeVersionResource>(new ServiceFabricApplicationTypeVersionOperationSource(Client), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

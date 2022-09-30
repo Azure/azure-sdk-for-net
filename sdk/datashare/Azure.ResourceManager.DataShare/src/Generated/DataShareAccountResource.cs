@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _dataShareAccountAccountsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _dataShareAccountAccountsClientDiagnostics, Pipeline, _dataShareAccountAccountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _dataShareAccountAccountsClientDiagnostics, Pipeline, _dataShareAccountAccountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _dataShareAccountAccountsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _dataShareAccountAccountsClientDiagnostics, Pipeline, _dataShareAccountAccountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _dataShareAccountAccountsClientDiagnostics, Pipeline, _dataShareAccountAccountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

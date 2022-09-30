@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = await _dnsResolverOutboundEndpointOutboundEndpointsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation(_dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DnsResolverArmOperation(_dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = _dnsResolverOutboundEndpointOutboundEndpointsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation(_dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DnsResolverArmOperation(_dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = await _dnsResolverOutboundEndpointOutboundEndpointsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation<DnsResolverOutboundEndpointResource>(new DnsResolverOutboundEndpointOperationSource(Client), _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DnsResolverArmOperation<DnsResolverOutboundEndpointResource>(new DnsResolverOutboundEndpointOperationSource(Client), _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = _dnsResolverOutboundEndpointOutboundEndpointsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation<DnsResolverOutboundEndpointResource>(new DnsResolverOutboundEndpointOperationSource(Client), _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DnsResolverArmOperation<DnsResolverOutboundEndpointResource>(new DnsResolverOutboundEndpointOperationSource(Client), _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

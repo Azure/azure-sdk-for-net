@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = await _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerDatabaseResource>(new MySqlFlexibleServerDatabaseOperationSource(Client), _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerDatabaseResource>(new MySqlFlexibleServerDatabaseOperationSource(Client), _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, cancellationToken);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerDatabaseResource>(new MySqlFlexibleServerDatabaseOperationSource(Client), _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerDatabaseResource>(new MySqlFlexibleServerDatabaseOperationSource(Client), _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

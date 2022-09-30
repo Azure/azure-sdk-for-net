@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _elasticPoolRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ElasticPoolResource>(new ElasticPoolOperationSource(Client), _elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ElasticPoolResource>(new ElasticPoolOperationSource(Client), _elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _elasticPoolRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, data, cancellationToken);
-                var operation = new SqlArmOperation<ElasticPoolResource>(new ElasticPoolOperationSource(Client), _elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ElasticPoolResource>(new ElasticPoolOperationSource(Client), _elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

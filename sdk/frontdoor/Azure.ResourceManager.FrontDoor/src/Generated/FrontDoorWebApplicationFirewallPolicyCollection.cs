@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = await _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, policyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource>(new FrontDoorWebApplicationFirewallPolicyOperationSource(Client), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource>(new FrontDoorWebApplicationFirewallPolicyOperationSource(Client), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, policyName, data, cancellationToken);
-                var operation = new FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource>(new FrontDoorWebApplicationFirewallPolicyOperationSource(Client), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource>(new FrontDoorWebApplicationFirewallPolicyOperationSource(Client), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

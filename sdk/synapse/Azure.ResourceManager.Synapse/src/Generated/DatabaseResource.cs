@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _databaseKustoPoolDatabasesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_databaseKustoPoolDatabasesClientDiagnostics, Pipeline, _databaseKustoPoolDatabasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_databaseKustoPoolDatabasesClientDiagnostics, Pipeline, _databaseKustoPoolDatabasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _databaseKustoPoolDatabasesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation(_databaseKustoPoolDatabasesClientDiagnostics, Pipeline, _databaseKustoPoolDatabasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_databaseKustoPoolDatabasesClientDiagnostics, Pipeline, _databaseKustoPoolDatabasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _databaseKustoPoolDatabasesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<DatabaseResource>(new DatabaseOperationSource(Client), _databaseKustoPoolDatabasesClientDiagnostics, Pipeline, _databaseKustoPoolDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<DatabaseResource>(new DatabaseOperationSource(Client), _databaseKustoPoolDatabasesClientDiagnostics, Pipeline, _databaseKustoPoolDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _databaseKustoPoolDatabasesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SynapseArmOperation<DatabaseResource>(new DatabaseOperationSource(Client), _databaseKustoPoolDatabasesClientDiagnostics, Pipeline, _databaseKustoPoolDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<DatabaseResource>(new DatabaseOperationSource(Client), _databaseKustoPoolDatabasesClientDiagnostics, Pipeline, _databaseKustoPoolDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

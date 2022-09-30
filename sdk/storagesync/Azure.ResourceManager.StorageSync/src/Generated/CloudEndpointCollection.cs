@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.StorageSync
             try
             {
                 var response = await _cloudEndpointRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cloudEndpointName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation<CloudEndpointResource>(new CloudEndpointOperationSource(Client), _cloudEndpointClientDiagnostics, Pipeline, _cloudEndpointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cloudEndpointName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageSyncArmOperation<CloudEndpointResource>(new CloudEndpointOperationSource(Client), _cloudEndpointClientDiagnostics, Pipeline, _cloudEndpointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cloudEndpointName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.StorageSync
             try
             {
                 var response = _cloudEndpointRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cloudEndpointName, content, cancellationToken);
-                var operation = new StorageSyncArmOperation<CloudEndpointResource>(new CloudEndpointOperationSource(Client), _cloudEndpointClientDiagnostics, Pipeline, _cloudEndpointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cloudEndpointName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageSyncArmOperation<CloudEndpointResource>(new CloudEndpointOperationSource(Client), _cloudEndpointClientDiagnostics, Pipeline, _cloudEndpointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cloudEndpointName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

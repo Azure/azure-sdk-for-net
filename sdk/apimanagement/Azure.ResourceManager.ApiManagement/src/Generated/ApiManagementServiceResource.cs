@@ -1216,7 +1216,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementServiceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation(_apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation(_apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1242,7 +1242,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementServiceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ApiManagementArmOperation(_apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation(_apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1272,7 +1272,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementServiceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1302,7 +1302,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementServiceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

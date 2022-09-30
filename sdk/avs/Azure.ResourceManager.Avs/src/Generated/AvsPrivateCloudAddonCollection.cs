@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _avsPrivateCloudAddonAddonsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addonName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<AvsPrivateCloudAddonResource>(new AvsPrivateCloudAddonOperationSource(Client), _avsPrivateCloudAddonAddonsClientDiagnostics, Pipeline, _avsPrivateCloudAddonAddonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addonName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<AvsPrivateCloudAddonResource>(new AvsPrivateCloudAddonOperationSource(Client), _avsPrivateCloudAddonAddonsClientDiagnostics, Pipeline, _avsPrivateCloudAddonAddonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addonName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _avsPrivateCloudAddonAddonsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addonName, data, cancellationToken);
-                var operation = new AvsArmOperation<AvsPrivateCloudAddonResource>(new AvsPrivateCloudAddonOperationSource(Client), _avsPrivateCloudAddonAddonsClientDiagnostics, Pipeline, _avsPrivateCloudAddonAddonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addonName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<AvsPrivateCloudAddonResource>(new AvsPrivateCloudAddonOperationSource(Client), _avsPrivateCloudAddonAddonsClientDiagnostics, Pipeline, _avsPrivateCloudAddonAddonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addonName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

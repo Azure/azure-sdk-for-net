@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _dedicatedSQLminimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<DedicatedSQLminimalTlsSettingResource>(new DedicatedSQLminimalTlsSettingOperationSource(Client), _dedicatedSQLminimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics, Pipeline, _dedicatedSQLminimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<DedicatedSQLminimalTlsSettingResource>(new DedicatedSQLminimalTlsSettingOperationSource(Client), _dedicatedSQLminimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics, Pipeline, _dedicatedSQLminimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _dedicatedSQLminimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SynapseArmOperation<DedicatedSQLminimalTlsSettingResource>(new DedicatedSQLminimalTlsSettingOperationSource(Client), _dedicatedSQLminimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics, Pipeline, _dedicatedSQLminimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<DedicatedSQLminimalTlsSettingResource>(new DedicatedSQLminimalTlsSettingOperationSource(Client), _dedicatedSQLminimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics, Pipeline, _dedicatedSQLminimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

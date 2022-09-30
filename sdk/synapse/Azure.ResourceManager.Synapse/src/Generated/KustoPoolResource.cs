@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _kustoPoolRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _kustoPoolRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _kustoPoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<KustoPoolResource>(new KustoPoolOperationSource(Client), _kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<KustoPoolResource>(new KustoPoolOperationSource(Client), _kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _kustoPoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, cancellationToken);
-                var operation = new SynapseArmOperation<KustoPoolResource>(new KustoPoolOperationSource(Client), _kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<KustoPoolResource>(new KustoPoolOperationSource(Client), _kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _kustoPoolRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _kustoPoolRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _kustoPoolRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _kustoPoolRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _kustoPoolRestClient.AddLanguageExtensionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToAdd, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateAddLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToAdd).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateAddLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToAdd).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _kustoPoolRestClient.AddLanguageExtensions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToAdd, cancellationToken);
-                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateAddLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToAdd).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateAddLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToAdd).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _kustoPoolRestClient.RemoveLanguageExtensionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToRemove, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateRemoveLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToRemove).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateRemoveLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToRemove).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _kustoPoolRestClient.RemoveLanguageExtensions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToRemove, cancellationToken);
-                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateRemoveLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToRemove).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateRemoveLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToRemove).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _kustoPoolRestClient.DetachFollowerDatabasesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, followerDatabaseToRemove, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateDetachFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, followerDatabaseToRemove).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateDetachFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, followerDatabaseToRemove).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _kustoPoolRestClient.DetachFollowerDatabases(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, followerDatabaseToRemove, cancellationToken);
-                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateDetachFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, followerDatabaseToRemove).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_kustoPoolClientDiagnostics, Pipeline, _kustoPoolRestClient.CreateDetachFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, followerDatabaseToRemove).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

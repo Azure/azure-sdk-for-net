@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             try
             {
                 var response = await _sqlVmSqlVirtualMachinesRestClient.DeleteAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlVirtualMachineArmOperation(_sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateDeleteRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlVirtualMachineArmOperation(_sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateDeleteRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             try
             {
                 var response = _sqlVmSqlVirtualMachinesRestClient.Delete(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                var operation = new SqlVirtualMachineArmOperation(_sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateDeleteRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlVirtualMachineArmOperation(_sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateDeleteRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             try
             {
                 var response = await _sqlVmSqlVirtualMachinesRestClient.UpdateAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlVirtualMachineArmOperation<SqlVmResource>(new SqlVmOperationSource(Client), _sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateUpdateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlVirtualMachineArmOperation<SqlVmResource>(new SqlVmOperationSource(Client), _sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateUpdateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             try
             {
                 var response = _sqlVmSqlVirtualMachinesRestClient.Update(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, patch, cancellationToken);
-                var operation = new SqlVirtualMachineArmOperation<SqlVmResource>(new SqlVmOperationSource(Client), _sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateUpdateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlVirtualMachineArmOperation<SqlVmResource>(new SqlVmOperationSource(Client), _sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateUpdateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             try
             {
                 var response = await _sqlVmSqlVirtualMachinesRestClient.RedeployAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlVirtualMachineArmOperation(_sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateRedeployRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlVirtualMachineArmOperation(_sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateRedeployRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             try
             {
                 var response = _sqlVmSqlVirtualMachinesRestClient.Redeploy(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                var operation = new SqlVirtualMachineArmOperation(_sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateRedeployRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlVirtualMachineArmOperation(_sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateRedeployRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             try
             {
                 var response = await _sqlVmSqlVirtualMachinesRestClient.StartAssessmentAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlVirtualMachineArmOperation(_sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateStartAssessmentRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlVirtualMachineArmOperation(_sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateStartAssessmentRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             try
             {
                 var response = _sqlVmSqlVirtualMachinesRestClient.StartAssessment(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                var operation = new SqlVirtualMachineArmOperation(_sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateStartAssessmentRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlVirtualMachineArmOperation(_sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, _sqlVmSqlVirtualMachinesRestClient.CreateStartAssessmentRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

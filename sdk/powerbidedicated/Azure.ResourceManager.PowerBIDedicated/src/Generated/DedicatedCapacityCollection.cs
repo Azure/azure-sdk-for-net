@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             try
             {
                 var response = await _dedicatedCapacityCapacitiesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PowerBIDedicatedArmOperation<DedicatedCapacityResource>(new DedicatedCapacityOperationSource(Client), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, _dedicatedCapacityCapacitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new PowerBIDedicatedArmOperation<DedicatedCapacityResource>(new DedicatedCapacityOperationSource(Client), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, _dedicatedCapacityCapacitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             try
             {
                 var response = _dedicatedCapacityCapacitiesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, data, cancellationToken);
-                var operation = new PowerBIDedicatedArmOperation<DedicatedCapacityResource>(new DedicatedCapacityOperationSource(Client), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, _dedicatedCapacityCapacitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new PowerBIDedicatedArmOperation<DedicatedCapacityResource>(new DedicatedCapacityOperationSource(Client), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, _dedicatedCapacityCapacitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

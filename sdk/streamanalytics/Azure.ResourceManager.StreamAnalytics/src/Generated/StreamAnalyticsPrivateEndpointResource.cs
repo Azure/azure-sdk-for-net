@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = await _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation(_streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics, Pipeline, _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new StreamAnalyticsArmOperation(_streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics, Pipeline, _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation(_streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics, Pipeline, _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new StreamAnalyticsArmOperation(_streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics, Pipeline, _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

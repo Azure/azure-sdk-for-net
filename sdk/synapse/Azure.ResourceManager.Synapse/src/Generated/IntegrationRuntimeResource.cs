@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _integrationRuntimeResourceIntegrationRuntimesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _integrationRuntimeResourceIntegrationRuntimesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation(_integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _integrationRuntimeResourceIntegrationRuntimesRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<IntegrationRuntimeStatusResponse>(new IntegrationRuntimeStatusResponseOperationSource(), _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<IntegrationRuntimeStatusResponse>(new IntegrationRuntimeStatusResponseOperationSource(), _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _integrationRuntimeResourceIntegrationRuntimesRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation<IntegrationRuntimeStatusResponse>(new IntegrationRuntimeStatusResponseOperationSource(), _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<IntegrationRuntimeStatusResponse>(new IntegrationRuntimeStatusResponseOperationSource(), _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _integrationRuntimeResourceIntegrationRuntimesRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _integrationRuntimeResourceIntegrationRuntimesRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation(_integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _integrationRuntimeResourceIntegrationRuntimesRestClient.EnableInteractiveQueryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateEnableInteractiveQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateEnableInteractiveQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _integrationRuntimeResourceIntegrationRuntimesRestClient.EnableInteractiveQuery(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation(_integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateEnableInteractiveQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateEnableInteractiveQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _integrationRuntimeResourceIntegrationRuntimesRestClient.DisableInteractiveQueryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateDisableInteractiveQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateDisableInteractiveQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _integrationRuntimeResourceIntegrationRuntimesRestClient.DisableInteractiveQuery(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation(_integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateDisableInteractiveQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateDisableInteractiveQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _integrationRuntimeObjectMetadataRestClient.RefreshAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SsisObjectMetadataStatusResponse>(new SsisObjectMetadataStatusResponseOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SsisObjectMetadataStatusResponse>(new SsisObjectMetadataStatusResponseOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _integrationRuntimeObjectMetadataRestClient.Refresh(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation<SsisObjectMetadataStatusResponse>(new SsisObjectMetadataStatusResponseOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SsisObjectMetadataStatusResponse>(new SsisObjectMetadataStatusResponseOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

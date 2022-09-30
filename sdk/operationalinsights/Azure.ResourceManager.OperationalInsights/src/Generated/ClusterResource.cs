@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _clusterRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation(_clusterClientDiagnostics, Pipeline, _clusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new OperationalInsightsArmOperation(_clusterClientDiagnostics, Pipeline, _clusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _clusterRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new OperationalInsightsArmOperation(_clusterClientDiagnostics, Pipeline, _clusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new OperationalInsightsArmOperation(_clusterClientDiagnostics, Pipeline, _clusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _clusterRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<ClusterResource>(new ClusterOperationSource(Client), _clusterClientDiagnostics, Pipeline, _clusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new OperationalInsightsArmOperation<ClusterResource>(new ClusterOperationSource(Client), _clusterClientDiagnostics, Pipeline, _clusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _clusterRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<ClusterResource>(new ClusterOperationSource(Client), _clusterClientDiagnostics, Pipeline, _clusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new OperationalInsightsArmOperation<ClusterResource>(new ClusterOperationSource(Client), _clusterClientDiagnostics, Pipeline, _clusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

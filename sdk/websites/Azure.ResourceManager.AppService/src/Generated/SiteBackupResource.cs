@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteBackupWebAppsRestClient.RestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(_siteBackupWebAppsClientDiagnostics, Pipeline, _siteBackupWebAppsRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_siteBackupWebAppsClientDiagnostics, Pipeline, _siteBackupWebAppsRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteBackupWebAppsRestClient.Restore(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info, cancellationToken);
-                var operation = new AppServiceArmOperation(_siteBackupWebAppsClientDiagnostics, Pipeline, _siteBackupWebAppsRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_siteBackupWebAppsClientDiagnostics, Pipeline, _siteBackupWebAppsRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

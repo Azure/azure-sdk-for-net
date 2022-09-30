@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = await _dataBoxEdgeTriggerTriggersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeTriggerResource>(new DataBoxEdgeTriggerOperationSource(Client), _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, _dataBoxEdgeTriggerTriggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeTriggerResource>(new DataBoxEdgeTriggerOperationSource(Client), _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, _dataBoxEdgeTriggerTriggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = _dataBoxEdgeTriggerTriggersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeTriggerResource>(new DataBoxEdgeTriggerOperationSource(Client), _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, _dataBoxEdgeTriggerTriggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeTriggerResource>(new DataBoxEdgeTriggerOperationSource(Client), _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, _dataBoxEdgeTriggerTriggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _sourceControlContainerAppsSourceControlsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<SourceControlResource>(new SourceControlOperationSource(Client), _sourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, _sourceControlContainerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation<SourceControlResource>(new SourceControlOperationSource(Client), _sourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, _sourceControlContainerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _sourceControlContainerAppsSourceControlsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlName, data, cancellationToken);
-                var operation = new AppContainersArmOperation<SourceControlResource>(new SourceControlOperationSource(Client), _sourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, _sourceControlContainerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation<SourceControlResource>(new SourceControlOperationSource(Client), _sourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, _sourceControlContainerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

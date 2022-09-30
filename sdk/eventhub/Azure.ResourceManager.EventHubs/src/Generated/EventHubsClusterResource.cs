@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = await _eventHubsClusterClustersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation(_eventHubsClusterClustersClientDiagnostics, Pipeline, _eventHubsClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventHubsArmOperation(_eventHubsClusterClustersClientDiagnostics, Pipeline, _eventHubsClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _eventHubsClusterClustersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new EventHubsArmOperation(_eventHubsClusterClustersClientDiagnostics, Pipeline, _eventHubsClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventHubsArmOperation(_eventHubsClusterClustersClientDiagnostics, Pipeline, _eventHubsClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = await _eventHubsClusterClustersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation<EventHubsClusterResource>(new EventHubsClusterOperationSource(Client), _eventHubsClusterClustersClientDiagnostics, Pipeline, _eventHubsClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventHubsArmOperation<EventHubsClusterResource>(new EventHubsClusterOperationSource(Client), _eventHubsClusterClustersClientDiagnostics, Pipeline, _eventHubsClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _eventHubsClusterClustersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new EventHubsArmOperation<EventHubsClusterResource>(new EventHubsClusterOperationSource(Client), _eventHubsClusterClustersClientDiagnostics, Pipeline, _eventHubsClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventHubsArmOperation<EventHubsClusterResource>(new EventHubsClusterOperationSource(Client), _eventHubsClusterClustersClientDiagnostics, Pipeline, _eventHubsClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

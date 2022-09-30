@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = await _edgeOrderAddressRestClient.DeleteAddressByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeOrderArmOperation(_edgeOrderAddressClientDiagnostics, Pipeline, _edgeOrderAddressRestClient.CreateDeleteAddressByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new EdgeOrderArmOperation(_edgeOrderAddressClientDiagnostics, Pipeline, _edgeOrderAddressRestClient.CreateDeleteAddressByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = _edgeOrderAddressRestClient.DeleteAddressByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new EdgeOrderArmOperation(_edgeOrderAddressClientDiagnostics, Pipeline, _edgeOrderAddressRestClient.CreateDeleteAddressByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new EdgeOrderArmOperation(_edgeOrderAddressClientDiagnostics, Pipeline, _edgeOrderAddressRestClient.CreateDeleteAddressByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = await _edgeOrderAddressRestClient.UpdateAddressAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(new EdgeOrderAddressOperationSource(Client), _edgeOrderAddressClientDiagnostics, Pipeline, _edgeOrderAddressRestClient.CreateUpdateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(new EdgeOrderAddressOperationSource(Client), _edgeOrderAddressClientDiagnostics, Pipeline, _edgeOrderAddressRestClient.CreateUpdateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = _edgeOrderAddressRestClient.UpdateAddress(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken);
-                var operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(new EdgeOrderAddressOperationSource(Client), _edgeOrderAddressClientDiagnostics, Pipeline, _edgeOrderAddressRestClient.CreateUpdateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(new EdgeOrderAddressOperationSource(Client), _edgeOrderAddressClientDiagnostics, Pipeline, _edgeOrderAddressRestClient.CreateUpdateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.StorageSync
             try
             {
                 var response = await _storageSyncServerEndpointServerEndpointsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation(_storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, _storageSyncServerEndpointServerEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageSyncArmOperation(_storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, _storageSyncServerEndpointServerEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.StorageSync
             try
             {
                 var response = _storageSyncServerEndpointServerEndpointsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new StorageSyncArmOperation(_storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, _storageSyncServerEndpointServerEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageSyncArmOperation(_storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, _storageSyncServerEndpointServerEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.StorageSync
             try
             {
                 var response = await _storageSyncServerEndpointServerEndpointsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation<StorageSyncServerEndpointResource>(new StorageSyncServerEndpointOperationSource(Client), _storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, _storageSyncServerEndpointServerEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageSyncArmOperation<StorageSyncServerEndpointResource>(new StorageSyncServerEndpointOperationSource(Client), _storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, _storageSyncServerEndpointServerEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.StorageSync
             try
             {
                 var response = _storageSyncServerEndpointServerEndpointsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new StorageSyncArmOperation<StorageSyncServerEndpointResource>(new StorageSyncServerEndpointOperationSource(Client), _storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, _storageSyncServerEndpointServerEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageSyncArmOperation<StorageSyncServerEndpointResource>(new StorageSyncServerEndpointOperationSource(Client), _storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, _storageSyncServerEndpointServerEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.StorageSync
             try
             {
                 var response = await _storageSyncServerEndpointServerEndpointsRestClient.RecallActionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation(_storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, _storageSyncServerEndpointServerEndpointsRestClient.CreateRecallActionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageSyncArmOperation(_storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, _storageSyncServerEndpointServerEndpointsRestClient.CreateRecallActionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.StorageSync
             try
             {
                 var response = _storageSyncServerEndpointServerEndpointsRestClient.RecallAction(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new StorageSyncArmOperation(_storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, _storageSyncServerEndpointServerEndpointsRestClient.CreateRecallActionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageSyncArmOperation(_storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, _storageSyncServerEndpointServerEndpointsRestClient.CreateRecallActionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

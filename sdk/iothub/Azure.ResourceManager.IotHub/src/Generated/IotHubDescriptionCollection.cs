@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.IotHub
             try
             {
                 var response = await _iotHubDescriptionIotHubResourceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, _iotHubDescriptionIotHubResourceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, _iotHubDescriptionIotHubResourceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, ifMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotHub
             try
             {
                 var response = _iotHubDescriptionIotHubResourceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, ifMatch, cancellationToken);
-                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, _iotHubDescriptionIotHubResourceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, _iotHubDescriptionIotHubResourceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, ifMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

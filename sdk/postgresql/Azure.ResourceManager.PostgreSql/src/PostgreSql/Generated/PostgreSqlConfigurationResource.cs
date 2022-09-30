@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = await _postgreSqlConfigurationConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PostgreSqlArmOperation<PostgreSqlConfigurationResource>(new PostgreSqlConfigurationOperationSource(Client), _postgreSqlConfigurationConfigurationsClientDiagnostics, Pipeline, _postgreSqlConfigurationConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation<PostgreSqlConfigurationResource>(new PostgreSqlConfigurationOperationSource(Client), _postgreSqlConfigurationConfigurationsClientDiagnostics, Pipeline, _postgreSqlConfigurationConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = _postgreSqlConfigurationConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new PostgreSqlArmOperation<PostgreSqlConfigurationResource>(new PostgreSqlConfigurationOperationSource(Client), _postgreSqlConfigurationConfigurationsClientDiagnostics, Pipeline, _postgreSqlConfigurationConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation<PostgreSqlConfigurationResource>(new PostgreSqlConfigurationOperationSource(Client), _postgreSqlConfigurationConfigurationsClientDiagnostics, Pipeline, _postgreSqlConfigurationConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _workloadNetworkDhcpWorkloadNetworksRestClient.CreateDhcpAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dhcpId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<WorkloadNetworkDhcpResource>(new WorkloadNetworkDhcpOperationSource(Client), _workloadNetworkDhcpWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkDhcpWorkloadNetworksRestClient.CreateCreateDhcpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dhcpId, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<WorkloadNetworkDhcpResource>(new WorkloadNetworkDhcpOperationSource(Client), _workloadNetworkDhcpWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkDhcpWorkloadNetworksRestClient.CreateCreateDhcpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dhcpId, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _workloadNetworkDhcpWorkloadNetworksRestClient.CreateDhcp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dhcpId, data, cancellationToken);
-                var operation = new AvsArmOperation<WorkloadNetworkDhcpResource>(new WorkloadNetworkDhcpOperationSource(Client), _workloadNetworkDhcpWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkDhcpWorkloadNetworksRestClient.CreateCreateDhcpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dhcpId, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<WorkloadNetworkDhcpResource>(new WorkloadNetworkDhcpOperationSource(Client), _workloadNetworkDhcpWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkDhcpWorkloadNetworksRestClient.CreateCreateDhcpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dhcpId, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

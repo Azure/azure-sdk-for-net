@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = await _virtualNetworkRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectedVMwarevSphereArmOperation(_virtualNetworkClientDiagnostics, Pipeline, _virtualNetworkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response, OperationFinalStateVia.Location);
+                var operation = new ConnectedVMwarevSphereArmOperation(_virtualNetworkClientDiagnostics, Pipeline, _virtualNetworkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _virtualNetworkRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken);
-                var operation = new ConnectedVMwarevSphereArmOperation(_virtualNetworkClientDiagnostics, Pipeline, _virtualNetworkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response, OperationFinalStateVia.Location);
+                var operation = new ConnectedVMwarevSphereArmOperation(_virtualNetworkClientDiagnostics, Pipeline, _virtualNetworkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

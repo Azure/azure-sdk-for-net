@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = await _hubRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation(_hubClientDiagnostics, Pipeline, _hubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation(_hubClientDiagnostics, Pipeline, _hubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = _hubRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new CustomerInsightsArmOperation(_hubClientDiagnostics, Pipeline, _hubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation(_hubClientDiagnostics, Pipeline, _hubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

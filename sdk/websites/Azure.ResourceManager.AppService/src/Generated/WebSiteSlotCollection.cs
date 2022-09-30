@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotWebAppsRestClient.CreateOrUpdateSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSiteSlotResource>(new WebSiteSlotOperationSource(Client), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateCreateOrUpdateSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<WebSiteSlotResource>(new WebSiteSlotOperationSource(Client), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateCreateOrUpdateSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotWebAppsRestClient.CreateOrUpdateSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, data, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSiteSlotResource>(new WebSiteSlotOperationSource(Client), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateCreateOrUpdateSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<WebSiteSlotResource>(new WebSiteSlotOperationSource(Client), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateCreateOrUpdateSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

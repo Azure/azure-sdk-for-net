@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _linkedServiceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<LinkedServiceResource>(new LinkedServiceOperationSource(Client), _linkedServiceClientDiagnostics, Pipeline, _linkedServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new OperationalInsightsArmOperation<LinkedServiceResource>(new LinkedServiceOperationSource(Client), _linkedServiceClientDiagnostics, Pipeline, _linkedServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _linkedServiceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<LinkedServiceResource>(new LinkedServiceOperationSource(Client), _linkedServiceClientDiagnostics, Pipeline, _linkedServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new OperationalInsightsArmOperation<LinkedServiceResource>(new LinkedServiceOperationSource(Client), _linkedServiceClientDiagnostics, Pipeline, _linkedServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _linkedServiceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<LinkedServiceResource>(new LinkedServiceOperationSource(Client), _linkedServiceClientDiagnostics, Pipeline, _linkedServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new OperationalInsightsArmOperation<LinkedServiceResource>(new LinkedServiceOperationSource(Client), _linkedServiceClientDiagnostics, Pipeline, _linkedServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _linkedServiceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<LinkedServiceResource>(new LinkedServiceOperationSource(Client), _linkedServiceClientDiagnostics, Pipeline, _linkedServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new OperationalInsightsArmOperation<LinkedServiceResource>(new LinkedServiceOperationSource(Client), _linkedServiceClientDiagnostics, Pipeline, _linkedServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

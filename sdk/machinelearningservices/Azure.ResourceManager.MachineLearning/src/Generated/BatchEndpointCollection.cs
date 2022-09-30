@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _batchEndpointRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<BatchEndpointResource>(new BatchEndpointOperationSource(Client), _batchEndpointClientDiagnostics, Pipeline, _batchEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<BatchEndpointResource>(new BatchEndpointOperationSource(Client), _batchEndpointClientDiagnostics, Pipeline, _batchEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _batchEndpointRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<BatchEndpointResource>(new BatchEndpointOperationSource(Client), _batchEndpointClientDiagnostics, Pipeline, _batchEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<BatchEndpointResource>(new BatchEndpointOperationSource(Client), _batchEndpointClientDiagnostics, Pipeline, _batchEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

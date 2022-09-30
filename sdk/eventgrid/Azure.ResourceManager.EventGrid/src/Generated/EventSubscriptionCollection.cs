@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _eventSubscriptionRestClient.CreateOrUpdateAsync(Id, eventSubscriptionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<EventSubscriptionResource>(new EventSubscriptionOperationSource(Client), _eventSubscriptionClientDiagnostics, Pipeline, _eventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id, eventSubscriptionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<EventSubscriptionResource>(new EventSubscriptionOperationSource(Client), _eventSubscriptionClientDiagnostics, Pipeline, _eventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id, eventSubscriptionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _eventSubscriptionRestClient.CreateOrUpdate(Id, eventSubscriptionName, data, cancellationToken);
-                var operation = new EventGridArmOperation<EventSubscriptionResource>(new EventSubscriptionOperationSource(Client), _eventSubscriptionClientDiagnostics, Pipeline, _eventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id, eventSubscriptionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<EventSubscriptionResource>(new EventSubscriptionOperationSource(Client), _eventSubscriptionClientDiagnostics, Pipeline, _eventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id, eventSubscriptionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

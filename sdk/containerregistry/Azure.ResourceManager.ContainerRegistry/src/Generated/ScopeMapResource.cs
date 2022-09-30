@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _scopeMapRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation(_scopeMapClientDiagnostics, Pipeline, _scopeMapRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation(_scopeMapClientDiagnostics, Pipeline, _scopeMapRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _scopeMapRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ContainerRegistryArmOperation(_scopeMapClientDiagnostics, Pipeline, _scopeMapRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation(_scopeMapClientDiagnostics, Pipeline, _scopeMapRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _scopeMapRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ScopeMapResource>(new ScopeMapOperationSource(Client), _scopeMapClientDiagnostics, Pipeline, _scopeMapRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ScopeMapResource>(new ScopeMapOperationSource(Client), _scopeMapClientDiagnostics, Pipeline, _scopeMapRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _scopeMapRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ScopeMapResource>(new ScopeMapOperationSource(Client), _scopeMapClientDiagnostics, Pipeline, _scopeMapRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ScopeMapResource>(new ScopeMapOperationSource(Client), _scopeMapClientDiagnostics, Pipeline, _scopeMapRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PolicyInsights
             try
             {
                 var response = await _attestationRestClient.CreateOrUpdateAtResourceAsync(Id, attestationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicyInsightsArmOperation<AttestationResource>(new AttestationOperationSource(Client), _attestationClientDiagnostics, Pipeline, _attestationRestClient.CreateCreateOrUpdateAtResourceRequest(Id, attestationName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new PolicyInsightsArmOperation<AttestationResource>(new AttestationOperationSource(Client), _attestationClientDiagnostics, Pipeline, _attestationRestClient.CreateCreateOrUpdateAtResourceRequest(Id, attestationName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.PolicyInsights
             try
             {
                 var response = _attestationRestClient.CreateOrUpdateAtResource(Id, attestationName, data, cancellationToken);
-                var operation = new PolicyInsightsArmOperation<AttestationResource>(new AttestationOperationSource(Client), _attestationClientDiagnostics, Pipeline, _attestationRestClient.CreateCreateOrUpdateAtResourceRequest(Id, attestationName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new PolicyInsightsArmOperation<AttestationResource>(new AttestationOperationSource(Client), _attestationClientDiagnostics, Pipeline, _attestationRestClient.CreateCreateOrUpdateAtResourceRequest(Id, attestationName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

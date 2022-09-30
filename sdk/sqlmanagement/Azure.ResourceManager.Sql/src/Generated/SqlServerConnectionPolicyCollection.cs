@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerConnectionPolicyServerConnectionPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerConnectionPolicyResource>(new SqlServerConnectionPolicyOperationSource(Client), _sqlServerConnectionPolicyServerConnectionPoliciesClientDiagnostics, Pipeline, _sqlServerConnectionPolicyServerConnectionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionPolicyName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerConnectionPolicyResource>(new SqlServerConnectionPolicyOperationSource(Client), _sqlServerConnectionPolicyServerConnectionPoliciesClientDiagnostics, Pipeline, _sqlServerConnectionPolicyServerConnectionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionPolicyName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerConnectionPolicyServerConnectionPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionPolicyName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerConnectionPolicyResource>(new SqlServerConnectionPolicyOperationSource(Client), _sqlServerConnectionPolicyServerConnectionPoliciesClientDiagnostics, Pipeline, _sqlServerConnectionPolicyServerConnectionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionPolicyName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerConnectionPolicyResource>(new SqlServerConnectionPolicyOperationSource(Client), _sqlServerConnectionPolicyServerConnectionPoliciesClientDiagnostics, Pipeline, _sqlServerConnectionPolicyServerConnectionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionPolicyName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

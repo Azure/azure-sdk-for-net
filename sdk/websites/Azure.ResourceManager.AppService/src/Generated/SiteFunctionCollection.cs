@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteFunctionWebAppsRestClient.CreateFunctionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteFunctionResource>(new SiteFunctionOperationSource(Client), _siteFunctionWebAppsClientDiagnostics, Pipeline, _siteFunctionWebAppsRestClient.CreateCreateFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<SiteFunctionResource>(new SiteFunctionOperationSource(Client), _siteFunctionWebAppsClientDiagnostics, Pipeline, _siteFunctionWebAppsRestClient.CreateCreateFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteFunctionWebAppsRestClient.CreateFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteFunctionResource>(new SiteFunctionOperationSource(Client), _siteFunctionWebAppsClientDiagnostics, Pipeline, _siteFunctionWebAppsRestClient.CreateCreateFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<SiteFunctionResource>(new SiteFunctionOperationSource(Client), _siteFunctionWebAppsClientDiagnostics, Pipeline, _siteFunctionWebAppsRestClient.CreateCreateFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

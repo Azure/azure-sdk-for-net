@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _dscNodeConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeConfigurationName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation(_dscNodeConfigurationClientDiagnostics, Pipeline, _dscNodeConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeConfigurationName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new AutomationArmOperation(_dscNodeConfigurationClientDiagnostics, Pipeline, _dscNodeConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeConfigurationName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _dscNodeConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeConfigurationName, content, cancellationToken);
-                var operation = new AutomationArmOperation(_dscNodeConfigurationClientDiagnostics, Pipeline, _dscNodeConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeConfigurationName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new AutomationArmOperation(_dscNodeConfigurationClientDiagnostics, Pipeline, _dscNodeConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeConfigurationName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

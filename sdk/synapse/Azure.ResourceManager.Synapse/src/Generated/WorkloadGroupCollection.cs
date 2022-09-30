@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _workloadGroupSqlPoolWorkloadGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<WorkloadGroupResource>(new WorkloadGroupOperationSource(Client), _workloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, _workloadGroupSqlPoolWorkloadGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<WorkloadGroupResource>(new WorkloadGroupOperationSource(Client), _workloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, _workloadGroupSqlPoolWorkloadGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _workloadGroupSqlPoolWorkloadGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, data, cancellationToken);
-                var operation = new SynapseArmOperation<WorkloadGroupResource>(new WorkloadGroupOperationSource(Client), _workloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, _workloadGroupSqlPoolWorkloadGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<WorkloadGroupResource>(new WorkloadGroupOperationSource(Client), _workloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, _workloadGroupSqlPoolWorkloadGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

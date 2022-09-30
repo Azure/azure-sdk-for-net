@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, _clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, _clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation(_clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, _clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, _clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<ClusterPrincipalAssignmentResource>(new ClusterPrincipalAssignmentOperationSource(Client), _clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, _clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<ClusterPrincipalAssignmentResource>(new ClusterPrincipalAssignmentOperationSource(Client), _clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, _clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SynapseArmOperation<ClusterPrincipalAssignmentResource>(new ClusterPrincipalAssignmentOperationSource(Client), _clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, _clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<ClusterPrincipalAssignmentResource>(new ClusterPrincipalAssignmentOperationSource(Client), _clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, _clusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

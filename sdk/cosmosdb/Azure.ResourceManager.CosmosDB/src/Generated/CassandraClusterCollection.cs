@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cassandraClusterRestClient.CreateUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CassandraClusterResource>(new CassandraClusterOperationSource(Client), _cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraClusterResource>(new CassandraClusterOperationSource(Client), _cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cassandraClusterRestClient.CreateUpdate(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken);
-                var operation = new CosmosDBArmOperation<CassandraClusterResource>(new CassandraClusterOperationSource(Client), _cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraClusterResource>(new CassandraClusterOperationSource(Client), _cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = await _mySqlFlexibleServerServersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = _mySqlFlexibleServerServersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = await _mySqlFlexibleServerServersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(new MySqlFlexibleServerOperationSource(Client), _mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(new MySqlFlexibleServerOperationSource(Client), _mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = _mySqlFlexibleServerServersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(new MySqlFlexibleServerOperationSource(Client), _mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(new MySqlFlexibleServerOperationSource(Client), _mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = await _mySqlFlexibleServerServersRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = _mySqlFlexibleServerServersRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = await _mySqlFlexibleServerServersRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mySqlFlexibleServerRestartParameter, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mySqlFlexibleServerRestartParameter).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mySqlFlexibleServerRestartParameter).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = _mySqlFlexibleServerServersRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mySqlFlexibleServerRestartParameter, cancellationToken);
-                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mySqlFlexibleServerRestartParameter).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mySqlFlexibleServerRestartParameter).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = await _mySqlFlexibleServerServersRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = _mySqlFlexibleServerServersRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = await _mySqlFlexibleServerServersRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = _mySqlFlexibleServerServersRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

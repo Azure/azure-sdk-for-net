@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _workloadNetworkPublicIPWorkloadNetworksRestClient.CreatePublicIPAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicIPId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<WorkloadNetworkPublicIPResource>(new WorkloadNetworkPublicIPOperationSource(Client), _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateCreatePublicIPRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicIPId, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<WorkloadNetworkPublicIPResource>(new WorkloadNetworkPublicIPOperationSource(Client), _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateCreatePublicIPRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicIPId, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _workloadNetworkPublicIPWorkloadNetworksRestClient.CreatePublicIP(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicIPId, data, cancellationToken);
-                var operation = new AvsArmOperation<WorkloadNetworkPublicIPResource>(new WorkloadNetworkPublicIPOperationSource(Client), _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateCreatePublicIPRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicIPId, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<WorkloadNetworkPublicIPResource>(new WorkloadNetworkPublicIPOperationSource(Client), _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateCreatePublicIPRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicIPId, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _fabricReplicationFabricsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _fabricReplicationFabricsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

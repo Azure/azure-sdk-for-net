@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _databaseKustoPoolDatabasesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<DatabaseResource>(new DatabaseOperationSource(Client), _databaseKustoPoolDatabasesClientDiagnostics, Pipeline, _databaseKustoPoolDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<DatabaseResource>(new DatabaseOperationSource(Client), _databaseKustoPoolDatabasesClientDiagnostics, Pipeline, _databaseKustoPoolDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _databaseKustoPoolDatabasesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName, data, cancellationToken);
-                var operation = new SynapseArmOperation<DatabaseResource>(new DatabaseOperationSource(Client), _databaseKustoPoolDatabasesClientDiagnostics, Pipeline, _databaseKustoPoolDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<DatabaseResource>(new DatabaseOperationSource(Client), _databaseKustoPoolDatabasesClientDiagnostics, Pipeline, _databaseKustoPoolDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

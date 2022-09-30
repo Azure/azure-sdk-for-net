@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _staticSiteBuildStaticSitesRestClient.DeleteStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(_staticSiteBuildStaticSitesClientDiagnostics, Pipeline, _staticSiteBuildStaticSitesRestClient.CreateDeleteStaticSiteBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_staticSiteBuildStaticSitesClientDiagnostics, Pipeline, _staticSiteBuildStaticSitesRestClient.CreateDeleteStaticSiteBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSiteBuildStaticSitesRestClient.DeleteStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppServiceArmOperation(_staticSiteBuildStaticSitesClientDiagnostics, Pipeline, _staticSiteBuildStaticSitesRestClient.CreateDeleteStaticSiteBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_staticSiteBuildStaticSitesClientDiagnostics, Pipeline, _staticSiteBuildStaticSitesRestClient.CreateDeleteStaticSiteBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _staticSiteBuildStaticSitesRestClient.CreateZipDeploymentForStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticSiteZipDeploymentEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(_staticSiteBuildStaticSitesClientDiagnostics, Pipeline, _staticSiteBuildStaticSitesRestClient.CreateCreateZipDeploymentForStaticSiteBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticSiteZipDeploymentEnvelope).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_staticSiteBuildStaticSitesClientDiagnostics, Pipeline, _staticSiteBuildStaticSitesRestClient.CreateCreateZipDeploymentForStaticSiteBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticSiteZipDeploymentEnvelope).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSiteBuildStaticSitesRestClient.CreateZipDeploymentForStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticSiteZipDeploymentEnvelope, cancellationToken);
-                var operation = new AppServiceArmOperation(_staticSiteBuildStaticSitesClientDiagnostics, Pipeline, _staticSiteBuildStaticSitesRestClient.CreateCreateZipDeploymentForStaticSiteBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticSiteZipDeploymentEnvelope).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_staticSiteBuildStaticSitesClientDiagnostics, Pipeline, _staticSiteBuildStaticSitesRestClient.CreateCreateZipDeploymentForStaticSiteBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticSiteZipDeploymentEnvelope).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

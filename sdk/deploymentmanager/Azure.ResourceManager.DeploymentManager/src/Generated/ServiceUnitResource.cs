@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DeploymentManager
             try
             {
                 var response = await _serviceUnitResourceServiceUnitsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentManagerArmOperation<ServiceUnitResource>(new ServiceUnitResourceOperationSource(Client), _serviceUnitResourceServiceUnitsClientDiagnostics, Pipeline, _serviceUnitResourceServiceUnitsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DeploymentManagerArmOperation<ServiceUnitResource>(new ServiceUnitResourceOperationSource(Client), _serviceUnitResourceServiceUnitsClientDiagnostics, Pipeline, _serviceUnitResourceServiceUnitsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DeploymentManager
             try
             {
                 var response = _serviceUnitResourceServiceUnitsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new DeploymentManagerArmOperation<ServiceUnitResource>(new ServiceUnitResourceOperationSource(Client), _serviceUnitResourceServiceUnitsClientDiagnostics, Pipeline, _serviceUnitResourceServiceUnitsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DeploymentManagerArmOperation<ServiceUnitResource>(new ServiceUnitResourceOperationSource(Client), _serviceUnitResourceServiceUnitsClientDiagnostics, Pipeline, _serviceUnitResourceServiceUnitsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

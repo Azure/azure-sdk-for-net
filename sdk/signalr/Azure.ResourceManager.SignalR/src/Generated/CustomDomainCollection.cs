@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SignalR
             try
             {
                 var response = await _customDomainSignalRCustomDomainsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SignalRArmOperation<CustomDomainResource>(new CustomDomainOperationSource(Client), _customDomainSignalRCustomDomainsClientDiagnostics, Pipeline, _customDomainSignalRCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SignalRArmOperation<CustomDomainResource>(new CustomDomainOperationSource(Client), _customDomainSignalRCustomDomainsClientDiagnostics, Pipeline, _customDomainSignalRCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SignalR
             try
             {
                 var response = _customDomainSignalRCustomDomainsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new SignalRArmOperation<CustomDomainResource>(new CustomDomainOperationSource(Client), _customDomainSignalRCustomDomainsClientDiagnostics, Pipeline, _customDomainSignalRCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SignalRArmOperation<CustomDomainResource>(new CustomDomainOperationSource(Client), _customDomainSignalRCustomDomainsClientDiagnostics, Pipeline, _customDomainSignalRCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = await _integrationServiceEnvironmentManagedApiRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LogicArmOperation(_integrationServiceEnvironmentManagedApiClientDiagnostics, Pipeline, _integrationServiceEnvironmentManagedApiRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new LogicArmOperation(_integrationServiceEnvironmentManagedApiClientDiagnostics, Pipeline, _integrationServiceEnvironmentManagedApiRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = _integrationServiceEnvironmentManagedApiRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new LogicArmOperation(_integrationServiceEnvironmentManagedApiClientDiagnostics, Pipeline, _integrationServiceEnvironmentManagedApiRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new LogicArmOperation(_integrationServiceEnvironmentManagedApiClientDiagnostics, Pipeline, _integrationServiceEnvironmentManagedApiRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = await _integrationServiceEnvironmentManagedApiRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LogicArmOperation<IntegrationServiceEnvironmentManagedApiResource>(new IntegrationServiceEnvironmentManagedApiOperationSource(Client), _integrationServiceEnvironmentManagedApiClientDiagnostics, Pipeline, _integrationServiceEnvironmentManagedApiRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new LogicArmOperation<IntegrationServiceEnvironmentManagedApiResource>(new IntegrationServiceEnvironmentManagedApiOperationSource(Client), _integrationServiceEnvironmentManagedApiClientDiagnostics, Pipeline, _integrationServiceEnvironmentManagedApiRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = _integrationServiceEnvironmentManagedApiRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new LogicArmOperation<IntegrationServiceEnvironmentManagedApiResource>(new IntegrationServiceEnvironmentManagedApiOperationSource(Client), _integrationServiceEnvironmentManagedApiClientDiagnostics, Pipeline, _integrationServiceEnvironmentManagedApiRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new LogicArmOperation<IntegrationServiceEnvironmentManagedApiResource>(new IntegrationServiceEnvironmentManagedApiOperationSource(Client), _integrationServiceEnvironmentManagedApiClientDiagnostics, Pipeline, _integrationServiceEnvironmentManagedApiRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

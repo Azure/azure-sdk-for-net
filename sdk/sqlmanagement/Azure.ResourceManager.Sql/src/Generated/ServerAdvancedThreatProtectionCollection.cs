@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ServerAdvancedThreatProtectionResource>(new ServerAdvancedThreatProtectionOperationSource(Client), _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ServerAdvancedThreatProtectionResource>(new ServerAdvancedThreatProtectionOperationSource(Client), _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, data, cancellationToken);
-                var operation = new SqlArmOperation<ServerAdvancedThreatProtectionResource>(new ServerAdvancedThreatProtectionOperationSource(Client), _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ServerAdvancedThreatProtectionResource>(new ServerAdvancedThreatProtectionOperationSource(Client), _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

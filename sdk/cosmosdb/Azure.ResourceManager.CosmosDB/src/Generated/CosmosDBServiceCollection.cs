@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBServiceServiceRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBServiceResource>(new CosmosDBServiceOperationSource(Client), _cosmosDBServiceServiceClientDiagnostics, Pipeline, _cosmosDBServiceServiceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBServiceResource>(new CosmosDBServiceOperationSource(Client), _cosmosDBServiceServiceClientDiagnostics, Pipeline, _cosmosDBServiceServiceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBServiceServiceRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceName, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBServiceResource>(new CosmosDBServiceOperationSource(Client), _cosmosDBServiceServiceClientDiagnostics, Pipeline, _cosmosDBServiceServiceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBServiceResource>(new CosmosDBServiceOperationSource(Client), _cosmosDBServiceServiceClientDiagnostics, Pipeline, _cosmosDBServiceServiceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

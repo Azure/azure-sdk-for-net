@@ -6309,7 +6309,7 @@ namespace Azure.IoT.DeviceUpdate
             try
             {
                 using HttpMessage message = CreateImportDevicesRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DeviceManagementClient.ImportDevices", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DeviceManagementClient.ImportDevices", OperationFinalStateVia.NotSpecified, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -6349,7 +6349,7 @@ namespace Azure.IoT.DeviceUpdate
             try
             {
                 using HttpMessage message = CreateImportDevicesRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DeviceManagementClient.ImportDevices", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DeviceManagementClient.ImportDevices", OperationFinalStateVia.NotSpecified, context, waitUntil);
             }
             catch (Exception e)
             {

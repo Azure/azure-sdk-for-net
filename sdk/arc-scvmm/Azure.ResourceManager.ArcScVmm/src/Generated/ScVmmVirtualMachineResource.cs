@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = await _scVmmVirtualMachineVirtualMachinesRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = _scVmmVirtualMachineVirtualMachinesRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = await _scVmmVirtualMachineVirtualMachinesRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = _scVmmVirtualMachineVirtualMachinesRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = await _scVmmVirtualMachineVirtualMachinesRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = _scVmmVirtualMachineVirtualMachinesRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = await _scVmmVirtualMachineVirtualMachinesRestClient.CreateCheckpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateCreateCheckpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateCreateCheckpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = _scVmmVirtualMachineVirtualMachinesRestClient.CreateCheckpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateCreateCheckpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateCreateCheckpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = await _scVmmVirtualMachineVirtualMachinesRestClient.DeleteCheckpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateDeleteCheckpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateDeleteCheckpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = _scVmmVirtualMachineVirtualMachinesRestClient.DeleteCheckpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateDeleteCheckpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateDeleteCheckpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = await _scVmmVirtualMachineVirtualMachinesRestClient.RestoreCheckpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateRestoreCheckpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateRestoreCheckpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = _scVmmVirtualMachineVirtualMachinesRestClient.RestoreCheckpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateRestoreCheckpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new ArcScVmmArmOperation(_scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _scVmmVirtualMachineVirtualMachinesRestClient.CreateRestoreCheckpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

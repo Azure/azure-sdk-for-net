@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServices
             try
             {
                 var response = await _vaultRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesArmOperation<VaultResource>(new VaultOperationSource(Client), _vaultClientDiagnostics, Pipeline, _vaultRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesArmOperation<VaultResource>(new VaultOperationSource(Client), _vaultClientDiagnostics, Pipeline, _vaultRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServices
             try
             {
                 var response = _vaultRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data, cancellationToken);
-                var operation = new RecoveryServicesArmOperation<VaultResource>(new VaultOperationSource(Client), _vaultClientDiagnostics, Pipeline, _vaultRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesArmOperation<VaultResource>(new VaultOperationSource(Client), _vaultClientDiagnostics, Pipeline, _vaultRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

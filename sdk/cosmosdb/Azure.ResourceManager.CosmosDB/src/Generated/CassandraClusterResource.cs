@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cassandraClusterRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cassandraClusterRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation(_cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cassandraClusterRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CassandraClusterResource>(new CassandraClusterOperationSource(Client), _cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraClusterResource>(new CassandraClusterOperationSource(Client), _cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cassandraClusterRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new CosmosDBArmOperation<CassandraClusterResource>(new CassandraClusterOperationSource(Client), _cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraClusterResource>(new CassandraClusterOperationSource(Client), _cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cassandraClusterRestClient.InvokeCommandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CassandraCommandOutput>(new CassandraCommandOutputOperationSource(), _cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateInvokeCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraCommandOutput>(new CassandraCommandOutputOperationSource(), _cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateInvokeCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cassandraClusterRestClient.InvokeCommand(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new CosmosDBArmOperation<CassandraCommandOutput>(new CassandraCommandOutputOperationSource(), _cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateInvokeCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraCommandOutput>(new CassandraCommandOutputOperationSource(), _cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateInvokeCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cassandraClusterRestClient.DeallocateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cassandraClusterRestClient.Deallocate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation(_cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cassandraClusterRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cassandraClusterRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation(_cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

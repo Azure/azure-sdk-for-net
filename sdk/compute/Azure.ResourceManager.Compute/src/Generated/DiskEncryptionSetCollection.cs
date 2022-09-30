@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _diskEncryptionSetRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<DiskEncryptionSetResource>(new DiskEncryptionSetOperationSource(Client), _diskEncryptionSetClientDiagnostics, Pipeline, _diskEncryptionSetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<DiskEncryptionSetResource>(new DiskEncryptionSetOperationSource(Client), _diskEncryptionSetClientDiagnostics, Pipeline, _diskEncryptionSetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _diskEncryptionSetRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, data, cancellationToken);
-                var operation = new ComputeArmOperation<DiskEncryptionSetResource>(new DiskEncryptionSetOperationSource(Client), _diskEncryptionSetClientDiagnostics, Pipeline, _diskEncryptionSetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<DiskEncryptionSetResource>(new DiskEncryptionSetOperationSource(Client), _diskEncryptionSetClientDiagnostics, Pipeline, _diskEncryptionSetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

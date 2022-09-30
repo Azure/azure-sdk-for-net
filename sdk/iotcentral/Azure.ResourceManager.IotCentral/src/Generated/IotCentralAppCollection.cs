@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.IotCentral
             try
             {
                 var response = await _iotCentralAppAppsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new IotCentralArmOperation<IotCentralAppResource>(new IotCentralAppOperationSource(Client), _iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new IotCentralArmOperation<IotCentralAppResource>(new IotCentralAppOperationSource(Client), _iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.IotCentral
             try
             {
                 var response = _iotCentralAppAppsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
-                var operation = new IotCentralArmOperation<IotCentralAppResource>(new IotCentralAppOperationSource(Client), _iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new IotCentralArmOperation<IotCentralAppResource>(new IotCentralAppOperationSource(Client), _iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

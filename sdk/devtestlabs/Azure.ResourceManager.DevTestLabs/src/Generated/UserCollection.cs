@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _userRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation<UserResource>(new UserOperationSource(Client), _userClientDiagnostics, Pipeline, _userRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation<UserResource>(new UserOperationSource(Client), _userClientDiagnostics, Pipeline, _userRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _userRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new DevTestLabsArmOperation<UserResource>(new UserOperationSource(Client), _userClientDiagnostics, Pipeline, _userRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation<UserResource>(new UserOperationSource(Client), _userClientDiagnostics, Pipeline, _userRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

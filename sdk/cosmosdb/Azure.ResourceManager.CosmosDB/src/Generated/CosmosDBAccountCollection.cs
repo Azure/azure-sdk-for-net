@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBAccountDatabaseAccountsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBAccountResource>(new CosmosDBAccountOperationSource(Client), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBAccountResource>(new CosmosDBAccountOperationSource(Client), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBAccountDatabaseAccountsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, accountName, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBAccountResource>(new CosmosDBAccountOperationSource(Client), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBAccountResource>(new CosmosDBAccountOperationSource(Client), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, _cosmosDBAccountDatabaseAccountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

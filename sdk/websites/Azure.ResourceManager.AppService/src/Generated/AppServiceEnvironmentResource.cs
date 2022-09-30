@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _appServiceEnvironmentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(_appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _appServiceEnvironmentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete, cancellationToken);
-                var operation = new AppServiceArmOperation(_appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

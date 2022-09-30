@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotExtensionWebAppsRestClient.CreateMSDeployOperationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteSlotExtensionResource>(new SiteSlotExtensionOperationSource(Client), _siteSlotExtensionWebAppsClientDiagnostics, Pipeline, _siteSlotExtensionWebAppsRestClient.CreateCreateMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<SiteSlotExtensionResource>(new SiteSlotExtensionOperationSource(Client), _siteSlotExtensionWebAppsClientDiagnostics, Pipeline, _siteSlotExtensionWebAppsRestClient.CreateCreateMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotExtensionWebAppsRestClient.CreateMSDeployOperationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteSlotExtensionResource>(new SiteSlotExtensionOperationSource(Client), _siteSlotExtensionWebAppsClientDiagnostics, Pipeline, _siteSlotExtensionWebAppsRestClient.CreateCreateMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<SiteSlotExtensionResource>(new SiteSlotExtensionOperationSource(Client), _siteSlotExtensionWebAppsClientDiagnostics, Pipeline, _siteSlotExtensionWebAppsRestClient.CreateCreateMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

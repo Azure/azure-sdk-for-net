@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Redis
             try
             {
                 var response = await _redisLinkedServerWithPropertyLinkedServerRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisArmOperation<RedisLinkedServerWithPropertyResource>(new RedisLinkedServerWithPropertyOperationSource(Client), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, _redisLinkedServerWithPropertyLinkedServerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RedisArmOperation<RedisLinkedServerWithPropertyResource>(new RedisLinkedServerWithPropertyOperationSource(Client), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, _redisLinkedServerWithPropertyLinkedServerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Redis
             try
             {
                 var response = _redisLinkedServerWithPropertyLinkedServerRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, content, cancellationToken);
-                var operation = new RedisArmOperation<RedisLinkedServerWithPropertyResource>(new RedisLinkedServerWithPropertyOperationSource(Client), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, _redisLinkedServerWithPropertyLinkedServerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RedisArmOperation<RedisLinkedServerWithPropertyResource>(new RedisLinkedServerWithPropertyOperationSource(Client), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, _redisLinkedServerWithPropertyLinkedServerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlDatabaseDatabasesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlDatabaseDatabasesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlDatabaseDatabasesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlDatabaseResource>(new SqlDatabaseOperationSource(Client), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlDatabaseResource>(new SqlDatabaseOperationSource(Client), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -885,7 +885,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlDatabaseDatabasesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new SqlArmOperation<SqlDatabaseResource>(new SqlDatabaseOperationSource(Client), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlDatabaseResource>(new SqlDatabaseOperationSource(Client), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1125,7 +1125,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createDatabaseRestorePointDefinition, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerDatabaseRestorePointResource>(new SqlServerDatabaseRestorePointOperationSource(Client), _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics, Pipeline, _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createDatabaseRestorePointDefinition).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerDatabaseRestorePointResource>(new SqlServerDatabaseRestorePointOperationSource(Client), _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics, Pipeline, _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createDatabaseRestorePointDefinition).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1155,7 +1155,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerDatabaseRestorePointRestorePointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createDatabaseRestorePointDefinition, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerDatabaseRestorePointResource>(new SqlServerDatabaseRestorePointOperationSource(Client), _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics, Pipeline, _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createDatabaseRestorePointDefinition).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerDatabaseRestorePointResource>(new SqlServerDatabaseRestorePointOperationSource(Client), _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics, Pipeline, _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createDatabaseRestorePointDefinition).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1188,7 +1188,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _databaseExtensionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, sqlDatabaseExtension, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ImportExportExtensionsOperationResult>(new ImportExportExtensionsOperationResultOperationSource(), _databaseExtensionsClientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, sqlDatabaseExtension).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ImportExportExtensionsOperationResult>(new ImportExportExtensionsOperationResultOperationSource(), _databaseExtensionsClientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, sqlDatabaseExtension).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1221,7 +1221,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _databaseExtensionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, sqlDatabaseExtension, cancellationToken);
-                var operation = new SqlArmOperation<ImportExportExtensionsOperationResult>(new ImportExportExtensionsOperationResultOperationSource(), _databaseExtensionsClientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, sqlDatabaseExtension).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ImportExportExtensionsOperationResult>(new ImportExportExtensionsOperationResultOperationSource(), _databaseExtensionsClientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, sqlDatabaseExtension).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1833,7 +1833,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlDatabaseDatabasesRestClient.ExportAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseExportDefinition, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseExportDefinition).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseExportDefinition).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1863,7 +1863,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlDatabaseDatabasesRestClient.Export(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseExportDefinition, cancellationToken);
-                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseExportDefinition).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseExportDefinition).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1890,7 +1890,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlDatabaseDatabasesRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1917,7 +1917,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlDatabaseDatabasesRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType, cancellationToken);
-                var operation = new SqlArmOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1947,7 +1947,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlDatabaseDatabasesRestClient.ImportAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, importExistingDatabaseDefinition, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateImportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, importExistingDatabaseDefinition).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateImportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, importExistingDatabaseDefinition).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1977,7 +1977,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlDatabaseDatabasesRestClient.Import(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, importExistingDatabaseDefinition, cancellationToken);
-                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateImportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, importExistingDatabaseDefinition).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateImportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, importExistingDatabaseDefinition).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -2055,7 +2055,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlDatabaseDatabasesRestClient.PauseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlDatabaseResource>(new SqlDatabaseOperationSource(Client), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlDatabaseResource>(new SqlDatabaseOperationSource(Client), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2081,7 +2081,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlDatabaseDatabasesRestClient.Pause(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation<SqlDatabaseResource>(new SqlDatabaseOperationSource(Client), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlDatabaseResource>(new SqlDatabaseOperationSource(Client), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -2107,7 +2107,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlDatabaseDatabasesRestClient.ResumeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlDatabaseResource>(new SqlDatabaseOperationSource(Client), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlDatabaseResource>(new SqlDatabaseOperationSource(Client), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2133,7 +2133,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlDatabaseDatabasesRestClient.Resume(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation<SqlDatabaseResource>(new SqlDatabaseOperationSource(Client), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlDatabaseResource>(new SqlDatabaseOperationSource(Client), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -2159,7 +2159,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlDatabaseDatabasesRestClient.UpgradeDataWarehouseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpgradeDataWarehouseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpgradeDataWarehouseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2185,7 +2185,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlDatabaseDatabasesRestClient.UpgradeDataWarehouse(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpgradeDataWarehouseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpgradeDataWarehouseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

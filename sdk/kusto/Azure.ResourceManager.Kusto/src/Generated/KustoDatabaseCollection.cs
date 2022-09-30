@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = await _kustoDatabaseDatabasesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation<KustoDatabaseResource>(new KustoDatabaseOperationSource(Client), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, _kustoDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation<KustoDatabaseResource>(new KustoDatabaseOperationSource(Client), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, _kustoDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = _kustoDatabaseDatabasesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, cancellationToken);
-                var operation = new KustoArmOperation<KustoDatabaseResource>(new KustoDatabaseOperationSource(Client), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, _kustoDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation<KustoDatabaseResource>(new KustoDatabaseOperationSource(Client), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, _kustoDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

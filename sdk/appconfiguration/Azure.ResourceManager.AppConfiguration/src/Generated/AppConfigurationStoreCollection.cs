@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = await _appConfigurationStoreConfigurationStoresRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(new AppConfigurationStoreOperationSource(Client), _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _appConfigurationStoreConfigurationStoresRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(new AppConfigurationStoreOperationSource(Client), _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _appConfigurationStoreConfigurationStoresRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = _appConfigurationStoreConfigurationStoresRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, data, cancellationToken);
-                var operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(new AppConfigurationStoreOperationSource(Client), _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _appConfigurationStoreConfigurationStoresRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(new AppConfigurationStoreOperationSource(Client), _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _appConfigurationStoreConfigurationStoresRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

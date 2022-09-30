@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = await _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation<KustoManagedPrivateEndpointResource>(new KustoManagedPrivateEndpointOperationSource(Client), _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics, Pipeline, _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation<KustoManagedPrivateEndpointResource>(new KustoManagedPrivateEndpointOperationSource(Client), _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics, Pipeline, _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, data, cancellationToken);
-                var operation = new KustoArmOperation<KustoManagedPrivateEndpointResource>(new KustoManagedPrivateEndpointOperationSource(Client), _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics, Pipeline, _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation<KustoManagedPrivateEndpointResource>(new KustoManagedPrivateEndpointOperationSource(Client), _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics, Pipeline, _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

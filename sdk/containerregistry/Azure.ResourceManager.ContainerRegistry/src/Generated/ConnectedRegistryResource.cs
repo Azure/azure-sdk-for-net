@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _connectedRegistryRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation(_connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation(_connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _connectedRegistryRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ContainerRegistryArmOperation(_connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation(_connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _connectedRegistryRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ConnectedRegistryResource>(new ConnectedRegistryOperationSource(Client), _connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ConnectedRegistryResource>(new ConnectedRegistryOperationSource(Client), _connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _connectedRegistryRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ConnectedRegistryResource>(new ConnectedRegistryOperationSource(Client), _connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ConnectedRegistryResource>(new ConnectedRegistryOperationSource(Client), _connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _connectedRegistryRestClient.DeactivateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation(_connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateDeactivateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation(_connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateDeactivateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _connectedRegistryRestClient.Deactivate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ContainerRegistryArmOperation(_connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateDeactivateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation(_connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateDeactivateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

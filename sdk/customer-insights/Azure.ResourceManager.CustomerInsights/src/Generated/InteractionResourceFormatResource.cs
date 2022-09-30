@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = await _interactionResourceFormatInteractionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation<InteractionResourceFormatResource>(new InteractionResourceFormatOperationSource(Client), _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, _interactionResourceFormatInteractionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation<InteractionResourceFormatResource>(new InteractionResourceFormatOperationSource(Client), _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, _interactionResourceFormatInteractionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = _interactionResourceFormatInteractionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new CustomerInsightsArmOperation<InteractionResourceFormatResource>(new InteractionResourceFormatOperationSource(Client), _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, _interactionResourceFormatInteractionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation<InteractionResourceFormatResource>(new InteractionResourceFormatOperationSource(Client), _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, _interactionResourceFormatInteractionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

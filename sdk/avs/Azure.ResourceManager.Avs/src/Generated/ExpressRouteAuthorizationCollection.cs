@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _expressRouteAuthorizationAuthorizationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(new ExpressRouteAuthorizationOperationSource(Client), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, _expressRouteAuthorizationAuthorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(new ExpressRouteAuthorizationOperationSource(Client), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, _expressRouteAuthorizationAuthorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _expressRouteAuthorizationAuthorizationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, data, cancellationToken);
-                var operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(new ExpressRouteAuthorizationOperationSource(Client), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, _expressRouteAuthorizationAuthorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(new ExpressRouteAuthorizationOperationSource(Client), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, _expressRouteAuthorizationAuthorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

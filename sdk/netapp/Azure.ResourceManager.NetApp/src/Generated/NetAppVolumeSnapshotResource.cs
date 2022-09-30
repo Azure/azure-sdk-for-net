@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = await _netAppVolumeSnapshotSnapshotsRestClient.RestoreFilesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation(_netAppVolumeSnapshotSnapshotsClientDiagnostics, Pipeline, _netAppVolumeSnapshotSnapshotsRestClient.CreateRestoreFilesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation(_netAppVolumeSnapshotSnapshotsClientDiagnostics, Pipeline, _netAppVolumeSnapshotSnapshotsRestClient.CreateRestoreFilesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = _netAppVolumeSnapshotSnapshotsRestClient.RestoreFiles(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new NetAppArmOperation(_netAppVolumeSnapshotSnapshotsClientDiagnostics, Pipeline, _netAppVolumeSnapshotSnapshotsRestClient.CreateRestoreFilesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation(_netAppVolumeSnapshotSnapshotsClientDiagnostics, Pipeline, _netAppVolumeSnapshotSnapshotsRestClient.CreateRestoreFilesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

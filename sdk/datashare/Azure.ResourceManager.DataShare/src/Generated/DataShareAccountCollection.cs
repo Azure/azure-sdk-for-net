@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _dataShareAccountAccountsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<DataShareAccountResource>(new DataShareAccountOperationSource(Client), _dataShareAccountAccountsClientDiagnostics, Pipeline, _dataShareAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataShareArmOperation<DataShareAccountResource>(new DataShareAccountOperationSource(Client), _dataShareAccountAccountsClientDiagnostics, Pipeline, _dataShareAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _dataShareAccountAccountsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken);
-                var operation = new DataShareArmOperation<DataShareAccountResource>(new DataShareAccountOperationSource(Client), _dataShareAccountAccountsClientDiagnostics, Pipeline, _dataShareAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataShareArmOperation<DataShareAccountResource>(new DataShareAccountOperationSource(Client), _dataShareAccountAccountsClientDiagnostics, Pipeline, _dataShareAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _staticSiteUserProvidedFunctionAppStaticSitesRestClient.RegisterUserProvidedFunctionAppWithStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionAppName, data, isForced, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<StaticSiteUserProvidedFunctionAppResource>(new StaticSiteUserProvidedFunctionAppOperationSource(Client), _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics, Pipeline, _staticSiteUserProvidedFunctionAppStaticSitesRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionAppName, data, isForced).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<StaticSiteUserProvidedFunctionAppResource>(new StaticSiteUserProvidedFunctionAppOperationSource(Client), _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics, Pipeline, _staticSiteUserProvidedFunctionAppStaticSitesRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionAppName, data, isForced).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSiteUserProvidedFunctionAppStaticSitesRestClient.RegisterUserProvidedFunctionAppWithStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionAppName, data, isForced, cancellationToken);
-                var operation = new AppServiceArmOperation<StaticSiteUserProvidedFunctionAppResource>(new StaticSiteUserProvidedFunctionAppOperationSource(Client), _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics, Pipeline, _staticSiteUserProvidedFunctionAppStaticSitesRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionAppName, data, isForced).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<StaticSiteUserProvidedFunctionAppResource>(new StaticSiteUserProvidedFunctionAppOperationSource(Client), _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics, Pipeline, _staticSiteUserProvidedFunctionAppStaticSitesRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionAppName, data, isForced).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

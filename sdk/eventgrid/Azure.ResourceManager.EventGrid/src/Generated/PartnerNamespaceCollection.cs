@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _partnerNamespaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerNamespaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<PartnerNamespaceResource>(new PartnerNamespaceOperationSource(Client), _partnerNamespaceClientDiagnostics, Pipeline, _partnerNamespaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerNamespaceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<PartnerNamespaceResource>(new PartnerNamespaceOperationSource(Client), _partnerNamespaceClientDiagnostics, Pipeline, _partnerNamespaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerNamespaceName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _partnerNamespaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, partnerNamespaceName, data, cancellationToken);
-                var operation = new EventGridArmOperation<PartnerNamespaceResource>(new PartnerNamespaceOperationSource(Client), _partnerNamespaceClientDiagnostics, Pipeline, _partnerNamespaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerNamespaceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<PartnerNamespaceResource>(new PartnerNamespaceOperationSource(Client), _partnerNamespaceClientDiagnostics, Pipeline, _partnerNamespaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerNamespaceName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

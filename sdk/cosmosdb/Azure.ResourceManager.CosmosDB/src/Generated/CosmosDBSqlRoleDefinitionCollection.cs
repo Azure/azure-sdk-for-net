@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.CreateUpdateSqlRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlRoleDefinitionResource>(new CosmosDBSqlRoleDefinitionOperationSource(Client), _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.CreateCreateUpdateSqlRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlRoleDefinitionResource>(new CosmosDBSqlRoleDefinitionOperationSource(Client), _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.CreateCreateUpdateSqlRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.CreateUpdateSqlRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlRoleDefinitionResource>(new CosmosDBSqlRoleDefinitionOperationSource(Client), _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.CreateCreateUpdateSqlRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlRoleDefinitionResource>(new CosmosDBSqlRoleDefinitionOperationSource(Client), _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.CreateCreateUpdateSqlRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, content).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HealthcareApis
             try
             {
                 var response = await _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HealthcareApisArmOperation(_healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics, Pipeline, _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new HealthcareApisArmOperation(_healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics, Pipeline, _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HealthcareApis
             try
             {
                 var response = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new HealthcareApisArmOperation(_healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics, Pipeline, _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new HealthcareApisArmOperation(_healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics, Pipeline, _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.HealthcareApis
             try
             {
                 var response = await _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HealthcareApisArmOperation<HealthcareApisIotFhirDestinationResource>(new HealthcareApisIotFhirDestinationOperationSource(Client), _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics, Pipeline, _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new HealthcareApisArmOperation<HealthcareApisIotFhirDestinationResource>(new HealthcareApisIotFhirDestinationOperationSource(Client), _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics, Pipeline, _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.HealthcareApis
             try
             {
                 var response = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new HealthcareApisArmOperation<HealthcareApisIotFhirDestinationResource>(new HealthcareApisIotFhirDestinationOperationSource(Client), _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics, Pipeline, _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new HealthcareApisArmOperation<HealthcareApisIotFhirDestinationResource>(new HealthcareApisIotFhirDestinationOperationSource(Client), _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics, Pipeline, _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

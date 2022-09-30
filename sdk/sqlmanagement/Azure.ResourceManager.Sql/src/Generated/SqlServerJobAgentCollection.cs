@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerJobAgentJobAgentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerJobAgentResource>(new SqlServerJobAgentOperationSource(Client), _sqlServerJobAgentJobAgentsClientDiagnostics, Pipeline, _sqlServerJobAgentJobAgentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerJobAgentResource>(new SqlServerJobAgentOperationSource(Client), _sqlServerJobAgentJobAgentsClientDiagnostics, Pipeline, _sqlServerJobAgentJobAgentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerJobAgentJobAgentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerJobAgentResource>(new SqlServerJobAgentOperationSource(Client), _sqlServerJobAgentJobAgentsClientDiagnostics, Pipeline, _sqlServerJobAgentJobAgentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerJobAgentResource>(new SqlServerJobAgentOperationSource(Client), _sqlServerJobAgentJobAgentsClientDiagnostics, Pipeline, _sqlServerJobAgentJobAgentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

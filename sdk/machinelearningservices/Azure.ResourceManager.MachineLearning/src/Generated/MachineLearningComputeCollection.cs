@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningComputeComputeRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningComputeResource>(new MachineLearningComputeOperationSource(Client), _machineLearningComputeComputeClientDiagnostics, Pipeline, _machineLearningComputeComputeRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningComputeResource>(new MachineLearningComputeOperationSource(Client), _machineLearningComputeComputeClientDiagnostics, Pipeline, _machineLearningComputeComputeRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningComputeComputeRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningComputeResource>(new MachineLearningComputeOperationSource(Client), _machineLearningComputeComputeClientDiagnostics, Pipeline, _machineLearningComputeComputeRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningComputeResource>(new MachineLearningComputeOperationSource(Client), _machineLearningComputeComputeClientDiagnostics, Pipeline, _machineLearningComputeComputeRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

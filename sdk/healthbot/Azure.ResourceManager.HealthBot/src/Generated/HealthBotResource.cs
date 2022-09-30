@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HealthBot
             try
             {
                 var response = await _healthBotBotsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HealthBotArmOperation(_healthBotBotsClientDiagnostics, Pipeline, _healthBotBotsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new HealthBotArmOperation(_healthBotBotsClientDiagnostics, Pipeline, _healthBotBotsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HealthBot
             try
             {
                 var response = _healthBotBotsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new HealthBotArmOperation(_healthBotBotsClientDiagnostics, Pipeline, _healthBotBotsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new HealthBotArmOperation(_healthBotBotsClientDiagnostics, Pipeline, _healthBotBotsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

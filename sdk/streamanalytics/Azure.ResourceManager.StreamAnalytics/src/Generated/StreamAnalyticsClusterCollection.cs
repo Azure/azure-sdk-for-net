@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = await _streamAnalyticsClusterClustersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsClusterResource>(new StreamAnalyticsClusterOperationSource(Client), _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, _streamAnalyticsClusterClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsClusterResource>(new StreamAnalyticsClusterOperationSource(Client), _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, _streamAnalyticsClusterClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = _streamAnalyticsClusterClustersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsClusterResource>(new StreamAnalyticsClusterOperationSource(Client), _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, _streamAnalyticsClusterClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsClusterResource>(new StreamAnalyticsClusterOperationSource(Client), _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, _streamAnalyticsClusterClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

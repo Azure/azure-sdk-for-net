@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateVmGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmGroupId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupOperationSource(Client), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateCreateVmGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmGroupId, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupOperationSource(Client), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateCreateVmGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmGroupId, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateVmGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmGroupId, data, cancellationToken);
-                var operation = new AvsArmOperation<WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupOperationSource(Client), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateCreateVmGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmGroupId, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupOperationSource(Client), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateCreateVmGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmGroupId, data).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

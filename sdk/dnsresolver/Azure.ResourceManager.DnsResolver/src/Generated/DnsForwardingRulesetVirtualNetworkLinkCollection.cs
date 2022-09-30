@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = await _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateOrUpdateAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkLinkName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource>(new DnsForwardingRulesetVirtualNetworkLinkOperationSource(Client), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateCreateOrUpdateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkLinkName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource>(new DnsForwardingRulesetVirtualNetworkLinkOperationSource(Client), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateCreateOrUpdateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkLinkName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateOrUpdate(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkLinkName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource>(new DnsForwardingRulesetVirtualNetworkLinkOperationSource(Client), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateCreateOrUpdateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkLinkName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource>(new DnsForwardingRulesetVirtualNetworkLinkOperationSource(Client), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateCreateOrUpdateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkLinkName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

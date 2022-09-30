@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = await _postgreSqlFlexibleServerServersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = _postgreSqlFlexibleServerServersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = await _postgreSqlFlexibleServerServersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerResource>(new PostgreSqlFlexibleServerOperationSource(Client), _postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerResource>(new PostgreSqlFlexibleServerOperationSource(Client), _postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = _postgreSqlFlexibleServerServersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerResource>(new PostgreSqlFlexibleServerOperationSource(Client), _postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerResource>(new PostgreSqlFlexibleServerOperationSource(Client), _postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = await _postgreSqlFlexibleServerServersRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, postgreSqlFlexibleServerRestartParameter, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, postgreSqlFlexibleServerRestartParameter).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, postgreSqlFlexibleServerRestartParameter).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = _postgreSqlFlexibleServerServersRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, postgreSqlFlexibleServerRestartParameter, cancellationToken);
-                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, postgreSqlFlexibleServerRestartParameter).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, postgreSqlFlexibleServerRestartParameter).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = await _postgreSqlFlexibleServerServersRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = _postgreSqlFlexibleServerServersRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = await _postgreSqlFlexibleServerServersRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = _postgreSqlFlexibleServerServersRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.NotSpecified);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
