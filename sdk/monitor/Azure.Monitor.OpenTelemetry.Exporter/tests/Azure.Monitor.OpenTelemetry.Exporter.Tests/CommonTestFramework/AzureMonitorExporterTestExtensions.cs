@@ -52,7 +52,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         /// <summary>
         /// Extension methods to simplify registering of <see cref="AzureMonitorTraceExporter"/> with <see cref="MockTransmitter"/> for unit tests.
         /// </summary>
-        internal static TracerProviderBuilder AddAzureMonitorTraceExporterForTest(this TracerProviderBuilder builder, out ConcurrentBag<TelemetryItem> telemetryItems)
+        internal static TracerProviderBuilder AddAzureMonitorTraceExporterForTest(this TracerProviderBuilder builder, out SimpleActivityExportProcessor processor, out ConcurrentBag<TelemetryItem> telemetryItems)
+        {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
+            telemetryItems = new ConcurrentBag<TelemetryItem>();
+            processor = new SimpleActivityExportProcessor(new AzureMonitorTraceExporter(new MockTransmitter(telemetryItems)));
+
+            return builder.AddProcessor(processor);
+        }
+
+        /// <summary>
+        /// Extension methods to simplify registering of <see cref="AzureMonitorTraceExporter"/> with <see cref="MockTransmitter"/> for unit tests.
+        /// </summary>
+        internal static TracerProviderBuilder AddAzureMonitorTraceExporterForTest(this TracerProviderBuilder builder,  out ConcurrentBag<TelemetryItem> telemetryItems)
         {
             if (builder == null)
             {

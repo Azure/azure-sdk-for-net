@@ -143,7 +143,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(activitySourceName)
-                .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> activityTelemetryItems)
+                .AddAzureMonitorTraceExporterForTest(out SimpleActivityExportProcessor activityProcessor, out ConcurrentBag<TelemetryItem> activityTelemetryItems)
                 .Build();
 
             var loggerFactory = LoggerFactory.Create(builder =>
@@ -176,6 +176,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             }
 
             // CLEANUP
+            activityProcessor.Shutdown();
             tracerProvider.Dispose();
             loggerFactory.Dispose();
 
