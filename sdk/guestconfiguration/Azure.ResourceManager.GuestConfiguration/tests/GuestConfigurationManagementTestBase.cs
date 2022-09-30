@@ -56,18 +56,21 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests
         protected async Task<GuestConfigurationVmAssignmentCollection> GetGuestConfigurationAssignmentCollectionAsync(string resourceGroupName, string vmName)
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
-            return rg.GetGuestConfigurationVmAssignments(vmName);
+            ResourceIdentifier resourceIdentifier = new ResourceIdentifier($"/subscriptions/{rg.Id.SubscriptionId}/resourceGroups/{rg.Id.Name}/providers/Microsoft.Compute/virtualMachines/{vmName}");
+            return ArmClient.GetGuestConfigurationVmAssignments(resourceIdentifier);
         }
 
         protected async Task<GuestConfigurationHcrpAssignmentCollection> GetGuestConfigurationAssignmentHcrpCollectionAsync(string resourceGroupName, string machineName)
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
-            return rg.GetGuestConfigurationHcrpAssignments(machineName);
+            ResourceIdentifier resourceIdentifier = new ResourceIdentifier($"/subscriptions/{rg.Id.SubscriptionId}/resourceGroups/{rg.Id.Name}/providers/Microsoft.HybridCompute/machines/{machineName}");
+            return ArmClient.GetGuestConfigurationHcrpAssignments(resourceIdentifier);
         }
         protected async Task<GuestConfigurationVmssAssignmentCollection> GetGuestConfigurationVmssAssignmentCollection(string resourceGroupName, string vmssName)
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
-            return rg.GetGuestConfigurationVmssAssignments(vmssName);
+            ResourceIdentifier resourceIdentifier = new ResourceIdentifier($"/subscriptions/{rg.Id.SubscriptionId}/resourceGroups/{rg.Id.Name}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}");
+            return ArmClient.GetGuestConfigurationVmssAssignments(resourceIdentifier);
         }
         public async Task<ResourceGroupResource> GetResourceGroupAsync(string name)
         {
