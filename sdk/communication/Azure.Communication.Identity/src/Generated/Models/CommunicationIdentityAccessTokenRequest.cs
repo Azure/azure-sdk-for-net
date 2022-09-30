@@ -30,5 +30,7 @@ namespace Azure.Communication.Identity.Models
 
         /// <summary> List of scopes attached to the token. </summary>
         public IList<CommunicationTokenScope> Scopes { get; }
+        /// <summary> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </summary>
+        public int? ExpiresInMinutes { get; set; }
     }
 }

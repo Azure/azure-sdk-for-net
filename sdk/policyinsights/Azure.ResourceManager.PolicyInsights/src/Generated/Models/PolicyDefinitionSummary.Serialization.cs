@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static PolicyDefinitionSummary DeserializePolicyDefinitionSummary(JsonElement element)
         {
-            Optional<string> policyDefinitionId = default;
+            Optional<ResourceIdentifier> policyDefinitionId = default;
             Optional<string> policyDefinitionReferenceId = default;
             Optional<IReadOnlyList<string>> policyDefinitionGroupNames = default;
             Optional<string> effect = default;
@@ -24,7 +24,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 if (property.NameEquals("policyDefinitionId"))
                 {
-                    policyDefinitionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    policyDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policyDefinitionReferenceId"))
