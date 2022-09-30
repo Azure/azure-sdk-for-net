@@ -15,15 +15,19 @@ namespace Azure.Communication.CallAutomation
         {
         }
 
-        /// <summary> Gets the event source. </summary>
-        public string EventSource { get; }
-        /// <summary> Gets the operation context. </summary>
-        public string OperationContext { get; }
-        /// <summary> Gets the result information. </summary>
-        public ResultInformation ResultInformation { get; }
-        /// <summary> Used to determine the version of the event. </summary>
-        public string Version { get; }
-        /// <summary> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </summary>
-        public string PublicEventType { get; }
+        /// <summary> Initializes a new instance of PlayFailed. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
+        internal PlayFailed(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
+        {
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CorrelationId = correlationId;
+            OperationContext = operationContext;
+            ResultInformation = resultInformation;
+        }
     }
 }

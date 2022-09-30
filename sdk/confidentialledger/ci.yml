@@ -8,6 +8,8 @@ trigger:
   paths:
     include:
     - sdk/confidentialledger/
+    exclude:
+    - sdk/confidentialledger/Azure.ResourceManager.ConfidentialLedger/
 
 pr:
   branches:
@@ -19,6 +21,8 @@ pr:
   paths:
     include:
     - sdk/confidentialledger/
+    exclude:
+    - sdk/confidentialledger/Azure.ResourceManager.ConfidentialLedger/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
