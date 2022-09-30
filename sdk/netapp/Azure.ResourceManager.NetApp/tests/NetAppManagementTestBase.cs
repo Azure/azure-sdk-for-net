@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.NetApp.Tests
     public class NetAppManagementTestBase : ManagementRecordedTestBase<NetAppManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
+        protected SubscriptionResource DefaultSubscription { get; private set; }
 
         protected NetAppManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -25,9 +26,10 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.LabServices.Models
 {
     /// <summary> Profile for how to handle networking for Labs. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <param name="subnetId"> The external subnet resource id. </param>
         /// <param name="loadBalancerId"> The external load balancer resource id. </param>
         /// <param name="publicIPId"> The external public IP resource id. </param>
-        internal LabNetworkProfile(string subnetId, string loadBalancerId, string publicIPId)
+        internal LabNetworkProfile(ResourceIdentifier subnetId, ResourceIdentifier loadBalancerId, ResourceIdentifier publicIPId)
         {
             SubnetId = subnetId;
             LoadBalancerId = loadBalancerId;
@@ -27,10 +29,10 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> The external subnet resource id. </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
         /// <summary> The external load balancer resource id. </summary>
-        public string LoadBalancerId { get; set; }
+        public ResourceIdentifier LoadBalancerId { get; set; }
         /// <summary> The external public IP resource id. </summary>
-        public string PublicIPId { get; set; }
+        public ResourceIdentifier PublicIPId { get; set; }
     }
 }

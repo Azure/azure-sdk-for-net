@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Kusto
 
             Sku = sku;
             Zones = new ChangeTrackingList<string>();
-            TrustedExternalTenants = new ChangeTrackingList<TrustedExternalTenant>();
+            TrustedExternalTenants = new ChangeTrackingList<KustoClusterTrustedExternalTenant>();
             AllowedIPRangeList = new ChangeTrackingList<string>();
             AcceptedAudiences = new ChangeTrackingList<AcceptedAudience>();
             AllowedFqdnList = new ChangeTrackingList<string>();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="state"> The state of the resource. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="uri"> The cluster URI. </param>
+        /// <param name="clusterUri"> The cluster URI. </param>
         /// <param name="dataIngestionUri"> The cluster data ingestion URI. </param>
         /// <param name="stateReason"> The reason for the cluster&apos;s current state. </param>
         /// <param name="trustedExternalTenants"> The cluster&apos;s external tenants. </param>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="publicIPType"> Indicates what public IP type to create - IPv4 (default), or DualStack (both IPv4 and IPv6). </param>
         /// <param name="virtualClusterGraduationProperties"> Virtual Cluster graduation properties. </param>
         /// <param name="privateEndpointConnections"> A list of private endpoint connections. </param>
-        internal KustoClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KustoSku sku, IList<string> zones, ManagedServiceIdentity identity, ETag? etag, KustoClusterState? state, KustoProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, IList<TrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, LanguageExtensionList languageExtensions, bool? isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess? publicNetworkAccess, IList<string> allowedIPRangeList, KustoClusterEngineType? engineType, IList<AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        internal KustoClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KustoSku sku, IList<string> zones, ManagedServiceIdentity identity, ETag? etag, KustoClusterState? state, KustoProvisioningState? provisioningState, Uri clusterUri, Uri dataIngestionUri, string stateReason, IList<KustoClusterTrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, KustoLanguageExtensionList languageExtensions, bool? isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess? publicNetworkAccess, IList<string> allowedIPRangeList, KustoClusterEngineType? engineType, IList<AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Zones = zones;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Kusto
             ETag = etag;
             State = state;
             ProvisioningState = provisioningState;
-            Uri = uri;
+            ClusterUri = clusterUri;
             DataIngestionUri = dataIngestionUri;
             StateReason = stateReason;
             TrustedExternalTenants = trustedExternalTenants;
@@ -117,13 +117,13 @@ namespace Azure.ResourceManager.Kusto
         /// <summary> The provisioned state of the resource. </summary>
         public KustoProvisioningState? ProvisioningState { get; }
         /// <summary> The cluster URI. </summary>
-        public Uri Uri { get; }
+        public Uri ClusterUri { get; }
         /// <summary> The cluster data ingestion URI. </summary>
         public Uri DataIngestionUri { get; }
         /// <summary> The reason for the cluster&apos;s current state. </summary>
         public string StateReason { get; }
         /// <summary> The cluster&apos;s external tenants. </summary>
-        public IList<TrustedExternalTenant> TrustedExternalTenants { get; }
+        public IList<KustoClusterTrustedExternalTenant> TrustedExternalTenants { get; }
         /// <summary> Optimized auto scale definition. </summary>
         public OptimizedAutoscale OptimizedAutoscale { get; set; }
         /// <summary> A boolean value that indicates if the cluster&apos;s disks are encrypted. </summary>
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.Kusto
         /// <summary> A boolean value that indicates if the purge operations are enabled. </summary>
         public bool? IsPurgeEnabled { get; set; }
         /// <summary> List of the cluster&apos;s language extensions. </summary>
-        internal LanguageExtensionList LanguageExtensions { get; }
+        internal KustoLanguageExtensionList LanguageExtensions { get; }
         /// <summary> The list of language extensions. </summary>
-        public IList<LanguageExtension> LanguageExtensionsValue
+        public IList<KustoLanguageExtension> LanguageExtensionsValue
         {
             get => LanguageExtensions?.Value;
         }

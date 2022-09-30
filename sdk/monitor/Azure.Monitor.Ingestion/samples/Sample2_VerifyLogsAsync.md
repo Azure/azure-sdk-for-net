@@ -14,7 +14,7 @@ TokenCredential credential = new DefaultAzureCredential();
 
 LogsQueryClient logsQueryClient = new(credential);
 LogsBatchQuery batch = new();
-string query = tableName + " | count;";
+string query = tableName + " | Count;";
 string countQueryId = batch.AddWorkspaceQuery(
     workspaceId,
     query,
@@ -22,7 +22,7 @@ string countQueryId = batch.AddWorkspaceQuery(
 
 Response<LogsBatchQueryResultCollection> queryResponse = await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);
 
-Console.WriteLine("Table entry count: " + queryResponse.Value.GetResult<int>(countQueryId).Single());
+Console.WriteLine("Table entry Count: " + queryResponse.Value.GetResult<int>(countQueryId).Single());
 ```
 
 To see the full example source files, see [QueryAsync](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQueryAsync.cs).

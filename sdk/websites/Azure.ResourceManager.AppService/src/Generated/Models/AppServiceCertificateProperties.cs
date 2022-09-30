@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Key Vault container for a certificate that is purchased through Azure. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="keyVaultId"> Key Vault resource Id. </param>
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>
-        internal AppServiceCertificateProperties(string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState)
+        internal AppServiceCertificateProperties(ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState)
         {
             KeyVaultId = keyVaultId;
             KeyVaultSecretName = keyVaultSecretName;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Key Vault resource Id. </summary>
-        public string KeyVaultId { get; set; }
+        public ResourceIdentifier KeyVaultId { get; set; }
         /// <summary> Key Vault secret name. </summary>
         public string KeyVaultSecretName { get; set; }
         /// <summary> Status of the Key Vault secret. </summary>

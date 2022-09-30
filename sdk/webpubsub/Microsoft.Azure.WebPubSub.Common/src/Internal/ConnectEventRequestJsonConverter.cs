@@ -19,6 +19,7 @@ namespace Microsoft.Azure.WebPubSub.Common
                 null,
                 element.ReadToObject<Dictionary<string, string[]>>(ConnectEventRequest.ClaimsProperty),
                 element.ReadToObject<Dictionary<string, string[]>>(ConnectEventRequest.QueryProperty),
+                element.ReadToObject<Dictionary<string, string[]>>(ConnectEventRequest.HeadersProperty),
                 element.ReadToObject<string[]>(ConnectEventRequest.SubprotocolsProperty),
                 element.ReadToObject<WebPubSubClientCertificate[]>(ConnectEventRequest.ClientCertificatesProperty));
         }
@@ -30,6 +31,8 @@ namespace Microsoft.Azure.WebPubSub.Common
             JsonSerializer.Serialize(writer, value.Claims, options);
             writer.WritePropertyName(ConnectEventRequest.QueryProperty);
             JsonSerializer.Serialize(writer, value.Query, options);
+            writer.WritePropertyName(ConnectEventRequest.HeadersProperty);
+            JsonSerializer.Serialize(writer, value.Headers, options);
             writer.WritePropertyName(ConnectEventRequest.SubprotocolsProperty);
             JsonSerializer.Serialize(writer, value.Subprotocols, options);
             writer.WritePropertyName(ConnectEventRequest.ClientCertificatesProperty);

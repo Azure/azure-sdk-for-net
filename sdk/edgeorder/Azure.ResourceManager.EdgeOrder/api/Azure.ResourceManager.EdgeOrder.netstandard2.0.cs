@@ -146,32 +146,6 @@ namespace Azure.ResourceManager.EdgeOrder
 }
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class BillingMeterDetails
-    {
-        internal BillingMeterDetails() { }
-        public string Frequency { get { throw null; } }
-        public Azure.ResourceManager.EdgeOrder.Models.MeterDetails MeterDetails { get { throw null; } }
-        public Azure.ResourceManager.EdgeOrder.Models.MeteringType? MeteringType { get { throw null; } }
-        public string Name { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ChargingType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.ChargingType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ChargingType(string value) { throw null; }
-        public static Azure.ResourceManager.EdgeOrder.Models.ChargingType PerDevice { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.ChargingType PerOrder { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.ChargingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.ChargingType left, Azure.ResourceManager.EdgeOrder.Models.ChargingType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.ChargingType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.ChargingType left, Azure.ResourceManager.EdgeOrder.Models.ChargingType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ConfigurationFilters
     {
         public ConfigurationFilters(Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation hierarchyInformation) { }
@@ -183,12 +157,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public ConfigurationsContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.Models.ConfigurationFilters> configurationFilters) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.EdgeOrder.Models.ConfigurationFilters> ConfigurationFilters { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.CustomerSubscriptionDetails CustomerSubscriptionDetails { get { throw null; } set { } }
-    }
-    public partial class CostInformation
-    {
-        internal CostInformation() { }
-        public System.Uri BillingInfoUri { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.BillingMeterDetails> BillingMeterDetails { get { throw null; } }
     }
     public partial class CustomerSubscriptionDetails
     {
@@ -202,13 +170,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public CustomerSubscriptionRegisteredFeatures() { }
         public string Name { get { throw null; } set { } }
         public string State { get { throw null; } set { } }
-    }
-    public partial class DeviceDetails
-    {
-        internal DeviceDetails() { }
-        public string ManagementResourceId { get { throw null; } }
-        public string ManagementResourceTenantId { get { throw null; } }
-        public string SerialNumber { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DoubleEncryptionStatus : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.DoubleEncryptionStatus>
@@ -359,12 +320,101 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         internal EdgeOrderProduct() { }
         public Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation AvailabilityInformation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ProductConfiguration> Configurations { get { throw null; } }
-        public Azure.ResourceManager.EdgeOrder.Models.CostInformation CostInformation { get { throw null; } }
+        public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductCostInformation CostInformation { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.ProductDescription Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.FilterableProperty> FilterableProperties { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation HierarchyInformation { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ImageInformation> ImageInformation { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation> ImageInformation { get { throw null; } }
+    }
+    public partial class EdgeOrderProductBillingMeterDetails
+    {
+        internal EdgeOrderProductBillingMeterDetails() { }
+        public string Frequency { get { throw null; } }
+        public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeterDetails MeterDetails { get { throw null; } }
+        public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeteringType? MeteringType { get { throw null; } }
+        public string Name { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EdgeOrderProductChargingType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductChargingType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EdgeOrderProductChargingType(string value) { throw null; }
+        public static Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductChargingType PerDevice { get { throw null; } }
+        public static Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductChargingType PerOrder { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductChargingType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductChargingType left, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductChargingType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductChargingType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductChargingType left, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductChargingType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class EdgeOrderProductCostInformation
+    {
+        internal EdgeOrderProductCostInformation() { }
+        public System.Uri BillingInfoUri { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductBillingMeterDetails> BillingMeterDetails { get { throw null; } }
+    }
+    public partial class EdgeOrderProductDeviceDetails
+    {
+        internal EdgeOrderProductDeviceDetails() { }
+        public string ManagementResourceId { get { throw null; } }
+        public string ManagementResourceTenantId { get { throw null; } }
+        public string SerialNumber { get { throw null; } }
+    }
+    public partial class EdgeOrderProductImageInformation
+    {
+        internal EdgeOrderProductImageInformation() { }
+        public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageType? ImageType { get { throw null; } }
+        public System.Uri ImageUri { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EdgeOrderProductImageType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EdgeOrderProductImageType(string value) { throw null; }
+        public static Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageType BulletImage { get { throw null; } }
+        public static Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageType GenericImage { get { throw null; } }
+        public static Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageType MainImage { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageType left, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageType left, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public abstract partial class EdgeOrderProductMeterDetails
+    {
+        protected EdgeOrderProductMeterDetails() { }
+        public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductChargingType? ChargingType { get { throw null; } }
+        public double? Multiplier { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EdgeOrderProductMeteringType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeteringType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EdgeOrderProductMeteringType(string value) { throw null; }
+        public static Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeteringType Adhoc { get { throw null; } }
+        public static Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeteringType OneTime { get { throw null; } }
+        public static Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeteringType Recurring { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeteringType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeteringType left, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeteringType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeteringType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeteringType left, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeteringType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class EdgeOrderShippingAddress
     {
@@ -460,96 +510,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public string ProductLineName { get { throw null; } set { } }
         public string ProductName { get { throw null; } set { } }
     }
-    public partial class ImageInformation
-    {
-        internal ImageInformation() { }
-        public Azure.ResourceManager.EdgeOrder.Models.ImageType? ImageType { get { throw null; } }
-        public System.Uri ImageUri { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ImageType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.ImageType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ImageType(string value) { throw null; }
-        public static Azure.ResourceManager.EdgeOrder.Models.ImageType BulletImage { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.ImageType GenericImage { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.ImageType MainImage { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.ImageType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.ImageType left, Azure.ResourceManager.EdgeOrder.Models.ImageType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.ImageType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.ImageType left, Azure.ResourceManager.EdgeOrder.Models.ImageType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LengthHeightUnit : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.LengthHeightUnit>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LengthHeightUnit(string value) { throw null; }
-        public static Azure.ResourceManager.EdgeOrder.Models.LengthHeightUnit CM { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.LengthHeightUnit IN { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.LengthHeightUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.LengthHeightUnit left, Azure.ResourceManager.EdgeOrder.Models.LengthHeightUnit right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.LengthHeightUnit (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.LengthHeightUnit left, Azure.ResourceManager.EdgeOrder.Models.LengthHeightUnit right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LinkType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.LinkType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LinkType(string value) { throw null; }
-        public static Azure.ResourceManager.EdgeOrder.Models.LinkType Documentation { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.LinkType Generic { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.LinkType KnowMore { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.LinkType SignUp { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.LinkType Specification { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.LinkType TermsAndConditions { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.LinkType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.LinkType left, Azure.ResourceManager.EdgeOrder.Models.LinkType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.LinkType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.LinkType left, Azure.ResourceManager.EdgeOrder.Models.LinkType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public abstract partial class MeterDetails
-    {
-        protected MeterDetails() { }
-        public Azure.ResourceManager.EdgeOrder.Models.ChargingType? ChargingType { get { throw null; } }
-        public double? Multiplier { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MeteringType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.MeteringType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MeteringType(string value) { throw null; }
-        public static Azure.ResourceManager.EdgeOrder.Models.MeteringType Adhoc { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.MeteringType OneTime { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.MeteringType Recurring { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.MeteringType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.MeteringType left, Azure.ResourceManager.EdgeOrder.Models.MeteringType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.MeteringType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.MeteringType left, Azure.ResourceManager.EdgeOrder.Models.MeteringType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class NotificationPreference
     {
         public NotificationPreference(Azure.ResourceManager.EdgeOrder.Models.NotificationStageName stageName, bool isNotificationRequired) { }
@@ -638,7 +598,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.OrderItemType left, Azure.ResourceManager.EdgeOrder.Models.OrderItemType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Pav2MeterDetails : Azure.ResourceManager.EdgeOrder.Models.MeterDetails
+    public partial class Pav2MeterDetails : Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeterDetails
     {
         internal Pav2MeterDetails() { }
         public System.Guid? MeterGuid { get { throw null; } }
@@ -676,13 +636,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal ProductConfiguration() { }
         public Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation AvailabilityInformation { get { throw null; } }
-        public Azure.ResourceManager.EdgeOrder.Models.CostInformation CostInformation { get { throw null; } }
+        public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductCostInformation CostInformation { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.ProductDescription Description { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.ProductDimensions Dimensions { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.FilterableProperty> FilterableProperties { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation HierarchyInformation { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ImageInformation> ImageInformation { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation> ImageInformation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ProductSpecification> Specifications { get { throw null; } }
     }
     public partial class ProductDescription
@@ -716,7 +676,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         public ProductDetails(Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation hierarchyInformation) { }
         public int? Count { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.DeviceDetails> DeviceDetails { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductDeviceDetails> DeviceDetails { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.ProductDisplayInfo DisplayInfo { get { throw null; } set { } }
         public Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation HierarchyInformation { get { throw null; } set { } }
         public Azure.ResourceManager.EdgeOrder.Models.DoubleEncryptionStatus? ProductDoubleEncryptionStatus { get { throw null; } }
@@ -727,9 +687,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public double? Depth { get { throw null; } }
         public double? Height { get { throw null; } }
         public double? Length { get { throw null; } }
-        public Azure.ResourceManager.EdgeOrder.Models.LengthHeightUnit? LengthHeightUnit { get { throw null; } }
+        public Azure.ResourceManager.EdgeOrder.Models.ProductLengthHeightWidthUnit? LengthHeightUnit { get { throw null; } }
         public double? Weight { get { throw null; } }
-        public Azure.ResourceManager.EdgeOrder.Models.WeightMeasurementUnit? WeightUnit { get { throw null; } }
+        public Azure.ResourceManager.EdgeOrder.Models.ProductWeightMeasurementUnit? WeightUnit { get { throw null; } }
         public double? Width { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -772,12 +732,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal ProductFamiliesMetadata() { }
         public Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation AvailabilityInformation { get { throw null; } }
-        public Azure.ResourceManager.EdgeOrder.Models.CostInformation CostInformation { get { throw null; } }
+        public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductCostInformation CostInformation { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.ProductDescription Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.FilterableProperty> FilterableProperties { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation HierarchyInformation { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ImageInformation> ImageInformation { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation> ImageInformation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ProductLine> ProductLines { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ResourceProviderDetails> ResourceProviderDetails { get { throw null; } }
     }
@@ -785,32 +745,72 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal ProductFamily() { }
         public Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation AvailabilityInformation { get { throw null; } }
-        public Azure.ResourceManager.EdgeOrder.Models.CostInformation CostInformation { get { throw null; } }
+        public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductCostInformation CostInformation { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.ProductDescription Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.FilterableProperty> FilterableProperties { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation HierarchyInformation { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ImageInformation> ImageInformation { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation> ImageInformation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ProductLine> ProductLines { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ResourceProviderDetails> ResourceProviderDetails { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProductLengthHeightWidthUnit : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.ProductLengthHeightWidthUnit>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProductLengthHeightWidthUnit(string value) { throw null; }
+        public static Azure.ResourceManager.EdgeOrder.Models.ProductLengthHeightWidthUnit CM { get { throw null; } }
+        public static Azure.ResourceManager.EdgeOrder.Models.ProductLengthHeightWidthUnit IN { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.ProductLengthHeightWidthUnit other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.ProductLengthHeightWidthUnit left, Azure.ResourceManager.EdgeOrder.Models.ProductLengthHeightWidthUnit right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.ProductLengthHeightWidthUnit (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.ProductLengthHeightWidthUnit left, Azure.ResourceManager.EdgeOrder.Models.ProductLengthHeightWidthUnit right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ProductLine
     {
         internal ProductLine() { }
         public Azure.ResourceManager.EdgeOrder.Models.ProductAvailabilityInformation AvailabilityInformation { get { throw null; } }
-        public Azure.ResourceManager.EdgeOrder.Models.CostInformation CostInformation { get { throw null; } }
+        public Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductCostInformation CostInformation { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.ProductDescription Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.FilterableProperty> FilterableProperties { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation HierarchyInformation { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ImageInformation> ImageInformation { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductImageInformation> ImageInformation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProduct> Products { get { throw null; } }
     }
     public partial class ProductLink
     {
         internal ProductLink() { }
-        public Azure.ResourceManager.EdgeOrder.Models.LinkType? LinkType { get { throw null; } }
+        public Azure.ResourceManager.EdgeOrder.Models.ProductLinkType? LinkType { get { throw null; } }
         public System.Uri LinkUri { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProductLinkType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.ProductLinkType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProductLinkType(string value) { throw null; }
+        public static Azure.ResourceManager.EdgeOrder.Models.ProductLinkType Documentation { get { throw null; } }
+        public static Azure.ResourceManager.EdgeOrder.Models.ProductLinkType Generic { get { throw null; } }
+        public static Azure.ResourceManager.EdgeOrder.Models.ProductLinkType KnowMore { get { throw null; } }
+        public static Azure.ResourceManager.EdgeOrder.Models.ProductLinkType SignUp { get { throw null; } }
+        public static Azure.ResourceManager.EdgeOrder.Models.ProductLinkType Specification { get { throw null; } }
+        public static Azure.ResourceManager.EdgeOrder.Models.ProductLinkType TermsAndConditions { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.ProductLinkType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.ProductLinkType left, Azure.ResourceManager.EdgeOrder.Models.ProductLinkType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.ProductLinkType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.ProductLinkType left, Azure.ResourceManager.EdgeOrder.Models.ProductLinkType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ProductSpecification
     {
@@ -818,7 +818,25 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
     }
-    public partial class PurchaseMeterDetails : Azure.ResourceManager.EdgeOrder.Models.MeterDetails
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProductWeightMeasurementUnit : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.ProductWeightMeasurementUnit>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProductWeightMeasurementUnit(string value) { throw null; }
+        public static Azure.ResourceManager.EdgeOrder.Models.ProductWeightMeasurementUnit Kgs { get { throw null; } }
+        public static Azure.ResourceManager.EdgeOrder.Models.ProductWeightMeasurementUnit Lbs { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.ProductWeightMeasurementUnit other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.ProductWeightMeasurementUnit left, Azure.ResourceManager.EdgeOrder.Models.ProductWeightMeasurementUnit right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.ProductWeightMeasurementUnit (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.ProductWeightMeasurementUnit left, Azure.ResourceManager.EdgeOrder.Models.ProductWeightMeasurementUnit right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class PurchaseMeterDetails : Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductMeterDetails
     {
         internal PurchaseMeterDetails() { }
         public string ProductId { get { throw null; } }
@@ -873,24 +891,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.TransportShipmentType left, Azure.ResourceManager.EdgeOrder.Models.TransportShipmentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.EdgeOrder.Models.TransportShipmentType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.TransportShipmentType left, Azure.ResourceManager.EdgeOrder.Models.TransportShipmentType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WeightMeasurementUnit : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.WeightMeasurementUnit>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public WeightMeasurementUnit(string value) { throw null; }
-        public static Azure.ResourceManager.EdgeOrder.Models.WeightMeasurementUnit Kgs { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.WeightMeasurementUnit Lbs { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.WeightMeasurementUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.WeightMeasurementUnit left, Azure.ResourceManager.EdgeOrder.Models.WeightMeasurementUnit right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.WeightMeasurementUnit (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.WeightMeasurementUnit left, Azure.ResourceManager.EdgeOrder.Models.WeightMeasurementUnit right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

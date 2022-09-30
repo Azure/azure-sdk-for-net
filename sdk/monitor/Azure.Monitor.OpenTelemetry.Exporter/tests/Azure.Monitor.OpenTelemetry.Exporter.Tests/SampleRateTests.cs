@@ -2,12 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using OpenTelemetry;
 using OpenTelemetry.Extensions.AzureMonitor;
 using OpenTelemetry.Trace;
@@ -32,6 +33,37 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             };
 
             ActivitySource.AddActivityListener(listener);
+        }
+
+        [Theory]
+        [InlineData(50.0F)]
+        [InlineData("somestring")]
+        [InlineData(null)]
+        [InlineData("")]
+        public void ValidateSampleRateForEventException(object SampleRate)
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+
+            // Valid SampleRate.
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Client,
+                parentContext: default,
+                startTime: DateTime.UtcNow,
+                tags: new Dictionary<string, object>() { ["sampleRate"] = SampleRate });
+
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+            var telemetryItem = new TelemetryItem(activity, ref monitorTags, "RoleName", "RoleInstance", "00000000-0000-0000-0000-000000000000");
+            var expTelemetryItem = new TelemetryItem(telemetryItem, default, default, default);
+
+            if (SampleRate is float)
+            {
+                Assert.Equal(SampleRate, expTelemetryItem.SampleRate);
+            }
+            else
+            {
+                Assert.Null(expTelemetryItem.SampleRate);
+            }
         }
 
         [Theory]
@@ -67,14 +99,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void SampleRateE2ETest()
         {
-            var transmitter = new MockTransmitter();
-
-            var testProcessor = new BatchActivityExportProcessor(new AzureMonitorTraceExporter(transmitter));
             using var activitySource = new ActivitySource(ActivitySourceName);
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(ActivitySourceName)
                 .SetSampler(new ApplicationInsightsSampler(1.0F))
-                .AddProcessor(testProcessor)
+                .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems)
                 .Build();
 
             using (var activity = activitySource.StartActivity("SayHello"))
@@ -83,21 +112,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             tracerProvider.ForceFlush();
 
-            Assert.NotEmpty(transmitter.TelemetryItems);
-            Assert.Equal(100F, transmitter.TelemetryItems.FirstOrDefault().SampleRate);
+            Assert.NotEmpty(telemetryItems);
+            Assert.Equal(100F, telemetryItems.FirstOrDefault().SampleRate);
         }
 
         [Fact]
         public void NoTelemetryCreatedOnZeroSampleRate()
         {
-            var transmitter = new MockTransmitter();
-
-            var testProcessor = new BatchActivityExportProcessor(new AzureMonitorTraceExporter(transmitter));
             using var activitySource = new ActivitySource(ActivitySourceName);
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(ActivitySourceName)
                 .SetSampler(new ApplicationInsightsSampler(0.0F))
-                .AddProcessor(testProcessor)
+                .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems)
                 .Build();
 
             using (var activity = activitySource.StartActivity("SayHello"))
@@ -106,7 +132,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             tracerProvider.ForceFlush();
 
-            Assert.Empty(transmitter.TelemetryItems);
+            Assert.Empty(telemetryItems);
         }
     }
 }

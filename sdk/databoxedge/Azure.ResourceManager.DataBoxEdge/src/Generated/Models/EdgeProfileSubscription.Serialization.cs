@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal static EdgeProfileSubscription DeserializeEdgeProfileSubscription(JsonElement element)
         {
             Optional<Guid> registrationId = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<DataBoxEdgeSubscriptionState> state = default;
             Optional<string> registrationDate = default;
             Optional<string> subscriptionId = default;
@@ -40,7 +40,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"))

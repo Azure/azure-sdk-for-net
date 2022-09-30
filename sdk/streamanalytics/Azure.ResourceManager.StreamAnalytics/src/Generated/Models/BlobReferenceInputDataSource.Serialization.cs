@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -70,15 +71,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WritePropertyName("sourcePartitionCount");
                 writer.WriteNumberValue(SourcePartitionCount.Value);
             }
-            if (Optional.IsDefined(FullSnapshotRefreshRate))
+            if (Optional.IsDefined(FullSnapshotRefreshInterval))
             {
                 writer.WritePropertyName("fullSnapshotRefreshRate");
-                writer.WriteStringValue(FullSnapshotRefreshRate);
+                writer.WriteStringValue(FullSnapshotRefreshInterval.Value, "T");
             }
-            if (Optional.IsDefined(DeltaSnapshotRefreshRate))
+            if (Optional.IsDefined(DeltaSnapshotRefreshInterval))
             {
                 writer.WritePropertyName("deltaSnapshotRefreshRate");
-                writer.WriteStringValue(DeltaSnapshotRefreshRate);
+                writer.WriteStringValue(DeltaSnapshotRefreshInterval.Value, "T");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -96,8 +97,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> blobName = default;
             Optional<string> deltaPathPattern = default;
             Optional<int> sourcePartitionCount = default;
-            Optional<string> fullSnapshotRefreshRate = default;
-            Optional<string> deltaSnapshotRefreshRate = default;
+            Optional<TimeSpan> fullSnapshotRefreshRate = default;
+            Optional<TimeSpan> deltaSnapshotRefreshRate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -181,19 +182,29 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         }
                         if (property0.NameEquals("fullSnapshotRefreshRate"))
                         {
-                            fullSnapshotRefreshRate = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            fullSnapshotRefreshRate = property0.Value.GetTimeSpan("T");
                             continue;
                         }
                         if (property0.NameEquals("deltaSnapshotRefreshRate"))
                         {
-                            deltaSnapshotRefreshRate = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            deltaSnapshotRefreshRate = property0.Value.GetTimeSpan("T");
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new BlobReferenceInputDataSource(type, Optional.ToList(storageAccounts), container.Value, pathPattern.Value, dateFormat.Value, timeFormat.Value, Optional.ToNullable(authenticationMode), blobName.Value, deltaPathPattern.Value, Optional.ToNullable(sourcePartitionCount), fullSnapshotRefreshRate.Value, deltaSnapshotRefreshRate.Value);
+            return new BlobReferenceInputDataSource(type, Optional.ToList(storageAccounts), container.Value, pathPattern.Value, dateFormat.Value, timeFormat.Value, Optional.ToNullable(authenticationMode), blobName.Value, deltaPathPattern.Value, Optional.ToNullable(sourcePartitionCount), Optional.ToNullable(fullSnapshotRefreshRate), Optional.ToNullable(deltaSnapshotRefreshRate));
         }
     }
 }

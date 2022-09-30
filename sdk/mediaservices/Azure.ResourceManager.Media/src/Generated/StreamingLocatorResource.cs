@@ -307,9 +307,9 @@ namespace Azure.ResourceManager.Media
         /// Operation Id: StreamingLocators_ListPaths
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GetPathsResult>> GetSupportedPathsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StreamingPathsResult>> GetStreamingPathsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetSupportedPaths");
+            using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetStreamingPaths");
             scope.Start();
             try
             {
@@ -329,9 +329,9 @@ namespace Azure.ResourceManager.Media
         /// Operation Id: StreamingLocators_ListPaths
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GetPathsResult> GetSupportedPaths(CancellationToken cancellationToken = default)
+        public virtual Response<StreamingPathsResult> GetStreamingPaths(CancellationToken cancellationToken = default)
         {
-            using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetSupportedPaths");
+            using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetStreamingPaths");
             scope.Start();
             try
             {

@@ -20,7 +20,7 @@ namespace Azure.Maps.GeoLocation
         private readonly HttpPipeline _pipeline;
 
         /// <summary> The restClient is used to access GeoLocation REST client. </summary>
-        internal GeoLocationRestClient RestClient { get; }
+        internal GeolocationRestClient RestClient { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics _clientDiagnostics { get; }
@@ -44,7 +44,7 @@ namespace Azure.Maps.GeoLocation
             var options = new MapsGeoLocationClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
-            RestClient = new GeoLocationRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
+            RestClient = new GeolocationRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
         }
 
         /// <summary> Initializes a new instance of MapsGeoLocationClient. </summary>
@@ -58,7 +58,7 @@ namespace Azure.Maps.GeoLocation
             options ??= new MapsGeoLocationClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
-            RestClient = new GeoLocationRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
+            RestClient = new GeolocationRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
         }
 
         /// <summary> Initializes a new instance of MapsGeoLocationClient. </summary>
@@ -74,7 +74,7 @@ namespace Azure.Maps.GeoLocation
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://atlas.microsoft.com/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
-            RestClient = new GeoLocationRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
+            RestClient = new GeolocationRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
         }
 
         /// <summary> Initializes a new instance of MapsGeoLocationClient. </summary>
@@ -91,7 +91,7 @@ namespace Azure.Maps.GeoLocation
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://atlas.microsoft.com/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
-            RestClient = new GeoLocationRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
+            RestClient = new GeolocationRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
         }
 
         /// <summary>

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.GreaterOrEqual(count, 1);
         }
 
         [Test]

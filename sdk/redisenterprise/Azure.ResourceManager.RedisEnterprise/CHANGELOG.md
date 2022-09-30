@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,15 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2022-09-19)
+
+This is the first stable release of the Redis Enterprise Management client library.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.3.1
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0-beta.2 (2022-08-29)
 

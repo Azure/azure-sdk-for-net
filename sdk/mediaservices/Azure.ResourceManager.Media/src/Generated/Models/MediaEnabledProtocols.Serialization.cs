@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WritePropertyName("dash");
             writer.WriteBooleanValue(IsDashEnabled);
             writer.WritePropertyName("hls");
-            writer.WriteBooleanValue(IsHttpLiveStreamingEnabled);
+            writer.WriteBooleanValue(IsHlsEnabled);
             writer.WritePropertyName("smoothStreaming");
             writer.WriteBooleanValue(IsSmoothStreamingEnabled);
             writer.WriteEndObject();
