@@ -36,8 +36,8 @@ namespace Azure.Core.Tests
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
-            scope.Start();
 
+            scope.Start();
             scope.Dispose();
 
             Assert.AreEqual(0, activityListener.Activities.Count);
