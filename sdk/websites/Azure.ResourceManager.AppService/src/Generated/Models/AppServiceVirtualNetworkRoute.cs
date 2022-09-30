@@ -11,14 +11,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Virtual Network route contract used to pass routing information for a Virtual Network. </summary>
-    public partial class AppServiceVirtualNetworkRout : ResourceData
+    public partial class AppServiceVirtualNetworkRoute : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkRout. </summary>
-        public AppServiceVirtualNetworkRout()
+        /// <summary> Initializes a new instance of AppServiceVirtualNetworkRoute. </summary>
+        public AppServiceVirtualNetworkRoute()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkRout. </summary>
+        /// <summary> Initializes a new instance of AppServiceVirtualNetworkRoute. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// These values will be used for syncing an app&apos;s routes with those from a Virtual Network.
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceVirtualNetworkRout(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string startAddress, string endAddress, AppServiceVirtualNetworkRouteType? routeType, string kind) : base(id, name, resourceType, systemData)
+        internal AppServiceVirtualNetworkRoute(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string startAddress, string endAddress, AppServiceVirtualNetworkRouteType? routeType, string kind) : base(id, name, resourceType, systemData)
         {
             StartAddress = startAddress;
             EndAddress = endAddress;

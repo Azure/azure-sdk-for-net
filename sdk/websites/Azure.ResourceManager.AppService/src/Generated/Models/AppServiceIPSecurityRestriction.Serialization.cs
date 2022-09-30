@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class IPSecurityRestriction : IUtf8JsonSerializable
+    public partial class AppServiceIPSecurityRestriction : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        internal static IPSecurityRestriction DeserializeIPSecurityRestriction(JsonElement element)
+        internal static AppServiceIPSecurityRestriction DeserializeAppServiceIPSecurityRestriction(JsonElement element)
         {
             Optional<string> ipAddress = default;
             Optional<string> subnetMask = default;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<int> vnetTrafficTag = default;
             Optional<int> subnetTrafficTag = default;
             Optional<string> action = default;
-            Optional<IPFilterTag> tag = default;
+            Optional<AppServiceIPFilterTag> tag = default;
             Optional<int> priority = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tag = new IPFilterTag(property.Value.GetString());
+                    tag = new AppServiceIPFilterTag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("priority"))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new IPSecurityRestriction(ipAddress.Value, subnetMask.Value, vnetSubnetResourceId.Value, Optional.ToNullable(vnetTrafficTag), Optional.ToNullable(subnetTrafficTag), action.Value, Optional.ToNullable(tag), Optional.ToNullable(priority), name.Value, description.Value, Optional.ToDictionary(headers));
+            return new AppServiceIPSecurityRestriction(ipAddress.Value, subnetMask.Value, vnetSubnetResourceId.Value, Optional.ToNullable(vnetTrafficTag), Optional.ToNullable(subnetTrafficTag), action.Value, Optional.ToNullable(tag), Optional.ToNullable(priority), name.Value, description.Value, Optional.ToDictionary(headers));
         }
     }
 }

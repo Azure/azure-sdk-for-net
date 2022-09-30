@@ -474,7 +474,7 @@ rename-mapping:
   StorageType: ArtifactStorageType
   StringList: StaticSiteStringList
   UsageCollection: AppServiceUsageListResult
-  StatusOptions: AppServicePlanStatusOption
+  StatusOptions: AppServicePlanStatus
   TriggerTypes: FunctionTriggerType
   CookieExpiration: WebAppCookieExpiration
   SourceControlCollection: AppServiceSourceControlListResult
@@ -484,7 +484,7 @@ rename-mapping:
   VnetInfo: AppServiceVirtualNetworkProperties
   VnetInfoResource: AppServiceVirtualNetwork
   VnetParameters: AppServiceVirtualNetworkValidationContent
-  VnetRoute: AppServiceVirtualNetworkRout
+  VnetRoute: AppServiceVirtualNetworkRoute
   VnetGateway: AppServiceVirtualNetworkGateway
   SupportTopic: DetectorSupportTopic
   SupportedTlsVersions: AppServiceSupportedTlsVersion
@@ -526,8 +526,8 @@ prepend-rp-prefix:
   - SourceControl
   - WorkerPool
   - ForwardProxy
-  - IpSecurityRestriction
-  - IpFilterTag
+  - IPSecurityRestriction
+  - IPFilterTag
   - VirtualNetworkProfile
 
 directive:

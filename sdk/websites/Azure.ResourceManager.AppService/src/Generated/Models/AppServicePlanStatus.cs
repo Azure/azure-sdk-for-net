@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> App Service plan status. </summary>
-    public enum AppServicePlanStatusOption
+    public enum AppServicePlanStatus
     {
         /// <summary> Ready. </summary>
         Ready,

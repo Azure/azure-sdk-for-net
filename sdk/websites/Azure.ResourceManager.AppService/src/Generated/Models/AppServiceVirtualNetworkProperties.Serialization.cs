@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<ResourceIdentifier> vnetResourceId = default;
             Optional<BinaryData> certThumbprint = default;
             Optional<string> certBlob = default;
-            Optional<IReadOnlyList<AppServiceVirtualNetworkRout>> routes = default;
+            Optional<IReadOnlyList<AppServiceVirtualNetworkRoute>> routes = default;
             Optional<bool> resyncRequired = default;
             Optional<string> dnsServers = default;
             Optional<bool> isSwift = default;
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AppServiceVirtualNetworkRout> array = new List<AppServiceVirtualNetworkRout>();
+                    List<AppServiceVirtualNetworkRoute> array = new List<AppServiceVirtualNetworkRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceVirtualNetworkRout.DeserializeAppServiceVirtualNetworkRout(item));
+                        array.Add(AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(item));
                     }
                     routes = array;
                     continue;

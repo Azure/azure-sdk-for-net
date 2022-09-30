@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceVirtualNetworkRout : IUtf8JsonSerializable
+    public partial class AppServiceVirtualNetworkRoute : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        internal static AppServiceVirtualNetworkRout DeserializeAppServiceVirtualNetworkRout(JsonElement element)
+        internal static AppServiceVirtualNetworkRoute DeserializeAppServiceVirtualNetworkRoute(JsonElement element)
         {
             Optional<string> kind = default;
             ResourceIdentifier id = default;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceVirtualNetworkRout(id, name, type, systemData.Value, startAddress.Value, endAddress.Value, Optional.ToNullable(routeType), kind.Value);
+            return new AppServiceVirtualNetworkRoute(id, name, type, systemData.Value, startAddress.Value, endAddress.Value, Optional.ToNullable(routeType), kind.Value);
         }
     }
 }

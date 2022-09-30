@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_ListRoutesForVnet
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppServiceVirtualNetworkRout" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppServiceVirtualNetworkRout> GetRoutesForVnetAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceVirtualNetworkRoute" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceVirtualNetworkRoute> GetRoutesForVnetAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppServiceVirtualNetworkRout>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServiceVirtualNetworkRoute>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionResource.GetRoutesForVnet");
                 scope.Start();
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_ListRoutesForVnet
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppServiceVirtualNetworkRout" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppServiceVirtualNetworkRout> GetRoutesForVnet(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceVirtualNetworkRoute" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceVirtualNetworkRoute> GetRoutesForVnet(CancellationToken cancellationToken = default)
         {
-            Page<AppServiceVirtualNetworkRout> FirstPageFunc(int? pageSizeHint)
+            Page<AppServiceVirtualNetworkRoute> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionResource.GetRoutesForVnet");
                 scope.Start();
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
-        public virtual async Task<Response<AppServiceVirtualNetworkRout>> CreateOrUpdateVnetRouteAsync(string routeName, AppServiceVirtualNetworkRout route, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceVirtualNetworkRoute>> CreateOrUpdateVnetRouteAsync(string routeName, AppServiceVirtualNetworkRoute route, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             Argument.AssertNotNull(route, nameof(route));
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
-        public virtual Response<AppServiceVirtualNetworkRout> CreateOrUpdateVnetRoute(string routeName, AppServiceVirtualNetworkRout route, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceVirtualNetworkRoute> CreateOrUpdateVnetRoute(string routeName, AppServiceVirtualNetworkRoute route, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             Argument.AssertNotNull(route, nameof(route));
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
-        public virtual async Task<Response<AppServiceVirtualNetworkRout>> UpdateVnetRouteAsync(string routeName, AppServiceVirtualNetworkRout route, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceVirtualNetworkRoute>> UpdateVnetRouteAsync(string routeName, AppServiceVirtualNetworkRoute route, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             Argument.AssertNotNull(route, nameof(route));
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
-        public virtual Response<AppServiceVirtualNetworkRout> UpdateVnetRoute(string routeName, AppServiceVirtualNetworkRout route, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceVirtualNetworkRoute> UpdateVnetRoute(string routeName, AppServiceVirtualNetworkRoute route, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             Argument.AssertNotNull(route, nameof(route));

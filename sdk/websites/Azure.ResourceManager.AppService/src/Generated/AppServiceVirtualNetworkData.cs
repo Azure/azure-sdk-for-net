@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of AppServiceVirtualNetworkData. </summary>
         public AppServiceVirtualNetworkData()
         {
-            Routes = new ChangeTrackingList<AppServiceVirtualNetworkRout>();
+            Routes = new ChangeTrackingList<AppServiceVirtualNetworkRoute>();
         }
 
         /// <summary> Initializes a new instance of AppServiceVirtualNetworkData. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="dnsServers"> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </param>
         /// <param name="isSwift"> Flag that is used to denote if this is VNET injection. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier vnetResourceId, BinaryData certThumbprint, string certBlob, IReadOnlyList<AppServiceVirtualNetworkRout> routes, bool? isResyncRequired, string dnsServers, bool? isSwift, string kind) : base(id, name, resourceType, systemData)
+        internal AppServiceVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier vnetResourceId, BinaryData certThumbprint, string certBlob, IReadOnlyList<AppServiceVirtualNetworkRoute> routes, bool? isResyncRequired, string dnsServers, bool? isSwift, string kind) : base(id, name, resourceType, systemData)
         {
             VnetResourceId = vnetResourceId;
             CertThumbprint = certThumbprint;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         public string CertBlob { get; set; }
         /// <summary> The routes that this Virtual Network connection uses. </summary>
-        public IReadOnlyList<AppServiceVirtualNetworkRout> Routes { get; }
+        public IReadOnlyList<AppServiceVirtualNetworkRoute> Routes { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsResyncRequired { get; }
         /// <summary> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </summary>

@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.AppService
         public string ResourceGroup { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.AppServiceSkuDescription Sku { get { throw null; } set { } }
         public System.DateTimeOffset? SpotExpireOn { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.AppServicePlanStatusOption? Status { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.AppServicePlanStatus? Status { get { throw null; } }
         public string Subscription { get { throw null; } }
         public int? TargetWorkerCount { get { throw null; } set { } }
         public int? TargetWorkerSizeId { get { throw null; } set { } }
@@ -723,8 +723,8 @@ namespace Azure.ResourceManager.AppService
         protected AppServicePlanVirtualNetworkConnectionResource() { }
         public virtual Azure.ResourceManager.AppService.AppServiceVirtualNetworkData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRout> CreateOrUpdateVnetRoute(string routeName, Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRout route, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRout>> CreateOrUpdateVnetRouteAsync(string routeName, Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRout route, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRoute> CreateOrUpdateVnetRoute(string routeName, Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRoute route, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRoute>> CreateOrUpdateVnetRouteAsync(string routeName, Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRoute route, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string vnetName) { throw null; }
         public virtual Azure.Response DeleteVnetRoute(string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteVnetRouteAsync(string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -733,10 +733,10 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.AppServicePlanVirtualNetworkConnectionGatewayResource>> GetAppServicePlanVirtualNetworkConnectionGatewayAsync(string gatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.AppServicePlanVirtualNetworkConnectionGatewayCollection GetAppServicePlanVirtualNetworkConnectionGateways() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.AppServicePlanVirtualNetworkConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRout> GetRoutesForVnet(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRout> GetRoutesForVnetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRout> UpdateVnetRoute(string routeName, Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRout route, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRout>> UpdateVnetRouteAsync(string routeName, Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRout route, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRoute> GetRoutesForVnet(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRoute> GetRoutesForVnetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRoute> UpdateVnetRoute(string routeName, Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRoute route, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRoute>> UpdateVnetRouteAsync(string routeName, Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRoute route, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AppServiceSourceControlCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.AppServiceSourceControlResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.AppServiceSourceControlResource>, System.Collections.IEnumerable
     {
@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.AppService
         public bool? IsResyncRequired { get { throw null; } }
         public bool? IsSwift { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRout> Routes { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRoute> Routes { get { throw null; } }
         public Azure.Core.ResourceIdentifier VnetResourceId { get { throw null; } set { } }
     }
     public partial class AppServiceVirtualNetworkGatewayData : Azure.ResourceManager.Models.ResourceData
@@ -1517,7 +1517,7 @@ namespace Azure.ResourceManager.AppService
         public int? FunctionAppScaleLimit { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.HttpRequestHandlerMapping> HandlerMappings { get { throw null; } set { } }
         public string HealthCheckPath { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IPSecurityRestriction> IPSecurityRestrictions { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceIPSecurityRestriction> IPSecurityRestrictions { get { throw null; } set { } }
         public bool? IsAlwaysOn { get { throw null; } set { } }
         public bool? IsAutoHealEnabled { get { throw null; } set { } }
         public bool? IsDetailedErrorLoggingEnabled { get { throw null; } set { } }
@@ -1555,7 +1555,7 @@ namespace Azure.ResourceManager.AppService
         public string PythonVersion { get { throw null; } set { } }
         public string RemoteDebuggingVersion { get { throw null; } set { } }
         public System.DateTimeOffset? RequestTracingExpirationOn { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IPSecurityRestriction> ScmIPSecurityRestrictions { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceIPSecurityRestriction> ScmIPSecurityRestrictions { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion? ScmMinTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ScmType? ScmType { get { throw null; } set { } }
         public string TracingOptions { get { throw null; } set { } }
@@ -4857,6 +4857,40 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResourceManager.AppService.Models.LegacyMicrosoftAccount LegacyMicrosoftAccount { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppServiceTwitterProvider Twitter { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AppServiceIPFilterTag : System.IEquatable<Azure.ResourceManager.AppService.Models.AppServiceIPFilterTag>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AppServiceIPFilterTag(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.AppServiceIPFilterTag Default { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AppServiceIPFilterTag ServiceTag { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AppServiceIPFilterTag XffProxy { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.AppServiceIPFilterTag other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.AppServiceIPFilterTag left, Azure.ResourceManager.AppService.Models.AppServiceIPFilterTag right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.AppServiceIPFilterTag (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.AppServiceIPFilterTag left, Azure.ResourceManager.AppService.Models.AppServiceIPFilterTag right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AppServiceIPSecurityRestriction
+    {
+        public AppServiceIPSecurityRestriction() { }
+        public string Action { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> Headers { get { throw null; } }
+        public string IPAddressOrCidr { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public int? Priority { get { throw null; } set { } }
+        public string SubnetMask { get { throw null; } set { } }
+        public int? SubnetTrafficTag { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceIPFilterTag? Tag { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VnetSubnetResourceId { get { throw null; } set { } }
+        public int? VnetTrafficTag { get { throw null; } set { } }
+    }
     public partial class AppServiceNameValuePair
     {
         public AppServiceNameValuePair() { }
@@ -4904,7 +4938,7 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResourceManager.AppService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string ResourceGroup { get { throw null; } }
         public System.DateTimeOffset? SpotExpirationOn { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.AppServicePlanStatusOption? Status { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.AppServicePlanStatus? Status { get { throw null; } }
         public string Subscription { get { throw null; } }
         public int? TargetWorkerCount { get { throw null; } set { } }
         public int? TargetWorkerSizeId { get { throw null; } set { } }
@@ -4919,7 +4953,7 @@ namespace Azure.ResourceManager.AppService.Models
         Standard = 4,
         Premium = 5,
     }
-    public enum AppServicePlanStatusOption
+    public enum AppServicePlanStatus
     {
         Ready = 0,
         Pending = 1,
@@ -5174,12 +5208,12 @@ namespace Azure.ResourceManager.AppService.Models
         public string DnsServers { get { throw null; } }
         public bool? IsResyncRequired { get { throw null; } }
         public bool? IsSwift { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRout> Routes { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRoute> Routes { get { throw null; } }
         public Azure.Core.ResourceIdentifier VnetResourceId { get { throw null; } }
     }
-    public partial class AppServiceVirtualNetworkRout : Azure.ResourceManager.Models.ResourceData
+    public partial class AppServiceVirtualNetworkRoute : Azure.ResourceManager.Models.ResourceData
     {
-        public AppServiceVirtualNetworkRout() { }
+        public AppServiceVirtualNetworkRoute() { }
         public string EndAddress { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkRouteType? RouteType { get { throw null; } set { } }
@@ -6129,40 +6163,6 @@ namespace Azure.ResourceManager.AppService.Models
         public System.Collections.Generic.IReadOnlyList<string> Endpoints { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Ports { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IPFilterTag : System.IEquatable<Azure.ResourceManager.AppService.Models.IPFilterTag>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IPFilterTag(string value) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.IPFilterTag Default { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.IPFilterTag ServiceTag { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.IPFilterTag XffProxy { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppService.Models.IPFilterTag other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppService.Models.IPFilterTag left, Azure.ResourceManager.AppService.Models.IPFilterTag right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppService.Models.IPFilterTag (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppService.Models.IPFilterTag left, Azure.ResourceManager.AppService.Models.IPFilterTag right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class IPSecurityRestriction
-    {
-        public IPSecurityRestriction() { }
-        public string Action { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> Headers { get { throw null; } }
-        public string IPAddressOrCidr { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public int? Priority { get { throw null; } set { } }
-        public string SubnetMask { get { throw null; } set { } }
-        public int? SubnetTrafficTag { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.IPFilterTag? Tag { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier VnetSubnetResourceId { get { throw null; } set { } }
-        public int? VnetTrafficTag { get { throw null; } set { } }
-    }
     public partial class JwtClaimChecks
     {
         public JwtClaimChecks() { }
@@ -6866,7 +6866,7 @@ namespace Azure.ResourceManager.AppService.Models
         public int? FunctionAppScaleLimit { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.HttpRequestHandlerMapping> HandlerMappings { get { throw null; } set { } }
         public string HealthCheckPath { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IPSecurityRestriction> IPSecurityRestrictions { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceIPSecurityRestriction> IPSecurityRestrictions { get { throw null; } set { } }
         public bool? IsAlwaysOn { get { throw null; } set { } }
         public bool? IsAutoHealEnabled { get { throw null; } set { } }
         public bool? IsDetailedErrorLoggingEnabled { get { throw null; } set { } }
@@ -6903,7 +6903,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string PythonVersion { get { throw null; } set { } }
         public string RemoteDebuggingVersion { get { throw null; } set { } }
         public System.DateTimeOffset? RequestTracingExpirationOn { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IPSecurityRestriction> ScmIPSecurityRestrictions { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceIPSecurityRestriction> ScmIPSecurityRestrictions { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion? ScmMinTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ScmType? ScmType { get { throw null; } set { } }
         public string TracingOptions { get { throw null; } set { } }

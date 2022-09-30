@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceVirtualNetworkProperties. </summary>
         internal AppServiceVirtualNetworkProperties()
         {
-            Routes = new ChangeTrackingList<AppServiceVirtualNetworkRout>();
+            Routes = new ChangeTrackingList<AppServiceVirtualNetworkRoute>();
         }
 
         /// <summary> Initializes a new instance of AppServiceVirtualNetworkProperties. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isResyncRequired"> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="dnsServers"> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </param>
         /// <param name="isSwift"> Flag that is used to denote if this is VNET injection. </param>
-        internal AppServiceVirtualNetworkProperties(ResourceIdentifier vnetResourceId, BinaryData certThumbprint, string certBlob, IReadOnlyList<AppServiceVirtualNetworkRout> routes, bool? isResyncRequired, string dnsServers, bool? isSwift)
+        internal AppServiceVirtualNetworkProperties(ResourceIdentifier vnetResourceId, BinaryData certThumbprint, string certBlob, IReadOnlyList<AppServiceVirtualNetworkRoute> routes, bool? isResyncRequired, string dnsServers, bool? isSwift)
         {
             VnetResourceId = vnetResourceId;
             CertThumbprint = certThumbprint;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         public string CertBlob { get; }
         /// <summary> The routes that this Virtual Network connection uses. </summary>
-        public IReadOnlyList<AppServiceVirtualNetworkRout> Routes { get; }
+        public IReadOnlyList<AppServiceVirtualNetworkRoute> Routes { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsResyncRequired { get; }
         /// <summary> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </summary>
