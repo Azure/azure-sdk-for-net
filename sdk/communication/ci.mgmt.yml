@@ -1,7 +1,15 @@
 
 trigger: none
-
-pr: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/communication/Azure.ResourceManager.Communication
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

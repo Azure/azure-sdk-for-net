@@ -9,38 +9,36 @@ function Update-CIFile() {
 
     $shouldRemove = $false
 
-    $lines = Get-Content $mgmtCiFile
-    $newLines = [System.Collections.ArrayList]::new()
-    foreach($line in $lines) {
-        if($line.StartsWith("    ArtifactName:")) {
-            Continue
-        }
-        if($line.StartsWith("trigger:") -or $line.StartsWith("pr:")) {
-            $prefix = $line.Substring(0, $line.IndexOf(":") + 1)
-            $newLines.Add("$prefix none") | Out-Null
-            $shouldRemove = $true
-            Continue
-        }
-        if($line.StartsWith("    - name:")) {
-            if($line -match "Azure.ResourceManager.") {
-                $shouldRemove = $false
-            }
-            else {
-                $shouldRemove = $true
-                Continue
-            }
-        }
-        if($shouldRemove) {
-            if($line.StartsWith(" ")) {
-                Continue
-            }
-            $shouldRemove = $false
-        }
+    $content = Get-Content $mgmtCiFile -Raw
 
-        $newLines.Add($line) | Out-Null
+    if ($content -match "(?s)ServiceDirectory: (?<sd>[^\r\n]+).*- name: (?<p>[^\r\n]+)")
+    {
+        $serviceDirectory = $matches["sd"]
+        $packageName = $matches["p"]
+    }
+    else {
+        Write-Error "Could not parse out the service directory and package from $mgmtCiFile, so skipping."
+        return
     }
 
-    Set-Content -Path $mgmtCiFile $newLines
+    $prtriggers = @"
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/$serviceDirectory/$packageName
+
+"@
+
+    $content = $content -replace "(?s)pr:[^\n]*(\n([ ]+[^\n]*|))*", $prtriggers
+    $content = $content -replace "trigger:[^\n]*(\n([ ]+[^\n]*|))*", "trigger: none"
+
+    Set-Content -Path $mgmtCiFile $content -NoNewline
 }
 
 #update all Azure.ResourceManager libraries to use the new pattern for ci

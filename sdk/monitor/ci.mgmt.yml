@@ -2,8 +2,16 @@
 # This file is generated automatically and any changes will be lost.
 
 trigger: none
-
-pr: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/monitor/Azure.ResourceManager.Monitor
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

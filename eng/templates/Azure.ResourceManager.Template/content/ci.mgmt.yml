@@ -2,7 +2,16 @@
 
 trigger: none
 
-pr: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/ProviderNameLowercase/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
