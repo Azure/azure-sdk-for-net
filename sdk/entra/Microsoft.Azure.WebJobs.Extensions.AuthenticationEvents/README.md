@@ -64,7 +64,7 @@ Learn about custom claims providers and custom extensions.  Learn how to create 
 #### Prerequisites
 
 1. [Download Postman](https://www.postman.com/downloads/)
-2. Download the [Authentication_Events_Collection.json](https://github.com/Azure/microsoft-azure-webJobs-extensions-authentication-events/wiki/collection/Authentication_Events_Collection.json) for the Authentication Events Trigger.
+2. Download [Authentication_Events_Collection.json](https://github.com/Azure/microsoft-azure-webJobs-extensions-authentication-events/wiki/collection/Authentication_Events_Collection.json) for the Authentication Events Trigger.
 3. In the Postman app, [create a new workspace](https://learning.postman.com/docs/getting-started/creating-your-first-workspace/) and [import](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/) the Authentication Events Collection JSON file.
 
 #### Create the project
