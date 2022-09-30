@@ -112,6 +112,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         private void WriteRemoteDependencyData(RemoteDependencyData remoteDependencyData)
         {
             output.WriteLine($"Name: {remoteDependencyData.Name}");
+            output.WriteLine($"Id: {remoteDependencyData.Id}");
 
             output.WriteLine($"Properties: {remoteDependencyData.Properties.Count}");
             foreach (var prop in remoteDependencyData.Properties)
@@ -123,6 +124,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         private void WriteRequestData(RequestData requestData)
         {
             output.WriteLine($"Name: {requestData.Name}");
+            output.WriteLine($"Id: {requestData.Id}");
             output.WriteLine($"Url: {requestData.Url}");
             output.WriteLine($"ResponseCode: {requestData.ResponseCode}");
 

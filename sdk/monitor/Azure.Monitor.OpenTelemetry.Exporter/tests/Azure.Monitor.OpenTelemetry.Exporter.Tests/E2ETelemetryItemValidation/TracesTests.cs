@@ -48,10 +48,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 .Build();
 
             // ACT
-            string traceId;
+            string spanId, traceId;
             using (var activity = activitySource.StartActivity(name: "SayHello", kind: activityKind ))
             {
                 traceId = activity.TraceId.ToHexString();
+                spanId = activity.SpanId.ToHexString();
 
                 activity.SetTag("integer", 1);
                 activity.SetTag("message", "Hello World!");
@@ -71,6 +72,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 telemetryItem: telemetryItem,
                 expectedName: "SayHello",
                 expectedTraceId: traceId,
+                expectedSpanId: spanId,
                 expectedProperties: new Dictionary<string, string> { { "integer", "1" }, { "message", "Hello World!" }, { "intArray", "1,2,3" } });
         }
 
@@ -91,10 +93,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 .Build();
 
             // ACT
-            string traceId;
+            string spanId, traceId;
             using (var activity = activitySource.StartActivity(name: "SayHello", kind: activityKind))
             {
                 traceId = activity.TraceId.ToHexString();
+                spanId = activity.SpanId.ToHexString();
 
                 activity.SetTag("integer", 1);
                 activity.SetTag("message", "Hello World!");
@@ -115,6 +118,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 activityKind: activityKind,
                 expectedName: "SayHello",
                 expectedTraceId: traceId,
+                expectedSpanId: spanId,
                 expectedProperties: new Dictionary<string, string> { { "integer", "1" }, { "message", "Hello World!" }, { "intArray", "1,2,3" } });
         }
 
@@ -184,6 +188,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 telemetryItem: activityTelemetryItem,
                 expectedName: activityName,
                 expectedTraceId: traceId,
+                expectedSpanId: spanId,
                 expectedProperties: null);
 
             Assert.True(logTelemetryItems.Any(), "Unit test failed to collect telemetry.");
