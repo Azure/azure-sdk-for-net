@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
+    - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

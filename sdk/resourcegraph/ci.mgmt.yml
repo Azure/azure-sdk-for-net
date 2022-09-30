@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/resourcegraph/Azure.ResourceManager.ResourceGraph
+    - sdk/resourcegraph/Azure.ResourceManager.ResourceGraph/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/datalake-analytics/Azure.ResourceManager.DataLakeAnalytics
+    - sdk/datalake-analytics/Azure.ResourceManager.DataLakeAnalytics/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

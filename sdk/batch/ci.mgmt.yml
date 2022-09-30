@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/batch/Azure.ResourceManager.Batch
+    - sdk/batch/Azure.ResourceManager.Batch/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

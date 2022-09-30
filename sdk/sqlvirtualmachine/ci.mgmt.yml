@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
+    - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

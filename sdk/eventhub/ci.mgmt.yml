@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/eventhub/Azure.ResourceManager.EventHubs
+    - sdk/eventhub/Azure.ResourceManager.EventHubs/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

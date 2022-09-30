@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/fluidrelay/Azure.ResourceManager.FluidRelay
+    - sdk/fluidrelay/Azure.ResourceManager.FluidRelay/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

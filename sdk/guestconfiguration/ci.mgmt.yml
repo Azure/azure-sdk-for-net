@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration
+    - sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

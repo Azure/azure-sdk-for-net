@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/databox/Azure.ResourceManager.DataBox
+    - sdk/databox/Azure.ResourceManager.DataBox/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

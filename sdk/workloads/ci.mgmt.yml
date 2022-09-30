@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/workloads/Azure.ResourceManager.Workloads
+    - sdk/workloads/Azure.ResourceManager.Workloads/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

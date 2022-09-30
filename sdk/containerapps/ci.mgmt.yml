@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/containerapps/Azure.ResourceManager.AppContainers
+    - sdk/containerapps/Azure.ResourceManager.AppContainers/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

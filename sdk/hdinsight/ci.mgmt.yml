@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/hdinsight/Azure.ResourceManager.HDInsight
+    - sdk/hdinsight/Azure.ResourceManager.HDInsight/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

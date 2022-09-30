@@ -11,7 +11,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/cosmosdb/Azure.ResourceManager.CosmosDB
+    - sdk/cosmosdb/Azure.ResourceManager.CosmosDB/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

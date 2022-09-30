@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/notificationhubs/Azure.ResourceManager.NotificationHubs
+    - sdk/notificationhubs/Azure.ResourceManager.NotificationHubs/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

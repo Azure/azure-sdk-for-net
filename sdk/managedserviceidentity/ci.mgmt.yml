@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/managedserviceidentity/Azure.ResourceManager.ManagedServiceIdentities
+    - sdk/managedserviceidentity/Azure.ResourceManager.ManagedServiceIdentities/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml

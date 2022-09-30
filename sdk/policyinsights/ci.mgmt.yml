@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
+    - sdk/policyinsights/Azure.ResourceManager.PolicyInsights/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

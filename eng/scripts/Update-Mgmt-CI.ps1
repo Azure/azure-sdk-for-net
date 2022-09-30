@@ -11,7 +11,7 @@ function Update-CIFile() {
 
     $content = Get-Content $mgmtCiFile -Raw
 
-    if ($content -match "(?s)ServiceDirectory: (?<sd>[^\r\n]+).*- name: (?<p>[^\r\n]+)")
+    if ($content -match "(?s)ServiceDirectory:\s*(?<sd>[^\r\n]+).*-\s*name:\s*(?<p>[^\r\n]+)")
     {
         $serviceDirectory = $matches["sd"]
         $packageName = $matches["p"]
@@ -21,6 +21,8 @@ function Update-CIFile() {
         return
     }
 
+    $relServiceDir = "sdk/$serviceDirectory"
+    $relPackageDir = "$relServiceDir/$packageName/"
     $prtriggers = @"
 pr:
   branches:
@@ -31,12 +33,11 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/$serviceDirectory/$packageName
-
+    - $relPackageDir
 "@
 
-    $content = $content -replace "(?s)pr:[^\n]*(\n([ ]+[^\n]*|))*", $prtriggers
-    $content = $content -replace "(?s)trigger:[^\n]*(\n([ ]+[^\n]*|))*", "trigger: none`r`n"
+    $content = $content -replace "(?s)pr:[^\r\n]*(\r\n([ ]+[^\r\n]*|))*", "$prtriggers`r`n`r`n"
+    $content = $content -replace "(?s)trigger:[^\r\n]*(\r\n([ ]+[^\r\n]*|))*", "trigger: none`r`n"
 
     if ($content -notmatch "LimitForPullRequest: true")
     {
@@ -44,6 +45,18 @@ pr:
     }
 
     Set-Content -Path $mgmtCiFile $content -NoNewline
+
+
+    $ciFile = $mgmtCiFile.Replace("ci.mgmt", "ci")
+
+    if (Test-Path $ciFile)
+    {
+        $ciContent = Get-Content $ciFile -Raw
+
+        $ciContent = $ciContent -replace "(?s)(paths:\r\n(\s+)include:\r\n(?:\s+-[^\r\n]*\r\n)*(?:\s+-\s+$relServiceDir/?\r\n)(?:\s+-[^\r\n]*\r\n)*)(?!\s+exclude:)", "`$1`$2exclude:`r`n`$2- $relPackageDir`r`n"
+
+        Set-Content -Path $ciFile $ciContent -NoNewline
+    }
 }
 
 #update all Azure.ResourceManager libraries to use the new pattern for ci

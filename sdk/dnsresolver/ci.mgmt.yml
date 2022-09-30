@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/dnsresolver/Azure.ResourceManager.DnsResolver
+    - sdk/dnsresolver/Azure.ResourceManager.DnsResolver/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

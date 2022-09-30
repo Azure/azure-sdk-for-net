@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/hybridcompute/Azure.ResourceManager.HybridCompute
+    - sdk/hybridcompute/Azure.ResourceManager.HybridCompute/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

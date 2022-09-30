@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/labservices/Azure.ResourceManager.LabServices
+    - sdk/labservices/Azure.ResourceManager.LabServices/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

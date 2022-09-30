@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/botservice/Azure.ResourceManager.BotService
+    - sdk/botservice/Azure.ResourceManager.BotService/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

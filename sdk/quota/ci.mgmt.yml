@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/quota/Azure.ResourceManager.Quota
+    - sdk/quota/Azure.ResourceManager.Quota/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

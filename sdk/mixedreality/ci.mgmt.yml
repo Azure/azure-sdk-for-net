@@ -9,7 +9,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/mixedreality/Azure.ResourceManager.MixedReality
+    - sdk/mixedreality/Azure.ResourceManager.MixedReality/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

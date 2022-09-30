@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/eventgrid/Azure.ResourceManager.EventGrid
+    - sdk/eventgrid/Azure.ResourceManager.EventGrid/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

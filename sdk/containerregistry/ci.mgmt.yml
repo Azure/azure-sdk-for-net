@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
+    - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

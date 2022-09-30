@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/iothub/Azure.ResourceManager.IotHub
+    - sdk/iothub/Azure.ResourceManager.IotHub/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

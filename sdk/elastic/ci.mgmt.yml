@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/elastic/Azure.ResourceManager.Elastic
+    - sdk/elastic/Azure.ResourceManager.Elastic/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

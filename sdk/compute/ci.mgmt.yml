@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/compute/Azure.ResourceManager.Compute
+    - sdk/compute/Azure.ResourceManager.Compute/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

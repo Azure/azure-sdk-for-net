@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/networkfunction/Azure.ResourceManager.NetworkFunction
+    - sdk/networkfunction/Azure.ResourceManager.NetworkFunction/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

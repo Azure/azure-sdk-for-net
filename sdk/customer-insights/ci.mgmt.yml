@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/customer-insights/Azure.ResourceManager.CustomerInsights
+    - sdk/customer-insights/Azure.ResourceManager.CustomerInsights/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

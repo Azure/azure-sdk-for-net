@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/netapp/Azure.ResourceManager.NetApp
+    - sdk/netapp/Azure.ResourceManager.NetApp/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

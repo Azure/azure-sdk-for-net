@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/recoveryservices-siterecovery/Azure.ResourceManager.RecoveryServicesSiteRecovery
+    - sdk/recoveryservices-siterecovery/Azure.ResourceManager.RecoveryServicesSiteRecovery/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

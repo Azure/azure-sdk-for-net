@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/dynatrace/Azure.ResourceManager.Dynatrace
+    - sdk/dynatrace/Azure.ResourceManager.Dynatrace/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

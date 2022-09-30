@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration
+    - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

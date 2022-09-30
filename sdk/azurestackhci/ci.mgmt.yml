@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/azurestackhci/Azure.ResourceManager.Hci
+    - sdk/azurestackhci/Azure.ResourceManager.Hci/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

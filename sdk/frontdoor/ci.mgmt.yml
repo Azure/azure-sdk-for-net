@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/frontdoor/Azure.ResourceManager.FrontDoor
+    - sdk/frontdoor/Azure.ResourceManager.FrontDoor/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

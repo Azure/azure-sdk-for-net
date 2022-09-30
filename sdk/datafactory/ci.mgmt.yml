@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/datafactory/Azure.ResourceManager.DataFactory
+    - sdk/datafactory/Azure.ResourceManager.DataFactory/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

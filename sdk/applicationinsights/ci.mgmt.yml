@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights
+    - sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

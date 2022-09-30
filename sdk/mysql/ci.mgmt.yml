@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/mysql/Azure.ResourceManager.MySql
+    - sdk/mysql/Azure.ResourceManager.MySql/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

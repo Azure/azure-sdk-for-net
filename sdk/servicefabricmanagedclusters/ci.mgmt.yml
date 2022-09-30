@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/servicefabricmanagedclusters/Azure.ResourceManager.ServiceFabricManagedClusters
+    - sdk/servicefabricmanagedclusters/Azure.ResourceManager.ServiceFabricManagedClusters/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

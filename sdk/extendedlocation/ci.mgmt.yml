@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/extendedlocation/Azure.ResourceManager.ExtendedLocations
+    - sdk/extendedlocation/Azure.ResourceManager.ExtendedLocations/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

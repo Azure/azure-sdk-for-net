@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/storagepool/Azure.ResourceManager.StoragePool
+    - sdk/storagepool/Azure.ResourceManager.StoragePool/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

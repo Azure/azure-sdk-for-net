@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/postgresql/Azure.ResourceManager.PostgreSql
+    - sdk/postgresql/Azure.ResourceManager.PostgreSql/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

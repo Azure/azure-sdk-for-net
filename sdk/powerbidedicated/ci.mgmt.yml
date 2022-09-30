@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
+    - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -9,7 +9,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/confidentialledger/Azure.ResourceManager.ConfidentialLedger
+    - sdk/confidentialledger/Azure.ResourceManager.ConfidentialLedger/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

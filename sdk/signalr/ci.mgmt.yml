@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/signalr/Azure.ResourceManager.SignalR
+    - sdk/signalr/Azure.ResourceManager.SignalR/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

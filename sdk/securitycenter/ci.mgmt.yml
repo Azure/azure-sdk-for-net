@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/securitycenter/Azure.ResourceManager.SecurityCenter
+    - sdk/securitycenter/Azure.ResourceManager.SecurityCenter/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

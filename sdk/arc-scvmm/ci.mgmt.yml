@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/arc-scvmm/Azure.ResourceManager.ArcScVmm
+    - sdk/arc-scvmm/Azure.ResourceManager.ArcScVmm/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

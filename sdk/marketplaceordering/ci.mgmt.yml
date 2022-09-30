@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/marketplaceordering/Azure.ResourceManager.MarketplaceOrdering
+    - sdk/marketplaceordering/Azure.ResourceManager.MarketplaceOrdering/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

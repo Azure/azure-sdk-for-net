@@ -9,7 +9,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/purview/Azure.ResourceManager.Purview
+    - sdk/purview/Azure.ResourceManager.Purview/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

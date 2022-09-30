@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/automanage/Azure.ResourceManager.Automanage
+    - sdk/automanage/Azure.ResourceManager.Automanage/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml

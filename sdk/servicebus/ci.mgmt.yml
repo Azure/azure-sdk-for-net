@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/servicebus/Azure.ResourceManager.ServiceBus
+    - sdk/servicebus/Azure.ResourceManager.ServiceBus/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

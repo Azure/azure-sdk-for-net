@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/peering/Azure.ResourceManager.Peering
+    - sdk/peering/Azure.ResourceManager.Peering/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/databoxedge/Azure.ResourceManager.DataBoxEdge
+    - sdk/databoxedge/Azure.ResourceManager.DataBoxEdge/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

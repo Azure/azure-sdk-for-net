@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
+    - sdk/edgeorder/Azure.ResourceManager.EdgeOrder/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

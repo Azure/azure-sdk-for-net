@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/search/Azure.ResourceManager.Search
+    - sdk/search/Azure.ResourceManager.Search/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

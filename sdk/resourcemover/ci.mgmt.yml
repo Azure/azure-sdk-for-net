@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/resourcemover/Azure.ResourceManager.ResourceMover
+    - sdk/resourcemover/Azure.ResourceManager.ResourceMover/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

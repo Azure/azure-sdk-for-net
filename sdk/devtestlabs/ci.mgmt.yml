@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/devtestlabs/Azure.ResourceManager.DevTestLabs
+    - sdk/devtestlabs/Azure.ResourceManager.DevTestLabs/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

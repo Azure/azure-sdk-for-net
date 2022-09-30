@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/storagesync/Azure.ResourceManager.StorageSync
+    - sdk/storagesync/Azure.ResourceManager.StorageSync/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

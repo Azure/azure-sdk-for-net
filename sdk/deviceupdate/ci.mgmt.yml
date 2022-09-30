@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate
+    - sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

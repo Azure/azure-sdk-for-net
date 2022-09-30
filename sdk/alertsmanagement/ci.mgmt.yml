@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
+    - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

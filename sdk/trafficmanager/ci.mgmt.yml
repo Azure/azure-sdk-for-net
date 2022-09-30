@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/trafficmanager/Azure.ResourceManager.TrafficManager
+    - sdk/trafficmanager/Azure.ResourceManager.TrafficManager/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

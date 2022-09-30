@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/streamanalytics/Azure.ResourceManager.StreamAnalytics
+    - sdk/streamanalytics/Azure.ResourceManager.StreamAnalytics/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

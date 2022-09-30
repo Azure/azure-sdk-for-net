@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/managednetwork/Azure.ResourceManager.ManagedNetwork
+    - sdk/managednetwork/Azure.ResourceManager.ManagedNetwork/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

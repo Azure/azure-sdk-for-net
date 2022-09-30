@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/appplatform/Azure.ResourceManager.AppPlatform
+    - sdk/appplatform/Azure.ResourceManager.AppPlatform/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

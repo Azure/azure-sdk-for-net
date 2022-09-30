@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform
+    - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
