@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
         /// Operation Id: PolicyStates_SummarizeForResourceGroupLevelPolicyAssignment
         /// </summary>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<PolicySummary>> FirstPageFunc(int? pageSizeHint)
             {
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = await PolicyStatesRestClient.SummarizeForResourceGroupLevelPolicyAssignmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyStatesSummaryResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyStatesRestClient.SummarizeForResourceGroupLevelPolicyAssignmentAsync(policyStateSummaryType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = await PolicyStatesRestClient.SummarizeForSubscriptionLevelPolicyAssignmentAsync(Id.SubscriptionId, Id.Name, policyStatesSummaryResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyStatesRestClient.SummarizeForSubscriptionLevelPolicyAssignmentAsync(policyStateSummaryType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                     }
                     else
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
         /// Operation Id: PolicyStates_SummarizeForResourceGroupLevelPolicyAssignment
         /// </summary>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicySummary> SummarizePolicyStates(PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicySummary> SummarizePolicyStates(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Page<PolicySummary> FirstPageFunc(int? pageSizeHint)
             {
@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = PolicyStatesRestClient.SummarizeForResourceGroupLevelPolicyAssignment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyStatesSummaryResource, queryOptions, cancellationToken: cancellationToken);
+                        var response = PolicyStatesRestClient.SummarizeForResourceGroupLevelPolicyAssignment(policyStateSummaryType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = PolicyStatesRestClient.SummarizeForSubscriptionLevelPolicyAssignment(Id.SubscriptionId, Id.Name, policyStatesSummaryResource, queryOptions, cancellationToken: cancellationToken);
+                        var response = PolicyStatesRestClient.SummarizeForSubscriptionLevelPolicyAssignment(policyStateSummaryType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                     }
                     else
@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
         /// Operation Id: PolicyStates_ListQueryResultsForResourceGroupLevelPolicyAssignment
         /// </summary>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<PolicyState>> FirstPageFunc(int? pageSizeHint)
             {
@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = await PolicyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(policyStateType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = await PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(Id.SubscriptionId, Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(policyStateType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else
@@ -184,12 +184,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = await PolicyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageAsync(nextLink, policyStateType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = await PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageAsync(nextLink, policyStateType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else
@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
         /// Operation Id: PolicyStates_ListQueryResultsForResourceGroupLevelPolicyAssignment
         /// </summary>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyState> GetPolicyStateQueryResults(PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyState> GetPolicyStateQueryResults(PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Page<PolicyState> FirstPageFunc(int? pageSizeHint)
             {
@@ -227,12 +227,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = PolicyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken);
+                        var response = PolicyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignment(policyStateType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignment(Id.SubscriptionId, Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken);
+                        var response = PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignment(policyStateType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else
@@ -254,12 +254,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = PolicyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken);
+                        var response = PolicyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPage(nextLink, policyStateType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPage(nextLink, Id.SubscriptionId, Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken);
+                        var response = PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPage(nextLink, policyStateType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else
@@ -283,11 +283,11 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
         /// Operation Id: PolicyEvents_ListQueryResultsForResourceGroupLevelPolicyAssignment
         /// </summary>
-        /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<PolicyEvent>> FirstPageFunc(int? pageSizeHint)
             {
@@ -297,12 +297,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = await PolicyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(policyEventType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = await PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(Id.SubscriptionId, Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(policyEventType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else
@@ -324,12 +324,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = await PolicyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageAsync(nextLink, policyEventType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = await PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageAsync(nextLink, policyEventType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else
@@ -353,11 +353,11 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
         /// Operation Id: PolicyEvents_ListQueryResultsForResourceGroupLevelPolicyAssignment
         /// </summary>
-        /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyEvent> GetPolicyEventQueryResults(PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyEvent> GetPolicyEventQueryResults(PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Page<PolicyEvent> FirstPageFunc(int? pageSizeHint)
             {
@@ -367,12 +367,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = PolicyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken);
+                        var response = PolicyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignment(policyEventType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignment(Id.SubscriptionId, Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken);
+                        var response = PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignment(policyEventType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else
@@ -394,12 +394,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = PolicyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken);
+                        var response = PolicyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPage(nextLink, policyEventType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPage(nextLink, Id.SubscriptionId, Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken);
+                        var response = PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPage(nextLink, policyEventType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else

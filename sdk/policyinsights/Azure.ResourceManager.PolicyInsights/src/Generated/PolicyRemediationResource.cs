@@ -252,10 +252,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/listDeployments
         /// Operation Id: Remediations_ListDeploymentsAtResource
         /// </summary>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RemediationDeployment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RemediationDeployment> GetDeploymentsAsync(PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RemediationDeployment> GetDeploymentsAsync(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<RemediationDeployment>> FirstPageFunc(int? pageSizeHint)
             {
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = await _policyRemediationRemediationsRestClient.ListDeploymentsAtResourceAsync(Id.Parent, Id.Name, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _policyRemediationRemediationsRestClient.ListDeploymentsAtResourceAsync(Id.Parent, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = await _policyRemediationRemediationsRestClient.ListDeploymentsAtResourceNextPageAsync(nextLink, Id.Parent, Id.Name, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _policyRemediationRemediationsRestClient.ListDeploymentsAtResourceNextPageAsync(nextLink, Id.Parent, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -295,10 +295,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/listDeployments
         /// Operation Id: Remediations_ListDeploymentsAtResource
         /// </summary>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RemediationDeployment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RemediationDeployment> GetDeployments(PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<RemediationDeployment> GetDeployments(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Page<RemediationDeployment> FirstPageFunc(int? pageSizeHint)
             {
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = _policyRemediationRemediationsRestClient.ListDeploymentsAtResource(Id.Parent, Id.Name, queryOptions, cancellationToken: cancellationToken);
+                    var response = _policyRemediationRemediationsRestClient.ListDeploymentsAtResource(Id.Parent, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = _policyRemediationRemediationsRestClient.ListDeploymentsAtResourceNextPage(nextLink, Id.Parent, Id.Name, queryOptions, cancellationToken: cancellationToken);
+                    var response = _policyRemediationRemediationsRestClient.ListDeploymentsAtResourceNextPage(nextLink, Id.Parent, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

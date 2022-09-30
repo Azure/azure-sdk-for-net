@@ -10,12 +10,12 @@ using Azure.ResourceManager.PolicyInsights.Models;
 namespace Azure.ResourceManager.PolicyInsights
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    [CodeGenSuppress("GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEvents", typeof(string), typeof(PolicyEventType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
-    [CodeGenSuppress("GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEventsAsync", typeof(string), typeof(PolicyEventType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
-    [CodeGenSuppress("GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStates", typeof(string), typeof(PolicyStateType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
-    [CodeGenSuppress("GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStatesAsync", typeof(string), typeof(PolicyStateType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
-    [CodeGenSuppress("SummarizeForResourceGroupLevelPolicyAssignmentPolicyStates", typeof(string), typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
-    [CodeGenSuppress("SummarizeForResourceGroupLevelPolicyAssignmentPolicyStatesAsync", typeof(string), typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [CodeGenSuppress("GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEvents", typeof(PolicyEventType), typeof(string), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [CodeGenSuppress("GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEventsAsync", typeof(PolicyEventType), typeof(string), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [CodeGenSuppress("GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStates", typeof(PolicyStateType), typeof(string), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [CodeGenSuppress("GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStatesAsync", typeof(PolicyStateType), typeof(string), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [CodeGenSuppress("SummarizeForResourceGroupLevelPolicyAssignmentPolicyStates", typeof(PolicyStateSummaryType), typeof(string), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [CodeGenSuppress("SummarizeForResourceGroupLevelPolicyAssignmentPolicyStatesAsync", typeof(PolicyStateSummaryType), typeof(string), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     internal partial class ResourceGroupResourceExtensionClient : ArmResource
     {
     }

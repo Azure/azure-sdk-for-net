@@ -93,6 +93,7 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
   Odata: OData|odata
+  QueryOptions: PolicyQuerySettings|policyQuerySettings
 
 rename-mapping:
   ComplianceState: PolicyComplianceState
@@ -139,7 +140,6 @@ rename-mapping:
   RemediationDeployment.deploymentId: -|arm-id
   RemediationDeployment.resourceLocation: -|azure-location
   TrackedResourceModificationDetails.deploymentId: -|arm-id
-  QueryOptions: PolicyQuerySettings
   PolicyTrackedResourcesResourceType: PolicyTrackedResourceType
 
 directive:
@@ -185,4 +185,17 @@ directive:
     transform: >
       $.ErrorResponse['x-ms-client-name'] = 'PolicyMetadataErrorResponse';
       $.ErrorDefinition['x-ms-client-name'] = 'PolicyMetadataErrorDefinition';
+  - from: policyEvents.json
+    where: $.parameters
+    transform: >
+      $.policyEventsResourceParameter['x-ms-client-name'] = 'policyEventType';
+  - from: policyStates.json
+    where: $.parameters
+    transform: >
+      $.policyStatesResourceParameter['x-ms-client-name'] = 'policyStateType';
+      $.policyStatesSummaryResourceParameter['x-ms-client-name'] = 'policyStateSummaryType';
+  - from: policyTrackedResources.json
+    where: $.parameters
+    transform: >
+      $.policyTrackedResourcesResourceParameter['x-ms-client-name'] = 'policyTrackedResourceType';
 ```

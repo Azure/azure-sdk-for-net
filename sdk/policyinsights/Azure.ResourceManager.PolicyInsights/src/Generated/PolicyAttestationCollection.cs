@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/attestations
         /// Operation Id: Attestations_ListForResource
         /// </summary>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicyAttestationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyAttestationResource> GetAllAsync(PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyAttestationResource> GetAllAsync(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<PolicyAttestationResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = await _policyAttestationAttestationsRestClient.ListForResourceAsync(Id, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _policyAttestationAttestationsRestClient.ListForResourceAsync(Id, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new PolicyAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = await _policyAttestationAttestationsRestClient.ListForResourceNextPageAsync(nextLink, Id, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _policyAttestationAttestationsRestClient.ListForResourceNextPageAsync(nextLink, Id, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new PolicyAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -216,10 +216,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/attestations
         /// Operation Id: Attestations_ListForResource
         /// </summary>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyAttestationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyAttestationResource> GetAll(PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyAttestationResource> GetAll(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Page<PolicyAttestationResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = _policyAttestationAttestationsRestClient.ListForResource(Id, queryOptions, cancellationToken: cancellationToken);
+                    var response = _policyAttestationAttestationsRestClient.ListForResource(Id, policyQuerySettings, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new PolicyAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Start();
                 try
                 {
-                    var response = _policyAttestationAttestationsRestClient.ListForResourceNextPage(nextLink, Id, queryOptions, cancellationToken: cancellationToken);
+                    var response = _policyAttestationAttestationsRestClient.ListForResourceNextPage(nextLink, Id, policyQuerySettings, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new PolicyAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
