@@ -12,6 +12,7 @@ using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 {
@@ -21,6 +22,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
     /// </summary>
     public class MetricsTests
     {
+        internal readonly TelemetryItemOutputHelper telemetryOutput;
+
+        public MetricsTests(ITestOutputHelper output)
+        {
+            this.telemetryOutput = new TelemetryItemOutputHelper(output);
+        }
+
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
@@ -57,6 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(telemetryItems);
             var telemetryItem = telemetryItems.Single();
 
             TelemetryItemValidationHelper.AssertCounter_As_MetricTelemetry(
@@ -107,6 +116,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(telemetryItems);
             var telemetryItem = telemetryItems.Single();
 
             TelemetryItemValidationHelper.AssertHistogram_As_MetricTelemetry(

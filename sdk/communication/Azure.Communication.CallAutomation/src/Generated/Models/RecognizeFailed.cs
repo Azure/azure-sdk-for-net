@@ -14,14 +14,5 @@ namespace Azure.Communication.CallAutomation
         internal RecognizeFailed()
         {
         }
-
-        /// <summary> Gets the operation context. </summary>
-        public string OperationContext { get; }
-        /// <summary> Gets the result information. </summary>
-        public ResultInformation ResultInformation { get; }
-        /// <summary> Used to determine the version of the event. </summary>
-        public string Version { get; }
-        /// <summary> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </summary>
-        public string PublicEventType { get; }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
             telemetryItems = new ConcurrentBag<TelemetryItem>();
 
-            return loggerOptions.AddProcessor(new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(new MockTransmitter(telemetryItems))));
+            return loggerOptions.AddProcessor(new SimpleLogRecordExportProcessor(new AzureMonitorLogExporter(new MockTransmitter(telemetryItems))));
         }
 
         /// <summary>

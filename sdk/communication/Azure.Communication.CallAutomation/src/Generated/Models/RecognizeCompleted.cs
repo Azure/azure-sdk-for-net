@@ -14,16 +14,7 @@ namespace Azure.Communication.CallAutomation
         internal RecognizeCompleted()
         {
         }
-
-        /// <summary> Gets the operation context. </summary>
-        public string OperationContext { get; }
-        /// <summary> Result information defines the code, subcode and message. </summary>
-        public ResultInformation ResultInformation { get; }
         /// <summary> Defines the result for RecognitionType = Dtmf. </summary>
         public CollectTonesResult CollectTonesResult { get; }
-        /// <summary> Used to determine the version of the event. </summary>
-        public string Version { get; }
-        /// <summary> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </summary>
-        public string PublicEventType { get; }
     }
 }
