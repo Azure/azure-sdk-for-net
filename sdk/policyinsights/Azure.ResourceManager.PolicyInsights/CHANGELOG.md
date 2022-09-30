@@ -11,8 +11,8 @@ Polishing since last public beta release:
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the suffix of `DateTimeOffset` properties / parameters.
-- Corrected the extended types of extension methods related to `PolicyAssignmentResource`, `SubscriptionPolicyDefinitionResource` and `SubscriptionPolicySetDefinitionResource`.
 - Optimized the name of some models and functions.
+- Corrected the extended types of extension methods related to `PolicyAssignmentResource`, `SubscriptionPolicyDefinitionResource` and `SubscriptionPolicySetDefinitionResource`.
 
 ### Other Changes
 
