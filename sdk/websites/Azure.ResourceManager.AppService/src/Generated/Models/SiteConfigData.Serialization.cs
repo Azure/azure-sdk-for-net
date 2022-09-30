@@ -913,7 +913,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> vnetName = default;
             Optional<bool?> vnetRouteAllEnabled = default;
             Optional<int?> vnetPrivatePortsCount = default;
-            Optional<CorsSettings> cors = default;
+            Optional<AppServiceCorsSettings> cors = default;
             Optional<WebAppPushSettings> push = default;
             Optional<AppServiceApiDefinitionInfo> apiDefinition = default;
             Optional<ApiManagementConfig> apiManagementConfig = default;
@@ -926,8 +926,8 @@ namespace Azure.ResourceManager.AppService
             Optional<IList<IPSecurityRestriction>> scmIPSecurityRestrictions = default;
             Optional<bool?> scmIPSecurityRestrictionsUseMain = default;
             Optional<bool?> http20Enabled = default;
-            Optional<SupportedTlsVersion?> minTlsVersion = default;
-            Optional<SupportedTlsVersion?> scmMinTlsVersion = default;
+            Optional<AppServiceSupportedTlsVersion?> minTlsVersion = default;
+            Optional<AppServiceSupportedTlsVersion?> scmMinTlsVersion = default;
             Optional<AppServiceFtpsState?> ftpsState = default;
             Optional<int?> preWarmedInstanceCount = default;
             Optional<int?> functionAppScaleLimit = default;
@@ -1440,7 +1440,7 @@ namespace Azure.ResourceManager.AppService
                                 cors = null;
                                 continue;
                             }
-                            cors = CorsSettings.DeserializeCorsSettings(property0.Value);
+                            cors = AppServiceCorsSettings.DeserializeAppServiceCorsSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("push"))
@@ -1580,7 +1580,7 @@ namespace Azure.ResourceManager.AppService
                                 minTlsVersion = null;
                                 continue;
                             }
-                            minTlsVersion = new SupportedTlsVersion(property0.Value.GetString());
+                            minTlsVersion = new AppServiceSupportedTlsVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("scmMinTlsVersion"))
@@ -1590,7 +1590,7 @@ namespace Azure.ResourceManager.AppService
                                 scmMinTlsVersion = null;
                                 continue;
                             }
-                            scmMinTlsVersion = new SupportedTlsVersion(property0.Value.GetString());
+                            scmMinTlsVersion = new AppServiceSupportedTlsVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ftpsState"))

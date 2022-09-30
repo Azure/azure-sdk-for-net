@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceEnvironmentProperties. </summary>
         /// <param name="virtualNetwork"> Description of the Virtual Network. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
-        public AppServiceEnvironmentProperties(VirtualNetworkProfile virtualNetwork)
+        public AppServiceEnvironmentProperties(AppServiceVirtualNetworkProfile virtualNetwork)
         {
             if (virtualNetwork == null)
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="hasLinuxWorkers"> Flag that displays whether an ASE has linux workers or not. </param>
         /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
         /// <param name="isZoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
-        internal AppServiceEnvironmentProperties(ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<AppServiceNameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? isZoneRedundant)
+        internal AppServiceEnvironmentProperties(ProvisioningState? provisioningState, HostingEnvironmentStatus? status, AppServiceVirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<AppServiceNameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? isZoneRedundant)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Current status of the App Service Environment. </summary>
         public HostingEnvironmentStatus? Status { get; }
         /// <summary> Description of the Virtual Network. </summary>
-        public VirtualNetworkProfile VirtualNetwork { get; set; }
+        public AppServiceVirtualNetworkProfile VirtualNetwork { get; set; }
         /// <summary> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </summary>
         public LoadBalancingMode? InternalLoadBalancingMode { get; set; }
         /// <summary> Front-end VM size, e.g. &quot;Medium&quot;, &quot;Large&quot;. </summary>

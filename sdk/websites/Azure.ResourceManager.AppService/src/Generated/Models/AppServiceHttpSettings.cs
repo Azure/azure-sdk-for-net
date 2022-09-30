@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isHttpsRequired"> &lt;code&gt;false&lt;/code&gt; if the authentication/authorization responses not having the HTTPS scheme are permissible; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="routes"> The configuration settings of the paths HTTP requests. </param>
         /// <param name="forwardProxy"> The configuration settings of a forward proxy used to make the requests. </param>
-        internal AppServiceHttpSettings(bool? isHttpsRequired, AppServiceHttpSettingsRoutes routes, ForwardProxy forwardProxy)
+        internal AppServiceHttpSettings(bool? isHttpsRequired, AppServiceHttpSettingsRoutes routes, AppServiceForwardProxy forwardProxy)
         {
             IsHttpsRequired = isHttpsRequired;
             Routes = routes;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The configuration settings of a forward proxy used to make the requests. </summary>
-        public ForwardProxy ForwardProxy { get; set; }
+        public AppServiceForwardProxy ForwardProxy { get; set; }
     }
 }

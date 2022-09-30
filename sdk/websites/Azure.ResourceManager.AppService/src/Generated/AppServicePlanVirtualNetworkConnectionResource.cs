@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics;
         private readonly AppServicePlansRestOperations _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient;
-        private readonly VnetInfoResourceData _data;
+        private readonly AppServiceVirtualNetworkData _data;
 
         /// <summary> Initializes a new instance of the <see cref="AppServicePlanVirtualNetworkConnectionResource"/> class for mocking. </summary>
         protected AppServicePlanVirtualNetworkConnectionResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "AppServicePlanVirtualNetworkConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AppServicePlanVirtualNetworkConnectionResource(ArmClient client, VnetInfoResourceData data) : this(client, data.Id)
+        internal AppServicePlanVirtualNetworkConnectionResource(ArmClient client, AppServiceVirtualNetworkData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual VnetInfoResourceData Data
+        public virtual AppServiceVirtualNetworkData Data
         {
             get
             {
@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_ListRoutesForVnet
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppServiceVnetRoute" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppServiceVnetRoute> GetRoutesForVnetAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceVirtualNetworkRout" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceVirtualNetworkRout> GetRoutesForVnetAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppServiceVnetRoute>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServiceVirtualNetworkRout>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionResource.GetRoutesForVnet");
                 scope.Start();
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_ListRoutesForVnet
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppServiceVnetRoute" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppServiceVnetRoute> GetRoutesForVnet(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceVirtualNetworkRout" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceVirtualNetworkRout> GetRoutesForVnet(CancellationToken cancellationToken = default)
         {
-            Page<AppServiceVnetRoute> FirstPageFunc(int? pageSizeHint)
+            Page<AppServiceVirtualNetworkRout> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionResource.GetRoutesForVnet");
                 scope.Start();
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
-        public virtual async Task<Response<AppServiceVnetRoute>> CreateOrUpdateVnetRouteAsync(string routeName, AppServiceVnetRoute route, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceVirtualNetworkRout>> CreateOrUpdateVnetRouteAsync(string routeName, AppServiceVirtualNetworkRout route, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             Argument.AssertNotNull(route, nameof(route));
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
-        public virtual Response<AppServiceVnetRoute> CreateOrUpdateVnetRoute(string routeName, AppServiceVnetRoute route, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceVirtualNetworkRout> CreateOrUpdateVnetRoute(string routeName, AppServiceVirtualNetworkRout route, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             Argument.AssertNotNull(route, nameof(route));
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
-        public virtual async Task<Response<AppServiceVnetRoute>> UpdateVnetRouteAsync(string routeName, AppServiceVnetRoute route, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceVirtualNetworkRout>> UpdateVnetRouteAsync(string routeName, AppServiceVirtualNetworkRout route, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             Argument.AssertNotNull(route, nameof(route));
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
-        public virtual Response<AppServiceVnetRoute> UpdateVnetRoute(string routeName, AppServiceVnetRoute route, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceVirtualNetworkRout> UpdateVnetRoute(string routeName, AppServiceVirtualNetworkRout route, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             Argument.AssertNotNull(route, nameof(route));

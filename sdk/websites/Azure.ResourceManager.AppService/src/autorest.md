@@ -467,11 +467,29 @@ rename-mapping:
   Rendering: DiagnosticDataRendering
   RenderingType: DiagnosticDataRenderingType
   ResourceCollection: AppServicePlanResourceListResult
-  RouteType: AppServiceVnetRouteType
+  RouteType: AppServiceVirtualNetworkRouteType
   Solution: DiagnosticSolution
+  SolutionType: DiagnosticSolutionType
   SslState: HostNameBindingSslState
   StorageType: ArtifactStorageType
   StringList: StaticSiteStringList
+  UsageCollection: AppServiceUsageListResult
+  StatusOptions: AppServicePlanStatusOption
+  TriggerTypes: FunctionTriggerType
+  CookieExpiration: WebAppCookieExpiration
+  SourceControlCollection: AppServiceSourceControlListResult
+  KeyInfo: WebAppKeyInfo
+  KeyValuePairStringObject: DataProviderKeyValuePair
+  IssueType: DetectorIssueType
+  VnetInfo: AppServiceVirtualNetworkProperties
+  VnetInfoResource: AppServiceVirtualNetwork
+  VnetParameters: AppServiceVirtualNetworkValidationContent
+  VnetRoute: AppServiceVirtualNetworkRout
+  VnetGateway: AppServiceVirtualNetworkGateway
+  SupportTopic: DetectorSupportTopic
+  SupportedTlsVersions: AppServiceSupportedTlsVersion
+  VnetValidationFailureDetails: VirtualNetworkValidationFailureDetails
+  VnetValidationTestFailure: VirtualNetworkValidationTestFailure
 
 prepend-rp-prefix:
   - ApiDefinitionInfo
@@ -500,11 +518,17 @@ prepend-rp-prefix:
   - HttpSettingsRoutes
   - Identifier
   - IdentityProviders
-  - VnetRoute
-  - VnetInfo
   - NameValuePair
   - OperationStatus
   - Operation
+  - UsageState
+  - CorsSettings
+  - SourceControl
+  - WorkerPool
+  - ForwardProxy
+  - IpSecurityRestriction
+  - IpFilterTag
+  - VirtualNetworkProfile
 
 directive:
 # operation removal - should be temporary

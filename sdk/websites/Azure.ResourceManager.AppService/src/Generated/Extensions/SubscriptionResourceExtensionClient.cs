@@ -1741,7 +1741,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(VnetContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualNetworkValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.VerifyHostingEnvironmentVnet");
             scope.Start();
@@ -1764,7 +1764,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VnetValidationFailureDetails> VerifyHostingEnvironmentVnet(VnetContent content, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualNetworkValidationFailureDetails> VerifyHostingEnvironmentVnet(AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.VerifyHostingEnvironmentVnet");
             scope.Start();

@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(tenantResource).GetPublishingUser();
         }
 
-        /// <summary> Gets a collection of SourceControlResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of AppServiceSourceControlResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SourceControlResources and their operations over a SourceControlResource. </returns>
-        public static SourceControlCollection GetSourceControls(this TenantResource tenantResource)
+        /// <returns> An object representing collection of AppServiceSourceControlResources and their operations over a AppServiceSourceControlResource. </returns>
+        public static AppServiceSourceControlCollection GetAppServiceSourceControls(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetSourceControls();
+            return GetExtensionClient(tenantResource).GetAppServiceSourceControls();
         }
 
         /// <summary>
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SourceControlResource>> GetSourceControlAsync(this TenantResource tenantResource, string sourceControlType, CancellationToken cancellationToken = default)
+        public static async Task<Response<AppServiceSourceControlResource>> GetAppServiceSourceControlAsync(this TenantResource tenantResource, string sourceControlType, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetSourceControls().GetAsync(sourceControlType, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetAppServiceSourceControls().GetAsync(sourceControlType, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SourceControlResource> GetSourceControl(this TenantResource tenantResource, string sourceControlType, CancellationToken cancellationToken = default)
+        public static Response<AppServiceSourceControlResource> GetAppServiceSourceControl(this TenantResource tenantResource, string sourceControlType, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetSourceControls().Get(sourceControlType, cancellationToken);
+            return tenantResource.GetAppServiceSourceControls().Get(sourceControlType, cancellationToken);
         }
 
         /// <summary>
@@ -1060,7 +1060,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(this SubscriptionResource subscriptionResource, VnetContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualNetworkValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(this SubscriptionResource subscriptionResource, AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1076,7 +1076,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<VnetValidationFailureDetails> VerifyHostingEnvironmentVnet(this SubscriptionResource subscriptionResource, VnetContent content, CancellationToken cancellationToken = default)
+        public static Response<VirtualNetworkValidationFailureDetails> VerifyHostingEnvironmentVnet(this SubscriptionResource subscriptionResource, AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2328,20 +2328,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region SourceControlResource
+        #region AppServiceSourceControlResource
         /// <summary>
-        /// Gets an object representing a <see cref="SourceControlResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SourceControlResource.CreateResourceIdentifier" /> to create a <see cref="SourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppServiceSourceControlResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServiceSourceControlResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceSourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SourceControlResource" /> object. </returns>
-        public static SourceControlResource GetSourceControlResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServiceSourceControlResource" /> object. </returns>
+        public static AppServiceSourceControlResource GetAppServiceSourceControlResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SourceControlResource.ValidateResourceId(id);
-                return new SourceControlResource(client, id);
+                AppServiceSourceControlResource.ValidateResourceId(id);
+                return new AppServiceSourceControlResource(client, id);
             }
             );
         }
