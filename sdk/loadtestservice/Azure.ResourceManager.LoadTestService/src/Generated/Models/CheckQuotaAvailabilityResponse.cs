@@ -10,7 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTestService.Models
 {
-    /// <summary> Check Quota Availability Response. </summary>
+    /// <summary> Check quota availability response object. </summary>
     public partial class CheckQuotaAvailabilityResponse : ResourceData
     {
         /// <summary> Initializes a new instance of CheckQuotaAvailabilityResponse. </summary>
@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.LoadTestService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="isAvailable"> true if Quota is Available, else false. </param>
-        /// <param name="availabilityStatus"> availability Status of the quota bucket. </param>
+        /// <param name="isAvailable"> True/False indicating whether the quota request be granted based on availability. </param>
+        /// <param name="availabilityStatus"> Message indicating additional details to add to quota support request. </param>
         internal CheckQuotaAvailabilityResponse(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isAvailable, string availabilityStatus) : base(id, name, resourceType, systemData)
         {
             IsAvailable = isAvailable;
             AvailabilityStatus = availabilityStatus;
         }
 
-        /// <summary> true if Quota is Available, else false. </summary>
+        /// <summary> True/False indicating whether the quota request be granted based on availability. </summary>
         public bool? IsAvailable { get; set; }
-        /// <summary> availability Status of the quota bucket. </summary>
+        /// <summary> Message indicating additional details to add to quota support request. </summary>
         public string AvailabilityStatus { get; set; }
     }
 }

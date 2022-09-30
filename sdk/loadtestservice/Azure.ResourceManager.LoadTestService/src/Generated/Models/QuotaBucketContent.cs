@@ -10,7 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTestService.Models
 {
-    /// <summary> Quota Bucket Request. </summary>
+    /// <summary> Request object of new quota for a quota bucket. </summary>
     public partial class QuotaBucketContent : ResourceData
     {
         /// <summary> Initializes a new instance of QuotaBucketContent. </summary>
@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.LoadTestService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="currentUsage"> Current Usage of the quota bucket. </param>
-        /// <param name="currentQuota"> Current Quota of the quota bucket. </param>
-        /// <param name="newQuota"> New Requested Quota of the quota bucket. </param>
-        /// <param name="dimensions"> Dimensions for new quota request of the quota bucket. </param>
+        /// <param name="currentUsage"> Current quota usage of the quota bucket. </param>
+        /// <param name="currentQuota"> Current quota limit of the quota bucket. </param>
+        /// <param name="newQuota"> New quota limit of the quota bucket. </param>
+        /// <param name="dimensions"> Dimensions for new quota request. </param>
         internal QuotaBucketContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? currentUsage, int? currentQuota, int? newQuota, QuotaBucketRequestPropertiesDimensions dimensions) : base(id, name, resourceType, systemData)
         {
             CurrentUsage = currentUsage;
@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.LoadTestService.Models
             Dimensions = dimensions;
         }
 
-        /// <summary> Current Usage of the quota bucket. </summary>
+        /// <summary> Current quota usage of the quota bucket. </summary>
         public int? CurrentUsage { get; set; }
-        /// <summary> Current Quota of the quota bucket. </summary>
+        /// <summary> Current quota limit of the quota bucket. </summary>
         public int? CurrentQuota { get; set; }
-        /// <summary> New Requested Quota of the quota bucket. </summary>
+        /// <summary> New quota limit of the quota bucket. </summary>
         public int? NewQuota { get; set; }
-        /// <summary> Dimensions for new quota request of the quota bucket. </summary>
+        /// <summary> Dimensions for new quota request. </summary>
         public QuotaBucketRequestPropertiesDimensions Dimensions { get; set; }
     }
 }

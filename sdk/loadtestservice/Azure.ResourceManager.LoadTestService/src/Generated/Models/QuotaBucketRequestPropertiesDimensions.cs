@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LoadTestService.Models
 {
-    /// <summary> Dimensions for new quota request of the quota bucket. </summary>
+    /// <summary> Dimensions for new quota request. </summary>
     public partial class QuotaBucketRequestPropertiesDimensions
     {
         /// <summary> Initializes a new instance of QuotaBucketRequestPropertiesDimensions. </summary>

@@ -11,7 +11,7 @@ using Azure.ResourceManager.LoadTestService;
 
 namespace Azure.ResourceManager.LoadTestService.Models
 {
-    /// <summary> A list of Quota Bucket details. It contains an URL link to get the next set of results. </summary>
+    /// <summary> List of quota bucket objects. It contains a URL link to get the next set of results. </summary>
     internal partial class QuotaResourceList
     {
         /// <summary> Initializes a new instance of QuotaResourceList. </summary>
@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.LoadTestService.Models
         }
 
         /// <summary> Initializes a new instance of QuotaResourceList. </summary>
-        /// <param name="value"> List of Quota Bucket details by the loadtestservice resource provider. </param>
-        /// <param name="nextLink"> URL to get the next set of Quota Bucket details results (if there are any). </param>
+        /// <param name="value"> List of quota bucket objects provided by the loadtestservice. </param>
+        /// <param name="nextLink"> URL to get the next set of quota bucket objects results (if there are any). </param>
         internal QuotaResourceList(IReadOnlyList<QuotaResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of Quota Bucket details by the loadtestservice resource provider. </summary>
+        /// <summary> List of quota bucket objects provided by the loadtestservice. </summary>
         public IReadOnlyList<QuotaResourceData> Value { get; }
-        /// <summary> URL to get the next set of Quota Bucket details results (if there are any). </summary>
+        /// <summary> URL to get the next set of quota bucket objects results (if there are any). </summary>
         public string NextLink { get; }
     }
 }

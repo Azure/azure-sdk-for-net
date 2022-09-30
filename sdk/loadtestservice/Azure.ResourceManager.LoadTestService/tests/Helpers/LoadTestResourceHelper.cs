@@ -15,11 +15,13 @@ namespace Azure.ResourceManager.LoadTestService.Tests.Helpers
 {
     public class LoadTestResourceHelper
     {
-        public const string DefaultResourceGroupName = "rg-loadtestservice-sdk-tests";
-        public const string DefaultResourceLocation = "westus2";
-        public const string LoadTestRpNamespace = "Microsoft.LoadTestService";
-        public const string LoadTestResourceArmIdFormat = "/subscriptions/{0}/resourceGroups/{1}/providers/" +
-                                               LoadTestRpNamespace + "/loadtests/{2}";
+        public class EnvironmentVariables
+        {
+            public static string RESOURCE_GROUP_NAME = "LOADTESTSERVICE_RESOURCE_GROUP";
+        }
+
+        public const string RESOURCE_LOCATION = "westus2";
+        public const string LOADTESTS_RESOURCE_TYPE = "Microsoft.LoadTestService/loadtests";
 
         public static async Task TryRegisterResourceGroupAsync(ResourceGroupCollection resourceGroupsOperations, string location, string resourceGroupName)
         {

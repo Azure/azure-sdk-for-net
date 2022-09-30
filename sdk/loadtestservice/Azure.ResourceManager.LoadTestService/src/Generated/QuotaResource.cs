@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.LoadTestService
         /// <summary> Initializes a new instance of the <see cref = "QuotaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal QuotaResource(ArmClient client, QuotaResourceData data) : this(client, data.Id)
+        internal QuotaResource(ArmClient client, QuotaResourceData data) //: this(client, data.Id)
         {
             HasData = true;
             _data = data;

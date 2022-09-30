@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.LoadTestService.Tests
                 await CreateCommonClient();
             }
             var resourceGroupName = Recording.GenerateAssetName("SdkRg");
-            await LoadTestResourceHelper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, LoadTestResourceHelper.DefaultResourceLocation, resourceGroupName);
-            var loadTestResourceName = Recording.GenerateAssetName("SdkLoadTestService");
+            await LoadTestResourceHelper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, LoadTestResourceHelper.RESOURCE_LOCATION, resourceGroupName);
+
             _loadTestResourceCollection = (await GetResourceGroupAsync(resourceGroupName)).GetLoadTestResources();
-            _loadTestResourceData = new LoadTestResourceData(LoadTestResourceHelper.DefaultResourceLocation);
+            _loadTestResourceData = new LoadTestResourceData(LoadTestResourceHelper.RESOURCE_LOCATION);
         }
 
         [OneTimeTearDown]
@@ -51,19 +51,30 @@ namespace Azure.ResourceManager.LoadTestService.Tests
         [AsyncOnly]
         public async Task LoadTestResourceOperationTests()
         {
-            var loadTestResourceName = Recording.GenerateAssetName("SdkLoadTestService");
+            var loadTestResourceName = Recording.GenerateAssetName("Sdk-LoadTestService-DotNet");
 
             //// Create
             ArmOperation<LoadTestResource> loadTestCreateResponse = await _loadTestResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, loadTestResourceName, _loadTestResourceData);
             await loadTestCreateResponse.WaitForCompletionAsync();
+
             Assert.IsTrue(loadTestCreateResponse.HasCompleted);
             Assert.IsTrue(loadTestCreateResponse.HasValue);
+            Assert.AreEqual(loadTestResourceName, loadTestCreateResponse.Value.Data.Name);
+            Assert.AreEqual(LoadTestResourceHelper.RESOURCE_LOCATION, loadTestCreateResponse.Value.Data.Location.Name);
+            Assert.AreEqual(LoadTestResourceHelper.LOADTESTS_RESOURCE_TYPE.ToLower(), loadTestCreateResponse.Value.Data.ResourceType.ToString().ToLower());
 
             //// Get
             Response<LoadTestResource> loadTestGetResponse = await _loadTestResourceCollection.GetAsync(loadTestResourceName);
             LoadTestResource loadTestGetResponseValue = loadTestGetResponse.Value;
+
             Assert.IsNotNull(loadTestGetResponseValue);
             Assert.AreEqual(loadTestResourceName, loadTestGetResponseValue.Data.Name);
+            Assert.AreEqual(LoadTestResourceHelper.RESOURCE_LOCATION, loadTestGetResponseValue.Data.Location.Name);
+            Assert.AreEqual(LoadTestResourceHelper.LOADTESTS_RESOURCE_TYPE.ToLower(), loadTestGetResponseValue.Data.ResourceType.ToString().ToLower());
+
+            //// List outbound network dependencies
+            AsyncPageable<OutboundEnvironmentEndpoint> outboundNetworkDependencyResponse = loadTestGetResponseValue.GetOutboundNetworkDependenciesEndpointsAsync();
+            Assert.IsNotNull(outboundNetworkDependencyResponse);
 
             //// Patch
             LoadTestResourcePatch resourcePatchPayload = new LoadTestResourcePatch
@@ -73,8 +84,14 @@ namespace Azure.ResourceManager.LoadTestService.Tests
             ArmOperation<LoadTestResource> loadTestPatchResponse = await loadTestGetResponseValue.UpdateAsync(WaitUntil.Completed,resourcePatchPayload);
             LoadTestResource loadTestPatchResponseValue = loadTestPatchResponse.Value;
 
+            Assert.IsNotNull(loadTestPatchResponseValue);
+            Assert.AreEqual(loadTestResourceName, loadTestPatchResponseValue.Data.Name);
+            Assert.AreEqual(LoadTestResourceHelper.RESOURCE_LOCATION, loadTestPatchResponseValue.Data.Location.Name);
+            Assert.AreEqual(LoadTestResourceHelper.LOADTESTS_RESOURCE_TYPE.ToLower(), loadTestPatchResponseValue.Data.ResourceType.ToString().ToLower());
+            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, loadTestPatchResponseValue.Data.Identity.ManagedServiceIdentityType);
+
             //// Delete
-            var loadTestDeleteResponse = await loadTestPatchResponseValue.DeleteAsync(WaitUntil.Completed);
+            ArmOperation loadTestDeleteResponse = await loadTestPatchResponseValue.DeleteAsync(WaitUntil.Completed);
             await loadTestDeleteResponse.WaitForCompletionResponseAsync();
             Assert.IsTrue(loadTestDeleteResponse.HasCompleted);
         }

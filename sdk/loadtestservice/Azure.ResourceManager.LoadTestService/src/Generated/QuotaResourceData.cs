@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.LoadTestService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="limit"> Quota Limit of the quota bucket. </param>
-        /// <param name="usage"> Current Usage of the quota bucket. </param>
+        /// <param name="limit"> Current quota limit of the quota bucket. </param>
+        /// <param name="usage"> Current quota usage of the quota bucket. </param>
         /// <param name="provisioningState"> Resource provisioning state. </param>
         internal QuotaResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? limit, int? usage, ResourceState? provisioningState) : base(id, name, resourceType, systemData)
         {
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.LoadTestService
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Quota Limit of the quota bucket. </summary>
+        /// <summary> Current quota limit of the quota bucket. </summary>
         public int? Limit { get; set; }
-        /// <summary> Current Usage of the quota bucket. </summary>
+        /// <summary> Current quota usage of the quota bucket. </summary>
         public int? Usage { get; set; }
         /// <summary> Resource provisioning state. </summary>
         public ResourceState? ProvisioningState { get; }
