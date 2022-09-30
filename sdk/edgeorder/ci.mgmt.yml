@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/edgeorder/ci.mgmt.yml
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder/
 
 extends:

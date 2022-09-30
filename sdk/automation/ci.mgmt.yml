@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/automation/ci.mgmt.yml
     - sdk/automation/Azure.ResourceManager.Automation/
 
 extends:

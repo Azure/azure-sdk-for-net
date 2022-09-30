@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/azurestackhci/ci.mgmt.yml
     - sdk/azurestackhci/Azure.ResourceManager.Hci/
 
 extends:

@@ -11,6 +11,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/dns/ci.mgmt.yml
     - sdk/dns/Azure.ResourceManager.Dns/
 
 extends:

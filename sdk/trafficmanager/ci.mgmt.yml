@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/trafficmanager/ci.mgmt.yml
     - sdk/trafficmanager/Azure.ResourceManager.TrafficManager/
 
 extends:

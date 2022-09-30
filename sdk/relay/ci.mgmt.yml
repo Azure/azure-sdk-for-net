@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/relay/ci.mgmt.yml
     - sdk/relay/Azure.ResourceManager.Relay/
 
 extends:

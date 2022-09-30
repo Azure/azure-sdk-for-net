@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/customer-insights/ci.mgmt.yml
     - sdk/customer-insights/Azure.ResourceManager.CustomerInsights/
 
 extends:

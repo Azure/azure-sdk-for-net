@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/apimanagement/ci.mgmt.yml
     - sdk/apimanagement/Azure.ResourceManager.ApiManagement/
 
 extends:

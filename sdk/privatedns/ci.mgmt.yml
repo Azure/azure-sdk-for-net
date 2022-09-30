@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/privatedns/ci.mgmt.yml
     - sdk/privatedns/Azure.ResourceManager.PrivateDns/
 
 extends:

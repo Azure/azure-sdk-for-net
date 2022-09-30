@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/connectedvmwarevsphere/ci.mgmt.yml
     - sdk/connectedvmwarevsphere/Azure.ResourceManager.ConnectedVMwarevSphere/
 
 extends:

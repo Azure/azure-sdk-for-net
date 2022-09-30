@@ -9,6 +9,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/machinelearningservices/ci.mgmt.yml
     - sdk/machinelearningservices/Azure.ResourceManager.MachineLearning/
 
 extends:

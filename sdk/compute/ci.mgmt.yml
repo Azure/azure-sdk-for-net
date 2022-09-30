@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/compute/ci.mgmt.yml
     - sdk/compute/Azure.ResourceManager.Compute/
 
 extends:

@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/resources/ci.mgmt.yml
     - sdk/resources/Azure.ResourceManager.Resources/
 
 extends:

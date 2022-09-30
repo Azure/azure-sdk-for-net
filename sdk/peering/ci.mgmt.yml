@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/peering/ci.mgmt.yml
     - sdk/peering/Azure.ResourceManager.Peering/
 
 extends:

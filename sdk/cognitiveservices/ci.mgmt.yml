@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/cognitiveservices/ci.mgmt.yml
     - sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices/
 
 extends:

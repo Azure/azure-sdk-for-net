@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/resourcegraph/ci.mgmt.yml
     - sdk/resourcegraph/Azure.ResourceManager.ResourceGraph/
 
 extends:

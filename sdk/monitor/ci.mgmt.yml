@@ -11,6 +11,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/monitor/ci.mgmt.yml
     - sdk/monitor/Azure.ResourceManager.Monitor/
 
 extends:

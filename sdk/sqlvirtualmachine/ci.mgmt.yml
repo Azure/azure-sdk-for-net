@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/sqlvirtualmachine/ci.mgmt.yml
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/
 
 extends:

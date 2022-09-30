@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/network/ci.mgmt.yml
     - sdk/network/Azure.ResourceManager.Network/
 
 extends:

@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/marketplaceordering/ci.mgmt.yml
     - sdk/marketplaceordering/Azure.ResourceManager.MarketplaceOrdering/
 
 extends:

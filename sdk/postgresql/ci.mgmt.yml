@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/postgresql/ci.mgmt.yml
     - sdk/postgresql/Azure.ResourceManager.PostgreSql/
 
 extends:

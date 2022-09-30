@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/securityinsights/ci.mgmt.yml
     - sdk/securityinsights/Azure.ResourceManager.SecurityInsights/
 
 extends:

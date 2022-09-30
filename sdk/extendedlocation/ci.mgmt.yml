@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/extendedlocation/ci.mgmt.yml
     - sdk/extendedlocation/Azure.ResourceManager.ExtendedLocations/
 
 extends:

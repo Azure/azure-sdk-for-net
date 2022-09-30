@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/alertsmanagement/ci.mgmt.yml
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement/
 
 extends:

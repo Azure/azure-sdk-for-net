@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/batch/ci.mgmt.yml
     - sdk/batch/Azure.ResourceManager.Batch/
 
 extends:

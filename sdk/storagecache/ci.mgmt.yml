@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/storagecache/ci.mgmt.yml
     - sdk/storagecache/Azure.ResourceManager.StorageCache/
 
 extends:

@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/applicationinsights/ci.mgmt.yml
     - sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights/
 
 extends:

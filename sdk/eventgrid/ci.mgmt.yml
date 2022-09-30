@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/eventgrid/ci.mgmt.yml
     - sdk/eventgrid/Azure.ResourceManager.EventGrid/
 
 extends:

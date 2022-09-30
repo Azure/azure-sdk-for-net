@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/workloads/ci.mgmt.yml
     - sdk/workloads/Azure.ResourceManager.Workloads/
 
 extends:

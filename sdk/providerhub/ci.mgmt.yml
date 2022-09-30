@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/providerhub/ci.mgmt.yml
     - sdk/providerhub/Azure.ResourceManager.ProviderHub/
 
 extends:

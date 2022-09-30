@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/storagesync/ci.mgmt.yml
     - sdk/storagesync/Azure.ResourceManager.StorageSync/
 
 extends:

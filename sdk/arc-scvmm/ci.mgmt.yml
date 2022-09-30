@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/arc-scvmm/ci.mgmt.yml
     - sdk/arc-scvmm/Azure.ResourceManager.ArcScVmm/
 
 extends:

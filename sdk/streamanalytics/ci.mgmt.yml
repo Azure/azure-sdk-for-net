@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/streamanalytics/ci.mgmt.yml
     - sdk/streamanalytics/Azure.ResourceManager.StreamAnalytics/
 
 extends:

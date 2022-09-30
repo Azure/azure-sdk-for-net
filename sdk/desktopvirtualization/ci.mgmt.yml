@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/desktopvirtualization/ci.mgmt.yml
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization/
 
 extends:

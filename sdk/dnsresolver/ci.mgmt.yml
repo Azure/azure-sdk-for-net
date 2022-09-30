@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/dnsresolver/ci.mgmt.yml
     - sdk/dnsresolver/Azure.ResourceManager.DnsResolver/
 
 extends:

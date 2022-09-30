@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/databoxedge/ci.mgmt.yml
     - sdk/databoxedge/Azure.ResourceManager.DataBoxEdge/
 
 extends:

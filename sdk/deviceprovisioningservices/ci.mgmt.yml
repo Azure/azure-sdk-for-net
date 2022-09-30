@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/deviceprovisioningservices/ci.mgmt.yml
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices/
 
 extends:

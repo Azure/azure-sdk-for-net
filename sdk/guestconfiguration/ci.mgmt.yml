@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/guestconfiguration/ci.mgmt.yml
     - sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration/
 
 extends:

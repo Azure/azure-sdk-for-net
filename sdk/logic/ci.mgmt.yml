@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/logic/ci.mgmt.yml
     - sdk/logic/Azure.ResourceManager.Logic/
 
 extends:

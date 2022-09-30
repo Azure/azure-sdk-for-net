@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/synapse/ci.mgmt.yml
     - sdk/synapse/Azure.ResourceManager.Synapse/
 
 extends:

@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/frontdoor/ci.mgmt.yml
     - sdk/frontdoor/Azure.ResourceManager.FrontDoor/
 
 extends:

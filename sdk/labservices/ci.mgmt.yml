@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/labservices/ci.mgmt.yml
     - sdk/labservices/Azure.ResourceManager.LabServices/
 
 extends:

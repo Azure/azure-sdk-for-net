@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/healthbot/ci.mgmt.yml
     - sdk/healthbot/Azure.ResourceManager.HealthBot/
 
 extends:

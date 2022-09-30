@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/storage/ci.mgmt.yml
     - sdk/storage/Azure.ResourceManager.Storage/
 
 extends:

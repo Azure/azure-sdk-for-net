@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/recoveryservices-backup/ci.mgmt.yml
     - sdk/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup/
 
 extends:

@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/elastic/ci.mgmt.yml
     - sdk/elastic/Azure.ResourceManager.Elastic/
 
 extends:

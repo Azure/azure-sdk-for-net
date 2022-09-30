@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/datalake-analytics/ci.mgmt.yml
     - sdk/datalake-analytics/Azure.ResourceManager.DataLakeAnalytics/
 
 extends:

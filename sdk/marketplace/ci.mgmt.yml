@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/marketplace/ci.mgmt.yml
     - sdk/marketplace/Azure.ResourceManager.Marketplace/
 
 extends:

@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/eventhub/ci.mgmt.yml
     - sdk/eventhub/Azure.ResourceManager.EventHubs/
 
 extends:

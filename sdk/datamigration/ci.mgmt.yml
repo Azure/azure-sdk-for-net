@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/datamigration/ci.mgmt.yml
     - sdk/datamigration/Azure.ResourceManager.DataMigration/
 
 extends:

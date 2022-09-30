@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/appconfiguration/ci.mgmt.yml
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/
 
 # These comments should stay.

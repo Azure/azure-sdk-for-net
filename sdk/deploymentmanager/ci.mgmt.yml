@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/deploymentmanager/ci.mgmt.yml
     - sdk/deploymentmanager/Azure.ResourceManager.DeploymentManager/
 
 extends:

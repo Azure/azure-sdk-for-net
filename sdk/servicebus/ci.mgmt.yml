@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/servicebus/ci.mgmt.yml
     - sdk/servicebus/Azure.ResourceManager.ServiceBus/
 
 extends:

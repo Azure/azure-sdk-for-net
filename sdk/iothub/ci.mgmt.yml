@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/iothub/ci.mgmt.yml
     - sdk/iothub/Azure.ResourceManager.IotHub/
 
 extends:

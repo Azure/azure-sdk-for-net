@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/quantum/ci.mgmt.yml
     - sdk/quantum/Azure.ResourceManager.Quantum/
 
 extends:

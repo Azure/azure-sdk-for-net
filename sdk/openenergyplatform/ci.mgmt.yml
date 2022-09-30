@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/openenergyplatform/ci.mgmt.yml
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices/
 
 extends:

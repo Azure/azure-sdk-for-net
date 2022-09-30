@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/netapp/ci.mgmt.yml
     - sdk/netapp/Azure.ResourceManager.NetApp/
 
 extends:

@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/websites/ci.mgmt.yml
     - sdk/websites/Azure.ResourceManager.AppService/
 
 extends:

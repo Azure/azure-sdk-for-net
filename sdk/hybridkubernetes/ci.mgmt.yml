@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/hybridkubernetes/ci.mgmt.yml
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes/
 
 extends:

@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/datadog/ci.mgmt.yml
     - sdk/datadog/Azure.ResourceManager.Datadog/
 
 extends:

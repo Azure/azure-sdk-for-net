@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/databox/ci.mgmt.yml
     - sdk/databox/Azure.ResourceManager.DataBox/
 
 extends:

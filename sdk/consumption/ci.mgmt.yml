@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/consumption/ci.mgmt.yml
     - sdk/consumption/Azure.ResourceManager.Consumption/
 
 extends:

@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/operationalinsights/ci.mgmt.yml
     - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights/
 
 extends:

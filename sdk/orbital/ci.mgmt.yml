@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/orbital/ci.mgmt.yml
     - sdk/orbital/Azure.ResourceManager.Orbital/
 
 extends:

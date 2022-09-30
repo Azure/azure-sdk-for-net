@@ -9,6 +9,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/confidentialledger/ci.mgmt.yml
     - sdk/confidentialledger/Azure.ResourceManager.ConfidentialLedger/
 
 extends:

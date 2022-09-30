@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/containerregistry/ci.mgmt.yml
     - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry/
 
 extends:

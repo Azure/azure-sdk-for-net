@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/billing/ci.mgmt.yml
     - sdk/billing/Azure.ResourceManager.Billing/
 
 extends:

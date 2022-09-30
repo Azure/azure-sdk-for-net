@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/policyinsights/ci.mgmt.yml
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights/
 
 extends:

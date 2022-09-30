@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/containerapps/ci.mgmt.yml
     - sdk/containerapps/Azure.ResourceManager.AppContainers/
 
 extends:

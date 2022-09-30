@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/agrifood/ci.mgmt.yml
     - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform/
 
 extends:

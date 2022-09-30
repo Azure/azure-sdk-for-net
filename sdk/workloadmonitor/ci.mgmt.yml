@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/workloadmonitor/ci.mgmt.yml
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor/
 
 extends:

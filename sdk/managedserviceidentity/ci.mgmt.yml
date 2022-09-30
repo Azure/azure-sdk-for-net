@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/managedserviceidentity/ci.mgmt.yml
     - sdk/managedserviceidentity/Azure.ResourceManager.ManagedServiceIdentities/
 
 extends:

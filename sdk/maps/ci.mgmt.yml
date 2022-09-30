@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/maps/ci.mgmt.yml
     - sdk/maps/Azure.ResourceManager.Maps/
 
 extends:

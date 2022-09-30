@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/devcenter/ci.mgmt.yml
     - sdk/devcenter/Azure.ResourceManager.DevCenter/
 
 extends:

@@ -9,6 +9,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/purview/ci.mgmt.yml
     - sdk/purview/Azure.ResourceManager.Purview/
 
 extends:

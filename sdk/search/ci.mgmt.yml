@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/search/ci.mgmt.yml
     - sdk/search/Azure.ResourceManager.Search/
 
 extends:

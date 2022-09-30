@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/changeanalysis/ci.mgmt.yml
     - sdk/changeanalysis/Azure.ResourceManager.ChangeAnalysis/
 
 extends:

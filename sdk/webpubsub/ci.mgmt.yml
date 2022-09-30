@@ -9,6 +9,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/webpubsub/ci.mgmt.yml
     - sdk/webpubsub/Azure.ResourceManager.WebPubSub/
 
 extends:

@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/attestation/ci.mgmt.yml
     - sdk/attestation/Azure.ResourceManager.Attestation/
 
 extends:

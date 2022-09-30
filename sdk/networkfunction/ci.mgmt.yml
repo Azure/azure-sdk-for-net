@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/networkfunction/ci.mgmt.yml
     - sdk/networkfunction/Azure.ResourceManager.NetworkFunction/
 
 extends:

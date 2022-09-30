@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/confluent/ci.mgmt.yml
     - sdk/confluent/Azure.ResourceManager.Confluent/
 
 extends:

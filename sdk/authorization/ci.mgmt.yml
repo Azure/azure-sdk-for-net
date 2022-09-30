@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/authorization/ci.mgmt.yml
     - sdk/authorization/Azure.ResourceManager.Authorization/
 
 extends:

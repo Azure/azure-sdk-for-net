@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/hybridcompute/ci.mgmt.yml
     - sdk/hybridcompute/Azure.ResourceManager.HybridCompute/
 
 extends:

@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/redis/ci.mgmt.yml
     - sdk/redis/Azure.ResourceManager.Redis/
 
 extends:

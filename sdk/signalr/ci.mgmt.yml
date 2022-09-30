@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/signalr/ci.mgmt.yml
     - sdk/signalr/Azure.ResourceManager.SignalR/
 
 extends:

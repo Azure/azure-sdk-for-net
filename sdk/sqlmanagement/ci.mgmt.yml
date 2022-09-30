@@ -11,6 +11,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/sqlmanagement/ci.mgmt.yml
     - sdk/sqlmanagement/Azure.ResourceManager.Sql/
 
 extends:

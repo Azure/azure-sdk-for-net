@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/notificationhubs/ci.mgmt.yml
     - sdk/notificationhubs/Azure.ResourceManager.NotificationHubs/
 
 extends:

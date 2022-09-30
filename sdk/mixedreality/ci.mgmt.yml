@@ -9,6 +9,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/mixedreality/ci.mgmt.yml
     - sdk/mixedreality/Azure.ResourceManager.MixedReality/
 
 extends:

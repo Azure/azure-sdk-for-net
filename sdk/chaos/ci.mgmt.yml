@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/chaos/ci.mgmt.yml
     - sdk/chaos/Azure.ResourceManager.Chaos/
 
 extends:

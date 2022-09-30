@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/appplatform/ci.mgmt.yml
     - sdk/appplatform/Azure.ResourceManager.AppPlatform/
 
 extends:

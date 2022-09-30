@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/managedservices/ci.mgmt.yml
     - sdk/managedservices/Azure.ResourceManager.ManagedServices/
 
 extends:

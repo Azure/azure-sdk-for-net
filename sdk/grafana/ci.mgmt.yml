@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/grafana/ci.mgmt.yml
     - sdk/grafana/Azure.ResourceManager.Grafana/
 
 extends:

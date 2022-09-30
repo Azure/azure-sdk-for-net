@@ -33,6 +33,7 @@ pr:
     - release/*
   paths:
     include:
+    - $relServiceDir/ci.mgmt.yml
     - $relPackageDir
 "@
 

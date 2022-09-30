@@ -10,6 +10,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/dynatrace/ci.mgmt.yml
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace/
 
 extends:
