@@ -1,8 +1,8 @@
-# Create or Update Load Test
+# Upload JMX File
 
 To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/README.md#getting-started) for details.
 
-You can create a LoadTestclient and call the `CreateOrUpdateTest` method from SubClient `LoadTestAdministrationClient`
+You can create a LoadTestclient and call the `UploadTestFile` method from SubClient `LoadTestAdministrationClient`
 
 ```csharp
 using System;
@@ -33,28 +33,11 @@ namespace SampleCodes
             // getting the Administration Sub Client
             LoadTestAdministrationClient loadTestAdministration = client.getLoadTestAdministration();
 
-            Response response = loadTestAdministration.
-            
-            // replace <testid> with unique id of test to be created
-            CreateOrUpdateTest(<testid>, RequestContent.Create(
-                   new
-                   {
-                       description = "This is created using SDK",
-                       displayName = "SDK's LoadTest",
-                       loadTestConfig = new
-                       {
-                           engineInstances = 1,
-                           splitAllCSVs = false,
-                       },
-                       secrets = new { },
-                       enviornmentVariables = new { },
-                       passFailCriteria = new
-                       {
-                           passFailMetrics = new { },
-                       }
-                   }
-                ));
-
+            // make sure to change <JMXPath> with File path of your file
+            // <testid> to be replaced with unqiue testid of your test
+            // supply a unique <fileid> for your file
+            Response response = loadTestAdministration.UploadTestFile(<testid>, <fileid>, File.OpenRead(<JMXPath>));
+                
             Console.WriteLine("Response Status : " + response.Status);
             Console.WriteLine("Is Error : " + response.IsError);
             Console.WriteLine("Reason Phrase : " + response.ReasonPhrase);

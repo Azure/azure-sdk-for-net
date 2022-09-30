@@ -1,8 +1,8 @@
-# Create or Update Load Test
+# Create or Update App Component
 
 To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/README.md#getting-started) for details.
 
-You can create a LoadTestclient and call the `CreateOrUpdateTest` method from SubClient `LoadTestAdministrationClient`
+You can create a LoadTestclient and call the `CreateOrUpdateAppComponents` method from SubClient `LoadTestAdministrationClient`
 
 ```csharp
 using System;
@@ -33,28 +33,26 @@ namespace SampleCodes
             // getting the Administration Sub Client
             LoadTestAdministrationClient loadTestAdministration = client.getLoadTestAdministration();
 
-            Response response = loadTestAdministration.
-            
-            // replace <testid> with unique id of test to be created
-            CreateOrUpdateTest(<testid>, RequestContent.Create(
-                   new
-                   {
-                       description = "This is created using SDK",
-                       displayName = "SDK's LoadTest",
-                       loadTestConfig = new
-                       {
-                           engineInstances = 1,
-                           splitAllCSVs = false,
-                       },
-                       secrets = new { },
-                       enviornmentVariables = new { },
-                       passFailCriteria = new
-                       {
-                           passFailMetrics = new { },
-                       }
-                   }
+            // <testid> to be replaced with unqiue testid of your test
+            // supply a unique <appcomponentid> for your appcomonent
+            Response response = CreateOrUpdateAppComponents(appcomponentid, RequestContent.Create(
+                new
+                    {
+                        testid = testid,
+                        name = "New App Component",
+                        value = new
+                        {
+                            appComponentConnectionString = new
+                            {
+                                resourceId = appComponentConnectionString,
+                                resourceName = "App-Service-Sample-Demo",
+                                resourceType = "Microsoft.Web/sites",
+                                subscriptionId = "7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a"
+                            }
+                        }
+                    }
                 ));
-
+                
             Console.WriteLine("Response Status : " + response.Status);
             Console.WriteLine("Is Error : " + response.IsError);
             Console.WriteLine("Reason Phrase : " + response.ReasonPhrase);
