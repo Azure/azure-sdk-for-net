@@ -1,16 +1,10 @@
 ﻿using System;
 using System.IO;
-using System.Net.Http.Headers;
-using System.Net.Http;
 using Azure;
 using Azure.Core;
 using Azure.Developer.LoadTesting;
 using Azure.Identity;
-using System.IO.Pipes;
-using System.Text.Json.Serialization;
-using Newtonsoft.Json;
-using System.Net;
-using System.Net.Mime;
+
 
 namespace SampleCodes
 {

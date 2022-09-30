@@ -11,4 +11,6 @@ description: Samples for the Azure.Developer.LoadTesting client library.
 
 # Azure.Developer.LoadTesting Samples
 
-<!-- please refer to <https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/samples/README.md> to write sample readme. -->
+Please find code snippets to some commong use cases. 
+- [Create or Update Load Test]() 
+
