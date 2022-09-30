@@ -18,7 +18,12 @@ function FindStressPackages(
     [string]$directory,
     [hashtable]$filters = @{},
     [switch]$CI,
-    [string]$namespaceOverride
+    [string]$namespaceOverride,
+    [string]$MatrixSelection,
+    [Parameter(Mandatory=$False)][string]$MatrixDisplayNameFilter,
+    [Parameter(Mandatory=$False)][array]$MatrixFilters,
+    [Parameter(Mandatory=$False)][array]$MatrixReplace,
+    [Parameter(Mandatory=$False)][array]$MatrixNonSparseParameters
 ) {
     # Bare minimum filter for stress tests
     $filters['stressTest'] = 'true'
@@ -30,7 +35,13 @@ function FindStressPackages(
         if (matchesAnnotations $chart $filters) {
             $matrixFilePath = (Join-Path $chartFile.Directory.FullName '/matrix.yaml')
             if (Test-Path $matrixFilePath) {
-                ScenariosMatrixGeneration $matrixFilePath
+                ScenariosMatrixGeneration `
+                    -matrixFilePath $matrixFilePath `
+                    -Selection $MatrixSelection `
+                    -DisplayNameFilter $MatrixDisplayNameFilter `
+                    -Filters $MatrixFilters `
+                    -Replace $MatrixReplace `
+                    -NonSparseParameters $MatrixNonSparseParameters
             }
 
             $packages += NewStressTestPackageInfo `
@@ -70,17 +81,31 @@ function GetUsername() {
 }
 
 function ScenariosMatrixGeneration(
-    [string]$matrixFilePath
+    [string]$matrixFilePath,
+    [string]$Selection,
+    [Parameter(Mandatory=$False)][string]$DisplayNameFilter,
+    [Parameter(Mandatory=$False)][array]$Filters,
+    [Parameter(Mandatory=$False)][array]$Replace,
+    [Parameter(Mandatory=$False)][array]$NonSparseParameters
 ) {
     $yamlConfig = Get-Content $matrixFilePath -Raw
-    $matrix = GenerateMatrix (GetMatrixConfigFromYaml $yamlConfig) "sparse"
-    $serializedMatrix = SerializePipelineMatrix $matrix
-    $prettyMatrix = $serializedMatrix.pretty | ConvertFrom-Json -AsHashtable
+
+    $prettySerializedMatrix = &"$PSScriptRoot/../job-matrix/Create-JobMatrix.ps1" `
+        -ConfigPath $matrixFilePath `
+        -Selection $Selection `
+        -DisplayNameFilter $DisplayNameFilter `
+        -Filters $Filters `
+        -Replace $Replace `
+        -NonSparseParameters $NonSparseParameters
+
+    $prettyMatrix = $prettySerializedMatrix | ConvertFrom-Json -AsHashtable
 
     $scenariosMatrix = @()
     foreach($permutation in $prettyMatrix.GetEnumerator()) {
         $entry = @{}
-        $entry.Name = $permutation.key
+        $entry.Name = $permutation.key -replace '_', '-'
+        $entry.Scenario = $entry.Name
+        $entry.Remove("Name")
         foreach ($param in $permutation.value.GetEnumerator()) {
             $entry.add($param.key, $param.value)
         }
@@ -89,8 +114,13 @@ function ScenariosMatrixGeneration(
 
     $valuesYaml = Get-Content (Join-Path $matrixFilePath '../values.yaml') -Raw
     $values = $valuesYaml | ConvertFrom-Yaml
+    if (!$values) {$values = @{}}
 
-    $values.Scenarios += $scenariosMatrix
+    if ($values.ContainsKey('Scenarios')) {
+        throw "Please use matrix generation for stress test scenarios."
+    }
+
+    $values.scenarios = $scenariosMatrix
     $values | ConvertTo-Yaml | Out-File -FilePath (Join-Path $matrixFilePath '../generatedValues.yaml')
 }
 

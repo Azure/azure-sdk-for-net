@@ -190,17 +190,33 @@ function ParseFilter([string]$filter) {
     }
 }
 
+function GetMatrixConfigFromFile([String] $config)
+{
+    [MatrixConfig]$config = try{
+        GetMatrixConfigFromJson($config)
+    } catch {
+        GetMatrixConfigFromYaml($config)
+    }
+    return $config
+}
+
 function GetMatrixConfigFromYaml([String] $yamlConfig)
 {
-    $config = $yamlConfig | ConvertFrom-Yaml
-    return GetMatrixConfigFromJson (ConvertTo-Json $config)
+    # ConvertTo then from json is to make sure the nested values are in PSCustomObject
+    [MatrixConfig]$config = ConvertFrom-Yaml $yamlConfig -Ordered | ConvertTo-Json -Depth 100 | ConvertFrom-Json
+    return GetMatrixConfig $config
+}
+
+function GetMatrixConfigFromJson([String]$jsonConfig)
+{
+    [MatrixConfig]$config = $jsonConfig | ConvertFrom-Json
+    return GetMatrixConfig $config
 }
 
 # Importing the JSON as PSCustomObject preserves key ordering,
 # whereas ConvertFrom-Json -AsHashtable does not
-function GetMatrixConfigFromJson([String]$jsonConfig)
+function GetMatrixConfig([MatrixConfig]$config)
 {
-    [MatrixConfig]$config = $jsonConfig | ConvertFrom-Json
     $config.matrixParameters = @()
     $config.displayNamesLookup = @{}
     $include = [MatrixParameter[]]@()
@@ -365,7 +381,7 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Array]$n
         Write-Error "`$IMPORT path '$importPath' does not exist."
         exit 1
     }
-    $importedMatrixConfig = GetMatrixConfigFromJson (Get-Content $importPath)
+    $importedMatrixConfig = GetMatrixConfigFromYaml (Get-Content $importPath)
     $importedMatrix = GenerateMatrix `
                         -config $importedMatrixConfig `
                         -selectFromMatrixType $selection `
