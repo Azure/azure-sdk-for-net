@@ -177,7 +177,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             }
 
             // CLEANUP
-            Task.Delay(1000).Wait();
+            Task.Delay(500).Wait();
             tracerProvider.Dispose();
             loggerFactory.Dispose();
 
@@ -211,7 +211,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         {
             // Running this test on a loop to try and force the failure.
 
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 VerifyLogWithinActivity(LogLevel.Trace, "Verbose");
             }
