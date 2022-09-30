@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 #pragma warning disable AZC0014 // Avoid using banned types in public API
 
-namespace Azure.Core
+namespace Azure
 {
     /// <summary>
     /// A mutable representation of a JSON value.
@@ -228,7 +228,7 @@ namespace Azure.Core
         /// <remarks>If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.</remarks>
         public JsonData? Get(string propertyName)
         {
-            if (EnsureObject().TryGetValue(propertyName, out JsonData value))
+            if (EnsureObject().TryGetValue(propertyName, out JsonData? value))
             {
                 return value;
             }
@@ -251,7 +251,8 @@ namespace Azure.Core
         /// <returns>A new instance of <typeparamref name="T"/> constructed from the underlying JSON value.</returns>
         public T To<T>(JsonSerializerOptions options)
         {
-            return JsonSerializer.Deserialize<T>(ToJsonString(), options);
+            // TODO: come back and address CS8603
+            return JsonSerializer.Deserialize<T>(ToJsonString(), options)!;
         }
 
         /// <summary>
@@ -308,6 +309,7 @@ namespace Azure.Core
             get => GetPropertyValue(propertyName);
         }
 
+        #region operators
         /// <summary>
         /// Converts the value to a <see cref="bool"/>
         /// </summary>
@@ -435,6 +437,7 @@ namespace Azure.Core
         /// <param name="right">The <see cref="JsonData"/> to compare.</param>
         /// <returns>False if the given JsonData represents the given string, and false otherwise</returns>
         public static bool operator !=(string? left, JsonData? right) => !(left == right);
+        #endregion operators
 
         /// <summary>
         /// Parses text representing a single JSON value into a <see cref="JsonData"/>.
@@ -521,7 +524,8 @@ namespace Azure.Core
                 return ToJsonString();
             }
 
-            return (_value ?? "<null>").ToString();
+            // TODO: come back and address CS8603
+            return (_value ?? "<null>").ToString()!;
         }
 
         /// <inheritdoc />
@@ -541,8 +545,13 @@ namespace Azure.Core
         }
 
         /// <inheritdoc />
-        public bool Equals(JsonData other)
+        public bool Equals(JsonData? other)
         {
+            if (other == null)
+            {
+                return false;
+            }
+
             if (_kind != other._kind)
             {
                 return false;
@@ -645,7 +654,7 @@ namespace Azure.Core
 
         private JsonData GetPropertyValue(string propertyName)
         {
-            if (EnsureObject().TryGetValue(propertyName, out JsonData element))
+            if (EnsureObject().TryGetValue(propertyName, out JsonData? element))
             {
                 return element;
             }
@@ -667,7 +676,7 @@ namespace Azure.Core
                 return Length;
             }
 
-            if (EnsureObject().TryGetValue(propertyName, out JsonData element))
+            if (EnsureObject().TryGetValue(propertyName, out JsonData? element))
             {
                 return element;
             }
@@ -794,11 +803,12 @@ namespace Azure.Core
 
         private class MetaObject : DynamicMetaObject
         {
-            private static readonly MethodInfo GetDynamicValueMethod = typeof(JsonData).GetMethod(nameof(GetDynamicProperty), BindingFlags.NonPublic | BindingFlags.Instance);
+            // TODO: come back and figure out the right thing to do wrt nullability CS8601
+            private static readonly MethodInfo GetDynamicValueMethod = typeof(JsonData).GetMethod(nameof(GetDynamicProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
-            private static readonly MethodInfo GetDynamicEnumerableMethod = typeof(JsonData).GetMethod(nameof(GetDynamicEnumerable), BindingFlags.NonPublic | BindingFlags.Instance);
+            private static readonly MethodInfo GetDynamicEnumerableMethod = typeof(JsonData).GetMethod(nameof(GetDynamicEnumerable), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
-            private static readonly MethodInfo SetValueMethod = typeof(JsonData).GetMethod(nameof(SetValue), BindingFlags.NonPublic | BindingFlags.Instance);
+            private static readonly MethodInfo SetValueMethod = typeof(JsonData).GetMethod(nameof(SetValue), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
             internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
             {
