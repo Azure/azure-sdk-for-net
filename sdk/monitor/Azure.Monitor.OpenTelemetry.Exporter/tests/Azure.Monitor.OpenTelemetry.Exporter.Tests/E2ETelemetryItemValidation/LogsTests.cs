@@ -10,6 +10,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry.Logs;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 {
@@ -19,6 +20,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
     /// </summary>
     public class LogsTests
     {
+        internal readonly TelemetryItemOutputHelper telemetryOutput;
+
+        public LogsTests(ITestOutputHelper output)
+        {
+            this.telemetryOutput = new TelemetryItemOutputHelper(output);
+        }
+
         [Theory]
         [InlineData(LogLevel.Information, "Information")]
         [InlineData(LogLevel.Warning, "Warning")]
@@ -59,6 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(telemetryItems);
             var telemetryItem = telemetryItems.Single();
 
             TelemetryItemValidationHelper.AssertLog_As_MessageTelemetry(
@@ -70,7 +79,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedTraceId: null);
         }
 
-        [Theory(Skip = "Bug: ILogger message is overwriting the Exception.Message.")]
+        [Theory]//(Skip = "Bug: ILogger message is overwriting the Exception.Message.")]
         [InlineData(LogLevel.Information, "Information")]
         [InlineData(LogLevel.Warning, "Warning")]
         [InlineData(LogLevel.Error, "Error")]
@@ -118,6 +127,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(telemetryItems);
             var telemetryItem = telemetryItems.Single();
 
             TelemetryItemValidationHelper.AssertLog_As_ExceptionTelemetry(

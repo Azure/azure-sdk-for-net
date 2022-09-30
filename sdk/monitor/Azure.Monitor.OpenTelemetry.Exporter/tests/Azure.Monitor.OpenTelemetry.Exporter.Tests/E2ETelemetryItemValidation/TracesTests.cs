@@ -23,12 +23,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
     /// </summary>
     public class TracesTests
     {
-        protected readonly ITestOutputHelper output;
         internal readonly TelemetryItemOutputHelper telemetryOutput;
 
         public TracesTests(ITestOutputHelper output)
         {
-            this.output = output;
             this.telemetryOutput = new TelemetryItemOutputHelper(output);
         }
 
@@ -66,6 +64,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(telemetryItems);
             var telemetryItem = telemetryItems.Single();
 
             TelemetryItemValidationHelper.AssertActivity_As_DependencyTelemetry(
@@ -108,6 +107,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(telemetryItems);
             var telemetryItem = telemetryItems.Single();
 
             TelemetryItemValidationHelper.AssertActivity_As_RequestTelemetry(
@@ -176,7 +176,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             loggerFactory.Dispose();
 
             // ASSERT
-            Assert.True(activityTelemetryItems.Any(), "test project did not capture telemetry");
+            Assert.True(activityTelemetryItems.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(activityTelemetryItems);
             var activityTelemetryItem = activityTelemetryItems.Single();
 
@@ -187,6 +187,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedProperties: null);
 
             Assert.True(logTelemetryItems.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(logTelemetryItems);
             var logTelemetryItem = logTelemetryItems.Single();
 
             TelemetryItemValidationHelper.AssertLog_As_MessageTelemetry(
