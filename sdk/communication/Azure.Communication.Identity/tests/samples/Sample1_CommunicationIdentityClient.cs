@@ -24,7 +24,7 @@ namespace Azure.Communication.Identity.Samples
 
         [Test]
         [AsyncOnly]
-        public async Task UserAndTokenLifeCycleAsync()
+        public async Task UserAndCustomExpirationTokenLifecycleAsync()
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
             #region Snippet:CreateCommunicationIdentityClientAsync
@@ -41,13 +41,14 @@ namespace Azure.Communication.Identity.Samples
             Console.WriteLine($"User id: {user.Id}");
             #endregion Snippet:CreateCommunicationTokenAsync
 
-            #region  Snippet:CreateCommunicationTokenAsync
-            Response<AccessToken> tokenResponse = await client.GetTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat });
+            #region Snippet:CreateCommunicationTokenAsyncWithCustomExpiration
+            TimeSpan tokenExpiresIn = TimeSpan.FromHours(1);
+            Response<AccessToken> tokenResponse = await client.GetTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
             string token = tokenResponse.Value.Token;
             DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
             Console.WriteLine($"Token: {token}");
             Console.WriteLine($"Expires On: {expiresOn}");
-            #endregion Snippet:CreateCommunicationTokenAsync
+            #endregion Snippet:CreateCommunicationTokenAsyncWithCustomExpiration
 
             #region Snippet:RevokeCommunicationUserTokenAsync
             Response revokeResponse = await client.RevokeTokensAsync(user);
@@ -59,8 +60,35 @@ namespace Azure.Communication.Identity.Samples
         }
 
         [Test]
+        [AsyncOnly]
+        public async Task UserAndTokenLifeCycleAsync()
+        {
+            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+            // Get a connection string to our Azure Communication resource.
+            //@@var connectionString = "<connection_string>";
+            var client = new CommunicationIdentityClient(connectionString);
+
+            client = CreateClientWithConnectionString();
+
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
+            CommunicationUserIdentifier user = userResponse.Value;
+            Console.WriteLine($"User id: {user.Id}");
+
+            #region  Snippet:CreateCommunicationTokenAsync
+            Response<AccessToken> tokenResponse = await client.GetTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat });
+            string token = tokenResponse.Value.Token;
+            DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
+            Console.WriteLine($"Token: {token}");
+            Console.WriteLine($"Expires On: {expiresOn}");
+            #endregion Snippet:CreateCommunicationTokenAsync
+
+            Response revokeResponse = await client.RevokeTokensAsync(user);
+            Response deleteResponse = await client.DeleteUserAsync(user);
+        }
+
+        [Test]
         [SyncOnly]
-        public void UserAndTokenLifeCycle()
+        public void UserAndCustomExpirationTokenLifeCycle()
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
             #region Snippet:CreateCommunicationIdentityClient
@@ -76,13 +104,14 @@ namespace Azure.Communication.Identity.Samples
             Console.WriteLine($"User id: {user.Id}");
             #endregion Snippet:CreateCommunicationToken
 
-            #region  Snippet:CreateCommunicationToken
-            Response<AccessToken> tokenResponse = client.GetToken(user, scopes: new[] { CommunicationTokenScope.Chat });
+            #region  Snippet:CreateCommunicationTokenWithCustomExpiration
+            TimeSpan tokenExpiresIn = TimeSpan.FromHours(1);
+            Response<AccessToken> tokenResponse = client.GetToken(user, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
             string token = tokenResponse.Value.Token;
             DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
             Console.WriteLine($"Token: {token}");
             Console.WriteLine($"Expires On: {expiresOn}");
-            #endregion Snippet:CreateCommunicationToken
+            #endregion Snippet:CreateCommunicationTokenWithCustomExpiration
 
             #region Snippet:RevokeCommunicationUserToken
             Response revokeResponse = client.RevokeTokens(user);
@@ -91,6 +120,63 @@ namespace Azure.Communication.Identity.Samples
             #region Snippet:DeleteACommunicationUser
             Response deleteResponse = client.DeleteUser(user);
             #endregion Snippet:DeleteACommunicationUser
+        }
+
+        [Test]
+        [SyncOnly]
+        public void UserAndTokenLifeCycle()
+        {
+            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+            // Get a connection string to our Azure Communication resource.
+            //@@var connectionString = "<connection_string>";
+            var client = new CommunicationIdentityClient(connectionString);
+            client = CreateClientWithConnectionString();
+
+            Response<CommunicationUserIdentifier> userResponse = client.CreateUser();
+            CommunicationUserIdentifier user = userResponse.Value;
+            Console.WriteLine($"User id: {user.Id}");
+
+            #region  Snippet:CreateCommunicationToken
+            Response<AccessToken> tokenResponse = client.GetToken(user, scopes: new[] { CommunicationTokenScope.Chat });
+            string token = tokenResponse.Value.Token;
+            DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
+            Console.WriteLine($"Token: {token}");
+            Console.WriteLine($"Expires On: {expiresOn}");
+            #endregion Snippet:CreateCommunicationToken
+
+            Response revokeResponse = client.RevokeTokens(user);
+            Response deleteResponse = client.DeleteUser(user);
+        }
+
+        [Test]
+        public async Task CreateUserAndTokenWithCustomExpirationAsync()
+        {
+            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+            var client = new CommunicationIdentityClient(connectionString);
+            client = CreateClientWithConnectionString();
+            #region Snippet:CreateCommunicationUserAndTokenWithCustomExpirationAsync
+            TimeSpan tokenExpiresIn = TimeSpan.FromHours(1);
+            Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
+            var (user, token) = response.Value;
+            Console.WriteLine($"User id: {user.Id}");
+            Console.WriteLine($"Token: {token.Token}");
+            #endregion Snippet:CreateCommunicationUserAndTokenWithCustomExpirationAsync
+        }
+
+        [Test]
+        [SyncOnly]
+        public void CreateUserAndTokenWithCustomExpiration()
+        {
+            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+            var client = new CommunicationIdentityClient(connectionString);
+            client = CreateClientWithConnectionString();
+            #region Snippet:CreateCommunicationUserAndTokenWithCustomExpiration
+            TimeSpan tokenExpiresIn = TimeSpan.FromHours(1);
+            Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
+            var (user, token) = response.Value;
+            Console.WriteLine($"User id: {user.Id}");
+            Console.WriteLine($"Token: {token.Token}");
+            #endregion Snippet:CreateCommunicationUserAndTokenWithCustomExpiration
         }
 
         [Test]
@@ -177,7 +263,8 @@ namespace Azure.Communication.Identity.Samples
         [AsyncOnly]
         public async Task GetTokenForTeamsUserAsync()
         {
-            if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest) {
+            if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
+            {
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
             }
 

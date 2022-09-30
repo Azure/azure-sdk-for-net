@@ -41,29 +41,5 @@ namespace Azure.ResourceManager.GuestConfiguration
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
-
-        /// <summary> Gets a collection of GuestConfigurationVmAssignmentResources in the ResourceGroupResource. </summary>
-        /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <returns> An object representing collection of GuestConfigurationVmAssignmentResources and their operations over a GuestConfigurationVmAssignmentResource. </returns>
-        public virtual GuestConfigurationVmAssignmentCollection GetGuestConfigurationVmAssignments(string vmName)
-        {
-            return new GuestConfigurationVmAssignmentCollection(Client, Id, vmName);
-        }
-
-        /// <summary> Gets a collection of GuestConfigurationHcrpAssignmentResources in the ResourceGroupResource. </summary>
-        /// <param name="machineName"> The name of the ARC machine. </param>
-        /// <returns> An object representing collection of GuestConfigurationHcrpAssignmentResources and their operations over a GuestConfigurationHcrpAssignmentResource. </returns>
-        public virtual GuestConfigurationHcrpAssignmentCollection GetGuestConfigurationHcrpAssignments(string machineName)
-        {
-            return new GuestConfigurationHcrpAssignmentCollection(Client, Id, machineName);
-        }
-
-        /// <summary> Gets a collection of GuestConfigurationVmssAssignmentResources in the ResourceGroupResource. </summary>
-        /// <param name="vmssName"> The name of the virtual machine scale set. </param>
-        /// <returns> An object representing collection of GuestConfigurationVmssAssignmentResources and their operations over a GuestConfigurationVmssAssignmentResource. </returns>
-        public virtual GuestConfigurationVmssAssignmentCollection GetGuestConfigurationVmssAssignments(string vmssName)
-        {
-            return new GuestConfigurationVmssAssignmentCollection(Client, Id, vmssName);
-        }
     }
 }

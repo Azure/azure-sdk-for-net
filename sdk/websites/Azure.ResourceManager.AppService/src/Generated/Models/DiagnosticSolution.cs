@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="solutionType"> Type of Solution. </param>
         /// <param name="data"> Solution Data. </param>
         /// <param name="metadata"> Solution Metadata. </param>
-        internal DiagnosticSolution(double? id, string displayName, double? order, string description, SolutionType? solutionType, IList<IList<AppServiceNameValuePair>> data, IList<IList<AppServiceNameValuePair>> metadata)
+        internal DiagnosticSolution(double? id, string displayName, double? order, string description, DiagnosticSolutionType? solutionType, IList<IList<AppServiceNameValuePair>> data, IList<IList<AppServiceNameValuePair>> metadata)
         {
             Id = id;
             DisplayName = displayName;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Description of the solution. </summary>
         public string Description { get; set; }
         /// <summary> Type of Solution. </summary>
-        public SolutionType? SolutionType { get; set; }
+        public DiagnosticSolutionType? SolutionType { get; set; }
         /// <summary> Solution Data. </summary>
         public IList<IList<AppServiceNameValuePair>> Data { get; }
         /// <summary> Solution Metadata. </summary>

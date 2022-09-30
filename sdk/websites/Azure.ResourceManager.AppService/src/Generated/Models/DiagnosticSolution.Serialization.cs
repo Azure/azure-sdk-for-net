@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> displayName = default;
             Optional<double> order = default;
             Optional<string> description = default;
-            Optional<SolutionType> type = default;
+            Optional<DiagnosticSolutionType> type = default;
             Optional<IList<IList<AppServiceNameValuePair>>> data = default;
             Optional<IList<IList<AppServiceNameValuePair>>> metadata = default;
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = property.Value.GetString().ToSolutionType();
+                    type = property.Value.GetString().ToDiagnosticSolutionType();
                     continue;
                 }
                 if (property.NameEquals("data"))

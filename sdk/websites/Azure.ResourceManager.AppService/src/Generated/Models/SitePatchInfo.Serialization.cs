@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> state = default;
             Optional<IReadOnlyList<string>> hostNames = default;
             Optional<string> repositorySiteName = default;
-            Optional<UsageState> usageState = default;
+            Optional<AppServiceUsageState> usageState = default;
             Optional<bool> enabled = default;
             Optional<IReadOnlyList<string>> enabledHostNames = default;
             Optional<WebSiteAvailabilityState> availabilityState = default;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            usageState = property0.Value.GetString().ToUsageState();
+                            usageState = property0.Value.GetString().ToAppServiceUsageState();
                             continue;
                         }
                         if (property0.NameEquals("enabled"))

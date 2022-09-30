@@ -22,9 +22,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
     /// </summary>
     public class TracesTests
     {
-        private const string activitySourceName = "MyCompany.MyProduct.MyLibrary";
-        private static readonly ActivitySource activitySource = new(activitySourceName);
-
         [Theory]
         [InlineData(ActivityKind.Client)]
         [InlineData(ActivityKind.Producer)]
@@ -32,6 +29,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         public void VerifyTrace_CreatesDependency(ActivityKind activityKind)
         {
             // SETUP
+            var uniqueTestId = Guid.NewGuid();
+
+            var activitySourceName = $"activitySourceName{uniqueTestId}";
+            using var activitySource = new ActivitySource(activitySourceName);
+
             var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(activitySourceName)
                 .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems)
@@ -69,6 +71,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         public void VerifyTrace_CreatesRequest(ActivityKind activityKind)
         {
             // SETUP
+            var uniqueTestId = Guid.NewGuid();
+
+            var activitySourceName = $"activitySourceName{uniqueTestId}";
+            using var activitySource = new ActivitySource(activitySourceName);
+
             var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(activitySourceName)
                 .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems)
@@ -111,7 +118,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         public void VerifyLogWithinActivity(LogLevel logLevel, string expectedSeverityLevel)
         {
             // SETUP
-            var logCategoryName = Guid.NewGuid().ToString();
+            var uniqueTestId = Guid.NewGuid();
+
+            var activitySourceName = $"activitySourceName{uniqueTestId}";
+            using var activitySource = new ActivitySource(activitySourceName);
+
+            var logCategoryName = $"logCategoryName{uniqueTestId}"; ;
 
             ConcurrentBag<TelemetryItem> logTelemetryItems = null;
 

@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService
             Optional<SystemData> systemData = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<HostingEnvironmentStatus> status = default;
-            Optional<VirtualNetworkProfile> virtualNetwork = default;
+            Optional<AppServiceVirtualNetworkProfile> virtualNetwork = default;
             Optional<LoadBalancingMode> internalLoadBalancingMode = default;
             Optional<string> multiSize = default;
             Optional<int> multiRoleCount = default;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualNetwork = VirtualNetworkProfile.DeserializeVirtualNetworkProfile(property0.Value);
+                            virtualNetwork = AppServiceVirtualNetworkProfile.DeserializeAppServiceVirtualNetworkProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("internalLoadBalancingMode"))

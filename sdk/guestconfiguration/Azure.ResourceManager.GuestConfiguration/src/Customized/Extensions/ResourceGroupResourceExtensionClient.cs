@@ -13,6 +13,9 @@ namespace Azure.ResourceManager.GuestConfiguration
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     [CodeGenSuppress("GetGuestConfigurationAssignmentsAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetGuestConfigurationAssignments", typeof(CancellationToken))]
+    [CodeGenSuppress("GetGuestConfigurationVmAssignments", typeof(string))]
+    [CodeGenSuppress("GetGuestConfigurationHcrpAssignments", typeof(string))]
+    [CodeGenSuppress("GetGuestConfigurationVmssAssignments", typeof(string))]
     internal partial class ResourceGroupResourceExtensionClient : ArmResource
     {
         /// <summary>

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             Optional<ProvisioningState> provisioningState = default;
             Optional<HostingEnvironmentStatus> status = default;
-            VirtualNetworkProfile virtualNetwork = default;
+            AppServiceVirtualNetworkProfile virtualNetwork = default;
             Optional<LoadBalancingMode> internalLoadBalancingMode = default;
             Optional<string> multiSize = default;
             Optional<int> multiRoleCount = default;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("virtualNetwork"))
                 {
-                    virtualNetwork = VirtualNetworkProfile.DeserializeVirtualNetworkProfile(property.Value);
+                    virtualNetwork = AppServiceVirtualNetworkProfile.DeserializeAppServiceVirtualNetworkProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("internalLoadBalancingMode"))
