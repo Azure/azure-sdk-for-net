@@ -251,6 +251,31 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         }
 
         [Test]
+        public void PlayCancelledEventParsed_Test()
+        {
+            RecognizeFailed @event = CallAutomationModelFactory.PlayCancelled(
+                operationContext: "operationContext",
+                resultInformation: new ResultInformation(code: 400, subCode: 8508, message: "Action failed, the operation was cancelled."),
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId");
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecognizeCancelled");
+            if (parsedEvent is PlayCancelled playCancelled)
+            {
+                Assert.AreEqual("correlationId", playCancelled.CorrelationId);
+                Assert.AreEqual("serverCallId", playCancelled.ServerCallId);
+                Assert.AreEqual(400, playCancelled.ResultInformation.Code);
+                Assert.AreEqual(ReasonCodeName.OperationCancelled, playCancelled.ReasonCodeName);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
         public void RecognizeCompletedEventParsed_Test()
         {
             RecognizeCompleted @event = CallAutomationModelFactory.RecognizeCompleted(
@@ -302,6 +327,31 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("serverCallId", recognizeFailed.ServerCallId);
                 Assert.AreEqual(400, recognizeFailed.ResultInformation.Code);
                 Assert.AreEqual(ReasonCodeName.RecognizeInitialSilenceTimedOut, recognizeFailed.ReasonCodeName);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void RecognizeCancelledEventParsed_Test()
+        {
+            RecognizeFailed @event = CallAutomationModelFactory.RecognizeCancelled(
+                operationContext: "operationContext",
+                resultInformation: new ResultInformation(code: 400, subCode: 8508, message: "Action failed, the operation was cancelled."),
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId");
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecognizeCancelled");
+            if (parsedEvent is RecognizeCancelled recognizeCancelled)
+            {
+                Assert.AreEqual("correlationId", recognizeCancelled.CorrelationId);
+                Assert.AreEqual("serverCallId", recognizeCancelled.ServerCallId);
+                Assert.AreEqual(400, recognizeCancelled.ResultInformation.Code);
+                Assert.AreEqual(ReasonCodeName.OperationCancelled, recognizeCancelled.ReasonCodeName);
             }
             else
             {
