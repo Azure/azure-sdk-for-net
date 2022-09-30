@@ -11,32 +11,29 @@ namespace Azure.Communication.CallAutomation
     [CodeGenModel("RecognizeCompleted", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class RecognizeCompleted : CallAutomationEventWithReasonCodeName
     {
-        /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
-        /// <param name="operationContext"></param>
-        /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
+        /// <summary> Initializes a new instance of RecognizeCompleted. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
         /// <param name="recognitionType">
         /// Determines the sub-type of the recognize operation.
         /// In case of cancel operation the this field is not set and is returned empty
         /// </param>
         /// <param name="collectTonesResult"> Defines the result for RecognitionType = Dtmf. </param>
-        /// <param name="version"> Used to determine the version of the event. </param>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
-        internal RecognizeCompleted(string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
+        internal RecognizeCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult)
         {
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CorrelationId = correlationId;
             OperationContext = operationContext;
             ResultInformation = resultInformation;
             RecognitionType = recognitionType;
             CollectTonesResult = collectTonesResult;
-            Version = version;
-            CallConnectionId = callConnectionId;
-            ServerCallId = serverCallId;
-            CorrelationId = correlationId;
-            PublicEventType = publicEventType;
             ReasonCodeName = new ReasonCodeName(resultInformation.SubCode.ToString());
         }
+
         /// <summary>
         /// The recognition type.
         /// </summary>
