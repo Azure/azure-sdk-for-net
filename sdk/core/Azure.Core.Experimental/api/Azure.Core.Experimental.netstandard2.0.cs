@@ -1,53 +1,5 @@
 namespace Azure
 {
-    [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
-    public partial class JsonData : System.Dynamic.IDynamicMetaObjectProvider, System.IEquatable<Azure.JsonData>
-    {
-        public JsonData(Azure.Response response) { }
-        public JsonData(System.BinaryData binaryData) { }
-        public JsonData(byte[] bytes) { }
-        public JsonData(object value, System.Text.Json.JsonSerializerOptions? options = null) { }
-        public JsonData(System.ReadOnlyMemory<byte> bytes) { }
-        public JsonData(string jsonString) { }
-        public JsonData(System.Text.Json.JsonDocument jsonDocument) { }
-        public Azure.JsonData this[int arrayIndex] { get { throw null; } }
-        public Azure.JsonData this[string propertyName] { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<Azure.JsonData> Items { get { throw null; } }
-        public System.Text.Json.JsonValueKind Kind { get { throw null; } }
-        public int Length { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<string> Properties { get { throw null; } }
-        public bool Equals(Azure.JsonData? other) { throw null; }
-        public override bool Equals(object? obj) { throw null; }
-        public static Azure.JsonData FromStream(System.IO.Stream utf8JsonStream) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.JsonData> FromStreamAsync(System.IO.Stream utf8JsonStream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public Azure.JsonData? Get(string propertyName) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public T Get<T>(string propertyName) { throw null; }
-        public T Get<T>(string propertyName, System.Text.Json.JsonSerializerOptions options) { throw null; }
-        public static bool operator ==(Azure.JsonData? left, string? right) { throw null; }
-        public static bool operator ==(string? left, Azure.JsonData? right) { throw null; }
-        public static explicit operator bool (Azure.JsonData json) { throw null; }
-        public static explicit operator double (Azure.JsonData json) { throw null; }
-        public static explicit operator int (Azure.JsonData json) { throw null; }
-        public static explicit operator long (Azure.JsonData json) { throw null; }
-        public static explicit operator bool? (Azure.JsonData json) { throw null; }
-        public static explicit operator double? (Azure.JsonData json) { throw null; }
-        public static explicit operator int? (Azure.JsonData json) { throw null; }
-        public static explicit operator long? (Azure.JsonData json) { throw null; }
-        public static explicit operator float? (Azure.JsonData json) { throw null; }
-        public static explicit operator float (Azure.JsonData json) { throw null; }
-        public static explicit operator string (Azure.JsonData json) { throw null; }
-        public static bool operator !=(Azure.JsonData? left, string? right) { throw null; }
-        public static bool operator !=(string? left, Azure.JsonData? right) { throw null; }
-        System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
-        public System.BinaryData ToBinaryData() { throw null; }
-        public string ToJsonString() { throw null; }
-        public override string ToString() { throw null; }
-        public T To<T>() { throw null; }
-        public T To<T>(System.Text.Json.JsonSerializerOptions options) { throw null; }
-        public long WriteTo(System.IO.Stream stream) { throw null; }
-        public System.Threading.Tasks.Task<long> WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Value
     {
@@ -152,5 +104,56 @@ namespace Azure
         public static implicit operator Azure.Value (uint value) { throw null; }
         public static implicit operator Azure.Value (ulong value) { throw null; }
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public bool TryGetValue<T>(out T value) { throw null; }
+    }
+}
+namespace Azure.Core
+{
+    [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
+    public partial class JsonData : System.Dynamic.IDynamicMetaObjectProvider, System.IEquatable<Azure.Core.JsonData>
+    {
+        public JsonData(Azure.Response response) { }
+        public JsonData(System.BinaryData binaryData) { }
+        public JsonData(byte[] bytes) { }
+        public JsonData(object value, System.Text.Json.JsonSerializerOptions? options = null) { }
+        public JsonData(System.ReadOnlyMemory<byte> bytes) { }
+        public JsonData(string jsonString) { }
+        public JsonData(System.Text.Json.JsonDocument jsonDocument) { }
+        public Azure.Core.JsonData this[int arrayIndex] { get { throw null; } }
+        public Azure.Core.JsonData this[string propertyName] { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<Azure.Core.JsonData> Items { get { throw null; } }
+        public System.Text.Json.JsonValueKind Kind { get { throw null; } }
+        public int Length { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<string> Properties { get { throw null; } }
+        public bool Equals(Azure.Core.JsonData? other) { throw null; }
+        public override bool Equals(object? obj) { throw null; }
+        public static Azure.Core.JsonData FromStream(System.IO.Stream utf8JsonStream) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Core.JsonData> FromStreamAsync(System.IO.Stream utf8JsonStream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public Azure.Core.JsonData? Get(string propertyName) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public T Get<T>(string propertyName) { throw null; }
+        public T Get<T>(string propertyName, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public static bool operator ==(Azure.Core.JsonData? left, string? right) { throw null; }
+        public static bool operator ==(string? left, Azure.Core.JsonData? right) { throw null; }
+        public static explicit operator bool (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator double (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator int (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator long (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator bool? (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator double? (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator int? (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator long? (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator float? (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator float (Azure.Core.JsonData json) { throw null; }
+        public static explicit operator string (Azure.Core.JsonData json) { throw null; }
+        public static bool operator !=(Azure.Core.JsonData? left, string? right) { throw null; }
+        public static bool operator !=(string? left, Azure.Core.JsonData? right) { throw null; }
+        System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
+        public System.BinaryData ToBinaryData() { throw null; }
+        public string ToJsonString() { throw null; }
+        public override string ToString() { throw null; }
+        public T To<T>() { throw null; }
+        public T To<T>(System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public long WriteTo(System.IO.Stream stream) { throw null; }
+        public System.Threading.Tasks.Task<long> WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
