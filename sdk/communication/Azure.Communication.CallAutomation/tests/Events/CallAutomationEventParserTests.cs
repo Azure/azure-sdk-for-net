@@ -475,13 +475,13 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         }
 
         [Test]
-        public void PlayCancelledEventParsed_Test()
+        public void PlayCanceledEventParsed_Test()
         {
-            RecognizeFailed @event = CallAutomationModelFactory.PlayCanceled(
-                operationContext: "operationContext",
+            PlayCanceled @event = CallAutomationModelFactory.PlayCanceled(
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
-                correlationId: "correlationId");
+                correlationId: "correlationId",
+                operationContext: "operationContext");
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.PlayCanceled");
@@ -558,7 +558,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         [Test]
         public void RecognizeCancelledEventParsed_Test()
         {
-            RecognizeFailed @event = CallAutomationModelFactory.RecognizeCanceled(
+            RecognizeCanceled @event = CallAutomationModelFactory.RecognizeCanceled(
                 operationContext: "operationContext",
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",

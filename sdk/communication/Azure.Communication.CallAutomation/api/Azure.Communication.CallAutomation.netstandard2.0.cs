@@ -110,8 +110,10 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.CollectTonesResult CollectTonesResult(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.DtmfTone> tones = null) { throw null; }
         public static Azure.Communication.CallAutomation.CreateCallResult CreateCallResult(Azure.Communication.CallAutomation.CallConnection callConnection = null, Azure.Communication.CallAutomation.CallConnectionProperties callConnectionProperties = null) { throw null; }
         public static Azure.Communication.CallAutomation.ParticipantsUpdated ParticipantsUpdated(string callConnectionId = null, string serverCallId = null, string correlationId = null, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> participants = null) { throw null; }
+        public static Azure.Communication.CallAutomation.PlayCanceled PlayCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.PlayCompleted PlayCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.PlayFailed PlayFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
+        public static Azure.Communication.CallAutomation.RecognizeCanceled RecognizeCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.RecognizeCompleted RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.CallMediaRecognitionType recognitionType = default(Azure.Communication.CallAutomation.CallMediaRecognitionType), Azure.Communication.CallAutomation.CollectTonesResult collectTonesResult = null) { throw null; }
         public static Azure.Communication.CallAutomation.RecognizeFailed RecognizeFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.RecordingStateResult RecordingStateResult(string recordingId = null, Azure.Communication.CallAutomation.RecordingState? recordingState = default(Azure.Communication.CallAutomation.RecordingState?)) { throw null; }
@@ -505,6 +507,11 @@ namespace Azure.Communication.CallAutomation
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CommunicationIdentifier> Participants { get { throw null; } }
         public static Azure.Communication.CallAutomation.ParticipantsUpdated Deserialize(string content) { throw null; }
     }
+    public partial class PlayCanceled : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal PlayCanceled() { }
+        public static Azure.Communication.CallAutomation.PlayCanceled Deserialize(string content) { throw null; }
+    }
     public partial class PlayCompleted : Azure.Communication.CallAutomation.CallAutomationEventWithReasonCodeName
     {
         internal PlayCompleted() { }
@@ -533,7 +540,6 @@ namespace Azure.Communication.CallAutomation
         private readonly int _dummyPrimitive;
         public ReasonCodeName(string value) { throw null; }
         public static Azure.Communication.CallAutomation.ReasonCodeName CompletedSuccessfully { get { throw null; } }
-        public static Azure.Communication.CallAutomation.ReasonCodeName OperationCancelled { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCodeName PlayDownloadFailed { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCodeName PlayInvalidFileFormat { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCodeName RecognizeInitialSilenceTimedOut { get { throw null; } }
@@ -551,6 +557,11 @@ namespace Azure.Communication.CallAutomation
         public static implicit operator Azure.Communication.CallAutomation.ReasonCodeName (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallAutomation.ReasonCodeName left, Azure.Communication.CallAutomation.ReasonCodeName right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class RecognizeCanceled : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal RecognizeCanceled() { }
+        public static Azure.Communication.CallAutomation.RecognizeCanceled Deserialize(string content) { throw null; }
     }
     public partial class RecognizeCompleted : Azure.Communication.CallAutomation.CallAutomationEventWithReasonCodeName
     {

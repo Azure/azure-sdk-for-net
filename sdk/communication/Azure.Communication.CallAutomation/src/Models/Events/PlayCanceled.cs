@@ -22,7 +22,7 @@ namespace Azure.Communication.CallAutomation
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            return DeserializePlayCancelled(element);
+            return DeserializePlayCanceled(element);
         }
     }
 }
