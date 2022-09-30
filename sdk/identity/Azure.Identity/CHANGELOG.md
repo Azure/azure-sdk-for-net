@@ -8,8 +8,8 @@
   - `AzurePowerShellCredential` and `AzurePowerShellCredentialOptions.PowerShellProcessTimeout`
   - `VisualStudioCredential` and `VisualStudioCredentialOptions.VisualStudioProcessTimeout`
   - `DefaultAzureCredential` and `DefaultAzureCredentialOptions.DeveloperCredentialTimeout`  Note: this option applies to all developer credentials above when using `DefaultAzureCredential`.
-  
 - Reintroduced `ManagedIdentityCredential` token caching support from 1.7.0-beta.1
+- `EnvironmentCredential` updated to support specifying a certificate password via the `AZURE_CLIENT_CERTIFICATE_PASSWORD` environment variable
 
 ### Breaking Changes
 

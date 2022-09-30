@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.AppService
             return apiVersion;
         }
 
-        /// <summary> Gets an object representing a UserResource along with the instance operations that can be performed on it in the TenantResource. </summary>
-        /// <returns> Returns a <see cref="UserResource" /> object. </returns>
-        public virtual UserResource GetUser()
+        /// <summary> Gets an object representing a PublishingUserResource along with the instance operations that can be performed on it in the TenantResource. </summary>
+        /// <returns> Returns a <see cref="PublishingUserResource" /> object. </returns>
+        public virtual PublishingUserResource GetPublishingUser()
         {
-            return new UserResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Web/publishingUsers/web"));
+            return new PublishingUserResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Web/publishingUsers/web"));
         }
 
         /// <summary> Gets a collection of SourceControlResources in the TenantResource. </summary>

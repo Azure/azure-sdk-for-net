@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<string> displayName = default;
             Optional<bool> isEntire = default;
             Optional<long> messageCode = default;
-            Optional<string> icon = default;
+            Optional<Uri> icon = default;
             Optional<IReadOnlyList<PlanNotificationDetails>> plans = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -55,7 +56,12 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 if (property.NameEquals("icon"))
                 {
-                    icon = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        icon = null;
+                        continue;
+                    }
+                    icon = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("plans"))

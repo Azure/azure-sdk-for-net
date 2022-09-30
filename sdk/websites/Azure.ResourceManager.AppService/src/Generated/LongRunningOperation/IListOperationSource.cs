@@ -15,26 +15,26 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class IListOperationSource : IOperationSource<IList<NetworkTrace>>
+    internal class IListOperationSource : IOperationSource<IList<WebAppNetworkTrace>>
     {
-        IList<NetworkTrace> IOperationSource<IList<NetworkTrace>>.CreateResult(Response response, CancellationToken cancellationToken)
+        IList<WebAppNetworkTrace> IOperationSource<IList<WebAppNetworkTrace>>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            List<NetworkTrace> array = new List<NetworkTrace>();
+            List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(NetworkTrace.DeserializeNetworkTrace(item));
+                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
             }
             return array;
         }
 
-        async ValueTask<IList<NetworkTrace>> IOperationSource<IList<NetworkTrace>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<IList<WebAppNetworkTrace>> IOperationSource<IList<WebAppNetworkTrace>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            List<NetworkTrace> array = new List<NetworkTrace>();
+            List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(NetworkTrace.DeserializeNetworkTrace(item));
+                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
             }
             return array;
         }

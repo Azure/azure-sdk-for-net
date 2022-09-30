@@ -108,6 +108,7 @@ DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
 | Error Message |Description| Mitigation |
 |---|---|---|
 |Environment variables aren't fully configured.|A valid combination of environment variables wasn't set.|Ensure the appropriate environment variables are set **prior to application startup** for the intended authentication method.</p><ul><li>To authenticate a service principal using a client secret, ensure the variables `AZURE_CLIENT_ID`, `AZURE_TENANT_ID` and `AZURE_CLIENT_SECRET` are properly set.</li><li>To authenticate a service principal using a certificate, ensure the variables `AZURE_CLIENT_ID`, `AZURE_TENANT_ID` and `AZURE_CLIENT_CERTIFICATE_PATH` are properly set.</li><li>To authenticate a user using a password, ensure the variables `AZURE_USERNAME` and `AZURE_PASSWORD` are properly set.</li><ul>|
+|Password protection for PEM encoded certificates is not supported.|`AZURE_CLIENT_CERTIFICATE_PASSWORD` was set when using a PEM encoded certificate.|Re-encode the client certificate to a password protected PFX (PKCS12) certificate, or a PEM certificate without password protection.|
 
 ## Troubleshoot `ClientSecretCredential` Authentication Issues
 `AuthenticationFailedException`
