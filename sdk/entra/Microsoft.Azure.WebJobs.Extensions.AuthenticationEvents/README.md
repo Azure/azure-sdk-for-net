@@ -35,19 +35,19 @@ There are three approaches to authenticating HTTP requests to your function app 
 - Have the trigger validate the token: In local environments or environments that aren't hosted in the Azure Function service, the trigger can do the token validation.
 - Don't validate the token: If you would like to _not_ authenticate the token during local development.
 
-To learn more, read about [testing your custom claims provider API](https://learn.microsoft.com/en-us/azure/active-directory/develop/custom-claims-provider-test-function-trigger).  
+To learn more, read about testing your custom claims provider API.  
 
 ## Key concepts
 
 ### Azure AD custom extensions
 
-Custom extensions allow you to handle Azure AD events, integrate with external systems, and customize what happens in your application authentication experience. For example, a custom claims provider is a custom extension that allows you to enrich or customize application tokens with information from external systems that can't be stored as part of the Azure AD directory. Read [Custom claims providers overview](https://learn.microsoft.com/azure/active-directory/develop/custom-claims-provider-overview) to learn more about custom extensions and custom claims providers.
+Custom extensions allow you to handle Azure AD events, integrate with external systems, and customize what happens in your application authentication experience. For example, a custom claims provider is a custom extension that allows you to enrich or customize application tokens with information from external systems that can't be stored as part of the Azure AD directory. Read Custom claims providers overview to learn more about custom extensions and custom claims providers.
 
 ### Authentication events trigger
 
 The authentication events trigger allows a function to be executed when an authentication event is sent from the Azure AD event service.
 
-Read [Configure a SAML app to receive tokens with claims from an external store](https://learn.microsoft.com/azure/active-directory/develop/custom-claims-provider-source-claims-from-external-system-saml-app) and [Configure an OIDC app to receive tokens with claims from an external store](https://learn.microsoft.com/azure/active-directory/develop/custom-claims-provider-source-claims-from-external-system-oidc-app) to learn more about using the authentication events trigger.
+Read Configure a SAML app to receive tokens with claims from an external store and Configure an OIDC app to receive tokens with claims from an external store to learn more about using the authentication events trigger.
 
 ### Authentication events trigger output binding
 
@@ -55,7 +55,7 @@ The authentication events trigger output binding allows a function to send authe
 
 ## Documentation
 
-Learn about custom [claims providers and custom extensions](https://learn.microsoft.com/azure/active-directory/develop/custom-claims-provider-overview).  Learn how to create and register your custom claims provider API, how to add tokens from external stores, and how to test and troubleshoot your API.
+Learn about custom claims providers and custom extensions.  Learn how to create and register your custom claims provider API, how to add tokens from external stores, and how to test and troubleshoot your API.
 
 ## Examples
 
@@ -128,11 +128,11 @@ For information on troubleshooting you custom claims provider, please read [Trou
 
 ## Next steps
 
-Learn how to [create, publish, and register a custom claims provider API](https://learn.microsoft.com/azure/active-directory/develop/custom-claims-provider-create-register-api).
+Learn how to create, publish, and register a custom claims provider API.
 
-If you already have a custom claims provider registered, you can configure a [SAML application](https://learn.microsoft.com/azure/active-directory/develop/custom-claims-provider-source-claims-from-external-system-saml-app) or an [OIDC](https://learn.microsoft.com/azure/active-directory/develop/custom-claims-provider-source-claims-from-external-system-oidc-app) application to receive tokens with claims sourced from an external store.
+If you already have a custom claims provider registered, you can configure a SAML application or an OIDC application to receive tokens with claims sourced from an external store.
 
-Learn how to [test your custom claims provider API](https://learn.microsoft.com/azure/active-directory/develop/custom-claims-provider-test-function-trigger).
+Learn how to test your custom claims provider API.
 
 ## Contributing
 
