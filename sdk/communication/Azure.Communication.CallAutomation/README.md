@@ -62,14 +62,13 @@ either the operation's constructor as optional parameters or the operation's `Op
 are considered the same request **if and only if** both repeatability parameters are the same.
 - `repeatabilityRequestId`: an opaque string representing a client-generated unique identifier for the request.
 It is a version 4 (random) UUID.
-- `repeatabilityFirstSent`: The value should be the date and time at which the request was **first** created,
-expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.
+- `repeatabilityFirstSent`: The value should be the date and time at which the request was **first** created.
 
 To set repeatability parameters, see below C# code snippet as an example:
 ```C#
 var createCallOptions = new CreateCallOptions(callSource, new CommunicationIdentifier[] { target }, new Uri("https://exmaple.com/callback")) {
     RepeatabilityRequestId = Guid.NewGuid(),
-    RepeatabilityFirstSent = DateTimeOffset.Now.ToString("R"),
+    RepeatabilityFirstSent = DateTimeOffset.Now,
 };
 CreateCallResult response1 = await callAutomationClient.CreateCallAsync(createCallOptions);
 await Task.Delay(5000);

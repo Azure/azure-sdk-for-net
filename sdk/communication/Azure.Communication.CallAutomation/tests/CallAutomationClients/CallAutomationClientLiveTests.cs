@@ -195,7 +195,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 var user = await CreateIdentityUserAsync().ConfigureAwait(false);
                 var targets = new CommunicationIdentifier[] { new CommunicationUserIdentifier(TestEnvironment.TargetUserId) };
                 var repeatabilityRequestId = new Guid("61460096-a0cc-4f65-8cec-b61cc24e646c");
-                var repeatabilityFirstSent = "Wed, 21 Sep 2022 04:40:28 GMT";
+                DateTimeOffset repeatabilityFirstSent = new DateTimeOffset(2022, 9, 21, 4, 40, 28, new TimeSpan(0,0,0));
                 var options = new CreateCallOptions(new CallSource(user), targets, new Uri(TestEnvironment.AppCallbackUrl)) {
                     RepeatabilityRequestId = repeatabilityRequestId,
                     RepeatabilityFirstSent = repeatabilityFirstSent
