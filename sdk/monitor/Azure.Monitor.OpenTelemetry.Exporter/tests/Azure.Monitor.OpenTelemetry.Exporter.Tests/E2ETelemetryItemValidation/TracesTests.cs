@@ -66,7 +66,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(telemetryItems);
-            var telemetryItem = telemetryItems.First(); // TODO: Change to Single(). Still investigating random duplicate export which only repros on build server.
+            var telemetryItem = telemetryItems.Single();
 
             TelemetryItemValidationHelper.AssertActivity_As_DependencyTelemetry(
                 telemetryItem: telemetryItem,
@@ -111,7 +111,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(telemetryItems);
-            var telemetryItem = telemetryItems.First(); // TODO: Change to Single(). Still investigating random duplicate export which only repros on build server.
+            var telemetryItem = telemetryItems.Single();
 
             TelemetryItemValidationHelper.AssertActivity_As_RequestTelemetry(
                 telemetryItem: telemetryItem,
@@ -182,7 +182,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // ASSERT
             Assert.True(activityTelemetryItems.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(activityTelemetryItems);
-            var activityTelemetryItem = activityTelemetryItems.First(); // TODO: Change to Single(). Still investigating random duplicate export which only repros on build server.
+            var activityTelemetryItem = activityTelemetryItems.Single();
 
             TelemetryItemValidationHelper.AssertActivity_As_DependencyTelemetry(
                 telemetryItem: activityTelemetryItem,
@@ -202,6 +202,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedMeessageProperties: new Dictionary<string, string> { { "name", "World" } },
                 expectedSpanId: spanId,
                 expectedTraceId: traceId);
+        }
+
+        [Fact]
+        public void HopingToForceAFailure()
+        {
+            // Running this test on a loop to try and force the failure.
+
+            for (int i = 0; i < 1000; i++)
+            {
+                VerifyLogWithinActivity(LogLevel.Trace, "Verbose");
+            }
         }
     }
 }
