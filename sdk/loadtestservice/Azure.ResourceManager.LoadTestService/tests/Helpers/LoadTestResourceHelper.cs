@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.LoadTestService.Tests.Helpers
             public static string RESOURCE_GROUP_NAME = "LOADTESTSERVICE_RESOURCE_GROUP";
         }
 
-        public const string RESOURCE_LOCATION = "westus2";
+        public const string RESOURCE_LOCATION = "northeurope";
         public const string LOADTESTS_RESOURCE_TYPE = "Microsoft.LoadTestService/loadtests";
 
         public static async Task TryRegisterResourceGroupAsync(ResourceGroupCollection resourceGroupsOperations, string location, string resourceGroupName)

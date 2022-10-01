@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.LoadTestService.Tests
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
-            ArmOperation<LoadTestResource> loadTestPatchResponse = await loadTestGetResponseValue.UpdateAsync(WaitUntil.Completed,resourcePatchPayload);
+            ArmOperation<LoadTestResource> loadTestPatchResponse = await loadTestGetResponseValue.UpdateAsync(WaitUntil.Completed, resourcePatchPayload);
             LoadTestResource loadTestPatchResponseValue = loadTestPatchResponse.Value;
 
             Assert.IsNotNull(loadTestPatchResponseValue);

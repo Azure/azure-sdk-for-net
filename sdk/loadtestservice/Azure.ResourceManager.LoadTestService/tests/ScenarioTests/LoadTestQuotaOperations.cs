@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -38,9 +39,9 @@ namespace Azure.ResourceManager.LoadTestService.Tests.ScenarioTests
 
         [RecordedTest]
         [AsyncOnly]
-        public async Task GetMaxConcurrentTestRuns()
+        public async Task GetQuotaLimitAndUsage()
         {
-            //// Quota get - maxConcurrentTestRuns
+            //// Quota get limit and usage tests
             var quotaResponse = await _quotaResourceCollection.GetAsync("maxConcurrentTestRuns");
             Assert.IsNotNull(quotaResponse);
             Assert.IsNotNull(quotaResponse.Value);
@@ -53,57 +54,38 @@ namespace Azure.ResourceManager.LoadTestService.Tests.ScenarioTests
 
         [RecordedTest]
         [AsyncOnly]
-        public async Task GetMaxConcurrentEngineInstances()
+        public async Task CheckQuotaAvailability()
         {
-            //// Quota get - maxConcurrentTestRuns
-            var quotaResponse = await _quotaResourceCollection.GetAsync("maxConcurrentEngineInstances");
+            //// Quota check availability tests
+            Response<QuotaResource> quotaResponse = await _quotaResourceCollection.GetAsync("maxConcurrentTestRuns");
+
             Assert.IsNotNull(quotaResponse);
             Assert.IsNotNull(quotaResponse.Value);
-            Assert.IsNotNull(quotaResponse.Value.Data);
-            Assert.IsNotNull(quotaResponse.Value.Data.Name);
-            Assert.IsNotNull(quotaResponse.Value.Data.Limit);
-            Assert.IsNotNull(quotaResponse.Value.Data.Usage);
-            Assert.AreEqual("maxConcurrentEngineInstances", quotaResponse.Value.Data.Name);
+            QuotaResource quotaResource = quotaResponse.Value;
+            Assert.IsNotNull(quotaResource.Data);
+            Assert.IsNotNull(quotaResource.Data.Name);
+            Assert.IsNotNull(quotaResource.Data.Limit);
+            Assert.IsNotNull(quotaResource.Data.Usage);
+            Assert.AreEqual("maxConcurrentTestRuns", quotaResource.Data.Name);
+
+            QuotaBucketRequestPropertiesDimensions dimensions = new QuotaBucketRequestPropertiesDimensions(
+                Subscription.Id.SubscriptionId, LoadTestResourceHelper.RESOURCE_LOCATION);
+
+            QuotaBucketContent quotaAvailabilityPayload = new QuotaBucketContent(
+                quotaResponse.Value.Data.Id,
+                quotaResource.Data.Name,
+                quotaResource.Data.ResourceType,
+                null,
+                quotaResource.Data.Usage,
+                quotaResource.Data.Limit,
+                quotaResource.Data.Limit,
+                dimensions);
+
+            Response<CheckQuotaAvailabilityResponse> checkAvailabilityResponse = await quotaResponse.Value.CheckAvailabilityAsync(quotaAvailabilityPayload);
+            Assert.IsNotNull(checkAvailabilityResponse);
+            Assert.IsNotNull(checkAvailabilityResponse.Value);
+            Assert.AreEqual("maxConcurrentTestRuns", checkAvailabilityResponse.Value.Name);
+            Assert.True(checkAvailabilityResponse.Value.IsAvailable.Value == true || checkAvailabilityResponse.Value.IsAvailable.Value == false);
         }
-
-        [RecordedTest]
-        [AsyncOnly]
-        public async Task GetMaxEngineInstancesPerTestRun()
-        {
-            //// Quota get - maxConcurrentTestRuns
-            var quotaResponse = await _quotaResourceCollection.GetAsync("maxEngineInstancesPerTestRun");
-            Assert.IsNotNull(quotaResponse);
-            Assert.IsNotNull(quotaResponse.Value);
-            Assert.IsNotNull(quotaResponse.Value.Data);
-            Assert.IsNotNull(quotaResponse.Value.Data.Name);
-            Assert.IsNotNull(quotaResponse.Value.Data.Limit);
-            Assert.IsNotNull(quotaResponse.Value.Data.Usage);
-            Assert.AreEqual("maxEngineInstancesPerTestRun", quotaResponse.Value.Data.Name);
-        }
-
-        //[RecordedTest]
-        //[AsyncOnly]
-        //public async Task CheckQuotaAvailability()
-        //{
-        //    //// Quota get - maxConcurrentTestRuns
-        //    var quotaResponse = await _quotaResourceCollection.GetAsync("maxConcurrentTestRuns");
-
-        //    Assert.IsNotNull(quotaResponse);
-        //    Assert.IsNotNull(quotaResponse.Value);
-        //    QuotaResource quotaResource = quotaResponse.Value;
-        //    Assert.IsNotNull(quotaResource.Data);
-        //    Assert.IsNotNull(quotaResource.Data.Name);
-        //    Assert.IsNotNull(quotaResource.Data.Limit);
-        //    Assert.IsNotNull(quotaResource.Data.Usage);
-        //    Assert.AreEqual("maxConcurrentTestRuns", quotaResource.Data.Name);
-
-        //    QuotaBucketRequestPropertiesDimensions dimensions = new QuotaBucketRequestPropertiesDimensions(
-        //        Subscription.Id.SubscriptionId, LoadTestResourceHelper.RESOURCE_LOCATION);
-        //    QuotaBucketContent qbc = new QuotaBucketContent(quotaResponse.Value.Data.Id,
-        //            quotaResource.Data.Name, quotaResource.Data.ResourceType, null,
-        //            quotaResource.Data.Usage, quotaResource.Data.Limit, quotaResource.Data.Usage, dimensions);
-        //    var a = await quotaResponse.Value.CheckAvailabilityAsync(qbc);
-        //    Assert.IsNotNull(a);
-        //}
     }
 }
