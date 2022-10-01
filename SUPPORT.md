@@ -2,7 +2,8 @@
 
 ## How to file issues and get help  
 
-This repository is merely a collection of tags that contain recordings and other resources. If there are issues to be filed, they likely relate to the language repo rather than this one.
+This repository is merely a collection of tags that contain recordings and other resources. If there are issues to be filed, they likely relate to the relevant language repo rather than this assets repository.
+
 
 For help and questions about using this repo, please file an issue with the label `question`. Before doing so, please read through the README.
 
