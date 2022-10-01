@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Redis.Models
                     }
 
                     rdbBackupEnabled = property.Value.ValueKind == JsonValueKind.String
-                        ? string.Equals(property.Value.GetString(), "true", StringComparison.InvariantCulture)
+                        ? string.Equals(property.Value.GetString(), "true", StringComparison.InvariantCultureIgnoreCase)
                         : property.Value.GetBoolean();
 
                     continue;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Redis.Models
                     }
 
                     aofBackupEnabled = property.Value.ValueKind == JsonValueKind.String
-                        ? string.Equals(property.Value.GetString(), "true", StringComparison.InvariantCulture)
+                        ? string.Equals(property.Value.GetString(), "true", StringComparison.InvariantCultureIgnoreCase)
                         : property.Value.GetBoolean();
 
                     continue;
