@@ -207,7 +207,7 @@ Content-type: application/json
   * If you see the following error on Windows (it's a bug) when trying to run the created projected.
   * This can be resolved by executing this command in powershell `Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope LocalMachine` more info on this can be found [here](https://github.com/Azure/azure-functions-core-tools/issues/1821) and [here](https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7)
 
-For information on troubleshooting you custom claims provider, please read [Troubleshooting](https://learn.microsoft.com/azure/active-directory/develop/custom-claims-provider-troubleshoot).
+For information on troubleshooting you custom claims provider, please read Troubleshooting.
 
 ## Next steps
 
