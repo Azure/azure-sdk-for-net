@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.2 (2022-10-01)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed the serialization issue of `RedisCommonConfiguration.IsAofBackupEnabled` and `RedisCommonConfiguration.IsRdbBackupEnabled`.
 
 ## 1.0.1 (2022-09-27)
 
