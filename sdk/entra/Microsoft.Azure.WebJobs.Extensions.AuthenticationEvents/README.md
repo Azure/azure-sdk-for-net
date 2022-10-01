@@ -63,9 +63,7 @@ Learn about custom claims providers and custom extensions.  Learn how to create 
 
 #### Prerequisites
 
-1. [Download Postman](https://www.postman.com/downloads/)
-2. Download [Authentication_Events_Collection.json](https://github.com/Azure/microsoft-azure-webJobs-extensions-authentication-events/wiki/collection/Authentication_Events_Collection.json) for the Authentication Events Trigger.
-3. In the Postman app, [create a new workspace](https://learning.postman.com/docs/getting-started/creating-your-first-workspace/) and [import](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/) the Authentication Events Collection JSON file.
+[Download Postman](https://www.postman.com/downloads/), [Fiddler](https://www.telerik.com/fiddler), or another tool that can test APIs by sending and receiving HTTP requests and respsonses.
 
 #### Create the project
 
@@ -102,19 +100,104 @@ For local development and testing purposes, you can turn off token validation. O
 }
 ```
 
-Run the function app from Visual Studio or Visual Studio Code. In the output, you should see the Azure functions developer's application load your end point. Find the **Host** value (for example, "localhost:7071") and **Code** value (for example, "Z4pp0zA3zoA...FuJWxaog==").
+Run the function app from Visual Studio or Visual Studio Code. In the output, you should see the Azure functions developer's application load your end point. Your function endpoint is a combination of the listening url and function, for example: "http://localhost:7071/runtime/webhooks/AuthenticationEvents?code=(YOUR_CODE)&function=OnTokenIssuanceStart".  
 
-#### Update Postman variables
+#### Send the request to the API
 
-In Postman, select the **Authentication Events** collection. Select the **Variable** tab. Copy and paste the **Host** and **Code** variables values from the running function app into the host and code variables (in the **CURRENT VALUE** column). Save the collection.
+While the function app is running locally, send the following payload to your function app using Postman, Fiddler, or the API testing tool of your choice.
 
-In Postman, select the **Local** request. Select the **Body** tab. Verify or change sample payload values.
+```http
+POST <Target URL>
+Content-type: application/json
 
-#### Send the request using Postman
+{
+    "type": "onTokenIssuanceStartCustomExtension",
+    "apiSchemaVersion": "10-01-2021-preview",
+    "time": "2021-05-17T00:00:00.0000000Z",
+    "eventListenerId": "10000000-0000-0000-0000-000000000001",
+    "customExtensionId":"10000000-0000-0000-0000-000000000001",
+    "context": {
+        "correlationId": "20000000-0000-0000-0000-000000000002",
+        "client": {
+            "ip": "127.0.0.1"
+        },
+        "authProtocol": {
+            "type": "OAUTH2.0",
+            "tenantId": "30000000-0000-0000-0000-000000000003"
+        },
+        "clientServicePrincipal": {
+            "id": "40000000-0000-0000-0000-000000000001",
+            "appId": "40000000-0000-0000-0000-000000000002",
+            "appDisplayName": "Test client app",
+            "displayName": "Test client application",
+            "servicePrincipalNames": ["40000000-0000-0000-0000-000000000002", "http://example.com/client/app1"]
+        },
+        "resourceServicePrincipal": {
+            "id": "40000000-0000-0000-0000-000000000003",
+            "appId": "40000000-0000-0000-0000-000000000004",
+            "appDisplayName": "Test resource app",
+            "displayName": "Test resource application",
+            "servicePrincipalNames": ["40000000-0000-0000-0000-000000000004", "https://example.com/resource2"]
+        },
+        "roles": [
+            {
+                "id": "50000000-0000-0000-0000-000000000005",
+                "value": "DummyRole"
+            }
+        ],
+        "user": {
+            "ageGroup": "Adult",
+            "companyName": "Evo Sts Test",
+            "country": "USA",
+            "createdDateTime": "0001-01-01T00:00:00Z",
+            "creationType": "Invitation",
+            "department": "Dummy department",
+            "displayName": "Dummy display name",
+            "givenName": "Example",
+            "id": "60000000-0000-0000-0000-000000000006",
+            "lastPasswordChangeDateTime": "0001-01-01T00:00:00Z",
+            "mail": "test@example.com",
+            "onPremisesSamAccountName": "testadmin",
+            "onPremisesSecurityIdentifier": "DummySID",
+            "onPremiseUserPrincipalName": "Dummy Name",
+            "preferredDataLocation": "DummyDataLocation",
+            "preferredLanguage": "DummyLanguage",
+            "surname": "Test",
+            "userPrincipalName": "testadmin@example.com",
+            "userType": "UserTypeCloudManaged"
+        }
+    }
+}
+```
 
-While the function app is running locally, send the payload to your function app by clicking **Send**. A debugger is already attached your running function app code, so any breakpoints that are passed through will break into the debugger.
+Here is an example of the response.
 
-Verify the function app was executed successfully by checking the HTTP response and status code in the **Postman console**.
+```http
+HTTP 200 (or 201) OK
+Content-type: application/json
+{
+  "type": "onTokenIssuanceStartCustomExtension",
+  "apiSchemaVersion": "10-01-2021-preview",
+  "actions": [ 
+    {
+      "type": "ProvideClaimsForToken", 
+      "claims": [ 
+        {
+          "id": "DateOfBirth",
+          "value": "01/01/2000"
+        },
+        {
+          "id": "CustomRoles",
+          "value": [
+            "Writer",
+            "Editor"
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
 
 ## Troubleshooting
 
