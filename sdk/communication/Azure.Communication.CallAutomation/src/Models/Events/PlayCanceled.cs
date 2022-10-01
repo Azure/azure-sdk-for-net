@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The Play Cancelled event.
+    /// The Play Canceled event.
     /// </summary>
     [CodeGenModel("PlayCanceled", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class PlayCanceled : CallAutomationEventBase

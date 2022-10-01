@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The Recognize Cancelled event.
+    /// The Recognize Canceled event.
     /// </summary>
     [CodeGenModel("RecognizeCanceled", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class RecognizeCanceled : CallAutomationEventBase
