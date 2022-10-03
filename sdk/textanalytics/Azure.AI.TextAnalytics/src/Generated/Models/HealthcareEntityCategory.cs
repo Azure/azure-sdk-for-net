@@ -40,7 +40,7 @@ namespace Azure.AI.TextAnalytics
         private const string HealthcareProfessionValue = "HealthcareProfession";
         private const string DiagnosisValue = "Diagnosis";
         private const string SymptomOrSignValue = "SymptomOrSign";
-        private const string ConditionQualifierValue = "ConditionQualifier";
+        private const string ConditionalQualifierValue = "ConditionalQualifier";
         private const string MedicationClassValue = "MedicationClass";
         private const string MedicationNameValue = "MedicationName";
         private const string DosageValue = "Dosage";
@@ -85,8 +85,8 @@ namespace Azure.AI.TextAnalytics
         public static HealthcareEntityCategory Diagnosis { get; } = new HealthcareEntityCategory(DiagnosisValue);
         /// <summary> SymptomOrSign. </summary>
         public static HealthcareEntityCategory SymptomOrSign { get; } = new HealthcareEntityCategory(SymptomOrSignValue);
-        /// <summary> ConditionQualifier. </summary>
-        public static HealthcareEntityCategory ConditionQualifier { get; } = new HealthcareEntityCategory(ConditionQualifierValue);
+        /// <summary> ConditionalQualifier. </summary>
+        public static HealthcareEntityCategory ConditionalQualifier { get; } = new HealthcareEntityCategory(ConditionalQualifierValue);
         /// <summary> MedicationClass. </summary>
         public static HealthcareEntityCategory MedicationClass { get; } = new HealthcareEntityCategory(MedicationClassValue);
         /// <summary> MedicationName. </summary>
