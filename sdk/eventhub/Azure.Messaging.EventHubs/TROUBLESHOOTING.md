@@ -240,7 +240,7 @@ To coordinate with other event processors, the checkpoint store ownership record
 
 #### The "LoadBalancingUpdateInterval" and "PartitionOwnershipExpirationInterval" options are set too close together:
 
-It is recommended that the `PartitionOwnershipExpirationInterval` be at least 3 times greater than the `LoadBalancingUpdateInterval` and very strongly advised that it should be no less than twice as long.  When these intervals are too close together, ownership may expire before it is renewed during load balancing, which will cause partitions to migrate.  Adjustments should be made to the values in the processor options.
+It is recommended that the `PartitionOwnershipExpirationInterval` be at least 3 times greater than the `LoadBalancingUpdateInterval` and very strongly advised that it should be no less than twice as long.  When these intervals are too close together, ownership may expire before it is renewed during load balancing, which could cause partitions to migrate unintentionally.  Adjustments should be made to the values in the processor options.
 
 ### Warnings being raised to the error handler that start with  "A load balancing cycle has taken too long to complete. ..."
 
