@@ -13,28 +13,28 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// This is the OS disk image.
+    /// The safety profile of the Gallery Application Version.
     /// </summary>
-    public partial class GalleryOSDiskImage : GalleryDiskImage
+    public partial class GalleryApplicationVersionSafetyProfile : GalleryArtifactSafetyProfileBase
     {
         /// <summary>
-        /// Initializes a new instance of the GalleryOSDiskImage class.
+        /// Initializes a new instance of the
+        /// GalleryApplicationVersionSafetyProfile class.
         /// </summary>
-        public GalleryOSDiskImage()
+        public GalleryApplicationVersionSafetyProfile()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the GalleryOSDiskImage class.
+        /// Initializes a new instance of the
+        /// GalleryApplicationVersionSafetyProfile class.
         /// </summary>
-        /// <param name="sizeInGB">This property indicates the size of the VHD
-        /// to be created.</param>
-        /// <param name="hostCaching">The host caching of the disk. Valid
-        /// values are 'None', 'ReadOnly', and 'ReadWrite'. Possible values
-        /// include: 'None', 'ReadOnly', 'ReadWrite'</param>
-        public GalleryOSDiskImage(int? sizeInGB = default(int?), HostCaching? hostCaching = default(HostCaching?), GalleryDiskImageSource source = default(GalleryDiskImageSource))
-            : base(sizeInGB, hostCaching, source)
+        /// <param name="allowDeletionOfReplicatedLocations">Indicates whether
+        /// or not removing this Gallery Image Version from replicated regions
+        /// is allowed.</param>
+        public GalleryApplicationVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations = default(bool?))
+            : base(allowDeletionOfReplicatedLocations)
         {
             CustomInit();
         }
