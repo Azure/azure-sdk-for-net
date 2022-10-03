@@ -4,13 +4,13 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// CallAutomation Event with a Reason Code Name.
+    /// CallAutomation Event with a Reason Code.
     /// </summary>
     public abstract class CallAutomationEventWithReasonCodeName : CallAutomationEventBase
     {
         /// <summary>
-        /// Reason code name.
+        /// Reason code.
         /// </summary>
-        public ReasonCode ReasonCodeName { get; internal set; }
+        public ReasonCode ReasonCode { get; internal set; }
     }
 }
