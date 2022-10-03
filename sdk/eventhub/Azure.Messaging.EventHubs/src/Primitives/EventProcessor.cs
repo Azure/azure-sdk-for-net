@@ -1287,7 +1287,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                     }
                 }
 
-                // Ensure the load balancing and partition ownership intervals are not configured too close.  The ownership
+                // Ensure the load balancing and partition ownership intervals are not configured too closely.  The ownership
                 // interval should be at least twice the load balancing interval.  Documented guidance recommends a factor of
                 // three.
                 //
