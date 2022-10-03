@@ -11,19 +11,21 @@ using System.Reflection;
 using System.Reflection.Metadata.Ecma335;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Compute.Batch;
 using Azure.Compute.Batch.Models;
+using Azure.Compute.Batch.Tests;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Compute.Batch.Tests
+namespace Azure.Compute.Tests.SessionTests
 {
-    public class BatchTestBase: RecordedTestBase<BatchClientTestEnvironment>
+    public class BatchRecordedTestBase : RecordedTestBase<BatchClientTestEnvironment>
     {
-        private string testJobId = "BatchClientTest_TestJob";
+        private string testJobId = "BatchRecordedTestBase_TestJob";
 
-        public BatchTestBase(bool isAsync) : base(isAsync)
+        public BatchRecordedTestBase(bool isAsync) : base(isAsync)
         {
         }
 

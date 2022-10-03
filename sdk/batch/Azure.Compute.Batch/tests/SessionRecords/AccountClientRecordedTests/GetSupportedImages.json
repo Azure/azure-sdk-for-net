@@ -1,0 +1,953 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/supportedimages?api-version=2022-01-01.15.0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20221003.1 (.NET 6.0.9; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "8f728983d48d172a28f66315685cabfa",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; odata=minimalmetadata",
+        "DataServiceVersion": "3.0",
+        "Date": "Mon, 03 Oct 2022 15:04:23 GMT",
+        "request-id": "bb2e28d5-0dfb-4cd0-a6d5-28068205b52b",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "odata.metadata": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/$metadata#supportedimages",
+        "value": [
+          {
+            "imageReference": {
+              "publisher": "almalinux",
+              "offer": "almalinux",
+              "sku": "8_4",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.el 8",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "almalinux",
+              "offer": "almalinux",
+              "sku": "8_4-gen2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.el 8",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "almalinux",
+              "offer": "almalinux",
+              "sku": "8_5",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.el 8",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "almalinux",
+              "offer": "almalinux",
+              "sku": "8_5-gen2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.el 8",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "almalinux",
+              "offer": "almalinux-hpc",
+              "sku": "8_5-hpc",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.el 8",
+            "capabilities": [
+              "SupportsRDMAOnly",
+              "IntelMPIRuntimeInstalled"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "almalinux",
+              "offer": "almalinux-hpc",
+              "sku": "8_5-hpc-gen2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.el 8",
+            "capabilities": [
+              "SupportsRDMAOnly",
+              "IntelMPIRuntimeInstalled",
+              "Generation2VMImage"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "batch",
+              "offer": "rendering-centos73",
+              "sku": "rendering",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "batch",
+              "offer": "rendering-windows2016",
+              "sku": "rendering",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "canonical",
+              "offer": "0001-com-ubuntu-server-focal",
+              "sku": "20_04-lts",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.ubuntu 20.04",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "canonical",
+              "offer": "0001-com-ubuntu-server-focal",
+              "sku": "20_04-lts-gen2",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.ubuntu 20.04",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "canonical",
+              "offer": "0001-com-ubuntu-server-jammy",
+              "sku": "22_04-lts",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.ubuntu 22.04",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "canonical",
+              "offer": "0001-com-ubuntu-server-jammy",
+              "sku": "22_04-lts-gen2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.ubuntu 22.04",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "canonical",
+              "offer": "ubuntuserver",
+              "sku": "18.04-lts",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.ubuntu 18.04",
+            "batchSupportEndOfLife": "2023-05-30T00:00:00Z",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "canonical",
+              "offer": "ubuntuserver",
+              "sku": "18_04-lts-gen2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.ubuntu 18.04",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "batchSupportEndOfLife": "2023-05-30T00:00:00Z",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "debian",
+              "offer": "debian-10",
+              "sku": "10",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.debian 10",
+            "batchSupportEndOfLife": "2022-09-30T00:00:00Z",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoft-azure-batch",
+              "offer": "centos-container",
+              "sku": "7-8",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "capabilities": [
+              "DockerCompatible",
+              "NvidiaTeslaDriverInstalled",
+              "NvidiaGridDriverInstalled"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoft-azure-batch",
+              "offer": "centos-container-rdma",
+              "sku": "7-8",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "capabilities": [
+              "DockerCompatible",
+              "NvidiaTeslaDriverInstalled",
+              "SupportsRDMAOnly",
+              "IntelMPIRuntimeInstalled"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoft-azure-batch",
+              "offer": "ubuntu-server-container",
+              "sku": "20-04-lts",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.ubuntu 20.04",
+            "capabilities": [
+              "DockerCompatible",
+              "NvidiaTeslaDriverInstalled",
+              "NvidiaGridDriverInstalled"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoft-azure-batch",
+              "offer": "ubuntu-server-container-rdma",
+              "sku": "20-04-lts",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.ubuntu 20.04",
+            "capabilities": [
+              "DockerCompatible",
+              "NvidiaTeslaDriverInstalled",
+              "SupportsRDMAOnly",
+              "IntelMPIRuntimeInstalled"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoft-dsvm",
+              "offer": "dsvm-win-2019",
+              "sku": "winserver-2019",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoft-dsvm",
+              "offer": "ubuntu-1804",
+              "sku": "1804",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.ubuntu 18.04",
+            "capabilities": [
+              "NvidiaTeslaDriverInstalled"
+            ],
+            "batchSupportEndOfLife": "2023-05-30T00:00:00Z",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoft-dsvm",
+              "offer": "ubuntu-hpc",
+              "sku": "1804",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.ubuntu 18.04",
+            "capabilities": [
+              "SupportsRDMAOnly",
+              "Generation2VMImage",
+              "IntelMPIRuntimeInstalled"
+            ],
+            "batchSupportEndOfLife": "2023-05-30T00:00:00Z",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoft-dsvm",
+              "offer": "ubuntu-hpc",
+              "sku": "2004",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.ubuntu 20.04",
+            "capabilities": [
+              "DockerCompatible",
+              "SupportsRDMAOnly",
+              "Generation2VMImage",
+              "IntelMPIRuntimeInstalled"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2008-r2-sp1",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2008-r2-sp1-smalldisk",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2012-datacenter",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2012-datacenter-smalldisk",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2012-r2-datacenter",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2012-r2-datacenter-smalldisk",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2016-datacenter",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2016-datacenter-gensecond",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2016-datacenter-gs",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2016-datacenter-smalldisk",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2016-datacenter-smalldisk-g2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2016-datacenter-with-containers",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "capabilities": [
+              "DockerCompatible"
+            ],
+            "batchSupportEndOfLife": "2022-09-30T00:00:00Z",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2016-datacenter-with-containers-gs",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "capabilities": [
+              "DockerCompatible"
+            ],
+            "batchSupportEndOfLife": "2022-09-30T00:00:00Z",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2019-datacenter",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2019-datacenter-core",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2019-datacenter-core-g2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2019-datacenter-core-smalldisk",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2019-datacenter-core-smalldisk-g2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2019-datacenter-core-with-containers",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "capabilities": [
+              "DockerCompatible"
+            ],
+            "batchSupportEndOfLife": "2022-09-30T00:00:00Z",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2019-datacenter-core-with-containers-g2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "capabilities": [
+              "DockerCompatible",
+              "Generation2VMImage"
+            ],
+            "batchSupportEndOfLife": "2022-09-30T00:00:00Z",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2019-datacenter-core-with-containers-smalldisk",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "capabilities": [
+              "DockerCompatible"
+            ],
+            "batchSupportEndOfLife": "2022-09-30T00:00:00Z",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2019-datacenter-gensecond",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2019-datacenter-gs",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2019-datacenter-smalldisk",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2019-datacenter-smalldisk-g2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2019-datacenter-with-containers",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "capabilities": [
+              "DockerCompatible"
+            ],
+            "batchSupportEndOfLife": "2022-09-30T00:00:00Z",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2019-datacenter-with-containers-g2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "capabilities": [
+              "DockerCompatible",
+              "Generation2VMImage"
+            ],
+            "batchSupportEndOfLife": "2022-09-30T00:00:00Z",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2019-datacenter-with-containers-gs",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "capabilities": [
+              "DockerCompatible"
+            ],
+            "batchSupportEndOfLife": "2022-09-30T00:00:00Z",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2019-datacenter-with-containers-smalldisk",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "capabilities": [
+              "DockerCompatible"
+            ],
+            "batchSupportEndOfLife": "2022-09-30T00:00:00Z",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2022-datacenter",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2022-datacenter-core",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2022-datacenter-core-g2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2022-datacenter-core-smalldisk",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2022-datacenter-core-smalldisk-g2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2022-datacenter-g2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2022-datacenter-smalldisk",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoftwindowsserver",
+              "offer": "windowsserver",
+              "sku": "2022-datacenter-smalldisk-g2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.windows amd64",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "openlogic",
+              "offer": "centos",
+              "sku": "7_9",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "openlogic",
+              "offer": "centos",
+              "sku": "7_9-gen2",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "openlogic",
+              "offer": "centos-hpc",
+              "sku": "7_9",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "capabilities": [
+              "SupportsRDMAOnly",
+              "IntelMPIRuntimeInstalled"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "openlogic",
+              "offer": "centos-hpc",
+              "sku": "7_9-gen2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "capabilities": [
+              "SupportsRDMAOnly",
+              "IntelMPIRuntimeInstalled",
+              "Generation2VMImage"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "oracle",
+              "offer": "oracle-linux",
+              "sku": "7.4",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "oracle",
+              "offer": "oracle-linux",
+              "sku": "78",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "oracle",
+              "offer": "oracle-linux",
+              "sku": "81",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.el 8",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "xilinx",
+              "offer": "xilinx_alveo_u250_deployment_vm_centos78_032321",
+              "sku": "xilinx_alveo_u250_deployment_vm_centos78_032321",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "xilinx",
+              "offer": "xilinx_alveo_u250_deployment_vm_ubuntu1804_032321",
+              "sku": "xilinx_alveo_u250_deployment_vm_ubuntu_1804_032321",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.ubuntu 18.04",
+            "batchSupportEndOfLife": "2023-05-30T00:00:00Z",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "xilinx",
+              "offer": "xilinx_alveo_u250_deployment_vm_ubuntu2004_062421",
+              "sku": "xilinx_alveo_u250_deployment_vm_ubuntu_2004_062421",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.ubuntu 20.04",
+            "osType": "linux"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "BATCH_ENDPOINT": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com",
+    "RandomSeed": "219625910"
+  }
+}

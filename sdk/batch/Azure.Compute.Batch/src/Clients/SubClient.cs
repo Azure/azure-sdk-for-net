@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Compute.Batch.Models;
@@ -13,6 +11,25 @@ namespace Azure.Compute.Batch
 {
     public abstract class SubClient
     {
+        protected internal delegate Response GetOperation(string id, string select, string expand, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
+        protected internal delegate System.Threading.Tasks.Task<Response> GetOperationAsync(string id, string select, string expand, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
+        protected internal delegate Response ParentedGetOperation(string parentId, string id, string select, string expand, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
+        protected internal delegate System.Threading.Tasks.Task<Response> ParentedGetOperationAsync(string parentId, string id, string select, string expand, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
+        protected internal delegate Pageable<BinaryData> ListOperation(string filter, string select, string expand, int? maxResults, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context);
+        protected internal delegate Pageable<BinaryData> ParentedListOperation(string parentId, string filter, string select, string expand, int? maxResults, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context);
+        protected internal delegate Response AddOperation(RequestContent content, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context);
+        protected internal delegate System.Threading.Tasks.Task<Response> AddOperationAsync(RequestContent content, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context);
+        protected internal delegate Response ParentedAddOperation(string parentId, RequestContent content, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context);
+        protected internal delegate System.Threading.Tasks.Task<Response> ParentedAddOperationAsync(string parentId, RequestContent content, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context);
+        protected internal delegate Response UpdateOperation(string id, RequestContent content, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
+        protected internal delegate System.Threading.Tasks.Task<Response> UpdateOperationAsync(string id, RequestContent content, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
+        protected internal delegate Response ParentedUpdateOperation(string parentId, string id, RequestContent content, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
+        protected internal delegate System.Threading.Tasks.Task<Response> ParentedUpdateOperationAsync(string parentId, string id, RequestContent content, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
+        protected internal delegate Response DeleteOperation(string id, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
+        protected internal delegate System.Threading.Tasks.Task<Response> DeleteOperationAsync(string id, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
+        protected internal delegate Response ParentedDeleteOperation(string parentid, string id, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
+        protected internal delegate System.Threading.Tasks.Task<Response> ParentedDeleteOperationAsync(string parentId, string id, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
+
         public Func<Response, BinaryData> ContentHandler { get; set; }
 
         protected virtual BinaryData GetContent(Response response)
@@ -26,33 +43,38 @@ namespace Azure.Compute.Batch
             return Response.FromValue(model, response);
         }
 
-        protected internal Response<T> HandleGet<T>(string id, GetOptions options, Func<string, string, string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> operation, Func<JsonElement, T> deserialize)
+        protected internal Response<T> HandleGet<T>(string id, GetOptions options, GetOperation operation, Func<JsonElement, T> deserialize)
         {
             Response response = operation(id, options?.Select, options?.Expand, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.RequestConditions, options?.Context);
             return HandleResponse(response, deserialize);
         }
 
-        protected internal async System.Threading.Tasks.Task<Response<T>> HandleGetAsync<T>(string id, GetOptions options, Func<string, string, string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> operation, Func<JsonElement, T> deserialize)
+        protected internal async System.Threading.Tasks.Task<Response<T>> HandleGetAsync<T>(string id, GetOptions options, GetOperationAsync operation, Func<JsonElement, T> deserialize)
         {
             Response response = await operation(id, options?.Select, options?.Expand, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.RequestConditions, options?.Context).ConfigureAwait(false);
             return HandleResponse(response, deserialize);
         }
 
-        protected internal Response<T> HandleGet<T>(string parentId, string id, GetOptions options, Func<string, string, string, string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> operation, Func<JsonElement, T> deserialize)
+        protected internal Response<T> HandleGet<T>(string parentId, string id, GetOptions options, ParentedGetOperation operation, Func<JsonElement, T> deserialize)
         {
             Response response = operation(parentId, id, options?.Select, options?.Expand, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.RequestConditions, options?.Context);
             return HandleResponse(response, deserialize);
         }
 
-        protected internal async System.Threading.Tasks.Task<Response<T>> HandleGetAsync<T>(string parentId, string id, GetOptions options, Func<string, string, string, string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> operation, Func<JsonElement, T> deserialize)
+        protected internal async System.Threading.Tasks.Task<Response<T>> HandleGetAsync<T>(string parentId, string id, GetOptions options, ParentedGetOperationAsync operation, Func<JsonElement, T> deserialize)
         {
             Response response = await operation(parentId, id, options?.Select, options?.Expand, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.RequestConditions, options?.Context).ConfigureAwait(false);
             return HandleResponse(response, deserialize);
         }
 
-        protected internal Pageable<T> HandleList<T>(ListOptions options, Func<string, string, string, int?, int?, Guid?, bool?, DateTimeOffset?, RequestContext, Pageable<BinaryData>> operation, Func<JsonElement, T> deserialize)
+        protected internal Pageable<T> HandleList<T>(ListOptions options, ListOperation operation, Func<JsonElement, T> deserialize)
         {
             Pageable<BinaryData> data = operation(options?.Filter, options?.Select, options?.Expand, options?.MaxResults, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.Context);
+            return HandleList(data, deserialize);
+        }
+
+        protected internal Pageable<T> HandleList<T>(Pageable<BinaryData> data, Func<JsonElement, T> deserialize)
+        {
             return PageableHelpers.Select(data, response =>
             {
                 JsonElement root = JsonDocument.Parse(response.Content).RootElement;
@@ -66,7 +88,7 @@ namespace Azure.Compute.Batch
             });
         }
 
-        protected internal Pageable<T> HandleList<T>(string parentId, ListOptions options, Func<string, string, string, string, int?, int?, Guid?, bool?, DateTimeOffset?, RequestContext, Pageable<BinaryData>> operation, Func<JsonElement, T> deserialize)
+        protected internal Pageable<T> HandleList<T>(string parentId, ListOptions options, ParentedListOperation operation, Func<JsonElement, T> deserialize)
         {
             Pageable<BinaryData> data = operation(parentId, options?.Filter, options?.Select, options?.Expand, options?.MaxResults, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.Context);
             return PageableHelpers.Select(data, response =>
@@ -82,88 +104,88 @@ namespace Azure.Compute.Batch
             });
         }
 
-        protected Response HandleAdd(object contentObj, Func<RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestContext, Response> add)
+        protected Response HandleAdd(object contentObj, AddOperation add)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
             return add(content, null, null, null, null, null);
         }
 
-        protected async System.Threading.Tasks.Task<Response> HandleAddAsync(object contentObj, Func<RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestContext, System.Threading.Tasks.Task<Response>> add)
+        protected async System.Threading.Tasks.Task<Response> HandleAddAsync(object contentObj, AddOperationAsync add)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
             return await add(content, null, null, null, null, null).ConfigureAwait(false);
         }
 
-        protected Response HandleAdd(string parentId, object contentObj, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestContext, Response> add)
+        protected Response HandleAdd(string parentId, object contentObj, ParentedAddOperation add)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
             return add(parentId, content, null, null, null, null, null);
         }
 
-        protected async System.Threading.Tasks.Task<Response> HandleAddAsync(string parentId, object contentObj, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestContext, System.Threading.Tasks.Task<Response>> add)
+        protected async System.Threading.Tasks.Task<Response> HandleAddAsync(string parentId, object contentObj, ParentedAddOperationAsync add)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
             return await add(parentId, content, null, null, null, null, null).ConfigureAwait(false);
         }
 
-        protected Response HandleAddCollection(string parentId, IEnumerable<object> contentList, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestContext, Response> add)
+        protected Response HandleAddCollection(string parentId, IEnumerable<object> contentList, ParentedAddOperation add)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentList);
             return add(parentId, content, null, null, null, null, null);
         }
 
-        protected Response HandleUpdate(string id, object contentObj, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> update)
+        protected Response HandleUpdate(string id, object contentObj, UpdateOperation update)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
             return update(id, content, null, null, null, null, null, null);
         }
 
-        protected async System.Threading.Tasks.Task<Response> HandleUpdateAsync(string id, object contentObj, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> update)
+        protected async System.Threading.Tasks.Task<Response> HandleUpdateAsync(string id, object contentObj, UpdateOperationAsync update)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
             return await update(id, content, null, null, null, null, null, null).ConfigureAwait(false);
         }
 
-        protected Response HandleUpdate(string parentId, string id, object contentObj, Func<string, string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> update)
+        protected Response HandleUpdate(string parentId, string id, object contentObj, ParentedUpdateOperation update)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
             return update(parentId, id, content, null, null, null, null, null, null);
         }
 
-        protected async System.Threading.Tasks.Task<Response> HandleUpdateAsync(string parentId, string id, object contentObj, Func<string, string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> update)
+        protected async System.Threading.Tasks.Task<Response> HandleUpdateAsync(string parentId, string id, object contentObj, ParentedUpdateOperationAsync update)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
             return await update(parentId, id, content, null, null, null, null, null, null).ConfigureAwait(false);
         }
 
-        protected Response HandlePatch(string id, object contentObj, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> patch)
+        protected Response HandlePatch(string id, object contentObj, UpdateOperation patch)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
             return patch(id, content, null, null, null, null, null, null);
         }
 
-        protected async System.Threading.Tasks.Task<Response> HandlePatchAsync(string id, object contentObj, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> patch)
+        protected async System.Threading.Tasks.Task<Response> HandlePatchAsync(string id, object contentObj, UpdateOperationAsync patch)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
             return await patch(id, content, null, null, null, null, null, null).ConfigureAwait(false);
         }
 
-        protected Response HandleDelete(string id, Func<string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> delete)
+        protected Response HandleDelete(string id, DeleteOperation delete)
         {
             return delete(id, null, null, null, null, null, null);
         }
 
-        protected async System.Threading.Tasks.Task<Response> HandleDeleteAsync(string id, Func<string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> delete)
+        protected async System.Threading.Tasks.Task<Response> HandleDeleteAsync(string id, DeleteOperationAsync delete)
         {
             return await delete(id, null, null, null, null, null, null).ConfigureAwait(false);
         }
 
-        protected Response HandleDelete(string parentId, string id, Func<string, string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> delete)
+        protected Response HandleDelete(string parentId, string id, ParentedDeleteOperation delete)
         {
             return delete(parentId, id, null, null, null, null, null, null);
         }
 
-        protected async System.Threading.Tasks.Task<Response> HandleDeleteAsync(string parentId, string id, Func<string, string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> delete)
+        protected async System.Threading.Tasks.Task<Response> HandleDeleteAsync(string parentId, string id, ParentedDeleteOperationAsync delete)
         {
             return await delete(parentId, id, null, null, null, null, null, null).ConfigureAwait(false);
         }
