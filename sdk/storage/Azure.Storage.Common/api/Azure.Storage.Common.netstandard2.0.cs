@@ -20,11 +20,6 @@ namespace Azure.Storage
         public bool AutoValidateChecksum { get { throw null; } set { } }
         public Azure.Storage.StorageChecksumAlgorithm ChecksumAlgorithm { get { throw null; } set { } }
     }
-    public enum GeoRedundantReadMode
-    {
-        PrimaryThenSecondary = 0,
-        SecondaryThenPrimary = 1,
-    }
     public enum StorageChecksumAlgorithm
     {
         Auto = 0,
