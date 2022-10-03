@@ -7,7 +7,7 @@ using System;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Failure Reason for incoming webhook events.
+    /// Reason Codes for incoming webhook events.
     /// </summary>
     public readonly partial struct ReasonCode : IEquatable<ReasonCode>
     {
