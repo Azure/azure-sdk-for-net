@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e145a05b1f90e1e0220b050f041e8b69-affed909a7a6e56e-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "dfd6d1d4502ba6542f3ee7f18336986d",
+        "traceparent": "00-d1c3dad3ab33d55b4cb0582dc4aafc82-72cb308319063e5d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.9; Microsoft Windows 10.0.22622)",
+        "x-ms-client-request-id": "0edbe80e22f2a0bed271a89ac72026b9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 06 Jun 2022 11:43:33 GMT",
+        "Date": "Fri, 30 Sep 2022 02:16:29 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "5dac3ee0-24b1-496a-802a-3792ba5a2180",
+        "x-ms-correlation-request-id": "afae613d-bf8c-4614-86e8-9e2802de637c",
         "x-ms-ratelimit-remaining-subscription-reads": "11969",
-        "x-ms-request-id": "5dac3ee0-24b1-496a-802a-3792ba5a2180",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220606T114333Z:5dac3ee0-24b1-496a-802a-3792ba5a2180"
+        "x-ms-request-id": "afae613d-bf8c-4614-86e8-9e2802de637c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220930T021629Z:afae613d-bf8c-4614-86e8-9e2802de637c"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -56,16 +56,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-5208?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-6251?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "43",
         "Content-Type": "application/json",
-        "traceparent": "00-d6a9c6a06a8713ac9d920e0a8bd7ea7b-e789b2e35f9956e8-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "f737e72544a909a0047a6ad3cd5d26d3",
+        "traceparent": "00-a4293618fb7b8f8626e3d91ff0c768d2-0963d6b1598a7a25-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.9; Microsoft Windows 10.0.22622)",
+        "x-ms-client-request-id": "99087d205d70dcf95907763beb98a5d2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -79,19 +79,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "241",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 06 Jun 2022 11:43:34 GMT",
+        "Date": "Fri, 30 Sep 2022 02:16:30 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2200b2a9-1c73-435e-b9e3-7708061d7b51",
+        "x-ms-correlation-request-id": "9d8ee6e5-243f-44a1-b84c-184afc0def7c",
         "x-ms-ratelimit-remaining-subscription-writes": "1148",
-        "x-ms-request-id": "2200b2a9-1c73-435e-b9e3-7708061d7b51",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220606T114335Z:2200b2a9-1c73-435e-b9e3-7708061d7b51"
+        "x-ms-request-id": "9d8ee6e5-243f-44a1-b84c-184afc0def7c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220930T021630Z:9d8ee6e5-243f-44a1-b84c-184afc0def7c"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-5208",
-        "name": "testRG-5208",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-6251",
+        "name": "testRG-6251",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus",
         "tags": {
@@ -103,16 +103,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-5208/providers/Microsoft.Compute/availabilitySets/testAS-8860?api-version=2022-03-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-6251/providers/Microsoft.Compute/availabilitySets/testAS-310?api-version=2022-08-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "60",
         "Content-Type": "application/json",
-        "traceparent": "00-819017c425eecc8bd106a0653d8c9ad3-b29f63bcd51a14e9-00",
-        "User-Agent": "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20220606.1 (.NET 6.0.5; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "739d6b4863211002091aa24637a36ebd",
+        "traceparent": "00-65d59f0bd7a1b80796da36513dc708be-de9e880fbc9e43e7-00",
+        "User-Agent": "azsdk-net-ResourceManager.Compute/1.1.0-alpha.20220930.1 (.NET 6.0.9; Microsoft Windows 10.0.22622)",
+        "x-ms-client-request-id": "0611db893463538e7749df4471302a39",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -125,9 +125,9 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "428",
+        "Content-Length": "426",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 06 Jun 2022 11:43:38 GMT",
+        "Date": "Fri, 30 Sep 2022 02:16:33 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -136,16 +136,16 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "739d6b4863211002091aa24637a36ebd",
-        "x-ms-correlation-request-id": "659e6d8b-b638-45f0-a66e-20cab61f5acc",
+        "x-ms-client-request-id": "0611db893463538e7749df4471302a39",
+        "x-ms-correlation-request-id": "3febcd16-5a9e-4515-9ebb-2eb0ec8475e6",
         "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/PutVM3Min;213,Microsoft.Compute/PutVM30Min;1168",
         "x-ms-ratelimit-remaining-subscription-writes": "1147",
-        "x-ms-request-id": "6bce1159-cd6c-4dc6-b20e-e754bd27a8aa",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220606T114338Z:659e6d8b-b638-45f0-a66e-20cab61f5acc"
+        "x-ms-request-id": "b2f0075f-782e-41b0-a2b8-3aa303fb1e98",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220930T021633Z:3febcd16-5a9e-4515-9ebb-2eb0ec8475e6"
       },
       "ResponseBody": {
-        "name": "testAS-8860",
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-5208/providers/Microsoft.Compute/availabilitySets/testAS-8860",
+        "name": "testAS-310",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-6251/providers/Microsoft.Compute/availabilitySets/testAS-310",
         "type": "Microsoft.Compute/availabilitySets",
         "location": "eastus",
         "tags": {
@@ -166,26 +166,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-9dd68c95d37d565e477b466aa25ccf35-5610c7c40ba69290-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "61fc8699dd7091273f224cd93c5c708a",
+        "traceparent": "00-7ffb7f51acd2868d8e3befd17f597f5e-9ee9b2a12b5661bb-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.9; Microsoft Windows 10.0.22622)",
+        "x-ms-client-request-id": "ff22cb1e74617e781515c9b72a97850f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "78107",
+        "Content-Length": "86418",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 06 Jun 2022 11:43:38 GMT",
+        "Date": "Fri, 30 Sep 2022 02:16:33 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "52a2483a-e267-459a-8387-375723de960b",
+        "x-ms-correlation-request-id": "b8fd6d7b-18c9-4a7d-a99c-a3edae4a002b",
         "x-ms-ratelimit-remaining-tenant-reads": "11998",
-        "x-ms-request-id": "52a2483a-e267-459a-8387-375723de960b",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220606T114338Z:52a2483a-e267-459a-8387-375723de960b"
+        "x-ms-request-id": "b8fd6d7b-18c9-4a7d-a99c-a3edae4a002b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220930T021633Z:b8fd6d7b-18c9-4a7d-a99c-a3edae4a002b"
       },
       "ResponseBody": {
         "namespace": "Microsoft.Compute",
@@ -229,6 +229,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -239,14 +240,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -281,6 +283,14 @@
               {
                 "profileVersion": "2018-06-01-profile",
                 "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2020-09-01-hybrid",
+                "apiVersion": "2020-06-01"
               }
             ],
             "capabilities": "SupportsTags, SupportsLocation"
@@ -324,6 +334,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -334,14 +345,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -376,6 +388,14 @@
               {
                 "profileVersion": "2018-06-01-profile",
                 "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2020-09-01-hybrid",
+                "apiVersion": "2020-06-01"
               }
             ],
             "zoneMappings": [],
@@ -420,6 +440,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -430,14 +451,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -472,6 +494,14 @@
               {
                 "profileVersion": "2018-06-01-profile",
                 "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2020-09-01-hybrid",
+                "apiVersion": "2020-06-01"
               }
             ],
             "capabilities": "SupportsTags, SupportsLocation"
@@ -515,6 +545,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -525,14 +556,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -568,6 +600,14 @@
               {
                 "profileVersion": "2018-06-01-profile",
                 "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2020-09-01-hybrid",
+                "apiVersion": "2020-06-01"
               }
             ],
             "zoneMappings": [],
@@ -612,6 +652,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -622,14 +663,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -665,6 +707,14 @@
               {
                 "profileVersion": "2018-06-01-profile",
                 "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2020-09-01-hybrid",
+                "apiVersion": "2020-06-01"
               }
             ],
             "capabilities": "None"
@@ -708,6 +758,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -718,14 +769,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -761,6 +813,14 @@
               {
                 "profileVersion": "2018-06-01-profile",
                 "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2020-09-01-hybrid",
+                "apiVersion": "2020-06-01"
               }
             ],
             "capabilities": "None"
@@ -804,6 +864,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -814,14 +875,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -856,6 +918,14 @@
               {
                 "profileVersion": "2018-06-01-profile",
                 "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2020-09-01-hybrid",
+                "apiVersion": "2020-06-01"
               }
             ],
             "capabilities": "None"
@@ -899,6 +969,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -909,14 +980,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -953,6 +1025,14 @@
               {
                 "profileVersion": "2018-06-01-profile",
                 "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2020-09-01-hybrid",
+                "apiVersion": "2020-06-01"
               }
             ],
             "capabilities": "None"
@@ -996,6 +1076,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -1006,14 +1087,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -1050,6 +1132,14 @@
               {
                 "profileVersion": "2018-06-01-profile",
                 "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2020-09-01-hybrid",
+                "apiVersion": "2020-06-01"
               }
             ],
             "capabilities": "None"
@@ -1093,6 +1183,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -1103,14 +1194,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -1135,6 +1227,14 @@
               {
                 "profileVersion": "2018-06-01-profile",
                 "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2020-09-01-hybrid",
+                "apiVersion": "2020-06-01"
               }
             ],
             "capabilities": "None"
@@ -1143,6 +1243,7 @@
             "resourceType": "locations",
             "locations": [],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -1205,6 +1306,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -1215,14 +1317,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -1257,6 +1360,14 @@
               {
                 "profileVersion": "2018-06-01-profile",
                 "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2020-09-01-hybrid",
+                "apiVersion": "2020-06-01"
               }
             ],
             "capabilities": "None"
@@ -1300,6 +1411,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -1310,14 +1422,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -1351,6 +1464,14 @@
               {
                 "profileVersion": "2018-06-01-profile",
                 "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2020-09-01-hybrid",
+                "apiVersion": "2020-06-01"
               }
             ],
             "capabilities": "None"
@@ -1394,6 +1515,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -1404,14 +1526,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -1436,6 +1559,14 @@
               {
                 "profileVersion": "2018-06-01-profile",
                 "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2020-09-01-hybrid",
+                "apiVersion": "2020-06-01"
               }
             ],
             "capabilities": "None"
@@ -1479,6 +1610,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -1489,14 +1621,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -1530,6 +1663,14 @@
               {
                 "profileVersion": "2018-06-01-profile",
                 "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2020-09-01-hybrid",
+                "apiVersion": "2020-06-01"
               }
             ],
             "capabilities": "None"
@@ -1573,6 +1714,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -1583,14 +1725,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -1647,6 +1790,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -1657,14 +1801,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -1691,6 +1836,14 @@
               {
                 "profileVersion": "2018-06-01-profile",
                 "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2020-09-01-hybrid",
+                "apiVersion": "2020-06-01"
               }
             ],
             "capabilities": "None"
@@ -1734,6 +1887,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -1744,14 +1898,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -1778,6 +1933,14 @@
               {
                 "profileVersion": "2018-06-01-profile",
                 "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2020-09-01-hybrid",
+                "apiVersion": "2020-06-01"
               }
             ],
             "capabilities": "None"
@@ -1821,6 +1984,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -1831,14 +1995,16 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
+              "2022-03-03",
               "2022-03-01",
               "2022-01-03",
               "2021-11-01",
@@ -1874,6 +2040,14 @@
               {
                 "profileVersion": "2018-06-01-profile",
                 "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2020-09-01-hybrid",
+                "apiVersion": "2020-06-01"
               }
             ],
             "capabilities": "None"
@@ -1917,6 +2091,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -1927,14 +2102,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -1996,10 +2172,12 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -2013,9 +2191,194 @@
             "capabilities": "SupportsTags, SupportsLocation"
           },
           {
+            "resourceType": "virtualMachineScaleSets/applications",
+            "locations": [
+              "East US",
+              "East US 2",
+              "West US",
+              "Central US",
+              "North Central US",
+              "South Central US",
+              "North Europe",
+              "West Europe",
+              "East Asia",
+              "Southeast Asia",
+              "Japan East",
+              "Japan West",
+              "Australia East",
+              "Australia Southeast",
+              "Australia Central",
+              "Brazil South",
+              "South India",
+              "Central India",
+              "West India",
+              "Canada Central",
+              "Canada East",
+              "West US 2",
+              "West Central US",
+              "UK South",
+              "UK West",
+              "Korea Central",
+              "Korea South",
+              "France Central",
+              "South Africa North",
+              "UAE North",
+              "Switzerland North",
+              "Germany West Central",
+              "Norway East",
+              "Jio India West",
+              "West US 3",
+              "Sweden Central",
+              "Qatar Central",
+              "France South",
+              "Australia Central 2",
+              "South Africa West",
+              "UAE Central",
+              "Switzerland West",
+              "Germany North",
+              "Norway West",
+              "Brazil Southeast",
+              "Jio India Central",
+              "Sweden South",
+              "Israel Central",
+              "Poland Central",
+              "East US STG",
+              "South Central US STG",
+              "East US 2 EUAP",
+              "Central US EUAP"
+            ],
+            "apiVersions": [
+              "2022-08-01",
+              "2022-03-01",
+              "2021-11-01",
+              "2021-07-01"
+            ],
+            "defaultApiVersion": "2021-07-01",
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "virtualMachines/applications",
+            "locations": [
+              "East US",
+              "East US 2",
+              "West US",
+              "Central US",
+              "North Central US",
+              "South Central US",
+              "North Europe",
+              "West Europe",
+              "East Asia",
+              "Southeast Asia",
+              "Japan East",
+              "Japan West",
+              "Australia East",
+              "Australia Southeast",
+              "Australia Central",
+              "Brazil South",
+              "South India",
+              "Central India",
+              "West India",
+              "Canada Central",
+              "Canada East",
+              "West US 2",
+              "West Central US",
+              "UK South",
+              "UK West",
+              "Korea Central",
+              "Korea South",
+              "France Central",
+              "South Africa North",
+              "UAE North",
+              "Switzerland North",
+              "Germany West Central",
+              "Norway East",
+              "Jio India West",
+              "West US 3",
+              "Sweden Central",
+              "Qatar Central",
+              "France South",
+              "Australia Central 2",
+              "South Africa West",
+              "UAE Central",
+              "Switzerland West",
+              "Germany North",
+              "Norway West",
+              "Brazil Southeast",
+              "Jio India Central",
+              "Sweden South",
+              "Israel Central",
+              "Poland Central",
+              "East US STG",
+              "South Central US STG",
+              "East US 2 EUAP",
+              "Central US EUAP"
+            ],
+            "apiVersions": [
+              "2022-08-01",
+              "2022-03-01",
+              "2021-11-01",
+              "2021-07-01"
+            ],
+            "defaultApiVersion": "2021-07-01",
+            "capabilities": "SupportsTags, SupportsLocation"
+          },
+          {
             "resourceType": "locations/edgeZones",
             "locations": [],
             "apiVersions": [
+              "2022-08-01",
+              "2022-03-01",
+              "2021-11-01",
+              "2021-07-01",
+              "2021-04-01",
+              "2021-03-01",
+              "2020-12-01"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/edgeZones/vmimages",
+            "locations": [
+              "East US",
+              "East US 2",
+              "West US",
+              "Central US",
+              "North Central US",
+              "South Central US",
+              "North Europe",
+              "West Europe",
+              "East Asia",
+              "Southeast Asia",
+              "Japan East",
+              "Japan West",
+              "Australia East",
+              "Australia Southeast",
+              "Australia Central",
+              "Brazil South",
+              "South India",
+              "Central India",
+              "West India",
+              "Canada Central",
+              "Canada East",
+              "West US 2",
+              "West Central US",
+              "UK South",
+              "UK West",
+              "Korea Central",
+              "Korea South",
+              "France Central",
+              "South Africa North",
+              "UAE North",
+              "Switzerland North",
+              "Germany West Central",
+              "Norway East",
+              "Jio India West",
+              "West US 3",
+              "Sweden Central",
+              "Qatar Central"
+            ],
+            "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -2064,6 +2427,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -2074,14 +2438,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -2130,6 +2495,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -2140,14 +2506,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -2206,6 +2573,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -2216,14 +2584,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -2281,6 +2650,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -2291,14 +2661,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -2356,6 +2727,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -2366,14 +2738,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -2425,6 +2798,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "East US 2 EUAP",
               "Central US EUAP",
               "France South",
@@ -2437,12 +2811,13 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -2494,6 +2869,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "East US 2 EUAP",
               "Central US EUAP",
               "France South",
@@ -2506,12 +2882,13 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -2577,6 +2954,7 @@
               "Sweden South",
               "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG"
             ],
@@ -2624,6 +3002,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -2634,14 +3013,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -2692,6 +3072,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -2702,14 +3083,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -2760,6 +3142,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -2770,14 +3153,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01"
@@ -2824,6 +3208,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -2834,14 +3219,16 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
+              "2022-03-03",
               "2022-03-01",
               "2022-01-03",
               "2021-11-01",
@@ -2877,6 +3264,14 @@
               {
                 "profileVersion": "2018-06-01-profile",
                 "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2020-09-01-hybrid",
+                "apiVersion": "2020-06-01"
               }
             ],
             "capabilities": "None"
@@ -2920,6 +3315,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -2930,14 +3326,16 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
+              "2022-03-03",
               "2022-03-01",
               "2022-01-03",
               "2021-11-01",
@@ -2973,6 +3371,14 @@
               {
                 "profileVersion": "2018-06-01-profile",
                 "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2019-03-01-hybrid",
+                "apiVersion": "2017-12-01"
+              },
+              {
+                "profileVersion": "2020-09-01-hybrid",
+                "apiVersion": "2020-06-01"
               }
             ],
             "capabilities": "None"
@@ -3147,6 +3553,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -3157,14 +3564,16 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-03",
+              "2022-03-03",
               "2022-01-03",
               "2021-10-01",
               "2021-07-01",
@@ -3217,6 +3626,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -3227,14 +3637,16 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-03",
+              "2022-03-03",
               "2022-01-03",
               "2021-10-01",
               "2021-07-01",
@@ -3287,6 +3699,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -3297,14 +3710,16 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-03",
+              "2022-03-03",
               "2022-01-03",
               "2021-10-01",
               "2021-07-01",
@@ -3357,6 +3772,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -3367,14 +3783,16 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-03",
+              "2022-03-03",
               "2022-01-03",
               "2021-10-01",
               "2021-07-01",
@@ -3427,6 +3845,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -3437,14 +3856,16 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-03",
+              "2022-03-03",
               "2022-01-03",
               "2021-10-01",
               "2021-07-01",
@@ -3497,6 +3918,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -3507,14 +3929,16 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-03",
+              "2022-03-03",
               "2022-01-03",
               "2021-10-01",
               "2021-07-01",
@@ -3566,6 +3990,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -3576,14 +4001,16 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-03",
+              "2022-03-03",
               "2022-01-03",
               "2021-10-01",
               "2021-07-01",
@@ -3612,8 +4039,8 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "Southeast Asia",
@@ -3650,9 +4077,12 @@
               "Norway East",
               "Jio India West",
               "West US 3",
-              "Sweden Central"
+              "Sweden Central",
+              "Qatar Central"
             ],
             "apiVersions": [
+              "2022-08-03",
+              "2022-03-03",
               "2022-01-03",
               "2021-10-01",
               "2021-07-01",
@@ -3679,8 +4109,8 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "Southeast Asia",
@@ -3717,9 +4147,12 @@
               "Norway East",
               "Jio India West",
               "West US 3",
-              "Sweden Central"
+              "Sweden Central",
+              "Qatar Central"
             ],
             "apiVersions": [
+              "2022-08-03",
+              "2022-03-03",
               "2022-01-03",
               "2021-10-01",
               "2021-07-01",
@@ -3728,6 +4161,69 @@
               "2019-12-01"
             ],
             "defaultApiVersion": "2019-12-01",
+            "capabilities": "SupportsTags, SupportsLocation"
+          },
+          {
+            "resourceType": "galleries/serviceArtifacts",
+            "locations": [
+              "West US",
+              "East US 2 EUAP",
+              "Central US EUAP",
+              "France South",
+              "Australia Central 2",
+              "South Africa West",
+              "UAE Central",
+              "Switzerland West",
+              "Germany North",
+              "Norway West",
+              "Brazil Southeast",
+              "Jio India Central",
+              "Sweden South",
+              "Israel Central",
+              "Poland Central",
+              "East US STG",
+              "South Central US STG",
+              "West Central US",
+              "South Central US",
+              "East US 2",
+              "Southeast Asia",
+              "West Europe",
+              "East US",
+              "Canada Central",
+              "North Europe",
+              "North Central US",
+              "Brazil South",
+              "UK West",
+              "West India",
+              "East Asia",
+              "Australia East",
+              "Japan East",
+              "Korea South",
+              "West US 2",
+              "Canada East",
+              "UK South",
+              "Central India",
+              "South India",
+              "Australia Southeast",
+              "Japan West",
+              "Korea Central",
+              "France Central",
+              "Central US",
+              "Australia Central",
+              "South Africa North",
+              "UAE North",
+              "Switzerland North",
+              "Germany West Central",
+              "Norway East",
+              "Jio India West",
+              "West US 3",
+              "Sweden Central",
+              "Qatar Central"
+            ],
+            "apiVersions": [
+              "2022-08-03"
+            ],
+            "defaultApiVersion": "2022-08-03",
             "capabilities": "SupportsTags, SupportsLocation"
           },
           {
@@ -3769,6 +4265,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -3779,14 +4276,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-07-02",
               "2022-03-02",
               "2021-12-01",
               "2021-08-01",
@@ -3857,6 +4355,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -3867,14 +4366,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-07-02",
               "2022-03-02",
               "2021-12-01",
               "2021-08-01",
@@ -3944,6 +4444,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -3954,14 +4455,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-07-02",
               "2022-03-02",
               "2021-12-01",
               "2021-08-01",
@@ -4030,6 +4532,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "East US 2 EUAP",
               "Central US EUAP",
               "France South",
@@ -4042,12 +4545,13 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-07-02",
               "2022-03-02",
               "2021-12-01",
               "2021-08-01",
@@ -4101,6 +4605,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "East US 2 EUAP",
               "Central US EUAP",
               "France South",
@@ -4113,12 +4618,13 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-07-02",
               "2022-03-02",
               "2021-12-01",
               "2021-08-01",
@@ -4172,6 +4678,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -4182,12 +4689,13 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-07-02",
               "2022-03-02",
               "2021-12-01",
               "2021-08-01",
@@ -4237,6 +4745,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "East US 2 EUAP",
               "Central US EUAP",
               "France South",
@@ -4249,8 +4758,8 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG"
             ],
@@ -4311,6 +4820,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -4321,14 +4831,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-04-04",
               "2021-03-01",
               "2020-10-01-preview"
             ],
@@ -4375,6 +4886,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "East US 2 EUAP",
               "Central US EUAP",
               "France South",
@@ -4387,12 +4899,13 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-04-04",
               "2021-03-01",
               "2020-10-01-preview"
             ],
@@ -4438,6 +4951,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "East US 2 EUAP",
               "Central US EUAP",
               "France South",
@@ -4450,12 +4964,13 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-04-04",
               "2021-03-01",
               "2020-10-01-preview"
             ],
@@ -4501,6 +5016,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "East US 2 EUAP",
               "Central US EUAP",
               "France South",
@@ -4513,12 +5029,13 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-04-04",
               "2021-03-01",
               "2020-10-01-preview"
             ],
@@ -4563,6 +5080,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "East US 2 EUAP",
               "Central US EUAP",
               "France South",
@@ -4575,12 +5093,13 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-04-04",
               "2021-03-01"
             ],
             "defaultApiVersion": "2021-03-01",
@@ -4625,6 +5144,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "East US 2 EUAP",
               "Central US EUAP",
               "France South",
@@ -4637,12 +5157,13 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-04-04",
               "2021-03-01"
             ],
             "defaultApiVersion": "2021-03-01",
@@ -4687,6 +5208,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "East US 2 EUAP",
               "Central US EUAP",
               "France South",
@@ -4699,8 +5221,8 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG"
             ],
@@ -4749,6 +5271,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "East US 2 EUAP",
               "Central US EUAP",
               "France South",
@@ -4761,8 +5284,8 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG"
             ],
@@ -4811,6 +5334,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "East US 2 EUAP",
               "Central US EUAP",
               "France South",
@@ -4823,8 +5347,8 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG"
             ],
@@ -4873,6 +5397,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -4883,14 +5408,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -5083,6 +5609,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -5093,14 +5620,15 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG",
               "East US 2 EUAP",
               "Central US EUAP"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -5159,6 +5687,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -5169,12 +5698,13 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -5232,6 +5762,7 @@
               "Jio India West",
               "West US 3",
               "Sweden Central",
+              "Qatar Central",
               "France South",
               "Australia Central 2",
               "South Africa West",
@@ -5242,12 +5773,13 @@
               "Brazil Southeast",
               "Jio India Central",
               "Sweden South",
-              "Qatar Central",
               "Israel Central",
+              "Poland Central",
               "East US STG",
               "South Central US STG"
             ],
             "apiVersions": [
+              "2022-08-01",
               "2022-03-01",
               "2021-11-01",
               "2021-07-01",
@@ -5269,7 +5801,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1710293033",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1454515612",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
