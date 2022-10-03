@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation
             CorrelationId = correlationId;
             OperationContext = operationContext;
             ResultInformation = resultInformation;
-            ReasonCodeName = new ReasonCodeName(resultInformation.SubCode.ToString());
+            ReasonCodeName = new ReasonCode(resultInformation.SubCode.ToString());
         }
 
         /// <summary>

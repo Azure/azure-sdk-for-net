@@ -31,7 +31,7 @@ namespace Azure.Communication.CallAutomation
             ResultInformation = resultInformation;
             RecognitionType = recognitionType;
             CollectTonesResult = collectTonesResult;
-            ReasonCodeName = new ReasonCodeName(resultInformation.SubCode.ToString());
+            ReasonCodeName = new ReasonCode(resultInformation.SubCode.ToString());
         }
 
         /// <summary>

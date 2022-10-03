@@ -11,6 +11,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Reason code name.
         /// </summary>
-        public ReasonCodeName ReasonCodeName { get; internal set; }
+        public ReasonCode ReasonCodeName { get; internal set; }
     }
 }
