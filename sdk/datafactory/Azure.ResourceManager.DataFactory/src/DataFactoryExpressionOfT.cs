@@ -109,6 +109,12 @@ namespace Azure.ResourceManager.DataFactory
             return false;
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="value"></param>
+        public static implicit operator DataFactoryExpression<T>(T value) => new DataFactoryExpression<T>(value);
+
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             if (HasValue)
