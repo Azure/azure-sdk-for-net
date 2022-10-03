@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -166,31 +165,6 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             Assert.AreEqual(nginxDeployment2.Data.Tags["Counter"], "1");
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment.AddTagAsync(null, "1")).Value);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment.AddTagAsync("Counter", null)).Value);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task SetTags()
-        {
-            string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
-            NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
-            NginxDeploymentResource nginxDeployment1 = await nginxDeployment.SetTagsAsync(new Dictionary<string, string> { { "Counter", "1" } });
-
-            Assert.AreEqual(nginxDeployment1.Data.Tags["Counter"], "1");
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment1.SetTagsAsync(null)).Value);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task RemoveTag()
-        {
-            string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
-            NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
-            NginxDeploymentResource nginxDeployment1 = await nginxDeployment.AddTagAsync("Counter", "1");
-            NginxDeploymentResource nginxDeployment2 = await nginxDeployment1.RemoveTagAsync("Counter");
-
-            Assert.Null(nginxDeployment2.Data.Tags["Counter"]);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment2.RemoveTagAsync(null)).Value);
         }
     }
 }
