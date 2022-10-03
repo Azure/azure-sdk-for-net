@@ -432,7 +432,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
                 operationContext: "operationContext",
-                resultInformation: new ResultInformation(code: 200, subCode: 200, message: "Action completed successfully"));
+                resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"));
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.PlayCompleted");
@@ -441,6 +441,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("correlationId", playCompleted.CorrelationId);
                 Assert.AreEqual("serverCallId", playCompleted.ServerCallId);
                 Assert.AreEqual(200, playCompleted.ResultInformation?.Code);
+                Assert.AreEqual(ReasonCode.CompletedSuccessfully, playCompleted.ReasonCode);
             }
             else
             {
@@ -465,6 +466,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("correlationId", playFailed.CorrelationId);
                 Assert.AreEqual("serverCallId", playFailed.ServerCallId);
                 Assert.AreEqual(400, playFailed.ResultInformation?.Code);
+                Assert.AreEqual(ReasonCode.PlayDownloadFailed, playFailed.ReasonCode);
             }
             else
             {
@@ -498,6 +500,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual(200, recognizeCompleted.ResultInformation?.Code);
                 Assert.NotZero(recognizeCompleted.CollectTonesResult.Tones.Count());
                 Assert.AreEqual(DtmfTone.Five, recognizeCompleted.CollectTonesResult.Tones.First());
+                Assert.AreEqual(ReasonCode.RecognizeMaxDigitsReceived, recognizeCompleted.ReasonCode);
             }
             else
             {
@@ -522,6 +525,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("correlationId", recognizeFailed.CorrelationId);
                 Assert.AreEqual("serverCallId", recognizeFailed.ServerCallId);
                 Assert.AreEqual(400, recognizeFailed.ResultInformation?.Code);
+                Assert.AreEqual(ReasonCode.RecognizeInitialSilenceTimedOut, recognizeFailed.ReasonCode);
             }
             else
             {
