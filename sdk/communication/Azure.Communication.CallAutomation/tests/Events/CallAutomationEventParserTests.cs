@@ -441,7 +441,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("correlationId", playCompleted.CorrelationId);
                 Assert.AreEqual("serverCallId", playCompleted.ServerCallId);
                 Assert.AreEqual(200, playCompleted.ResultInformation?.Code);
-                Assert.AreEqual(ReasonCodeName.CompletedSuccessfully, playCompleted.ReasonCodeName);
+                Assert.AreEqual(ReasonCode.CompletedSuccessfully, playCompleted.ReasonCode);
             }
             else
             {
@@ -466,7 +466,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("correlationId", playFailed.CorrelationId);
                 Assert.AreEqual("serverCallId", playFailed.ServerCallId);
                 Assert.AreEqual(400, playFailed.ResultInformation?.Code);
-                Assert.AreEqual(ReasonCodeName.PlayDownloadFailed, playFailed.ReasonCodeName);
+                Assert.AreEqual(ReasonCode.PlayDownloadFailed, playFailed.ReasonCode);
             }
             else
             {
@@ -522,7 +522,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual(200, recognizeCompleted.ResultInformation?.Code);
                 Assert.NotZero(recognizeCompleted.CollectTonesResult.Tones.Count());
                 Assert.AreEqual(DtmfTone.Five, recognizeCompleted.CollectTonesResult.Tones.First());
-                Assert.AreEqual(ReasonCodeName.RecognizeMaxDigitsReceived, recognizeCompleted.ReasonCodeName);
+                Assert.AreEqual(ReasonCode.RecognizeMaxDigitsReceived, recognizeCompleted.ReasonCode);
             }
             else
             {
@@ -547,7 +547,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("correlationId", recognizeFailed.CorrelationId);
                 Assert.AreEqual("serverCallId", recognizeFailed.ServerCallId);
                 Assert.AreEqual(400, recognizeFailed.ResultInformation?.Code);
-                Assert.AreEqual(ReasonCodeName.RecognizeInitialSilenceTimedOut, recognizeFailed.ReasonCodeName);
+                Assert.AreEqual(ReasonCode.RecognizeInitialSilenceTimedOut, recognizeFailed.ReasonCode);
             }
             else
             {

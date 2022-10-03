@@ -9,13 +9,13 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Failure Reason for incoming webhook events.
     /// </summary>
-    public readonly partial struct ReasonCodeName : IEquatable<ReasonCodeName>
+    public readonly partial struct ReasonCode : IEquatable<ReasonCode>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ReasonCodeName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReasonCode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ReasonCodeName(string value)
+        public ReasonCode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -34,39 +34,39 @@ namespace Azure.Communication.CallAutomation
         private const string UnspecifiedErrorValue = "9999";
 
         /// <summary> Action failed, initial silence timeout reached. </summary>
-        public static ReasonCodeName RecognizeInitialSilenceTimedOut { get; } = new ReasonCodeName(RecognizeInitialSilenceTimedOutValue);
+        public static ReasonCode RecognizeInitialSilenceTimedOut { get; } = new ReasonCode(RecognizeInitialSilenceTimedOutValue);
         /// <summary> Action failed, inter-digit silence timeout reached. </summary>
-        public static ReasonCodeName RecognizeInterDigitTimedOut { get; } = new ReasonCodeName(RecognizeInterDigitTimedOutValue);
+        public static ReasonCode RecognizeInterDigitTimedOut { get; } = new ReasonCode(RecognizeInterDigitTimedOutValue);
         /// <summary> Action failed, encountered failure while trying to play the prompt. </summary>
-        public static ReasonCodeName RecognizePlayPromptFailed { get; } = new ReasonCodeName(RecognizePlayPromptFailedValue);
+        public static ReasonCode RecognizePlayPromptFailed { get; } = new ReasonCode(RecognizePlayPromptFailedValue);
 
         /// <summary> Action completed, max digits received. </summary>
-        public static ReasonCodeName RecognizeMaxDigitsReceived { get; } = new ReasonCodeName(RecognizeMaxDigitsReceivedValue);
+        public static ReasonCode RecognizeMaxDigitsReceived { get; } = new ReasonCode(RecognizeMaxDigitsReceivedValue);
         /// <summary> Action completed as stop tone was detected. </summary>
-        public static ReasonCodeName RecognizeStopToneDetected { get; } = new ReasonCodeName(RecognizeStopToneDetectedValue);
+        public static ReasonCode RecognizeStopToneDetected { get; } = new ReasonCode(RecognizeStopToneDetectedValue);
 
         /// <summary> Action failed, file could not be downloaded. </summary>
-        public static ReasonCodeName PlayDownloadFailed { get; } = new ReasonCodeName(PlayDownloadFailedValue);
+        public static ReasonCode PlayDownloadFailed { get; } = new ReasonCode(PlayDownloadFailedValue);
         /// <summary> Action failed, file could not be downloaded. </summary>
-        public static ReasonCodeName PlayInvalidFileFormat { get; } = new ReasonCodeName(PlayInvalidFileFormatValue);
+        public static ReasonCode PlayInvalidFileFormat { get; } = new ReasonCode(PlayInvalidFileFormatValue);
 
         /// <summary> Action completed successfully. </summary>
-        public static ReasonCodeName CompletedSuccessfully { get; } = new ReasonCodeName (CompletedSuccessfullyValue);
+        public static ReasonCode CompletedSuccessfully { get; } = new ReasonCode (CompletedSuccessfullyValue);
         /// <summary> Unknown internal server error. </summary>
-        public static ReasonCodeName UnspecifiedError { get; } = new ReasonCodeName(UnspecifiedErrorValue);
+        public static ReasonCode UnspecifiedError { get; } = new ReasonCode(UnspecifiedErrorValue);
 
-        /// <summary> Determines if two <see cref="ReasonCodeName"/> values are the same. </summary>
-        public static bool operator ==(ReasonCodeName left, ReasonCodeName right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ReasonCodeName"/> values are not the same. </summary>
-        public static bool operator !=(ReasonCodeName left, ReasonCodeName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ReasonCodeName"/>. </summary>
-        public static implicit operator ReasonCodeName(string value) => new ReasonCodeName(value);
+        /// <summary> Determines if two <see cref="ReasonCode"/> values are the same. </summary>
+        public static bool operator ==(ReasonCode left, ReasonCode right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ReasonCode"/> values are not the same. </summary>
+        public static bool operator !=(ReasonCode left, ReasonCode right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="ReasonCode"/>. </summary>
+        public static implicit operator ReasonCode(string value) => new ReasonCode(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ReasonCodeName other && Equals(other);
+        public override bool Equals(object obj) => obj is ReasonCode other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(ReasonCodeName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ReasonCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

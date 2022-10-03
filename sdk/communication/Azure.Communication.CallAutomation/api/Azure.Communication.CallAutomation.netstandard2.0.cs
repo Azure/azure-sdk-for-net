@@ -92,7 +92,7 @@ namespace Azure.Communication.CallAutomation
     public abstract partial class CallAutomationEventWithReasonCodeName : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         protected CallAutomationEventWithReasonCodeName() { }
-        public Azure.Communication.CallAutomation.ReasonCodeName ReasonCodeName { get { throw null; } }
+        public Azure.Communication.CallAutomation.ReasonCode ReasonCode { get { throw null; } }
     }
     public static partial class CallAutomationModelFactory
     {
@@ -534,28 +534,28 @@ namespace Azure.Communication.CallAutomation
         public string PlaySourceId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ReasonCodeName : System.IEquatable<Azure.Communication.CallAutomation.ReasonCodeName>
+    public readonly partial struct ReasonCode : System.IEquatable<Azure.Communication.CallAutomation.ReasonCode>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ReasonCodeName(string value) { throw null; }
-        public static Azure.Communication.CallAutomation.ReasonCodeName CompletedSuccessfully { get { throw null; } }
-        public static Azure.Communication.CallAutomation.ReasonCodeName PlayDownloadFailed { get { throw null; } }
-        public static Azure.Communication.CallAutomation.ReasonCodeName PlayInvalidFileFormat { get { throw null; } }
-        public static Azure.Communication.CallAutomation.ReasonCodeName RecognizeInitialSilenceTimedOut { get { throw null; } }
-        public static Azure.Communication.CallAutomation.ReasonCodeName RecognizeInterDigitTimedOut { get { throw null; } }
-        public static Azure.Communication.CallAutomation.ReasonCodeName RecognizeMaxDigitsReceived { get { throw null; } }
-        public static Azure.Communication.CallAutomation.ReasonCodeName RecognizePlayPromptFailed { get { throw null; } }
-        public static Azure.Communication.CallAutomation.ReasonCodeName RecognizeStopToneDetected { get { throw null; } }
-        public static Azure.Communication.CallAutomation.ReasonCodeName UnspecifiedError { get { throw null; } }
-        public bool Equals(Azure.Communication.CallAutomation.ReasonCodeName other) { throw null; }
+        public ReasonCode(string value) { throw null; }
+        public static Azure.Communication.CallAutomation.ReasonCode CompletedSuccessfully { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ReasonCode PlayDownloadFailed { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ReasonCode PlayInvalidFileFormat { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ReasonCode RecognizeInitialSilenceTimedOut { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ReasonCode RecognizeInterDigitTimedOut { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ReasonCode RecognizeMaxDigitsReceived { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ReasonCode RecognizePlayPromptFailed { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ReasonCode RecognizeStopToneDetected { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ReasonCode UnspecifiedError { get { throw null; } }
+        public bool Equals(Azure.Communication.CallAutomation.ReasonCode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.CallAutomation.ReasonCodeName left, Azure.Communication.CallAutomation.ReasonCodeName right) { throw null; }
-        public static implicit operator Azure.Communication.CallAutomation.ReasonCodeName (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.CallAutomation.ReasonCodeName left, Azure.Communication.CallAutomation.ReasonCodeName right) { throw null; }
+        public static bool operator ==(Azure.Communication.CallAutomation.ReasonCode left, Azure.Communication.CallAutomation.ReasonCode right) { throw null; }
+        public static implicit operator Azure.Communication.CallAutomation.ReasonCode (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallAutomation.ReasonCode left, Azure.Communication.CallAutomation.ReasonCode right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class RecognizeCanceled : Azure.Communication.CallAutomation.CallAutomationEventBase
