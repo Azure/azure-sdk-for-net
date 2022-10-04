@@ -18,6 +18,7 @@ using Azure.Storage.Test;
 using System.IO;
 using NUnit.Framework;
 using Azure.Core;
+using System.Threading;
 
 namespace Azure.Storage.Blobs.DataMovement.Tests.Shared
 {
@@ -481,5 +482,82 @@ namespace Azure.Storage.Blobs.DataMovement.Tests.Shared
 
         public BlobClientOptions GetOptions(bool parallelRange = false)
             => BlobsClientBuilder.GetOptions(parallelRange);
+
+        internal static void CompareSourceAndDestinationFiles(string sourceFile, string destinationFile)
+        {
+            FileStream sourceStream;
+            FileStream destinationStream;
+
+            // Open the two files.
+            using (sourceStream = new FileStream(sourceFile, FileMode.Open))
+            {
+                using (destinationStream = new FileStream(destinationFile, FileMode.Open))
+                {
+                    // Read and compare a byte from each file until either a
+                    // non-matching set of bytes is found or until the end of
+                    // sourceFile is reached.
+                    TestHelper.AssertSequenceEqual(sourceStream.AsBytes(), destinationStream.AsBytes());
+                }
+            }
+        }
+
+        internal class CheckBlobCompletionProgress : IProgress<long>
+        {
+            private long _expectedSize { get; }
+            private AutoResetEvent _completeEvent { get; }
+            public CheckBlobCompletionProgress(long expectedSize, AutoResetEvent completeEvent)
+            {
+                _expectedSize = expectedSize;
+                _completeEvent = completeEvent;
+            }
+            public void Report(long value)
+            {
+                if (value == _expectedSize)
+                {
+                    //Console.WriteLine("Completed!");
+                    _completeEvent.Set();
+                }
+                else if (value >= _expectedSize)
+                {
+                    // Error!!
+                    Assert.Fail();
+                    _completeEvent.Set();
+                }
+            }
+        };
+
+        /// <summary>
+        /// Verifies Upload blob contents
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="blob"></param>
+        /// <returns></returns>
+        internal static async Task DownloadAndAssertAsync(Stream stream, BlobBaseClient blob)
+        {
+            var actual = new byte[Constants.DefaultBufferSize];
+            using var actualStream = new MemoryStream(actual);
+
+            // reset the stream before validating
+            stream.Seek(0, SeekOrigin.Begin);
+            long size = stream.Length;
+            // we are testing Upload, not download: so we download in partitions to avoid the default timeout
+            for (var i = 0; i < size; i += Constants.DefaultBufferSize * 5 / 2)
+            {
+                var startIndex = i;
+                var count = Math.Min(Constants.DefaultBufferSize, (int)(size - startIndex));
+
+                Response<BlobDownloadInfo> download = await blob.DownloadAsync(new HttpRange(startIndex, count));
+                actualStream.Seek(0, SeekOrigin.Begin);
+                await download.Value.Content.CopyToAsync(actualStream);
+
+                var buffer = new byte[count];
+                stream.Seek(i, SeekOrigin.Begin);
+                await stream.ReadAsync(buffer, 0, count);
+
+                TestHelper.AssertSequenceEqual(
+                    buffer,
+                    actual.AsSpan(0, count).ToArray());
+            }
+        }
     }
 }

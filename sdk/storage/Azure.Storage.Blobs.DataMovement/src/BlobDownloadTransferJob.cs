@@ -422,18 +422,11 @@ namespace Azure.Storage.Blobs.DataMovement
                     }
                 }
             }
-            // Expand Exception Handling
+            // TODO: Expand Exception Handling
             catch (Exception ex)
             {
                 // The file either does not exist any more, got moved, or renamed.
-                Options?.GetDownloadFailed()?.Invoke(new BlobDownloadFailedEventArgs(
-                    TransferId,
-                    SourceBlobClient,
-                    DestinationLocalPath,
-                    ex,
-                    false,
-                    CancellationTokenSource.Token));
-                await OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
+                await InvokeDownloadFailed(ex).ConfigureAwait(false);
             }
         }
 
@@ -491,14 +484,7 @@ namespace Azure.Storage.Blobs.DataMovement
             }
             catch (RequestFailedException ex)
             {
-                Options?.GetDownloadFailed()?.Invoke(new BlobDownloadFailedEventArgs(
-                    TransferId,
-                    SourceBlobClient,
-                    DestinationLocalPath,
-                    ex,
-                    false,
-                    CancellationTokenSource.Token));
-                await OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
+                await InvokeDownloadFailed(ex).ConfigureAwait(false);
             }
             catch (IOException ex)
             {
@@ -557,15 +543,7 @@ namespace Azure.Storage.Blobs.DataMovement
             }
             catch (Exception ex)
             {
-                Options?.GetDownloadFailed()?.Invoke(new BlobDownloadFailedEventArgs(
-                    TransferId,
-                    SourceBlobClient,
-                    DestinationLocalPath,
-                    new Exception($"Failed to Write to File: {DestinationLocalPath}", ex),
-                    false,
-                    CancellationTokenSource.Token));
-                TriggerJobCancellation();
-                await OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
+                await InvokeDownloadFailed(ex).ConfigureAwait(false);
             }
         }
 
@@ -621,14 +599,7 @@ namespace Azure.Storage.Blobs.DataMovement
             }
             catch (Exception ex)
             {
-                Options?.GetDownloadFailed()?.Invoke(new BlobDownloadFailedEventArgs(
-                                TransferId,
-                                SourceBlobClient,
-                                DestinationLocalPath,
-                                ex,
-                                false,
-                                CancellationTokenSource.Token));
-                await OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
+                await InvokeDownloadFailed(ex).ConfigureAwait(false);
             }
         }
 
@@ -651,22 +622,7 @@ namespace Azure.Storage.Blobs.DataMovement
             {
                 CopyToDestinationFile = (result) => job.CopyToStreamInternal(result),
                 CopyToChunkFile = (chunkFilePath, source) => job.WriteChunkToTempFile(chunkFilePath, source),
-                InvokeFailedHandler = (ex) =>
-                {
-                    job.Options?.GetDownloadFailed()?.Invoke(
-                    new BlobDownloadFailedEventArgs(
-                    job.TransferId,
-                    job.SourceBlobClient,
-                    job.DestinationLocalPath,
-                    ex,
-                    false,
-                    job.CancellationTokenSource.Token));
-                    // Trigger job cancellation if the failed handler is enabled
-                    job.TriggerJobCancellation();
-                },
-                UpdateTransferStatus = (status) => job.QueueChunkTask(
-                    async () =>
-                    await job.OnTransferStatusChanged(status, true).ConfigureAwait(false)),
+                InvokeFailedHandler = async (ex) => await job.InvokeDownloadFailed(ex).ConfigureAwait(false),
                 QueueCompleteFileDownload = () => job.QueueChunkTask(
                     async () =>
                     await job.CompleteFileDownload().ConfigureAwait(false))
@@ -695,6 +651,21 @@ namespace Azure.Storage.Blobs.DataMovement
                 list.Add(new HttpRange(offset, Math.Min(totalLength - offset, rangeSize)));
             }
             return list;
+        }
+
+        private async Task InvokeDownloadFailed(Exception ex)
+        {
+            Options?.GetDownloadFailed()?.Invoke(
+                    new BlobDownloadFailedEventArgs(
+                    TransferId,
+                    SourceBlobClient,
+                    DestinationLocalPath,
+                    ex,
+                    false,
+                    CancellationTokenSource.Token));
+            // Trigger job cancellation if the failed handler is enabled
+            TriggerJobCancellation();
+            await OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
         }
         #endregion PartitionedDownloader
     }

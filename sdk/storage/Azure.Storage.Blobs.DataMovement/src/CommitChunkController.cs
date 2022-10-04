@@ -2,73 +2,68 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net.Http.Headers;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+using System.Collections.Generic;
+using System.Text;
 using Azure.Core;
 using Azure.Storage.Blobs.DataMovement.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Azure.Storage.Blobs.DataMovement
 {
-    internal class CommitBlockEventHandler
+    internal class CommitChunkController
     {
         #region Delegate Definitions
         public delegate Task QueueCommitBlockTaskInternal();
         public delegate Task UpdateTransferStatusInternal(StorageTransferStatus status);
-        public delegate void TriggerCancellationInternal();
+        public delegate void ReportProgressInBytes(long bytesWritten);
+        public delegate Task InvokeFailedEventHandlerInternal(Exception ex);
         #endregion Delegate Definitions
 
         private readonly QueueCommitBlockTaskInternal _queueCommitBlockTask;
-        private readonly TriggerCancellationInternal _triggerCancellationTask;
+        private readonly ReportProgressInBytes _reportProgressInBytes;
         private readonly UpdateTransferStatusInternal _updateTransferStatus;
+        private readonly InvokeFailedEventHandlerInternal _invokeFailedEventHandler;
 
         public struct Behaviors
         {
             public QueueCommitBlockTaskInternal QueueCommitBlockTask { get; set; }
-            public TriggerCancellationInternal TriggerCancellationTask { get; set; }
+            public ReportProgressInBytes ReportProgressInBytes { get; set; }
             public UpdateTransferStatusInternal UpdateTransferStatus { get; set; }
+            public InvokeFailedEventHandlerInternal InvokeFailedHandler { get; set; }
         }
 
         private event SyncAsyncEventHandler<BlobStageChunkEventArgs> _commitBlockHandler;
         internal SyncAsyncEventHandler<BlobStageChunkEventArgs> GetCommitBlockHandler() => _commitBlockHandler;
 
-        private readonly BlobSingleUploadOptions _uploadOptions;
-
         private long _bytesTransferred;
         private long _expectedLength;
-        private readonly Uri _sourcePath;
-        private readonly BlockBlobClient _destinationClient;
-        private CancellationToken _cancellationToken;
 
-        public CommitBlockEventHandler(
+        public CommitChunkController(
             long expectedLength,
-            Uri sourcePath,
-            BlockBlobClient destinationClient, // TODO: change this to just using the Uri
-            Behaviors behaviors,
-            BlobSingleUploadOptions uploadOptions,
-            CancellationToken cancellationToken)
+            Behaviors behaviors)
         {
             if (expectedLength <= 0)
             {
                 throw new ArgumentException("Cannot initiate Commit Block List function with File that has a negative or zero length");
             }
-            Argument.AssertNotNull(sourcePath, nameof(sourcePath));
-            Argument.AssertNotNull(destinationClient, nameof(destinationClient));
             Argument.AssertNotNull(behaviors, nameof(behaviors));
-            Argument.AssertNotNull(uploadOptions, nameof(uploadOptions));
+
+            _queueCommitBlockTask = behaviors.QueueCommitBlockTask
+                ?? throw Errors.ArgumentNull(nameof(behaviors.QueueCommitBlockTask));
+            _reportProgressInBytes = behaviors.ReportProgressInBytes
+                ?? throw Errors.ArgumentNull(nameof(behaviors.ReportProgressInBytes));
+            _invokeFailedEventHandler = behaviors.InvokeFailedHandler
+                ?? throw Errors.ArgumentNull(nameof(behaviors.InvokeFailedHandler));
+            _updateTransferStatus = behaviors.UpdateTransferStatus
+                ?? throw Errors.ArgumentNull(nameof(behaviors.UpdateTransferStatus));
 
             // Set values
             _expectedLength = expectedLength;
-            _sourcePath = sourcePath;
-            _destinationClient = destinationClient;
             _queueCommitBlockTask = behaviors.QueueCommitBlockTask;
-            _triggerCancellationTask = behaviors.TriggerCancellationTask;
             _updateTransferStatus = behaviors.UpdateTransferStatus;
-            _uploadOptions = uploadOptions;
-            _cancellationToken = cancellationToken;
 
             // Set bytes transferred to 0
             _bytesTransferred = 0;
@@ -92,32 +87,16 @@ namespace Azure.Storage.Blobs.DataMovement
                     else if (_bytesTransferred > _expectedLength)
                     {
                         await _updateTransferStatus(StorageTransferStatus.Completed).ConfigureAwait(false);
-                        _uploadOptions?.GetUploadFailed().Invoke(
-                            new BlobUploadFailedEventArgs(
-                                args.TransferId,
-                                _sourcePath.AbsolutePath,
-                                _destinationClient,
-                                new Exception("Bytes have overflowed, cannot commit block"),
-                                false,
-                                _cancellationToken));
-                        _triggerCancellationTask();
+                        await _invokeFailedEventHandler(
+                                new Exception("Unexpected Error: Amount of bytes transferred exceeds expected length.")).ConfigureAwait(false);
                     }
-                    _uploadOptions?.ProgressHandler?.Report(_bytesTransferred);
+                    _reportProgressInBytes(_bytesTransferred);
                 }
                 else
                 {
                     // Set status to completed
                     await _updateTransferStatus(StorageTransferStatus.Completed).ConfigureAwait(false);
-                    _uploadOptions?.GetUploadFailed().Invoke(
-                            new BlobUploadFailedEventArgs(
-                                args.TransferId,
-                                _sourcePath.AbsolutePath,
-                                _destinationClient,
-                                new Exception("Failure on stageblock"),
-                                false,
-                                _cancellationToken));
-                        _uploadOptions?.ProgressHandler.Report(_bytesTransferred);
-                    _triggerCancellationTask();
+                    await _invokeFailedEventHandler(new Exception("Failure on Stage Block")).ConfigureAwait(false);
                 }
             };
         }

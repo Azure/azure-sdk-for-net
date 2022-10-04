@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using Azure.Storage.Shared;
 using System.Security.Cryptography;
+using static Azure.Storage.Blobs.DataMovement.CommitChunkController;
 
 namespace Azure.Storage.Blobs.DataMovement
 {
@@ -61,7 +62,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// </summary>
         public ClientDiagnostics Diagnostics => _diagnostics;
 
-        internal CommitBlockEventHandler commitBlockHandler;
+        internal CommitChunkController commitBlockHandler;
 
         /// <summary>
         /// Array pool designated for upload file
@@ -128,15 +129,6 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <returns>The Task to perform the Upload operation.</returns>
         public override async Task ProcessPartToChunkAsync()
         {
-            // TODO: make logging messages similar to the errors class where we only take in params
-            // so we dont have magic strings hanging out here
-            /* TODO: replace with Azure.Core.Diagnotiscs logger
-            Logger.LogAsync(DataMovementLogLevel.Information,
-                $"Processing Upload Transfer source: {SourceLocalPath}; destination: {DestinationBlobClient.Uri}", async).EnsureCompleted();
-            */
-            // Do only blockblob upload for now for now
-            //BlockBlobClientInternals internalClient = new BlockBlobClientInternals(DestinationBlobClient);
-
             // Set _singleUploadThreshold
             long singleUploadThreshold = Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes;
             if (UploadOptions.TransferOptions.InitialTransferSize.HasValue
@@ -178,7 +170,7 @@ namespace Azure.Storage.Blobs.DataMovement
                     UploadOptions,
                     cancellationToken).ConfigureAwait(false);
 
-                commitBlockHandler = GetBlockListCommitHandler(
+                commitBlockHandler = GetCommitController(
                     expectedLength: fileLength,
                     commitBlockTask: async (options, cancellationToken) =>
                     await CommitBlockListInternal(
@@ -442,7 +434,7 @@ namespace Azure.Storage.Blobs.DataMovement
                         default,
                         cancellationToken).ConfigureAwait(false);
                 await commitBlockHandler.InvokeEvent(
-                    new BlobStageBlockEventArgs(
+                    new BlobStageChunkEventArgs(
                         TransferId,
                         true,
                         offset,
@@ -470,7 +462,7 @@ namespace Azure.Storage.Blobs.DataMovement
                 }
                 await OnTransferStatusChanged(status, true).ConfigureAwait(false);
                 await commitBlockHandler.InvokeEvent(
-                    new BlobStageBlockEventArgs(
+                    new BlobStageChunkEventArgs(
                         TransferId,
                         false,
                         offset,
@@ -495,7 +487,7 @@ namespace Azure.Storage.Blobs.DataMovement
                 }
                 await OnTransferStatusChanged(status, true).ConfigureAwait(false);
                 await commitBlockHandler.InvokeEvent(
-                    new BlobStageBlockEventArgs(
+                    new BlobStageChunkEventArgs(
                         TransferId,
                         false,
                         offset,
@@ -638,31 +630,29 @@ namespace Azure.Storage.Blobs.DataMovement
         }
         #endregion
 
-        #region CommitBlockHandler
-        internal static CommitBlockEventHandler GetBlockListCommitHandler(
+        #region CommitChunkController
+        internal static CommitChunkController GetCommitController(
             long expectedLength,
             CommitBlockTaskInternal commitBlockTask,
             BlobUploadTransferJob job)
-        => new CommitBlockEventHandler(
+        => new CommitChunkController(
             expectedLength,
-            new Uri(job.SourceLocalPath), // Change source local path ot a uri
-            job.DestinationBlobClient,
-            GetBlockListCommitHandlerBehaviors(commitBlockTask, job),
-            job.UploadOptions,
-            job.CancellationTokenSource.Token);
+            GetBlockListCommitHandlerBehaviors(commitBlockTask, job));
 
-        internal static CommitBlockEventHandler.Behaviors GetBlockListCommitHandlerBehaviors(
+        internal static CommitChunkController.Behaviors GetBlockListCommitHandlerBehaviors(
             CommitBlockTaskInternal commitBlockTask,
             BlobUploadTransferJob job)
         {
-            return new CommitBlockEventHandler.Behaviors
+            return new CommitChunkController.Behaviors
             {
                 // TODO #27253
                 QueueCommitBlockTask = async () =>
                         await commitBlockTask(
                             job.UploadOptions,
                             job.CancellationTokenSource.Token).ConfigureAwait(false),
-                TriggerCancellationTask = () => job.TriggerJobCancellation(),
+                ReportProgressInBytes = (long bytesWritten) =>
+                    job.UploadOptions?.ProgressHandler?.Report(bytesWritten),
+                InvokeFailedHandler = async (ex) => await job.InvokeCopyFailed(ex).ConfigureAwait(false),
                 UpdateTransferStatus = async (StorageTransferStatus status)
                     => await job.OnTransferStatusChanged(status, true).ConfigureAwait(false)
             };
@@ -752,6 +742,21 @@ namespace Azure.Storage.Blobs.DataMovement
                 yield return (absolutePosition, blockLength);
                 absolutePosition += blockLength;
             }
+        }
+
+        private async Task InvokeCopyFailed(Exception ex)
+        {
+            UploadOptions?.GetUploadFailed()?.Invoke(
+                new BlobUploadFailedEventArgs(
+                TransferId,
+                SourceLocalPath,
+                DestinationBlobClient,
+                ex,
+                false,
+                CancellationTokenSource.Token));
+            // Trigger job cancellation if the failed handler is enabled
+            TriggerJobCancellation();
+            await OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
         }
     }
 }

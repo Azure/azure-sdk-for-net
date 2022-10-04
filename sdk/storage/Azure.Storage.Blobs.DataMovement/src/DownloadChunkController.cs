@@ -19,14 +19,12 @@ namespace Azure.Storage.Blobs.DataMovement
         public delegate Task CopyToDestinationFileInternal(Stream stream);
         public delegate Task CopyToChunkFileInternal(string chunkFilePath, Stream stream);
         public delegate Task QueueCompleteFileDownloadInternal();
-        public delegate Task UpdateTransferStatusInternal(StorageTransferStatus status);
-        public delegate void InvokeFailedEventHandlerInternal(Exception ex);
+        public delegate Task InvokeFailedEventHandlerInternal(Exception ex);
         #endregion Delegate Definitions
 
         private readonly CopyToDestinationFileInternal _copyToDestinationFile;
         private readonly CopyToChunkFileInternal _copyToChunkFile;
         private readonly InvokeFailedEventHandlerInternal _invokeFailedEventHandler;
-        private readonly UpdateTransferStatusInternal _updateTransferStatus;
         private readonly QueueCompleteFileDownloadInternal _queueCompleteFileDownload;
 
         public struct Behaviors
@@ -35,7 +33,6 @@ namespace Azure.Storage.Blobs.DataMovement
 
             public CopyToChunkFileInternal CopyToChunkFile { get; set; }
             public InvokeFailedEventHandlerInternal InvokeFailedHandler { get; set; }
-            public UpdateTransferStatusInternal UpdateTransferStatus { get; set; }
 
             public QueueCompleteFileDownloadInternal QueueCompleteFileDownload { get; set; }
         }
@@ -110,8 +107,6 @@ namespace Azure.Storage.Blobs.DataMovement
                 ?? throw Errors.ArgumentNull(nameof(behaviors.CopyToChunkFile));
             _invokeFailedEventHandler = behaviors.InvokeFailedHandler
                 ?? throw Errors.ArgumentNull(nameof(behaviors.InvokeFailedHandler));
-            _updateTransferStatus = behaviors.UpdateTransferStatus
-                ?? throw Errors.ArgumentNull(nameof(behaviors.UpdateTransferStatus));
             _queueCompleteFileDownload = behaviors.QueueCompleteFileDownload
                 ?? throw Errors.ArgumentNull(nameof(behaviors.QueueCompleteFileDownload));
             _progressHandler = progressHandler;
@@ -179,7 +174,6 @@ namespace Azure.Storage.Blobs.DataMovement
                         {
                             // TODO: update progress handler, flush file
                             await _queueCompleteFileDownload().ConfigureAwait(false);
-                            await _updateTransferStatus(StorageTransferStatus.Completed).ConfigureAwait(false);
                         }
                     }
                     else
@@ -275,8 +269,7 @@ namespace Azure.Storage.Blobs.DataMovement
                     }
                 }
             }
-            _invokeFailedEventHandler(ex);
-            await _updateTransferStatus(StorageTransferStatus.Completed).ConfigureAwait(false);
+            await _invokeFailedEventHandler(ex).ConfigureAwait(false);
         }
 
         /// <summary>

@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs.DataMovement.Models
         /// <summary>
         /// Gets the <see cref="Uri"/> that was the destination blob for the upload.
         /// </summary>
-        public BlobBaseClient SourceBlobClient { get; }
+        public Uri SourceBlobClient { get; }
 
         /// <summary>
         /// Gets the <see cref="Uri"/> to the contents to upload to the destination.
@@ -34,7 +34,8 @@ namespace Azure.Storage.Blobs.DataMovement.Models
         /// Initializes a new instance of the <see cref="BlobSingleCopyFailedEventArgs"/>.
         /// </summary>
         /// <param name="transferId"></param>
-        /// <param name="sourceClient"></param>
+        /// <param name="ex"></param>
+        /// <param name="sourceUri"></param>
         /// <param name="destinationClient"></param>
         /// <param name="isRunningSynchronously">
         /// A value indicating whether the event handler was invoked
@@ -49,22 +50,24 @@ namespace Azure.Storage.Blobs.DataMovement.Models
         /// default value is <see cref="CancellationToken.None"/>.
         /// </param>
         /// <exception cref="System.ArgumentNullException">
-        /// Trhown if <paramref name="transferId"/> is empty or null.
-        /// Thrown if <paramref name="sourceClient"/> is null.
+        /// Thrown if <paramref name="transferId"/> is empty or null.
+        /// Thrown if <paramref name="sourceUri"/> is null.
         /// Thrown if <paramref name="destinationClient"/> is null.
         /// </exception>
         public BlobSingleCopyFailedEventArgs(
             string transferId,
-            BlobBaseClient sourceClient,
+            Uri sourceUri,
             BlobBaseClient destinationClient,
+            Exception ex,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)
             : base(transferId, isRunningSynchronously, cancellationToken)
         {
-            Argument.AssertNotNull(sourceClient, nameof(Uri));
+            Argument.AssertNotNull(sourceUri, nameof(Uri));
             Argument.AssertNotNull(destinationClient, nameof(Uri));
-            SourceBlobClient = sourceClient;
+            SourceBlobClient = sourceUri;
             DestinationBlobClient = destinationClient;
+            Exception = ex;
         }
     }
 }

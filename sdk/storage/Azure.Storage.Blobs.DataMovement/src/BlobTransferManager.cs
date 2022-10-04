@@ -221,7 +221,6 @@ namespace Azure.Storage.Blobs.DataMovement
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
             string transferId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
-
             BlobUploadTransferJob transferJob = new BlobUploadTransferJob(
                 transferId,
                 sourceLocalPath,
@@ -231,8 +230,6 @@ namespace Azure.Storage.Blobs.DataMovement
                 QueueJobChunkAsync);
             await QueueJobAsync(transferJob).ConfigureAwait(false);
             _jobDictionary.Add(transferId, transferJob);
-                //transferJob.ProcessUploadTransfer(_taskFactory, _jobTransferScheduler),
-
             return transferJob.ToBlobTransferJobDetails();
         }
 
@@ -261,8 +258,8 @@ namespace Azure.Storage.Blobs.DataMovement
                 options,
                 Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
                 QueueJobChunkAsync);
-                await QueueJobAsync(transferJob).ConfigureAwait(false);
-                //action: transferJob.ProcessDownloadTransfer(),
+            await QueueJobAsync(transferJob).ConfigureAwait(false);
+            _jobDictionary.Add(transferId, transferJob);
             return transferJob.ToBlobTransferJobDetails();
         }
 
@@ -306,6 +303,8 @@ namespace Azure.Storage.Blobs.DataMovement
 
             // Queue task to scan the local directory for paths to upload
             // As each local path is found, it is added to the queue as well.
+            await QueueJobAsync(transferJob).ConfigureAwait(false);
+
             PathScannerFactory scannerFactory = new PathScannerFactory(transferJob.SourceLocalPath);
             PathScanner scanner = scannerFactory.BuildPathScanner();
             IEnumerable<FileSystemInfo> pathList = scanner.Scan();
@@ -362,8 +361,9 @@ namespace Azure.Storage.Blobs.DataMovement
                 options,
                 Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
                 QueueJobChunkAsync);
-                await QueueJobAsync(transferJob).ConfigureAwait(false);
             _jobDictionary.Add(transferId, transferJob);
+            await QueueJobAsync(transferJob).ConfigureAwait(false);
+
             // Queue task to scan the remote directory for paths to download
             // As each blob is found, it is added to the queue as well.
             Pageable<BlobItem> blobs = transferJob.SourceBlobDirectoryClient.GetBlobs();
@@ -391,16 +391,16 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <returns>A guid of the job id</returns>
         public async Task<BlobTransferJobProperties> ScheduleCopyAsync(
             Uri sourceUri,
-            BlobBaseClient destinationClient,
+            BlockBlobClient destinationClient,
             BlobCopyMethod copyMethod,
-            BlobCopyFromUriOptions copyOptions = default)
+            BlobSingleCopyOptions copyOptions = default)
         {
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
             string transferId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
 
-            BlobServiceCopyTransferJob transferJob = new BlobServiceCopyTransferJob(
+            BlockBlobServiceCopyTransferJob transferJob = new BlockBlobServiceCopyTransferJob(
                 transferId,
                 sourceUri,
                 destinationClient,
@@ -408,9 +408,8 @@ namespace Azure.Storage.Blobs.DataMovement
                 copyOptions,
                 Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
                 QueueJobChunkAsync);
-                await QueueJobAsync(transferJob).ConfigureAwait(false);
             _jobDictionary.Add(transferId, transferJob);
-            //transferJob.ProcessCopyTransfer();
+            await QueueJobAsync(transferJob).ConfigureAwait(false);
 
             return transferJob.ToBlobTransferJobDetails();
         }
@@ -448,6 +447,8 @@ namespace Azure.Storage.Blobs.DataMovement
                 QueueJobChunkAsync);
                 await QueueJobAsync(transferJob).ConfigureAwait(false);
             _jobDictionary.Add(transferId , transferJob);
+            await QueueJobAsync(transferJob).ConfigureAwait(false);
+
             // Queue task to scan the remote directory for paths to download
             // As each blob is found, it is added to the queue as well.
             Pageable<BlobItem> blobs = sourceClient.GetBlobs();

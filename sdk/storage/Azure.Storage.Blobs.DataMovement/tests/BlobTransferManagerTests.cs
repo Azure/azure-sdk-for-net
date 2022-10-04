@@ -47,18 +47,18 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
         internal class VerifyUploadBlobContentInfo
         {
             public readonly string LocalPath;
-            public BlobBaseClient Client;
+            public BlobBaseClient DestinationClient;
             public BlobSingleUploadOptions UploadOptions;
             public AutoResetEvent CompletedStatusWait;
 
             public VerifyUploadBlobContentInfo(
                 string sourceFile,
-                BlobBaseClient blobClient,
+                BlobBaseClient destinationClient,
                 BlobSingleUploadOptions uploadOptions,
                 AutoResetEvent completedStatusWait)
             {
                 LocalPath = sourceFile;
-                Client = blobClient;
+                DestinationClient = destinationClient;
                 UploadOptions = uploadOptions;
                 CompletedStatusWait = completedStatusWait;
             }
@@ -101,108 +101,6 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             };
             return newOptions;
         }
-
-        private async Task SetUpDirectoryForListing(BlobContainerClient container)
-        {
-            var blobNames = BlobNames;
-
-            var data = GetRandomBuffer(Constants.KB);
-
-            var blobs = new BlockBlobClient[blobNames.Length];
-
-            // Upload Blobs
-            for (var i = 0; i < blobNames.Length; i++)
-            {
-                BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobNames[i]));
-                blobs[i] = blob;
-
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadAsync(stream);
-                }
-            }
-
-            // Set metadata on Blob index 3
-            IDictionary<string, string> metadata = BuildMetadata();
-            await blobs[3].SetMetadataAsync(metadata);
-        }
-
-        /// <summary>
-        /// Verifies Upload blob contents
-        /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="blob"></param>
-        /// <returns></returns>
-        private static async Task DownloadAndAssertAsync(Stream stream, BlobBaseClient blob)
-        {
-            var actual = new byte[Constants.DefaultBufferSize];
-            using var actualStream = new MemoryStream(actual);
-
-            // reset the stream before validating
-            stream.Seek(0, SeekOrigin.Begin);
-            long size = stream.Length;
-            // we are testing Upload, not download: so we download in partitions to avoid the default timeout
-            for (var i = 0; i < size; i += Constants.DefaultBufferSize * 5 / 2)
-            {
-                var startIndex = i;
-                var count = Math.Min(Constants.DefaultBufferSize, (int)(size - startIndex));
-
-                Response<BlobDownloadInfo> download = await blob.DownloadAsync(new HttpRange(startIndex, count));
-                actualStream.Seek(0, SeekOrigin.Begin);
-                await download.Value.Content.CopyToAsync(actualStream);
-
-                var buffer = new byte[count];
-                stream.Seek(i, SeekOrigin.Begin);
-                await stream.ReadAsync(buffer, 0, count);
-
-                TestHelper.AssertSequenceEqual(
-                    buffer,
-                    actual.AsSpan(0, count).ToArray());
-            }
-        }
-
-        private static void CompareSourceAndDestinationFiles(string sourceFile, string destinationFile)
-        {
-            FileStream sourceStream;
-            FileStream destinationStream;
-
-            // Open the two files.
-            using (sourceStream = new FileStream(sourceFile, FileMode.Open))
-            {
-                using (destinationStream = new FileStream(destinationFile, FileMode.Open))
-                {
-                    // Read and compare a byte from each file until either a
-                    // non-matching set of bytes is found or until the end of
-                    // sourceFile is reached.
-                    TestHelper.AssertSequenceEqual(sourceStream.AsBytes(), destinationStream.AsBytes());
-                }
-            }
-        }
-
-        internal class CheckBlobCompletionProgress : IProgress<long>
-        {
-            private long _expectedSize { get; }
-            private AutoResetEvent _completeEvent { get; }
-            public CheckBlobCompletionProgress(long expectedSize, AutoResetEvent completeEvent)
-            {
-                _expectedSize = expectedSize;
-                _completeEvent = completeEvent;
-            }
-            public void Report(long value)
-            {
-                if (value == _expectedSize)
-                {
-                    //Console.WriteLine("Completed!");
-                    _completeEvent.Set();
-                }
-                else if (value >= _expectedSize)
-                {
-                    // Error!!
-                    Assert.Fail();
-                    _completeEvent.Set();
-                }
-            }
-        };
 
         [RecordedTest]
         public void Ctor_Defaults()
@@ -344,7 +242,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
                     // Verify Upload
                     using (FileStream fileStream = File.OpenRead(uploadedBlobInfo[i].LocalPath))
                     {
-                        await DownloadAndAssertAsync(fileStream, uploadedBlobInfo[i].Client).ConfigureAwait(false);
+                        await DownloadAndAssertAsync(fileStream, uploadedBlobInfo[i].DestinationClient).ConfigureAwait(false);
                     }
                 }
             }
@@ -822,8 +720,8 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
         [TestCase(2, 4 * Constants.MB, 300)]
         [TestCase(6, 4 * Constants.MB, 300)]
         [TestCase(2, 257 * Constants.MB, 400)]
-        [TestCase(6, 257 * Constants.MB, 400)]
-        [TestCase(2, Constants.GB, 1000)]
+        [TestCase(6, 257 * Constants.MB, 600)]
+        [TestCase(2, Constants.GB, 2000)]
         public async Task ScheduleDownload_Multiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange

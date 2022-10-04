@@ -87,7 +87,7 @@ namespace Azure.Storage.Blobs.DataMovement
             };
         }
 
-        internal static BlobTransferJobProperties ToBlobTransferJobDetails(this BlobServiceCopyTransferJob transferJob)
+        internal static BlobTransferJobProperties ToBlobTransferJobDetails(this BlockBlobServiceCopyTransferJob transferJob)
         {
             if (transferJob == null)
             {
@@ -137,8 +137,8 @@ namespace Azure.Storage.Blobs.DataMovement
                     return BlobTransferType.OperationType.SyncCopy;
                 case BlobCopyMethod.UploadFromUriCopy:
                     return BlobTransferType.OperationType.UploadFromUriCopy;
-                case BlobCopyMethod.DownloadThenUploadCopy:
-                    return BlobTransferType.OperationType.DownloadThenUploadCopy;
+                //case BlobCopyMethod.DownloadThenUploadCopy:
+                    //return BlobTransferType.OperationType.DownloadThenUploadCopy;
                 default:
                     return default;
             }

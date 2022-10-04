@@ -32,7 +32,7 @@ namespace Azure.Storage.Blobs.DataMovement.Models
         /// For blobs we will essentially download the blob (or each block of the blob ) to a local temporary destination, then upload the blob (or block)
         /// to the destination blob (or block).
         /// </summary>
-        DownloadThenUploadCopy,
+        /// DownloadThenUploadCopy,
 
         /// <summary>
         /// For block blob sends <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">Put Blob From Url</see>

@@ -409,7 +409,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                     sourceBlob.Uri,
                     destinationBlob,
                     copyMethod: BlobCopyMethod.Copy,
-                    copyOptions: new BlobCopyFromUriOptions()
+                    copyOptions: new BlobSingleCopyOptions()
                     {
                         AccessTier = AccessTier.Hot
                     }).ConfigureAwait(false);
