@@ -31,19 +31,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static CloudEdgeManagementRole DeserializeCloudEdgeManagementRole(JsonElement element)
         {
-            RoleType kind = default;
+            DataBoxEdgeRoleType kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<RoleStatus> localManagementStatus = default;
+            Optional<DataBoxEdgeRoleStatus> localManagementStatus = default;
             Optional<EdgeProfile> edgeProfile = default;
-            Optional<RoleStatus> roleStatus = default;
+            Optional<DataBoxEdgeRoleStatus> roleStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
                 {
-                    kind = new RoleType(property.Value.GetString());
+                    kind = new DataBoxEdgeRoleType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            localManagementStatus = new RoleStatus(property0.Value.GetString());
+                            localManagementStatus = new DataBoxEdgeRoleStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("edgeProfile"))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            roleStatus = new RoleStatus(property0.Value.GetString());
+                            roleStatus = new DataBoxEdgeRoleStatus(property0.Value.GetString());
                             continue;
                         }
                     }

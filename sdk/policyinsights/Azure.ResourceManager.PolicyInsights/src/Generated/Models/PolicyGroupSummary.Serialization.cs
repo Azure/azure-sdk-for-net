@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         internal static PolicyGroupSummary DeserializePolicyGroupSummary(JsonElement element)
         {
             Optional<string> policyGroupName = default;
-            Optional<SummaryResults> results = default;
+            Optional<PolicySummaryResults> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyGroupName"))
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    results = SummaryResults.DeserializeSummaryResults(property.Value);
+                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value);
                     continue;
                 }
             }

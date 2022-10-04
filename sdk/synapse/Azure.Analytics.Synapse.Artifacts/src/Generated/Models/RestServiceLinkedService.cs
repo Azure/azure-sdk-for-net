@@ -47,7 +47,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
         /// <param name="aadResourceId"> The resource you are requesting authorization to use. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal RestServiceLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, object enableServerCertificateValidation, RestServiceAuthenticationType authenticationType, object userName, SecretBase password, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object azureCloudType, object aadResourceId, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="clientId"> The client ID associated with your application. Type: string (or Expression with resultType string). </param>
+        /// <param name="clientSecret"> The client secret associated with your application. </param>
+        /// <param name="tokenEndpoint"> The token endpoint of the authorization server to acquire access token. Type: string (or Expression with resultType string). </param>
+        /// <param name="resource"> The target service or resource to which the access will be requested. Type: string (or Expression with resultType string). </param>
+        /// <param name="scope"> The scope of the access required. It describes what kind of access will be requested. Type: string (or Expression with resultType string). </param>
+        internal RestServiceLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, object enableServerCertificateValidation, RestServiceAuthenticationType authenticationType, object userName, SecretBase password, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object azureCloudType, object aadResourceId, object encryptedCredential, object clientId, SecretBase clientSecret, object tokenEndpoint, object resource, object scope) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Url = url;
             EnableServerCertificateValidation = enableServerCertificateValidation;
@@ -60,6 +65,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AzureCloudType = azureCloudType;
             AadResourceId = aadResourceId;
             EncryptedCredential = encryptedCredential;
+            ClientId = clientId;
+            ClientSecret = clientSecret;
+            TokenEndpoint = tokenEndpoint;
+            Resource = resource;
+            Scope = scope;
             Type = type ?? "RestService";
         }
 
@@ -85,5 +95,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object AadResourceId { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
+        /// <summary> The client ID associated with your application. Type: string (or Expression with resultType string). </summary>
+        public object ClientId { get; set; }
+        /// <summary> The client secret associated with your application. </summary>
+        public SecretBase ClientSecret { get; set; }
+        /// <summary> The token endpoint of the authorization server to acquire access token. Type: string (or Expression with resultType string). </summary>
+        public object TokenEndpoint { get; set; }
+        /// <summary> The target service or resource to which the access will be requested. Type: string (or Expression with resultType string). </summary>
+        public object Resource { get; set; }
+        /// <summary> The scope of the access required. It describes what kind of access will be requested. Type: string (or Expression with resultType string). </summary>
+        public object Scope { get; set; }
     }
 }

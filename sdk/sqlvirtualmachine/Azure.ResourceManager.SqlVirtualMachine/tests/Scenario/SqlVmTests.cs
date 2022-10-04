@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
     public class SqlVmTests : SqlVirtualMachineManagementTestBase
     {
         public SqlVmTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -82,10 +82,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             Assert.True(sqlVms.Count == count);
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task SetTags()
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SetTags(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "sqlvmtestrg", AzureLocation.WestUS);
             var sqlVmCollections = rg.GetSqlVms();
             Dictionary<ResourceIdentifier, SqlVmResource> sqlVms = new Dictionary<ResourceIdentifier, SqlVmResource>();

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         internal static IotConnectorCollection DeserializeIotConnectorCollection(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<IotConnectorData>> value = default;
+            Optional<IReadOnlyList<HealthcareApisIotConnectorData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IotConnectorData> array = new List<IotConnectorData>();
+                    List<HealthcareApisIotConnectorData> array = new List<HealthcareApisIotConnectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotConnectorData.DeserializeIotConnectorData(item));
+                        array.Add(HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(item));
                     }
                     value = array;
                     continue;

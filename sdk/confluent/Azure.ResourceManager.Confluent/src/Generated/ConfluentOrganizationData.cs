@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="ssoUri"> SSO url for the Confluent organization. </param>
         /// <param name="offerDetail"> Confluent offer detail. </param>
         /// <param name="userDetail"> Subscriber detail. </param>
-        internal ConfluentOrganizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, ConfluentProvisionState? provisioningState, string organizationId, Uri ssoUri, ConfluentOfferDetail offerDetail, ConfluentUserDetail userDetail) : base(id, name, resourceType, systemData, tags, location)
+        internal ConfluentOrganizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, ConfluentProvisionState? provisioningState, Guid? organizationId, Uri ssoUri, ConfluentOfferDetail offerDetail, ConfluentUserDetail userDetail) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Confluent
         /// <summary> Provision states for confluent RP. </summary>
         public ConfluentProvisionState? ProvisioningState { get; }
         /// <summary> Id of the Confluent organization. </summary>
-        public string OrganizationId { get; }
+        public Guid? OrganizationId { get; }
         /// <summary> SSO url for the Confluent organization. </summary>
         public Uri SsoUri { get; }
         /// <summary> Confluent offer detail. </summary>

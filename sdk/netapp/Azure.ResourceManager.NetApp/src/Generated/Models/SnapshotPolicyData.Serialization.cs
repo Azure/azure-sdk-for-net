@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("monthlySchedule");
                 writer.WriteObjectValue(MonthlySchedule);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.NetApp
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<HourlySchedule> hourlySchedule = default;
-            Optional<DailySchedule> dailySchedule = default;
-            Optional<WeeklySchedule> weeklySchedule = default;
-            Optional<MonthlySchedule> monthlySchedule = default;
+            Optional<SnapshotPolicyHourlySchedule> hourlySchedule = default;
+            Optional<SnapshotPolicyDailySchedule> dailySchedule = default;
+            Optional<SnapshotPolicyWeeklySchedule> weeklySchedule = default;
+            Optional<SnapshotPolicyMonthlySchedule> monthlySchedule = default;
             Optional<bool> enabled = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hourlySchedule = HourlySchedule.DeserializeHourlySchedule(property0.Value);
+                            hourlySchedule = SnapshotPolicyHourlySchedule.DeserializeSnapshotPolicyHourlySchedule(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dailySchedule"))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NetApp
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dailySchedule = DailySchedule.DeserializeDailySchedule(property0.Value);
+                            dailySchedule = SnapshotPolicyDailySchedule.DeserializeSnapshotPolicyDailySchedule(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("weeklySchedule"))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.NetApp
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            weeklySchedule = WeeklySchedule.DeserializeWeeklySchedule(property0.Value);
+                            weeklySchedule = SnapshotPolicyWeeklySchedule.DeserializeSnapshotPolicyWeeklySchedule(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("monthlySchedule"))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.NetApp
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            monthlySchedule = MonthlySchedule.DeserializeMonthlySchedule(property0.Value);
+                            monthlySchedule = SnapshotPolicyMonthlySchedule.DeserializeSnapshotPolicyMonthlySchedule(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enabled"))

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         internal static WorkspaceList DeserializeWorkspaceList(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<WorkspaceData>> value = default;
+            Optional<IReadOnlyList<HealthcareApisWorkspaceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WorkspaceData> array = new List<WorkspaceData>();
+                    List<HealthcareApisWorkspaceData> array = new List<HealthcareApisWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkspaceData.DeserializeWorkspaceData(item));
+                        array.Add(HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(item));
                     }
                     value = array;
                     continue;

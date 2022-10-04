@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Media.Tests
     public class ContentKeyPolicyTests : MediaManagementTestBase
     {
         private ResourceIdentifier _mediaServiceIdentifier;
-        private MediaServiceResource _mediaService;
+        private MediaServicesAccountResource _mediaService;
 
         private ContentKeyPolicyCollection contentKeyPolicyCollection => _mediaService.GetContentKeyPolicies();
 
@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Media.Tests
         [SetUp]
         public async Task SetUp()
         {
-            _mediaService = await Client.GetMediaServiceResource(_mediaServiceIdentifier).GetAsync();
+            _mediaService = await Client.GetMediaServicesAccountResource(_mediaServiceIdentifier).GetAsync();
         }
 
         private async Task<ContentKeyPolicyResource> CreateDefaultContentKey(string contentKeyPolicyName)
         {
-            ContentKeyPolicyPreference empty_AES_Clear_Key = new ContentKeyPolicyPreference(new ContentKeyPolicyClearKeyConfiguration(), new ContentKeyPolicyOpenRestriction());
+            ContentKeyPolicyOption empty_AES_Clear_Key = new ContentKeyPolicyOption(new ContentKeyPolicyClearKeyConfiguration(), new ContentKeyPolicyOpenRestriction());
             ContentKeyPolicyData data = new ContentKeyPolicyData();
-            data.Preferences.Add(empty_AES_Clear_Key);
+            data.Options.Add(empty_AES_Clear_Key);
             var contentKey = await contentKeyPolicyCollection.CreateOrUpdateAsync(WaitUntil.Completed, contentKeyPolicyName, data);
             return contentKey.Value;
         }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media.Tests
             var contentKey = await CreateDefaultContentKey(contentKeyPolicyName);
             Assert.IsNotNull(contentKey);
             Assert.AreEqual(contentKeyPolicyName, contentKey.Data.Name);
-            Assert.AreEqual(1, contentKey.Data.Preferences.Count);
+            Assert.AreEqual(1, contentKey.Data.Options.Count);
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Media.Tests
             var contentKey = await contentKeyPolicyCollection.GetAsync(contentKeyPolicyName);
             Assert.IsNotNull(contentKey);
             Assert.AreEqual(contentKeyPolicyName, contentKey.Value.Data.Name);
-            Assert.AreEqual(1, contentKey.Value.Data.Preferences.Count);
+            Assert.AreEqual(1, contentKey.Value.Data.Options.Count);
         }
 
         [Test]

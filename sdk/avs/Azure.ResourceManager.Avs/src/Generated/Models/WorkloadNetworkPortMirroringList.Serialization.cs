@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static WorkloadNetworkPortMirroringList DeserializeWorkloadNetworkPortMirroringList(JsonElement element)
         {
-            Optional<IReadOnlyList<WorkloadNetworkPortMirroringData>> value = default;
+            Optional<IReadOnlyList<WorkloadNetworkPortMirroringProfileData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WorkloadNetworkPortMirroringData> array = new List<WorkloadNetworkPortMirroringData>();
+                    List<WorkloadNetworkPortMirroringProfileData> array = new List<WorkloadNetworkPortMirroringProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadNetworkPortMirroringData.DeserializeWorkloadNetworkPortMirroringData(item));
+                        array.Add(WorkloadNetworkPortMirroringProfileData.DeserializeWorkloadNetworkPortMirroringProfileData(item));
                     }
                     value = array;
                     continue;

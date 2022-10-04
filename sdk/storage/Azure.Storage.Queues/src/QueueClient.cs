@@ -1597,8 +1597,7 @@ namespace Azure.Storage.Queues
 
         #region SendMessage
         /// <summary>
-        /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations.
+        /// Adds a new message to the back of a queue.
         ///
         /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
         /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
@@ -1625,8 +1624,7 @@ namespace Azure.Storage.Queues
                 null); // Pass anything else so we don't recurse on this overload
 
         /// <summary>
-        /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations.
+        /// Adds a new message to the back of a queue.
         ///
         /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
         /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
@@ -1654,8 +1652,7 @@ namespace Azure.Storage.Queues
             .ConfigureAwait(false);
 
         /// <summary>
-        /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations.
+        /// Adds a new message to the back of a queue.
         ///
         /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
         /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.
@@ -1686,8 +1683,7 @@ namespace Azure.Storage.Queues
                 visibilityTimeout: default); // Pass anything else so we don't recurse on this overload
 
         /// <summary>
-        /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations.
+        /// Adds a new message to the back of a queue.
         ///
         /// A message must be in a format that can be included in an XML request with UTF-8 encoding.
         /// Otherwise <see cref="QueueClientOptions.MessageEncoding"/> option can be set to <see cref="QueueMessageEncoding.Base64"/> to handle non compliant messages.

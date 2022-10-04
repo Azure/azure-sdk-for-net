@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Avs
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
-            Optional<string> timeout = default;
+            Optional<TimeSpan> timeout = default;
             Optional<IReadOnlyList<ScriptParameter>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -76,7 +77,12 @@ namespace Azure.ResourceManager.Avs
                         }
                         if (property0.NameEquals("timeout"))
                         {
-                            timeout = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            timeout = property0.Value.GetTimeSpan("P");
                             continue;
                         }
                         if (property0.NameEquals("parameters"))
@@ -98,7 +104,7 @@ namespace Azure.ResourceManager.Avs
                     continue;
                 }
             }
-            return new ScriptCmdletData(id, name, type, systemData.Value, description.Value, timeout.Value, Optional.ToList(parameters));
+            return new ScriptCmdletData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(timeout), Optional.ToList(parameters));
         }
     }
 }

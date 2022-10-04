@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DeviceErasureDetails DeserializeDeviceErasureDetails(JsonElement element)
         {
-            Optional<StageStatus> deviceErasureStatus = default;
+            Optional<DataBoxStageStatus> deviceErasureStatus = default;
             Optional<string> erasureOrDestructionCertificateSasKey = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    deviceErasureStatus = property.Value.GetString().ToStageStatus();
+                    deviceErasureStatus = property.Value.GetString().ToDataBoxStageStatus();
                     continue;
                 }
                 if (property.NameEquals("erasureOrDestructionCertificateSasKey"))

@@ -1,6 +1,9 @@
 # Release History
 
 ## 3.2.0-preview.5 (Unreleased)
+### Fixed
+- Id attribute in labelled utterances stored as int could overflow
+- ExampleId attribute description typo
 
 ## 3.2.0-preview.4 (2021-02-25)
 ### Fixed

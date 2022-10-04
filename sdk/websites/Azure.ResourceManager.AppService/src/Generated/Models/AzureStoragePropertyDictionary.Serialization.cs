@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AzureStoragePropertyDictionary DeserializeAzureStoragePropertyDictionary(JsonElement element)
         {
-            Optional<IDictionary<string, AzureStorageInfoValue>> properties = default;
+            Optional<IDictionary<string, AppServiceStorageAccessInfo>> properties = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, AzureStorageInfoValue> dictionary = new Dictionary<string, AzureStorageInfoValue>();
+                    Dictionary<string, AppServiceStorageAccessInfo> dictionary = new Dictionary<string, AppServiceStorageAccessInfo>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, AzureStorageInfoValue.DeserializeAzureStorageInfoValue(property0.Value));
+                        dictionary.Add(property0.Name, AppServiceStorageAccessInfo.DeserializeAppServiceStorageAccessInfo(property0.Value));
                     }
                     properties = dictionary;
                     continue;

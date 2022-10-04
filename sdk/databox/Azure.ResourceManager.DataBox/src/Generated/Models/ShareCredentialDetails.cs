@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of ShareCredentialDetails. </summary>
         internal ShareCredentialDetails()
         {
-            SupportedAccessProtocols = new ChangeTrackingList<AccessProtocol>();
+            SupportedAccessProtocols = new ChangeTrackingList<DataBoxAccessProtocol>();
         }
 
         /// <summary> Initializes a new instance of ShareCredentialDetails. </summary>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="userName"> User name for the share. </param>
         /// <param name="password"> Password for the share. </param>
         /// <param name="supportedAccessProtocols"> Access protocols supported on the device. </param>
-        internal ShareCredentialDetails(string shareName, ShareDestinationFormatType? shareType, string userName, string password, IReadOnlyList<AccessProtocol> supportedAccessProtocols)
+        internal ShareCredentialDetails(string shareName, ShareDestinationFormatType? shareType, string userName, string password, IReadOnlyList<DataBoxAccessProtocol> supportedAccessProtocols)
         {
             ShareName = shareName;
             ShareType = shareType;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Password for the share. </summary>
         public string Password { get; }
         /// <summary> Access protocols supported on the device. </summary>
-        public IReadOnlyList<AccessProtocol> SupportedAccessProtocols { get; }
+        public IReadOnlyList<DataBoxAccessProtocol> SupportedAccessProtocols { get; }
     }
 }

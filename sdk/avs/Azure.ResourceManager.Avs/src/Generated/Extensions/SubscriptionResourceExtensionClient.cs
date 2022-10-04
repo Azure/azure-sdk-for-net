@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Avs
     {
         private ClientDiagnostics _locationsClientDiagnostics;
         private LocationsRestOperations _locationsRestClient;
-        private ClientDiagnostics _privateCloudClientDiagnostics;
-        private PrivateCloudsRestOperations _privateCloudRestClient;
+        private ClientDiagnostics _avsPrivateCloudPrivateCloudsClientDiagnostics;
+        private PrivateCloudsRestOperations _avsPrivateCloudPrivateCloudsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Avs
 
         private ClientDiagnostics LocationsClientDiagnostics => _locationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LocationsRestOperations LocationsRestClient => _locationsRestClient ??= new LocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics PrivateCloudClientDiagnostics => _privateCloudClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs", PrivateCloudResource.ResourceType.Namespace, Diagnostics);
-        private PrivateCloudsRestOperations PrivateCloudRestClient => _privateCloudRestClient ??= new PrivateCloudsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PrivateCloudResource.ResourceType));
+        private ClientDiagnostics AvsPrivateCloudPrivateCloudsClientDiagnostics => _avsPrivateCloudPrivateCloudsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs", AvsPrivateCloudResource.ResourceType.Namespace, Diagnostics);
+        private PrivateCloudsRestOperations AvsPrivateCloudPrivateCloudsRestClient => _avsPrivateCloudPrivateCloudsRestClient ??= new PrivateCloudsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AvsPrivateCloudResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Trial>> CheckTrialAvailabilityLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckTrialAvailabilityLocation");
+            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAvsTrialAvailability");
             scope.Start();
             try
             {
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Trial> CheckTrialAvailabilityLocation(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckTrialAvailabilityLocation");
+            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAvsTrialAvailability");
             scope.Start();
             try
             {
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Quota>> CheckQuotaAvailabilityLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsSubscriptionQuotaAvailabilityResult>> CheckAvsQuotaAvailabilityAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckQuotaAvailabilityLocation");
+            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAvsQuotaAvailability");
             scope.Start();
             try
             {
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Quota> CheckQuotaAvailabilityLocation(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Response<AvsSubscriptionQuotaAvailabilityResult> CheckAvsQuotaAvailability(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckQuotaAvailabilityLocation");
+            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAvsQuotaAvailability");
             scope.Start();
             try
             {
@@ -146,17 +146,17 @@ namespace Azure.ResourceManager.Avs
         /// Operation Id: PrivateClouds_ListInSubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateCloudResource> GetPrivateCloudsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AvsPrivateCloudResource> GetAvsPrivateCloudsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateCloudResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AvsPrivateCloudResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PrivateCloudClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateClouds");
+                using var scope = AvsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvsPrivateClouds");
                 scope.Start();
                 try
                 {
-                    var response = await PrivateCloudRestClient.ListInSubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateCloudResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await AvsPrivateCloudPrivateCloudsRestClient.ListInSubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AvsPrivateCloudResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -164,14 +164,14 @@ namespace Azure.ResourceManager.Avs
                     throw;
                 }
             }
-            async Task<Page<PrivateCloudResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AvsPrivateCloudResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PrivateCloudClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateClouds");
+                using var scope = AvsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvsPrivateClouds");
                 scope.Start();
                 try
                 {
-                    var response = await PrivateCloudRestClient.ListInSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateCloudResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await AvsPrivateCloudPrivateCloudsRestClient.ListInSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AvsPrivateCloudResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -188,17 +188,17 @@ namespace Azure.ResourceManager.Avs
         /// Operation Id: PrivateClouds_ListInSubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateCloudResource> GetPrivateClouds(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AvsPrivateCloudResource> GetAvsPrivateClouds(CancellationToken cancellationToken = default)
         {
-            Page<PrivateCloudResource> FirstPageFunc(int? pageSizeHint)
+            Page<AvsPrivateCloudResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PrivateCloudClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateClouds");
+                using var scope = AvsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvsPrivateClouds");
                 scope.Start();
                 try
                 {
-                    var response = PrivateCloudRestClient.ListInSubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateCloudResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = AvsPrivateCloudPrivateCloudsRestClient.ListInSubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AvsPrivateCloudResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -206,14 +206,14 @@ namespace Azure.ResourceManager.Avs
                     throw;
                 }
             }
-            Page<PrivateCloudResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AvsPrivateCloudResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PrivateCloudClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateClouds");
+                using var scope = AvsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvsPrivateClouds");
                 scope.Start();
                 try
                 {
-                    var response = PrivateCloudRestClient.ListInSubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateCloudResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = AvsPrivateCloudPrivateCloudsRestClient.ListInSubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AvsPrivateCloudResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

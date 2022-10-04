@@ -60,36 +60,36 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("keyEncryptionKey");
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
-            if (Optional.IsDefined(ExpectedDataSizeInTeraBytes))
+            if (Optional.IsDefined(ExpectedDataSizeInTerabytes))
             {
                 writer.WritePropertyName("expectedDataSizeInTeraBytes");
-                writer.WriteNumberValue(ExpectedDataSizeInTeraBytes.Value);
+                writer.WriteNumberValue(ExpectedDataSizeInTerabytes.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static DataBoxJobDetails DeserializeDataBoxJobDetails(JsonElement element)
         {
-            Optional<IReadOnlyList<CopyProgress>> copyProgress = default;
+            Optional<IReadOnlyList<DataBoxCopyProgress>> copyProgress = default;
             Optional<string> devicePassword = default;
-            Optional<IReadOnlyList<JobStages>> jobStages = default;
-            ContactDetails contactDetails = default;
-            Optional<ShippingAddress> shippingAddress = default;
+            Optional<IReadOnlyList<DataBoxJobStage>> jobStages = default;
+            DataBoxContactDetails contactDetails = default;
+            Optional<DataBoxShippingAddress> shippingAddress = default;
             Optional<PackageShippingDetails> deliveryPackage = default;
             Optional<PackageShippingDetails> returnPackage = default;
             Optional<IList<DataImportDetails>> dataImportDetails = default;
             Optional<IList<DataExportDetails>> dataExportDetails = default;
-            ClassDiscriminator jobDetailsType = default;
-            Optional<Preferences> preferences = default;
+            DataBoxOrderType jobDetailsType = default;
+            Optional<DataBoxOrderPreferences> preferences = default;
             Optional<IReadOnlyList<CopyLogDetails>> copyLogDetails = default;
             Optional<string> reverseShipmentLabelSasKey = default;
             Optional<string> chainOfCustodySasKey = default;
             Optional<DeviceErasureDetails> deviceErasureDetails = default;
-            Optional<KeyEncryptionKey> keyEncryptionKey = default;
-            Optional<int> expectedDataSizeInTeraBytes = default;
+            Optional<DataBoxKeyEncryptionKey> keyEncryptionKey = default;
+            Optional<int> expectedDataSizeInTerabytes = default;
             Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
             Optional<LastMitigationActionOnJob> lastMitigationActionOnJob = default;
-            Optional<DatacenterAddressResponse> datacenterAddress = default;
+            Optional<DataCenterAddressResult> dataCenterAddress = default;
             Optional<DataCenterCode> dataCenterCode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CopyProgress> array = new List<CopyProgress>();
+                    List<DataBoxCopyProgress> array = new List<DataBoxCopyProgress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.CopyProgress.DeserializeCopyProgress(item));
+                        array.Add(DataBoxCopyProgress.DeserializeDataBoxCopyProgress(item));
                     }
                     copyProgress = array;
                     continue;
@@ -120,17 +120,17 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<JobStages> array = new List<JobStages>();
+                    List<DataBoxJobStage> array = new List<DataBoxJobStage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.JobStages.DeserializeJobStages(item));
+                        array.Add(DataBoxJobStage.DeserializeDataBoxJobStage(item));
                     }
                     jobStages = array;
                     continue;
                 }
                 if (property.NameEquals("contactDetails"))
                 {
-                    contactDetails = ContactDetails.DeserializeContactDetails(property.Value);
+                    contactDetails = DataBoxContactDetails.DeserializeDataBoxContactDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("shippingAddress"))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    shippingAddress = ShippingAddress.DeserializeShippingAddress(property.Value);
+                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deliveryPackage"))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("jobDetailsType"))
                 {
-                    jobDetailsType = property.Value.GetString().ToClassDiscriminator();
+                    jobDetailsType = property.Value.GetString().ToDataBoxOrderType();
                     continue;
                 }
                 if (property.NameEquals("preferences"))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    preferences = Preferences.DeserializePreferences(property.Value);
+                    preferences = DataBoxOrderPreferences.DeserializeDataBoxOrderPreferences(property.Value);
                     continue;
                 }
                 if (property.NameEquals("copyLogDetails"))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    keyEncryptionKey = KeyEncryptionKey.DeserializeKeyEncryptionKey(property.Value);
+                    keyEncryptionKey = DataBoxKeyEncryptionKey.DeserializeDataBoxKeyEncryptionKey(property.Value);
                     continue;
                 }
                 if (property.NameEquals("expectedDataSizeInTeraBytes"))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    expectedDataSizeInTeraBytes = property.Value.GetInt32();
+                    expectedDataSizeInTerabytes = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("actions"))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    datacenterAddress = DatacenterAddressResponse.DeserializeDatacenterAddressResponse(property.Value);
+                    dataCenterAddress = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataCenterCode"))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxJobDetails(Optional.ToList(jobStages), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, Optional.ToList(dataImportDetails), Optional.ToList(dataExportDetails), jobDetailsType, preferences.Value, Optional.ToList(copyLogDetails), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTeraBytes), Optional.ToList(actions), lastMitigationActionOnJob.Value, datacenterAddress.Value, Optional.ToNullable(dataCenterCode), Optional.ToList(copyProgress), devicePassword.Value);
+            return new DataBoxJobDetails(Optional.ToList(jobStages), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, Optional.ToList(dataImportDetails), Optional.ToList(dataExportDetails), jobDetailsType, preferences.Value, Optional.ToList(copyLogDetails), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTerabytes), Optional.ToList(actions), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode), Optional.ToList(copyProgress), devicePassword.Value);
         }
     }
 }

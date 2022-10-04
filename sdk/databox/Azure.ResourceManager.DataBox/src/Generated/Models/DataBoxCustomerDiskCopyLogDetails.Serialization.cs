@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> serialNumber = default;
             Optional<string> errorLogLink = default;
             Optional<string> verboseLogLink = default;
-            ClassDiscriminator copyLogDetailsType = default;
+            DataBoxOrderType copyLogDetailsType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serialNumber"))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("copyLogDetailsType"))
                 {
-                    copyLogDetailsType = property.Value.GetString().ToClassDiscriminator();
+                    copyLogDetailsType = property.Value.GetString().ToDataBoxOrderType();
                     continue;
                 }
             }

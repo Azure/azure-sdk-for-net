@@ -1,18 +1,22 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using System;
-using System.CodeDom;
-using System.Drawing;
+using NUnit.Framework;
 
-namespace Azure.Communication.CallingServer.Tests
+namespace Azure.Communication.CallingServer
 {
     public class CallAutomationClientTests : CallAutomationTestBase
     {
+        private readonly MediaStreamingOptions _mediaStreamingConfiguration = new MediaStreamingOptions(
+            new Uri("https://websocket"),
+            MediaStreamingTransport.Websocket,
+            MediaStreamingContent.Audio,
+            MediaStreamingAudioChannel.Mixed);
+
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public async Task AnswerCallAsync_200OK(string incomingCallContext, Uri callbackUri)
         {
@@ -22,6 +26,7 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.NotNull(response);
             Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
             verifyCallConnectionProperties(response.Value.CallConnectionProperties);
+            Assert.Null(response.Value.CallConnectionProperties.MediaSubscriptionId);
             Assert.AreEqual(CallConnectionId, response.Value.CallConnection.CallConnectionId);
         }
 
@@ -34,7 +39,42 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.NotNull(response);
             Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
             verifyCallConnectionProperties(response.Value.CallConnectionProperties);
+            Assert.Null(response.Value.CallConnectionProperties.MediaSubscriptionId);
             Assert.AreEqual(CallConnectionId, response.Value.CallConnection.CallConnectionId);
+        }
+
+        [TestCaseSource(nameof(TestData_AnswerCall))]
+        public async Task AnswerCallWithOptionsAsync_200OK(string incomingCallContext, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
+            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: callbackUri)
+            {
+                MediaStreamingOptions = _mediaStreamingConfiguration
+            };
+
+            var response = await callAutomationClient.AnswerCallAsync(options).ConfigureAwait(false);
+            Assert.NotNull(response);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            verifyCallConnectionProperties(response.Value.CallConnectionProperties);
+            Assert.AreEqual(CallConnectionId, response.Value.CallConnection.CallConnectionId);
+            Assert.AreEqual("mediaSubscriptionId", response.Value.CallConnectionProperties.MediaSubscriptionId);
+        }
+
+        [TestCaseSource(nameof(TestData_AnswerCall))]
+        public void AnswerCallWithOptions_200OK(string incomingCallContext, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
+            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: callbackUri)
+            {
+                MediaStreamingOptions = _mediaStreamingConfiguration
+            };
+
+            var response = callAutomationClient.AnswerCall(options);
+            Assert.NotNull(response);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            verifyCallConnectionProperties(response.Value.CallConnectionProperties);
+            Assert.AreEqual(CallConnectionId, response.Value.CallConnection.CallConnectionId);
+            Assert.AreEqual("mediaSubscriptionId", response.Value.CallConnectionProperties.MediaSubscriptionId);
         }
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
@@ -147,6 +187,7 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.NotNull(result);
             Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
             verifyCallConnectionProperties(result.CallConnectionProperties);
+            Assert.Null(result.CallConnectionProperties.MediaSubscriptionId);
             Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
         }
 
@@ -160,7 +201,52 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.NotNull(result);
             Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
             verifyCallConnectionProperties(result.CallConnectionProperties);
+            Assert.Null(result.CallConnectionProperties.MediaSubscriptionId);
             Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
+        }
+
+        [TestCaseSource(nameof(TestData_CreateCall))]
+        public async Task CreateCallWithOptionsAsync_201Created(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
+            CreateCallOptions options = new CreateCallOptions(
+                callSource: source,
+                targets: targets,
+                callbackUri: callbackUri)
+            {
+                Subject = "subject",
+                MediaStreamingOptions = _mediaStreamingConfiguration
+            };
+
+            var response = await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false);
+            CreateCallResult result = (CreateCallResult)response;
+            Assert.NotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
+            verifyCallConnectionProperties(result.CallConnectionProperties);
+            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
+            Assert.AreEqual("mediaSubscriptionId", result.CallConnectionProperties.MediaSubscriptionId);
+        }
+
+        [TestCaseSource(nameof(TestData_CreateCall))]
+        public void CreateCallWithOptions_201Created(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
+            CreateCallOptions options = new CreateCallOptions(
+                callSource: source,
+                targets: targets,
+                callbackUri: callbackUri)
+            {
+                Subject = "subject",
+                MediaStreamingOptions = _mediaStreamingConfiguration
+            };
+
+            var response = callAutomationClient.CreateCall(options);
+            CreateCallResult result = (CreateCallResult)response;
+            Assert.NotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
+            verifyCallConnectionProperties(result.CallConnectionProperties);
+            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
+            Assert.AreEqual("mediaSubscriptionId", result.CallConnectionProperties.MediaSubscriptionId);
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
@@ -197,6 +283,33 @@ namespace Azure.Communication.CallingServer.Tests
         {
             var response = new CallAutomationClient(ConnectionString).GetCallRecording();
             Assert.NotNull(response);
+        }
+
+        private static void ValidateCreateCallResult(CreateCallResult createCallResult)
+        {
+            Assert.NotNull(createCallResult);
+            Assert.NotNull(createCallResult.CallConnection);
+            Assert.AreEqual("callConnectionId", createCallResult.CallConnection.CallConnectionId);
+            ValidateCallConnectionProperties(createCallResult.CallConnectionProperties);
+        }
+
+        private static void ValidateAnswerCallResult(AnswerCallResult answerCallResult)
+        {
+            Assert.NotNull(answerCallResult);
+            Assert.NotNull(answerCallResult.CallConnection);
+            Assert.AreEqual("callConnectionId", answerCallResult.CallConnection.CallConnectionId);
+            ValidateCallConnectionProperties(answerCallResult.CallConnectionProperties);
+        }
+
+        private static void ValidateCallConnectionProperties(CallConnectionProperties properties)
+        {
+            Assert.NotNull(properties);
+            Assert.AreEqual("callConnectionId", properties.CallConnectionId);
+            Assert.AreEqual(CallConnectionState.Connecting, properties.CallConnectionState);
+            Assert.NotNull(properties.CallSource);
+            Assert.AreEqual("dummySourceUser", properties.CallSource.Identifier.RawId);
+            Assert.AreEqual("serverCallId", properties.ServerCallId);
+            Assert.AreEqual(1, properties.Targets.Count);
         }
 
         // exceptions

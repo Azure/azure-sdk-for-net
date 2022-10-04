@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> The Key Vault ARM Id for client secrets. </summary>
-        public string ClientSecretStoreId { get; set; }
+        public ResourceIdentifier ClientSecretStoreId { get; set; }
         /// <summary> The url to access the Client Key Vault. </summary>
         public Uri ClientSecretStoreUri { get; set; }
         /// <summary> The name for Channel Integrity Key stored in the Client Key Vault. </summary>
@@ -26,6 +27,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> The version of Channel Integrity Key stored in the Client Key Vault. </summary>
         public string ChannelIntegrityKeyVersion { get; set; }
         /// <summary> For changing or to initiate the resync to key-vault set the status to KeyVaultSyncPending, rest of the status will not be applicable. </summary>
-        public KeyVaultSyncStatus? SyncStatus { get; set; }
+        public EdgeKeyVaultSyncStatus? SyncStatus { get; set; }
     }
 }

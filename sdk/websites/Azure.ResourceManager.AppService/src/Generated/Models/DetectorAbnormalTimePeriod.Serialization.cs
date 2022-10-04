@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> message = default;
             Optional<string> source = default;
             Optional<double> priority = default;
-            Optional<IList<IList<NameValuePair>>> metaData = default;
-            Optional<IssueType> type = default;
-            Optional<IList<Solution>> solutions = default;
+            Optional<IList<IList<AppServiceNameValuePair>>> metaData = default;
+            Optional<DetectorIssueType> type = default;
+            Optional<IList<DiagnosticSolution>> solutions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"))
@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IList<NameValuePair>> array = new List<IList<NameValuePair>>();
+                    List<IList<AppServiceNameValuePair>> array = new List<IList<AppServiceNameValuePair>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<NameValuePair> array0 = new List<NameValuePair>();
+                        List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                         foreach (var item0 in item.EnumerateArray())
                         {
-                            array0.Add(NameValuePair.DeserializeNameValuePair(item0));
+                            array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
                         }
                         array.Add(array0);
                     }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = property.Value.GetString().ToIssueType();
+                    type = property.Value.GetString().ToDetectorIssueType();
                     continue;
                 }
                 if (property.NameEquals("solutions"))
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Solution> array = new List<Solution>();
+                    List<DiagnosticSolution> array = new List<DiagnosticSolution>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Solution.DeserializeSolution(item));
+                        array.Add(DiagnosticSolution.DeserializeDiagnosticSolution(item));
                     }
                     solutions = array;
                     continue;

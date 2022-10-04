@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="providerPrimaryPeeringLocation"> The primary peering (Microsoft/service provider) location to be used for customer traffic. </param>
         /// <param name="providerBackupPeeringLocation"> The backup peering (Microsoft/service provider) location to be used for customer traffic. </param>
         /// <param name="logAnalyticsWorkspaceProperties"> The Log Analytics Workspace Properties. </param>
-        internal PeeringServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PeeringServiceSku sku, string peeringServiceLocation, string peeringServiceProvider, ProvisioningState? provisioningState, string providerPrimaryPeeringLocation, string providerBackupPeeringLocation, LogAnalyticsWorkspaceProperties logAnalyticsWorkspaceProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal PeeringServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PeeringServiceSku sku, string peeringServiceLocation, string peeringServiceProvider, PeeringProvisioningState? provisioningState, string providerPrimaryPeeringLocation, string providerBackupPeeringLocation, PeeringLogAnalyticsWorkspaceProperties logAnalyticsWorkspaceProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             PeeringServiceLocation = peeringServiceLocation;
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Peering
         /// <summary> The name of the service provider. </summary>
         public string PeeringServiceProvider { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PeeringProvisioningState? ProvisioningState { get; }
         /// <summary> The primary peering (Microsoft/service provider) location to be used for customer traffic. </summary>
         public string ProviderPrimaryPeeringLocation { get; set; }
         /// <summary> The backup peering (Microsoft/service provider) location to be used for customer traffic. </summary>
         public string ProviderBackupPeeringLocation { get; set; }
         /// <summary> The Log Analytics Workspace Properties. </summary>
-        public LogAnalyticsWorkspaceProperties LogAnalyticsWorkspaceProperties { get; set; }
+        public PeeringLogAnalyticsWorkspaceProperties LogAnalyticsWorkspaceProperties { get; set; }
     }
 }

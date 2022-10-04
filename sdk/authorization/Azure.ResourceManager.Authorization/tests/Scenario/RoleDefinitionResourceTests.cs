@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         {
         }
 
-        private async Task<RoleDefinitionCollection> GetRoleDefinitionCollectionAsync()
+        private async Task<AuthorizationRoleDefinitionCollection> GetRoleDefinitionCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            return resourceGroup.GetRoleDefinitions();
+            return resourceGroup.GetAuthorizationRoleDefinitions();
         }
 
         [Test]

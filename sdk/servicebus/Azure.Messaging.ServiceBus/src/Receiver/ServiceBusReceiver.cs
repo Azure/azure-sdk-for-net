@@ -12,8 +12,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Primitives;
+using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -304,10 +307,8 @@ namespace Azure.Messaging.ServiceBus
                 DiagnosticProperty.ReceiveActivityName,
                 DiagnosticScope.ActivityKind.Client);
 
-            scope.Start();
-
             IReadOnlyList<ServiceBusReceivedMessage> messages = null;
-
+            var startTime = DateTime.UtcNow;
             try
             {
                 messages = await InnerReceiver.ReceiveMessagesAsync(
@@ -318,19 +319,23 @@ namespace Azure.Messaging.ServiceBus
             catch (OperationCanceledException ex)
                 when (isProcessor && cancellationToken.IsCancellationRequested)
             {
+                scope.BackdateStart(startTime);
                 Logger.ProcessorStoppingReceiveCanceled(Identifier, ex.ToString());
                 scope.Failed(ex);
                 throw;
             }
             catch (Exception exception)
             {
+                scope.BackdateStart(startTime);
                 Logger.ReceiveMessageException(Identifier, exception.ToString());
                 scope.Failed(exception);
                 throw;
             }
 
-            Logger.ReceiveMessageComplete(Identifier, messages);
             scope.SetMessageData(messages);
+            scope.BackdateStart(startTime);
+
+            Logger.ReceiveMessageComplete(Identifier, messages);
 
             return messages;
         }
@@ -467,9 +472,10 @@ namespace Azure.Messaging.ServiceBus
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.PeekActivityName,
                 DiagnosticScope.ActivityKind.Client);
-            scope.Start();
 
             IReadOnlyList<ServiceBusReceivedMessage> messages;
+            var startTime = DateTime.UtcNow;
+
             try
             {
                 messages = await InnerReceiver.PeekMessagesAsync(
@@ -480,6 +486,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
+                scope.BackdateStart(startTime);
                 Logger.PeekMessageException(Identifier, exception.ToString());
                 scope.Failed(exception);
                 throw;
@@ -487,6 +494,7 @@ namespace Azure.Messaging.ServiceBus
 
             Logger.PeekMessageComplete(Identifier, messages.Count);
             scope.SetMessageData(messages);
+            scope.BackdateStart(startTime);
             return messages;
         }
 
@@ -685,6 +693,86 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to dead-letter.</param>
         /// <param name="deadLetterReason">The reason for dead-lettering the message.</param>
         /// <param name="deadLetterErrorDescription">The error description for dead-lettering the message.</param>
+        /// <param name="propertiesToModify">The properties of the message to modify while moving to subqueue.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>
+        /// In order to receive a message from the dead-letter queue or transfer dead-letter queue,
+        /// set the <see cref="ServiceBusReceiverOptions.SubQueue"/> property to <see cref="SubQueue.DeadLetter"/>
+        /// or <see cref="SubQueue.TransferDeadLetter"/> when calling
+        /// <see cref="ServiceBusClient.CreateReceiver(string, ServiceBusReceiverOptions)"/> or
+        /// <see cref="ServiceBusClient.CreateReceiver(string, string, ServiceBusReceiverOptions)"/>.
+        /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
+        /// The dead letter reason and error description can only be specified either through the method parameters or hard coded
+        /// using this properties.
+        /// </remarks>
+        /// <exception cref="ServiceBusException">
+        ///   <list type="bullet">
+        ///     <item>
+        ///       <description>
+        ///         The lock for the message has expired or the message has already been completed. This does not apply for session-enabled entities.
+        ///         The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageLockLost"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         The lock for the session has expired or the message has already been completed. This only applies for session-enabled entities.
+        ///         The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///   </list>
+        /// </exception>
+        /// <exception cref="InvalidOperationException">
+        ///   <list type="bullet">
+        ///     <item>
+        ///       <description>
+        ///         The dead letter reason or dead letter error exception was specified in both the parameter and the properties dictionary.
+        ///       </description>
+        ///     </item>
+        ///   </list>
+        /// </exception>
+        public virtual async Task DeadLetterMessageAsync(
+            ServiceBusReceivedMessage message,
+            IDictionary<string, object> propertiesToModify,
+            string deadLetterReason,
+            string deadLetterErrorDescription = default,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(message, nameof(message));
+            Argument.AssertNotNull(propertiesToModify, nameof(propertiesToModify));
+
+            // Prevent properties and arguments from setting distinct deadletter reasons or error descriptions
+            bool containsReasonHeader = propertiesToModify.TryGetValue(AmqpMessageConstants.DeadLetterReasonHeader, out object reasonHeaderProperty);
+            bool containsDescriptionHeader = propertiesToModify.TryGetValue(AmqpMessageConstants.DeadLetterErrorDescriptionHeader, out object descriptionHeaderProperty);
+
+            bool setsReasonHeaderTwice = containsReasonHeader && deadLetterReason != null;
+            bool setsDescriptionHeaderTwice = containsDescriptionHeader && deadLetterErrorDescription != null;
+
+            if (setsReasonHeaderTwice && (reasonHeaderProperty is not string || reasonHeaderProperty.ToString() != deadLetterReason))
+            {
+                throw new InvalidOperationException("Differing deadletter reasons cannot be specified for both the 'propertiesToModify' and 'deadLetterReason' parameters. The values should either be identical or only be specified in one of the parameters.");
+            }
+
+            if (setsDescriptionHeaderTwice && (descriptionHeaderProperty is not string || descriptionHeaderProperty.ToString() != deadLetterErrorDescription))
+            {
+                throw new InvalidOperationException("Differing deadletter error descriptions cannot be specified for both the 'propertiesToModify' and 'deadLetterErrorDescription' parameters. The values should either be identical or only be specified in one of the parameters.");
+            }
+
+            await DeadLetterInternalAsync(
+                message: message,
+                deadLetterReason: deadLetterReason,
+                deadLetterErrorDescription: deadLetterErrorDescription,
+                propertiesToModify: propertiesToModify,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Moves a message to the dead-letter subqueue.
+        /// </summary>
+        ///
+        /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to dead-letter.</param>
+        /// <param name="deadLetterReason">The reason for dead-lettering the message.</param>
+        /// <param name="deadLetterErrorDescription">The error description for dead-lettering the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
@@ -739,10 +827,10 @@ namespace Azure.Messaging.ServiceBus
         /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockTokenGuid"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// In order to receive a message from the dead-letter queue, you will need a new <see cref="ServiceBusReceiver"/>, with the corresponding path.
-        /// You can use EntityNameHelper.FormatDeadLetterPath(string) to help with this.
+        /// You can use <see cref="ServiceBusReceiverOptions.SubQueue"/> with <see cref="SubQueue.DeadLetter"/> to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
-        private async Task DeadLetterInternalAsync(
+        internal virtual async Task DeadLetterInternalAsync(
             ServiceBusReceivedMessage message,
             string deadLetterReason = default,
             string deadLetterErrorDescription = default,

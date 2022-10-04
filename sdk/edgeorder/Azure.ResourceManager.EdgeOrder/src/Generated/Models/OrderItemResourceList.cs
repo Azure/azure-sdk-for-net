@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of OrderItemResourceList. </summary>
         internal OrderItemResourceList()
         {
-            Value = new ChangeTrackingList<OrderItemResourceData>();
+            Value = new ChangeTrackingList<EdgeOrderItemData>();
         }
 
         /// <summary> Initializes a new instance of OrderItemResourceList. </summary>
         /// <param name="value"> List of order item resources. </param>
         /// <param name="nextLink"> Link for the next set of order item resources. </param>
-        internal OrderItemResourceList(IReadOnlyList<OrderItemResourceData> value, string nextLink)
+        internal OrderItemResourceList(IReadOnlyList<EdgeOrderItemData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of order item resources. </summary>
-        public IReadOnlyList<OrderItemResourceData> Value { get; }
+        public IReadOnlyList<EdgeOrderItemData> Value { get; }
         /// <summary> Link for the next set of order item resources. </summary>
         public string NextLink { get; }
     }

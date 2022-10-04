@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Purview
 {
     /// <summary>
     /// A class representing a collection of <see cref="PurviewPrivateLinkResource" /> and their operations.
-    /// Each <see cref="PurviewPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="AccountResource" />.
-    /// To get a <see cref="PurviewPrivateLinkResourceCollection" /> instance call the GetPurviewPrivateLinkResources method from an instance of <see cref="AccountResource" />.
+    /// Each <see cref="PurviewPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="PurviewAccountResource" />.
+    /// To get a <see cref="PurviewPrivateLinkResourceCollection" /> instance call the GetPurviewPrivateLinkResources method from an instance of <see cref="PurviewAccountResource" />.
     /// </summary>
     public partial class PurviewPrivateLinkResourceCollection : ArmCollection, IEnumerable<PurviewPrivateLinkResource>, IAsyncEnumerable<PurviewPrivateLinkResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Purview
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AccountResource.ResourceType), nameof(id));
+            if (id.ResourceType != PurviewAccountResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PurviewAccountResource.ResourceType), nameof(id));
         }
 
         /// <summary>

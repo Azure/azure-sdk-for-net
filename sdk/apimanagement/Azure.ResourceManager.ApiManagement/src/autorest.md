@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: ApiManagement
 namespace: Azure.ResourceManager.ApiManagement
-require: https://github.com/Azure/azure-rest-api-specs/blob/b9b91929c304f8fb44002267b6c98d9fb9dde014/specification/apimanagement/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/2f28b5026a4b44adefd0237087acb0c48cfe31a6/specification/apimanagement/resource-manager/readme.md
 tag: package-2021-08
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -19,6 +19,12 @@ skip-serialization-format-xml: true
 
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/locations/{location}/deletedservices/{serviceName}
+
+request-path-is-non-resource:
+# The Id of content type does not meet the criteria of ResourceIdentifier (E.g. /contentTypes/page)
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}
+# The Id of content item does not meet the criteria of ResourceIdentifier (E.g. /contentTypes/page/contentItems/4e3cf6a5-574a-ba08-1f23-2e7a38faa6d8)
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/diagnostics/{diagnosticId}: ApiDiagnostic
@@ -95,6 +101,10 @@ override-operation-name:
   ProductGroup_CheckEntityExists: CheckProductGroupEntityExists
   ApiManagementService_CheckNameAvailability: CheckApiManagementServiceNameAvailability
   ApiManagementService_GetDomainOwnershipIdentifier: GetApiManagementServiceDomainOwnershipIdentifier
+  ContentType_ListByService: GetContentTypes
+  ContentItem_ListByService: GetContentItems
+  ContentItem_GetEntityTag: GetContentItemEntityTag
+  ProductSubscriptions_List: GetAllProductSubscriptionData # temporary - to be removed once the polymorphic resource change is merged.
 
 prepend-rp-prefix:
 - ResourceSkuCapacity
@@ -155,7 +165,7 @@ rename-mapping:
   BackendContract: ApiManagementBackend
   CacheContract: ApiManagementCache
   CertificateContract: ApiManagementCertificate
-  CertificateContract.properties.expirationDate: ExpiresOn
+  CertificateContract.properties.expirationDate: ExpireOn
   CertificateContract.properties.keyVault: KeyVaultDetails
   CertificateCreateOrUpdateParameters.properties.keyVault: KeyVaultDetails
   ContentTypeContract: ApiManagementContentType
@@ -194,7 +204,7 @@ rename-mapping:
   ProductState: ApiManagementProductState
   UserState: ApiManagementUserState
   TagCreateUpdateParameters: ApiManagementTagCreateOrUpdateContent
-  SubscriptionContract.properties.expirationDate: ExpiresOn
+  SubscriptionContract.properties.expirationDate: ExpireOn
   SubscriptionContract.properties.notificationDate: NotifiesOn
   UserContract.properties.registrationDate: RegistriesOn
   AccessInformationSecretsContract: TenantAccessInfoSecretsDetails
@@ -206,7 +216,7 @@ rename-mapping:
   ApiType.graphql: GraphQL
   ProvisioningState: AssociationEntityProvisioningState
   AuthenticationSettingsContract.openid: OpenId
-  CertificateInformation.expiry: ExpiresOn
+  CertificateInformation.expiry: ExpireOn
   Confirmation: ConfirmationEmailType
   Confirmation.signup: SignUp
   ConnectivityCheckProtocol.TCP: Tcp
@@ -230,14 +240,14 @@ rename-mapping:
   PolicyContentFormat.rawxml-link: RawXmlLink
   PolicyIdName: PolicyName
   ProductEntityBaseParameters: ProductEntityBaseProperties
-  SubscriptionUpdateParameters.properties.expirationDate: ExpiresOn
+  SubscriptionUpdateParameters.properties.expirationDate: ExpireOn
   SettingsTypeName: SettingsType
   TagResourceContract: TagResourceContractDetails
   TagResourceContractProperties: AssociatedTagProperties
   ApiTagResourceContractProperties: AssociatedApiProperties
   OperationTagResourceContractProperties: AssociatedOperationProperties
   ProductTagResourceContractProperties: AssociatedProductProperties
-  UserTokenParameters.properties.expiry: ExpiresOn
+  UserTokenParameters.properties.expiry: ExpireOn
   AuthorizationMethod.GET: Get
   AuthorizationMethod.PUT: Put
   GroupContractProperties.builtIn: IsBuiltIn
@@ -311,7 +321,8 @@ directive:
   - from: apimdeployment.json
     where: $.definitions
     transform: >
-      $.Operation['x-ms-client-name'] = 'RestApiOperation';
+      delete $.Operation;
+      delete $.OperationListResult;
       $.VirtualNetworkConfiguration.properties.vnetid['format'] = 'uuid';
       $.VirtualNetworkConfiguration.properties.subnetResourceId['x-ms-format'] = 'arm-id';
       $.ResourceSkuResult.properties.resourceType['x-ms-format'] = 'resource-type';
@@ -321,8 +332,219 @@ directive:
     where: $.parameters
     transform: >
       $.OpenIdConnectIdParameter['x-ms-client-name'] = 'OpenId';
+      $.IfMatchOptionalParameter['x-ms-format'] = 'etag';
+      $.IfMatchRequiredParameter['x-ms-format'] = 'etag';
+  - from: apimgroups.json
+    where: $.paths
+    transform: >
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}/users'].get.responses['200'].schema = {
+          "x-ms-client-name": "ApiManagementGroupUserListResult",
+          "type": "object",
+          "properties": {
+              "value": {
+                  "type": "array",
+                  "items": {
+                      "x-ms-client-name": "ApiManagementGroupUserData",
+                      "type": "object",
+                      "allOf": [
+                          {
+                              "$ref": "./definitions.json#/definitions/UserContract"
+                          }
+                      ]
+                  },
+                  "description": "Page values."
+              },
+              "count": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "Total record count number across all pages."
+              },
+              "nextLink": {
+                  "type": "string",
+                  "description": "Next page link if any."
+              }
+          },
+          "description": "Paged Group Users list representation."
+        }
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}/users/{userId}'].put.responses['200'].schema = {
+          "x-ms-client-name": "ApiManagementGroupUserData",
+          "type": "object",
+          "allOf": [
+              {
+                  "$ref": "./definitions.json#/definitions/UserContract"
+              }
+          ]
+        }
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}/users/{userId}'].put.responses['201'].schema = {
+          "x-ms-client-name": "ApiManagementGroupUserData",
+          "type": "object",
+          "allOf": [
+              {
+                  "$ref": "./definitions.json#/definitions/UserContract"
+              }
+          ]
+        }
+    reason: Modify the original swagger since the id in the real response is slightly different from the ApiManagementUserResource.
+  - from: apimgateways.json
+    where: $.paths
+    transform: >
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/apis'].get.responses['200'].schema = {
+          "x-ms-client-name": "ApiManagementGatewayApiListResult",
+          "type": "object",
+          "properties": {
+              "value": {
+                  "type": "array",
+                  "items": {
+                      "x-ms-client-name": "GatewayApiData",
+                      "type": "object",
+                      "allOf": [
+                          {
+                              "$ref": "./definitions.json#/definitions/ApiContract"
+                          }
+                      ]
+                  },
+                  "description": "Page values.",
+                  "readOnly": true
+              },
+              "count": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "Total record count number across all pages."
+              },
+              "nextLink": {
+                  "type": "string",
+                  "description": "Next page link if any.",
+                  "readOnly": true
+              }
+          },
+          "description": "Paged API list representation."
+        }
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/apis/{apiId}'].put.responses['200'].schema = {
+          "x-ms-client-name": "GatewayApiData",
+          "type": "object",
+          "allOf": [
+              {
+                  "$ref": "./definitions.json#/definitions/ApiContract"
+              }
+          ]
+        }
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/apis/{apiId}'].put.responses['201'].schema = {
+          "x-ms-client-name": "GatewayApiData",
+          "type": "object",
+          "allOf": [
+              {
+                  "$ref": "./definitions.json#/definitions/ApiContract"
+              }
+          ]
+        }
+    reason: Modify the original swagger since the id in the real response is slightly different from the ApiResource.
+  - from: apimproducts.json
+    where: $.paths
+    transform: >
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/apis'].get.responses['200'].schema = {
+          "x-ms-client-name": "ApiManagementProductApiListResult",
+          "type": "object",
+          "properties": {
+              "value": {
+                  "type": "array",
+                  "items": {
+                      "x-ms-client-name": "ProductApiData",
+                      "type": "object",
+                      "allOf": [
+                          {
+                              "$ref": "./definitions.json#/definitions/ApiContract"
+                          }
+                      ]
+                  },
+                  "description": "Page values.",
+                  "readOnly": true
+              },
+              "count": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "Total record count number across all pages."
+              },
+              "nextLink": {
+                  "type": "string",
+                  "description": "Next page link if any.",
+                  "readOnly": true
+              }
+          },
+          "description": "Paged API list representation."
+        }
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/apis/{apiId}'].put.responses['200'].schema = {
+          "x-ms-client-name": "ProductApiData",
+          "type": "object",
+          "allOf": [
+              {
+                  "$ref": "./definitions.json#/definitions/ApiContract"
+              }
+          ]
+        }
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/apis/{apiId}'].put.responses['201'].schema = {
+          "x-ms-client-name": "ProductApiData",
+          "type": "object",
+          "allOf": [
+              {
+                  "$ref": "./definitions.json#/definitions/ApiContract"
+              }
+          ]
+        }
+    reason: Modify the original swagger since the id in the real response is slightly different from the ApiResource.
+  - from: apimproducts.json
+    where: $.paths
+    transform: >
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/groups'].get.responses['200'].schema = {
+          "x-ms-client-name": "ApiManagementProductGroupListResult",
+          "type": "object",
+          "properties": {
+              "value": {
+                  "type": "array",
+                  "items": {
+                      "x-ms-client-name": "ProductGroupData",
+                      "type": "object",
+                      "allOf": [
+                          {
+                              "$ref": "./definitions.json#/definitions/GroupContract"
+                          }
+                      ]
+                  },
+                  "description": "Page values.",
+                  "readOnly": true
+              },
+              "count": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "Total record count number across all pages."
+              },
+              "nextLink": {
+                  "type": "string",
+                  "description": "Next page link if any."
+              }
+          },
+          "description": "Paged Group list representation."
+        }
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/groups/{groupId}'].put.responses['200'].schema = {
+          "x-ms-client-name": "ProductGroupData",
+          "type": "object",
+          "allOf": [
+              {
+                  "$ref": "./definitions.json#/definitions/GroupContract"
+              }
+          ]
+        }
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/groups/{groupId}'].put.responses['201'].schema = {
+          "x-ms-client-name": "ProductGroupData",
+          "type": "object",
+          "allOf": [
+              {
+                  "$ref": "./definitions.json#/definitions/GroupContract"
+              }
+          ]
+        }
+    reason: Modify the original swagger since the id in the real response is slightly different from the ApiManagementGroupResource.
   - from: swagger-document
     where: $..[?(@.name=='$orderby')]
-    transform: $['x-ms-client-name'] = 'orderBy' 
+    transform: $['x-ms-client-name'] = 'orderBy'
 
 ```
