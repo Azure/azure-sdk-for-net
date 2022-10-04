@@ -93,10 +93,10 @@ namespace Azure.Core.Pipeline
                     message.ProcessingContext.LastException = ex;
                 }
 
-                // If we got a response for this request, trigger OnResponse. We don't rely on no exception being thrown because it's possible
-                // a policy later in the pipeline could throw after receiving a response, but we still want to allow OnResponse to be called
-                // in this case.
-                if (message.Request.ClientRequestId == message.Response.ClientRequestId)
+                // If we got a response for this request, trigger OnResponse. We can't assume that an exception being thrown means there was no response
+                // since it's possible a policy later in the pipeline could throw after receiving a response. We need to compare the request/response Ids
+                // to make sure we're not triggering OnResponse for a previous response.
+                if (message.HasResponse && message.Request.ClientRequestId == message.Response.ClientRequestId)
                 {
                     if (async)
                     {
@@ -150,9 +150,9 @@ namespace Azure.Core.Pipeline
                     message.Response.ContentStream?.Dispose();
                 }
 
-                message.ProcessingContext.AttemptNumber++;
                 AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, message.ProcessingContext.AttemptNumber,
                     elapsed);
+                message.ProcessingContext.AttemptNumber++;
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.Core.Pipeline
 
         private bool ShouldRetryInternal(HttpMessage message)
         {
-            if (message.ProcessingContext!.AttemptNumber <= _maxRetries + 1)
+            if (message.ProcessingContext!.AttemptNumber <= _maxRetries)
             {
                 if (message.ProcessingContext!.LastException != null)
                 {
