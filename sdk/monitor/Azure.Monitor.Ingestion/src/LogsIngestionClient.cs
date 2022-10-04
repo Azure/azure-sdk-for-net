@@ -409,6 +409,7 @@ namespace Azure.Monitor.Ingestion
         /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -442,13 +443,14 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual async Task<Response> UploadAsync(string ruleId, string streamName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> UploadAsync(string ruleId, string streamName, RequestContent content, RequestContext context = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
             try
             {
                 scope.Start();
-                return await UploadInternalAsync(ruleId, streamName, content, "gzip", context).ConfigureAwait(false);
+                using HttpMessage message = CreateUploadRequest(ruleId, streamName, content, "gzip", context);
+                return await _pipeline.ProcessMessageAsync(message, context, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -462,6 +464,7 @@ namespace Azure.Monitor.Ingestion
         /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -495,13 +498,14 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        internal virtual Response Upload(string ruleId, string streamName, RequestContent content, RequestContext context = null)
+        internal virtual Response Upload(string ruleId, string streamName, RequestContent content, RequestContext context = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
             try
             {
                 scope.Start();
-                return UploadInternal(ruleId, streamName, content, "gzip", context);
+                using HttpMessage message = CreateUploadRequest(ruleId, streamName, content, "gzip", context);
+                return _pipeline.ProcessMessage(message, context, cancellationToken);
             }
             catch (Exception ex)
             {

@@ -18,7 +18,7 @@ namespace Azure.Monitor.Ingestion.Tests
     public class MonitorIngestionLiveTest : RecordedTestBase<MonitorIngestionTestEnvironment>
     {
         private const int Mb = 1024 * 1024;
-        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync)
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.Monitor.Ingestion.Tests
         public void NullInput()
         {
             LogsIngestionClient client = CreateClient();
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, null).ConfigureAwait(false));
+            Assert.ThrowsAsync<NullReferenceException>(async () => await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, null).ConfigureAwait(false));
         }
 
         [Test]
@@ -178,34 +178,6 @@ namespace Azure.Monitor.Ingestion.Tests
 
         [Test]
         public async Task ValidInputFromObjectAsJsonNoBatchingAsync()
-        {
-            LogsIngestionClient client = CreateClient();
-
-            BinaryData data = BinaryData.FromObjectAsJson(
-                // Use an anonymous type to create the payload
-                new[] {
-                    new
-                    {
-                        Time = Recording.Now.DateTime,
-                        Computer = "Computer1",
-                        AdditionalContext = 2,
-                    },
-                    new
-                    {
-                        Time = Recording.Now.DateTime,
-                        Computer = "Computer2",
-                        AdditionalContext = 3
-                    },
-                });
-
-            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(data)).ConfigureAwait(false); //takes StreamName not tablename
-            // Check the response
-            Assert.AreEqual(204, response.Status);
-            Assert.IsFalse(response.IsError);
-        }
-
-        [Test]
-        public async Task ValidInputFromObjectAsJsonNoBatchingNullEncodingAsync()
         {
             LogsIngestionClient client = CreateClient();
 

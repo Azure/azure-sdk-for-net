@@ -7,20 +7,20 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Encoding": "gzip",
-        "Content-Length": "167",
+        "Content-Length": "169",
         "Content-Type": "application/json",
-        "traceparent": "00-1cba7ac51633d1488cbbfd065e6616ef-941e5bf303de3b42-00",
-        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20220928.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "f0f3d5ff31f04ea939382bc1608071ef",
+        "traceparent": "00-3f475542d4daa3f2ead84da2317cb608-c01192a07869edd0-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20221004.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "83366c6b050655db10b5d1ccced0b857",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "[{\u0022Time\u0022:\u00222022-09-28T12:54:12.130178\u0022,\u0022Computer\u0022:\u0022Computer1\u0022,\u0022AdditionalContext\u0022:2},{\u0022Time\u0022:\u00222022-09-28T12:54:12.130178\u0022,\u0022Computer\u0022:\u0022Computer2\u0022,\u0022AdditionalContext\u0022:3}]",
+      "RequestBody": "[{\u0022Time\u0022:\u00222022-10-04T14:26:51.3427448\u0022,\u0022Computer\u0022:\u0022Computer1\u0022,\u0022AdditionalContext\u0022:2},{\u0022Time\u0022:\u00222022-10-04T14:26:51.3427448\u0022,\u0022Computer\u0022:\u0022Computer2\u0022,\u0022AdditionalContext\u0022:3}]",
       "StatusCode": 204,
       "ResponseHeaders": {
-        "Date": "Wed, 28 Sep 2022 19:54:16 GMT",
+        "Date": "Tue, 04 Oct 2022 21:26:53 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "f0f3d5ff-31f0-4ea9-3938-2bc1608071ef",
-        "x-ms-request-id": "7f77de79-291a-45cb-80cb-6d1f35abd7cf"
+        "x-ms-client-request-id": "83366c6b-0506-55db-10b5-d1ccced0b857",
+        "x-ms-request-id": "4d990431-75a1-4136-b4ab-b5cc75576250"
       },
       "ResponseBody": null
     }
@@ -30,7 +30,7 @@
     "AZURE_MONITOR_INGESTION_DATA_COLLECTION_ENDPOINT": "https://nibhati-dce-final-vhac.westus2-1.ingest.monitor.azure.com",
     "AZURE_MONITOR_INGESTION_LOGS_DCR_RULE_ID": "dcr-981bcfe0506f41f5b5168f3368499cfa",
     "AZURE_MONITOR_INGESTION_LOGS_DCR_STREAM_NAME": "Custom-MyTableRawData",
-    "DateTimeOffsetNow": "2022-09-28T12:54:12.1301780-07:00",
-    "RandomSeed": "82743447"
+    "DateTimeOffsetNow": "2022-10-04T14:26:51.3427448-07:00",
+    "RandomSeed": "1195091348"
   }
 }
