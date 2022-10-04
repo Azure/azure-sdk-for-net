@@ -30,6 +30,53 @@ namespace Azure.Maps.Routing
             V1_0 = 1,
         }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RoutingLanguage : System.IEquatable<Azure.Maps.Routing.RoutingLanguage>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RoutingLanguage(string value) { throw null; }
+        public static Azure.Maps.Routing.RoutingLanguage Afrikaans { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Arabic { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Bulgarian { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Czech { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Danish { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage DutchNetherlands { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage EnglishGreatBritain { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage EnglishUSA { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Finnish { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage FrenchFrance { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage German { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Greek { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Hungarian { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Indonesian { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Italian { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Korean { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Lithuanian { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Malay { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Norwegian { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Polish { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage PortugueseBrazil { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage PortuguesePortugal { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Russian { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Slovak { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Slovenian { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage SpanishMexico { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage SpanishSpain { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Swedish { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Thai { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage TraditionalChinese { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Turkish { get { throw null; } }
+        public bool Equals(Azure.Maps.Routing.RoutingLanguage other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Maps.Routing.RoutingLanguage left, Azure.Maps.Routing.RoutingLanguage right) { throw null; }
+        public static implicit operator Azure.Maps.Routing.RoutingLanguage (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Routing.RoutingLanguage left, Azure.Maps.Routing.RoutingLanguage right) { throw null; }
+        public override string ToString() { throw null; }
+    }
 }
 namespace Azure.Maps.Routing.Models
 {
@@ -348,7 +395,7 @@ namespace Azure.Maps.Routing.Models
         public Azure.Maps.Routing.Models.InclineLevel? InclineLevel { get { throw null; } set { } }
         public Azure.Maps.Routing.Models.RouteInstructionsType? InstructionsType { get { throw null; } set { } }
         public bool? IsCommercialVehicle { get { throw null; } set { } }
-        public string Language { get { throw null; } set { } }
+        public Azure.Maps.Routing.RoutingLanguage Language { get { throw null; } set { } }
         public int? MaxAlternatives { get { throw null; } set { } }
         public double? MaxChargeInKwH { get { throw null; } set { } }
         public int? MinDeviationDistance { get { throw null; } set { } }
