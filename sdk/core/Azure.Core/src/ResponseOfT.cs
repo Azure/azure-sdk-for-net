@@ -14,7 +14,7 @@ namespace Azure
     [DebuggerTypeProxy(typeof(ResponseDebugView<>))]
 #pragma warning disable SA1649 // File name should match first type name
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Response<T>
+    public abstract class Response<T> : NullableResponse<T>
 #pragma warning restore AZC0012 // Avoid single word type names
 #pragma warning restore SA1649 // File name should match first type name
     {
@@ -27,7 +27,7 @@ namespace Azure
         /// <summary>
         /// Gets the value returned by the service.
         /// </summary>
-        public abstract T Value { get; }
+        public new abstract T Value { get; }
 
         /// <summary>
         /// Returns the value of this <see cref="Response{T}"/> object.
