@@ -11,12 +11,12 @@ namespace Azure.Communication.CallAutomation
     public class RepeatabilityHeaders
     {
         /// <summary>
-        /// Repeatabiity Request Id.
+        /// If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID.
         /// </summary>
         public Guid? RepeatabilityRequestId { get; set; }
 
         /// <summary>
-        /// Repeatability First Sent.
+        /// If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created.
         /// </summary>
         public DateTimeOffset? RepeatabilityFirstSent { get; set; }
 
