@@ -18,7 +18,7 @@ namespace Azure.Monitor.Ingestion.Tests
     public class MonitorIngestionLiveTest : RecordedTestBase<MonitorIngestionTestEnvironment>
     {
         private const int Mb = 1024 * 1024;
-        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync)
+        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -226,7 +226,7 @@ namespace Azure.Monitor.Ingestion.Tests
                     },
                 });
 
-            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(data), null).ConfigureAwait(false); //takes StreamName not tablename
+            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(data)).ConfigureAwait(false); //takes StreamName not tablename
             // Check the response
             Assert.AreEqual(204, response.Status);
             Assert.IsFalse(response.IsError);

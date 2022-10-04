@@ -66,7 +66,7 @@ namespace Azure.Monitor.Ingestion
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call UploadAsync with required parameters and request content.
+        /// This sample shows how to call UploadInternalAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
@@ -76,10 +76,10 @@ namespace Azure.Monitor.Ingestion
         ///     new {}
         /// };
         /// 
-        /// Response response = await client.UploadAsync("<ruleId>", "<streamName>", RequestContent.Create(data));
+        /// Response response = await client.UploadInternalAsync("<ruleId>", "<streamName>", RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
         /// ]]></code>
-        /// This sample shows how to call UploadAsync with all parameters and request content.
+        /// This sample shows how to call UploadInternalAsync with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
@@ -89,22 +89,22 @@ namespace Azure.Monitor.Ingestion
         ///     new {}
         /// };
         /// 
-        /// Response response = await client.UploadAsync("<ruleId>", "<streamName>", RequestContent.Create(data), <gzip>);
+        /// Response response = await client.UploadInternalAsync("<ruleId>", "<streamName>", RequestContent.Create(data), <gzip>);
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual async Task<Response> UploadAsync(string ruleId, string streamName, RequestContent content, string contentEncoding = "gzip", RequestContext context = null)
+        internal virtual async Task<Response> UploadInternalAsync(string ruleId, string streamName, RequestContent content, string contentEncoding = "gzip", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
+            using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.UploadInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadRequest(ruleId, streamName, content, contentEncoding, context);
+                using HttpMessage message = CreateUploadInternalRequest(ruleId, streamName, content, contentEncoding, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -125,7 +125,7 @@ namespace Azure.Monitor.Ingestion
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call Upload with required parameters and request content.
+        /// This sample shows how to call UploadInternal with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
@@ -135,10 +135,10 @@ namespace Azure.Monitor.Ingestion
         ///     new {}
         /// };
         /// 
-        /// Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Create(data));
+        /// Response response = client.UploadInternal("<ruleId>", "<streamName>", RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
         /// ]]></code>
-        /// This sample shows how to call Upload with all parameters and request content.
+        /// This sample shows how to call UploadInternal with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
@@ -148,22 +148,22 @@ namespace Azure.Monitor.Ingestion
         ///     new {}
         /// };
         /// 
-        /// Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Create(data), <gzip>);
+        /// Response response = client.UploadInternal("<ruleId>", "<streamName>", RequestContent.Create(data), <gzip>);
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual Response Upload(string ruleId, string streamName, RequestContent content, string contentEncoding = "gzip", RequestContext context = null)
+        internal virtual Response UploadInternal(string ruleId, string streamName, RequestContent content, string contentEncoding = "gzip", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
+            using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.UploadInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadRequest(ruleId, streamName, content, contentEncoding, context);
+                using HttpMessage message = CreateUploadInternalRequest(ruleId, streamName, content, contentEncoding, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -171,6 +171,29 @@ namespace Azure.Monitor.Ingestion
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        internal HttpMessage CreateUploadInternalRequest(string ruleId, string streamName, RequestContent content, string contentEncoding, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/dataCollectionRules/", false);
+            uri.AppendPath(ruleId, true);
+            uri.AppendPath("/streams/", false);
+            uri.AppendPath(streamName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            if (contentEncoding != null)
+            {
+                request.Headers.Add("Content-Encoding", contentEncoding);
+            }
+            request.Content = content;
+            return message;
         }
 
         private static ResponseClassifier _responseClassifier204;
