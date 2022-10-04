@@ -79,7 +79,7 @@ namespace Azure.Core.Pipeline
 
                     // This request didn't result in an exception, so reset the LastException property
                     // in case it was set on a previous attempt.
-                    message.RetryContext.LastException = null;
+                    message.ProcessingContext.LastException = null;
                 }
                 catch (Exception ex)
                 {
@@ -90,7 +90,7 @@ namespace Azure.Core.Pipeline
 
                     exceptions.Add(ex);
 
-                    message.RetryContext.LastException = ex;
+                    message.ProcessingContext.LastException = ex;
                 }
 
                 // If we got a response for this request, trigger OnResponse. We don't rely on no exception being thrown because it's possible
@@ -126,16 +126,16 @@ namespace Azure.Core.Pipeline
                         }
                     }
                 }
-                else if (message.RetryContext.LastException != null)
+                else if (message.ProcessingContext.LastException != null)
                 {
                     // Rethrow a singular exception
                     if (exceptions!.Count == 1)
                     {
-                        ExceptionDispatchInfo.Capture(message.RetryContext.LastException).Throw();
+                        ExceptionDispatchInfo.Capture(message.ProcessingContext.LastException).Throw();
                     }
 
                     throw new AggregateException(
-                        $"Retry failed after {message.RetryContext.AttemptNumber} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.",
+                        $"Retry failed after {message.ProcessingContext.AttemptNumber} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.",
                         exceptions);
                 }
                 else
@@ -150,8 +150,8 @@ namespace Azure.Core.Pipeline
                     message.Response.ContentStream?.Dispose();
                 }
 
-                message.RetryContext.AttemptNumber++;
-                AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, message.RetryContext.AttemptNumber,
+                message.ProcessingContext.AttemptNumber++;
+                AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, message.ProcessingContext.AttemptNumber,
                     elapsed);
             }
         }
@@ -182,11 +182,11 @@ namespace Azure.Core.Pipeline
 
         private bool ShouldRetryInternal(HttpMessage message)
         {
-            if (message.RetryContext!.AttemptNumber <= _maxRetries + 1)
+            if (message.ProcessingContext!.AttemptNumber <= _maxRetries + 1)
             {
-                if (message.RetryContext!.LastException != null)
+                if (message.ProcessingContext!.LastException != null)
                 {
-                    return message.ResponseClassifier.IsRetriable(message, message.RetryContext!.LastException);
+                    return message.ResponseClassifier.IsRetriable(message, message.ProcessingContext!.LastException);
                 }
 
                 if (message.Response.IsError)
@@ -251,7 +251,7 @@ namespace Azure.Core.Pipeline
                     delay = _delay;
                     break;
                 case RetryMode.Exponential:
-                    delay = CalculateExponentialDelay(message.RetryContext!.AttemptNumber);
+                    delay = CalculateExponentialDelay(message.ProcessingContext!.AttemptNumber);
                     break;
             }
 

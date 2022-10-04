@@ -452,10 +452,10 @@ namespace Azure.Core
         public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public bool HasResponse { get { throw null; } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
+        public Azure.Core.ProcessingContext ProcessingContext { get { throw null; } }
         public Azure.Core.Request Request { get { throw null; } }
         public Azure.Response Response { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
-        public Azure.Core.RetryContext RetryContext { get { throw null; } }
         public void Dispose() { }
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
@@ -471,6 +471,13 @@ namespace Azure.Core
     {
         public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public partial class ProcessingContext
+    {
+        internal ProcessingContext() { }
+        public int AttemptNumber { get { throw null; } }
+        public System.Exception? LastException { get { throw null; } }
+        public System.DateTimeOffset OperationStartTime { get { throw null; } }
     }
     public abstract partial class Request : System.IDisposable
     {
@@ -646,13 +653,6 @@ namespace Azure.Core
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value) { throw null; }
         public bool TryGetValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
-    }
-    public partial class RetryContext
-    {
-        internal RetryContext() { }
-        public int AttemptNumber { get { throw null; } }
-        public System.Exception? LastException { get { throw null; } }
-        public System.DateTimeOffset OperationStartTime { get { throw null; } }
     }
     public enum RetryMode
     {

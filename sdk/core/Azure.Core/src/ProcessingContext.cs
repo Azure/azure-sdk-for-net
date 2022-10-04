@@ -6,9 +6,9 @@ using System;
 namespace Azure.Core
 {
     /// <summary>
-    /// Contains information related to request attempts made as part of the configured retry policy.
+    /// Contains information related to the processing of the <see cref="HttpMessage"/>.
     /// </summary>
-    public class RetryContext
+    public class ProcessingContext
     {
         /// <summary>
         /// The start time of the first try of the request.
@@ -25,7 +25,7 @@ namespace Azure.Core
         /// </summary>
         public Exception? LastException { get; internal set; }
 
-        internal RetryContext(DateTimeOffset startTime)
+        internal ProcessingContext(DateTimeOffset startTime)
         {
             OperationStartTime = startTime;
             AttemptNumber = 1;
