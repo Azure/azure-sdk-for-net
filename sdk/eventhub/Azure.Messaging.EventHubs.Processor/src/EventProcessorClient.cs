@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventHubs
         ///   This handler will be invoked concurrently, limited to one call per partition.  The processor will await each invocation before starting to process
         ///   the associated partition.
         ///
-        ///   No time limit is imposed on an invocation of this handler; the processor will wait indefinitely for execution to complete.  It is recommended for
+        ///   The processor will wait indefinitely for execution of the handler to complete.  It is recommended for
         ///   implementations to avoid long-running operations, as they will delay processing for the associated partition.
         /// </remarks>
         ///
