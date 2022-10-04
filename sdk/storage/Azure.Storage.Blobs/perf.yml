@@ -1,4 +1,7 @@
 parameters:
+- name: ToolsRepoCommitish
+  type: string
+  default: 'main'
 - name: PackageVersions
   displayName: PackageVersions (regex of package versions to run)
   type: string
@@ -23,6 +26,7 @@ parameters:
 extends:
   template: /eng/pipelines/templates/jobs/perf.yml
   parameters:
+    ToolsRepoCommitish: ${{ parameters.ToolsRepoCommitish }}
     ServiceDirectory: storage/Azure.Storage.Blobs
     Services: "^storage-blob$"
     PackageVersions: ${{ parameters.PackageVersions }}

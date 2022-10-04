@@ -1,4 +1,7 @@
 parameters:
+- name: ToolsRepoCommitish
+  type: string
+  default: 'main'
 - name: ServiceDirectory
   type: string
   default: ''
@@ -34,6 +37,7 @@ extends:
     - template: /eng/pipelines/templates/steps/install-dotnet.yml
       parameters:
         EnableNuGetCache: false
+    ToolsRepoCommitish: ${{ parameters.ToolsRepoCommitish }}
     ServiceDirectory: ${{ parameters.ServiceDirectory }}
     Services: ${{ parameters.Services }}
     PackageVersions: ${{ parameters.PackageVersions }}
