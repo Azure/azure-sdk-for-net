@@ -40,6 +40,11 @@ namespace Azure.Compute.Batch
             return HandleList(jobId, options, taskRest.GetTasks, Task.DeserializeTask);
         }
 
+        public virtual AsyncPageable<Task> ListAsync(string jobId, ListOptions options = null)
+        {
+            return HandleListAsync(jobId, options, taskRest.GetTasksAsync, Task.DeserializeTask);
+        }
+
         public virtual Response Add(string jobId, Task task)
         {
             return HandleAdd(jobId, task, taskRest.Add);

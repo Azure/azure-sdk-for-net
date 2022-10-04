@@ -23,8 +23,6 @@ namespace Azure.Compute.Tests.SessionTests
 {
     public class BatchRecordedTestBase : RecordedTestBase<BatchClientTestEnvironment>
     {
-        private string testJobId = "BatchRecordedTestBase_TestJob";
-
         public BatchRecordedTestBase(bool isAsync) : base(isAsync)
         {
         }
@@ -53,6 +51,7 @@ namespace Azure.Compute.Tests.SessionTests
             return batchClient;
         }
 
+        /*
         [RecordedTest]
         public async System.Threading.Tasks.Task TestOperation()
         {
@@ -71,6 +70,7 @@ namespace Azure.Compute.Tests.SessionTests
 
             return;
         }
+        */
 
         // Add live tests here. If you need more information please refer https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#live-testing and
         // here are some examples: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/synapse/Azure.Analytics.Synapse.AccessControl/tests/AccessControlClientLiveTests.cs.

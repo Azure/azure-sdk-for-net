@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Azure.Compute.Batch;
 using Azure.Compute.Batch.Models;
 using Azure.Core.TestFramework;
@@ -18,13 +19,13 @@ namespace Azure.Compute.Tests.SessionTests
         }
 
         [RecordedTest]
-        [SyncOnly]
-        public void GetSupportedImages()
+        public async System.Threading.Tasks.Task GetSupportedImages()
         {
             BatchServiceClient client = CreateClient();
             AccountClient accountClient = client.CreateAccountClient();
 
-            Pageable<ImageInformation> images = accountClient.GetSupportedImages();
+            AccountListSupportedImagesOptions options = new AccountListSupportedImagesOptions();
+            IEnumerable<ImageInformation> images = await accountClient.GetSupportedImagesAsync(options).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.IsNotEmpty(images);
         }

@@ -16,7 +16,9 @@ namespace Azure.Compute.Batch
         protected internal delegate Response ParentedGetOperation(string parentId, string id, string select, string expand, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
         protected internal delegate System.Threading.Tasks.Task<Response> ParentedGetOperationAsync(string parentId, string id, string select, string expand, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
         protected internal delegate Pageable<BinaryData> ListOperation(string filter, string select, string expand, int? maxResults, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context);
+        protected internal delegate AsyncPageable<BinaryData> ListOperationAsync(string filter, string select, string expand, int? maxResults, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context);
         protected internal delegate Pageable<BinaryData> ParentedListOperation(string parentId, string filter, string select, string expand, int? maxResults, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context);
+        protected internal delegate AsyncPageable<BinaryData> ParentedListOperationAsync(string parentId, string filter, string select, string expand, int? maxResults, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context);
         protected internal delegate Response AddOperation(RequestContent content, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context);
         protected internal delegate System.Threading.Tasks.Task<Response> AddOperationAsync(RequestContent content, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context);
         protected internal delegate Response ParentedAddOperation(string parentId, RequestContent content, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context);
@@ -73,7 +75,28 @@ namespace Azure.Compute.Batch
             return HandleList(data, deserialize);
         }
 
+        protected internal AsyncPageable<T> HandleListAsync<T>(ListOptions options, ListOperationAsync operation, Func<JsonElement, T> deserialize)
+        {
+            AsyncPageable<BinaryData> data = operation(options?.Filter, options?.Select, options?.Expand, options?.MaxResults, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.Context);
+            return HandleListAsync(data, deserialize);
+        }
+
         protected internal Pageable<T> HandleList<T>(Pageable<BinaryData> data, Func<JsonElement, T> deserialize)
+        {
+            return PageableHelpers.Select(data, response =>
+            {
+                JsonElement root = JsonDocument.Parse(response.Content).RootElement;
+                List<T> items = new List<T>();
+                foreach (JsonElement item in root.GetProperty("value").EnumerateArray())
+                {
+                    items.Add(deserialize(item));
+                }
+
+                return items;
+            });
+        }
+
+        protected internal AsyncPageable<T> HandleListAsync<T>(AsyncPageable<BinaryData> data, Func<JsonElement, T> deserialize)
         {
             return PageableHelpers.Select(data, response =>
             {
@@ -91,17 +114,13 @@ namespace Azure.Compute.Batch
         protected internal Pageable<T> HandleList<T>(string parentId, ListOptions options, ParentedListOperation operation, Func<JsonElement, T> deserialize)
         {
             Pageable<BinaryData> data = operation(parentId, options?.Filter, options?.Select, options?.Expand, options?.MaxResults, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.Context);
-            return PageableHelpers.Select(data, response =>
-            {
-                JsonElement root = JsonDocument.Parse(response.Content).RootElement;
-                List<T> items = new List<T>();
-                foreach (JsonElement item in root.GetProperty("value").EnumerateArray())
-                {
-                    items.Add(deserialize(item));
-                }
+            return HandleList(data, deserialize);
+        }
 
-                return items;
-            });
+        protected internal AsyncPageable<T> HandleListAsync<T>(string parentId, ListOptions options, ParentedListOperationAsync operation, Func<JsonElement, T> deserialize)
+        {
+            AsyncPageable<BinaryData> data = operation(parentId, options?.Filter, options?.Select, options?.Expand, options?.MaxResults, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.Context);
+            return HandleListAsync(data, deserialize);
         }
 
         protected Response HandleAdd(object contentObj, AddOperation add)

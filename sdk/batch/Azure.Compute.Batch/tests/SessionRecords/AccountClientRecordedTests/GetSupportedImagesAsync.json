@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-3a7f866cf56287c6da5d265bd2985c91-2f94a911dc386dec-00",
+        "traceparent": "00-608143ee642c0f9132c481d5e134478d-d3e4a6bc5571968a-00",
         "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20221004.1 (.NET 6.0.9; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "3fbbbba4fb2be0dcf035c3375e2fe929",
+        "x-ms-client-request-id": "66a89313d818b57614a3dfc10b2e2776",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,8 +16,8 @@
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
         "DataServiceVersion": "3.0",
-        "Date": "Tue, 04 Oct 2022 17:20:09 GMT",
-        "request-id": "8975ad01-3db5-471a-81d4-31ccc8a1d70a",
+        "Date": "Tue, 04 Oct 2022 17:20:10 GMT",
+        "request-id": "247dc0aa-0c5c-49aa-8db3-67921ea12f07",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
@@ -530,6 +530,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "BATCH_ENDPOINT": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com",
-    "RandomSeed": "2026547878"
+    "RandomSeed": "360942085"
   }
 }

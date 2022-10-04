@@ -27,5 +27,12 @@ namespace Azure.Compute.Batch
             Pageable<BinaryData> binaryResult = accountRest.GetSupportedImages(options?.Filter, options?.MaxResults, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate);
             return HandleList(binaryResult, ImageInformation.DeserializeImageInformation);
         }
+
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<ImageInformation> GetSupportedImagesAsync(AccountListSupportedImagesOptions options = null)
+        {
+            AsyncPageable<BinaryData> binaryResult = accountRest.GetSupportedImagesAsync(options?.Filter, options?.MaxResults, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate);
+            return HandleListAsync(binaryResult, ImageInformation.DeserializeImageInformation);
+        }
     }
 }
