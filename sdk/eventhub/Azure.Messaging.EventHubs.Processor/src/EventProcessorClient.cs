@@ -78,6 +78,14 @@ namespace Azure.Messaging.EventHubs
         ///   a deadlock scenario, especially if using the synchronous form of the call.
         /// </summary>
         ///
+        /// <remarks>
+        ///   This handler will be invoked concurrently, limited to one call per partition.  The processor will await each invocation before starting to process
+        ///   the associated partition.
+        ///
+        ///   No time limit is imposed on an invocation of this handler; the processor will wait indefinitely for execution to complete.  It is recommended for
+        ///   implementations to avoid long-running operations, as they will delay processing for the associated partition.
+        /// </remarks>
+        ///
         /// <exception cref="ArgumentException">If an attempt is made to remove a handler that doesn't match the current handler registered.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add a handler when one is currently registered.</exception>
@@ -118,6 +126,12 @@ namespace Azure.Messaging.EventHubs
         ///   <para>It is not recommended that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
         ///   a deadlock scenario, especially if using the synchronous form of the call.</para>
         /// </summary>
+        ///
+        /// <remarks>
+        ///   This handler will be invoked concurrently, as each close is independent.  No time limit is imposed on an invocation of this handler; it is safe for
+        ///   implementations to perform long-running operations and retries as needed.  This handler has no influence on processing for the associated partition
+        ///   and offers no guarantee that execution will complete before processing for the partition is restarted or migrates to a new host.
+        /// </remarks>
         ///
         /// <exception cref="ArgumentException">If an attempt is made to remove a handler that doesn't match the current handler registered.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
@@ -162,6 +176,14 @@ namespace Azure.Messaging.EventHubs
         ///   It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
         ///   a deadlock scenario, especially if using the synchronous form of the call.
         /// </summary>
+        ///
+        /// <remarks>
+        ///   This handler will be invoked concurrently, limited to one call per partition.  The processor will await each invocation to ensure that the events from
+        ///   the same partition are processed one-at-a-time in the order that they were read from the partition.
+        ///
+        ///   No time limit is imposed on an invocation of this handler; the processor will wait indefinitely for execution to complete before dispatching another
+        ///   event for the associated partition.  It is safe for implementations to perform long-running operations, retries, delays, and dead-lettering activities.
+        /// </remarks>
         ///
         /// <exception cref="ArgumentException">If an attempt is made to remove a handler that doesn't match the current handler registered.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
@@ -215,6 +237,11 @@ namespace Azure.Messaging.EventHubs
         ///   As with event processing, should an exception occur in the code for the error handler, the event processor will allow it to bubble and will not attempt to handle
         ///   it in any way.  Developers are strongly encouraged to take exception scenarios into account and guard against them using try/catch blocks and other means as appropriate.
         /// </summary>
+        ///
+        /// <remarks>
+        ///   This handler will be invoked concurrently and is not awaited by the processor, as each error is independent.  No time limit is imposed on an invocation of this handler;
+        ///   it is safe for implementations to perform long-running operations and retries as needed.
+        /// </remarks>
         ///
         /// <exception cref="ArgumentException">If an attempt is made to remove a handler that doesn't match the current handler registered.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
