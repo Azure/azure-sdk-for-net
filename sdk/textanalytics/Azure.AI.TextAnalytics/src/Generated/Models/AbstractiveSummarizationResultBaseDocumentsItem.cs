@@ -12,7 +12,7 @@ using Azure.AI.TextAnalytics;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The AbstractiveSummarizationResultBaseDocumentsItem. </summary>
-    public partial class AbstractiveSummarizationResultBaseDocumentsItem : AbstractiveSummaryDocumentResult
+    internal partial class AbstractiveSummarizationResultBaseDocumentsItem : AbstractiveSummaryDocumentResult
     {
         /// <summary> Initializes a new instance of AbstractiveSummarizationResultBaseDocumentsItem. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>

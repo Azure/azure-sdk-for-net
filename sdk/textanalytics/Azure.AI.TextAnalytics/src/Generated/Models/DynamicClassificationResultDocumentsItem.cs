@@ -12,7 +12,7 @@ using Azure.AI.TextAnalytics;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The DynamicClassificationResultDocumentsItem. </summary>
-    public partial class DynamicClassificationResultDocumentsItem : ClassificationDocumentResult
+    internal partial class DynamicClassificationResultDocumentsItem : ClassificationDocumentResult
     {
         /// <summary> Initializes a new instance of DynamicClassificationResultDocumentsItem. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>

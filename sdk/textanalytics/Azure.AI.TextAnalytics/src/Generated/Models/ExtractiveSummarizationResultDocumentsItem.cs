@@ -12,7 +12,7 @@ using Azure.AI.TextAnalytics;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The ExtractiveSummarizationResultDocumentsItem. </summary>
-    public partial class ExtractiveSummarizationResultDocumentsItem : ExtractedSummaryDocumentResult
+    internal partial class ExtractiveSummarizationResultDocumentsItem : ExtractedSummaryDocumentResult
     {
         /// <summary> Initializes a new instance of ExtractiveSummarizationResultDocumentsItem. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
