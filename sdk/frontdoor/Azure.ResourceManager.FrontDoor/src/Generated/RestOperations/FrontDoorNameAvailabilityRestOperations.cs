@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.FrontDoor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckRequest(CheckNameAvailabilityInput input)
+        internal HttpMessage CreateCheckRequest(FrontDoorNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -49,30 +49,30 @@ namespace Azure.ResourceManager.FrontDoor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(input);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Check the availability of a Front Door resource name. </summary>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<Response<CheckNameAvailabilityOutput>> CheckAsync(CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public async Task<Response<FrontDoorNameAvailabilityResult>> CheckAsync(FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckRequest(input);
+            using var message = CreateCheckRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityOutput value = default;
+                        FrontDoorNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityOutput.DeserializeCheckNameAvailabilityOutput(document.RootElement);
+                        value = FrontDoorNameAvailabilityResult.DeserializeFrontDoorNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -81,22 +81,22 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary> Check the availability of a Front Door resource name. </summary>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public Response<CheckNameAvailabilityOutput> Check(CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public Response<FrontDoorNameAvailabilityResult> Check(FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckRequest(input);
+            using var message = CreateCheckRequest(content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityOutput value = default;
+                        FrontDoorNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameAvailabilityOutput.DeserializeCheckNameAvailabilityOutput(document.RootElement);
+                        value = FrontDoorNameAvailabilityResult.DeserializeFrontDoorNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

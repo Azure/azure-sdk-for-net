@@ -12,9 +12,9 @@ namespace Azure.ResourceManager.Media.Tests
     public class AccountFilterTests : MediaManagementTestBase
     {
         private ResourceIdentifier _mediaServiceIdentifier;
-        private MediaServiceResource _mediaService;
+        private MediaServicesAccountResource _mediaService;
 
-        private AccountFilterCollection accountFilterCollection => _mediaService.GetAccountFilters();
+        private MediaServicesAccountFilterCollection accountFilterCollection => _mediaService.GetMediaServicesAccountFilters();
 
         public AccountFilterTests(bool isAsync) : base(isAsync)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Tests
         [SetUp]
         public async Task SetUp()
         {
-            _mediaService = await Client.GetMediaServiceResource(_mediaServiceIdentifier).GetAsync();
+            _mediaService = await Client.GetMediaServicesAccountResource(_mediaServiceIdentifier).GetAsync();
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task CreateOrUpdate()
         {
             string accountFilterName = SessionRecording.GenerateAssetName("accountFilter");
-            var mediaAsset = await accountFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountFilterName, new AccountFilterData());
+            var mediaAsset = await accountFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountFilterName, new MediaServicesAccountFilterData());
             Assert.IsNotNull(mediaAsset);
             Assert.AreEqual(accountFilterName, mediaAsset.Value.Data.Name);
         }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task Exist()
         {
             string accountFilterName = SessionRecording.GenerateAssetName("accountFilter");
-            await accountFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountFilterName, new AccountFilterData());
+            await accountFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountFilterName, new MediaServicesAccountFilterData());
             bool flag = await accountFilterCollection.ExistsAsync(accountFilterName);
             Assert.IsTrue(flag);
         }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task Get()
         {
             string accountFilterName = SessionRecording.GenerateAssetName("accountFilter");
-            await accountFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountFilterName, new AccountFilterData());
+            await accountFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountFilterName, new MediaServicesAccountFilterData());
             var mediaAsset = await accountFilterCollection.GetAsync(accountFilterName);
             Assert.IsNotNull(mediaAsset);
             Assert.AreEqual(accountFilterName, mediaAsset.Value.Data.Name);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task GetAll()
         {
             string accountFilterName = SessionRecording.GenerateAssetName("accountFilter");
-            await accountFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountFilterName, new AccountFilterData());
+            await accountFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountFilterName, new MediaServicesAccountFilterData());
             var list = await accountFilterCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
         }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task Delete()
         {
             string accountFilterName = SessionRecording.GenerateAssetName("accountFilter");
-            var accountFilter = await accountFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountFilterName, new AccountFilterData());
+            var accountFilter = await accountFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountFilterName, new MediaServicesAccountFilterData());
             bool flag = await accountFilterCollection.ExistsAsync(accountFilterName);
             Assert.IsTrue(flag);
 

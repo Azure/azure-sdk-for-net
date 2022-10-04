@@ -66,9 +66,9 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateWithDeviceCodeMockAsync([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
-            options = new TokenCredentialOptions();
+            var options = new DeviceCodeCredentialOptions { AdditionallyAllowedTenants = { TenantIdHint } };
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context) ;
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants) ;
             var cred = InstrumentClient(
                 new DeviceCodeCredential((code, _) => VerifyDeviceCode(code, expectedCode), TenantId, ClientId, options, null, mockPublicMsalClient));
 
@@ -79,6 +79,25 @@ namespace Azure.Identity.Tests
             token = await cred.GetTokenAsync(context);
 
             Assert.AreEqual(token.Token, expectedToken);
+        }
+
+        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        {
+            Console.WriteLine(parameters.ToDebugString());
+
+            var options = new DeviceCodeCredentialOptions { TenantId = parameters.TenantId };
+
+            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
+            var authResult = AuthenticationResultFactory.Create();
+            var msalClientMock = new MockMsalPublicClient(authResult);
+
+            var cred = InstrumentClient(
+                new DeviceCodeCredential((code, _) => Task.CompletedTask, parameters.TenantId, ClientId, options, null, msalClientMock));
+
+            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
         }
 
         [Test]

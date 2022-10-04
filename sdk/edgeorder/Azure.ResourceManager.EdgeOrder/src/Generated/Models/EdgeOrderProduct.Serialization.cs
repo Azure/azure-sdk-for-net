@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             Optional<string> displayName = default;
             Optional<ProductDescription> description = default;
-            Optional<IReadOnlyList<ImageInformation>> imageInformation = default;
-            Optional<CostInformation> costInformation = default;
-            Optional<AvailabilityInformation> availabilityInformation = default;
+            Optional<IReadOnlyList<EdgeOrderProductImageInformation>> imageInformation = default;
+            Optional<EdgeOrderProductCostInformation> costInformation = default;
+            Optional<ProductAvailabilityInformation> availabilityInformation = default;
             Optional<HierarchyInformation> hierarchyInformation = default;
             Optional<IReadOnlyList<FilterableProperty>> filterableProperties = default;
             Optional<IReadOnlyList<ProductConfiguration>> configurations = default;
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ImageInformation> array = new List<ImageInformation>();
+                            List<EdgeOrderProductImageInformation> array = new List<EdgeOrderProductImageInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.ImageInformation.DeserializeImageInformation(item));
+                                array.Add(EdgeOrderProductImageInformation.DeserializeEdgeOrderProductImageInformation(item));
                             }
                             imageInformation = array;
                             continue;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            costInformation = CostInformation.DeserializeCostInformation(property0.Value);
+                            costInformation = EdgeOrderProductCostInformation.DeserializeEdgeOrderProductCostInformation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("availabilityInformation"))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            availabilityInformation = AvailabilityInformation.DeserializeAvailabilityInformation(property0.Value);
+                            availabilityInformation = ProductAvailabilityInformation.DeserializeProductAvailabilityInformation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hierarchyInformation"))

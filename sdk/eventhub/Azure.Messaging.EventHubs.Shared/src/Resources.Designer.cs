@@ -848,6 +848,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to The 'PartitionOwnershipExpirationInterval' and 'LoadBalancingUpdateInterval' are configured for intervals that may cause stability issues with partition ownership.  It is recommended that the 'PartitionOwnershipExpirationInterval' be at least 3 times greater than the 'LoadBalancingUpdateInterval' and very strongly advised that it should be no less than twice as long.  It is advised to adjust the intervals in the processor options.  Load Balancing Interval '{1:0:00}' seconds.  Partition Ownership Interval '{1:0:00}' seconds..
+        /// </summary>
+        internal static string ProcessorLoadBalancingIntervalsTooCloseMask
+        {
+            get
+            {
+                return ResourceManager.GetString("ProcessorLoadBalancingIntervalsTooCloseMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Events cannot be enqueued processing without the {0} handler set..
         /// </summary>
         internal static string CannotEnqueueEventWithoutHandler
@@ -877,6 +888,17 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("EventTooLargeMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to For troubleshooting information, see https://aka.ms/azsdk/net/eventhubs/exceptions/troubleshoot.
+        /// </summary>
+        internal static string TroubleshootingGuideLink
+        {
+            get
+            {
+                return ResourceManager.GetString("TroubleshootingGuideLink", resourceCulture);
             }
         }
     }

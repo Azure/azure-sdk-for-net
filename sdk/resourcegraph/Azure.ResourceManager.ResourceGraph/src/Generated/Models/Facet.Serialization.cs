@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     continue;
                 }
             }
-            return new Facet(expression, resultType);
+            return new UnknownFacet(expression, resultType);
         }
     }
 }

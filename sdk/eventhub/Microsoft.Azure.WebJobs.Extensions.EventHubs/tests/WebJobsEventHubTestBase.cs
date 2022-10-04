@@ -16,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
     public class WebJobsEventHubTestBase
     {
         protected const string TestHubName = "%webjobstesthub%";
-        protected static readonly int Timeout = (int)TimeSpan.FromSeconds(90).TotalMilliseconds;
+        protected static readonly int Timeout = (int)EventHubsTestEnvironment.Instance.TestExecutionTimeLimit.TotalMilliseconds;
 
         /// <summary>The active Event Hub resource scope for the test fixture.</summary>
         protected EventHubScope _eventHubScope;

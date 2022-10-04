@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -52,9 +53,9 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> databaseName = default;
-            Optional<string> dataSetId = default;
+            Optional<Guid> dataSetId = default;
             Optional<string> schemaName = default;
-            Optional<string> sqlServerResourceId = default;
+            Optional<ResourceIdentifier> sqlServerResourceId = default;
             Optional<string> tableName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -104,7 +105,12 @@ namespace Azure.ResourceManager.DataShare.Models
                         }
                         if (property0.NameEquals("dataSetId"))
                         {
-                            dataSetId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dataSetId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("schemaName"))
@@ -114,7 +120,12 @@ namespace Azure.ResourceManager.DataShare.Models
                         }
                         if (property0.NameEquals("sqlServerResourceId"))
                         {
-                            sqlServerResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sqlServerResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("tableName"))
@@ -126,7 +137,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new SqlDBTableDataSet(id, name, type, systemData.Value, kind, databaseName.Value, dataSetId.Value, schemaName.Value, sqlServerResourceId.Value, tableName.Value);
+            return new SqlDBTableDataSet(id, name, type, systemData.Value, kind, databaseName.Value, Optional.ToNullable(dataSetId), schemaName.Value, sqlServerResourceId.Value, tableName.Value);
         }
     }
 }

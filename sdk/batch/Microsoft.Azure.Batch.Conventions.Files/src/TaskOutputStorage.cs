@@ -13,9 +13,7 @@
 // limitations under the License.
 
 using Microsoft.Azure.Batch.Conventions.Files.Utilities;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
-using Microsoft.WindowsAzure.Storage.RetryPolicies;
+using Azure.Storage.Blobs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -51,7 +49,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// <remarks>The container must already exist; the TaskOutputStorage class does not create
         /// it for you.</remarks>
         public TaskOutputStorage(Uri jobOutputContainerUri, string taskId)
-            : this(CloudBlobContainerUtils.GetContainerReference(jobOutputContainerUri), taskId, null)
+            : this(CloudBlobContainerUtils.GetContainerReference(jobOutputContainerUri), taskId)
         {
         }
 
@@ -59,48 +57,21 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// Initializes a new instance of the <see cref="JobOutputStorage"/> class from a storage account,
         /// job id, and task id.
         /// </summary>
-        /// <param name="storageAccount">The storage account linked to the Azure Batch account.</param>
+        /// <param name="blobClient">The blob client linked to the Azure Batch storage account.</param>
         /// <param name="jobId">The id of the Azure Batch job containing the task.</param>
         /// <param name="taskId">The id of the Azure Batch task.</param>
         /// <remarks>The job output container must already exist; the TaskOutputStorage class does not create
         /// it for you.</remarks>
-        public TaskOutputStorage(CloudStorageAccount storageAccount, string jobId, string taskId)
-            : this(CloudBlobContainerUtils.GetContainerReference(storageAccount, jobId), taskId, null)
+        public TaskOutputStorage(BlobServiceClient blobClient, string jobId, string taskId)
+            : this(CloudBlobContainerUtils.GetContainerReference(blobClient, jobId), taskId)
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JobOutputStorage"/> class from a task id and
-        /// a URL representing the job output container.
-        /// </summary>
-        /// <param name="jobOutputContainerUri">The URL in Azure storage of the blob container to
-        /// use for outputs associated with this job. This URL must contain a SAS (Shared Access
-        /// Signature) granting access to the container, or the container must be public.</param>
-        /// <param name="taskId">The id of the Azure Batch task.</param>
-        /// <param name="storageRetryPolicy">The retry policy for storage requests.</param>
-        /// <remarks>The container must already exist; the TaskOutputStorage class does not create
-        /// it for you.</remarks>
-        public TaskOutputStorage(Uri jobOutputContainerUri, string taskId, IRetryPolicy storageRetryPolicy)
-            : this(CloudBlobContainerUtils.GetContainerReference(jobOutputContainerUri), taskId, storageRetryPolicy)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JobOutputStorage"/> class from a storage account,
-        /// job id, and task id.
-        /// </summary>
-        /// <param name="storageAccount">The storage account linked to the Azure Batch account.</param>
-        /// <param name="jobId">The id of the Azure Batch job containing the task.</param>
-        /// <param name="taskId">The id of the Azure Batch task.</param>
-        /// <param name="storageRetryPolicy">The retry policy for storage requests.</param>
-        /// <remarks>The job output container must already exist; the TaskOutputStorage class does not create
-        /// it for you.</remarks>
-        public TaskOutputStorage(CloudStorageAccount storageAccount, string jobId, string taskId, IRetryPolicy storageRetryPolicy)
-            : this(CloudBlobContainerUtils.GetContainerReference(storageAccount, jobId), taskId, storageRetryPolicy)
-        {
-        }
-
-        private TaskOutputStorage(CloudBlobContainer jobOutputContainer, string taskId, IRetryPolicy storageRetryPolicy)
+        /*
+         * No retry policy interfaces exist in new SDK - Consider passing ClientOptions.RetryOptions? or ClientOptions.AddPolicy to add custom policy to act on request for retries?
+         * Seems that once you instantiate BlobContainerClient, you cannot modify the client options..?
+         */
+        private TaskOutputStorage(BlobContainerClient jobOutputContainer, string taskId)
         {
             if (jobOutputContainer == null)
             {
@@ -108,11 +79,6 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             }
 
             Validate.IsNotNullOrEmpty(taskId, nameof(taskId));
-
-            if (storageRetryPolicy != null)
-            {
-                jobOutputContainer.ServiceClient.DefaultRequestOptions.RetryPolicy = storageRetryPolicy;
-            }
 
             _storagePath = new StoragePath.TaskStoragePath(jobOutputContainer, taskId);
         }
@@ -203,14 +169,12 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// <param name="kind">A <see cref="TaskOutputKind"/> representing the category of the output to
         /// retrieve, for example <see cref="TaskOutputKind.TaskOutput"/> or <see cref="TaskOutputKind.TaskLog"/>.</param>
         /// <param name="filePath">The path under which the output was persisted in blob storage.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A reference to the requested file in Azure blob storage.</returns>
-        public async Task<OutputFileReference> GetOutputAsync(
+        public OutputFileReference GetOutput(
             TaskOutputKind kind,
-            string filePath,
-            CancellationToken cancellationToken = default(CancellationToken)
+            string filePath
         )
-            => await _storagePath.GetOutputAsync(kind, filePath, cancellationToken).ConfigureAwait(false);
+            => _storagePath.GetOutput(kind, filePath);
 
         /// <summary>
         /// Saves the specified file to persistent storage as a <see cref="TaskOutputKind.TaskLog"/>,

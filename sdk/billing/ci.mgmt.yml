@@ -1,0 +1,23 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/billing/ci.mgmt.yml
+    - sdk/billing/Azure.ResourceManager.Billing/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: billing
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.Billing
+      safeName: AzureResourceManagerBilling

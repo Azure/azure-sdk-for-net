@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyTrackedResources/{policyTrackedResourcesResource}/queryResults
         /// Operation Id: PolicyTrackedResources_ListQueryResultsForSubscription
         /// </summary>
-        /// <param name="policyTrackedResourcesResource"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyTrackedResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyTrackedResource> GetQueryResultsForSubscriptionPolicyTrackedResourcesAsync(PolicyTrackedResourcesResourceType policyTrackedResourcesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PolicyTrackedResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PolicyTrackedResourceRecord>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyTrackedResourcesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionPolicyTrackedResources");
+                using var scope = PolicyTrackedResourcesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyTrackedResourceQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = await PolicyTrackedResourcesRestClient.ListQueryResultsForSubscriptionAsync(Id.SubscriptionId, policyTrackedResourcesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await PolicyTrackedResourcesRestClient.ListQueryResultsForSubscriptionAsync(policyTrackedResourceType, Id.SubscriptionId, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.PolicyInsights
                     throw;
                 }
             }
-            async Task<Page<PolicyTrackedResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<PolicyTrackedResourceRecord>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PolicyTrackedResourcesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionPolicyTrackedResources");
+                using var scope = PolicyTrackedResourcesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyTrackedResourceQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = await PolicyTrackedResourcesRestClient.ListQueryResultsForSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, policyTrackedResourcesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await PolicyTrackedResourcesRestClient.ListQueryResultsForSubscriptionNextPageAsync(nextLink, policyTrackedResourceType, Id.SubscriptionId, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -104,19 +104,19 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyTrackedResources/{policyTrackedResourcesResource}/queryResults
         /// Operation Id: PolicyTrackedResources_ListQueryResultsForSubscription
         /// </summary>
-        /// <param name="policyTrackedResourcesResource"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyTrackedResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyTrackedResource> GetQueryResultsForSubscriptionPolicyTrackedResources(PolicyTrackedResourcesResourceType policyTrackedResourcesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Page<PolicyTrackedResource> FirstPageFunc(int? pageSizeHint)
+            Page<PolicyTrackedResourceRecord> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyTrackedResourcesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionPolicyTrackedResources");
+                using var scope = PolicyTrackedResourcesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyTrackedResourceQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = PolicyTrackedResourcesRestClient.ListQueryResultsForSubscription(Id.SubscriptionId, policyTrackedResourcesResource, queryOptions, cancellationToken: cancellationToken);
+                    var response = PolicyTrackedResourcesRestClient.ListQueryResultsForSubscription(policyTrackedResourceType, Id.SubscriptionId, policyQuerySettings, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -125,13 +125,13 @@ namespace Azure.ResourceManager.PolicyInsights
                     throw;
                 }
             }
-            Page<PolicyTrackedResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<PolicyTrackedResourceRecord> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PolicyTrackedResourcesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionPolicyTrackedResources");
+                using var scope = PolicyTrackedResourcesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyTrackedResourceQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = PolicyTrackedResourcesRestClient.ListQueryResultsForSubscriptionNextPage(nextLink, Id.SubscriptionId, policyTrackedResourcesResource, queryOptions, cancellationToken: cancellationToken);
+                    var response = PolicyTrackedResourcesRestClient.ListQueryResultsForSubscriptionNextPage(nextLink, policyTrackedResourceType, Id.SubscriptionId, policyQuerySettings, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -148,20 +148,20 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
         /// Operation Id: PolicyEvents_ListQueryResultsForSubscription
         /// </summary>
-        /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForSubscriptionPolicyEventsAsync(PolicyEventsResourceType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<PolicyEvent>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionPolicyEvents");
+                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyEventQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = await PolicyEventsRestClient.ListQueryResultsForSubscriptionAsync(Id.SubscriptionId, policyEventsResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                    var response = await PolicyEventsRestClient.ListQueryResultsForSubscriptionAsync(policyEventType, Id.SubscriptionId, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.PolicyInsights
             }
             async Task<Page<PolicyEvent>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionPolicyEvents");
+                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyEventQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = await PolicyEventsRestClient.ListQueryResultsForSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, policyEventsResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                    var response = await PolicyEventsRestClient.ListQueryResultsForSubscriptionNextPageAsync(nextLink, policyEventType, Id.SubscriptionId, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -192,20 +192,20 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
         /// Operation Id: PolicyEvents_ListQueryResultsForSubscription
         /// </summary>
-        /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyEvent> GetQueryResultsForSubscriptionPolicyEvents(PolicyEventsResourceType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyEvent> GetPolicyEventQueryResults(PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Page<PolicyEvent> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionPolicyEvents");
+                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyEventQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = PolicyEventsRestClient.ListQueryResultsForSubscription(Id.SubscriptionId, policyEventsResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                    var response = PolicyEventsRestClient.ListQueryResultsForSubscription(policyEventType, Id.SubscriptionId, policyQuerySettings, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -215,282 +215,12 @@ namespace Azure.ResourceManager.PolicyInsights
             }
             Page<PolicyEvent> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionPolicyEvents");
+                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyEventQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = PolicyEventsRestClient.ListQueryResultsForSubscriptionNextPage(nextLink, Id.SubscriptionId, policyEventsResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Queries policy events for the subscription level policy set definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForPolicySetDefinition
-        /// </summary>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForPolicySetDefinitionPolicyEventsAsync(string policySetDefinitionName, PolicyEventsResourceType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<PolicyEvent>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForPolicySetDefinitionPolicyEvents");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyEventsRestClient.ListQueryResultsForPolicySetDefinitionAsync(Id.SubscriptionId, policySetDefinitionName, policyEventsResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PolicyEvent>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForPolicySetDefinitionPolicyEvents");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyEventsRestClient.ListQueryResultsForPolicySetDefinitionNextPageAsync(nextLink, Id.SubscriptionId, policySetDefinitionName, policyEventsResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Queries policy events for the subscription level policy set definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForPolicySetDefinition
-        /// </summary>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyEvent> GetQueryResultsForPolicySetDefinitionPolicyEvents(string policySetDefinitionName, PolicyEventsResourceType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Page<PolicyEvent> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForPolicySetDefinitionPolicyEvents");
-                scope.Start();
-                try
-                {
-                    var response = PolicyEventsRestClient.ListQueryResultsForPolicySetDefinition(Id.SubscriptionId, policySetDefinitionName, policyEventsResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PolicyEvent> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForPolicySetDefinitionPolicyEvents");
-                scope.Start();
-                try
-                {
-                    var response = PolicyEventsRestClient.ListQueryResultsForPolicySetDefinitionNextPage(nextLink, Id.SubscriptionId, policySetDefinitionName, policyEventsResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Queries policy events for the subscription level policy definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForPolicyDefinition
-        /// </summary>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForPolicyDefinitionPolicyEventsAsync(string policyDefinitionName, PolicyEventsResourceType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<PolicyEvent>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForPolicyDefinitionPolicyEvents");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyEventsRestClient.ListQueryResultsForPolicyDefinitionAsync(Id.SubscriptionId, policyDefinitionName, policyEventsResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PolicyEvent>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForPolicyDefinitionPolicyEvents");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyEventsRestClient.ListQueryResultsForPolicyDefinitionNextPageAsync(nextLink, Id.SubscriptionId, policyDefinitionName, policyEventsResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Queries policy events for the subscription level policy definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForPolicyDefinition
-        /// </summary>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyEvent> GetQueryResultsForPolicyDefinitionPolicyEvents(string policyDefinitionName, PolicyEventsResourceType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Page<PolicyEvent> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForPolicyDefinitionPolicyEvents");
-                scope.Start();
-                try
-                {
-                    var response = PolicyEventsRestClient.ListQueryResultsForPolicyDefinition(Id.SubscriptionId, policyDefinitionName, policyEventsResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PolicyEvent> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForPolicyDefinitionPolicyEvents");
-                scope.Start();
-                try
-                {
-                    var response = PolicyEventsRestClient.ListQueryResultsForPolicyDefinitionNextPage(nextLink, Id.SubscriptionId, policyDefinitionName, policyEventsResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Queries policy events for the subscription level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForSubscriptionLevelPolicyAssignment
-        /// </summary>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEventsAsync(string policyAssignmentName, PolicyEventsResourceType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<PolicyEvent>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(Id.SubscriptionId, policyAssignmentName, policyEventsResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PolicyEvent>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageAsync(nextLink, Id.SubscriptionId, policyAssignmentName, policyEventsResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Queries policy events for the subscription level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForSubscriptionLevelPolicyAssignment
-        /// </summary>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents(string policyAssignmentName, PolicyEventsResourceType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Page<PolicyEvent> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents");
-                scope.Start();
-                try
-                {
-                    var response = PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignment(Id.SubscriptionId, policyAssignmentName, policyEventsResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PolicyEvent> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents");
-                scope.Start();
-                try
-                {
-                    var response = PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPage(nextLink, Id.SubscriptionId, policyAssignmentName, policyEventsResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                    var response = PolicyEventsRestClient.ListQueryResultsForSubscriptionNextPage(nextLink, policyEventType, Id.SubscriptionId, policyQuerySettings, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -506,20 +236,20 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
         /// Operation Id: PolicyStates_ListQueryResultsForSubscription
         /// </summary>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyState> GetQueryResultsForSubscriptionPolicyStatesAsync(PolicyStatesResource policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<PolicyState>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionPolicyStates");
+                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyStateQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = await PolicyStatesRestClient.ListQueryResultsForSubscriptionAsync(Id.SubscriptionId, policyStatesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                    var response = await PolicyStatesRestClient.ListQueryResultsForSubscriptionAsync(policyStateType, Id.SubscriptionId, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -529,12 +259,12 @@ namespace Azure.ResourceManager.PolicyInsights
             }
             async Task<Page<PolicyState>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionPolicyStates");
+                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyStateQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = await PolicyStatesRestClient.ListQueryResultsForSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, policyStatesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                    var response = await PolicyStatesRestClient.ListQueryResultsForSubscriptionNextPageAsync(nextLink, policyStateType, Id.SubscriptionId, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -550,20 +280,20 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
         /// Operation Id: PolicyStates_ListQueryResultsForSubscription
         /// </summary>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyState> GetQueryResultsForSubscriptionPolicyStates(PolicyStatesResource policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyState> GetPolicyStateQueryResults(PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Page<PolicyState> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionPolicyStates");
+                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyStateQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = PolicyStatesRestClient.ListQueryResultsForSubscription(Id.SubscriptionId, policyStatesResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                    var response = PolicyStatesRestClient.ListQueryResultsForSubscription(policyStateType, Id.SubscriptionId, policyQuerySettings, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -573,12 +303,12 @@ namespace Azure.ResourceManager.PolicyInsights
             }
             Page<PolicyState> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionPolicyStates");
+                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyStateQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = PolicyStatesRestClient.ListQueryResultsForSubscriptionNextPage(nextLink, Id.SubscriptionId, policyStatesResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                    var response = PolicyStatesRestClient.ListQueryResultsForSubscriptionNextPage(nextLink, policyStateType, Id.SubscriptionId, policyQuerySettings, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -594,19 +324,19 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
         /// Operation Id: PolicyStates_SummarizeForSubscription
         /// </summary>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Summary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Summary> SummarizeForSubscriptionPolicyStatesAsync(PolicyStatesSummaryResourceType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Summary>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PolicySummary>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SummarizeForSubscriptionPolicyStates");
+                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SummarizePolicyStates");
                 scope.Start();
                 try
                 {
-                    var response = await PolicyStatesRestClient.SummarizeForSubscriptionAsync(Id.SubscriptionId, policyStatesSummaryResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await PolicyStatesRestClient.SummarizeForSubscriptionAsync(policyStateSummaryType, Id.SubscriptionId, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -623,19 +353,19 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
         /// Operation Id: PolicyStates_SummarizeForSubscription
         /// </summary>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Summary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Summary> SummarizeForSubscriptionPolicyStates(PolicyStatesSummaryResourceType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PolicySummary> SummarizePolicyStates(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Page<Summary> FirstPageFunc(int? pageSizeHint)
+            Page<PolicySummary> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SummarizeForSubscriptionPolicyStates");
+                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SummarizePolicyStates");
                 scope.Start();
                 try
                 {
-                    var response = PolicyStatesRestClient.SummarizeForSubscription(Id.SubscriptionId, policyStatesSummaryResource, queryOptions, cancellationToken: cancellationToken);
+                    var response = PolicyStatesRestClient.SummarizeForSubscription(policyStateSummaryType, Id.SubscriptionId, policyQuerySettings, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -654,9 +384,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> TriggerSubscriptionEvaluationPolicyStateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> TriggerPolicyStateEvaluationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.TriggerSubscriptionEvaluationPolicyState");
+            using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.TriggerPolicyStateEvaluation");
             scope.Start();
             try
             {
@@ -680,9 +410,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation TriggerSubscriptionEvaluationPolicyState(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation TriggerPolicyStateEvaluation(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.TriggerSubscriptionEvaluationPolicyState");
+            using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.TriggerPolicyStateEvaluation");
             scope.Start();
             try
             {
@@ -700,469 +430,19 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
-        /// Queries policy states for the subscription level policy set definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForPolicySetDefinition
-        /// </summary>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyState> GetQueryResultsForPolicySetDefinitionPolicyStatesAsync(string policySetDefinitionName, PolicyStatesResource policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<PolicyState>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForPolicySetDefinitionPolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyStatesRestClient.ListQueryResultsForPolicySetDefinitionAsync(Id.SubscriptionId, policySetDefinitionName, policyStatesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PolicyState>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForPolicySetDefinitionPolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyStatesRestClient.ListQueryResultsForPolicySetDefinitionNextPageAsync(nextLink, Id.SubscriptionId, policySetDefinitionName, policyStatesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Queries policy states for the subscription level policy set definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForPolicySetDefinition
-        /// </summary>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyState> GetQueryResultsForPolicySetDefinitionPolicyStates(string policySetDefinitionName, PolicyStatesResource policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Page<PolicyState> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForPolicySetDefinitionPolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = PolicyStatesRestClient.ListQueryResultsForPolicySetDefinition(Id.SubscriptionId, policySetDefinitionName, policyStatesResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PolicyState> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForPolicySetDefinitionPolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = PolicyStatesRestClient.ListQueryResultsForPolicySetDefinitionNextPage(nextLink, Id.SubscriptionId, policySetDefinitionName, policyStatesResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the subscription level policy set definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForPolicySetDefinition
-        /// </summary>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Summary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Summary> SummarizeForPolicySetDefinitionPolicyStatesAsync(string policySetDefinitionName, PolicyStatesSummaryResourceType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<Summary>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SummarizeForPolicySetDefinitionPolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyStatesRestClient.SummarizeForPolicySetDefinitionAsync(Id.SubscriptionId, policySetDefinitionName, policyStatesSummaryResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the subscription level policy set definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForPolicySetDefinition
-        /// </summary>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Summary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Summary> SummarizeForPolicySetDefinitionPolicyStates(string policySetDefinitionName, PolicyStatesSummaryResourceType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Page<Summary> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SummarizeForPolicySetDefinitionPolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = PolicyStatesRestClient.SummarizeForPolicySetDefinition(Id.SubscriptionId, policySetDefinitionName, policyStatesSummaryResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Queries policy states for the subscription level policy definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForPolicyDefinition
-        /// </summary>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyState> GetQueryResultsForPolicyDefinitionPolicyStatesAsync(string policyDefinitionName, PolicyStatesResource policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<PolicyState>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForPolicyDefinitionPolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyStatesRestClient.ListQueryResultsForPolicyDefinitionAsync(Id.SubscriptionId, policyDefinitionName, policyStatesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PolicyState>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForPolicyDefinitionPolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyStatesRestClient.ListQueryResultsForPolicyDefinitionNextPageAsync(nextLink, Id.SubscriptionId, policyDefinitionName, policyStatesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Queries policy states for the subscription level policy definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForPolicyDefinition
-        /// </summary>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyState> GetQueryResultsForPolicyDefinitionPolicyStates(string policyDefinitionName, PolicyStatesResource policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Page<PolicyState> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForPolicyDefinitionPolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = PolicyStatesRestClient.ListQueryResultsForPolicyDefinition(Id.SubscriptionId, policyDefinitionName, policyStatesResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PolicyState> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForPolicyDefinitionPolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = PolicyStatesRestClient.ListQueryResultsForPolicyDefinitionNextPage(nextLink, Id.SubscriptionId, policyDefinitionName, policyStatesResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the subscription level policy definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForPolicyDefinition
-        /// </summary>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Summary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Summary> SummarizeForPolicyDefinitionPolicyStatesAsync(string policyDefinitionName, PolicyStatesSummaryResourceType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<Summary>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SummarizeForPolicyDefinitionPolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyStatesRestClient.SummarizeForPolicyDefinitionAsync(Id.SubscriptionId, policyDefinitionName, policyStatesSummaryResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the subscription level policy definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForPolicyDefinition
-        /// </summary>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Summary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Summary> SummarizeForPolicyDefinitionPolicyStates(string policyDefinitionName, PolicyStatesSummaryResourceType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Page<Summary> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SummarizeForPolicyDefinitionPolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = PolicyStatesRestClient.SummarizeForPolicyDefinition(Id.SubscriptionId, policyDefinitionName, policyStatesSummaryResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Queries policy states for the subscription level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForSubscriptionLevelPolicyAssignment
-        /// </summary>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(string policyAssignmentName, PolicyStatesResource policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<PolicyState>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(Id.SubscriptionId, policyAssignmentName, policyStatesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PolicyState>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageAsync(nextLink, Id.SubscriptionId, policyAssignmentName, policyStatesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Queries policy states for the subscription level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForSubscriptionLevelPolicyAssignment
-        /// </summary>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates(string policyAssignmentName, PolicyStatesResource policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Page<PolicyState> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignment(Id.SubscriptionId, policyAssignmentName, policyStatesResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PolicyState> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPage(nextLink, Id.SubscriptionId, policyAssignmentName, policyStatesResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the subscription level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForSubscriptionLevelPolicyAssignment
-        /// </summary>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Summary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Summary> SummarizeForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(string policyAssignmentName, PolicyStatesSummaryResourceType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<Summary>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyStatesRestClient.SummarizeForSubscriptionLevelPolicyAssignmentAsync(Id.SubscriptionId, policyAssignmentName, policyStatesSummaryResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the subscription level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForSubscriptionLevelPolicyAssignment
-        /// </summary>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Summary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Summary> SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates(string policyAssignmentName, PolicyStatesSummaryResourceType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Page<Summary> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = PolicyStatesRestClient.SummarizeForSubscriptionLevelPolicyAssignment(Id.SubscriptionId, policyAssignmentName, policyStatesSummaryResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
         /// Checks what restrictions Azure Policy will place on a resource within a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/checkPolicyRestrictions
         /// Operation Id: PolicyRestrictions_CheckAtSubscriptionScope
         /// </summary>
-        /// <param name="checkRestrictionsRequest"> The check policy restrictions parameters. </param>
+        /// <param name="content"> The check policy restrictions parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckRestrictionsResult>> CheckAtSubscriptionScopePolicyRestrictionAsync(CheckRestrictionsRequest checkRestrictionsRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckPolicyRestrictionsResult>> CheckPolicyRestrictionsAsync(CheckPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = PolicyRestrictionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAtSubscriptionScopePolicyRestriction");
+            using var scope = PolicyRestrictionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPolicyRestrictions");
             scope.Start();
             try
             {
-                var response = await PolicyRestrictionsRestClient.CheckAtSubscriptionScopeAsync(Id.SubscriptionId, checkRestrictionsRequest, cancellationToken).ConfigureAwait(false);
+                var response = await PolicyRestrictionsRestClient.CheckAtSubscriptionScopeAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1177,15 +457,15 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/checkPolicyRestrictions
         /// Operation Id: PolicyRestrictions_CheckAtSubscriptionScope
         /// </summary>
-        /// <param name="checkRestrictionsRequest"> The check policy restrictions parameters. </param>
+        /// <param name="content"> The check policy restrictions parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckRestrictionsResult> CheckAtSubscriptionScopePolicyRestriction(CheckRestrictionsRequest checkRestrictionsRequest, CancellationToken cancellationToken = default)
+        public virtual Response<CheckPolicyRestrictionsResult> CheckPolicyRestrictions(CheckPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = PolicyRestrictionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAtSubscriptionScopePolicyRestriction");
+            using var scope = PolicyRestrictionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPolicyRestrictions");
             scope.Start();
             try
             {
-                var response = PolicyRestrictionsRestClient.CheckAtSubscriptionScope(Id.SubscriptionId, checkRestrictionsRequest, cancellationToken);
+                var response = PolicyRestrictionsRestClient.CheckAtSubscriptionScope(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

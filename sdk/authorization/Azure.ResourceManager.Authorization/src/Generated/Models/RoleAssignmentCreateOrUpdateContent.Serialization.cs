@@ -43,8 +43,15 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             if (Optional.IsDefined(DelegatedManagedIdentityResourceId))
             {
-                writer.WritePropertyName("delegatedManagedIdentityResourceId");
-                writer.WriteStringValue(DelegatedManagedIdentityResourceId);
+                if (DelegatedManagedIdentityResourceId != null)
+                {
+                    writer.WritePropertyName("delegatedManagedIdentityResourceId");
+                    writer.WriteStringValue(DelegatedManagedIdentityResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("delegatedManagedIdentityResourceId");
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

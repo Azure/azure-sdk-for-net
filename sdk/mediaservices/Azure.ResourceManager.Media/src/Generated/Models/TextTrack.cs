@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Represents a text track in an asset. A text track is usually used for sparse data related to the audio or video tracks. </summary>
-    public partial class TextTrack : AssetTrackInfo
+    public partial class TextTrack : MediaAssetTrackBase
     {
         /// <summary> Initializes a new instance of TextTrack. </summary>
         public TextTrack()

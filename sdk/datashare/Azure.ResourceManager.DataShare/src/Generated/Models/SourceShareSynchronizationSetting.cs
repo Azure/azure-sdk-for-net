@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.DataShare.Models
     /// Please note <see cref="SourceShareSynchronizationSetting"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ScheduledSourceSynchronizationSetting"/>.
     /// </summary>
-    public partial class SourceShareSynchronizationSetting
+    public abstract partial class SourceShareSynchronizationSetting
     {
         /// <summary> Initializes a new instance of SourceShareSynchronizationSetting. </summary>
-        internal SourceShareSynchronizationSetting()
+        protected SourceShareSynchronizationSetting()
         {
         }
 

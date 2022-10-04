@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -17,17 +16,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of SubscriptionQuotaItemList. </summary>
         internal SubscriptionQuotaItemList()
         {
-            Value = new ChangeTrackingList<SubscriptionQuotaItemData>();
+            Value = new ChangeTrackingList<NetAppSubscriptionQuotaItem>();
         }
 
         /// <summary> Initializes a new instance of SubscriptionQuotaItemList. </summary>
         /// <param name="value"> A list of SubscriptionQuotaItems. </param>
-        internal SubscriptionQuotaItemList(IReadOnlyList<SubscriptionQuotaItemData> value)
+        internal SubscriptionQuotaItemList(IReadOnlyList<NetAppSubscriptionQuotaItem> value)
         {
             Value = value;
         }
 
         /// <summary> A list of SubscriptionQuotaItems. </summary>
-        public IReadOnlyList<SubscriptionQuotaItemData> Value { get; }
+        public IReadOnlyList<NetAppSubscriptionQuotaItem> Value { get; }
     }
 }

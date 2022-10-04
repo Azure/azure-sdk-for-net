@@ -1,0 +1,390 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/address/structured/json?api-version=1.0\u0026countryCode=US\u0026streetNumber=15127\u0026streetName=NE%2024th%20Street\u0026municipality=Redmond\u0026countrySubdivision=WA\u0026postalCode=98052",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d34aee4d0a0c5eba15447e265a6afd47-9d65693c2ffa38d3-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220908.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
+        "x-ms-client-request-id": "5f6615c7c969b79e02ff11f39c57429f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "6728",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 08 Sep 2022 18:56:31 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 2397395248014E55975E034B6378B870 Ref B: PAOEDGE0610 Ref C: 2022-09-08T18:56:32Z"
+      },
+      "ResponseBody": {
+        "summary": {
+          "query": "ne 24th street 15127 redmond 98052 wa",
+          "queryType": "NON_NEAR",
+          "queryTime": 8,
+          "numResults": 10,
+          "offset": 0,
+          "totalResults": 28,
+          "fuzzyLevel": 1
+        },
+        "results": [
+          {
+            "type": "Point Address",
+            "id": "US/PAD/p0/31570413",
+            "score": 14.1640310287,
+            "address": {
+              "streetNumber": "15127",
+              "streetName": "Northeast 24th Street",
+              "municipality": "Redmond",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98052",
+              "extendedPostalCode": "98052-5544",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "15127 Northeast 24th Street, Redmond, WA 98052",
+              "localName": "Redmond"
+            },
+            "position": {
+              "lat": 47.63096,
+              "lon": -122.13814
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.63186,
+                "lon": -122.13947
+              },
+              "btmRightPoint": {
+                "lat": 47.63006,
+                "lon": -122.13681
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 47.63149,
+                  "lon": -122.13853
+                }
+              },
+              {
+                "type": "minor",
+                "position": {
+                  "lat": 47.6308,
+                  "lon": -122.1385
+                }
+              }
+            ]
+          },
+          {
+            "type": "Cross Street",
+            "id": "US/XSTR/p0/1177189",
+            "score": 10.7666654587,
+            "address": {
+              "streetName": "Northeast 24th Street \u0026 Bel Red Road, Bellevue Redmond Road",
+              "municipality": "Bellevue",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98007",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Northeast 24th Street \u0026 Bel Red Road, Bellevue, WA 98007",
+              "localName": "Bellevue"
+            },
+            "position": {
+              "lat": 47.63162,
+              "lon": -122.13401
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.63252,
+                "lon": -122.13534
+              },
+              "btmRightPoint": {
+                "lat": 47.63072,
+                "lon": -122.13268
+              }
+            }
+          },
+          {
+            "type": "Cross Street",
+            "id": "US/XSTR/p0/1177190",
+            "score": 10.6782073975,
+            "address": {
+              "streetName": "Bel Red Road, Bellevue Redmond Road \u0026 Northeast 24th Street",
+              "municipality": "Bellevue",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98052",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Bel Red Road \u0026 Northeast 24th Street, Bellevue, WA 98052",
+              "localName": "Bellevue"
+            },
+            "position": {
+              "lat": 47.63162,
+              "lon": -122.13401
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.63252,
+                "lon": -122.13534
+              },
+              "btmRightPoint": {
+                "lat": 47.63072,
+                "lon": -122.13268
+              }
+            }
+          },
+          {
+            "type": "Cross Street",
+            "id": "US/XSTR/p0/1177160",
+            "score": 10.4268474579,
+            "address": {
+              "streetName": "148th Avenue Northeast \u0026 Northeast 24th Street",
+              "municipality": "Redmond",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98052",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "148th Avenue Northeast \u0026 Northeast 24th Street, Redmond, WA 98052",
+              "localName": "Redmond"
+            },
+            "position": {
+              "lat": 47.63154,
+              "lon": -122.14297
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.63244,
+                "lon": -122.1443
+              },
+              "btmRightPoint": {
+                "lat": 47.63064,
+                "lon": -122.14164
+              }
+            }
+          },
+          {
+            "type": "Cross Street",
+            "id": "US/XSTR/p0/1177162",
+            "score": 10.4268474579,
+            "address": {
+              "streetName": "148th Avenue Northeast \u0026 Northeast 24th Street",
+              "municipalitySubdivision": "Bridle Trails",
+              "municipality": "Bellevue",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98052",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "148th Avenue Northeast \u0026 Northeast 24th Street, Bellevue, WA 98052",
+              "localName": "Bellevue"
+            },
+            "position": {
+              "lat": 47.63154,
+              "lon": -122.14314
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.63244,
+                "lon": -122.14447
+              },
+              "btmRightPoint": {
+                "lat": 47.63064,
+                "lon": -122.14181
+              }
+            }
+          },
+          {
+            "type": "Cross Street",
+            "id": "US/XSTR/p0/1177164",
+            "score": 10.4268474579,
+            "address": {
+              "streetName": "Northeast 24th Street \u0026 148th Avenue Northeast",
+              "municipality": "Redmond",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98052",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Northeast 24th Street \u0026 148th Avenue Northeast, Redmond, WA 98052",
+              "localName": "Redmond"
+            },
+            "position": {
+              "lat": 47.63154,
+              "lon": -122.14314
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.63244,
+                "lon": -122.14447
+              },
+              "btmRightPoint": {
+                "lat": 47.63064,
+                "lon": -122.14181
+              }
+            }
+          },
+          {
+            "type": "Cross Street",
+            "id": "US/XSTR/p0/1177165",
+            "score": 10.4268474579,
+            "address": {
+              "streetName": "Northeast 24th Street \u0026 148th Avenue Northeast",
+              "municipalitySubdivision": "Bridle Trails",
+              "municipality": "Bellevue",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98007",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Northeast 24th Street \u0026 148th Avenue Northeast, Bellevue, WA 98007",
+              "localName": "Bellevue"
+            },
+            "position": {
+              "lat": 47.63154,
+              "lon": -122.14314
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.63244,
+                "lon": -122.14447
+              },
+              "btmRightPoint": {
+                "lat": 47.63064,
+                "lon": -122.14181
+              }
+            }
+          },
+          {
+            "type": "Cross Street",
+            "id": "US/XSTR/p0/1177166",
+            "score": 10.4268474579,
+            "address": {
+              "streetName": "148th Avenue Northeast \u0026 Northeast 24th Street",
+              "municipalitySubdivision": "Bel Red",
+              "municipality": "Bellevue",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98052",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "148th Avenue Northeast \u0026 Northeast 24th Street, Bellevue, WA 98052",
+              "localName": "Bellevue"
+            },
+            "position": {
+              "lat": 47.63145,
+              "lon": -122.14314
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.63235,
+                "lon": -122.14447
+              },
+              "btmRightPoint": {
+                "lat": 47.63055,
+                "lon": -122.14181
+              }
+            }
+          },
+          {
+            "type": "Cross Street",
+            "id": "US/XSTR/p0/1177185",
+            "score": 10.4268474579,
+            "address": {
+              "streetName": "151st Place Northeast \u0026 Northeast 24th Street",
+              "municipality": "Redmond",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98052",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "151st Place Northeast \u0026 Northeast 24th Street, Redmond, WA 98052",
+              "localName": "Redmond"
+            },
+            "position": {
+              "lat": 47.63157,
+              "lon": -122.13936
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.63247,
+                "lon": -122.14069
+              },
+              "btmRightPoint": {
+                "lat": 47.63067,
+                "lon": -122.13803
+              }
+            }
+          },
+          {
+            "type": "Cross Street",
+            "id": "US/XSTR/p0/1177187",
+            "score": 10.4268474579,
+            "address": {
+              "streetName": "152nd Avenue Northeast \u0026 Northeast 24th Street",
+              "municipality": "Redmond",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98052",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "152nd Avenue Northeast \u0026 Northeast 24th Street, Redmond, WA 98052",
+              "localName": "Redmond"
+            },
+            "position": {
+              "lat": 47.63159,
+              "lon": -122.1377
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.63249,
+                "lon": -122.13903
+              },
+              "btmRightPoint": {
+                "lat": 47.63069,
+                "lon": -122.13637
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "1708093020"
+  }
+}

@@ -2,13 +2,13 @@
 
 This sample demonstrates how to create and deploy Question Answering projects. To get started, you'll need to create a Question Answering service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/README.md) for links and instructions.
 
-To create, deploy, or perform any other authoring actions for Question Answering projects, you need to first create a `QuestionAnsweringProjectsClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
+To create, deploy, or perform any other authoring actions for Question Answering projects, you need to first create a `QuestionAnsweringAuthoringClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
-```C# Snippet:QuestionAnsweringProjectsClient_Create
-Uri endpoint = new Uri("{LanguageEndpoint}");
-AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
+```C# Snippet:QuestionAnsweringAuthoringClient_Create
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
-QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 ```
 
 Once you have created a client, you can call synchronous or asynchronous methods.
@@ -19,7 +19,7 @@ Once you have created a client, you can call synchronous or asynchronous methods
 
 To create a new Question Answering project, you will need to set your project name as well as the request content and call `CreateProject()` as shown below:
 
-```C# Snippet:QuestionAnsweringProjectsClient_CreateProject
+```C# Snippet:QuestionAnsweringAuthoringClient_CreateProject
 // Set project name and request content parameters
 string newProjectName = "{ProjectName}";
 RequestContent creationRequestContent = RequestContent.Create(
@@ -51,7 +51,7 @@ You might want to add a knowledge base source to your project before deployment.
 
 The following snippet shows how to add a new knowledge base source to your project using the `UpdateSources()` method.
 
-```C# Snippet:QuestionAnsweringProjectsClient_UpdateSources
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSources
 // Set request content parameters for updating our new project's sources
 string sourceUri = "{KnowledgeSourceUri}";
 RequestContent updateSourcesRequestContent = RequestContent.Create(
@@ -70,10 +70,11 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
+Operation<Pageable<BinaryData>> updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
 
 // Knowledge Sources can be retrieved as follows
-Pageable<BinaryData> sources = client.GetSources(newProjectName);
+Pageable<BinaryData> sources = updateSourcesOperation.Value;
+
 Console.WriteLine("Sources: ");
 foreach (BinaryData source in sources)
 {
@@ -83,9 +84,10 @@ foreach (BinaryData source in sources)
 
 ### Deploy your Project
 
-```C# Snippet:QuestionAnsweringProjectsClient_DeployProject
+```C# Snippet:QuestionAnsweringAuthoringClient_DeployProject
 // Set deployment name and start operation
 string newDeploymentName = "{DeploymentName}";
+
 Operation<BinaryData> deploymentOperation = client.DeployProject(WaitUntil.Completed, newProjectName, newDeploymentName);
 
 // Deployments can be retrieved as follows
@@ -101,7 +103,7 @@ foreach (BinaryData deployment in deployments)
 
 ### Creating a Project
 
-```C# Snippet:QuestionAnsweringProjectsClient_CreateProjectAsync
+```C# Snippet:QuestionAnsweringAuthoringClient_CreateProjectAsync
 // Set project name and request content parameters
 string newProjectName = "{ProjectName}";
 RequestContent creationRequestContent = RequestContent.Create(
@@ -131,7 +133,7 @@ await foreach (BinaryData project in projects)
 
 ### Adding a knowledge base source
 
-```C# Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSourcesAsync
 // Set request content parameters for updating our new project's sources
 string sourceUri = "{KnowledgeSourceUri}";
 RequestContent updateSourcesRequestContent = RequestContent.Create(
@@ -150,12 +152,11 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
-
-Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperation.Value}");
+Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
 
 // Knowledge Sources can be retrieved as follows
-AsyncPageable<BinaryData> sources = client.GetSourcesAsync(newProjectName);
+AsyncPageable<BinaryData> sources = updateSourcesOperation.Value;
+
 Console.WriteLine("Sources: ");
 await foreach (BinaryData source in sources)
 {
@@ -165,12 +166,11 @@ await foreach (BinaryData source in sources)
 
 ### Deploy your Project
 
-```C# Snippet:QuestionAnsweringProjectsClient_DeployProjectAsync
+```C# Snippet:QuestionAnsweringAuthoringClient_DeployProjectAsync
 // Set deployment name and start operation
 string newDeploymentName = "{DeploymentName}";
-Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(WaitUntil.Completed, newProjectName, newDeploymentName);
 
-Console.WriteLine($"Update Sources operation result: \n{deploymentOperation.Value}");
+Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(WaitUntil.Completed, newProjectName, newDeploymentName);
 
 // Deployments can be retrieved as follows
 AsyncPageable<BinaryData> deployments = client.GetDeploymentsAsync(newProjectName);

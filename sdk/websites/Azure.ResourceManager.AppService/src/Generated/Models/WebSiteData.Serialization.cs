@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("siteConfig");
                 writer.WriteObjectValue(SiteConfig);
             }
-            if (Optional.IsDefined(ScmSiteAlsoStopped))
+            if (Optional.IsDefined(IsScmSiteAlsoStopped))
             {
                 writer.WritePropertyName("scmSiteAlsoStopped");
-                writer.WriteBooleanValue(ScmSiteAlsoStopped.Value);
+                writer.WriteBooleanValue(IsScmSiteAlsoStopped.Value);
             }
             if (Optional.IsDefined(HostingEnvironmentProfile))
             {
@@ -202,12 +202,12 @@ namespace Azure.ResourceManager.AppService
             Optional<string> state = default;
             Optional<IReadOnlyList<string>> hostNames = default;
             Optional<string> repositorySiteName = default;
-            Optional<UsageState> usageState = default;
+            Optional<AppServiceUsageState> usageState = default;
             Optional<bool> enabled = default;
             Optional<IReadOnlyList<string>> enabledHostNames = default;
             Optional<WebSiteAvailabilityState> availabilityState = default;
             Optional<IList<HostNameSslState>> hostNameSslStates = default;
-            Optional<string> serverFarmId = default;
+            Optional<ResourceIdentifier> serverFarmId = default;
             Optional<bool> reserved = default;
             Optional<bool> isXenon = default;
             Optional<bool> hyperV = default;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.AppService
             Optional<Guid?> inProgressOperationId = default;
             Optional<bool> storageAccountRequired = default;
             Optional<string> keyVaultReferenceIdentity = default;
-            Optional<string> virtualNetworkSubnetId = default;
+            Optional<ResourceIdentifier> virtualNetworkSubnetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            usageState = property0.Value.GetString().ToUsageState();
+                            usageState = property0.Value.GetString().ToAppServiceUsageState();
                             continue;
                         }
                         if (property0.NameEquals("enabled"))
@@ -408,7 +408,12 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("serverFarmId"))
                         {
-                            serverFarmId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            serverFarmId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("reserved"))
@@ -688,7 +693,12 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("virtualNetworkSubnetId"))
                         {
-                            virtualNetworkSubnetId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            virtualNetworkSubnetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }

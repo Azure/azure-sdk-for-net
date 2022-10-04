@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _apiVersion = apiVersion ?? "2022-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SnapshotData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetAppVolumeSnapshotData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -179,13 +179,13 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        SnapshotData value = default;
+                        NetAppVolumeSnapshotData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SnapshotData.DeserializeSnapshotData(document.RootElement);
+                        value = NetAppVolumeSnapshotData.DeserializeNetAppVolumeSnapshotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SnapshotData)null, message.Response);
+                    return Response.FromValue((NetAppVolumeSnapshotData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SnapshotData> Get(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default)
+        public Response<NetAppVolumeSnapshotData> Get(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -216,19 +216,19 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        SnapshotData value = default;
+                        NetAppVolumeSnapshotData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SnapshotData.DeserializeSnapshotData(document.RootElement);
+                        value = NetAppVolumeSnapshotData.DeserializeNetAppVolumeSnapshotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SnapshotData)null, message.Response);
+                    return Response.FromValue((NetAppVolumeSnapshotData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, SnapshotData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, NetAppVolumeSnapshotData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="snapshotName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, SnapshotData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, NetAppVolumeSnapshotData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="snapshotName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, SnapshotData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, NetAppVolumeSnapshotData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        internal HttpMessage CreateRestoreFilesRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, SnapshotRestoreFiles body)
+        internal HttpMessage CreateRestoreFilesRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, NetAppVolumeSnapshotRestoreFilesContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -436,9 +436,9 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -450,11 +450,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="poolName"> The name of the capacity pool. </param>
         /// <param name="volumeName"> The name of the volume. </param>
         /// <param name="snapshotName"> The name of the snapshot. </param>
-        /// <param name="body"> Restore payload supplied in the body of the operation. </param>
+        /// <param name="content"> Restore payload supplied in the body of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="snapshotName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="snapshotName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RestoreFilesAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, SnapshotRestoreFiles body, CancellationToken cancellationToken = default)
+        public async Task<Response> RestoreFilesAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, NetAppVolumeSnapshotRestoreFilesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -462,9 +462,9 @@ namespace Azure.ResourceManager.NetApp
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRestoreFilesRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, snapshotName, body);
+            using var message = CreateRestoreFilesRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, snapshotName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -483,11 +483,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="poolName"> The name of the capacity pool. </param>
         /// <param name="volumeName"> The name of the volume. </param>
         /// <param name="snapshotName"> The name of the snapshot. </param>
-        /// <param name="body"> Restore payload supplied in the body of the operation. </param>
+        /// <param name="content"> Restore payload supplied in the body of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="snapshotName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="snapshotName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RestoreFiles(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, SnapshotRestoreFiles body, CancellationToken cancellationToken = default)
+        public Response RestoreFiles(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, NetAppVolumeSnapshotRestoreFilesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -495,9 +495,9 @@ namespace Azure.ResourceManager.NetApp
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRestoreFilesRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, snapshotName, body);
+            using var message = CreateRestoreFilesRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, snapshotName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

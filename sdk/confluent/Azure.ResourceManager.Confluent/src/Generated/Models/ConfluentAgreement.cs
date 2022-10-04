@@ -29,19 +29,19 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="plan"> Plan identifier string. </param>
         /// <param name="licenseTextLink"> Link to HTML with Microsoft and Publisher terms. </param>
         /// <param name="privacyPolicyLink"> Link to the privacy policy of the publisher. </param>
-        /// <param name="retrieveDatetime"> Date and time in UTC of when the terms were accepted. This is empty if Accepted is false. </param>
+        /// <param name="retrieveOn"> Date and time in UTC of when the terms were accepted. This is empty if Accepted is false. </param>
         /// <param name="signature"> Terms signature. </param>
-        /// <param name="accepted"> If any version of the terms have been accepted, otherwise false. </param>
-        internal ConfluentAgreement(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string product, string plan, string licenseTextLink, string privacyPolicyLink, DateTimeOffset? retrieveDatetime, string signature, bool? accepted) : base(id, name, resourceType, systemData)
+        /// <param name="isAccepted"> If any version of the terms have been accepted, otherwise false. </param>
+        internal ConfluentAgreement(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string product, string plan, string licenseTextLink, string privacyPolicyLink, DateTimeOffset? retrieveOn, string signature, bool? isAccepted) : base(id, name, resourceType, systemData)
         {
             Publisher = publisher;
             Product = product;
             Plan = plan;
             LicenseTextLink = licenseTextLink;
             PrivacyPolicyLink = privacyPolicyLink;
-            RetrieveDatetime = retrieveDatetime;
+            RetrieveOn = retrieveOn;
             Signature = signature;
-            Accepted = accepted;
+            IsAccepted = isAccepted;
         }
 
         /// <summary> Publisher identifier string. </summary>
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <summary> Link to the privacy policy of the publisher. </summary>
         public string PrivacyPolicyLink { get; set; }
         /// <summary> Date and time in UTC of when the terms were accepted. This is empty if Accepted is false. </summary>
-        public DateTimeOffset? RetrieveDatetime { get; set; }
+        public DateTimeOffset? RetrieveOn { get; set; }
         /// <summary> Terms signature. </summary>
         public string Signature { get; set; }
         /// <summary> If any version of the terms have been accepted, otherwise false. </summary>
-        public bool? Accepted { get; set; }
+        public bool? IsAccepted { get; set; }
     }
 }

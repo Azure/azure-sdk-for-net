@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.IotConnectorCollection>> ListByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<IotConnectorCollection>> ListByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        Models.IotConnectorCollection value = default;
+                        IotConnectorCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.IotConnectorCollection.DeserializeIotConnectorCollection(document.RootElement);
+                        value = IotConnectorCollection.DeserializeIotConnectorCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.IotConnectorCollection> ListByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<IotConnectorCollection> ListByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        Models.IotConnectorCollection value = default;
+                        IotConnectorCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.IotConnectorCollection.DeserializeIotConnectorCollection(document.RootElement);
+                        value = IotConnectorCollection.DeserializeIotConnectorCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IotConnectorData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, CancellationToken cancellationToken = default)
+        public async Task<Response<HealthcareApisIotConnectorData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        IotConnectorData value = default;
+                        HealthcareApisIotConnectorData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IotConnectorData.DeserializeIotConnectorData(document.RootElement);
+                        value = HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IotConnectorData)null, message.Response);
+                    return Response.FromValue((HealthcareApisIotConnectorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IotConnectorData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, CancellationToken cancellationToken = default)
+        public Response<HealthcareApisIotConnectorData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        IotConnectorData value = default;
+                        HealthcareApisIotConnectorData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IotConnectorData.DeserializeIotConnectorData(document.RootElement);
+                        value = HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IotConnectorData)null, message.Response);
+                    return Response.FromValue((HealthcareApisIotConnectorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, IotConnectorData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, HealthcareApisIotConnectorData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, IotConnectorData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, HealthcareApisIotConnectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, IotConnectorData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, HealthcareApisIotConnectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.HealthcareApis
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, IotConnectorPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, HealthcareApisIotConnectorPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, IotConnectorPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, HealthcareApisIotConnectorPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, IotConnectorPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, HealthcareApisIotConnectorPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.IotConnectorCollection>> ListByWorkspaceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<IotConnectorCollection>> ListByWorkspaceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -487,9 +487,9 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        Models.IotConnectorCollection value = default;
+                        IotConnectorCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.IotConnectorCollection.DeserializeIotConnectorCollection(document.RootElement);
+                        value = IotConnectorCollection.DeserializeIotConnectorCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.IotConnectorCollection> ListByWorkspaceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<IotConnectorCollection> ListByWorkspaceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -518,9 +518,9 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        Models.IotConnectorCollection value = default;
+                        IotConnectorCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.IotConnectorCollection.DeserializeIotConnectorCollection(document.RootElement);
+                        value = IotConnectorCollection.DeserializeIotConnectorCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

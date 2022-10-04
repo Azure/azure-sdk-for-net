@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> Display name of the VM. </param>
         /// <param name="vmType"> Virtual machine type. </param>
-        internal WorkloadNetworkVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, VmTypeEnum? vmType) : base(id, name, resourceType, systemData)
+        internal WorkloadNetworkVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, WorkloadNetworkVmType? vmType) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             VmType = vmType;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Display name of the VM. </summary>
         public string DisplayName { get; set; }
         /// <summary> Virtual machine type. </summary>
-        public VmTypeEnum? VmType { get; }
+        public WorkloadNetworkVmType? VmType { get; }
     }
 }

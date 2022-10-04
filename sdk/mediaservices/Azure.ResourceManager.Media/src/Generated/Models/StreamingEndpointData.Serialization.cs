@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ScaleUnitsNumber))
+            if (Optional.IsDefined(ScaleUnits))
             {
                 writer.WritePropertyName("scaleUnits");
-                writer.WriteNumberValue(ScaleUnitsNumber.Value);
+                writer.WriteNumberValue(ScaleUnits.Value);
             }
             if (Optional.IsDefined(AvailabilitySetName))
             {
