@@ -171,14 +171,14 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        protected internal virtual bool ShouldRetry(HttpMessage message) => ShouldRetryInternal(message);
+        protected virtual bool ShouldRetry(HttpMessage message) => ShouldRetryInternal(message);
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        protected internal virtual ValueTask<bool> ShouldRetryAsync(HttpMessage message) => new(ShouldRetryInternal(message));
+        protected virtual ValueTask<bool> ShouldRetryAsync(HttpMessage message) => new(ShouldRetryInternal(message));
 
         private bool ShouldRetryInternal(HttpMessage message)
         {
@@ -204,7 +204,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        protected internal virtual TimeSpan CalculateNextDelay(HttpMessage message) => CalculateNextDelayInternal(message);
+        protected virtual TimeSpan CalculateNextDelay(HttpMessage message) => CalculateNextDelayInternal(message);
 
         /// <summary>
         ///
