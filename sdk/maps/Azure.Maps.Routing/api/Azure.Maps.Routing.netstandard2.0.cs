@@ -1,20 +1,12 @@
 namespace Azure.Maps.Routing
 {
-    public partial class MapsRouteClientOptions : Azure.Core.ClientOptions
-    {
-        public MapsRouteClientOptions(Azure.Maps.Routing.MapsRouteClientOptions.ServiceVersion version = Azure.Maps.Routing.MapsRouteClientOptions.ServiceVersion.V1_0, System.Uri endpoint = null) { }
-        public enum ServiceVersion
-        {
-            V1_0 = 1,
-        }
-    }
     public partial class MapsRoutingClient
     {
         protected MapsRoutingClient() { }
         public MapsRoutingClient(Azure.AzureKeyCredential credential) { }
-        public MapsRoutingClient(Azure.AzureKeyCredential credential, Azure.Maps.Routing.MapsRouteClientOptions options) { }
+        public MapsRoutingClient(Azure.AzureKeyCredential credential, Azure.Maps.Routing.MapsRoutingClientOptions options) { }
         public MapsRoutingClient(Azure.Core.TokenCredential credential, string clientId) { }
-        public MapsRoutingClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Routing.MapsRouteClientOptions options) { }
+        public MapsRoutingClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Routing.MapsRoutingClientOptions options) { }
         public virtual Azure.Response<Azure.Maps.Routing.Models.RouteDirections> GetDirections(Azure.Maps.Routing.Models.RouteDirectionQuery routeDirectionQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteDirections>> GetDirectionsAsync(Azure.Maps.Routing.Models.RouteDirectionQuery routeDirectionQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Routing.Models.RouteRangeResult> GetRouteRange(Azure.Maps.Routing.Models.RouteRangeOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -29,6 +21,14 @@ namespace Azure.Maps.Routing
         public virtual Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult> SyncRequestRouteMatrix(Azure.Maps.Routing.Models.RouteMatrixQuery routeMatrixQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult>> SyncRequestRouteMatrixAsync(Azure.Maps.Routing.Models.RouteMatrixOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult>> SyncRequestRouteMatrixAsync(Azure.Maps.Routing.Models.RouteMatrixQuery routeMatrixQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MapsRoutingClientOptions : Azure.Core.ClientOptions
+    {
+        public MapsRoutingClientOptions(Azure.Maps.Routing.MapsRoutingClientOptions.ServiceVersion version = Azure.Maps.Routing.MapsRoutingClientOptions.ServiceVersion.V1_0, System.Uri endpoint = null) { }
+        public enum ServiceVersion
+        {
+            V1_0 = 1,
+        }
     }
 }
 namespace Azure.Maps.Routing.Models

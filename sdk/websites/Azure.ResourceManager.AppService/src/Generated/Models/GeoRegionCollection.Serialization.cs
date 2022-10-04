@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static GeoRegionCollection DeserializeGeoRegionCollection(JsonElement element)
         {
-            IReadOnlyList<GeoRegion> value = default;
+            IReadOnlyList<AppServiceGeoRegion> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<GeoRegion> array = new List<GeoRegion>();
+                    List<AppServiceGeoRegion> array = new List<AppServiceGeoRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GeoRegion.DeserializeGeoRegion(item));
+                        array.Add(AppServiceGeoRegion.DeserializeAppServiceGeoRegion(item));
                     }
                     value = array;
                     continue;

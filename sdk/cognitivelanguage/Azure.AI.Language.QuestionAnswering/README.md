@@ -19,7 +19,7 @@ dotnet add package Azure.AI.Language.QuestionAnswering
 * An [Azure subscription][azure_subscription]
 * An existing Question Answering resource
 
-> Note: the new unified Cognitive Language Services are not currently available for deployment.
+Though you can use this SDK to create and import conversation projects, [Language Studio][language_studio] is the preferred method for creating projects.
 
 ### Authenticate the client
 
@@ -37,24 +37,25 @@ az cognitiveservices account keys list --resource-group <resource-group-name> --
 
 #### Create a QuestionAnsweringClient
 
-To use the `QuestionAnsweringClient`, make sure you use the right namespace:
+To use the `QuestionAnsweringClient`, make sure you use the right namespaces:
 
-```C# Snippet:QuestionAnsweringClient_Namespace
+```C# Snippet:QuestionAnsweringClient_Namespaces
+using Azure.Core;
 using Azure.AI.Language.QuestionAnswering;
 ```
 
 With your **endpoint** and **API key** you can instantiate a `QuestionAnsweringClient`:
 
 ```C# Snippet:QuestionAnsweringClient_Create
-Uri endpoint = new Uri("{LanguageEndpoint}");
-AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
 QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
 ```
 
 #### Create a QuestionAnsweringAuthoringClient
 
-To use the `QuestionAnsweringAuthoringClient`, make sure you use the right namespace:
+To use the `QuestionAnsweringAuthoringClient`, use the following namespace in addition to those above, if needed.
 
 ```C# Snippet:QuestionAnsweringAuthoringClient_Namespace
 using Azure.AI.Language.QuestionAnswering.Authoring;
@@ -63,11 +64,38 @@ using Azure.AI.Language.QuestionAnswering.Authoring;
 With your **endpoint** and **API key**, you can instantiate a `QuestionAnsweringAuthoringClient`:
 
 ```C# Snippet:QuestionAnsweringAuthoringClient_Create
-Uri endpoint = new Uri("{LanguageEndpoint}");
-AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 ```
+
+#### Create a client using Azure Active Directory authentication
+
+You can also create a `QuestionAnsweringClient` or `QuestionAnsweringAuthoringClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
+Using the [DefaultAzureCredential] you can authenticate a service using Managed Identity or a service principal, authenticate as a developer working on an application, and more all without changing code.
+
+Before you can use the `DefaultAzureCredential`, or any credential type from [Azure.Identity][azure_identity], you'll first need to [install the Azure.Identity package][azure_identity_install].
+
+To use `DefaultAzureCredential` with a client ID and secret, you'll need to set the `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, and `AZURE_CLIENT_SECRET` environment variables; alternatively, you can pass those values
+to the `ClientSecretCredential` also in Azure.Identity.
+
+Make sure you use the right namespace for `DefaultAzureCredential` at the top of your source file:
+
+```C# Snippet:QuestionAnswering_Identity_Namespace
+using Azure.Identity;
+```
+
+Then you can create an instance of `DefaultAzureCredential` and pass it to a new instance of your client:
+
+```C# Snippet:QuestionAnsweringClient_CreateWithDefaultAzureCredential
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+DefaultAzureCredential credential = new DefaultAzureCredential();
+
+QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
+```
+
+Note that regional endpoints do not support AAD authentication. Instead, create a [custom domain][custom_domain] name for your resource to use AAD authentication.
 
 ## Key concepts
 
@@ -310,6 +338,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [azure_cli]: https://docs.microsoft.com/cli/azure/
+[azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
+[azure_identity_install]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#install-the-package
 [azure_portal]: https://portal.azure.com/
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/
 [cla]: https://cla.microsoft.com
@@ -319,7 +349,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication/
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
 [core_logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
+[custom_domain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
+[language_studio]: https://language.cognitive.azure.com/
 [nuget]: https://www.nuget.org/
+
 [questionanswering_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/QuestionAnsweringClient.cs
 [questionanswering_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/
 [questionanswering_docs]: https://docs.microsoft.com/azure/cognitive-services/qnamaker/

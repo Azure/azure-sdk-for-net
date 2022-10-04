@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="content"> The parameters to provide for the contacts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<OrbitalSpacecraftAvailableContactListResult>> GetAllAvailableContactsAsync(WaitUntil waitUntil, OrbitalSpacecraftAvailableContactsContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OrbitalAvailableContactsResult>> GetAllAvailableContactsAsync(WaitUntil waitUntil, OrbitalAvailableContactsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Orbital
             try
             {
                 var response = await _orbitalSpacecraftSpacecraftsRestClient.ListAvailableContactsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new OrbitalArmOperation<OrbitalSpacecraftAvailableContactListResult>(new OrbitalSpacecraftAvailableContactListResultOperationSource(), _orbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, _orbitalSpacecraftSpacecraftsRestClient.CreateListAvailableContactsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new OrbitalArmOperation<OrbitalAvailableContactsResult>(new OrbitalAvailableContactsResultOperationSource(), _orbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, _orbitalSpacecraftSpacecraftsRestClient.CreateListAvailableContactsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="content"> The parameters to provide for the contacts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<OrbitalSpacecraftAvailableContactListResult> GetAllAvailableContacts(WaitUntil waitUntil, OrbitalSpacecraftAvailableContactsContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OrbitalAvailableContactsResult> GetAllAvailableContacts(WaitUntil waitUntil, OrbitalAvailableContactsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Orbital
             try
             {
                 var response = _orbitalSpacecraftSpacecraftsRestClient.ListAvailableContacts(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new OrbitalArmOperation<OrbitalSpacecraftAvailableContactListResult>(new OrbitalSpacecraftAvailableContactListResultOperationSource(), _orbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, _orbitalSpacecraftSpacecraftsRestClient.CreateListAvailableContactsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new OrbitalArmOperation<OrbitalAvailableContactsResult>(new OrbitalAvailableContactsResultOperationSource(), _orbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, _orbitalSpacecraftSpacecraftsRestClient.CreateListAvailableContactsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

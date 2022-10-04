@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static RemediationDeployment DeserializeRemediationDeployment(JsonElement element)
         {
-            Optional<string> remediatedResourceId = default;
-            Optional<string> deploymentId = default;
+            Optional<ResourceIdentifier> remediatedResourceId = default;
+            Optional<ResourceIdentifier> deploymentId = default;
             Optional<string> status = default;
-            Optional<string> resourceLocation = default;
+            Optional<AzureLocation> resourceLocation = default;
             Optional<ResponseError> error = default;
             Optional<DateTimeOffset> createdOn = default;
             Optional<DateTimeOffset> lastUpdatedOn = default;
@@ -27,12 +27,22 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 if (property.NameEquals("remediatedResourceId"))
                 {
-                    remediatedResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    remediatedResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("deploymentId"))
                 {
-                    deploymentId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    deploymentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"))
@@ -42,7 +52,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (property.NameEquals("resourceLocation"))
                 {
-                    resourceLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"))
@@ -76,7 +91,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new RemediationDeployment(remediatedResourceId.Value, deploymentId.Value, status.Value, resourceLocation.Value, error.Value, Optional.ToNullable(createdOn), Optional.ToNullable(lastUpdatedOn));
+            return new RemediationDeployment(remediatedResourceId.Value, deploymentId.Value, status.Value, Optional.ToNullable(resourceLocation), error.Value, Optional.ToNullable(createdOn), Optional.ToNullable(lastUpdatedOn));
         }
     }
 }

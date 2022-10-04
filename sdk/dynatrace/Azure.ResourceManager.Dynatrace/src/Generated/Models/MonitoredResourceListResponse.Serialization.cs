@@ -15,16 +15,21 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         internal static MonitoredResourceListResponse DeserializeMonitoredResourceListResponse(JsonElement element)
         {
-            IReadOnlyList<MonitoredResourceDetails> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<DynatraceMonitoredResourceDetails>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<MonitoredResourceDetails> array = new List<MonitoredResourceDetails>();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<DynatraceMonitoredResourceDetails> array = new List<DynatraceMonitoredResourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoredResourceDetails.DeserializeMonitoredResourceDetails(item));
+                        array.Add(DynatraceMonitoredResourceDetails.DeserializeDynatraceMonitoredResourceDetails(item));
                     }
                     value = array;
                     continue;
@@ -35,7 +40,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new MonitoredResourceListResponse(value, nextLink);
+            return new MonitoredResourceListResponse(Optional.ToList(value), nextLink.Value);
         }
     }
 }

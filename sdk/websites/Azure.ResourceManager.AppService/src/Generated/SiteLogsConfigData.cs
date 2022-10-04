@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="applicationLogs"> Application logs configuration. </param>
         /// <param name="httpLogs"> HTTP logs configuration. </param>
-        /// <param name="failedRequestsTracing"> Failed requests tracing configuration. </param>
-        /// <param name="detailedErrorMessages"> Detailed error messages configuration. </param>
+        /// <param name="isFailedRequestsTracing"> Failed requests tracing configuration. </param>
+        /// <param name="isDetailedErrorMessages"> Detailed error messages configuration. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApplicationLogsConfig applicationLogs, HttpLogsConfig httpLogs, EnabledConfig failedRequestsTracing, EnabledConfig detailedErrorMessages, string kind) : base(id, name, resourceType, systemData)
+        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApplicationLogsConfig applicationLogs, AppServiceHttpLogsConfig httpLogs, WebAppEnabledConfig isFailedRequestsTracing, WebAppEnabledConfig isDetailedErrorMessages, string kind) : base(id, name, resourceType, systemData)
         {
             ApplicationLogs = applicationLogs;
             HttpLogs = httpLogs;
-            FailedRequestsTracing = failedRequestsTracing;
-            DetailedErrorMessages = detailedErrorMessages;
+            IsFailedRequestsTracing = isFailedRequestsTracing;
+            IsDetailedErrorMessages = isDetailedErrorMessages;
             Kind = kind;
         }
 
         /// <summary> Application logs configuration. </summary>
         public ApplicationLogsConfig ApplicationLogs { get; set; }
         /// <summary> HTTP logs configuration. </summary>
-        public HttpLogsConfig HttpLogs { get; set; }
+        public AppServiceHttpLogsConfig HttpLogs { get; set; }
         /// <summary> Failed requests tracing configuration. </summary>
-        internal EnabledConfig FailedRequestsTracing { get; set; }
+        internal WebAppEnabledConfig IsFailedRequestsTracing { get; set; }
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
-        public bool? FailedRequestsTracingEnabled
+        public bool? IsFailedRequestsTracingEnabled
         {
-            get => FailedRequestsTracing is null ? default : FailedRequestsTracing.Enabled;
+            get => IsFailedRequestsTracing is null ? default : IsFailedRequestsTracing.Enabled;
             set
             {
-                if (FailedRequestsTracing is null)
-                    FailedRequestsTracing = new EnabledConfig();
-                FailedRequestsTracing.Enabled = value;
+                if (IsFailedRequestsTracing is null)
+                    IsFailedRequestsTracing = new WebAppEnabledConfig();
+                IsFailedRequestsTracing.Enabled = value;
             }
         }
 
         /// <summary> Detailed error messages configuration. </summary>
-        internal EnabledConfig DetailedErrorMessages { get; set; }
+        internal WebAppEnabledConfig IsDetailedErrorMessages { get; set; }
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
-        public bool? DetailedErrorMessagesEnabled
+        public bool? IsDetailedErrorMessagesEnabled
         {
-            get => DetailedErrorMessages is null ? default : DetailedErrorMessages.Enabled;
+            get => IsDetailedErrorMessages is null ? default : IsDetailedErrorMessages.Enabled;
             set
             {
-                if (DetailedErrorMessages is null)
-                    DetailedErrorMessages = new EnabledConfig();
-                DetailedErrorMessages.Enabled = value;
+                if (IsDetailedErrorMessages is null)
+                    IsDetailedErrorMessages = new WebAppEnabledConfig();
+                IsDetailedErrorMessages.Enabled = value;
             }
         }
 

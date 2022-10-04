@@ -15,22 +15,27 @@ namespace Azure.Communication.CallAutomation
     {
         internal static CallRecordingStateChanged DeserializeCallRecordingStateChanged(JsonElement element)
         {
-            Optional<string> eventSource = default;
-            Optional<string> recordingId = default;
-            Optional<RecordingState> state = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<string> version = default;
-            Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInformation = default;
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
-            Optional<string> publicEventType = default;
+            Optional<string> recordingId = default;
+            Optional<RecordingState> state = default;
+            Optional<DateTimeOffset> startDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eventSource"))
+                if (property.NameEquals("callConnectionId"))
                 {
-                    eventSource = property.Value.GetString();
+                    callConnectionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serverCallId"))
+                {
+                    serverCallId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("correlationId"))
+                {
+                    correlationId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("recordingId"))
@@ -58,48 +63,8 @@ namespace Azure.Communication.CallAutomation
                     startDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("version"))
-                {
-                    version = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("operationContext"))
-                {
-                    operationContext = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultInformation"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("callConnectionId"))
-                {
-                    callConnectionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serverCallId"))
-                {
-                    serverCallId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationId"))
-                {
-                    correlationId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("publicEventType"))
-                {
-                    publicEventType = property.Value.GetString();
-                    continue;
-                }
             }
-            return new CallRecordingStateChanged(eventSource.Value, recordingId.Value, state, Optional.ToNullable(startDateTime), version.Value, operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new CallRecordingStateChanged(callConnectionId.Value, serverCallId.Value, correlationId.Value, recordingId.Value, state, Optional.ToNullable(startDateTime));
         }
     }
 }
