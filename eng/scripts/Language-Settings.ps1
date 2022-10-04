@@ -272,7 +272,7 @@ function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
 
   # This logic eliminates a preceeding "azure." in the readme filename.
   # "azure.storage.blobs" -> "storage.blobs"
-  if ($readmeName.StartsWith('Azure.')) {
+  if ($readmeName.StartsWith('azure.')) {
     $readmeName = $readmeName.Substring(6)
   }
 
