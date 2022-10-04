@@ -9,7 +9,9 @@ namespace Azure.Storage.Shared
 {
     internal static class StorageExtensions
     {
-        public static string EscapePath(this string path, bool trimOuterSlashes = false)
+        /// <param name="path">Path to operate on.</param>
+        /// <param name="trimOuterSlashes">Whether to perform backwards-compatible trimming.</param>
+        public static string EscapePath(this string path, bool trimOuterSlashes = true)
         {
             if (path == null)
             {
@@ -27,7 +29,9 @@ namespace Azure.Storage.Shared
             return string.Join("/", split);
         }
 
-        public static string UnescapePath(this string path, bool trimOuterSlashes = false)
+        /// <param name="path">Path to operate on.</param>
+        /// <param name="trimOuterSlashes">Whether to perform backwards-compatible trimming.</param>
+        public static string UnescapePath(this string path, bool trimOuterSlashes = true)
         {
             if (path == null)
             {
