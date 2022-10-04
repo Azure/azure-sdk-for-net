@@ -123,3 +123,20 @@ directive:
     };
 
 ```
+
+### C# customizations
+
+``` yaml
+directive:
+# Remove explicit paging parameters until Azure/azure-sdk-for-net#29342 is resolved.
+- from: questionanswering-authoring.json
+  where: $.paths.*[?(@["x-ms-pageable"])]
+  transform: |
+    var paramRefs = [
+        "common.json#/parameters/TopParameter",
+        "common.json#/parameters/SkipParameter",
+        "common.json#/parameters/MaxPageSizeParameter"
+    ];
+    $.parameters = $.parameters.filter(param => !paramRefs.includes(param["$ref"]));
+
+```
