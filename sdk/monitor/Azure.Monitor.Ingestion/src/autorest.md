@@ -41,10 +41,3 @@ directive:
   where: $.paths["/dataCollectionRules/{ruleId}/streams/{stream}"].post
   transform: $['x-accessibility'] = "internal";
 ```
-### Renames generated Upload method to UploadInternal
-``` yaml
-directive:
-- from: swagger-document
-  where: $.paths["/dataCollectionRules/{ruleId}/streams/{stream}"].post
-  transform: $["x-ms-client-name"] = "UploadInternal";
-  ```

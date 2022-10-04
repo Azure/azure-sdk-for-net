@@ -15,6 +15,9 @@ namespace Azure.Monitor.Ingestion
 {
     /// <summary> The IngestionUsingDataCollectionRules service client. </summary>
     [CodeGenClient("IngestionUsingDataCollectionRulesClient")]
+    [CodeGenSuppress("Upload", typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("UploadAsync", typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("CreateUploadRequest", typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
     public partial class LogsIngestionClient
     {
         /// <summary> Initializes a new instance of LogsIngestionClient for mocking. </summary>
