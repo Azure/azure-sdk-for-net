@@ -5,7 +5,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.RecoveryServices.Backup.CrossRegionRestore
+namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
   using System;
   using System.Collections.Generic;
@@ -19,17 +19,59 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.CrossRegionRestore
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("RecoveryServices", "AadProperties", "2021-11-15"),
-                new Tuple<string, string, string>("RecoveryServices", "BackupCrrJobDetails", "2021-11-15"),
-                new Tuple<string, string, string>("RecoveryServices", "BackupCrrJobs", "2021-11-15"),
-                new Tuple<string, string, string>("RecoveryServices", "BackupProtectedItemsCrr", "2021-11-15"),
-                new Tuple<string, string, string>("RecoveryServices", "BackupResourceStorageConfigs", "2021-11-15"),
-                new Tuple<string, string, string>("RecoveryServices", "BackupUsageSummariesCRR", "2021-11-15"),
-                new Tuple<string, string, string>("RecoveryServices", "CrossRegionRestore", "2021-11-15"),
-                new Tuple<string, string, string>("RecoveryServices", "CrrOperationResults", "2021-11-15"),
-                new Tuple<string, string, string>("RecoveryServices", "CrrOperationStatus", "2021-11-15"),
-                new Tuple<string, string, string>("RecoveryServices", "RecoveryPoints", "2021-11-15"),
-                new Tuple<string, string, string>("RecoveryServices", "RecoveryPointsCrr", "2021-11-15"),
+                new Tuple<string, string, string>("RecoveryServices", "BMSPrepareDataMove", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "BMSPrepareDataMoveOperationResult", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "BMSTriggerDataMove", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "BackupEngines", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "BackupJobs", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "BackupOperationResults", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "BackupOperationStatuses", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "BackupPolicies", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "BackupProtectableItems", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "BackupProtectedItems", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "BackupProtectionContainers", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "BackupProtectionIntent", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "BackupResourceEncryptionConfigs", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "BackupResourceStorageConfigsNonCRR", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "BackupResourceVaultConfigs", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "BackupStatus", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "BackupUsageSummaries", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "BackupWorkloadItems", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "Backups", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "DeletedProtectionContainers", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "ExportJobsOperationResults", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "FeatureSupport", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "GetOperationStatus", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "ItemLevelRecoveryConnections", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "JobCancellations", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "JobDetails", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "JobOperationResults", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "Jobs", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "MoveRecoveryPoint", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "Operation", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "Operations", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "PrivateEndpoint", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "PrivateEndpointConnection", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "ProtectableContainers", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "ProtectedItemOperationResults", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "ProtectedItemOperationStatuses", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "ProtectedItems", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "ProtectionContainerOperationResults", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "ProtectionContainerRefreshOperationResults", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "ProtectionContainers", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "ProtectionIntent", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "ProtectionPolicies", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "ProtectionPolicyOperationResults", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "ProtectionPolicyOperationStatuses", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "RecoveryPoints", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "RecoveryPointsRecommendedForMove", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "ResourceGuardProxies", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "ResourceGuardProxy", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "Restores", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "SecurityPINs", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "ValidateOperation", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "ValidateOperationResults", "2022-09-01-preview"),
+                new Tuple<string, string, string>("RecoveryServices", "ValidateOperationStatuses", "2022-09-01-preview"),
               }.AsEnumerable();
           }
       }

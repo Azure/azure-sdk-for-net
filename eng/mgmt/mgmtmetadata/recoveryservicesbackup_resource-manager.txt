@@ -4,7 +4,8 @@ Commencing code generation
 Generating CSharp code
 Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/recoveryservicesbackup/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp.namespace=Microsoft.Azure.Management.RecoveryServices.Backup --tag=package-preview-2022-09 --csharp.output-folder=D:\code\azure-sdk-for-net\sdk\recoveryservices-backup\Microsoft.Azure.Management.RecoveryServices.Backup\src\recoveryservicesbackup\Generated
-2022-10-04 07:01:50 UTC
+Autorest CSharp Version: 2.3.82
+2022-10-04 11:37:36 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      main
@@ -19,7 +20,7 @@ Generating CSharp code
 Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/recoveryservicesbackup/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp.namespace=Microsoft.Azure.Management.RecoveryServices.Backup.CrossRegionRestore --tag=package-passivestamp-2021-11-15 --csharp.output-folder=D:\code\azure-sdk-for-net\sdk\recoveryservices-backup\Microsoft.Azure.Management.RecoveryServices.Backup\src\recoveryservicesbackupCrossregionRestore\Generated
 Autorest CSharp Version: 2.3.82
-2022-10-04 07:02:27 UTC
+2022-10-04 11:38:13 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      main
