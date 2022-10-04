@@ -139,5 +139,10 @@ namespace Microsoft.Azure.Management.DataProtection
         /// </summary>
         IResourceGuardsOperations ResourceGuards { get; }
 
+        /// <summary>
+        /// Gets the IDppResourceGuardProxyOperations.
+        /// </summary>
+        IDppResourceGuardProxyOperations DppResourceGuardProxy { get; }
+
     }
 }

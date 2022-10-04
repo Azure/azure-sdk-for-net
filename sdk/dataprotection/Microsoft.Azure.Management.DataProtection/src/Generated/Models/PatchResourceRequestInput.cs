@@ -35,10 +35,12 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// Initializes a new instance of the PatchResourceRequestInput class.
         /// </summary>
         /// <param name="identity">Input Managed Identity Details</param>
+        /// <param name="properties">Resource properties.</param>
         /// <param name="tags">Resource tags.</param>
-        public PatchResourceRequestInput(DppIdentityDetails identity = default(DppIdentityDetails), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public PatchResourceRequestInput(DppIdentityDetails identity = default(DppIdentityDetails), PatchBackupVaultInput properties = default(PatchBackupVaultInput), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Identity = identity;
+            Properties = properties;
             Tags = tags;
             CustomInit();
         }
@@ -53,6 +55,12 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public DppIdentityDetails Identity { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public PatchBackupVaultInput Properties { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.
