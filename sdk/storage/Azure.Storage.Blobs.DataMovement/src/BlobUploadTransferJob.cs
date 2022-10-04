@@ -31,12 +31,12 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <summary>
         /// The path to the local file where the contents to be upload to the blob is stored.
         /// </summary>
-        internal string _sourceLocalPath;
+        internal StorageResource _sourceLocalPath;
 
         /// <summary>
         /// Gets the path to the local file where the contents to be upload to the blob is stored.
         /// </summary>
-        public string SourceLocalPath => _sourceLocalPath;
+        public StorageResource SourceLocalPath => _sourceLocalPath;
 
         /// <summary>
         /// Holds Source Blob Configurations
@@ -95,7 +95,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// </param>
         public BlobUploadTransferJob(
             string transferId,
-            string sourceLocalPath,
+            StorageResource sourceLocalPath,
             BlockBlobClient destinationClient,
             BlobSingleUploadOptions uploadOptions,
             ErrorHandlingOptions errorOption,
@@ -137,7 +137,7 @@ namespace Azure.Storage.Blobs.DataMovement
                 singleUploadThreshold = Math.Min(UploadOptions.TransferOptions.InitialTransferSize.Value, Constants.Blob.Block.MaxUploadBytes);
             }
 
-            FileInfo fileInfo = new FileInfo(SourceLocalPath);
+            FileInfo fileInfo = new FileInfo(SourceLocalPath.GetUri().AbsoluteUri);
             long fileLength = fileInfo.Length;
             string operationName = $"{nameof(BlobTransferManager.ScheduleUploadAsync)}";
 
@@ -322,7 +322,7 @@ namespace Azure.Storage.Blobs.DataMovement
         {
             try
             {
-                using (FileStream stream = new FileStream(SourceLocalPath, FileMode.Open, FileAccess.Read))
+                using (FileStream stream = new FileStream(SourceLocalPath.GetUri().AbsoluteUri, FileMode.Open, FileAccess.Read))
                 {
                     await OnTransferStatusChanged(StorageTransferStatus.InProgress, true).ConfigureAwait(false);
                     Response<BlobContentInfo> response = await BlockBlobClientInternals.PutBlobCallAsync(
@@ -345,11 +345,6 @@ namespace Azure.Storage.Blobs.DataMovement
                     false,
                     CancellationTokenSource.Token));
                 StorageTransferStatus status = StorageTransferStatus.Completed;
-                if (!ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnServiceFailure))
-                {
-                    PauseTransferJob();
-                    status = StorageTransferStatus.Paused;
-                }
                 await OnTransferStatusChanged(status, true).ConfigureAwait(false);
             }
             catch (IOException ex)
@@ -362,11 +357,6 @@ namespace Azure.Storage.Blobs.DataMovement
                                 false,
                                 CancellationTokenSource.Token));
                 StorageTransferStatus status = StorageTransferStatus.Completed;
-                if (!ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnLocalFilesystemFailure))
-                {
-                    PauseTransferJob();
-                    status = StorageTransferStatus.Paused;
-                }
                 await OnTransferStatusChanged(status, true).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
@@ -409,7 +399,7 @@ namespace Azure.Storage.Blobs.DataMovement
                 // Make sure it's opened only in Shared Read Only Mode
 
                 Stream slicedStream = Stream.Null;
-                using (FileStream stream = new FileStream(SourceLocalPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (FileStream stream = new FileStream(SourceLocalPath.GetUri().AbsoluteUri, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
                     await OnTransferStatusChanged(StorageTransferStatus.InProgress, true).ConfigureAwait(false);
                     slicedStream = await GetOffsetPartitionInternal(
@@ -455,11 +445,6 @@ namespace Azure.Storage.Blobs.DataMovement
                                 false,
                                 CancellationTokenSource.Token));
                 StorageTransferStatus status = StorageTransferStatus.Completed;
-                if (!ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnServiceFailure))
-                {
-                    PauseTransferJob();
-                    status = StorageTransferStatus.Paused;
-                }
                 await OnTransferStatusChanged(status, true).ConfigureAwait(false);
                 await commitBlockHandler.InvokeEvent(
                     new BlobStageChunkEventArgs(
@@ -480,11 +465,6 @@ namespace Azure.Storage.Blobs.DataMovement
                                 false,
                                 CancellationTokenSource.Token));
                 StorageTransferStatus status = StorageTransferStatus.Completed;
-                if (!ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnLocalFilesystemFailure))
-                {
-                    PauseTransferJob();
-                    status = StorageTransferStatus.Paused;
-                }
                 await OnTransferStatusChanged(status, true).ConfigureAwait(false);
                 await commitBlockHandler.InvokeEvent(
                     new BlobStageChunkEventArgs(
@@ -549,11 +529,6 @@ namespace Azure.Storage.Blobs.DataMovement
                                 false,
                                 CancellationTokenSource.Token));
                 StorageTransferStatus status = StorageTransferStatus.Completed;
-                if (!ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnServiceFailure))
-                {
-                    PauseTransferJob();
-                    status = StorageTransferStatus.Paused;
-                }
                 await OnTransferStatusChanged(status, true).ConfigureAwait(false);
             }
             catch (IOException ex)
@@ -566,11 +541,6 @@ namespace Azure.Storage.Blobs.DataMovement
                                 false,
                                 CancellationTokenSource.Token));
                 StorageTransferStatus status = StorageTransferStatus.Completed;
-                if (!ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnLocalFilesystemFailure))
-                {
-                    PauseTransferJob();
-                    status = StorageTransferStatus.Paused;
-                }
                 await OnTransferStatusChanged(status, true).ConfigureAwait(false);
             }
             catch (OperationCanceledException)

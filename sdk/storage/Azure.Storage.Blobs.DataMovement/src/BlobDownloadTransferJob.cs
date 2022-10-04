@@ -496,11 +496,6 @@ namespace Azure.Storage.Blobs.DataMovement
                                 false,
                                 CancellationTokenSource.Token));
                 StorageTransferStatus status = StorageTransferStatus.Completed;
-                if (!ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnLocalFilesystemFailure))
-                {
-                    PauseTransferJob();
-                    status = StorageTransferStatus.Paused;
-                }
                 await OnTransferStatusChanged(status, true).ConfigureAwait(false);
             }
             catch (OperationCanceledException)

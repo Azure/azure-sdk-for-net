@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Optional event handler containing all possible status event status holders
         /// </summary>
-        public IProgress<StorageTransferProgress> ProgressHandler { get; set; }
+        internal IProgress<StorageTransferProgress> ProgressHandler { get; set; }
 
         /// <summary>
         /// Optional. If set to false, the operation will terminate quickly on encountering

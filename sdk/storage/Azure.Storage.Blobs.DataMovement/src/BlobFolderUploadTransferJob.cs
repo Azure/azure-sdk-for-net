@@ -22,12 +22,12 @@ namespace Azure.Storage.Blobs.DataMovement
     /// </summary>
     internal class BlobFolderUploadTransferJob : BlobTransferJobInternal
     {
-        private string _sourceLocalPath;
+        private LocalDirectoryStorageResourceContainer _sourceLocalPath;
 
         /// <summary>
         /// Gets the local path of the source file.
         /// </summary>
-        public string SourceLocalPath => _sourceLocalPath;
+        public LocalDirectoryStorageResourceContainer SourceLocalPath => _sourceLocalPath;
 
         /// <summary>
         /// Holds Source Blob Configurations
@@ -80,7 +80,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <param name="queueChunkTask"></param>
         public BlobFolderUploadTransferJob(
             string transferId,
-            string sourceLocalPath,
+            LocalDirectoryStorageResourceContainer sourceLocalPath,
             bool overwrite,
             BlobFolderClient destinationClient,
             BlobFolderUploadOptions uploadOptions,
@@ -112,7 +112,7 @@ namespace Azure.Storage.Blobs.DataMovement
         internal async Task<Response<BlobContentInfo>> GetSingleUploadTaskAsync(string fullPathName)
         {
             // Replace backward slashes meant to be directory name separators
-            string blobName = fullPathName.Substring(SourceLocalPath.Length + 1);
+            string blobName = fullPathName.Substring(SourceLocalPath.GetFullPath().Length + 1);
             blobName = blobName.Replace(@"\", "/");
 
             BlobBaseClient blobClient = DestinationBlobDirectoryClient.GetBlobBaseClient(blobName);
@@ -411,7 +411,7 @@ namespace Azure.Storage.Blobs.DataMovement
                                cancellationToken).ConfigureAwait(false);
                             args?.GetUploadCompleted()?.Invoke(new BlobUploadSuccessEventArgs(
                                 job.TransferId,
-                                sourcePath,
+                                LocalStorageResourceFactory.GetFile(sourcePath),
                                 destinationClient,
                                 contentInfo.GetRawResponse(),
                                 false,
@@ -429,7 +429,7 @@ namespace Azure.Storage.Blobs.DataMovement
                                cancellationToken);
                             args?.GetUploadCompleted()?.Invoke(new BlobUploadSuccessEventArgs(
                                 job.TransferId,
-                                sourcePath,
+                                LocalStorageResourceFactory.GetFile(sourcePath),
                                 destinationClient,
                                 contentInfo.GetRawResponse(),
                                 false,
@@ -442,29 +442,21 @@ namespace Azure.Storage.Blobs.DataMovement
                     {
                         args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                         job.TransferId,
-                                        sourcePath,
+                                        LocalStorageResourceFactory.GetFile(sourcePath),
                                         destinationClient,
                                         ex,
                                         false,
                                         job.CancellationTokenSource.Token));
-                        if (!job.ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnServiceFailure))
-                        {
-                            job.PauseTransferJob();
-                        }
                     }
                     catch (IOException ex)
                     {
                         args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                         job.TransferId,
-                                        sourcePath,
+                                        LocalStorageResourceFactory.GetFile(sourcePath),
                                         destinationClient,
                                         ex,
                                         false,
                                         job.CancellationTokenSource.Token));
-                        if (!job.ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnLocalFilesystemFailure))
-                        {
-                            job.PauseTransferJob();
-                        }
                     }
                     catch (OperationCanceledException)
                     {
@@ -475,7 +467,7 @@ namespace Azure.Storage.Blobs.DataMovement
                         // Unexpected exception
                         args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                         job.TransferId,
-                                        sourcePath,
+                                        LocalStorageResourceFactory.GetFile(sourcePath),
                                         destinationClient,
                                         ex,
                                         false,
@@ -540,29 +532,21 @@ namespace Azure.Storage.Blobs.DataMovement
                     {
                         args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                         job.TransferId,
-                                        sourcePath,
+                                        LocalStorageResourceFactory.GetFile(sourcePath),
                                         destinationClient,
                                         ex,
                                         false,
                                         job.CancellationTokenSource.Token));
-                        if (!job.ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnServiceFailure))
-                        {
-                            job.PauseTransferJob();
-                        }
                     }
                     catch (IOException ex)
                     {
                         args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                         job.TransferId,
-                                        sourcePath,
+                                        LocalStorageResourceFactory.GetFile(sourcePath),
                                         destinationClient,
                                         ex,
                                         false,
                                         job.CancellationTokenSource.Token));
-                        if (!job.ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnLocalFilesystemFailure))
-                        {
-                            job.PauseTransferJob();
-                        }
                     }
                     catch (OperationCanceledException)
                     {
@@ -573,7 +557,7 @@ namespace Azure.Storage.Blobs.DataMovement
                         // Unexpected exception
                         args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                         job.TransferId,
-                                        sourcePath,
+                                        LocalStorageResourceFactory.GetFile(sourcePath),
                                         destinationClient,
                                         ex,
                                         false,
@@ -611,29 +595,21 @@ namespace Azure.Storage.Blobs.DataMovement
                     {
                         args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                         job.TransferId,
-                                        sourcePath,
+                                        LocalStorageResourceFactory.GetFile(sourcePath),
                                         destinationClient,
                                         ex,
                                         false,
                                         job.CancellationTokenSource.Token));
-                        if (!job.ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnServiceFailure))
-                        {
-                            job.PauseTransferJob();
-                        }
                     }
                     catch (IOException ex)
                     {
                         args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                         job.TransferId,
-                                        sourcePath,
+                                        LocalStorageResourceFactory.GetFile(sourcePath),
                                         destinationClient,
                                         ex,
                                         false,
                                         job.CancellationTokenSource.Token));
-                        if (!job.ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnLocalFilesystemFailure))
-                        {
-                            job.PauseTransferJob();
-                        }
                     }
                     catch (OperationCanceledException)
                     {
@@ -644,7 +620,7 @@ namespace Azure.Storage.Blobs.DataMovement
                         // Unexpected exception
                         args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                         job.TransferId,
-                                        sourcePath,
+                                        LocalStorageResourceFactory.GetFile(sourcePath),
                                         destinationClient,
                                         ex,
                                         false,

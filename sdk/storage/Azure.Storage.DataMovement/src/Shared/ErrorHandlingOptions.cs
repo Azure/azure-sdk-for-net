@@ -13,21 +13,13 @@ namespace Azure.Storage.DataMovement
     public enum ErrorHandlingOptions
     {
         /// <summary>
-        /// If set all the transfer jobs will ignore storage service related
-        /// failures and proceed with the other sub-entities of the
+        /// If set all the transfer jobs will ignore failures
+        /// and proceed with the other sub-entities of the
         /// transfer job and pending transfer jobs.
         /// If not set the operation will terminate
-        /// quickly on encountering failures from the storage service.
+        /// quickly on encountering failures.
         /// </summary>
-        ContinueOnServiceFailure = 1,
-
-        /// <summary>
-        /// If set, the all the transfer jobs will ignore local filesytem failures
-        /// and proceed with the other sub-entities of the transfer job
-        /// and pending transfer jobs. If not set, the all the transfer jobs will
-        /// terminate quickly on encountering user filesystem failures.
-        /// </summary>
-        ContinueOnLocalFilesystemFailure = 2,
+        ContinueOnFailure = 1,
 
         /// <summary>
         /// If set and by default all the transfer jobs will terminate

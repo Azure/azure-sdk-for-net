@@ -13,6 +13,7 @@ using Azure.Storage.DataMovement;
 using Azure.Storage.Blobs;
 using Azure.Core.Pipeline;
 using Azure.Core;
+using Azure.Storage.DataMovement.Shared;
 
 namespace Azure.Storage.Blobs.DataMovement
 {
@@ -105,7 +106,7 @@ namespace Azure.Storage.Blobs.DataMovement
             Response response;
             try
             {
-                if (!((Options.OverwriteOptions == DownloadOverwriteMethod.Skip) && (File.Exists(downloadPath))))
+                if (!((Options.OverwriteOptions == StorageResourceCreateMode.Skip) && (File.Exists(downloadPath))))
                 {
                     using (Stream destination = File.Create(downloadPath))
                     {
@@ -138,10 +139,6 @@ namespace Azure.Storage.Blobs.DataMovement
                                 ex,
                                 false,
                                 CancellationTokenSource.Token));
-                if (!ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnServiceFailure))
-                {
-                    PauseTransferJob();
-                }
             }
             catch (IOException ex)
             {
@@ -152,10 +149,6 @@ namespace Azure.Storage.Blobs.DataMovement
                                 ex,
                                 false,
                                 CancellationTokenSource.Token));
-                if (!ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnLocalFilesystemFailure))
-                {
-                    PauseTransferJob();
-                }
             }
             catch (OperationCanceledException)
             {

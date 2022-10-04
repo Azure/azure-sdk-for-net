@@ -119,7 +119,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
 
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
 
@@ -179,7 +179,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
 
             transferManagerOptions ??= new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
 
             List<VerifyUploadBlobContentInfo> uploadedBlobInfo = new List<VerifyUploadBlobContentInfo>(blobCount);
@@ -231,7 +231,9 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
                         completedStatusWait));
 
                     // Act
-                    await blobTransferManager.ScheduleUploadAsync(localSourceFile, destClient, options[i]).ConfigureAwait(false);
+                    StorageResource resource = LocalStorageResourceFactory.GetFile(localSourceFile);
+
+                    await blobTransferManager.ScheduleUploadAsync(resource, destClient, options[i]).ConfigureAwait(false);
                 }
 
                 for (int i = 0; i < blobCount; i++)
@@ -397,7 +399,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
 
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 
@@ -481,7 +483,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
 
             transferManagerOptions ??= new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
 
             List<VerifyDownloadBlobContentInfo> downloadedBlobInfo = new List<VerifyDownloadBlobContentInfo>(blobCount);
@@ -747,7 +749,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
 
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 
@@ -761,6 +763,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
         }
         #endregion SingleDownload
 
+        /*
         #region DirectoryUploadTests
         [RecordedTest]
         public async Task ScheduleFolderUploadAsync()
@@ -786,7 +789,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             // Act
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobTransferManager blobTransferManager = InstrumentClient(new BlobTransferManager(managerOptions));
@@ -826,7 +829,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
 
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobTransferManager blobTransferManager = InstrumentClient(new BlobTransferManager(managerOptions));
@@ -860,13 +863,13 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
 
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobTransferManager blobTransferManager = InstrumentClient(new BlobTransferManager(managerOptions));
 
             // Act
-            await blobTransferManager.ScheduleFolderUploadAsync(folder, client, false, options).ConfigureAwait(false);
+            await blobTransferManager.ScheduleFolderUploadAsync(LocalStorageResourceFactory.GetDirectory(folder), client, false, options).ConfigureAwait(false);
 
             // Assert - Check Response
             List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
@@ -899,7 +902,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             BlobFolderUploadOptions options = new BlobFolderUploadOptions();
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobTransferManager blobTransferManager = InstrumentClient(new BlobTransferManager(managerOptions));
@@ -955,7 +958,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             BlobFolderUploadOptions options = new BlobFolderUploadOptions();
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobTransferManager blobTransferManager = InstrumentClient(new BlobTransferManager(managerOptions));
@@ -1011,7 +1014,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             BlobFolderUploadOptions options = new BlobFolderUploadOptions();
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobTransferManager blobTransferManager = InstrumentClient(new BlobTransferManager(managerOptions));
@@ -1057,7 +1060,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             BlobFolderUploadOptions options = new BlobFolderUploadOptions();
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobTransferManager blobTransferManager = InstrumentClient(new BlobTransferManager(managerOptions));
@@ -1124,7 +1127,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             // Act
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobTransferManager blobTransferManager = InstrumentClient(new BlobTransferManager(managerOptions));
@@ -1173,7 +1176,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             // Act
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobTransferManager blobTransferManager = InstrumentClient(new BlobTransferManager(managerOptions));
@@ -1216,7 +1219,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             // Act
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobTransferManager blobTransferManager = InstrumentClient(new BlobTransferManager(managerOptions));
@@ -1249,7 +1252,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             // Act
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobTransferManager blobTransferManager = InstrumentClient(new BlobTransferManager(managerOptions));
@@ -1293,7 +1296,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             options.ProgressHandler = new Progress<BlobFolderUploadProgress>();
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobTransferManager blobTransferManager = InstrumentClient(new BlobTransferManager(managerOptions));
@@ -1335,7 +1338,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             // Act
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobTransferManager blobTransferManager = InstrumentClient(new BlobTransferManager(managerOptions));
@@ -1372,7 +1375,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             BlobFolderDownloadOptions downloadOptions = new BlobFolderDownloadOptions();
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobTransferManager blobTransferManager = InstrumentClient(new BlobTransferManager(managerOptions));
@@ -1419,7 +1422,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             BlobFolderDownloadOptions downloadOptions = new BlobFolderDownloadOptions();
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobTransferManager blobTransferManager = InstrumentClient(new BlobTransferManager(managerOptions));
@@ -1468,7 +1471,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             BlobFolderDownloadOptions downloadOptions = new BlobFolderDownloadOptions();
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobTransferManager blobTransferManager = InstrumentClient(new BlobTransferManager(managerOptions));
@@ -1520,7 +1523,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             BlobFolderDownloadOptions downloadOptions = new BlobFolderDownloadOptions();
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobTransferManager blobTransferManager = InstrumentClient(new BlobTransferManager(managerOptions));
@@ -1584,5 +1587,6 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             Directory.Delete(folder, true);
         }
         #endregion DirectoryDownloadTests
+        */
     }
 }

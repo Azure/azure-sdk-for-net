@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using System;
 using Azure.Core;
+using Azure.Storage.DataMovement.Shared;
 
 namespace Azure.Storage.Blobs.DataMovement.Models
 {
@@ -29,10 +30,10 @@ namespace Azure.Storage.Blobs.DataMovement.Models
         ///public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
 
         /// <summary>
-        /// Optional <see cref="DownloadOverwriteMethod"/> to configure overwrite
-        /// behavior. Will default to <see cref="DownloadOverwriteMethod.Overwrite"/>.
+        /// Optional <see cref="StorageResourceCreateMode"/> to configure overwrite
+        /// behavior. Will default to <see cref="StorageResourceCreateMode.Overwrite"/>.
         /// </summary>
-        public DownloadOverwriteMethod OverwriteOptions { get; set; }
+        public StorageResourceCreateMode OverwriteOptions { get; set; }
 
         /// <summary>
         /// If a blob gets transferred successfully the event will get added to this handler

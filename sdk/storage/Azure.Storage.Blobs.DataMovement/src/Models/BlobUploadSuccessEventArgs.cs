@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.DataMovement.Models
         /// <summary>
         /// Gets the source path to the contents to upload to the destination.
         /// </summary>
-        public string SourcePath { get; }
+        public StorageResource SourcePath { get; }
 
         /// <summary>
         /// Gets the <see cref="BlobBaseClient"/> that was the destination blob for the upload.
@@ -53,15 +53,16 @@ namespace Azure.Storage.Blobs.DataMovement.Models
         /// </exception>
         public BlobUploadSuccessEventArgs(
             string transferId,
-            string sourcePath,
+            StorageResource sourcePath,
             BlobBaseClient destinationBlobClient,
             Response response,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)
             : base(transferId, isRunningSynchronously, cancellationToken)
         {
-            Argument.AssertNotNullOrEmpty(sourcePath, nameof(sourcePath));
-            Argument.AssertNotNull(destinationBlobClient, nameof(BlobBaseClient));
+            Argument.AssertNotNull(sourcePath, nameof(sourcePath));
+            Argument.AssertNotNull(destinationBlobClient, nameof(destinationBlobClient));
+            Argument.AssertNotNull(response, nameof(response));
             SourcePath = sourcePath;
             DestinationBlobClient = destinationBlobClient;
             Response = response;

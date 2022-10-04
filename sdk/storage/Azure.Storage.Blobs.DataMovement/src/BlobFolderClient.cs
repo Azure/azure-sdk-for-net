@@ -12,6 +12,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.DataMovement.Models;
 using Azure.Storage.DataMovement;
+using Azure.Storage.DataMovement.Shared;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -1092,7 +1093,7 @@ namespace Azure.Storage.Blobs.DataMovement
 
                                     // If the destination file doesn't exist
                                     // or it's specified to overwrite the existing file, then perform normal download
-                                    if (options == null || options.OverwriteOptions == DownloadOverwriteMethod.Overwrite)
+                                    if (options == null || options.OverwriteOptions == StorageResourceCreateMode.Overwrite)
                                     {
                                         using (Stream destination = File.Create(downloadPath))
                                         {
@@ -1119,7 +1120,7 @@ namespace Azure.Storage.Blobs.DataMovement
                                                     .ConfigureAwait(false));
                                             }
                                         }
-                                        else if (options.OverwriteOptions == DownloadOverwriteMethod.Skip)
+                                        else if (options.OverwriteOptions == StorageResourceCreateMode.Skip)
                                         {
                                             options.ProgressHandler.Report(
                                                 new BlobFolderDownloadProgress()

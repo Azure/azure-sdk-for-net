@@ -101,7 +101,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
 
             transferManagerOptions ??= new StorageTransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
 
             List<VerifyCopyFromUriInfo> copyBlobInfo = new List<VerifyCopyFromUriInfo>(blobCount);

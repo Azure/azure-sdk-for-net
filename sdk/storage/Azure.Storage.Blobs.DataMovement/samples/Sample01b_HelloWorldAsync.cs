@@ -70,7 +70,8 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 BlobTransferManager transferManager = new BlobTransferManager(default);
 
                 // Create simple transfer single blob upload job
-                BlobTransferJobProperties jobId = await transferManager.ScheduleUploadAsync(originalPath, destinationBlob);
+                StorageResource resource = LocalStorageResourceFactory.GetFile(originalPath);
+                BlobTransferJobProperties jobId = await transferManager.ScheduleUploadAsync(resource, destinationBlob);
 
                 // Create transfer single blob upload job with transfer options concurrency specified
                 // i.e. it's a bigger blob so it maybe need more help uploading fast
@@ -78,7 +79,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 // Also I want to specify the progress handler
                 Progress<long> blob2Progress = new Progress<long>();
                 await transferManager.ScheduleUploadAsync(
-                    originalPath,
+                    resource,
                     destinationBlob2,
                     uploadOptions: new BlobSingleUploadOptions()
                     {
@@ -243,17 +244,19 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 BlobTransferManager transferManager = new BlobTransferManager(options);
 
                 // Create simple transfer directory upload job which uploads the directory and the contents of that directory
-                BlobTransferJobProperties uploadDirectoryJobId = await transferManager.ScheduleFolderUploadAsync(sourcePath, destinationBlob).ConfigureAwait(false);
+                BlobTransferJobProperties uploadDirectoryJobId = await transferManager.ScheduleFolderUploadAsync(
+                    LocalStorageResourceFactory.GetDirectory(sourcePath),
+                    destinationBlob).ConfigureAwait(false);
 
                 // Create simple transfer directory upload job which the contents of that directory
                 BlobTransferJobProperties uploadDirectoryJobId2 = await transferManager.ScheduleFolderUploadAsync(
-                    sourcePath2,
+                    LocalStorageResourceFactory.GetDirectory(sourcePath2),
                     destinationBlob,
                     options: uploadOptions).ConfigureAwait(false);
 
                 // Create transfer directory upload job where we specify a progress handler and concurrency
                 BlobTransferJobProperties uploadDirectoryJobId3 = await transferManager.ScheduleFolderUploadAsync(
-                    sourcePath,
+                    LocalStorageResourceFactory.GetDirectory(sourcePath2),
                     destinationBlob2,
                     options: uploadOptions).ConfigureAwait(false);
             }
@@ -398,7 +401,8 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 BlobTransferManager transferManager = new BlobTransferManager(default);
 
                 // Create simple transfer single blob upload job
-                BlobTransferJobProperties job = await transferManager.ScheduleUploadAsync(originalPath, sourceBlob).ConfigureAwait(false);
+                StorageResource resource = LocalStorageResourceFactory.GetFile(originalPath);
+                BlobTransferJobProperties job = await transferManager.ScheduleUploadAsync(resource, sourceBlob).ConfigureAwait(false);
 
                 // Create transfer single blob upload job with transfer options concurrency specified
                 // i.e. it's a bigger blob so it maybe need more help uploading fast

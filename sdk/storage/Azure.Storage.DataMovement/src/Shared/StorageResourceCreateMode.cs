@@ -1,12 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-namespace Azure.Storage.Blobs.DataMovement.Models
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Azure.Storage.DataMovement.Shared
 {
     /// <summary>
-    /// Specifies the overwrite behavior for when a file to download
-    /// already exists in the destination path specified.
+    /// Defines how creating a transfer file resource should go
+    /// if the resource already exists or does not exist.
     /// </summary>
-    public enum DownloadOverwriteMethod
+    public enum StorageResourceCreateMode
     {
         /// <summary>
         /// Overwrites the file if it already exists. No error will be thrown.
