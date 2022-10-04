@@ -29,6 +29,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests.TestFramework
 
         public bool IsTestModeLive => this.Mode != RecordedTestMode.Playback;
 
+        public Uri LogsEndpoint => new(GetRecordedVariable("LOGS_ENDPOINT"));
+
+        public string WorkspaceId => GetRecordedVariable("WORKSPACE_ID");
+
         /// <summary>
         /// Get a <see cref="ServiceClientCredentials"/> needed by <see cref="ApplicationInsightsDataClient"/> to query Kusto.
         /// - IN LIVE OR RECORD TEST MODE
