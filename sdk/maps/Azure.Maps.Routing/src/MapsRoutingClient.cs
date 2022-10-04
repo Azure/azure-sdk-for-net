@@ -44,7 +44,7 @@ namespace Azure.Maps.Routing
             Argument.AssertNotNull(credential, nameof(credential));
 
             var endpoint = new Uri("https://atlas.microsoft.com");
-            var options = new MapsRouteClientOptions();
+            var options = new MapsRoutingClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
             RestClient = new RouteRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
@@ -53,12 +53,12 @@ namespace Azure.Maps.Routing
         /// <summary> Initializes a new instance of MapsRoutingClient. </summary>
         /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Route Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public MapsRoutingClient(AzureKeyCredential credential, MapsRouteClientOptions options)
+        public MapsRoutingClient(AzureKeyCredential credential, MapsRoutingClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
             var endpoint = options.Endpoint;
-            options ??= new MapsRouteClientOptions();
+            options ??= new MapsRoutingClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
             RestClient = new RouteRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
@@ -76,7 +76,7 @@ namespace Azure.Maps.Routing
             Argument.AssertNotNull(credential, nameof(credential));
 
             var endpoint = new Uri("https://atlas.microsoft.com");
-            var options = new MapsRouteClientOptions();
+            var options = new MapsRoutingClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://atlas.microsoft.com/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
@@ -91,12 +91,12 @@ namespace Azure.Maps.Routing
         /// </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="clientId"/> is null. </exception>
-        public MapsRoutingClient(TokenCredential credential, string clientId, MapsRouteClientOptions options)
+        public MapsRoutingClient(TokenCredential credential, string clientId, MapsRoutingClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
             var endpoint = new Uri("https://atlas.microsoft.com");
-            options ??= new MapsRouteClientOptions();
+            options ??= new MapsRoutingClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://atlas.microsoft.com/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
