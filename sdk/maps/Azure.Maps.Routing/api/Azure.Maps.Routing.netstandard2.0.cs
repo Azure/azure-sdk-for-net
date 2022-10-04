@@ -348,7 +348,7 @@ namespace Azure.Maps.Routing.Models
         public Azure.Maps.Routing.Models.InclineLevel? InclineLevel { get { throw null; } set { } }
         public Azure.Maps.Routing.Models.RouteInstructionsType? InstructionsType { get { throw null; } set { } }
         public bool? IsCommercialVehicle { get { throw null; } set { } }
-        public string Language { get { throw null; } set { } }
+        public Azure.Maps.Routing.Models.RoutingLanguage Language { get { throw null; } set { } }
         public int? MaxAlternatives { get { throw null; } set { } }
         public double? MaxChargeInKwH { get { throw null; } set { } }
         public int? MinDeviationDistance { get { throw null; } set { } }
@@ -681,6 +681,53 @@ namespace Azure.Maps.Routing.Models
         public static bool operator ==(Azure.Maps.Routing.Models.RouteType left, Azure.Maps.Routing.Models.RouteType right) { throw null; }
         public static implicit operator Azure.Maps.Routing.Models.RouteType (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Routing.Models.RouteType left, Azure.Maps.Routing.Models.RouteType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RoutingLanguage : System.IEquatable<Azure.Maps.Routing.Models.RoutingLanguage>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RoutingLanguage(string value) { throw null; }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Afrikaans { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Arabic { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Bulgarian { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Czech { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Danish { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage DutchNetherlands { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage EnglishGreatBritain { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage EnglishUSA { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Finnish { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage FrenchFrance { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage German { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Greek { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Hungarian { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Indonesian { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Italian { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Korean { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Lithuanian { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Malay { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Norwegian { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Polish { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage PortugueseBrazil { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage PortuguesePortugal { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Russian { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Slovak { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Slovenian { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage SpanishMexico { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage SpanishSpain { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Swedish { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Thai { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage TraditionalChinese { get { throw null; } }
+        public static Azure.Maps.Routing.Models.RoutingLanguage Turkish { get { throw null; } }
+        public bool Equals(Azure.Maps.Routing.Models.RoutingLanguage other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Maps.Routing.Models.RoutingLanguage left, Azure.Maps.Routing.Models.RoutingLanguage right) { throw null; }
+        public static implicit operator Azure.Maps.Routing.Models.RoutingLanguage (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Routing.Models.RoutingLanguage left, Azure.Maps.Routing.Models.RoutingLanguage right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
