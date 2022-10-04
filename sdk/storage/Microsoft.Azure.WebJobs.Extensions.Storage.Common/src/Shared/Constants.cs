@@ -7,8 +7,5 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
     {
         public const string DateTimeFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffK";
         public const string DefaultAzureStorageConnectionName = "AzureWebJobsStorage";
-        public const string ConnectionName = "connection_name";
-        public const string ContainerName = "container_name";
-        public const string BlobName = "blob_name";
     }
 }
