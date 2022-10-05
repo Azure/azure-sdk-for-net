@@ -444,21 +444,7 @@ namespace Azure.Monitor.Ingestion
         /// <remarks> See error response code and error response message for more detail. </remarks>
         public virtual async Task<Response> UploadAsync(string ruleId, string streamName, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
-            Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
-            scope.Start();
-            try
-            {
-                return await UploadRequestContentAsync(ruleId, streamName, content, true, context).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return await UploadRequestContentAsync(ruleId, streamName, content, true, context).ConfigureAwait(false);
         }
 
         /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
@@ -501,6 +487,11 @@ namespace Azure.Monitor.Ingestion
         /// <remarks> See error response code and error response message for more detail. </remarks>
         public virtual Response Upload(string ruleId, string streamName, RequestContent content, RequestContext context = null)
         {
+            return UploadRequestContentAsync(ruleId, streamName, content, false, context).Result;
+        }
+
+        private async Task<Response> UploadRequestContentAsync(string ruleId, string streamName, RequestContent content, bool async, RequestContext context = null)
+        {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
             Argument.AssertNotNull(content, nameof(content));
@@ -509,26 +500,20 @@ namespace Azure.Monitor.Ingestion
             scope.Start();
             try
             {
-                return UploadRequestContentAsync(ruleId, streamName, content, false, context).Result;
+                using HttpMessage message = CreateUploadRequest(ruleId, streamName, content, "gzip", context);
+                if (async)
+                {
+                    return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                }
+                else
+                {
+                    return _pipeline.ProcessMessage(message, context);
+                }
             }
             catch (Exception ex)
             {
                 scope.Failed(ex);
                 throw;
-            }
-        }
-
-        private async Task<Response> UploadRequestContentAsync(string ruleId, string streamName, RequestContent content, bool async, RequestContext context = null)
-        {
-            using HttpMessage message = CreateUploadRequest(ruleId, streamName, content, "gzip", context);
-
-            if (async)
-            {
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            else
-            {
-                return _pipeline.ProcessMessage(message, context);
             }
         }
     }
