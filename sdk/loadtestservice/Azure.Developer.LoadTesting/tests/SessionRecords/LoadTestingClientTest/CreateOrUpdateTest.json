@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "220",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-9234351182fe8ebd25ade0ebc8eea406-b43ea2d25e3f804c-00",
-        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20220930.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "9c5fdddddc91fe48de1937795cd0fbfe",
+        "traceparent": "00-36f689b1ec55e7130177daed7bd19d61-e2a3ed9797af943e-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20221005.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "82cfc7faa0989641a486894d7ef18b0e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,13 +30,13 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview",
         "Connection": "keep-alive",
-        "Content-Length": "1357",
+        "Content-Length": "1157",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 30 Sep 2022 13:28:28 GMT",
-        "mise-correlation-id": "aa22be98-02cf-4a39-ae9c-22a4bd6c2f32",
+        "Date": "Wed, 05 Oct 2022 17:35:57 GMT",
+        "mise-correlation-id": "56f343af-3e8a-446e-ab31-0a9f60610c02",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "908e05ef-cae9-49a7-8d60-545265073a34"
+        "x-ms-correlation-request-id": "e977bbaa-57bf-4df3-be28-33bf52a6ebcc"
       },
       "ResponseBody": {
         "testId": "d7c68e2a-bcd8-423f-b9ce-fe9cccd00f1c",
@@ -57,12 +57,7 @@
         "inputArtifacts": {
           "configUrl": null,
           "testScriptUrl": {
-            "url": "https://stcntproddataeus.blob.core.windows.net/0f707b6c-09cb-4fa8-a12d-b243c792d9b4/1c2ccb7b-8f62-4f70-812e-70df2c3df314?sv=2020-04-08\u0026se=2022-09-30T14%3A28%3A28Z\u0026sr=b\u0026sp=r\u0026sig=m2xQAF%2B6lAqnxxfDVizOjwCi8BMLLuMLOqK5KWl%2FZT4%3D",
-            "fileId": "1c2ccb7b-8f62-4f70-812e-70df2c3df314",
-            "filename": "sample.jmx",
-            "fileType": 0,
-            "expireTime": "2022-09-30T13:38:28.386116\u002B00:00",
-            "validationStatus": "Test script is not valid. Exception: XmlPullParserException: only whitespace content allowed before start tag and not A (position: START_DOCUMENT seen A... @1:2)"
+            "url": "https://stcntproddataeus.blob.core.windows.net/0f707b6c-09cb-4fa8-a12d-b243c792d9b4/1c2ccb7b-8f62-4f70-812e-70df2c3df314?sv=2020-04-08\u0026se=2022-10-05T18%3A35%3A57Z\u0026sr=b\u0026sp=r\u0026sig=Sanitized script is not valid. Exception: XmlPullParserException: only whitespace content allowed before start tag and not A (position: START_DOCUMENT seen A... @1:2)"
           },
           "userPropUrl": null,
           "inputArtifactsZipFileurl": null,
@@ -79,7 +74,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "ENDPOINT": "eccdc9b7-7603-402b-879d-bde2b637db56.eus.cnt-prod.loadtesting.azure.com",
-    "RandomSeed": "630524872"
+    "LOADTESTSERVICE_ENDPOINT": "eccdc9b7-7603-402b-879d-bde2b637db56.eus.cnt-prod.loadtesting.azure.com",
+    "RandomSeed": "343196591"
   }
 }

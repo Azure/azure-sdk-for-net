@@ -11,6 +11,8 @@ using Azure.Core;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace Azure.Developer.LoadTesting
 {

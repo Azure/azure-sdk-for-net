@@ -13,6 +13,7 @@ using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.Developer.LoadTesting.Tests
 {
@@ -23,12 +24,17 @@ namespace Azure.Developer.LoadTesting.Tests
         public string testRunId;
         public string appComponentId;
 
-        public LoadTestingClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public LoadTestingClientTest(bool isAsync) : base(isAsync)
         {
             testId = "d7c68e2a-bcd8-423f-b9ce-fe9cccd00f1c";
             fileId = "1c2ccb7b-8f62-4f70-812e-70df2c3df314";
             testRunId = "df697300-dd3d-4654-bddf-e83d70f71af8";
             appComponentId = "ff0be495-eb8b-43f7-b18b-7877d33d98e7";
+
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"sig=(?<group>.*?)(?=\s+)", SanitizeValue)
+            {
+                GroupForReplace = "group"
+            });
         }
 
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */

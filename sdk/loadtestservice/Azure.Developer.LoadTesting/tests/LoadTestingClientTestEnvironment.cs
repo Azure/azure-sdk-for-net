@@ -8,6 +8,6 @@ namespace Azure.Developer.LoadTesting.Tests
 {
     public class LoadTestingClientTestEnvironment : TestEnvironment
     {
-        public string Endpoint => GetRecordedVariable("ENDPOINT");
+        public string Endpoint => GetRecordedVariable("LOADTESTSERVICE_ENDPOINT");
     }
 }
