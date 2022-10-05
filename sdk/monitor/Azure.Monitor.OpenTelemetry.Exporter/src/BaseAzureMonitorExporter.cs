@@ -44,22 +44,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                if (_resourceParser.RoleName is null && _resourceParser.RoleInstance is null)
+                // Export may be called even if there are no items in batch.
+                if (batch.Count > 0)
                 {
-                    var resource = ParentProvider.GetResource();
-                    _resourceParser.UpdateRoleNameAndInstance(resource);
+                    if (_resourceParser.RoleName is null && _resourceParser.RoleInstance is null)
+                    {
+                        var resource = ParentProvider.GetResource();
+                        _resourceParser.UpdateRoleNameAndInstance(resource);
+                    }
+
+                    var telemetryItems = _convertToTelemetryItemsFunc(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, _instrumentationKey);
+                    return _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
                 }
 
-                var telemetryItems = _convertToTelemetryItemsFunc(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, _instrumentationKey);
-                var exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
-                _persistentStorage?.StopExporterTimerAndTransmitFromStorage();
-
-                return exportResult;
+                return ExportResult.Success;
             }
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.WriteError("FailedToExport", ex);
                 return ExportResult.Failure;
+            }
+            finally
+            {
+                _persistentStorage?.StopExporterTimerAndTransmitFromStorage();
             }
         }
     }
