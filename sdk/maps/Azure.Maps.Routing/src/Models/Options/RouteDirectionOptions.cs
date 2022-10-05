@@ -48,9 +48,9 @@ namespace Azure.Maps.Routing.Models
 
         /// <summary>
         /// The language parameter determines the language of the guidance messages. Proper nouns (the names of streets, plazas, etc.) are returned in the specified  language, or if that is not available, they are returned in an available language  that is close to it. Allowed values are (a subset of) the IETF language tags. The currently supported  languages are listed in the <see href="https://docs.microsoft.com/azure/azure-maps/supported-languages">Supported languages  section</see>.
-        /// Default value: en-GB
+        /// Default value: <c>RoutingLanguage.EnglishGreatBritain</c>
         /// </summary>
-        public string Language { get; set; }
+        public RoutingLanguage Language { get; set; }
 
         /// <summary> Re-order the route waypoints using a fast heuristic algorithm to reduce the route length. Yields best results when used in conjunction with routeType _shortest_. Notice that origin and destination are excluded from the optimized waypoint indices. To include origin and destination in the response, please increase all the indices by 1 to account for the origin, and then add the destination as the final index. Possible values are true or false. True computes a better order if possible, but is not allowed to be used in conjunction with maxAlternatives value greater than 0 or in conjunction with circle waypoints. False will use the locations in the given order and not allowed to be used in conjunction with routeRepresentation _none_. </summary>
         public bool? ComputeBestWaypointOrder { get; set; }

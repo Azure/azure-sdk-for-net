@@ -142,11 +142,11 @@ namespace Azure.Storage.Blobs
         public TransferValidationOptions TransferValidation { get; } = new();
 
         /// <summary>
-        /// Whether to preserve leading and trailing slashes on a blob name when using
+        /// Whether to trim leading and trailing slashes on a blob name when using
         /// <see cref="BlobContainerClient.GetBlobClient(string)"/> and similar methods.
-        /// Defaults to false for backwards compatibility.
+        /// Defaults to true for backwards compatibility.
         /// </summary>
-        public bool PreserveBlobNameSlashes { get; set; }
+        public bool TrimBlobNameSlashes { get; set; } = Constants.DefaultTrimBlobNameSlashes;
 
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
