@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -442,6 +441,7 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response> UploadAsync(string ruleId, string streamName, RequestContent content, RequestContext context = null)
         {
             return await UploadRequestContentAsync(ruleId, streamName, content, true, context).ConfigureAwait(false);
@@ -485,12 +485,13 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
+        [ForwardsClientCalls]
         public virtual Response Upload(string ruleId, string streamName, RequestContent content, RequestContext context = null)
         {
-            return UploadRequestContentAsync(ruleId, streamName, content, false, context).Result;
+            return UploadRequestContentAsync(ruleId, streamName, content, false, context).EnsureCompleted();
         }
 
-        private async Task<Response> UploadRequestContentAsync(string ruleId, string streamName, RequestContent content, bool async, RequestContext context = null)
+        internal virtual async Task<Response> UploadRequestContentAsync(string ruleId, string streamName, RequestContent content, bool async, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
