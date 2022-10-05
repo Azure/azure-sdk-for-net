@@ -35,7 +35,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             {
                 var user = await CreateIdentityUserAsync().ConfigureAwait(false);
                 var targets = new CommunicationIdentifier[] { new CommunicationUserIdentifier(TestEnvironment.TargetUserId) };
-                var options = new CreateCallOptions(new CallSource(user), targets, new Uri(TestEnvironment.AppCallbackUrl));
+                var options = new CreateCallOptions(new CallSource(user), targets, new Uri(TestEnvironment.AppCallbackUrl)) {
+                    RepeatabilityHeaders = new RepeatabilityHeaders(new Guid("12345678-1234-4f65-8cec-b61cc24e646c"), new DateTimeOffset(2022, 9, 21, 4, 40, 30, new TimeSpan(0, 0, 0)))
+                };
                 CreateCallResult response = await client.CreateCallAsync(options).ConfigureAwait(false);
                 Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
                 Assert.AreEqual(CallConnectionState.Connecting, response.CallConnectionProperties.CallConnectionState);
@@ -45,7 +47,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
                 wasConnected = true;
 
-                await response.CallConnection.HangUpAsync(true).ConfigureAwait(false);
+                var hangUpOptions = new HangUpOptions(true)
+                {
+                    RepeatabilityHeaders = new RepeatabilityHeaders(new Guid("12345678-0123-4f65-8cec-b61cc24e646c"), new DateTimeOffset(2022, 9, 21, 4, 40, 50, new TimeSpan(0, 0, 0)))
+                };
+                await response.CallConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
                 await WaitForOperationCompletion().ConfigureAwait(false);
                 properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
 
@@ -195,19 +201,21 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 var user = await CreateIdentityUserAsync().ConfigureAwait(false);
                 var targets = new CommunicationIdentifier[] { new CommunicationUserIdentifier(TestEnvironment.TargetUserId) };
                 var repeatabilityRequestId = new Guid("61460096-a0cc-4f65-8cec-b61cc24e646c");
-                DateTimeOffset repeatabilityFirstSent = new DateTimeOffset(2022, 9, 21, 4, 40, 28, new TimeSpan(0,0,0));
-                var options = new CreateCallOptions(new CallSource(user), targets, new Uri(TestEnvironment.AppCallbackUrl)) {
-                    RepeatabilityRequestId = repeatabilityRequestId,
-                    RepeatabilityFirstSent = repeatabilityFirstSent
+                DateTimeOffset repeatabilityFirstSent = new DateTimeOffset(2022, 9, 21, 4, 40, 28, new TimeSpan(0, 0, 0));
+                var createCallOptions = new CreateCallOptions(new CallSource(user), targets, new Uri(TestEnvironment.AppCallbackUrl)) {
+                    RepeatabilityHeaders = new RepeatabilityHeaders(repeatabilityRequestId, repeatabilityFirstSent)
                 };
-                CreateCallResult response1 = await client.CreateCallAsync(options).ConfigureAwait(false);
+                CreateCallResult response1 = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                 await WaitForOperationCompletion().ConfigureAwait(false);
-                CreateCallResult response2 = await client.CreateCallAsync(options).ConfigureAwait(false);
+                CreateCallResult response2 = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
 
                 Assert.AreEqual(response1.CallConnectionProperties.CallConnectionId, response2.CallConnectionProperties.CallConnectionId);
                 Assert.AreEqual(response1.CallConnectionProperties.MediaSubscriptionId, response2.CallConnectionProperties.MediaSubscriptionId);
 
-                await response1.CallConnection.HangUpAsync(true).ConfigureAwait(false);
+                var hangUpOptions = new HangUpOptions(true) {
+                    RepeatabilityHeaders = new RepeatabilityHeaders(new Guid("12345678-a0cc-4f65-8cec-b61cc24e646c"), new DateTimeOffset(2022, 9, 21, 4, 40, 38, new TimeSpan(0, 0, 0)))
+                };
+                await response1.CallConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

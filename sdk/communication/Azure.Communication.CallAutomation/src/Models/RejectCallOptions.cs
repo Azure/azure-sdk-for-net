@@ -6,19 +6,19 @@ using System;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The answer call operation options.
+    /// The reject call operation options.
     /// </summary>
-    public class AnswerCallOptions
+    public class RejectCallOptions
     {
         /// <summary>
-        /// Creates a new AnswerCallOptions object.
+        /// Creates a new RejectCallOptions object.
         /// </summary>
         /// <param name="incomingCallContext"></param>
-        /// <param name="callbackUri"></param>
-        public AnswerCallOptions(string incomingCallContext, Uri callbackUri)
+        /// <param name="callRejectReason"></param>
+        public RejectCallOptions(string incomingCallContext, CallRejectReason callRejectReason)
         {
             IncomingCallContext = incomingCallContext;
-            CallbackUri = callbackUri;
+            CallRejectReason = callRejectReason;
         }
 
         /// <summary>
@@ -27,14 +27,9 @@ namespace Azure.Communication.CallAutomation
         public string IncomingCallContext { get; }
 
         /// <summary>
-        /// The callback uri.
+        /// The reason for rejecting call.
         /// </summary>
-        public Uri CallbackUri { get; }
-
-        /// <summary>
-        /// Media Streaming Configuration.
-        /// </summary>
-        public MediaStreamingOptions MediaStreamingOptions { get; set; }
+        public CallRejectReason CallRejectReason { get; }
 
         /// <summary>
         /// Repeatability Headers.

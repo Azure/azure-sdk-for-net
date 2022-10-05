@@ -6,19 +6,19 @@ using System;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The answer call operation options.
+    /// The redirect call operation options.
     /// </summary>
-    public class AnswerCallOptions
+    public class RedirectCallOptions
     {
         /// <summary>
-        /// Creates a new AnswerCallOptions object.
+        /// Creates a new RedirectCallOptions object.
         /// </summary>
         /// <param name="incomingCallContext"></param>
-        /// <param name="callbackUri"></param>
-        public AnswerCallOptions(string incomingCallContext, Uri callbackUri)
+        /// <param name="target"></param>
+        public RedirectCallOptions(string incomingCallContext, CommunicationIdentifier target)
         {
             IncomingCallContext = incomingCallContext;
-            CallbackUri = callbackUri;
+            Target = target;
         }
 
         /// <summary>
@@ -27,14 +27,9 @@ namespace Azure.Communication.CallAutomation
         public string IncomingCallContext { get; }
 
         /// <summary>
-        /// The callback uri.
+        /// The target identity.
         /// </summary>
-        public Uri CallbackUri { get; }
-
-        /// <summary>
-        /// Media Streaming Configuration.
-        /// </summary>
-        public MediaStreamingOptions MediaStreamingOptions { get; set; }
+        public CommunicationIdentifier Target { get; }
 
         /// <summary>
         /// Repeatability Headers.
