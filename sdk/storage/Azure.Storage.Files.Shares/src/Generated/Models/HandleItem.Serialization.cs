@@ -11,25 +11,25 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareFileHandle
+    internal partial class HandleItem
     {
-        internal static ShareFileHandle DeserializeShareFileHandle(XElement element)
+        internal static HandleItem DeserializeHandleItem(XElement element)
         {
             string handleId = default;
-            string path = default;
+            StringEncoded path = default;
             string fileId = default;
             string parentId = default;
             string sessionId = default;
             string clientIp = default;
-            DateTimeOffset? openedOn = default;
-            DateTimeOffset? lastReconnectedOn = default;
+            DateTimeOffset openTime = default;
+            DateTimeOffset? lastReconnectTime = default;
             if (element.Element("HandleId") is XElement handleIdElement)
             {
                 handleId = (string)handleIdElement;
             }
             if (element.Element("Path") is XElement pathElement)
             {
-                path = (string)pathElement;
+                path = StringEncoded.DeserializeStringEncoded(pathElement);
             }
             if (element.Element("FileId") is XElement fileIdElement)
             {
@@ -49,13 +49,13 @@ namespace Azure.Storage.Files.Shares.Models
             }
             if (element.Element("OpenTime") is XElement openTimeElement)
             {
-                openedOn = openTimeElement.GetDateTimeOffsetValue("R");
+                openTime = openTimeElement.GetDateTimeOffsetValue("R");
             }
             if (element.Element("LastReconnectTime") is XElement lastReconnectTimeElement)
             {
-                lastReconnectedOn = lastReconnectTimeElement.GetDateTimeOffsetValue("R");
+                lastReconnectTime = lastReconnectTimeElement.GetDateTimeOffsetValue("R");
             }
-            return new ShareFileHandle(handleId, path, fileId, parentId, sessionId, clientIp, openedOn, lastReconnectedOn);
+            return new HandleItem(handleId, path, fileId, parentId, sessionId, clientIp, openTime, lastReconnectTime);
         }
     }
 }
