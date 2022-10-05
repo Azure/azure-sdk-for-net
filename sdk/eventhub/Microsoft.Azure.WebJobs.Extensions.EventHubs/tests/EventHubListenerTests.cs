@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
+using Castle.Core.Logging;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.Executors;
@@ -18,6 +19,7 @@ using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 {
@@ -299,6 +301,37 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 await Task.Delay(500);
             });
             await eventProcessor.ProcessEventsAsync(partitionContext, events, source.Token);
+        }
+
+        [Test]
+        public void CreateListener_TargetScalerIsNull_MultipleDispatch()
+        {
+            EventHubOptions config = new EventHubOptions();
+            var functionId = "FunctionId";
+            var eventHubName = "EventHubName";
+            var consumerGroup = "ConsumerGroup";
+            var host = new Mock<EventProcessorHost>(consumerGroup,
+                "Endpoint=sb://test.eventhub.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=",
+                eventHubName,
+                new EventProcessorOptions(),
+                3, null);
+            host.Setup(h => h.StopProcessingAsync(CancellationToken.None)).Returns(Task.CompletedTask);
+
+            var consumerClientMock = new Mock<IEventHubConsumerClient>();
+            consumerClientMock.SetupGet(c => c.ConsumerGroup).Returns(consumerGroup);
+            consumerClientMock.SetupGet(c => c.EventHubName).Returns(eventHubName);
+
+            var listener = new EventHubListener(
+               functionId,
+               Mock.Of<ITriggeredFunctionExecutor>(),
+               host.Object,
+               false,
+               consumerClientMock.Object,
+               Mock.Of<BlobCheckpointStoreInternal>(),
+               new EventHubOptions(),
+               Mock.Of<LoggerFactory>());
+
+            Assert.IsNull((listener as ITargetScalerProvider).GetTargetScaler());
         }
     }
 }

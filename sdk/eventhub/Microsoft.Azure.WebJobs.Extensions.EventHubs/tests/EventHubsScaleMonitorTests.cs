@@ -60,7 +60,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                                     _functionId,
                                     _consumerClientMock.Object,
                                     _mockCheckpointStore.Object,
-                                    _loggerFactory.CreateLogger(LogCategories.CreateTriggerCategory("EventHub")));
+                                    _loggerFactory);
         }
 
         [Test]

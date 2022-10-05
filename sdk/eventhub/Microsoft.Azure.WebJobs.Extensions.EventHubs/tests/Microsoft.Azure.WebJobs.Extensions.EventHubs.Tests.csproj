@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Management.EventHub" />
+     <PackageReference Include="Microsoft.Azure.Management.EventHub" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
     <PackageReference Include="Microsoft.Azure.Management.Storage" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
@@ -18,6 +18,7 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
+   
   </ItemGroup>
 
   <ItemGroup>
@@ -34,5 +35,9 @@
 
   <ItemGroup>
     <Folder Include="Properties" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference  Include="Microsoft.Azure.WebJobs" VersionOverride="3.0.34-11969" />
   </ItemGroup>
 </Project>
