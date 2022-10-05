@@ -500,7 +500,7 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        internal virtual Response Upload(string ruleId, string streamName, RequestContent content, RequestContext context = null)
+        public virtual Response Upload(string ruleId, string streamName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
