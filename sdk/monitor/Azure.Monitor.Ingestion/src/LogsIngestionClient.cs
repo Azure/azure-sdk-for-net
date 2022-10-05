@@ -446,6 +446,10 @@ namespace Azure.Monitor.Ingestion
         /// <remarks> See error response code and error response message for more detail. </remarks>
         public virtual async Task<Response> UploadAsync(string ruleId, string streamName, RequestContent content, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+            Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
             try
             {
@@ -500,6 +504,10 @@ namespace Azure.Monitor.Ingestion
         /// <remarks> See error response code and error response message for more detail. </remarks>
         internal virtual Response Upload(string ruleId, string streamName, RequestContent content, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+            Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
             try
             {
