@@ -200,10 +200,9 @@ namespace Azure.Monitor.Ingestion
             RequestContext requestContext = GenerateRequestContext(cancellationToken);
             Response response = null;
             List<UploadLogsError> errors = new List<UploadLogsError>();
+            scope.Start();
             try
             {
-                scope.Start();
-
                 // Partition the stream into individual blocks
                 foreach (BatchedLogs<T> batch in Batch(logs, options))
                 {
@@ -271,10 +270,9 @@ namespace Azure.Monitor.Ingestion
             RequestContext requestContext = GenerateRequestContext(cancellationToken);
             Response response = null;
             List<UploadLogsError> errors = new List<UploadLogsError>();
-
+            scope.Start();
             try
             {
-                scope.Start();
                 // A list of tasks that are currently executing which will
                 // always be smaller than or equal to MaxWorkerCount
                 List<Task<BatchUpload>> runningTasks = new();
@@ -451,9 +449,9 @@ namespace Azure.Monitor.Ingestion
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
+            scope.Start();
             try
             {
-                scope.Start();
                 using HttpMessage message = CreateUploadRequest(ruleId, streamName, content, "gzip", context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -509,9 +507,9 @@ namespace Azure.Monitor.Ingestion
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
+            scope.Start();
             try
             {
-                scope.Start();
                 using HttpMessage message = CreateUploadRequest(ruleId, streamName, content, "gzip", context);
                 return _pipeline.ProcessMessage(message, context);
             }
