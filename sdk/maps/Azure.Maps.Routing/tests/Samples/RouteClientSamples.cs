@@ -101,7 +101,7 @@ namespace Azure.Maps.Routing.Tests
                 RouteType = RouteType.Fastest,
                 UseTrafficData = true,
                 TravelMode = TravelMode.Bicycle,
-                Language = "en-US",
+                Language = RoutingLanguage.EnglishUSA,
             };
 
             // Create Route direction query object
