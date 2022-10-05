@@ -241,5 +241,98 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 VerifyLogWithinActivity(LogLevel.Trace, "Verbose");
             }
         }
+
+        [Theory]
+        [InlineData(LogLevel.Information)]
+        [InlineData(LogLevel.Warning)]
+        [InlineData(LogLevel.Error)]
+        [InlineData(LogLevel.Critical)]
+        [InlineData(LogLevel.Debug)]
+        [InlineData(LogLevel.Trace)]
+        public void LogWithinActivity(LogLevel logLevel)
+        {
+            // SETUP
+            var uniqueTestId = Guid.NewGuid();
+
+            var activitySourceName = $"activitySourceName{uniqueTestId}";
+            using var activitySource = new ActivitySource(activitySourceName);
+
+            var logCategoryName = $"logCategoryName{uniqueTestId}";
+
+            List<Activity> exportedActivities = new List<Activity>();
+            List<LogRecord> exportedLogs = new List<LogRecord>();
+
+            var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource(activitySourceName)
+                .AddInMemoryExporter(exportedActivities)
+                .Build();
+
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                    .AddFilter<OpenTelemetryLoggerProvider>(logCategoryName, logLevel)
+                    .AddOpenTelemetry(options =>
+                    {
+                        options.AddInMemoryExporter(exportedLogs);
+                    });
+            });
+
+            // ACT
+            string spanId, traceId;
+            string activityName = $"TestActivity {nameof(this.LogWithinActivity)} {logLevel}";
+
+            using (var activity = activitySource.StartActivity(name: activityName))
+            {
+                spanId = activity.SpanId.ToHexString();
+                traceId = activity.TraceId.ToHexString();
+
+                var logger = loggerFactory.CreateLogger(logCategoryName);
+
+                logger.Log(
+                    logLevel: logLevel,
+                    eventId: 0,
+                    exception: null,
+                    message: "Hello {name}.",
+                    args: new object[] { "World" });
+            }
+
+            // CLEANUP
+            tracerProvider.Dispose();
+            loggerFactory.Dispose();
+
+            // ASSERT
+            try
+            {
+                Assert.True(exportedActivities.Count == 1, "Unexpected count of exported Activities.");
+                Assert.True(exportedLogs.Count == 1, "Unexpected count of exported Logs.");
+            }
+            catch (Exception)
+            {
+                this._outputHelper.WriteLine($"Activities Count:{exportedActivities.Count}  Logs Count:{exportedLogs.Count}\n");
+                this._outputHelper.WriteLine($"Expected TraceId:{traceId}  Expected SpanId:{spanId}\n");
+
+                foreach (var activity in exportedActivities)
+                {
+                    this._outputHelper.WriteLine("Exported Activity:");
+                    this._outputHelper.WriteLine($"\tDisplayName: {activity.DisplayName}");
+                    this._outputHelper.WriteLine($"\tId: {activity.Id}");
+                    this._outputHelper.WriteLine($"\tTraceId: {activity.TraceId.ToHexString()}");
+                    this._outputHelper.WriteLine($"\tSpanId: {activity.SpanId.ToHexString()}");
+                }
+
+                throw;
+            }
+        }
+
+        [Fact]
+        public void StressTest_InMemoryExporter()
+        {
+            // Running this test on a loop to try and capture the intermittent failure.
+
+            for (int i = 0; i < 10000; i++)
+            {
+                this.LogWithinActivity(LogLevel.Trace);
+            }
+        }
     }
 }
