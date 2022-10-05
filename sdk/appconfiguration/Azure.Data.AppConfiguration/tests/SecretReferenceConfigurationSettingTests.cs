@@ -23,6 +23,7 @@ namespace Azure.Data.AppConfiguration
 
         [TestCase("INVALID")]
         [TestCase(ReferenceValue)]
+        [TestCase("")]
         [TestCase(null)]
         public void CanRountripValue(string value)
         {
