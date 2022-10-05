@@ -63,7 +63,7 @@ namespace Azure.Data.AppConfiguration
 
         internal override string GetValue()
         {
-             return _isValidValue ? FormatValue() : _originalValue;
+            return _isValidValue ? FormatValue() : _originalValue;
         }
 
         private string FormatValue()
