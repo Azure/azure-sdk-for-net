@@ -1,8 +1,0 @@
-{
-  "Entries": [],
-  "Variables": {
-    "RESOURCE_MANAGER_URL": "https://localhost:8443",
-    "SERVICE_MANAGEMENT_URL": null,
-    "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
-  }
-}
