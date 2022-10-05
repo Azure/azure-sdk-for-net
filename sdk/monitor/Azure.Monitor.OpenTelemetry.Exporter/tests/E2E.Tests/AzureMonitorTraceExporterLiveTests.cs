@@ -28,7 +28,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
         public AzureMonitorTraceExporterLiveTests(bool isAsync) : base(isAsync) { }
 
         [RecordedTest]
-        [PlaybackOnly("Add field level validations")]
         public async Task VerifyTraceExporter()
         {
             // SET UP
