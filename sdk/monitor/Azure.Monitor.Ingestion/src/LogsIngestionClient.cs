@@ -452,8 +452,7 @@ namespace Azure.Monitor.Ingestion
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadRequest(ruleId, streamName, content, "gzip", context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await UploadRequestContentAsync(ruleId, streamName, content, true, context).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -510,13 +509,26 @@ namespace Azure.Monitor.Ingestion
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadRequest(ruleId, streamName, content, "gzip", context);
-                return _pipeline.ProcessMessage(message, context);
+                return UploadRequestContentAsync(ruleId, streamName, content, false, context).Result;
             }
             catch (Exception ex)
             {
                 scope.Failed(ex);
                 throw;
+            }
+        }
+
+        private async Task<Response> UploadRequestContentAsync(string ruleId, string streamName, RequestContent content, bool async, RequestContext context = null)
+        {
+            using HttpMessage message = CreateUploadRequest(ruleId, streamName, content, "gzip", context);
+
+            if (async)
+            {
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            else
+            {
+                return _pipeline.ProcessMessage(message, context);
             }
         }
     }
