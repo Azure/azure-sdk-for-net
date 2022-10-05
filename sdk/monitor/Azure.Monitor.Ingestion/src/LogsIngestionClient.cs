@@ -441,7 +441,6 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response> UploadAsync(string ruleId, string streamName, RequestContent content, RequestContext context = null)
         {
             return await UploadRequestContentAsync(ruleId, streamName, content, true, context).ConfigureAwait(false);
@@ -485,7 +484,6 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        [ForwardsClientCalls]
         public virtual Response Upload(string ruleId, string streamName, RequestContent content, RequestContext context = null)
         {
             return UploadRequestContentAsync(ruleId, streamName, content, false, context).EnsureCompleted();
