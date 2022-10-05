@@ -103,11 +103,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             rule.BindToInput<MultiBlobContext>(this); // Intermediate private context to capture state
             rule.AddOpenConverter<MultiBlobContext, IEnumerable<BlobCollectionType>>(typeof(BlobCollectionConverter<>), this);
 
+            // Bind to ParameterBindingData
+            rule.BindToInput<ParameterBindingData>((attr) => CreateBindingData(attr)); // Precedence, must beat BindToStream
+
             // BindToStream will also handle the custom Stream-->T converters.
             rule.BindToStream(CreateStreamAsync, FileAccess.ReadWrite); // Precedence, must beat CloudBlobStream
-
-            // Bind to ParameterBindingData
-            rule.BindToInput<ParameterBindingData>((attr) => CreateBindingData(attr));
 
             // Normal blob
             // These are not converters because Blob/Page/Append affects how we *create* the blob.
