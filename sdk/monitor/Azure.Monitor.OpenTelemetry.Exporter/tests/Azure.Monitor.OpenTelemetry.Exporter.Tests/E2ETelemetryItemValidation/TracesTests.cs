@@ -185,30 +185,50 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             loggerFactory.Dispose();
 
             // ASSERT
-            this._outputHelper.WriteLine($"Activities: {inMemoryActivities.Count}  ActivityTelemetry: {activityTelemetryItems.Count}  LogTelemetry:{logTelemetryItems.Count}");
+            try
+            {
+                Assert.True(activityTelemetryItems.Count == 1, "Unexpected count of exported Activities.");
+                Assert.True(logTelemetryItems.Count == 1, "Unexpected count of exported Logs.");
 
-            Assert.True(activityTelemetryItems.Any(), "Unit test failed to collect telemetry.");
-            this.telemetryOutput.Write(activityTelemetryItems);
-            var activityTelemetryItem = activityTelemetryItems.Single();
+                Assert.True(activityTelemetryItems.Any(), "Unit test failed to collect telemetry.");
+                this.telemetryOutput.Write(activityTelemetryItems);
+                var activityTelemetryItem = activityTelemetryItems.Single();
 
-            TelemetryItemValidationHelper.AssertActivity_As_DependencyTelemetry(
-                telemetryItem: activityTelemetryItem,
-                expectedName: activityName,
-                expectedTraceId: traceId,
-                expectedSpanId: spanId,
-                expectedProperties: null);
+                TelemetryItemValidationHelper.AssertActivity_As_DependencyTelemetry(
+                    telemetryItem: activityTelemetryItem,
+                    expectedName: activityName,
+                    expectedTraceId: traceId,
+                    expectedSpanId: spanId,
+                    expectedProperties: null);
 
-            Assert.True(logTelemetryItems.Any(), "Unit test failed to collect telemetry.");
-            this.telemetryOutput.Write(logTelemetryItems);
-            var logTelemetryItem = logTelemetryItems.Single();
+                Assert.True(logTelemetryItems.Any(), "Unit test failed to collect telemetry.");
+                this.telemetryOutput.Write(logTelemetryItems);
+                var logTelemetryItem = logTelemetryItems.Single();
 
-            TelemetryItemValidationHelper.AssertLog_As_MessageTelemetry(
-                telemetryItem: logTelemetryItem,
-                expectedSeverityLevel: expectedSeverityLevel,
-                expectedMessage: "Hello {name}.",
-                expectedMeessageProperties: new Dictionary<string, string> { { "name", "World" } },
-                expectedSpanId: spanId,
-                expectedTraceId: traceId);
+                TelemetryItemValidationHelper.AssertLog_As_MessageTelemetry(
+                    telemetryItem: logTelemetryItem,
+                    expectedSeverityLevel: expectedSeverityLevel,
+                    expectedMessage: "Hello {name}.",
+                    expectedMeessageProperties: new Dictionary<string, string> { { "name", "World" } },
+                    expectedSpanId: spanId,
+                    expectedTraceId: traceId);
+            }
+            catch (Exception)
+            {
+                this._outputHelper.WriteLine($"InMemoryExporter Activity Count: {inMemoryActivities.Count}  AzureMonitorExporter ActivityTelemetry Count: {activityTelemetryItems.Count}  AzureMonitorExporter LogTelemetry Count:{logTelemetryItems.Count}");
+                _outputHelper.WriteLine($"Expected TraceId:{traceId}  Expected SpanId:{spanId}\n");
+
+                foreach (var activity in inMemoryActivities)
+                {
+                    this._outputHelper.WriteLine("Exported Activity:");
+                    this._outputHelper.WriteLine($"\tDisplayName: {activity.DisplayName}");
+                    this._outputHelper.WriteLine($"\tId: {activity.Id}");
+                    this._outputHelper.WriteLine($"\tTraceid: {activity.TraceId.ToHexString()}");
+                    this._outputHelper.WriteLine($"\tSpanId: {activity.SpanId.ToHexString()}");
+                }
+
+                throw;
+            }
         }
 
         [Fact]
