@@ -24,10 +24,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
     /// </summary>
     public class TracesTests
     {
+        internal readonly ITestOutputHelper _outputHelper;
         internal readonly TelemetryItemOutputHelper telemetryOutput;
 
         public TracesTests(ITestOutputHelper output)
         {
+            this._outputHelper = output;
             this.telemetryOutput = new TelemetryItemOutputHelper(output);
         }
 
@@ -141,10 +143,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             var logCategoryName = $"logCategoryName{uniqueTestId}"; ;
 
             ConcurrentBag<TelemetryItem> logTelemetryItems = null;
+            List<Activity> inMemoryActivities = new List<Activity>();
 
             var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(activitySourceName)
                 .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> activityTelemetryItems)
+                .AddInMemoryExporter(inMemoryActivities)
                 .Build();
 
             var loggerFactory = LoggerFactory.Create(builder =>
@@ -177,11 +181,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             }
 
             // CLEANUP
-            Task.Delay(500).Wait();
             tracerProvider.Dispose();
             loggerFactory.Dispose();
 
             // ASSERT
+            this._outputHelper.WriteLine($"Activities: {inMemoryActivities.Count}  ActivityTelemetry: {activityTelemetryItems.Count}  LogTelemetry:{logTelemetryItems.Count}");
+
             Assert.True(activityTelemetryItems.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(activityTelemetryItems);
             var activityTelemetryItem = activityTelemetryItems.Single();
@@ -207,7 +212,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         }
 
         [Fact]
-        public void HopingToForceAFailure()
+        public void StressTest_AzureMonitorExporter()
         {
             // Running this test on a loop to try and force the failure.
 
