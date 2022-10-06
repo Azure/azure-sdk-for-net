@@ -42,7 +42,11 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data");
-                writer.WriteObjectValue(Data);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Data);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Data.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Password))
             {
@@ -63,7 +67,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<string> thumbprintAlgorithm = default;
             Optional<BinaryData> thumbprint = default;
             Optional<BatchAccountCertificateFormat> format = default;
-            Optional<object> data = default;
+            Optional<BinaryData> data = default;
             Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -143,7 +147,7 @@ namespace Azure.ResourceManager.Batch.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            data = property0.Value.GetObject();
+                            data = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"))

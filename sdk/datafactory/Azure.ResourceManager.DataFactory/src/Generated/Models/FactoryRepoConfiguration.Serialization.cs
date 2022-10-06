@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new FactoryRepoConfiguration(type, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId.Value);
+            return new UnknownFactoryRepoConfiguration(type, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId.Value);
         }
     }
 }

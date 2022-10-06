@@ -244,6 +244,28 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public async Task DetectLanguageBatchDisableServiceLogs()
+        {
+            TextAnalyticsClient client = GetClient();
+            DetectLanguageResultCollection results = await client.DetectLanguageBatchAsync(batchConvenienceDocuments, options: new TextAnalyticsRequestOptions { DisableServiceLogs = true });
+
+            ValidateBatchDocumentsResult(results);
+            Assert.AreEqual("English", results[0].PrimaryLanguage.Name);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_0)]
+        public void DetectLanguageBatchDisableServiceLogsThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.DetectLanguageBatchAsync(batchConvenienceDocuments, options: new TextAnalyticsRequestOptions { DisableServiceLogs = true }));
+            Assert.AreEqual("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+        }
+
         private void ValidateInDocumenResult(DetectedLanguage language)
         {
             Assert.That(language.Name, Is.Not.Null.And.Not.Empty);

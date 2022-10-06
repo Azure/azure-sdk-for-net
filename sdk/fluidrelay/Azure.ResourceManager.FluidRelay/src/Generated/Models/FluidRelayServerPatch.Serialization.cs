@@ -36,6 +36,14 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location.Value);
             }
+            writer.WritePropertyName("properties");
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption");
+                writer.WriteObjectValue(Encryption);
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
     }

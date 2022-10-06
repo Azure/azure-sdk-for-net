@@ -101,6 +101,7 @@ rename-mapping:
   CapabilitiesResult: HDInsightCapabilitiesResult
   BillingMeters: HDInsightBillingMeters
   BillingResources: HDInsightBillingResources
+  BillingResources.region: -|azure-location
   ClusterConfigurations: HDInsightClusterConfigurations
   ClusterCreateProperties: HDInsightClusterCreateOrUpdateProperties
   ClusterGetProperties: HDInsightClusterProperties
@@ -139,18 +140,27 @@ rename-mapping:
   HostInfo: HDInsightClusterHostInfo
   GatewaySettings: HDInsightClusterGatewaySettings
   IPConfiguration.id: -|arm-id
-  IPConfiguration.type: -|arm-id
+  IPConfiguration.type: -|resource-type
   IPConfiguration.properties.primary: IsPrimary
   NameAvailabilityCheckRequestParameters.type: -|resource-type
   NameAvailabilityCheckResult.nameAvailable: IsNameAvailable
-  RuntimeScriptActionDetail.startTime: -|datetime
-  RuntimeScriptActionDetail.endTime: -|datetime
+  RuntimeScriptActionDetail.startTime: -|date-time
+  RuntimeScriptActionDetail.endTime: -|date-time
   DaysOfWeek: HDInsightDayOfWeek
   DiskEncryptionProperties.encryptionAtHost: IsEncryptionAtHostEnabled
   DirectoryType: AuthenticationDirectoryType
   ConnectivityEndpoint.location: EndpointLocation
   ApplicationGetEndpoint.location: EndpointLocation
   ApplicationGetHttpsEndpoint.location: EndpointLocation
+  SecurityProfile.aaddsResourceId: -|arm-id
+  PrivateLinkConfiguration.type: ResourceType|resource-type
+  RegionalQuotaCapability.regionName: region|azure-location
+  VmSizeProperty.supportedByVirtualMachines: IsSupportedByVirtualMachines
+  VmSizeProperty.supportedByWebWorkerRoles: IsSupportedByWebWorkerRoles
+  VmSizeCompatibilityFilterV2.computeIsolationSupported: IsComputeIsolationSupported
+  SecurityProfile.ldapsUrls: LdapUris|uri
+  ApplicationProperties.createdDate: CreatedOn|date-time
+  ClusterGetProperties.createdDate: CreatedOn|date-time
 
 prepend-rp-prefix:
 - VmSizeCompatibilityFilterV2
@@ -175,46 +185,56 @@ directive:
   - from: cluster.json
     where: $.definitions
     transform: >
-      $.Resource["x-ms-client-name"] = 'HDInsightClusterResponseData';
+      $.Resource['x-ms-client-name'] = 'HDInsightClusterResponseData';
+      $.GatewaySettings.properties['restAuthCredential.isEnabled']['type'] = 'boolean';
 # this model has an extra property which prevents the generator to replace it with the type provided by resourcemanager
   - from: swagger-document
     where: $.definitions.UserAssignedIdentity.properties
-    transform: $["tenantId"] = undefined
+    transform: $['tenantId'] = undefined
 # mark it as input so that the getter of its properties will still preseve the setter
   - from: swagger-document
     where: $.definitions.Cluster
-    transform: $["x-csharp-usage"] = "model,input,output"
+    transform: $['x-csharp-usage'] = 'model,input,output'
 # fix some attributes in Errors so that it could be replaced by Azure.ResponseError
   - from: swagger-document
     where: $.definitions.Errors.properties
     transform: >
       return {
-        "code": {
-          "readOnly": true,
-          "type": "string",
-          "description": "The error code."
+        'code': {
+          'readOnly': true,
+          'type': 'string',
+          'description': 'The error code.'
         },
-        "message": {
-          "readOnly": true,
-          "type": "string",
-          "description": "The error message."
+        'message': {
+          'readOnly': true,
+          'type': 'string',
+          'description': 'The error message.'
         },
-        "target": {
-          "readOnly": true,
-          "type": "string",
-          "description": "The error target."
+        'target': {
+          'readOnly': true,
+          'type': 'string',
+          'description': 'The error target.'
         },
-        "details": {
-          "readOnly": true,
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Errors"
+        'details': {
+          'readOnly': true,
+          'type': 'array',
+          'items': {
+            '$ref': '#/definitions/Errors'
           },
-          "x-ms-identifiers": [
-            "message",
-            "target"
+          'x-ms-identifiers': [
+            'message',
+            'target'
           ],
-          "description": "The error details."
+          'description': 'The error details.'
         }
       };
+# nullable
+  - from: cluster.json
+    where: $.definitions
+    transform: >
+      $.StorageAccount.properties.msiResourceId['x-nullable'] = true;
+      $.StorageAccount.properties.resourceId['x-nullable'] = true;
+      $.DiskEncryptionProperties.properties.encryptionAlgorithm['x-nullable'] = true;
+      $.DiskEncryptionProperties.properties.msiResourceId['x-nullable'] = true;
+
 ```

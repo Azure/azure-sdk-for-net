@@ -9,6 +9,8 @@ trigger:
   paths:
     include:
     - sdk/storage/
+    exclude:
+    - sdk/storage/Azure.ResourceManager.Storage/
 
 pr:
   branches:
@@ -20,9 +22,8 @@ pr:
   paths:
     include:
     - sdk/storage/
-    - sdk/resourcemanager/
-    - sdk/compute/
-    - sdk/network/
+    exclude:
+    - sdk/storage/Azure.ResourceManager.Storage/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -50,7 +51,5 @@ extends:
       safeName: MicrosoftAzureWebJobsExtensionsStorageBlobs
     - name: Microsoft.Azure.WebJobs.Extensions.Storage.Queues
       safeName: MicrosoftAzureWebJobsExtensionsStorageQueues
-    - name: Azure.ResourceManager.Storage
-      safeName: AzureResourceManagerStorage
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml

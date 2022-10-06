@@ -1,12 +1,12 @@
 param resourceLocation string = resourceGroup().location
-param catalogSecretIdentifier string = 'https://dtc-ppe-integrationtests.vault.azure.net/secrets/FidalgoIntegrationTestsGithubTemplates'
-param devCenterPresetMsi string = '/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/KeepFidalgoIntegrationTestResourcesCanary/providers/Microsoft.ManagedIdentity/userAssignedIdentities/FidalgoIntegrationTestIdentity'
-param projectEnvironmentTypePresetMsi string = '/subscriptions/974ae608-fbe5-429f-83ae-924a64019bf3/resourceGroups/Common/providers/Microsoft.ManagedIdentity/userAssignedIdentities/IntegrationTestProjectEnvTypeIdentity'
-param testUserOid string = 'df428e89-1bc2-4e72-b736-032c31a6cd97'
-param projectAdminRoleDefinitionId string = '331c37c6-af14-46d9-b9f4-e1909e1b95a0'
-param deploymentEnvironmentsRoleDefinitionId string = '18e40d4e-8d2e-438d-97e1-9528336e149c'
+param catalogSecretIdentifier string
+param devCenterPresetMsi string
+param projectEnvironmentTypePresetMsi string
+param testUserOid string
+param projectAdminRoleDefinitionId string
+param deploymentEnvironmentsRoleDefinitionId string
 
-var defaultDevCenterName = 'sdk-default-dc-euap7'
+var defaultDevCenterName = 'sdk-default-devcenter'
 var defaultProjectName = 'sdk-default-project'
 var defaultPoolName = 'sdk-default-pool'
 var defaultNetworkConnectionName = 'sdk-default-networkconnection'
@@ -26,7 +26,7 @@ resource devcenter 'Microsoft.DevCenter/devcenters@2022-09-01-preview' = {
     type: 'UserAssigned'
     userAssignedIdentities: {
       '${devCenterPresetMsi}': {}
-    }
+  }
   }
   properties: {
   }
@@ -209,7 +209,7 @@ resource devBoxRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-10-0
     roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', deploymentEnvironmentsRoleDefinitionId)
     principalId: testUserOid
     principalType: 'User'
-  }
+}
 }
 
 output DEFAULT_DEVCENTER_ID string = devcenter.id

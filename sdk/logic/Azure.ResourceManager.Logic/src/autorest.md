@@ -221,9 +221,8 @@ directive:
       $.OpenAuthenticationAccessPolicies.properties.policies['x-ms-client-name'] = 'AccessPolicies';
       $.ResourceReference.properties.id['x-ms-format'] = 'arm-id';
       $.ResourceReference.properties.type['x-ms-format'] = 'resource-type';
-      $.IpAddress.properties.address['x-ms-format'] = 'ip-address';
+      $.IpAddress.properties.address['x-ms-client-name'] = 'CidrAddress';
       $.IntegrationServiceEnvironmentSkuDefinition.properties.resourceType['x-ms-format'] = 'resource-type';
-      $.KeyVaultKey.properties.attributes['x-ms-client-flatten'] = true;
       $.KeyVaultKeyReference.properties.keyVault['x-ms-client-flatten'] = true;
       $.KeyVaultKeyReference.properties.keyVault.properties.id['x-ms-format'] = 'arm-id';
       $.KeyVaultKeyReference.properties.keyVault.properties.type['x-ms-format'] = 'resource-type';
@@ -231,13 +230,8 @@ directive:
       $.WorkflowTriggerRecurrence.properties.endTime['format'] = 'date-time';
       $.RecurrenceSchedule.properties.weekDays.items['x-ms-enum']['name'] = 'DayOfWeek';
       $.CallbackUrl.properties.value['x-ms-client-name'] = 'url';
+      $.KeyVaultKey.properties.attributes.properties.created['format'] = 'unixtime';
+      $.KeyVaultKey.properties.attributes.properties.updated['format'] = 'unixtime';
+      $.KeyVaultKey.properties.attributes['x-ms-client-flatten'] = true;
 
-  # TODO: change ManagedServiceIdentity to common identity type(ManagedServiceIdentity)
-  - from: logic.json
-    where: $.definitions
-    transform: >
-      $.ManagedServiceIdentity.properties.type.enum.push('SystemAssigned, UserAssigned');
-      $.Workflow.properties.identity['description'] = 'Managed service identity properties. Current supported identity types: SystemAssigned, UserAssigned, None.';
-      $.IntegrationServiceEnvironment.properties.identity['description'] = 'Managed service identity properties. Current supported identity types: SystemAssigned, UserAssigned, None.';
-    reason: Temporary workaround to match with common type.
 ```

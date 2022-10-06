@@ -8,6 +8,8 @@ trigger:
   paths:
     include:
     - sdk/webpubsub/
+    exclude:
+    - sdk/webpubsub/Azure.ResourceManager.WebPubSub/
 
 pr:
   branches:
@@ -19,8 +21,8 @@ pr:
   paths:
     include:
     - sdk/webpubsub/
-    - sdk/resourcemanager/
-    - sdk/network/
+    exclude:
+    - sdk/webpubsub/Azure.ResourceManager.WebPubSub/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -36,5 +38,3 @@ extends:
       safeName: MicrosoftAzureWebPubSubAspNetCore
     - name: Microsoft.Azure.WebPubSub.Common
       safeName: MicrosoftAzureWebPubSubCommon
-    - name: Azure.ResourceManager.WebPubSub
-      safeName: AzureResourceManagerWebPubSub

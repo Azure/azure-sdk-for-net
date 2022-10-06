@@ -61,16 +61,14 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
         private async Task CreateJobOutputContainerIfNotExistsAsync()
         {
             await StorageConfiguration.GetAccount(null)  // Xunit doesn't provide a convenient way for shared fixtures to log
-                                      .CreateCloudBlobClient()
-                                      .GetContainerReference(ContainerNameUtils.GetSafeContainerName(JobId))
+                                      .GetBlobContainerClient(ContainerNameUtils.GetSafeContainerName(JobId))
                                       .CreateIfNotExistsAsync();
         }
 
         private async Task DeleteJobOutputContainerAsync()
         {
             await StorageConfiguration.GetAccount(null)  // Xunit doesn't provide a convenient way for shared fixtures to log
-                                      .CreateCloudBlobClient()
-                                      .GetContainerReference(ContainerNameUtils.GetSafeContainerName(JobId))
+                                      .GetBlobContainerClient(ContainerNameUtils.GetSafeContainerName(JobId))
                                       .DeleteIfExistsAsync();
         }
 

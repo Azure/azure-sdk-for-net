@@ -5,7 +5,6 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -40,9 +39,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <value>
         /// <c>true</c> if the receiver is closed; otherwise, <c>false</c>.
         /// </value>
-        public override bool WasClosedExplicitly => _receiverClosedExplicitlyExplicitly;
+        public bool IsClosed => _closed;
 
-        private volatile bool _receiverClosedExplicitlyExplicitly;
+        private volatile bool _closed;
 
         /// <summary>
         /// Indicates whether or not the session link has been closed.
@@ -105,9 +104,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private Exception LinkException { get; set; }
 
         /// <summary>
-        /// A map of locked messages received using the management client.
+        ///    The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.
         /// </summary>
-        private readonly ConcurrentExpiringSet<Guid> _requestResponseLockedMessages;
+        private readonly AmqpMessageConverter _messageConverter;
+
+        /// <summary>
+        /// A map of locked messages received using the management link.
+        /// </summary>
+        internal readonly ConcurrentExpiringSet<Guid> RequestResponseLockedMessages;
 
         private static IReadOnlyList<ServiceBusReceivedMessage> s_backingEmptyList;
         private readonly bool _isProcessor;
@@ -134,6 +138,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="sessionId">The session ID to receive messages for.</param>
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver link.</param>
         /// <param name="isProcessor">Whether or not the receiver is being created for a processor.</param>
+        /// <param name="messageConverter">The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the
         /// open link operation. Only applicable for session receivers.</param>
         ///
@@ -154,6 +159,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string sessionId,
             bool isSessionReceiver,
             bool isProcessor,
+            AmqpMessageConverter messageConverter,
             CancellationToken cancellationToken)
         {
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
@@ -167,7 +173,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _isProcessor = isProcessor;
             _receiveMode = receiveMode;
             Identifier = identifier;
-            _requestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
+            RequestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
             SessionId = sessionId;
 
             _receiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
@@ -186,6 +192,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => OpenManagementLinkAsync(timeout),
                 link => _connectionScope.CloseLink(link));
+            _messageConverter = messageConverter;
         }
 
         private async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(
@@ -255,6 +262,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // to log here.
                 throw;
             }
+            catch (AmqpException amqpException)
+                when (_isSessionReceiver && amqpException.Error.Condition.Equals(AmqpClientConstants.TimeoutError))
+            {
+                // When this occurs during accepting a session, it will be logged from
+                // ServiceBusSessionReceiver.CreateSessionReceiverAsync so it would be redundant
+                // to log here. This exception occurs if we get back a timeout error from the service before the client timeout.
+                // Both exceptions would be translated to a ServiceBusException with ServiceBusFailureReason.ServiceTimeout before being
+                // thrown to the user.
+                throw;
+            }
+            catch (OperationCanceledException opEx)
+                when (_isSessionReceiver && opEx is not TaskCanceledException)
+            {
+                // Do not log as this will be translated to a TimeoutException and logged from
+                // ServiceBusSessionReceiver.CreateSessionReceiverAsync.
+                throw;
+            }
             catch (OperationCanceledException)
                 when (_isProcessor && cancellationToken.IsCancellationRequested)
             {
@@ -281,14 +305,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken)
         {
             return await _retryPolicy.RunOperation(static async (value, timeout, token) =>
-                {
-                    var (receiver, maxMessages, maxWaitTime) = value;
-                    return await receiver.ReceiveMessagesAsyncInternal(
-                        maxMessages,
-                        maxWaitTime,
-                        timeout,
-                        token).ConfigureAwait(false);
-                },
+            {
+                var (receiver, maxMessages, maxWaitTime) = value;
+                return await receiver.ReceiveMessagesAsyncInternal(
+                    maxMessages,
+                    maxWaitTime,
+                    timeout,
+                    token).ConfigureAwait(false);
+            },
                 (this, maxMessages, maxWaitTime),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
@@ -344,7 +368,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
                     }
 
-                    receivedMessages.Add(AmqpMessageConverter.AmqpMessageToSBMessage(message));
+                    receivedMessages.Add(_messageConverter.AmqpMessageToSBMessage(message));
                     message.Dispose();
                 }
 
@@ -367,7 +391,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             finally
             {
-                    registration.Dispose();
+                registration.Dispose();
             }
         }
 
@@ -409,7 +433,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Guid lockToken,
             TimeSpan timeout)
         {
-            if (_requestResponseLockedMessages.Contains(lockToken))
+            ThrowIfSessionLockLost();
+            if (RequestResponseLockedMessages.Contains(lockToken))
             {
                 await DisposeMessageRequestResponseAsync(
                     lockToken,
@@ -433,8 +458,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Outcome outcome,
             TimeSpan timeout)
         {
-            ThrowIfSessionLockLost();
-
             byte[] bufferForLockToken = ArrayPool<byte>.Shared.Rent(SizeOfGuidInBytes);
             if (!MemoryMarshal.TryWrite(bufferForLockToken, ref lockToken))
             {
@@ -558,7 +581,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             IDictionary<string, object> propertiesToModify = null)
         {
-            if (_requestResponseLockedMessages.Contains(lockToken))
+            ThrowIfSessionLockLost();
+            if (RequestResponseLockedMessages.Contains(lockToken))
             {
                 return DisposeMessageRequestResponseAsync(
                     lockToken,
@@ -614,7 +638,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             IDictionary<string, object> propertiesToModify = null)
         {
-            if (_requestResponseLockedMessages.Contains(lockToken))
+            ThrowIfSessionLockLost();
+            if (RequestResponseLockedMessages.Contains(lockToken))
             {
                 return DisposeMessageRequestResponseAsync(
                     lockToken,
@@ -639,7 +664,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <remarks>
         /// In order to receive a message from the dead-letter queue, you will need a new
         /// <see cref="ServiceBusReceiver"/> with the corresponding path.
-        /// You can use EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
+        /// You can use <see cref="ServiceBusReceiverOptions.SubQueue"/> with <see cref="SubQueue.DeadLetter"/> to help with this.
         /// This operation can only be performed on messages that were received by this receiver
         /// when <see cref="ServiceBusReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// </remarks>
@@ -684,8 +709,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             Argument.AssertNotTooLong(deadLetterReason, Constants.MaxDeadLetterReasonLength, nameof(deadLetterReason));
             Argument.AssertNotTooLong(deadLetterErrorDescription, Constants.MaxDeadLetterReasonLength, nameof(deadLetterErrorDescription));
+            ThrowIfSessionLockLost();
 
-            if (_requestResponseLockedMessages.Contains(lockToken))
+            if (RequestResponseLockedMessages.Contains(lockToken))
             {
                 return DisposeMessageRequestResponseAsync(
                     lockToken,
@@ -769,7 +795,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
             }
 
-            amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = new Guid[]{ lockToken };
+            amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = new Guid[] { lockToken };
             amqpRequestMessage.Map[ManagementConstants.Properties.DispositionStatus] = dispositionStatus.ToString().ToLowerInvariant();
 
             if (deadLetterReason != null)
@@ -958,7 +984,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                     var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                     var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
-                    message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage, true);
+                    message = _messageConverter.AmqpMessageToSBMessage(amqpMessage, true);
                     messages.Add(message);
                 }
 
@@ -1036,9 +1062,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 DateTime[] lockedUntilUtcTimes = amqpResponseMessage.GetValue<DateTime[]>(ManagementConstants.Properties.Expirations);
                 lockedUntil = lockedUntilUtcTimes[0];
-                if (_requestResponseLockedMessages.Contains(lockToken))
+                if (RequestResponseLockedMessages.Contains(lockToken))
                 {
-                    _requestResponseLockedMessages.AddOrUpdate(lockToken, lockedUntil);
+                    RequestResponseLockedMessages.AddOrUpdate(lockToken, lockedUntil);
                 }
             }
             else
@@ -1268,11 +1294,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                         var amqpMessage =
                             AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
-                        var message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+                        var message = _messageConverter.AmqpMessageToSBMessage(amqpMessage);
                         if (entry.TryGetValue<Guid>(ManagementConstants.Properties.LockToken, out var lockToken))
                         {
                             message.LockTokenGuid = lockToken;
-                            _requestResponseLockedMessages.AddOrUpdate(lockToken, message.LockedUntil);
+                            RequestResponseLockedMessages.AddOrUpdate(lockToken, message.LockedUntil);
                         }
 
                         messages.Add(message);
@@ -1301,18 +1327,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public override async Task CloseAsync(CancellationToken cancellationToken)
         {
-            if (_receiverClosedExplicitlyExplicitly)
+            if (_closed)
             {
                 return;
             }
 
-            _receiverClosedExplicitlyExplicitly = true;
+            _closed = true;
 
-            await CloseCoreAsync(cancellationToken).ConfigureAwait(false);
-        }
+            RequestResponseLockedMessages.Dispose();
 
-        private async Task CloseCoreAsync(CancellationToken cancellationToken)
-        {
             if (_receiveLink?.TryGetOpenedObject(out var _) == true)
             {
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -1350,7 +1373,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 // Clean up and dispose the underlying resources. The receive link should already be closed, but management link may need to be
                 // closed as well.
-                _ = CloseCoreAsync(CancellationToken.None);
+                _ = CloseAsync(CancellationToken.None);
             }
 
             ServiceBusEventSource.Log.ReceiveLinkClosed(
@@ -1394,7 +1417,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         private bool HasLinkCommunicationError(ReceivingAmqpLink link) =>
-            !_receiverClosedExplicitlyExplicitly && (link?.IsClosing() ?? false);
+            !_closed && (link?.IsClosing() ?? false);
 
         private void ThrowIfSessionLockLost()
         {

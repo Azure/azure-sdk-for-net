@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                accessKeys = null;
                                 continue;
                             }
                             accessKeys = RedisAccessKeys.DeserializeRedisAccessKeys(property0.Value);

@@ -1,20 +1,20 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels:build?api-version=2022-06-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels:build?api-version=2022-08-31",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "94",
+        "Content-Length": "93",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-2d008a656374c27fb4819ee7ecdb1aa6-6a81950d135ef4d8-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "f95fbce3a9e2f6e1558f5c9e7060c8bd",
+        "traceparent": "00-562185c72b6929ba0d401b796e84e110-6d4976277687bbda-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a298a3702323f987ffb062dbaf4ae473",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "modelId": "2093077299",
+        "modelId": "254036573",
         "buildMode": "template",
         "azureBlobSource": {
           "containerUrl": "Sanitized"
@@ -22,78 +22,111 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "274ab24f-9bab-4593-8429-b2a968685414",
+        "apim-request-id": "b6172875-665a-4a05-a36b-9a577f3f8fc5",
         "Content-Length": "0",
-        "Date": "Fri, 20 May 2022 22:34:30 GMT",
-        "operation-location": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/operations/31513281979_274ab24f-9bab-4593-8429-b2a968685414?api-version=2022-06-30-preview",
+        "Date": "Tue, 16 Aug 2022 05:55:36 GMT",
+        "operation-location": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/operations/31505738665_b6172875-665a-4a05-a36b-9a577f3f8fc5?api-version=2022-08-31",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "50155"
+        "x-envoy-upstream-service-time": "2705"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/operations/31513281979_274ab24f-9bab-4593-8429-b2a968685414?api-version=2022-06-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/operations/31505738665_b6172875-665a-4a05-a36b-9a577f3f8fc5?api-version=2022-08-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "88a4904b4afd4289290c4fc82ae5cca6",
+        "traceparent": "00-562185c72b6929ba0d401b796e84e110-35c347e60abbaaa7-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "8a2e3bf018b3e749045b5fbaba20a1fd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "643f3b6f-1713-4b14-84e7-19d0eb5b4229",
+        "apim-request-id": "8a5cf16b-4564-46ff-9ae9-d67bfcab3f5b",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 May 2022 22:34:30 GMT",
+        "Date": "Tue, 16 Aug 2022 05:55:36 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "104"
+        "x-envoy-upstream-service-time": "16"
       },
       "ResponseBody": {
-        "operationId": "31513281979_274ab24f-9bab-4593-8429-b2a968685414",
+        "operationId": "31505738665_b6172875-665a-4a05-a36b-9a577f3f8fc5",
         "kind": "documentModelBuild",
-        "status": "running",
-        "createdDateTime": "2022-05-20T22:33:40Z",
-        "lastUpdatedDateTime": "2022-05-20T22:34:31Z",
-        "resourceLocation": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2093077299?api-version=2022-06-30-preview"
+        "status": "notStarted",
+        "createdDateTime": "2022-08-16T05:55:34Z",
+        "lastUpdatedDateTime": "2022-08-16T05:55:34Z",
+        "resourceLocation": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/254036573?api-version=2022-08-31"
       }
     },
     {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/operations/31513281979_274ab24f-9bab-4593-8429-b2a968685414?api-version=2022-06-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/operations/31505738665_b6172875-665a-4a05-a36b-9a577f3f8fc5?api-version=2022-08-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "8f6236a2e43b2e6ac6e7f1c562bfa72c",
+        "traceparent": "00-562185c72b6929ba0d401b796e84e110-75fa79ff5a3f66b0-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "180a90e759bae89ff54913bcfe778a23",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "a968a135-10cb-4696-9d8b-8bd8092f6657",
+        "apim-request-id": "3db659e7-ebe7-4871-8c82-2c971e6a8e72",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 May 2022 22:34:32 GMT",
+        "Date": "Tue, 16 Aug 2022 05:55:38 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "25"
+        "x-envoy-upstream-service-time": "17"
       },
       "ResponseBody": {
-        "operationId": "31513281979_274ab24f-9bab-4593-8429-b2a968685414",
+        "operationId": "31505738665_b6172875-665a-4a05-a36b-9a577f3f8fc5",
+        "kind": "documentModelBuild",
+        "status": "running",
+        "createdDateTime": "2022-08-16T05:55:34Z",
+        "lastUpdatedDateTime": "2022-08-16T05:55:37Z",
+        "resourceLocation": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/254036573?api-version=2022-08-31"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/operations/31505738665_b6172875-665a-4a05-a36b-9a577f3f8fc5?api-version=2022-08-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-562185c72b6929ba0d401b796e84e110-2f91e7ab7668acc2-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ac000207a9d457a959b09ec8c3cc3fde",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a22b693e-ccbf-4502-8f64-9837a892eff7",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Aug 2022 05:55:39 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "20"
+      },
+      "ResponseBody": {
+        "operationId": "31505738665_b6172875-665a-4a05-a36b-9a577f3f8fc5",
         "kind": "documentModelBuild",
         "status": "succeeded",
-        "createdDateTime": "2022-05-20T22:33:40Z",
-        "lastUpdatedDateTime": "2022-05-20T22:34:32Z",
-        "resourceLocation": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2093077299?api-version=2022-06-30-preview",
+        "createdDateTime": "2022-08-16T05:55:34Z",
+        "lastUpdatedDateTime": "2022-08-16T05:55:38Z",
+        "resourceLocation": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/254036573?api-version=2022-08-31",
         "percentCompleted": 100,
         "result": {
           "docTypes": {
-            "2093077299": {
+            "254036573": {
               "fieldSchema": {
                 "VISA_SELECTION_MARK": {
                   "type": "selectionMark"
@@ -113,149 +146,181 @@
               }
             }
           },
-          "modelId": "2093077299",
-          "createdDateTime": "2022-05-20T22:34:32Z",
-          "apiVersion": "2022-06-30-preview"
+          "modelId": "254036573",
+          "createdDateTime": "2022-08-16T05:55:38Z",
+          "apiVersion": "2022-08-31"
         }
       }
     },
     {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2093077299:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-06-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/254036573:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-08-31",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "251215",
         "Content-Type": "application/octet-stream",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-96d8ed73b2cc4732b2bdbdc6f1a1bab8-9b3f8f7b42d0e0e2-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "1690fcfdf5379836321dd0d55a18cb70",
+        "traceparent": "00-6532be442f52d9b7f64ce0682eaf2ffc-7dd09bf3e462e4cd-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "1ff4640fcc3f96b99c469569058de88d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "b6275c39-5e8b-4cbe-835b-461e266457d5",
+        "apim-request-id": "3a65faa3-9b73-4c65-be9c-4f61e4029eb3",
         "Content-Length": "0",
-        "Date": "Fri, 20 May 2022 22:34:32 GMT",
-        "Operation-Location": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2093077299/analyzeResults/b6275c39-5e8b-4cbe-835b-461e266457d5?api-version=2022-06-30-preview",
+        "Date": "Tue, 16 Aug 2022 05:55:39 GMT",
+        "Operation-Location": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/254036573/analyzeResults/3a65faa3-9b73-4c65-be9c-4f61e4029eb3?api-version=2022-08-31",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "180"
+        "x-envoy-upstream-service-time": "200"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2093077299/analyzeResults/b6275c39-5e8b-4cbe-835b-461e266457d5?api-version=2022-06-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/254036573/analyzeResults/3a65faa3-9b73-4c65-be9c-4f61e4029eb3?api-version=2022-08-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "39fcb6c339fd67822576c21659c4df6a",
+        "traceparent": "00-6532be442f52d9b7f64ce0682eaf2ffc-b080867033d14029-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b8b33bd0f4203d29e6b2bf09bbd62528",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "a93b2213-b795-4564-b0e8-a18aaa311489",
+        "apim-request-id": "a069c3e4-455b-4d3a-9391-804b39b75244",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 May 2022 22:34:32 GMT",
+        "Date": "Tue, 16 Aug 2022 05:55:39 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "16"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-08-16T05:55:39Z",
+        "lastUpdatedDateTime": "2022-08-16T05:55:39Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/254036573/analyzeResults/3a65faa3-9b73-4c65-be9c-4f61e4029eb3?api-version=2022-08-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-6532be442f52d9b7f64ce0682eaf2ffc-b4248cdb82147a9c-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "9aac340a6b823ae4496a0f8e144052cb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "17374272-1306-4d9e-99a4-029868a3cfc8",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Aug 2022 05:55:40 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "30"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-08-16T05:55:39Z",
+        "lastUpdatedDateTime": "2022-08-16T05:55:39Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/254036573/analyzeResults/3a65faa3-9b73-4c65-be9c-4f61e4029eb3?api-version=2022-08-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-6532be442f52d9b7f64ce0682eaf2ffc-7fefbd78cda7a5c4-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "87f811c886181abe3bb7398c0cb0dbc5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "cf6b8b2e-9d09-40c8-833c-62ae293ea1b3",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Aug 2022 05:55:42 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "22"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-05-20T22:34:32Z",
-        "lastUpdatedDateTime": "2022-05-20T22:34:33Z"
+        "createdDateTime": "2022-08-16T05:55:39Z",
+        "lastUpdatedDateTime": "2022-08-16T05:55:39Z"
       }
     },
     {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2093077299/analyzeResults/b6275c39-5e8b-4cbe-835b-461e266457d5?api-version=2022-06-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/254036573/analyzeResults/3a65faa3-9b73-4c65-be9c-4f61e4029eb3?api-version=2022-08-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "2dcb2265b555ac6e00c95c1d1495d3ae",
+        "traceparent": "00-6532be442f52d9b7f64ce0682eaf2ffc-edf210cdb8c9ecba-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "d05f6c204ee0640a57786eb5e49b29a6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "5cc5705b-8e30-4955-bdde-b67a01499b9d",
+        "apim-request-id": "6613a785-aa1f-407e-93c0-09ffaf68cb90",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 May 2022 22:34:34 GMT",
+        "Date": "Tue, 16 Aug 2022 05:55:43 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "17"
+        "x-envoy-upstream-service-time": "21"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-05-20T22:34:32Z",
-        "lastUpdatedDateTime": "2022-05-20T22:34:33Z"
+        "createdDateTime": "2022-08-16T05:55:39Z",
+        "lastUpdatedDateTime": "2022-08-16T05:55:39Z"
       }
     },
     {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2093077299/analyzeResults/b6275c39-5e8b-4cbe-835b-461e266457d5?api-version=2022-06-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/254036573/analyzeResults/3a65faa3-9b73-4c65-be9c-4f61e4029eb3?api-version=2022-08-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "ac02811c6dc2c42e7a29f0c133203f6e",
+        "traceparent": "00-6532be442f52d9b7f64ce0682eaf2ffc-ebe7a96d32ba6c4c-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a941f3609dde830f76925ecb31572d99",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "fab30e6e-7768-4f9a-9eba-0582f5451df0",
+        "apim-request-id": "edbb6255-c826-4e95-a0bc-5c5c9c19b240",
+        "Content-Length": "45893",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 May 2022 22:34:35 GMT",
+        "Date": "Tue, 16 Aug 2022 05:55:44 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "19"
-      },
-      "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2022-05-20T22:34:32Z",
-        "lastUpdatedDateTime": "2022-05-20T22:34:33Z"
-      }
-    },
-    {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2093077299/analyzeResults/b6275c39-5e8b-4cbe-835b-461e266457d5?api-version=2022-06-30-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "3770653e9d4d0d1a48503934dd645390",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "af910836-a50e-4755-b863-7978e6ddfb76",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 May 2022 22:34:36 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "59"
+        "x-envoy-upstream-service-time": "56"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2022-05-20T22:34:32Z",
-        "lastUpdatedDateTime": "2022-05-20T22:34:36Z",
+        "createdDateTime": "2022-08-16T05:55:39Z",
+        "lastUpdatedDateTime": "2022-08-16T05:55:43Z",
         "analyzeResult": {
-          "apiVersion": "2022-06-30-preview",
-          "modelId": "2093077299",
+          "apiVersion": "2022-08-31",
+          "modelId": "254036573",
           "stringIndexType": "utf16CodeUnit",
-          "content": "STATE OF CALIFORNIA: CONTOSO BUREAU OF INSURANCE 124 Main Street Palo Alto CA 842325 (650)768-2322\nAUTHORIZATION OF CREDIT CARD PAYMENT\nFees owed to this Department may be paid by the use of a credit card. If you wish to pay your fee(s) with your credit card, please complete this form and send it with your paperwork. Payment through credit cards will not be processed without this authorization form. Please print or type clearly.\nName (company/individual for whom payment is being made) (Please Include License # and SSN/FEIN): Contoso Insurance 54353T7A, 36-1222985\nPurpose of Payment: Balance on Account\nCard Type: \u2751Visa\n\u2751x AMEX\n\u2751Master Card\nI authorize Contoso Department of Professional and Financial Regulation, Bureau of Insurance to charge my: Visa\n____________________________\n(Card number \u2013 Please print clearly)\n4872876432425423\nExpiration date:\n09\n/\n21\nin the amount of: $__________________\n263.00\nSignature: ___________________________________________ Date: ______\n______\n08\n/\n23\n/\n2018\n(must be signed by authorized person to validate)\n________\nForm is available on our website: www.contoso.com/insurance You may fax the form to: 650-768-2322 or e-mail to: insurance@contoso.com\nOFFICES LOCATED AT 24 Main Street Palo Alto CA 842325 www.contoso.com/insurance\ncontoso\nCONTOSO BANK\nName of Cardholder:\nJohn Singer\nContact persons phone #, if questions with this\nform. Telephone #: (\n-\n425\n)\n779 3479\nEmail Address:\njohnsinger@hotmail.com\nMailing Address:\n472 SE 74th ST\nCity:\nLakewood\nState:\nWA\nZip Code:\n98712\nJohn Singer :unselected: :selected: :unselected:",
+          "content": "STATE OF CALIFORNIA: CONTOSO BUREAU OF INSURANCE 124 Main Street Palo Alto CA 842325 (650)768-2322\nAUTHORIZATION OF CREDIT CARD PAYMENT\nFees owed to this Department may be paid by the use of a credit card. If you wish to pay your fee(s) with your credit card, please complete this form and send it with your paperwork. Payment through credit cards will not be processed without this authorization form. Please print or type clearly.\nName (company/individual for whom payment is being made) (Please Include License # and SSN/FEIN): Contoso Insurance 54353T7A, 36-1222985\nPurpose of Payment:\nBalance on Account\nCard Type: \u2751Visa\n\u2751x AMEX\n\u2751Master Card\nName of Cardholder: John Singer\nContact persons phone #, if questions with this form. Telephone #: ( 425 ) 779 3479 -\nEmail Address: johnsinger@hotmail.com\nMailing Address: 472 SE 74th ST\nCity: Lakewood\nState: WA\nZip Code: 98712\nI authorize Contoso Department of Professional and Financial Regulation, Bureau of Insurance to charge my: Visa\n____________________________\n(Card number \u2013 Please print clearly)\n4872876432425423\nExpiration date:\n09\n/\n21\nin the amount of: $__________________\n263.00\nSignature: ___________________________________________ Date: ______\n(must be signed by authorized person to validate)\nJohn Singer\n08\n/\n23\n/\n2018\n______\n________\nForm is available on our website: www.contoso.com/insurance You may fax the form to: 650-768-2322 or e-mail to: insurance@contoso.com\nOFFICES LOCATED AT 24 Main Street Palo Alto CA 842325 www.contoso.com/insurance\nContoso\nCONTOSO BANK :unselected: :selected: :unselected:",
           "pages": [
             {
               "pageNumber": 1,
@@ -2137,1554 +2202,6 @@
                   }
                 },
                 {
-                  "content": "I",
-                  "polygon": [
-                    0.8033,
-                    6.9598,
-                    0.8617,
-                    6.9598,
-                    0.8617,
-                    7.0725,
-                    0.8033,
-                    7.0725
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 647,
-                    "length": 1
-                  }
-                },
-                {
-                  "content": "authorize",
-                  "polygon": [
-                    0.9107,
-                    6.9573,
-                    1.5801,
-                    6.9573,
-                    1.5801,
-                    7.0747,
-                    0.9107,
-                    7.0747
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 649,
-                    "length": 9
-                  }
-                },
-                {
-                  "content": "Contoso",
-                  "polygon": [
-                    1.6314,
-                    6.958,
-                    2.2027,
-                    6.958,
-                    2.2027,
-                    7.0748,
-                    1.6314,
-                    7.0748
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 659,
-                    "length": 7
-                  }
-                },
-                {
-                  "content": "Department",
-                  "polygon": [
-                    2.2527,
-                    6.9598,
-                    3.1119,
-                    6.9598,
-                    3.1119,
-                    7.1065,
-                    2.2527,
-                    7.1065
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 667,
-                    "length": 10
-                  }
-                },
-                {
-                  "content": "of",
-                  "polygon": [
-                    3.1579,
-                    6.9573,
-                    3.302,
-                    6.9573,
-                    3.302,
-                    7.0747,
-                    3.1579,
-                    7.0747
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 678,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "Professional",
-                  "polygon": [
-                    3.3372,
-                    6.9573,
-                    4.2013,
-                    6.9573,
-                    4.2013,
-                    7.0747,
-                    3.3372,
-                    7.0747
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 681,
-                    "length": 12
-                  }
-                },
-                {
-                  "content": "and",
-                  "polygon": [
-                    4.2509,
-                    6.9598,
-                    4.5118,
-                    6.9598,
-                    4.5118,
-                    7.0747,
-                    4.2509,
-                    7.0747
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 694,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "Financial",
-                  "polygon": [
-                    4.5598,
-                    6.9573,
-                    5.2201,
-                    6.9573,
-                    5.2201,
-                    7.0747,
-                    4.5598,
-                    7.0747
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 698,
-                    "length": 9
-                  }
-                },
-                {
-                  "content": "Regulation,",
-                  "polygon": [
-                    5.2699,
-                    6.9573,
-                    6.0806,
-                    6.9573,
-                    6.0806,
-                    7.1067,
-                    5.2699,
-                    7.1067
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 708,
-                    "length": 11
-                  }
-                },
-                {
-                  "content": "Bureau",
-                  "polygon": [
-                    6.1294,
-                    6.9598,
-                    6.6514,
-                    6.9598,
-                    6.6514,
-                    7.0747,
-                    6.1294,
-                    7.0747
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 720,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "of",
-                  "polygon": [
-                    6.7004,
-                    6.9573,
-                    6.8444,
-                    6.9573,
-                    6.8444,
-                    7.0747,
-                    6.7004,
-                    7.0747
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 727,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "Insurance",
-                  "polygon": [
-                    6.8801,
-                    6.9598,
-                    7.5868,
-                    6.9598,
-                    7.5868,
-                    7.0747,
-                    6.8801,
-                    7.0747
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 730,
-                    "length": 9
-                  }
-                },
-                {
-                  "content": "to",
-                  "polygon": [
-                    0.8033,
-                    7.1592,
-                    0.9348,
-                    7.1592,
-                    0.9348,
-                    7.2663,
-                    0.8033,
-                    7.2663
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 740,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "charge",
-                  "polygon": [
-                    0.9847,
-                    7.1515,
-                    1.4588,
-                    7.1515,
-                    1.4588,
-                    7.2983,
-                    0.9847,
-                    7.2983
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 743,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "my:",
-                  "polygon": [
-                    1.5062,
-                    7.1853,
-                    1.7675,
-                    7.1853,
-                    1.7675,
-                    7.2982,
-                    1.5062,
-                    7.2982
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 750,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "Visa",
-                  "polygon": [
-                    1.8242,
-                    7.1495,
-                    2.1348,
-                    7.1495,
-                    2.1348,
-                    7.2665,
-                    1.8242,
-                    7.2665
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 754,
-                    "length": 4
-                  }
-                },
-                {
-                  "content": "____________________________",
-                  "polygon": [
-                    0.8,
-                    8.0223,
-                    3.1333,
-                    8.0223,
-                    3.1333,
-                    8.0307,
-                    0.8,
-                    8.0307
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 759,
-                    "length": 28
-                  }
-                },
-                {
-                  "content": "(Card",
-                  "polygon": [
-                    0.806,
-                    8.0771,
-                    1.0841,
-                    8.0771,
-                    1.0841,
-                    8.1845,
-                    0.806,
-                    8.1845
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 788,
-                    "length": 5
-                  }
-                },
-                {
-                  "content": "number",
-                  "polygon": [
-                    1.119,
-                    8.0771,
-                    1.4992,
-                    8.0771,
-                    1.4992,
-                    8.1636,
-                    1.119,
-                    8.1636
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 794,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "\u2013",
-                  "polygon": [
-                    1.5308,
-                    8.1323,
-                    1.5933,
-                    8.1323,
-                    1.5933,
-                    8.1374,
-                    1.5308,
-                    8.1374
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 801,
-                    "length": 1
-                  }
-                },
-                {
-                  "content": "Please",
-                  "polygon": [
-                    1.6253,
-                    8.0771,
-                    1.9401,
-                    8.0771,
-                    1.9401,
-                    8.1636,
-                    1.6253,
-                    8.1636
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 803,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "print",
-                  "polygon": [
-                    1.975,
-                    8.0771,
-                    2.2103,
-                    8.0771,
-                    2.2103,
-                    8.1895,
-                    1.975,
-                    8.1895
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 810,
-                    "length": 5
-                  }
-                },
-                {
-                  "content": "clearly)",
-                  "polygon": [
-                    2.2444,
-                    8.0771,
-                    2.6175,
-                    8.0771,
-                    2.6175,
-                    8.1896,
-                    2.2444,
-                    8.1896
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 816,
-                    "length": 8
-                  }
-                },
-                {
-                  "content": "4872876432425423",
-                  "polygon": [
-                    0.8996,
-                    7.8438,
-                    2.2164,
-                    7.8438,
-                    2.2164,
-                    7.9603,
-                    0.8996,
-                    7.9603
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 825,
-                    "length": 16
-                  }
-                },
-                {
-                  "content": "Expiration",
-                  "polygon": [
-                    3.3024,
-                    7.9046,
-                    4.0018,
-                    7.9046,
-                    4.0018,
-                    8.0411,
-                    3.3024,
-                    8.0411
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 842,
-                    "length": 10
-                  }
-                },
-                {
-                  "content": "date:",
-                  "polygon": [
-                    4.0467,
-                    7.9069,
-                    4.3518,
-                    7.9069,
-                    4.3518,
-                    8.012,
-                    4.0467,
-                    8.012
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 853,
-                    "length": 5
-                  }
-                },
-                {
-                  "content": "09",
-                  "polygon": [
-                    4.442,
-                    7.8916,
-                    4.5825,
-                    7.8916,
-                    4.5825,
-                    7.9982,
-                    4.442,
-                    7.9982
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 859,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "/",
-                  "polygon": [
-                    4.6708,
-                    7.9069,
-                    4.7157,
-                    7.9069,
-                    4.7157,
-                    8.012,
-                    4.6708,
-                    8.012
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 862,
-                    "length": 1
-                  }
-                },
-                {
-                  "content": "21",
-                  "polygon": [
-                    4.7708,
-                    7.8956,
-                    4.9015,
-                    7.8956,
-                    4.9015,
-                    8.0003,
-                    4.7708,
-                    8.0003
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 864,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "in",
-                  "polygon": [
-                    5.0592,
-                    7.9046,
-                    5.1817,
-                    7.9046,
-                    5.1817,
-                    8.01,
-                    5.0592,
-                    8.01
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 867,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "the",
-                  "polygon": [
-                    5.2259,
-                    7.9069,
-                    5.4239,
-                    7.9069,
-                    5.4239,
-                    8.012,
-                    5.2259,
-                    8.012
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 870,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "amount",
-                  "polygon": [
-                    5.4691,
-                    7.9139,
-                    5.9657,
-                    7.9139,
-                    5.9657,
-                    8.012,
-                    5.4691,
-                    8.012
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 874,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "of:",
-                  "polygon": [
-                    6.0082,
-                    7.9046,
-                    6.1702,
-                    7.9046,
-                    6.1702,
-                    8.012,
-                    6.0082,
-                    8.012
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 881,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "$__________________",
-                  "polygon": [
-                    6.2258,
-                    7.8956,
-                    7.6702,
-                    7.8956,
-                    7.6702,
-                    8.0289,
-                    6.2258,
-                    8.0289
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 885,
-                    "length": 19
-                  }
-                },
-                {
-                  "content": "263.00",
-                  "polygon": [
-                    6.5828,
-                    7.8896,
-                    6.9948,
-                    7.8896,
-                    6.9948,
-                    7.9962,
-                    6.5828,
-                    7.9962
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 905,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "Signature:",
-                  "polygon": [
-                    0.8059,
-                    8.3968,
-                    1.5333,
-                    8.3968,
-                    1.5333,
-                    8.5421,
-                    0.8059,
-                    8.5421
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 912,
-                    "length": 10
-                  }
-                },
-                {
-                  "content": "___________________________________________",
-                  "polygon": [
-                    1.5893,
-                    8.5205,
-                    5.2429,
-                    8.5205,
-                    5.2429,
-                    8.5281,
-                    1.5893,
-                    8.5281
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 923,
-                    "length": 43
-                  }
-                },
-                {
-                  "content": "Date:",
-                  "polygon": [
-                    5.2557,
-                    8.3997,
-                    5.6041,
-                    8.3997,
-                    5.6041,
-                    8.5111,
-                    5.2557,
-                    8.5111
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 967,
-                    "length": 5
-                  }
-                },
-                {
-                  "content": "______",
-                  "polygon": [
-                    5.66,
-                    8.5205,
-                    6.1697,
-                    8.5205,
-                    6.1697,
-                    8.5281,
-                    5.66,
-                    8.5281
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 973,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "______",
-                  "polygon": [
-                    6.2125,
-                    8.5205,
-                    6.7221,
-                    8.5205,
-                    6.7221,
-                    8.5281,
-                    6.2125,
-                    8.5281
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 980,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "08",
-                  "polygon": [
-                    5.8155,
-                    8.3705,
-                    5.9721,
-                    8.3705,
-                    5.9721,
-                    8.4835,
-                    5.8155,
-                    8.4835
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 987,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "/",
-                  "polygon": [
-                    6.1674,
-                    8.3968,
-                    6.2149,
-                    8.3968,
-                    6.2149,
-                    8.5119,
-                    6.1674,
-                    8.5119
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 990,
-                    "length": 1
-                  }
-                },
-                {
-                  "content": "23",
-                  "polygon": [
-                    6.5359,
-                    8.3585,
-                    6.6943,
-                    8.3585,
-                    6.6943,
-                    8.4716,
-                    6.5359,
-                    8.4716
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 992,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "/",
-                  "polygon": [
-                    6.7199,
-                    8.3968,
-                    6.7673,
-                    8.3968,
-                    6.7673,
-                    8.5119,
-                    6.7199,
-                    8.5119
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 995,
-                    "length": 1
-                  }
-                },
-                {
-                  "content": "2018",
-                  "polygon": [
-                    7.0358,
-                    8.3585,
-                    7.3644,
-                    8.3585,
-                    7.3644,
-                    8.4715,
-                    7.0358,
-                    8.4715
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 997,
-                    "length": 4
-                  }
-                },
-                {
-                  "content": "(must",
-                  "polygon": [
-                    1.7087,
-                    8.6229,
-                    1.9762,
-                    8.6229,
-                    1.9762,
-                    8.727,
-                    1.7087,
-                    8.727
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1002,
-                    "length": 5
-                  }
-                },
-                {
-                  "content": "be",
-                  "polygon": [
-                    2.0158,
-                    8.6246,
-                    2.1283,
-                    8.6246,
-                    2.1283,
-                    8.7057,
-                    2.0158,
-                    8.7057
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1008,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "signed",
-                  "polygon": [
-                    2.168,
-                    8.6246,
-                    2.485,
-                    8.6246,
-                    2.485,
-                    8.7284,
-                    2.168,
-                    8.7284
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1011,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "by",
-                  "polygon": [
-                    2.5286,
-                    8.6246,
-                    2.6389,
-                    8.6246,
-                    2.6389,
-                    8.7278,
-                    2.5286,
-                    8.7278
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1018,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "authorized",
-                  "polygon": [
-                    2.6737,
-                    8.6246,
-                    3.1831,
-                    8.6246,
-                    3.1831,
-                    8.7057,
-                    2.6737,
-                    8.7057
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1021,
-                    "length": 10
-                  }
-                },
-                {
-                  "content": "person",
-                  "polygon": [
-                    3.2268,
-                    8.6445,
-                    3.5523,
-                    8.6445,
-                    3.5523,
-                    8.727,
-                    3.2268,
-                    8.727
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1032,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "to",
-                  "polygon": [
-                    3.592,
-                    8.63,
-                    3.6791,
-                    8.63,
-                    3.6791,
-                    8.7056,
-                    3.592,
-                    8.7056
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1039,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "validate)",
-                  "polygon": [
-                    3.7147,
-                    8.6229,
-                    4.1257,
-                    8.6229,
-                    4.1257,
-                    8.727,
-                    3.7147,
-                    8.727
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1042,
-                    "length": 9
-                  }
-                },
-                {
-                  "content": "________",
-                  "polygon": [
-                    6.7649,
-                    8.5205,
-                    7.4445,
-                    8.5205,
-                    7.4445,
-                    8.5281,
-                    6.7649,
-                    8.5281
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1052,
-                    "length": 8
-                  }
-                },
-                {
-                  "content": "Form",
-                  "polygon": [
-                    0.8131,
-                    9.1397,
-                    1.1463,
-                    9.1397,
-                    1.1463,
-                    9.2511,
-                    0.8131,
-                    9.2511
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1061,
-                    "length": 4
-                  }
-                },
-                {
-                  "content": "is",
-                  "polygon": [
-                    1.2089,
-                    9.1397,
-                    1.3033,
-                    9.1397,
-                    1.3033,
-                    9.2513,
-                    1.2089,
-                    9.2513
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1066,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "available",
-                  "polygon": [
-                    1.3569,
-                    9.1397,
-                    1.9478,
-                    9.1397,
-                    1.9478,
-                    9.2513,
-                    1.3569,
-                    9.2513
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1069,
-                    "length": 9
-                  }
-                },
-                {
-                  "content": "on",
-                  "polygon": [
-                    2.0018,
-                    9.1671,
-                    2.1563,
-                    9.1671,
-                    2.1563,
-                    9.2511,
-                    2.0018,
-                    9.2511
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1079,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "our",
-                  "polygon": [
-                    2.2141,
-                    9.1671,
-                    2.4292,
-                    9.1671,
-                    2.4292,
-                    9.2513,
-                    2.2141,
-                    9.2513
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1082,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "website:",
-                  "polygon": [
-                    2.4732,
-                    9.1397,
-                    3.0178,
-                    9.1397,
-                    3.0178,
-                    9.2513,
-                    2.4732,
-                    9.2513
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1086,
-                    "length": 8
-                  }
-                },
-                {
-                  "content": "www.contoso.com/insurance",
-                  "polygon": [
-                    3.1183,
-                    9.1368,
-                    5.0528,
-                    9.1368,
-                    5.0528,
-                    9.2519,
-                    3.1183,
-                    9.2519
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1095,
-                    "length": 25
-                  }
-                },
-                {
-                  "content": "You",
-                  "polygon": [
-                    5.1037,
-                    9.1397,
-                    5.3628,
-                    9.1397,
-                    5.3628,
-                    9.2513,
-                    5.1037,
-                    9.2513
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1121,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "may",
-                  "polygon": [
-                    5.4255,
-                    9.1671,
-                    5.7022,
-                    9.1671,
-                    5.7022,
-                    9.2816,
-                    5.4255,
-                    9.2816
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1125,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "fax",
-                  "polygon": [
-                    5.7486,
-                    9.1381,
-                    5.9485,
-                    9.1381,
-                    5.9485,
-                    9.2513,
-                    5.7486,
-                    9.2513
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1129,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "the",
-                  "polygon": [
-                    5.9948,
-                    9.1397,
-                    6.1987,
-                    9.1397,
-                    6.1987,
-                    9.2513,
-                    5.9948,
-                    9.2513
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1133,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "form",
-                  "polygon": [
-                    6.2496,
-                    9.1381,
-                    6.5429,
-                    9.1381,
-                    6.5429,
-                    9.2511,
-                    6.2496,
-                    9.2511
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1137,
-                    "length": 4
-                  }
-                },
-                {
-                  "content": "to:",
-                  "polygon": [
-                    6.5975,
-                    9.1471,
-                    6.7518,
-                    9.1471,
-                    6.7518,
-                    9.2511,
-                    6.5975,
-                    9.2511
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1142,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "650-768-2322",
-                  "polygon": [
-                    0.8058,
-                    9.3245,
-                    1.7423,
-                    9.3245,
-                    1.7423,
-                    9.4377,
-                    0.8058,
-                    9.4377
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1146,
-                    "length": 12
-                  }
-                },
-                {
-                  "content": "or",
-                  "polygon": [
-                    1.7983,
-                    9.3538,
-                    1.9285,
-                    9.3538,
-                    1.9285,
-                    9.4378,
-                    1.7983,
-                    9.4378
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1159,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "e-mail",
-                  "polygon": [
-                    1.9774,
-                    9.3263,
-                    2.3769,
-                    9.3263,
-                    2.3769,
-                    9.438,
-                    1.9774,
-                    9.438
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1162,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "to:",
-                  "polygon": [
-                    2.4319,
-                    9.3338,
-                    2.5864,
-                    9.3338,
-                    2.5864,
-                    9.4378,
-                    2.4319,
-                    9.4378
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1169,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "insurance@contoso.com",
-                  "polygon": [
-                    2.695,
-                    9.323,
-                    4.3584,
-                    9.323,
-                    4.3584,
-                    9.4677,
-                    2.695,
-                    9.4677
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1173,
-                    "length": 21
-                  }
-                },
-                {
-                  "content": "OFFICES",
-                  "polygon": [
-                    3.2626,
-                    9.7731,
-                    3.6024,
-                    9.7731,
-                    3.6024,
-                    9.8468,
-                    3.2626,
-                    9.8468
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1195,
-                    "length": 7
-                  }
-                },
-                {
-                  "content": "LOCATED",
-                  "polygon": [
-                    3.6348,
-                    9.775,
-                    3.996,
-                    9.775,
-                    3.996,
-                    9.8464,
-                    3.6348,
-                    9.8464
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1203,
-                    "length": 7
-                  }
-                },
-                {
-                  "content": "AT",
-                  "polygon": [
-                    4.0212,
-                    9.79,
-                    4.1168,
-                    9.79,
-                    4.1168,
-                    9.845,
-                    4.0212,
-                    9.845
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1211,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "24",
-                  "polygon": [
-                    4.1421,
-                    9.7738,
-                    4.2429,
-                    9.7738,
-                    4.2429,
-                    9.845,
-                    4.1421,
-                    9.845
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1214,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "Main",
-                  "polygon": [
-                    4.2818,
-                    9.7741,
-                    4.479,
-                    9.7741,
-                    4.479,
-                    9.8461,
-                    4.2818,
-                    9.8461
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1217,
-                    "length": 4
-                  }
-                },
-                {
-                  "content": "Street",
-                  "polygon": [
-                    4.5171,
-                    9.7729,
-                    4.7719,
-                    9.7729,
-                    4.7719,
-                    9.8461,
-                    4.5171,
-                    9.8461
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1222,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "Palo",
-                  "polygon": [
-                    4.8071,
-                    9.7741,
-                    4.9909,
-                    9.7741,
-                    4.9909,
-                    9.8461,
-                    4.8071,
-                    9.8461
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1229,
-                    "length": 4
-                  }
-                },
-                {
-                  "content": "Alto",
-                  "polygon": [
-                    5.0215,
-                    9.7741,
-                    5.1857,
-                    9.7741,
-                    5.1857,
-                    9.8461,
-                    5.0215,
-                    9.8461
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1234,
-                    "length": 4
-                  }
-                },
-                {
-                  "content": "CA",
-                  "polygon": [
-                    5.2212,
-                    9.7729,
-                    5.3518,
-                    9.7729,
-                    5.3518,
-                    9.8461,
-                    5.2212,
-                    9.8461
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1239,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "842325",
-                  "polygon": [
-                    5.3827,
-                    9.7738,
-                    5.6997,
-                    9.7738,
-                    5.6997,
-                    9.8462,
-                    5.3827,
-                    9.8462
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1242,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "www.contoso.com/insurance",
-                  "polygon": [
-                    3.8373,
-                    9.8915,
-                    5.1228,
-                    9.8915,
-                    5.1228,
-                    9.9709,
-                    3.8373,
-                    9.9709
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1249,
-                    "length": 25
-                  }
-                },
-                {
-                  "content": "contoso",
-                  "polygon": [
-                    0.6559,
-                    0.8218,
-                    2.2553,
-                    0.8143,
-                    2.2578,
-                    1.1745,
-                    0.6559,
-                    1.1398
-                  ],
-                  "confidence": 0.5204381,
-                  "span": {
-                    "offset": 1275,
-                    "length": 7
-                  }
-                },
-                {
-                  "content": "CONTOSO",
-                  "polygon": [
-                    3.3877,
-                    3.0237,
-                    4.4165,
-                    3.0283,
-                    4.4213,
-                    3.2322,
-                    3.3878,
-                    3.2258
-                  ],
-                  "confidence": 0.9967771,
-                  "span": {
-                    "offset": 1283,
-                    "length": 7
-                  }
-                },
-                {
-                  "content": "BANK",
-                  "polygon": [
-                    4.5409,
-                    3.0281,
-                    5.1293,
-                    3.0254,
-                    5.1373,
-                    3.2322,
-                    4.5463,
-                    3.2322
-                  ],
-                  "confidence": 0.9889253,
-                  "span": {
-                    "offset": 1291,
-                    "length": 4
-                  }
-                },
-                {
                   "content": "Name",
                   "polygon": [
                     0.8954,
@@ -3698,7 +2215,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1296,
+                    "offset": 647,
                     "length": 4
                   }
                 },
@@ -3716,7 +2233,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1301,
+                    "offset": 652,
                     "length": 2
                   }
                 },
@@ -3734,7 +2251,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1304,
+                    "offset": 655,
                     "length": 11
                   }
                 },
@@ -3752,7 +2269,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1316,
+                    "offset": 667,
                     "length": 4
                   }
                 },
@@ -3770,7 +2287,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1321,
+                    "offset": 672,
                     "length": 6
                   }
                 },
@@ -3788,7 +2305,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1328,
+                    "offset": 679,
                     "length": 7
                   }
                 },
@@ -3806,7 +2323,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1336,
+                    "offset": 687,
                     "length": 7
                   }
                 },
@@ -3824,7 +2341,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1344,
+                    "offset": 695,
                     "length": 5
                   }
                 },
@@ -3842,7 +2359,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1350,
+                    "offset": 701,
                     "length": 2
                   }
                 },
@@ -3860,7 +2377,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1353,
+                    "offset": 704,
                     "length": 2
                   }
                 },
@@ -3878,7 +2395,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1356,
+                    "offset": 707,
                     "length": 9
                   }
                 },
@@ -3896,7 +2413,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1366,
+                    "offset": 717,
                     "length": 4
                   }
                 },
@@ -3914,7 +2431,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1371,
+                    "offset": 722,
                     "length": 4
                   }
                 },
@@ -3932,7 +2449,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1376,
+                    "offset": 727,
                     "length": 5
                   }
                 },
@@ -3950,7 +2467,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1382,
+                    "offset": 733,
                     "length": 9
                   }
                 },
@@ -3968,7 +2485,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1392,
+                    "offset": 743,
                     "length": 2
                   }
                 },
@@ -3986,25 +2503,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1395,
-                    "length": 1
-                  }
-                },
-                {
-                  "content": "-",
-                  "polygon": [
-                    7.3783,
-                    5.9042,
-                    7.4157,
-                    5.9042,
-                    7.4157,
-                    5.918,
-                    7.3783,
-                    5.918
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1397,
+                    "offset": 746,
                     "length": 1
                   }
                 },
@@ -4022,7 +2521,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1399,
+                    "offset": 748,
                     "length": 3
                   }
                 },
@@ -4040,7 +2539,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1403,
+                    "offset": 752,
                     "length": 1
                   }
                 },
@@ -4058,7 +2557,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1405,
+                    "offset": 754,
                     "length": 3
                   }
                 },
@@ -4076,8 +2575,26 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1409,
+                    "offset": 758,
                     "length": 4
+                  }
+                },
+                {
+                  "content": "-",
+                  "polygon": [
+                    7.3783,
+                    5.9042,
+                    7.4157,
+                    5.9042,
+                    7.4157,
+                    5.918,
+                    7.3783,
+                    5.918
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 763,
+                    "length": 1
                   }
                 },
                 {
@@ -4094,7 +2611,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1414,
+                    "offset": 765,
                     "length": 5
                   }
                 },
@@ -4112,7 +2629,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1420,
+                    "offset": 771,
                     "length": 8
                   }
                 },
@@ -4130,7 +2647,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1429,
+                    "offset": 780,
                     "length": 22
                   }
                 },
@@ -4148,7 +2665,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1452,
+                    "offset": 803,
                     "length": 7
                   }
                 },
@@ -4166,7 +2683,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1460,
+                    "offset": 811,
                     "length": 8
                   }
                 },
@@ -4184,7 +2701,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1469,
+                    "offset": 820,
                     "length": 3
                   }
                 },
@@ -4202,7 +2719,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1473,
+                    "offset": 824,
                     "length": 2
                   }
                 },
@@ -4220,7 +2737,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1476,
+                    "offset": 827,
                     "length": 4
                   }
                 },
@@ -4238,7 +2755,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1481,
+                    "offset": 832,
                     "length": 2
                   }
                 },
@@ -4256,7 +2773,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1484,
+                    "offset": 835,
                     "length": 5
                   }
                 },
@@ -4274,7 +2791,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1490,
+                    "offset": 841,
                     "length": 8
                   }
                 },
@@ -4292,7 +2809,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1499,
+                    "offset": 850,
                     "length": 6
                   }
                 },
@@ -4310,7 +2827,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1506,
+                    "offset": 857,
                     "length": 2
                   }
                 },
@@ -4328,7 +2845,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1509,
+                    "offset": 860,
                     "length": 3
                   }
                 },
@@ -4346,7 +2863,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1513,
+                    "offset": 864,
                     "length": 5
                   }
                 },
@@ -4364,44 +2881,1592 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1519,
+                    "offset": 870,
                     "length": 5
+                  }
+                },
+                {
+                  "content": "I",
+                  "polygon": [
+                    0.8033,
+                    6.9598,
+                    0.8617,
+                    6.9598,
+                    0.8617,
+                    7.0725,
+                    0.8033,
+                    7.0725
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 876,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "authorize",
+                  "polygon": [
+                    0.9107,
+                    6.9573,
+                    1.5801,
+                    6.9573,
+                    1.5801,
+                    7.0747,
+                    0.9107,
+                    7.0747
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 878,
+                    "length": 9
+                  }
+                },
+                {
+                  "content": "Contoso",
+                  "polygon": [
+                    1.6314,
+                    6.958,
+                    2.2027,
+                    6.958,
+                    2.2027,
+                    7.0748,
+                    1.6314,
+                    7.0748
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 888,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "Department",
+                  "polygon": [
+                    2.2527,
+                    6.9598,
+                    3.1119,
+                    6.9598,
+                    3.1119,
+                    7.1065,
+                    2.2527,
+                    7.1065
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 896,
+                    "length": 10
+                  }
+                },
+                {
+                  "content": "of",
+                  "polygon": [
+                    3.1579,
+                    6.9573,
+                    3.302,
+                    6.9573,
+                    3.302,
+                    7.0747,
+                    3.1579,
+                    7.0747
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 907,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "Professional",
+                  "polygon": [
+                    3.3372,
+                    6.9573,
+                    4.2013,
+                    6.9573,
+                    4.2013,
+                    7.0747,
+                    3.3372,
+                    7.0747
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 910,
+                    "length": 12
+                  }
+                },
+                {
+                  "content": "and",
+                  "polygon": [
+                    4.2509,
+                    6.9598,
+                    4.5118,
+                    6.9598,
+                    4.5118,
+                    7.0747,
+                    4.2509,
+                    7.0747
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 923,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "Financial",
+                  "polygon": [
+                    4.5598,
+                    6.9573,
+                    5.2201,
+                    6.9573,
+                    5.2201,
+                    7.0747,
+                    4.5598,
+                    7.0747
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 927,
+                    "length": 9
+                  }
+                },
+                {
+                  "content": "Regulation,",
+                  "polygon": [
+                    5.2699,
+                    6.9573,
+                    6.0806,
+                    6.9573,
+                    6.0806,
+                    7.1067,
+                    5.2699,
+                    7.1067
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 937,
+                    "length": 11
+                  }
+                },
+                {
+                  "content": "Bureau",
+                  "polygon": [
+                    6.1294,
+                    6.9598,
+                    6.6514,
+                    6.9598,
+                    6.6514,
+                    7.0747,
+                    6.1294,
+                    7.0747
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 949,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "of",
+                  "polygon": [
+                    6.7004,
+                    6.9573,
+                    6.8444,
+                    6.9573,
+                    6.8444,
+                    7.0747,
+                    6.7004,
+                    7.0747
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 956,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "Insurance",
+                  "polygon": [
+                    6.8801,
+                    6.9598,
+                    7.5868,
+                    6.9598,
+                    7.5868,
+                    7.0747,
+                    6.8801,
+                    7.0747
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 959,
+                    "length": 9
+                  }
+                },
+                {
+                  "content": "to",
+                  "polygon": [
+                    0.8033,
+                    7.1592,
+                    0.9348,
+                    7.1592,
+                    0.9348,
+                    7.2663,
+                    0.8033,
+                    7.2663
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 969,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "charge",
+                  "polygon": [
+                    0.9847,
+                    7.1515,
+                    1.4588,
+                    7.1515,
+                    1.4588,
+                    7.2983,
+                    0.9847,
+                    7.2983
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 972,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "my:",
+                  "polygon": [
+                    1.5062,
+                    7.1853,
+                    1.7675,
+                    7.1853,
+                    1.7675,
+                    7.2982,
+                    1.5062,
+                    7.2982
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 979,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "Visa",
+                  "polygon": [
+                    1.8242,
+                    7.1495,
+                    2.1348,
+                    7.1495,
+                    2.1348,
+                    7.2665,
+                    1.8242,
+                    7.2665
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 983,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "____________________________",
+                  "polygon": [
+                    0.8,
+                    8.0223,
+                    3.1333,
+                    8.0223,
+                    3.1333,
+                    8.0307,
+                    0.8,
+                    8.0307
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 988,
+                    "length": 28
+                  }
+                },
+                {
+                  "content": "(Card",
+                  "polygon": [
+                    0.806,
+                    8.0771,
+                    1.0841,
+                    8.0771,
+                    1.0841,
+                    8.1845,
+                    0.806,
+                    8.1845
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1017,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "number",
+                  "polygon": [
+                    1.119,
+                    8.0771,
+                    1.4992,
+                    8.0771,
+                    1.4992,
+                    8.1636,
+                    1.119,
+                    8.1636
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1023,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "\u2013",
+                  "polygon": [
+                    1.5308,
+                    8.1323,
+                    1.5933,
+                    8.1323,
+                    1.5933,
+                    8.1374,
+                    1.5308,
+                    8.1374
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1030,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "Please",
+                  "polygon": [
+                    1.6253,
+                    8.0771,
+                    1.9401,
+                    8.0771,
+                    1.9401,
+                    8.1636,
+                    1.6253,
+                    8.1636
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1032,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "print",
+                  "polygon": [
+                    1.975,
+                    8.0771,
+                    2.2103,
+                    8.0771,
+                    2.2103,
+                    8.1895,
+                    1.975,
+                    8.1895
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1039,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "clearly)",
+                  "polygon": [
+                    2.2444,
+                    8.0771,
+                    2.6175,
+                    8.0771,
+                    2.6175,
+                    8.1896,
+                    2.2444,
+                    8.1896
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1045,
+                    "length": 8
+                  }
+                },
+                {
+                  "content": "4872876432425423",
+                  "polygon": [
+                    0.8996,
+                    7.8438,
+                    2.2164,
+                    7.8438,
+                    2.2164,
+                    7.9603,
+                    0.8996,
+                    7.9603
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1054,
+                    "length": 16
+                  }
+                },
+                {
+                  "content": "Expiration",
+                  "polygon": [
+                    3.3024,
+                    7.9046,
+                    4.0018,
+                    7.9046,
+                    4.0018,
+                    8.0411,
+                    3.3024,
+                    8.0411
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1071,
+                    "length": 10
+                  }
+                },
+                {
+                  "content": "date:",
+                  "polygon": [
+                    4.0467,
+                    7.9069,
+                    4.3518,
+                    7.9069,
+                    4.3518,
+                    8.012,
+                    4.0467,
+                    8.012
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1082,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "09",
+                  "polygon": [
+                    4.442,
+                    7.8916,
+                    4.5825,
+                    7.8916,
+                    4.5825,
+                    7.9982,
+                    4.442,
+                    7.9982
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1088,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "/",
+                  "polygon": [
+                    4.6708,
+                    7.9069,
+                    4.7157,
+                    7.9069,
+                    4.7157,
+                    8.012,
+                    4.6708,
+                    8.012
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1091,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "21",
+                  "polygon": [
+                    4.7708,
+                    7.8956,
+                    4.9015,
+                    7.8956,
+                    4.9015,
+                    8.0003,
+                    4.7708,
+                    8.0003
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1093,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "in",
+                  "polygon": [
+                    5.0592,
+                    7.9046,
+                    5.1817,
+                    7.9046,
+                    5.1817,
+                    8.01,
+                    5.0592,
+                    8.01
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1096,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "the",
+                  "polygon": [
+                    5.2259,
+                    7.9069,
+                    5.4239,
+                    7.9069,
+                    5.4239,
+                    8.012,
+                    5.2259,
+                    8.012
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1099,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "amount",
+                  "polygon": [
+                    5.4691,
+                    7.9139,
+                    5.9657,
+                    7.9139,
+                    5.9657,
+                    8.012,
+                    5.4691,
+                    8.012
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1103,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "of:",
+                  "polygon": [
+                    6.0082,
+                    7.9046,
+                    6.1702,
+                    7.9046,
+                    6.1702,
+                    8.012,
+                    6.0082,
+                    8.012
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1110,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "$__________________",
+                  "polygon": [
+                    6.2258,
+                    7.8956,
+                    7.6702,
+                    7.8956,
+                    7.6702,
+                    8.0289,
+                    6.2258,
+                    8.0289
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1114,
+                    "length": 19
+                  }
+                },
+                {
+                  "content": "263.00",
+                  "polygon": [
+                    6.5828,
+                    7.8896,
+                    6.9948,
+                    7.8896,
+                    6.9948,
+                    7.9962,
+                    6.5828,
+                    7.9962
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1134,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "Signature:",
+                  "polygon": [
+                    0.8059,
+                    8.3968,
+                    1.5333,
+                    8.3968,
+                    1.5333,
+                    8.5421,
+                    0.8059,
+                    8.5421
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1141,
+                    "length": 10
+                  }
+                },
+                {
+                  "content": "___________________________________________",
+                  "polygon": [
+                    1.5893,
+                    8.5205,
+                    5.2429,
+                    8.5205,
+                    5.2429,
+                    8.5281,
+                    1.5893,
+                    8.5281
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1152,
+                    "length": 43
+                  }
+                },
+                {
+                  "content": "Date:",
+                  "polygon": [
+                    5.2557,
+                    8.3997,
+                    5.6041,
+                    8.3997,
+                    5.6041,
+                    8.5111,
+                    5.2557,
+                    8.5111
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1196,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "______",
+                  "polygon": [
+                    5.66,
+                    8.5205,
+                    6.1697,
+                    8.5205,
+                    6.1697,
+                    8.5281,
+                    5.66,
+                    8.5281
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1202,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "(must",
+                  "polygon": [
+                    1.7087,
+                    8.6229,
+                    1.9762,
+                    8.6229,
+                    1.9762,
+                    8.727,
+                    1.7087,
+                    8.727
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1209,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "be",
+                  "polygon": [
+                    2.0158,
+                    8.6246,
+                    2.1283,
+                    8.6246,
+                    2.1283,
+                    8.7057,
+                    2.0158,
+                    8.7057
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1215,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "signed",
+                  "polygon": [
+                    2.168,
+                    8.6246,
+                    2.485,
+                    8.6246,
+                    2.485,
+                    8.7284,
+                    2.168,
+                    8.7284
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1218,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "by",
+                  "polygon": [
+                    2.5286,
+                    8.6246,
+                    2.6389,
+                    8.6246,
+                    2.6389,
+                    8.7278,
+                    2.5286,
+                    8.7278
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1225,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "authorized",
+                  "polygon": [
+                    2.6737,
+                    8.6246,
+                    3.1831,
+                    8.6246,
+                    3.1831,
+                    8.7057,
+                    2.6737,
+                    8.7057
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1228,
+                    "length": 10
+                  }
+                },
+                {
+                  "content": "person",
+                  "polygon": [
+                    3.2268,
+                    8.6445,
+                    3.5523,
+                    8.6445,
+                    3.5523,
+                    8.727,
+                    3.2268,
+                    8.727
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1239,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "to",
+                  "polygon": [
+                    3.592,
+                    8.63,
+                    3.6791,
+                    8.63,
+                    3.6791,
+                    8.7056,
+                    3.592,
+                    8.7056
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1246,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "validate)",
+                  "polygon": [
+                    3.7147,
+                    8.6229,
+                    4.1257,
+                    8.6229,
+                    4.1257,
+                    8.727,
+                    3.7147,
+                    8.727
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1249,
+                    "length": 9
                   }
                 },
                 {
                   "content": "John",
                   "polygon": [
-                    1.933,
-                    8.2616,
-                    2.451,
-                    8.2655,
-                    2.4633,
-                    8.562,
-                    1.9534,
-                    8.5741
+                    1.9425,
+                    8.252,
+                    2.4233,
+                    8.2569,
+                    2.426,
+                    8.5534,
+                    1.9402,
+                    8.5556
                   ],
-                  "confidence": 0.9507164,
+                  "confidence": 0.915,
                   "span": {
-                    "offset": 1525,
+                    "offset": 1259,
                     "length": 4
                   }
                 },
                 {
                   "content": "Singer",
                   "polygon": [
-                    2.5677,
-                    8.2682,
-                    3.2346,
-                    8.2925,
-                    3.2346,
-                    8.5348,
-                    2.5781,
-                    8.5586
+                    2.5399,
+                    8.2596,
+                    3.2071,
+                    8.2817,
+                    3.2178,
+                    8.5333,
+                    2.5438,
+                    8.5511
                   ],
-                  "confidence": 0.961087,
+                  "confidence": 0.944,
                   "span": {
-                    "offset": 1530,
+                    "offset": 1264,
                     "length": 6
+                  }
+                },
+                {
+                  "content": "08",
+                  "polygon": [
+                    5.8155,
+                    8.3705,
+                    5.9721,
+                    8.3705,
+                    5.9721,
+                    8.4835,
+                    5.8155,
+                    8.4835
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1271,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "/",
+                  "polygon": [
+                    6.1674,
+                    8.3968,
+                    6.2149,
+                    8.3968,
+                    6.2149,
+                    8.5119,
+                    6.1674,
+                    8.5119
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1274,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "23",
+                  "polygon": [
+                    6.5359,
+                    8.3585,
+                    6.6943,
+                    8.3585,
+                    6.6943,
+                    8.4716,
+                    6.5359,
+                    8.4716
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1276,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "/",
+                  "polygon": [
+                    6.7199,
+                    8.3968,
+                    6.7673,
+                    8.3968,
+                    6.7673,
+                    8.5119,
+                    6.7199,
+                    8.5119
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1279,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "2018",
+                  "polygon": [
+                    7.0358,
+                    8.3585,
+                    7.3644,
+                    8.3585,
+                    7.3644,
+                    8.4715,
+                    7.0358,
+                    8.4715
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1281,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "______",
+                  "polygon": [
+                    6.2125,
+                    8.5205,
+                    6.7221,
+                    8.5205,
+                    6.7221,
+                    8.5281,
+                    6.2125,
+                    8.5281
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1286,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "________",
+                  "polygon": [
+                    6.7649,
+                    8.5205,
+                    7.4445,
+                    8.5205,
+                    7.4445,
+                    8.5281,
+                    6.7649,
+                    8.5281
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1293,
+                    "length": 8
+                  }
+                },
+                {
+                  "content": "Form",
+                  "polygon": [
+                    0.8131,
+                    9.1397,
+                    1.1463,
+                    9.1397,
+                    1.1463,
+                    9.2511,
+                    0.8131,
+                    9.2511
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1302,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "is",
+                  "polygon": [
+                    1.2089,
+                    9.1397,
+                    1.3033,
+                    9.1397,
+                    1.3033,
+                    9.2513,
+                    1.2089,
+                    9.2513
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1307,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "available",
+                  "polygon": [
+                    1.3569,
+                    9.1397,
+                    1.9478,
+                    9.1397,
+                    1.9478,
+                    9.2513,
+                    1.3569,
+                    9.2513
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1310,
+                    "length": 9
+                  }
+                },
+                {
+                  "content": "on",
+                  "polygon": [
+                    2.0018,
+                    9.1671,
+                    2.1563,
+                    9.1671,
+                    2.1563,
+                    9.2511,
+                    2.0018,
+                    9.2511
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1320,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "our",
+                  "polygon": [
+                    2.2141,
+                    9.1671,
+                    2.4292,
+                    9.1671,
+                    2.4292,
+                    9.2513,
+                    2.2141,
+                    9.2513
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1323,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "website:",
+                  "polygon": [
+                    2.4732,
+                    9.1397,
+                    3.0178,
+                    9.1397,
+                    3.0178,
+                    9.2513,
+                    2.4732,
+                    9.2513
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1327,
+                    "length": 8
+                  }
+                },
+                {
+                  "content": "www.contoso.com/insurance",
+                  "polygon": [
+                    3.1183,
+                    9.1368,
+                    5.0528,
+                    9.1368,
+                    5.0528,
+                    9.2519,
+                    3.1183,
+                    9.2519
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1336,
+                    "length": 25
+                  }
+                },
+                {
+                  "content": "You",
+                  "polygon": [
+                    5.1037,
+                    9.1397,
+                    5.3628,
+                    9.1397,
+                    5.3628,
+                    9.2513,
+                    5.1037,
+                    9.2513
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1362,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "may",
+                  "polygon": [
+                    5.4255,
+                    9.1671,
+                    5.7022,
+                    9.1671,
+                    5.7022,
+                    9.2816,
+                    5.4255,
+                    9.2816
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1366,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "fax",
+                  "polygon": [
+                    5.7486,
+                    9.1381,
+                    5.9485,
+                    9.1381,
+                    5.9485,
+                    9.2513,
+                    5.7486,
+                    9.2513
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1370,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "the",
+                  "polygon": [
+                    5.9948,
+                    9.1397,
+                    6.1987,
+                    9.1397,
+                    6.1987,
+                    9.2513,
+                    5.9948,
+                    9.2513
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1374,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "form",
+                  "polygon": [
+                    6.2496,
+                    9.1381,
+                    6.5429,
+                    9.1381,
+                    6.5429,
+                    9.2511,
+                    6.2496,
+                    9.2511
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1378,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "to:",
+                  "polygon": [
+                    6.5975,
+                    9.1471,
+                    6.7518,
+                    9.1471,
+                    6.7518,
+                    9.2511,
+                    6.5975,
+                    9.2511
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1383,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "650-768-2322",
+                  "polygon": [
+                    0.8058,
+                    9.3245,
+                    1.7423,
+                    9.3245,
+                    1.7423,
+                    9.4377,
+                    0.8058,
+                    9.4377
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1387,
+                    "length": 12
+                  }
+                },
+                {
+                  "content": "or",
+                  "polygon": [
+                    1.7983,
+                    9.3538,
+                    1.9285,
+                    9.3538,
+                    1.9285,
+                    9.4378,
+                    1.7983,
+                    9.4378
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1400,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "e-mail",
+                  "polygon": [
+                    1.9774,
+                    9.3263,
+                    2.3769,
+                    9.3263,
+                    2.3769,
+                    9.438,
+                    1.9774,
+                    9.438
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1403,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "to:",
+                  "polygon": [
+                    2.4319,
+                    9.3338,
+                    2.5864,
+                    9.3338,
+                    2.5864,
+                    9.4378,
+                    2.4319,
+                    9.4378
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1410,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "insurance@contoso.com",
+                  "polygon": [
+                    2.695,
+                    9.323,
+                    4.3584,
+                    9.323,
+                    4.3584,
+                    9.4677,
+                    2.695,
+                    9.4677
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1414,
+                    "length": 21
+                  }
+                },
+                {
+                  "content": "OFFICES",
+                  "polygon": [
+                    3.2626,
+                    9.7731,
+                    3.6024,
+                    9.7731,
+                    3.6024,
+                    9.8468,
+                    3.2626,
+                    9.8468
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1436,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "LOCATED",
+                  "polygon": [
+                    3.6348,
+                    9.775,
+                    3.996,
+                    9.775,
+                    3.996,
+                    9.8464,
+                    3.6348,
+                    9.8464
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1444,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "AT",
+                  "polygon": [
+                    4.0212,
+                    9.79,
+                    4.1168,
+                    9.79,
+                    4.1168,
+                    9.845,
+                    4.0212,
+                    9.845
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1452,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "24",
+                  "polygon": [
+                    4.1421,
+                    9.7738,
+                    4.2429,
+                    9.7738,
+                    4.2429,
+                    9.845,
+                    4.1421,
+                    9.845
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1455,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "Main",
+                  "polygon": [
+                    4.2818,
+                    9.7741,
+                    4.479,
+                    9.7741,
+                    4.479,
+                    9.8461,
+                    4.2818,
+                    9.8461
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1458,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "Street",
+                  "polygon": [
+                    4.5171,
+                    9.7729,
+                    4.7719,
+                    9.7729,
+                    4.7719,
+                    9.8461,
+                    4.5171,
+                    9.8461
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1463,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "Palo",
+                  "polygon": [
+                    4.8071,
+                    9.7741,
+                    4.9909,
+                    9.7741,
+                    4.9909,
+                    9.8461,
+                    4.8071,
+                    9.8461
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1470,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "Alto",
+                  "polygon": [
+                    5.0215,
+                    9.7741,
+                    5.1857,
+                    9.7741,
+                    5.1857,
+                    9.8461,
+                    5.0215,
+                    9.8461
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1475,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "CA",
+                  "polygon": [
+                    5.2212,
+                    9.7729,
+                    5.3518,
+                    9.7729,
+                    5.3518,
+                    9.8461,
+                    5.2212,
+                    9.8461
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1480,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "842325",
+                  "polygon": [
+                    5.3827,
+                    9.7738,
+                    5.6997,
+                    9.7738,
+                    5.6997,
+                    9.8462,
+                    5.3827,
+                    9.8462
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1483,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "www.contoso.com/insurance",
+                  "polygon": [
+                    3.8373,
+                    9.8915,
+                    5.1228,
+                    9.8915,
+                    5.1228,
+                    9.9709,
+                    3.8373,
+                    9.9709
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1490,
+                    "length": 25
+                  }
+                },
+                {
+                  "content": "Contoso",
+                  "polygon": [
+                    0.6113,
+                    0.6827,
+                    2.3538,
+                    0.6827,
+                    2.3625,
+                    1.3078,
+                    0.62,
+                    1.3311
+                  ],
+                  "confidence": 0.955,
+                  "span": {
+                    "offset": 1516,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "CONTOSO",
+                  "polygon": [
+                    3.3914,
+                    3.0309,
+                    4.413,
+                    3.0233,
+                    4.4115,
+                    3.2321,
+                    3.3899,
+                    3.232
+                  ],
+                  "confidence": 0.996,
+                  "span": {
+                    "offset": 1524,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "BANK",
+                  "polygon": [
+                    4.5382,
+                    3.0229,
+                    5.1302,
+                    3.0219,
+                    5.1287,
+                    3.228,
+                    4.5366,
+                    3.2316
+                  ],
+                  "confidence": 0.988,
+                  "span": {
+                    "offset": 1532,
+                    "length": 4
                   }
                 }
               ],
@@ -4748,500 +4813,6 @@
                   ]
                 },
                 {
-                  "content": "I authorize Contoso Department of Professional and Financial Regulation, Bureau of Insurance",
-                  "polygon": [
-                    0.8033,
-                    6.9573,
-                    7.5868,
-                    6.9573,
-                    7.5868,
-                    7.1067,
-                    0.8033,
-                    7.1067
-                  ],
-                  "spans": [
-                    {
-                      "offset": 647,
-                      "length": 92
-                    }
-                  ]
-                },
-                {
-                  "content": "to charge my: Visa",
-                  "polygon": [
-                    0.8033,
-                    7.1495,
-                    2.1348,
-                    7.1495,
-                    2.1348,
-                    7.2983,
-                    0.8033,
-                    7.2983
-                  ],
-                  "spans": [
-                    {
-                      "offset": 740,
-                      "length": 18
-                    }
-                  ]
-                },
-                {
-                  "content": "____________________________",
-                  "polygon": [
-                    0.8,
-                    8.0223,
-                    3.1333,
-                    8.0223,
-                    3.1333,
-                    8.0307,
-                    0.8,
-                    8.0307
-                  ],
-                  "spans": [
-                    {
-                      "offset": 759,
-                      "length": 28
-                    }
-                  ]
-                },
-                {
-                  "content": "(Card number \u2013 Please print clearly)",
-                  "polygon": [
-                    0.806,
-                    8.0771,
-                    2.6175,
-                    8.0771,
-                    2.6175,
-                    8.1896,
-                    0.806,
-                    8.1896
-                  ],
-                  "spans": [
-                    {
-                      "offset": 788,
-                      "length": 36
-                    }
-                  ]
-                },
-                {
-                  "content": "4872876432425423",
-                  "polygon": [
-                    0.8996,
-                    7.8438,
-                    2.2164,
-                    7.8438,
-                    2.2164,
-                    7.9603,
-                    0.8996,
-                    7.9603
-                  ],
-                  "spans": [
-                    {
-                      "offset": 825,
-                      "length": 16
-                    }
-                  ]
-                },
-                {
-                  "content": "Expiration date:",
-                  "polygon": [
-                    3.3024,
-                    7.9046,
-                    4.3518,
-                    7.9046,
-                    4.3518,
-                    8.0411,
-                    3.3024,
-                    8.0411
-                  ],
-                  "spans": [
-                    {
-                      "offset": 842,
-                      "length": 16
-                    }
-                  ]
-                },
-                {
-                  "content": "09",
-                  "polygon": [
-                    4.442,
-                    7.8916,
-                    4.5825,
-                    7.8916,
-                    4.5825,
-                    7.9982,
-                    4.442,
-                    7.9982
-                  ],
-                  "spans": [
-                    {
-                      "offset": 859,
-                      "length": 2
-                    }
-                  ]
-                },
-                {
-                  "content": "/",
-                  "polygon": [
-                    4.6708,
-                    7.9069,
-                    4.7157,
-                    7.9069,
-                    4.7157,
-                    8.012,
-                    4.6708,
-                    8.012
-                  ],
-                  "spans": [
-                    {
-                      "offset": 862,
-                      "length": 1
-                    }
-                  ]
-                },
-                {
-                  "content": "21",
-                  "polygon": [
-                    4.7708,
-                    7.8956,
-                    4.9015,
-                    7.8956,
-                    4.9015,
-                    8.0003,
-                    4.7708,
-                    8.0003
-                  ],
-                  "spans": [
-                    {
-                      "offset": 864,
-                      "length": 2
-                    }
-                  ]
-                },
-                {
-                  "content": "in the amount of: $__________________",
-                  "polygon": [
-                    5.0592,
-                    7.8956,
-                    7.6702,
-                    7.8956,
-                    7.6702,
-                    8.0289,
-                    5.0592,
-                    8.0289
-                  ],
-                  "spans": [
-                    {
-                      "offset": 867,
-                      "length": 37
-                    }
-                  ]
-                },
-                {
-                  "content": "263.00",
-                  "polygon": [
-                    6.5828,
-                    7.8896,
-                    6.9948,
-                    7.8896,
-                    6.9948,
-                    7.9962,
-                    6.5828,
-                    7.9962
-                  ],
-                  "spans": [
-                    {
-                      "offset": 905,
-                      "length": 6
-                    }
-                  ]
-                },
-                {
-                  "content": "Signature: ___________________________________________ Date: ______",
-                  "polygon": [
-                    0.8059,
-                    8.3968,
-                    6.1697,
-                    8.3968,
-                    6.1697,
-                    8.5421,
-                    0.8059,
-                    8.5421
-                  ],
-                  "spans": [
-                    {
-                      "offset": 912,
-                      "length": 67
-                    }
-                  ]
-                },
-                {
-                  "content": "______",
-                  "polygon": [
-                    6.2125,
-                    8.5205,
-                    6.7221,
-                    8.5205,
-                    6.7221,
-                    8.5281,
-                    6.2125,
-                    8.5281
-                  ],
-                  "spans": [
-                    {
-                      "offset": 980,
-                      "length": 6
-                    }
-                  ]
-                },
-                {
-                  "content": "08",
-                  "polygon": [
-                    5.8155,
-                    8.3705,
-                    5.9721,
-                    8.3705,
-                    5.9721,
-                    8.4835,
-                    5.8155,
-                    8.4835
-                  ],
-                  "spans": [
-                    {
-                      "offset": 987,
-                      "length": 2
-                    }
-                  ]
-                },
-                {
-                  "content": "/",
-                  "polygon": [
-                    6.1674,
-                    8.3968,
-                    6.2149,
-                    8.3968,
-                    6.2149,
-                    8.5119,
-                    6.1674,
-                    8.5119
-                  ],
-                  "spans": [
-                    {
-                      "offset": 990,
-                      "length": 1
-                    }
-                  ]
-                },
-                {
-                  "content": "23",
-                  "polygon": [
-                    6.5359,
-                    8.3585,
-                    6.6943,
-                    8.3585,
-                    6.6943,
-                    8.4716,
-                    6.5359,
-                    8.4716
-                  ],
-                  "spans": [
-                    {
-                      "offset": 992,
-                      "length": 2
-                    }
-                  ]
-                },
-                {
-                  "content": "/",
-                  "polygon": [
-                    6.7199,
-                    8.3968,
-                    6.7673,
-                    8.3968,
-                    6.7673,
-                    8.5119,
-                    6.7199,
-                    8.5119
-                  ],
-                  "spans": [
-                    {
-                      "offset": 995,
-                      "length": 1
-                    }
-                  ]
-                },
-                {
-                  "content": "2018",
-                  "polygon": [
-                    7.0358,
-                    8.3585,
-                    7.3644,
-                    8.3585,
-                    7.3644,
-                    8.4715,
-                    7.0358,
-                    8.4715
-                  ],
-                  "spans": [
-                    {
-                      "offset": 997,
-                      "length": 4
-                    }
-                  ]
-                },
-                {
-                  "content": "(must be signed by authorized person to validate)",
-                  "polygon": [
-                    1.7087,
-                    8.6229,
-                    4.1257,
-                    8.6229,
-                    4.1257,
-                    8.7284,
-                    1.7087,
-                    8.7284
-                  ],
-                  "spans": [
-                    {
-                      "offset": 1002,
-                      "length": 49
-                    }
-                  ]
-                },
-                {
-                  "content": "________",
-                  "polygon": [
-                    6.7649,
-                    8.5205,
-                    7.4445,
-                    8.5205,
-                    7.4445,
-                    8.5281,
-                    6.7649,
-                    8.5281
-                  ],
-                  "spans": [
-                    {
-                      "offset": 1052,
-                      "length": 8
-                    }
-                  ]
-                },
-                {
-                  "content": "Form is available on our website: www.contoso.com/insurance You may fax the form to:",
-                  "polygon": [
-                    0.8131,
-                    9.1368,
-                    6.7518,
-                    9.1368,
-                    6.7518,
-                    9.2816,
-                    0.8131,
-                    9.2816
-                  ],
-                  "spans": [
-                    {
-                      "offset": 1061,
-                      "length": 84
-                    }
-                  ]
-                },
-                {
-                  "content": "650-768-2322 or e-mail to: insurance@contoso.com",
-                  "polygon": [
-                    0.8058,
-                    9.323,
-                    4.3584,
-                    9.323,
-                    4.3584,
-                    9.4677,
-                    0.8058,
-                    9.4677
-                  ],
-                  "spans": [
-                    {
-                      "offset": 1146,
-                      "length": 48
-                    }
-                  ]
-                },
-                {
-                  "content": "OFFICES LOCATED AT 24 Main Street Palo Alto CA 842325",
-                  "polygon": [
-                    3.2626,
-                    9.7729,
-                    5.6997,
-                    9.7729,
-                    5.6997,
-                    9.8468,
-                    3.2626,
-                    9.8468
-                  ],
-                  "spans": [
-                    {
-                      "offset": 1195,
-                      "length": 53
-                    }
-                  ]
-                },
-                {
-                  "content": "www.contoso.com/insurance",
-                  "polygon": [
-                    3.8373,
-                    9.8915,
-                    5.1228,
-                    9.8915,
-                    5.1228,
-                    9.9709,
-                    3.8373,
-                    9.9709
-                  ],
-                  "spans": [
-                    {
-                      "offset": 1249,
-                      "length": 25
-                    }
-                  ]
-                },
-                {
-                  "content": "contoso",
-                  "polygon": [
-                    0.6542,
-                    0.8069,
-                    2.3685,
-                    0.8069,
-                    2.3638,
-                    1.1697,
-                    0.6542,
-                    1.1554
-                  ],
-                  "spans": [
-                    {
-                      "offset": 1275,
-                      "length": 7
-                    }
-                  ]
-                },
-                {
-                  "content": "CONTOSO BANK",
-                  "polygon": [
-                    3.3857,
-                    3.0221,
-                    5.1812,
-                    3.0221,
-                    5.1812,
-                    3.2322,
-                    3.3857,
-                    3.2227
-                  ],
-                  "spans": [
-                    {
-                      "offset": 1283,
-                      "length": 12
-                    }
-                  ]
-                },
-                {
                   "content": "Name of Cardholder:",
                   "polygon": [
                     0.8954,
@@ -5255,7 +4826,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1296,
+                      "offset": 647,
                       "length": 19
                     }
                   ]
@@ -5274,7 +4845,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1316,
+                      "offset": 667,
                       "length": 11
                     }
                   ]
@@ -5293,7 +4864,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1328,
+                      "offset": 679,
                       "length": 47
                     }
                   ]
@@ -5312,27 +4883,8 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1376,
+                      "offset": 727,
                       "length": 20
-                    }
-                  ]
-                },
-                {
-                  "content": "-",
-                  "polygon": [
-                    7.3783,
-                    5.9042,
-                    7.4157,
-                    5.9042,
-                    7.4157,
-                    5.918,
-                    7.3783,
-                    5.918
-                  ],
-                  "spans": [
-                    {
-                      "offset": 1397,
-                      "length": 1
                     }
                   ]
                 },
@@ -5350,7 +4902,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1399,
+                      "offset": 748,
                       "length": 3
                     }
                   ]
@@ -5369,7 +4921,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1403,
+                      "offset": 752,
                       "length": 1
                     }
                   ]
@@ -5388,8 +4940,27 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1405,
+                      "offset": 754,
                       "length": 8
+                    }
+                  ]
+                },
+                {
+                  "content": "-",
+                  "polygon": [
+                    7.3783,
+                    5.9042,
+                    7.4157,
+                    5.9042,
+                    7.4157,
+                    5.918,
+                    7.3783,
+                    5.918
+                  ],
+                  "spans": [
+                    {
+                      "offset": 763,
+                      "length": 1
                     }
                   ]
                 },
@@ -5407,7 +4978,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1414,
+                      "offset": 765,
                       "length": 14
                     }
                   ]
@@ -5426,7 +4997,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1429,
+                      "offset": 780,
                       "length": 22
                     }
                   ]
@@ -5445,7 +5016,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1452,
+                      "offset": 803,
                       "length": 16
                     }
                   ]
@@ -5464,7 +5035,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1469,
+                      "offset": 820,
                       "length": 14
                     }
                   ]
@@ -5483,7 +5054,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1484,
+                      "offset": 835,
                       "length": 5
                     }
                   ]
@@ -5502,7 +5073,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1490,
+                      "offset": 841,
                       "length": 8
                     }
                   ]
@@ -5521,7 +5092,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1499,
+                      "offset": 850,
                       "length": 6
                     }
                   ]
@@ -5540,7 +5111,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1506,
+                      "offset": 857,
                       "length": 2
                     }
                   ]
@@ -5559,7 +5130,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1509,
+                      "offset": 860,
                       "length": 9
                     }
                   ]
@@ -5578,27 +5149,521 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1519,
+                      "offset": 870,
                       "length": 5
+                    }
+                  ]
+                },
+                {
+                  "content": "I authorize Contoso Department of Professional and Financial Regulation, Bureau of Insurance",
+                  "polygon": [
+                    0.8033,
+                    6.9573,
+                    7.5868,
+                    6.9573,
+                    7.5868,
+                    7.1067,
+                    0.8033,
+                    7.1067
+                  ],
+                  "spans": [
+                    {
+                      "offset": 876,
+                      "length": 92
+                    }
+                  ]
+                },
+                {
+                  "content": "to charge my: Visa",
+                  "polygon": [
+                    0.8033,
+                    7.1495,
+                    2.1348,
+                    7.1495,
+                    2.1348,
+                    7.2983,
+                    0.8033,
+                    7.2983
+                  ],
+                  "spans": [
+                    {
+                      "offset": 969,
+                      "length": 18
+                    }
+                  ]
+                },
+                {
+                  "content": "____________________________",
+                  "polygon": [
+                    0.8,
+                    8.0223,
+                    3.1333,
+                    8.0223,
+                    3.1333,
+                    8.0307,
+                    0.8,
+                    8.0307
+                  ],
+                  "spans": [
+                    {
+                      "offset": 988,
+                      "length": 28
+                    }
+                  ]
+                },
+                {
+                  "content": "(Card number \u2013 Please print clearly)",
+                  "polygon": [
+                    0.806,
+                    8.0771,
+                    2.6175,
+                    8.0771,
+                    2.6175,
+                    8.1896,
+                    0.806,
+                    8.1896
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1017,
+                      "length": 36
+                    }
+                  ]
+                },
+                {
+                  "content": "4872876432425423",
+                  "polygon": [
+                    0.8996,
+                    7.8438,
+                    2.2164,
+                    7.8438,
+                    2.2164,
+                    7.9603,
+                    0.8996,
+                    7.9603
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1054,
+                      "length": 16
+                    }
+                  ]
+                },
+                {
+                  "content": "Expiration date:",
+                  "polygon": [
+                    3.3024,
+                    7.9046,
+                    4.3518,
+                    7.9046,
+                    4.3518,
+                    8.0411,
+                    3.3024,
+                    8.0411
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1071,
+                      "length": 16
+                    }
+                  ]
+                },
+                {
+                  "content": "09",
+                  "polygon": [
+                    4.442,
+                    7.8916,
+                    4.5825,
+                    7.8916,
+                    4.5825,
+                    7.9982,
+                    4.442,
+                    7.9982
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1088,
+                      "length": 2
+                    }
+                  ]
+                },
+                {
+                  "content": "/",
+                  "polygon": [
+                    4.6708,
+                    7.9069,
+                    4.7157,
+                    7.9069,
+                    4.7157,
+                    8.012,
+                    4.6708,
+                    8.012
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1091,
+                      "length": 1
+                    }
+                  ]
+                },
+                {
+                  "content": "21",
+                  "polygon": [
+                    4.7708,
+                    7.8956,
+                    4.9015,
+                    7.8956,
+                    4.9015,
+                    8.0003,
+                    4.7708,
+                    8.0003
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1093,
+                      "length": 2
+                    }
+                  ]
+                },
+                {
+                  "content": "in the amount of: $__________________",
+                  "polygon": [
+                    5.0592,
+                    7.8956,
+                    7.6702,
+                    7.8956,
+                    7.6702,
+                    8.0289,
+                    5.0592,
+                    8.0289
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1096,
+                      "length": 37
+                    }
+                  ]
+                },
+                {
+                  "content": "263.00",
+                  "polygon": [
+                    6.5828,
+                    7.8896,
+                    6.9948,
+                    7.8896,
+                    6.9948,
+                    7.9962,
+                    6.5828,
+                    7.9962
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1134,
+                      "length": 6
+                    }
+                  ]
+                },
+                {
+                  "content": "Signature: ___________________________________________ Date: ______",
+                  "polygon": [
+                    0.8059,
+                    8.3968,
+                    6.1697,
+                    8.3968,
+                    6.1697,
+                    8.5421,
+                    0.8059,
+                    8.5421
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1141,
+                      "length": 67
+                    }
+                  ]
+                },
+                {
+                  "content": "(must be signed by authorized person to validate)",
+                  "polygon": [
+                    1.7087,
+                    8.6229,
+                    4.1257,
+                    8.6229,
+                    4.1257,
+                    8.7284,
+                    1.7087,
+                    8.7284
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1209,
+                      "length": 49
                     }
                   ]
                 },
                 {
                   "content": "John Singer",
                   "polygon": [
-                    1.891,
-                    8.2595,
-                    3.2329,
-                    8.2595,
-                    3.2329,
-                    8.5699,
-                    1.891,
-                    8.5699
+                    1.8958,
+                    8.25,
+                    3.2472,
+                    8.2548,
+                    3.2472,
+                    8.5556,
+                    1.8958,
+                    8.5508
                   ],
                   "spans": [
                     {
-                      "offset": 1525,
+                      "offset": 1259,
                       "length": 11
+                    }
+                  ]
+                },
+                {
+                  "content": "08",
+                  "polygon": [
+                    5.8155,
+                    8.3705,
+                    5.9721,
+                    8.3705,
+                    5.9721,
+                    8.4835,
+                    5.8155,
+                    8.4835
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1271,
+                      "length": 2
+                    }
+                  ]
+                },
+                {
+                  "content": "/",
+                  "polygon": [
+                    6.1674,
+                    8.3968,
+                    6.2149,
+                    8.3968,
+                    6.2149,
+                    8.5119,
+                    6.1674,
+                    8.5119
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1274,
+                      "length": 1
+                    }
+                  ]
+                },
+                {
+                  "content": "23",
+                  "polygon": [
+                    6.5359,
+                    8.3585,
+                    6.6943,
+                    8.3585,
+                    6.6943,
+                    8.4716,
+                    6.5359,
+                    8.4716
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1276,
+                      "length": 2
+                    }
+                  ]
+                },
+                {
+                  "content": "/",
+                  "polygon": [
+                    6.7199,
+                    8.3968,
+                    6.7673,
+                    8.3968,
+                    6.7673,
+                    8.5119,
+                    6.7199,
+                    8.5119
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1279,
+                      "length": 1
+                    }
+                  ]
+                },
+                {
+                  "content": "2018",
+                  "polygon": [
+                    7.0358,
+                    8.3585,
+                    7.3644,
+                    8.3585,
+                    7.3644,
+                    8.4715,
+                    7.0358,
+                    8.4715
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1281,
+                      "length": 4
+                    }
+                  ]
+                },
+                {
+                  "content": "______",
+                  "polygon": [
+                    6.2125,
+                    8.5205,
+                    6.7221,
+                    8.5205,
+                    6.7221,
+                    8.5281,
+                    6.2125,
+                    8.5281
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1286,
+                      "length": 6
+                    }
+                  ]
+                },
+                {
+                  "content": "________",
+                  "polygon": [
+                    6.7649,
+                    8.5205,
+                    7.4445,
+                    8.5205,
+                    7.4445,
+                    8.5281,
+                    6.7649,
+                    8.5281
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1293,
+                      "length": 8
+                    }
+                  ]
+                },
+                {
+                  "content": "Form is available on our website: www.contoso.com/insurance You may fax the form to:",
+                  "polygon": [
+                    0.8131,
+                    9.1368,
+                    6.7518,
+                    9.1368,
+                    6.7518,
+                    9.2816,
+                    0.8131,
+                    9.2816
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1302,
+                      "length": 84
+                    }
+                  ]
+                },
+                {
+                  "content": "650-768-2322 or e-mail to: insurance@contoso.com",
+                  "polygon": [
+                    0.8058,
+                    9.323,
+                    4.3584,
+                    9.323,
+                    4.3584,
+                    9.4677,
+                    0.8058,
+                    9.4677
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1387,
+                      "length": 48
+                    }
+                  ]
+                },
+                {
+                  "content": "OFFICES LOCATED AT 24 Main Street Palo Alto CA 842325",
+                  "polygon": [
+                    3.2626,
+                    9.7729,
+                    5.6997,
+                    9.7729,
+                    5.6997,
+                    9.8468,
+                    3.2626,
+                    9.8468
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1436,
+                      "length": 53
+                    }
+                  ]
+                },
+                {
+                  "content": "www.contoso.com/insurance",
+                  "polygon": [
+                    3.8373,
+                    9.8915,
+                    5.1228,
+                    9.8915,
+                    5.1228,
+                    9.9709,
+                    3.8373,
+                    9.9709
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1490,
+                      "length": 25
+                    }
+                  ]
+                },
+                {
+                  "content": "Contoso",
+                  "polygon": [
+                    0.5444,
+                    0.6827,
+                    2.3733,
+                    0.7925,
+                    2.359,
+                    1.1793,
+                    0.5444,
+                    1.3368
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1516,
+                      "length": 7
+                    }
+                  ]
+                },
+                {
+                  "content": "CONTOSO BANK",
+                  "polygon": [
+                    3.3857,
+                    3.0269,
+                    5.1812,
+                    3.0174,
+                    5.1812,
+                    3.2227,
+                    3.3857,
+                    3.2322
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1524,
+                      "length": 12
                     }
                   ]
                 }
@@ -5612,11 +5677,323 @@
               "kind": "document"
             }
           ],
-          "tables": [],
-          "styles": [],
+          "tables": [
+            {
+              "rowCount": 4,
+              "columnCount": 4,
+              "cells": [
+                {
+                  "kind": "columnHeader",
+                  "rowIndex": 0,
+                  "columnIndex": 0,
+                  "content": "Name of Cardholder: John Singer",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        0.804,
+                        5.6454,
+                        3.8304,
+                        5.6454,
+                        3.8769,
+                        5.9934,
+                        0.804,
+                        5.9867
+                      ]
+                    }
+                  ],
+                  "spans": [
+                    {
+                      "offset": 647,
+                      "length": 31
+                    }
+                  ]
+                },
+                {
+                  "kind": "columnHeader",
+                  "rowIndex": 0,
+                  "columnIndex": 1,
+                  "content": "",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        3.8304,
+                        5.6454,
+                        4.8159,
+                        5.6454,
+                        4.8081,
+                        5.9934,
+                        3.8769,
+                        5.9934
+                      ]
+                    }
+                  ],
+                  "spans": []
+                },
+                {
+                  "kind": "columnHeader",
+                  "rowIndex": 0,
+                  "columnIndex": 2,
+                  "columnSpan": 2,
+                  "content": "Contact persons phone #, if questions with this form. Telephone #: ( 425 ) 779 3479 -",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        4.8159,
+                        5.6454,
+                        8.2535,
+                        5.6454,
+                        8.2535,
+                        5.9867,
+                        4.8081,
+                        5.9934
+                      ]
+                    }
+                  ],
+                  "spans": [
+                    {
+                      "offset": 679,
+                      "length": 85
+                    }
+                  ]
+                },
+                {
+                  "rowIndex": 1,
+                  "columnIndex": 0,
+                  "content": "Email Address: johnsinger@hotmail.com",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        0.804,
+                        5.9867,
+                        3.8769,
+                        5.9934,
+                        3.908,
+                        6.221,
+                        0.804,
+                        6.221
+                      ]
+                    }
+                  ],
+                  "spans": [
+                    {
+                      "offset": 765,
+                      "length": 37
+                    }
+                  ]
+                },
+                {
+                  "rowIndex": 1,
+                  "columnIndex": 1,
+                  "columnSpan": 2,
+                  "content": "",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        3.8769,
+                        5.9934,
+                        6.3678,
+                        5.9934,
+                        6.3678,
+                        6.221,
+                        3.908,
+                        6.221
+                      ]
+                    }
+                  ],
+                  "spans": []
+                },
+                {
+                  "rowIndex": 1,
+                  "columnIndex": 3,
+                  "content": "",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        6.3678,
+                        5.9934,
+                        8.2535,
+                        5.9867,
+                        8.2535,
+                        6.221,
+                        6.3678,
+                        6.221
+                      ]
+                    }
+                  ],
+                  "spans": []
+                },
+                {
+                  "rowIndex": 2,
+                  "columnIndex": 0,
+                  "content": "Mailing Address: 472 SE 74th ST",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        0.804,
+                        6.221,
+                        3.908,
+                        6.221,
+                        3.9468,
+                        6.4954,
+                        0.804,
+                        6.4954
+                      ]
+                    }
+                  ],
+                  "spans": [
+                    {
+                      "offset": 803,
+                      "length": 31
+                    }
+                  ]
+                },
+                {
+                  "rowIndex": 2,
+                  "columnIndex": 1,
+                  "columnSpan": 3,
+                  "content": "",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        3.908,
+                        6.221,
+                        8.2535,
+                        6.221,
+                        8.2535,
+                        6.4954,
+                        3.9468,
+                        6.4954
+                      ]
+                    }
+                  ],
+                  "spans": []
+                },
+                {
+                  "rowIndex": 3,
+                  "columnIndex": 0,
+                  "content": "City: Lakewood",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        0.804,
+                        6.4954,
+                        3.9468,
+                        6.4954,
+                        3.97,
+                        6.7095,
+                        0.804,
+                        6.7095
+                      ]
+                    }
+                  ],
+                  "spans": [
+                    {
+                      "offset": 835,
+                      "length": 14
+                    }
+                  ]
+                },
+                {
+                  "rowIndex": 3,
+                  "columnIndex": 1,
+                  "columnSpan": 2,
+                  "content": "State: WA",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        3.9468,
+                        6.4954,
+                        6.3678,
+                        6.4954,
+                        6.3678,
+                        6.7095,
+                        3.97,
+                        6.7095
+                      ]
+                    }
+                  ],
+                  "spans": [
+                    {
+                      "offset": 850,
+                      "length": 9
+                    }
+                  ]
+                },
+                {
+                  "rowIndex": 3,
+                  "columnIndex": 3,
+                  "content": "Zip Code: 98712",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        6.3678,
+                        6.4954,
+                        8.2535,
+                        6.4954,
+                        8.2535,
+                        6.7095,
+                        6.3678,
+                        6.7095
+                      ]
+                    }
+                  ],
+                  "spans": [
+                    {
+                      "offset": 860,
+                      "length": 15
+                    }
+                  ]
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.7897,
+                    5.6312,
+                    8.2826,
+                    5.6339,
+                    8.2841,
+                    6.7495,
+                    0.7898,
+                    6.7466
+                  ]
+                }
+              ],
+              "spans": [
+                {
+                  "offset": 647,
+                  "length": 228
+                }
+              ]
+            }
+          ],
+          "styles": [
+            {
+              "confidence": 0.9,
+              "spans": [
+                {
+                  "offset": 1259,
+                  "length": 11
+                }
+              ],
+              "isHandwritten": true
+            }
+          ],
           "documents": [
             {
-              "docType": "2093077299:2093077299",
+              "docType": "254036573:254036573",
               "boundingRegions": [
                 {
                   "pageNumber": 1,
@@ -5633,6 +6010,33 @@
                 }
               ],
               "fields": {
+                "AMEX_SELECTION_MARK": {
+                  "type": "selectionMark",
+                  "valueSelectionMark": "selected",
+                  "content": ":selected:",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        2.38,
+                        5.475,
+                        2.445,
+                        5.475,
+                        2.445,
+                        5.545,
+                        2.38,
+                        5.545
+                      ]
+                    }
+                  ],
+                  "confidence": 0.995,
+                  "spans": [
+                    {
+                      "offset": 1550,
+                      "length": 10
+                    }
+                  ]
+                },
                 "VISA_SELECTION_MARK": {
                   "type": "selectionMark",
                   "valueSelectionMark": "unselected",
@@ -5641,14 +6045,14 @@
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        323,
-                        1086,
-                        355,
-                        1086,
-                        355,
-                        1119,
-                        323,
-                        1119
+                        1.615,
+                        5.43,
+                        1.775,
+                        5.43,
+                        1.775,
+                        5.595,
+                        1.615,
+                        5.595
                       ]
                     }
                   ],
@@ -5668,14 +6072,14 @@
                     {
                       "pageNumber": 1,
                       "polygon": [
-                        617,
-                        1090,
-                        649,
-                        1090,
-                        649,
-                        1122,
-                        617,
-                        1122
+                        3.085,
+                        5.45,
+                        3.245,
+                        5.45,
+                        3.245,
+                        5.61,
+                        3.085,
+                        5.61
                       ]
                     }
                   ],
@@ -5684,33 +6088,6 @@
                     {
                       "offset": 1561,
                       "length": 12
-                    }
-                  ]
-                },
-                "AMEX_SELECTION_MARK": {
-                  "type": "selectionMark",
-                  "valueSelectionMark": "selected",
-                  "content": ":selected:",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "polygon": [
-                        476,
-                        1095,
-                        489,
-                        1095,
-                        489,
-                        1109,
-                        476,
-                        1109
-                      ]
-                    }
-                  ],
-                  "confidence": 0.995,
-                  "spans": [
-                    {
-                      "offset": 1550,
-                      "length": 10
                     }
                   ]
                 }
@@ -5728,33 +6105,33 @@
       }
     },
     {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/2093077299?api-version=2022-06-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/254036573?api-version=2022-08-31",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-114b098cf35b88df99687fef282b9b9f-1b115983d615bef8-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "d7f913a233c1f7a7f407b32cc4ac78e0",
+        "traceparent": "00-13c24145d63757561ae87091f555ebb3-e525990bad16bcf6-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a76d498e82e179ea079330a0170835a0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "apim-request-id": "383deb88-b400-43d2-b5ba-37d0205e2e14",
+        "apim-request-id": "74c5427c-ad0c-4344-84f4-138b03e0baf6",
         "Content-Length": "0",
-        "Date": "Fri, 20 May 2022 22:34:36 GMT",
+        "Date": "Tue, 16 Aug 2022 05:55:44 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "136"
+        "x-envoy-upstream-service-time": "67"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/",
     "FORM_RECOGNIZER_SELECTION_MARK_BLOB_CONTAINER_SAS_URL": "https://sanitized.blob.core.windows.net",
-    "RandomSeed": "256478625"
+    "RandomSeed": "743079573"
   }
 }

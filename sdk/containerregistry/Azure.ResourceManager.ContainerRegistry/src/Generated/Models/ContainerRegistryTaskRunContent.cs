@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ContainerRegistryTaskRunContent. </summary>
         /// <param name="taskId"> The resource ID of task against which run has to be queued. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
-        public ContainerRegistryTaskRunContent(string taskId)
+        public ContainerRegistryTaskRunContent(ResourceIdentifier taskId)
         {
             if (taskId == null)
             {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
         /// <param name="taskId"> The resource ID of task against which run has to be queued. </param>
         /// <param name="overrideTaskStepProperties"> Set of overridable parameters that can be passed when running a Task. </param>
-        internal ContainerRegistryTaskRunContent(string runRequestType, bool? isArchiveEnabled, string agentPoolName, string logTemplate, string taskId, ContainerRegistryOverrideTaskStepProperties overrideTaskStepProperties) : base(runRequestType, isArchiveEnabled, agentPoolName, logTemplate)
+        internal ContainerRegistryTaskRunContent(string runRequestType, bool? isArchiveEnabled, string agentPoolName, string logTemplate, ResourceIdentifier taskId, ContainerRegistryOverrideTaskStepProperties overrideTaskStepProperties) : base(runRequestType, isArchiveEnabled, agentPoolName, logTemplate)
         {
             TaskId = taskId;
             OverrideTaskStepProperties = overrideTaskStepProperties;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The resource ID of task against which run has to be queued. </summary>
-        public string TaskId { get; set; }
+        public ResourceIdentifier TaskId { get; set; }
         /// <summary> Set of overridable parameters that can be passed when running a Task. </summary>
         public ContainerRegistryOverrideTaskStepProperties OverrideTaskStepProperties { get; set; }
     }

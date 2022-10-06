@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.MediaComposition
+namespace Azure.Communication.MediaComposition.Models
 {
-    public partial class CommunicationErrorResponse : IUtf8JsonSerializable
+    internal partial class CommunicationErrorResponse : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

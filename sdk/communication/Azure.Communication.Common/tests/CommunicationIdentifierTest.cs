@@ -24,8 +24,8 @@ namespace Azure.Communication
             Assert.AreEqual(new PhoneNumberIdentifier("+14255550123"), new PhoneNumberIdentifier("+14255550123"));
             Assert.AreNotEqual(new PhoneNumberIdentifier("+14255550123", "Raw Id"), new PhoneNumberIdentifier("+14255550123", "Another Raw Id"));
 
-            Assert.AreEqual(new PhoneNumberIdentifier("+override", "4:14255550123"), new PhoneNumberIdentifier("+14255550123"));
-            Assert.AreEqual(new PhoneNumberIdentifier("+14255550123"), new PhoneNumberIdentifier("+override", "4:14255550123"));
+            Assert.AreEqual(new PhoneNumberIdentifier("+override", "4:14255550123"), new PhoneNumberIdentifier("14255550123"));
+            Assert.AreEqual(new PhoneNumberIdentifier("14255550123"), new PhoneNumberIdentifier("+override", "4:14255550123"));
         }
 
         [Test]
@@ -47,10 +47,14 @@ namespace Azure.Communication
             AssertRawId(new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: false), "8:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130");
             AssertRawId(new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true), "8:teamsvisitor:45ab2481-1c1c-4005-be24-0ffb879b1130");
             AssertRawId(new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", rawId: "8:orgid:legacyFormat", isAnonymous: true), "8:orgid:legacyFormat");
-            AssertRawId(new PhoneNumberIdentifier("+112345556789"), "4:112345556789");
+            AssertRawId(new PhoneNumberIdentifier("+112345556789"), "4:+112345556789");
             AssertRawId(new PhoneNumberIdentifier("+112345556789", rawId: "4:otherFormat"), "4:otherFormat");
             AssertRawId(new UnknownIdentifier("28:45ab2481-1c1c-4005-be24-0ffb879b1130"), "28:45ab2481-1c1c-4005-be24-0ffb879b1130");
-            AssertRawId(new UnknownIdentifier("someFutureFormat"), "someFutureFormat");
+            AssertRawId(new PhoneNumberIdentifier("+112345556789"), "4:+112345556789");
+            AssertRawId(new PhoneNumberIdentifier("112345556789"), "4:112345556789");
+            AssertRawId(new PhoneNumberIdentifier("otherFormat", rawId: "4:207ffef6-9444-41fb-92ab-20eacaae2768"), "4:207ffef6-9444-41fb-92ab-20eacaae2768");
+            AssertRawId(new PhoneNumberIdentifier("otherFormat", rawId: "4:207ffef6-9444-41fb-92ab-20eacaae2768_207ffef6-9444-41fb-92ab-20eacaae2768"), "4:207ffef6-9444-41fb-92ab-20eacaae2768_207ffef6-9444-41fb-92ab-20eacaae2768");
+            AssertRawId(new PhoneNumberIdentifier("otherFormat", rawId: "4:+112345556789_207ffef6-9444-41fb-92ab-20eacaae2768"), "4:+112345556789_207ffef6-9444-41fb-92ab-20eacaae2768");
         }
 
         [Test]
@@ -74,8 +78,11 @@ namespace Azure.Communication
             AssertIdentifier("8:gcch:45ab2481-1c1c-4005-be24-0ffb879b1130", new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", false, CommunicationCloudEnvironment.Gcch));
             AssertIdentifier("8:teamsvisitor:45ab2481-1c1c-4005-be24-0ffb879b1130", new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", true, CommunicationCloudEnvironment.Public));
             AssertIdentifier("8:orgid:legacyFormat", new MicrosoftTeamsUserIdentifier("legacyFormat", false, CommunicationCloudEnvironment.Public));
-            AssertIdentifier("4:112345556789", new PhoneNumberIdentifier("+112345556789"));
-            AssertIdentifier("4:otherFormat", new PhoneNumberIdentifier("+otherFormat"));
+            AssertIdentifier("4:+112345556789", new PhoneNumberIdentifier("+112345556789"));
+            AssertIdentifier("4:112345556789", new PhoneNumberIdentifier("112345556789"));
+            AssertIdentifier("4:207ffef6-9444-41fb-92ab-20eacaae2768", new PhoneNumberIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768"));
+            AssertIdentifier("4:207ffef6-9444-41fb-92ab-20eacaae2768_207ffef6-9444-41fb-92ab-20eacaae2768", new PhoneNumberIdentifier("207ffef6-9444-41fb-92ab-20eacaae2768_207ffef6-9444-41fb-92ab-20eacaae2768"));
+            AssertIdentifier("4:+112345556789_207ffef6-9444-41fb-92ab-20eacaae2768", new PhoneNumberIdentifier("+112345556789_207ffef6-9444-41fb-92ab-20eacaae2768"));
             AssertIdentifier("28:45ab2481-1c1c-4005-be24-0ffb879b1130", new UnknownIdentifier("28:45ab2481-1c1c-4005-be24-0ffb879b1130"));
 
             Assert.Throws<ArgumentNullException>(() => CommunicationIdentifier.FromRawId(null));
@@ -97,7 +104,10 @@ namespace Azure.Communication
             AssertRoundtrip("8:teamsvisitor:45ab2481-1c1c-4005-be24-0ffb879b1130");
             AssertRoundtrip("8:orgid:legacyFormat");
             AssertRoundtrip("4:112345556789");
-            AssertRoundtrip("4:otherFormat");
+            AssertRoundtrip("4:+112345556789");
+            AssertRoundtrip("4:207ffef6-9444-41fb-92ab-20eacaae2768");
+            AssertRoundtrip("4:207ffef6-9444-41fb-92ab-20eacaae2768_207ffef6-9444-41fb-92ab-20eacaae2768");
+            AssertRoundtrip("4:+112345556789_207ffef6-9444-41fb-92ab-20eacaae2768");
             AssertRoundtrip("28:45ab2481-1c1c-4005-be24-0ffb879b1130");
         }
 
@@ -110,6 +120,42 @@ namespace Azure.Communication
             {
                 Assert.AreNotEqual(baseType, implementation.GetProperty(nameof(CommunicationIdentifier.RawId))?.DeclaringType);
             }
+        }
+
+        [Test]
+        public void EqualityOperatorOverrideDoesntThrow()
+        {
+            var identifier = new CommunicationUserIdentifier("123");
+            var sameIdentifier = new CommunicationUserIdentifier("123");
+            var otherIdentifier = new CommunicationUserIdentifier("124");
+            var otherTypeIdentifier = new MicrosoftTeamsUserIdentifier("123");
+            CommunicationIdentifier? nullIdentifier = null;
+
+            Assert.False(identifier == null);
+            Assert.False(null == identifier);
+            Assert.True(identifier != null);
+            Assert.True(null != identifier);
+
+            Assert.True(null as CommunicationIdentifier == null as CommunicationIdentifier);
+            Assert.False(identifier == null as CommunicationIdentifier);
+            Assert.False(null as CommunicationIdentifier == identifier);
+            Assert.True(identifier != null as CommunicationIdentifier);
+            Assert.True(null as CommunicationIdentifier != identifier);
+
+            Assert.True(null == nullIdentifier);
+            Assert.False(nullIdentifier == identifier);
+
+#pragma warning disable CS1718 // Comparison made to same variable
+            Assert.True(identifier == identifier);
+#pragma warning restore CS1718 // Comparison made to same variable
+            Assert.True(identifier == sameIdentifier);
+            Assert.False(identifier != sameIdentifier);
+            Assert.True(sameIdentifier == identifier);
+            Assert.False(sameIdentifier != identifier);
+            Assert.False(identifier == otherIdentifier);
+            Assert.True(identifier != otherIdentifier);
+            Assert.False(identifier == otherTypeIdentifier);
+            Assert.True(identifier != otherTypeIdentifier);
         }
     }
 }

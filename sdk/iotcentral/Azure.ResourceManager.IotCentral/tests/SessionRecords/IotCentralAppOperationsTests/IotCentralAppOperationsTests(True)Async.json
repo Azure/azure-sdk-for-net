@@ -1,7 +1,8 @@
 {
   "Entries": [],
   "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "RESOURCE_MANAGER_URL": null,
-    "SUBSCRIPTION_ID": "77969078-2897-47b0-9143-917252379303"
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

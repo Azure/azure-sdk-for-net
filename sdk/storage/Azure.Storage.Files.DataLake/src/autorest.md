@@ -81,6 +81,10 @@ directive:
     $.Path.properties.isDirectory = {
         "type": "string"
     };
+    delete $.Path.properties.eTag;
+    $.Path.properties.etag = {
+        "type": "string"
+    };
 ```
 
 ### Fix append file consumes

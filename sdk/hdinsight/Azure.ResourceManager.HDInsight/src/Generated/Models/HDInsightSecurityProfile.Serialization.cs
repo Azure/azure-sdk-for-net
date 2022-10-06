@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -31,13 +32,13 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("organizationalUnitDN");
                 writer.WriteStringValue(OrganizationalUnitDN);
             }
-            if (Optional.IsCollectionDefined(LdapsUrls))
+            if (Optional.IsCollectionDefined(LdapUris))
             {
                 writer.WritePropertyName("ldapsUrls");
                 writer.WriteStartArray();
-                foreach (var item in LdapsUrls)
+                foreach (var item in LdapUris)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.AbsoluteUri);
                 }
                 writer.WriteEndArray();
             }
@@ -79,11 +80,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<AuthenticationDirectoryType> directoryType = default;
             Optional<string> domain = default;
             Optional<string> organizationalUnitDN = default;
-            Optional<IList<string>> ldapsUrls = default;
+            Optional<IList<Uri>> ldapsUrls = default;
             Optional<string> domainUsername = default;
             Optional<string> domainUserPassword = default;
             Optional<IList<string>> clusterUsersGroupDNs = default;
-            Optional<string> aaddsResourceId = default;
+            Optional<ResourceIdentifier> aaddsResourceId = default;
             Optional<ResourceIdentifier> msiResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -114,10 +115,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<Uri> array = new List<Uri>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new Uri(item.GetString()));
                     }
                     ldapsUrls = array;
                     continue;
@@ -149,7 +150,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (property.NameEquals("aaddsResourceId"))
                 {
-                    aaddsResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    aaddsResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("msiResourceId"))

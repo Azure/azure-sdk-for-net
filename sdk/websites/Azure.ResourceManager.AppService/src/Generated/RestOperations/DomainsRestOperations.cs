@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DomainCollection>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceDomainListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -144,9 +144,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DomainCollection value = default;
+                        AppServiceDomainListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DomainCollection.DeserializeDomainCollection(document.RootElement);
+                        value = AppServiceDomainListResult.DeserializeAppServiceDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DomainCollection> List(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<AppServiceDomainListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -169,9 +169,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DomainCollection value = default;
+                        AppServiceDomainListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DomainCollection.DeserializeDomainCollection(document.RootElement);
+                        value = AppServiceDomainListResult.DeserializeAppServiceDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NameIdentifierCollection>> ListRecommendationsAsync(string subscriptionId, DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceDomainNameIdentifierListResult>> ListRecommendationsAsync(string subscriptionId, DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -284,9 +284,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        NameIdentifierCollection value = default;
+                        AppServiceDomainNameIdentifierListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NameIdentifierCollection.DeserializeNameIdentifierCollection(document.RootElement);
+                        value = AppServiceDomainNameIdentifierListResult.DeserializeAppServiceDomainNameIdentifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NameIdentifierCollection> ListRecommendations(string subscriptionId, DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
+        public Response<AppServiceDomainNameIdentifierListResult> ListRecommendations(string subscriptionId, DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -311,9 +311,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        NameIdentifierCollection value = default;
+                        AppServiceDomainNameIdentifierListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NameIdentifierCollection.DeserializeNameIdentifierCollection(document.RootElement);
+                        value = AppServiceDomainNameIdentifierListResult.DeserializeAppServiceDomainNameIdentifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DomainCollection>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceDomainListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -357,9 +357,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DomainCollection value = default;
+                        AppServiceDomainListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DomainCollection.DeserializeDomainCollection(document.RootElement);
+                        value = AppServiceDomainListResult.DeserializeAppServiceDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DomainCollection> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<AppServiceDomainListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -384,9 +384,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DomainCollection value = default;
+                        AppServiceDomainListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DomainCollection.DeserializeDomainCollection(document.RootElement);
+                        value = AppServiceDomainListResult.DeserializeAppServiceDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -493,9 +493,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -647,9 +647,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(patch);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -904,9 +904,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -1072,9 +1072,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -1238,7 +1238,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DomainCollection>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceDomainListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1249,9 +1249,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DomainCollection value = default;
+                        AppServiceDomainListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DomainCollection.DeserializeDomainCollection(document.RootElement);
+                        value = AppServiceDomainListResult.DeserializeAppServiceDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1265,7 +1265,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DomainCollection> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<AppServiceDomainListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1276,9 +1276,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DomainCollection value = default;
+                        AppServiceDomainListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DomainCollection.DeserializeDomainCollection(document.RootElement);
+                        value = AppServiceDomainListResult.DeserializeAppServiceDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1307,7 +1307,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NameIdentifierCollection>> ListRecommendationsNextPageAsync(string nextLink, string subscriptionId, DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceDomainNameIdentifierListResult>> ListRecommendationsNextPageAsync(string nextLink, string subscriptionId, DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1319,9 +1319,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        NameIdentifierCollection value = default;
+                        AppServiceDomainNameIdentifierListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NameIdentifierCollection.DeserializeNameIdentifierCollection(document.RootElement);
+                        value = AppServiceDomainNameIdentifierListResult.DeserializeAppServiceDomainNameIdentifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1336,7 +1336,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NameIdentifierCollection> ListRecommendationsNextPage(string nextLink, string subscriptionId, DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
+        public Response<AppServiceDomainNameIdentifierListResult> ListRecommendationsNextPage(string nextLink, string subscriptionId, DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1348,9 +1348,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        NameIdentifierCollection value = default;
+                        AppServiceDomainNameIdentifierListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NameIdentifierCollection.DeserializeNameIdentifierCollection(document.RootElement);
+                        value = AppServiceDomainNameIdentifierListResult.DeserializeAppServiceDomainNameIdentifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1379,7 +1379,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DomainCollection>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceDomainListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1391,9 +1391,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DomainCollection value = default;
+                        AppServiceDomainListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DomainCollection.DeserializeDomainCollection(document.RootElement);
+                        value = AppServiceDomainListResult.DeserializeAppServiceDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1408,7 +1408,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DomainCollection> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<AppServiceDomainListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1420,9 +1420,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DomainCollection value = default;
+                        AppServiceDomainListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DomainCollection.DeserializeDomainCollection(document.RootElement);
+                        value = AppServiceDomainListResult.DeserializeAppServiceDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

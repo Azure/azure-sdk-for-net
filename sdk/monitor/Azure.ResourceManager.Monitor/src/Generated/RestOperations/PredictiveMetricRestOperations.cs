@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="autoscaleSettingName"/>, <paramref name="timespan"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="aggregation"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="autoscaleSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PredictiveResponse>> GetAsync(string subscriptionId, string resourceGroupName, string autoscaleSettingName, string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
+        public async Task<Response<AutoscaleSettingPredicativeResult>> GetAsync(string subscriptionId, string resourceGroupName, string autoscaleSettingName, string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        PredictiveResponse value = default;
+                        AutoscaleSettingPredicativeResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PredictiveResponse.DeserializePredictiveResponse(document.RootElement);
+                        value = AutoscaleSettingPredicativeResult.DeserializeAutoscaleSettingPredicativeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="autoscaleSettingName"/>, <paramref name="timespan"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="aggregation"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="autoscaleSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PredictiveResponse> Get(string subscriptionId, string resourceGroupName, string autoscaleSettingName, string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
+        public Response<AutoscaleSettingPredicativeResult> Get(string subscriptionId, string resourceGroupName, string autoscaleSettingName, string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -129,9 +129,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        PredictiveResponse value = default;
+                        AutoscaleSettingPredicativeResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PredictiveResponse.DeserializePredictiveResponse(document.RootElement);
+                        value = AutoscaleSettingPredicativeResult.DeserializeAutoscaleSettingPredicativeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

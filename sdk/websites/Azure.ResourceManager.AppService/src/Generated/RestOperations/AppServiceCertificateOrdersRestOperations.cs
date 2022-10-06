@@ -1219,9 +1219,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(nameIdentifier);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(nameIdentifier);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -1551,7 +1551,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<CertificateEmail>>> RetrieveCertificateEmailHistoryAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<AppServiceCertificateEmail>>> RetrieveCertificateEmailHistoryAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1563,12 +1563,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<CertificateEmail> value = default;
+                        IReadOnlyList<AppServiceCertificateEmail> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<CertificateEmail> array = new List<CertificateEmail>();
+                        List<AppServiceCertificateEmail> array = new List<AppServiceCertificateEmail>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(CertificateEmail.DeserializeCertificateEmail(item));
+                            array.Add(AppServiceCertificateEmail.DeserializeAppServiceCertificateEmail(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -1585,7 +1585,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<CertificateEmail>> RetrieveCertificateEmailHistory(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<AppServiceCertificateEmail>> RetrieveCertificateEmailHistory(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1597,12 +1597,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<CertificateEmail> value = default;
+                        IReadOnlyList<AppServiceCertificateEmail> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<CertificateEmail> array = new List<CertificateEmail>();
+                        List<AppServiceCertificateEmail> array = new List<AppServiceCertificateEmail>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(CertificateEmail.DeserializeCertificateEmail(item));
+                            array.Add(AppServiceCertificateEmail.DeserializeAppServiceCertificateEmail(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

@@ -13,7 +13,7 @@ using Azure.AI.Language.Conversations.Authoring;
 To import a project, you'll need to first create a `ConversationAuthoringClient` using an endpoint and an API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:ConversationAuthoringClient_Create
-Uri endpoint = new Uri("https://myaccount.cognitive.microsoft.com");
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);

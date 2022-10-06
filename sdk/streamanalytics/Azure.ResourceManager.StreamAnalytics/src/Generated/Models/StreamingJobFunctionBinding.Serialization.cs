@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamingJobFunctionBinding(type);
+            return new UnknownStreamingJobFunctionBinding(type);
         }
     }
 }

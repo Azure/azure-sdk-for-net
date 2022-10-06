@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics;
         private readonly AppServiceEnvironmentsRestOperations _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient;
-        private readonly WorkerPoolData _data;
+        private readonly AppServiceWorkerPoolData _data;
 
         /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentWorkerPoolResource"/> class for mocking. </summary>
         protected HostingEnvironmentWorkerPoolResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "HostingEnvironmentWorkerPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HostingEnvironmentWorkerPoolResource(ArmClient client, WorkerPoolData data) : this(client, data.Id)
+        internal HostingEnvironmentWorkerPoolResource(ArmClient client, AppServiceWorkerPoolData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual WorkerPoolData Data
+        public virtual AppServiceWorkerPoolData Data
         {
             get
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<HostingEnvironmentWorkerPoolResource>> UpdateAsync(WorkerPoolData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostingEnvironmentWorkerPoolResource>> UpdateAsync(AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<HostingEnvironmentWorkerPoolResource> Update(WorkerPoolData data, CancellationToken cancellationToken = default)
+        public virtual Response<HostingEnvironmentWorkerPoolResource> Update(AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
