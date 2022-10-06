@@ -13,19 +13,19 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class MarkDevicesShippedContent
     {
         /// <summary> Initializes a new instance of MarkDevicesShippedContent. </summary>
-        /// <param name="deliverToDcPackageDetails"> Delivery package details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deliverToDcPackageDetails"/> is null. </exception>
-        public MarkDevicesShippedContent(PackageCarrierInfo deliverToDcPackageDetails)
+        /// <param name="deliverToDataCenterPackageDetails"> Delivery package details. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deliverToDataCenterPackageDetails"/> is null. </exception>
+        public MarkDevicesShippedContent(PackageCarrierInfo deliverToDataCenterPackageDetails)
         {
-            if (deliverToDcPackageDetails == null)
+            if (deliverToDataCenterPackageDetails == null)
             {
-                throw new ArgumentNullException(nameof(deliverToDcPackageDetails));
+                throw new ArgumentNullException(nameof(deliverToDataCenterPackageDetails));
             }
 
-            DeliverToDcPackageDetails = deliverToDcPackageDetails;
+            DeliverToDataCenterPackageDetails = deliverToDataCenterPackageDetails;
         }
 
         /// <summary> Delivery package details. </summary>
-        public PackageCarrierInfo DeliverToDcPackageDetails { get; }
+        public PackageCarrierInfo DeliverToDataCenterPackageDetails { get; }
     }
 }

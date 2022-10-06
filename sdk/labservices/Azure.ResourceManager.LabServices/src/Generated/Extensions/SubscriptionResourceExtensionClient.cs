@@ -24,8 +24,6 @@ namespace Azure.ResourceManager.LabServices
         private LabPlansRestOperations _labPlanRestClient;
         private ClientDiagnostics _labClientDiagnostics;
         private LabsRestOperations _labRestClient;
-        private ClientDiagnostics _operationResultsClientDiagnostics;
-        private OperationResultsRestOperations _operationResultsRestClient;
         private ClientDiagnostics _skusClientDiagnostics;
         private SkusRestOperations _skusRestClient;
         private ClientDiagnostics _usagesClientDiagnostics;
@@ -47,8 +45,6 @@ namespace Azure.ResourceManager.LabServices
         private LabPlansRestOperations LabPlanRestClient => _labPlanRestClient ??= new LabPlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LabPlanResource.ResourceType));
         private ClientDiagnostics LabClientDiagnostics => _labClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LabServices", LabResource.ResourceType.Namespace, Diagnostics);
         private LabsRestOperations LabRestClient => _labRestClient ??= new LabsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LabResource.ResourceType));
-        private ClientDiagnostics OperationResultsClientDiagnostics => _operationResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LabServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OperationResultsRestOperations OperationResultsRestClient => _operationResultsRestClient ??= new OperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LabServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SkusRestOperations SkusRestClient => _skusRestClient ??= new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LabServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -233,52 +229,6 @@ namespace Azure.ResourceManager.LabServices
         }
 
         /// <summary>
-        /// Returns an azure operation result.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/operationResults/{operationResultId}
-        /// Operation Id: OperationResults_Get
-        /// </summary>
-        /// <param name="operationResultId"> The operation result ID / name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationResult>> GetOperationResultAsync(string operationResultId, CancellationToken cancellationToken = default)
-        {
-            using var scope = OperationResultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationResult");
-            scope.Start();
-            try
-            {
-                var response = await OperationResultsRestClient.GetAsync(Id.SubscriptionId, operationResultId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns an azure operation result.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/operationResults/{operationResultId}
-        /// Operation Id: OperationResults_Get
-        /// </summary>
-        /// <param name="operationResultId"> The operation result ID / name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationResult> GetOperationResult(string operationResultId, CancellationToken cancellationToken = default)
-        {
-            using var scope = OperationResultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationResult");
-            scope.Start();
-            try
-            {
-                var response = OperationResultsRestClient.Get(Id.SubscriptionId, operationResultId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Returns a list of Azure Lab Services resource SKUs.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/skus
         /// Operation Id: Skus_List
@@ -373,11 +323,11 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LabServicesUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LabServicesUsage> GetUsagesByLocationAsync(AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LabServicesUsage> GetUsagesAsync(AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<LabServicesUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsagesByLocation");
+                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();
                 try
                 {
@@ -392,7 +342,7 @@ namespace Azure.ResourceManager.LabServices
             }
             async Task<Page<LabServicesUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsagesByLocation");
+                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();
                 try
                 {
@@ -417,11 +367,11 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LabServicesUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LabServicesUsage> GetUsagesByLocation(AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<LabServicesUsage> GetUsages(AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
             Page<LabServicesUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsagesByLocation");
+                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();
                 try
                 {
@@ -436,7 +386,7 @@ namespace Azure.ResourceManager.LabServices
             }
             Page<LabServicesUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsagesByLocation");
+                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();
                 try
                 {

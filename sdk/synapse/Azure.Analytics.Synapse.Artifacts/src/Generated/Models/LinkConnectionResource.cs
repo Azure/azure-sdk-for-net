@@ -30,12 +30,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Link connection name. </param>
         /// <param name="type"> Link connection type. </param>
         /// <param name="properties"> Properties of link connection. </param>
-        internal LinkConnectionResource(string id, string name, string type, LinkConnection properties)
+        /// <param name="description"> Link connection description. </param>
+        internal LinkConnectionResource(string id, string name, string type, LinkConnection properties, string description)
         {
             Id = id;
             Name = name;
             Type = type;
             Properties = properties;
+            Description = description;
         }
 
         /// <summary> Link connection id. </summary>
@@ -46,5 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string Type { get; set; }
         /// <summary> Properties of link connection. </summary>
         public LinkConnection Properties { get; set; }
+        /// <summary> Link connection description. </summary>
+        public string Description { get; set; }
     }
 }

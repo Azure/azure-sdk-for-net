@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal static DataProviderMetadata DeserializeDataProviderMetadata(JsonElement element)
         {
             Optional<string> providerName = default;
-            Optional<IReadOnlyList<KeyValuePairStringObject>> propertyBag = default;
+            Optional<IReadOnlyList<DataProviderKeyValuePair>> propertyBag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providerName"))
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KeyValuePairStringObject> array = new List<KeyValuePairStringObject>();
+                    List<DataProviderKeyValuePair> array = new List<DataProviderKeyValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyValuePairStringObject.DeserializeKeyValuePairStringObject(item));
+                        array.Add(DataProviderKeyValuePair.DeserializeDataProviderKeyValuePair(item));
                     }
                     propertyBag = array;
                     continue;

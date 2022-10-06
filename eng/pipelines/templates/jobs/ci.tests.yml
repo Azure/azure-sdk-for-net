@@ -47,19 +47,19 @@ jobs:
               Paths:
                 - "/*"
                 - "!SessionRecords"
-                - "/sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords"
+                - "/sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/*"
             ${{ else }}:
               Paths:
                 - "/*"
                 - "!SessionRecords"
-                - "/sdk/*/**/SessionRecords"
+                - "/sdk/*/**/SessionRecords/*"
       - ${{ if ne(parameters.ProjectListOverrideFilePropertyName, '') }}:
         - task: DownloadPipelineArtifact@2
           inputs:
             artifact: DependencyTestProjectReferences
             patterns: "**/$(${{ parameters.ProjectListOverrideFilePropertyName }})"
             path: $(Build.SourcesDirectory)
-        
+
       - pwsh: |
           $(Build.SourcesDirectory)/eng/common/scripts/trust-proxy-certificate.ps1
         displayName: 'Language Specific Certificate Trust'
@@ -76,12 +76,12 @@ jobs:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
           NuGetCacheKey: Test
-      - pwsh: | 
+      - pwsh: |
           if ("${{ parameters.ProjectListOverrideFilePropertyName }}" -ne '') {
             Write-Host "##vso[task.setvariable variable=ProjectListOverrideFileName]$(${{ parameters.ProjectListOverrideFilePropertyName }})"
             Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)\sdk\**\coverage.cobertura.xml"
           }
-          else 
+          else
           {
             Write-Host "##vso[task.setvariable variable=ProjectListOverrideFileName]"
             Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**\coverage.cobertura.xml"
@@ -99,7 +99,7 @@ jobs:
           /p:RunApiCompat=false /p:InheritDocEnabled=false
           /p:Configuration=$(BuildConfiguration)
           /p:CollectCoverage=$(CollectCoverage)
-          /p:EnableSourceLink=false 
+          /p:EnableSourceLink=false
           /p:ProjectListOverrideFile=$(ProjectListOverrideFileName)
           $(AdditionalTestArguments)
         displayName: "Build & Test ($(TestTargetFramework))"

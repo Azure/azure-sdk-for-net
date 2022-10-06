@@ -59,6 +59,11 @@ namespace Azure.Security.KeyVault.Administration
             this.ConfigureLogging();
         }
 
+        /// <summary>
+        /// Gets or sets whether to disable verification that the authentication challenge resource matches the Key Vault or Managed HSM domain.
+        /// </summary>
+        public bool DisableChallengeResourceVerification { get; set; }
+
         internal string GetVersionString()
         {
             return Version switch

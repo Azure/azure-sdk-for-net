@@ -4,7 +4,6 @@
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Media.Models;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
@@ -23,13 +22,13 @@ namespace Azure.ResourceManager.Media.Tests
         protected MediaManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
-            JsonPathSanitizers.Add("$.properties.input.accessToken");
-            JsonPathSanitizers.Add("$.value.[*].properties.input.accessToken");
+            JsonPathSanitizers.Add("$..accessToken");
         }
 
         protected MediaManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            JsonPathSanitizers.Add("$..accessToken");
         }
 
         [SetUp]
@@ -38,9 +37,10 @@ namespace Azure.ResourceManager.Media.Tests
             Client = GetArmClient();
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroup(AzureLocation location)
         {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            string rgName = Recording.GenerateAssetName(ResourceGroupNamePrefix);
             ResourceGroupData input = new ResourceGroupData(location);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
@@ -56,24 +56,11 @@ namespace Azure.ResourceManager.Media.Tests
             return storage.Value;
         }
 
-        protected async Task<VirtualNetworkResource> CreateVirtualNetwork(ResourceGroupResource resourceGroup, string vnetName)
+        protected async Task<MediaServicesAccountResource> CreateMediaService(ResourceGroupResource resourceGroup, string mediaServiceName, ResourceIdentifier storageAccountIdentifier)
         {
-            VirtualNetworkData data = new VirtualNetworkData()
-            {
-                Location = resourceGroup.Data.Location,
-            };
-            data.AddressPrefixes.Add("10.10.0.0/16");
-            data.Subnets.Add(new SubnetData() { Name = "subnet1", AddressPrefix = "10.10.1.0/24" });
-            data.Subnets.Add(new SubnetData() { Name = "subnet2", AddressPrefix = "10.10.2.0/24" });
-            var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, data);
-            return vnet.Value;
-        }
-
-        protected async Task<MediaServiceResource> CreateMediaService(ResourceGroupResource resourceGroup, string mediaServiceName, ResourceIdentifier storageAccountIdentifier)
-        {
-            MediaServiceData data = new MediaServiceData(resourceGroup.Data.Location);
-            data.StorageAccounts.Add(new MediaServiceStorageAccount(MediaServiceStorageAccountType.Primary) { Id = storageAccountIdentifier });
-            var mediaService = await resourceGroup.GetMediaServices().CreateOrUpdateAsync(WaitUntil.Completed, mediaServiceName, data);
+            MediaServicesAccountData data = new MediaServicesAccountData(resourceGroup.Data.Location);
+            data.StorageAccounts.Add(new MediaServicesStorageAccount(MediaServicesStorageAccountType.Primary) { Id = storageAccountIdentifier });
+            var mediaService = await resourceGroup.GetMediaServicesAccounts().CreateOrUpdateAsync(WaitUntil.Completed, mediaServiceName, data);
             return mediaService.Value;
         }
 
@@ -85,14 +72,14 @@ namespace Azure.ResourceManager.Media.Tests
             return mediaTransfer.Value;
         }
 
-        protected async Task<LiveEventResource> CreateLiveEvent(MediaServiceResource mediaService, string liveEventName)
+        protected async Task<MediaLiveEventResource> CreateLiveEvent(MediaServicesAccountResource mediaService, string liveEventName)
         {
-            LiveEventData data = new LiveEventData(mediaService.Data.Location)
+            MediaLiveEventData data = new MediaLiveEventData(mediaService.Data.Location)
             {
                 Input = new LiveEventInput(LiveEventInputProtocol.Rtmp),
                 CrossSiteAccessPolicies = new CrossSiteAccessPolicies(),
             };
-            var liveEvent = await mediaService.GetLiveEvents().CreateOrUpdateAsync(WaitUntil.Completed, liveEventName, data);
+            var liveEvent = await mediaService.GetMediaLiveEvents().CreateOrUpdateAsync(WaitUntil.Completed, liveEventName, data);
             return liveEvent.Value;
         }
     }

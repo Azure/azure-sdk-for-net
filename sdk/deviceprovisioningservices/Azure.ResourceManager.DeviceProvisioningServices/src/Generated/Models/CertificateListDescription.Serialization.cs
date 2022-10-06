@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     {
         internal static CertificateListDescription DeserializeCertificateListDescription(JsonElement element)
         {
-            Optional<IReadOnlyList<CertificateResponseData>> value = default;
+            Optional<IReadOnlyList<DeviceProvisioningServicesCertificateData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CertificateResponseData> array = new List<CertificateResponseData>();
+                    List<DeviceProvisioningServicesCertificateData> array = new List<DeviceProvisioningServicesCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CertificateResponseData.DeserializeCertificateResponseData(item));
+                        array.Add(DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(item));
                     }
                     value = array;
                     continue;

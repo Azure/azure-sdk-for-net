@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary>
     /// Properties of a time series database connection resource.
     /// Please note <see cref="TimeSeriesDatabaseConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureDataExplorerConnectionProperties"/>.
+    /// The available derived classes include <see cref="DataExplorerConnectionProperties"/>.
     /// </summary>
-    public partial class TimeSeriesDatabaseConnectionProperties
+    public abstract partial class TimeSeriesDatabaseConnectionProperties
     {
         /// <summary> Initializes a new instance of TimeSeriesDatabaseConnectionProperties. </summary>
-        public TimeSeriesDatabaseConnectionProperties()
+        protected TimeSeriesDatabaseConnectionProperties()
         {
         }
 

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static SkuDescriptionList DeserializeSkuDescriptionList(JsonElement element)
         {
-            Optional<IReadOnlyList<SkuDescription>> value = default;
+            Optional<IReadOnlyList<KustoSkuDescription>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Kusto.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SkuDescription> array = new List<SkuDescription>();
+                    List<KustoSkuDescription> array = new List<KustoSkuDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuDescription.DeserializeSkuDescription(item));
+                        array.Add(KustoSkuDescription.DeserializeKustoSkuDescription(item));
                     }
                     value = array;
                     continue;

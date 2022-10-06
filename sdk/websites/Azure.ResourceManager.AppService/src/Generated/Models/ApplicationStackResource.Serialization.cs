@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(NamePropertiesName))
+            if (Optional.IsDefined(StackName))
             {
                 writer.WritePropertyName("name");
-                writer.WriteStringValue(NamePropertiesName);
+                writer.WriteStringValue(StackName);
             }
             if (Optional.IsDefined(Display))
             {

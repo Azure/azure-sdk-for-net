@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> Initializes a new instance of PagedUsers. </summary>
         internal PagedUsers()
         {
-            Value = new ChangeTrackingList<UserData>();
+            Value = new ChangeTrackingList<LabUserData>();
         }
 
         /// <summary> Initializes a new instance of PagedUsers. </summary>
         /// <param name="value"> The array page of user results. </param>
         /// <param name="nextLink"> The link to get the next page of image results. </param>
-        internal PagedUsers(IReadOnlyList<UserData> value, string nextLink)
+        internal PagedUsers(IReadOnlyList<LabUserData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The array page of user results. </summary>
-        public IReadOnlyList<UserData> Value { get; }
+        public IReadOnlyList<LabUserData> Value { get; }
         /// <summary> The link to get the next page of image results. </summary>
         public string NextLink { get; }
     }

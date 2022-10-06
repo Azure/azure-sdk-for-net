@@ -1286,6 +1286,25 @@ namespace Azure.Messaging.EventHubs.Primitives
                         Logger.ProcessorStoppingCancellationWarning(Identifier, EventHubName, ConsumerGroup, cancelEx.Message);
                     }
                 }
+
+                // Ensure the load balancing and partition ownership intervals are not configured too closely.  The ownership
+                // interval should be at least twice the load balancing interval.  Documented guidance recommends a factor of
+                // three.
+                //
+                // A smaller gap is valid and may be desirable in some unusual scenarios, but is likely to cause
+                // issues for mainline scenarios.  Emit a warning to the error handler and logs, but allow starting to proceed.
+
+                var ownershipSeconds = Options.PartitionOwnershipExpirationInterval.TotalSeconds;
+                var loadBalancingSeconds = Options.LoadBalancingUpdateInterval.TotalSeconds;
+
+                if (ownershipSeconds < (loadBalancingSeconds * 2))
+                {
+                    Logger.ProcessorLoadBalancingIntervalsTooCloseWarning(Identifier, EventHubName, loadBalancingSeconds, ownershipSeconds);
+
+                    var message = string.Format(CultureInfo.InvariantCulture, Resources.ProcessorLoadBalancingIntervalsTooCloseMask, loadBalancingSeconds, ownershipSeconds);
+                    var intervalException = new EventHubsException(true, EventHubName, message, EventHubsException.FailureReason.GeneralError);
+                    _ = InvokeOnProcessingErrorAsync(intervalException, null, Resources.OperationLoadBalancing, CancellationToken.None);
+                }
             }
             catch (OperationCanceledException ex)
             {

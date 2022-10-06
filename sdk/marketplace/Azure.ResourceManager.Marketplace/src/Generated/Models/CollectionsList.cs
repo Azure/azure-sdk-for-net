@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of CollectionsList. </summary>
         internal CollectionsList()
         {
-            Value = new ChangeTrackingList<CollectionData>();
+            Value = new ChangeTrackingList<PrivateStoreCollectionInfoData>();
         }
 
         /// <summary> Initializes a new instance of CollectionsList. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of offer list results if there are any. </param>
-        internal CollectionsList(IReadOnlyList<CollectionData> value, string nextLink)
+        internal CollectionsList(IReadOnlyList<PrivateStoreCollectionInfoData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<CollectionData> Value { get; }
+        public IReadOnlyList<PrivateStoreCollectionInfoData> Value { get; }
         /// <summary> URL to get the next set of offer list results if there are any. </summary>
         public string NextLink { get; }
     }

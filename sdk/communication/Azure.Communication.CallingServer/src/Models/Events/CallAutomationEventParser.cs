@@ -11,7 +11,10 @@ namespace Azure.Communication.CallingServer
     /// </summary>
     public static class CallAutomationEventParser
     {
-        private const string EventPrefix = "Microsoft.Communication.";
+        /// <summary>
+        /// Parsing a CallAutomation event from a CloudEvent.
+        /// </summary>
+        public const string EventPrefix = "Microsoft.Communication.";
 
         /// <summary>
         /// Parsing a CallAutomation event from a CloudEvent.
@@ -109,6 +112,10 @@ namespace Azure.Communication.CallingServer
                     return PlayCompleted.Deserialize(eventData);
                 case nameof(PlayFailed):
                     return PlayFailed.Deserialize(eventData);
+                case nameof(RecognizeCompleted):
+                    return RecognizeCompleted.Deserialize(eventData);
+                case nameof(RecognizeFailed):
+                    return RecognizeFailed.Deserialize(eventData);
                 default:
                     return null;
             }

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
     /// A class representing a collection of <see cref="ShareSubscriptionResource" /> and their operations.
-    /// Each <see cref="ShareSubscriptionResource" /> in the collection will belong to the same instance of <see cref="AccountResource" />.
-    /// To get a <see cref="ShareSubscriptionCollection" /> instance call the GetShareSubscriptions method from an instance of <see cref="AccountResource" />.
+    /// Each <see cref="ShareSubscriptionResource" /> in the collection will belong to the same instance of <see cref="DataShareAccountResource" />.
+    /// To get a <see cref="ShareSubscriptionCollection" /> instance call the GetShareSubscriptions method from an instance of <see cref="DataShareAccountResource" />.
     /// </summary>
     public partial class ShareSubscriptionCollection : ArmCollection, IEnumerable<ShareSubscriptionResource>, IAsyncEnumerable<ShareSubscriptionResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.DataShare
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AccountResource.ResourceType), nameof(id));
+            if (id.ResourceType != DataShareAccountResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataShareAccountResource.ResourceType), nameof(id));
         }
 
         /// <summary>

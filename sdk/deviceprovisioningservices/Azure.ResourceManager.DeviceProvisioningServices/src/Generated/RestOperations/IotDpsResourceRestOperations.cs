@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="provisioningServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProvisioningServiceDescriptionData>> GetAsync(string subscriptionId, string resourceGroupName, string provisioningServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<DeviceProvisioningServiceData>> GetAsync(string subscriptionId, string resourceGroupName, string provisioningServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,13 +77,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 case 200:
                     {
-                        ProvisioningServiceDescriptionData value = default;
+                        DeviceProvisioningServiceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProvisioningServiceDescriptionData.DeserializeProvisioningServiceDescriptionData(document.RootElement);
+                        value = DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProvisioningServiceDescriptionData)null, message.Response);
+                    return Response.FromValue((DeviceProvisioningServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="provisioningServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProvisioningServiceDescriptionData> Get(string subscriptionId, string resourceGroupName, string provisioningServiceName, CancellationToken cancellationToken = default)
+        public Response<DeviceProvisioningServiceData> Get(string subscriptionId, string resourceGroupName, string provisioningServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -108,19 +108,19 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 case 200:
                     {
-                        ProvisioningServiceDescriptionData value = default;
+                        DeviceProvisioningServiceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProvisioningServiceDescriptionData.DeserializeProvisioningServiceDescriptionData(document.RootElement);
+                        value = DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProvisioningServiceDescriptionData)null, message.Response);
+                    return Response.FromValue((DeviceProvisioningServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string provisioningServiceName, ProvisioningServiceDescriptionData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string provisioningServiceName, DeviceProvisioningServiceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string provisioningServiceName, ProvisioningServiceDescriptionData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string provisioningServiceName, DeviceProvisioningServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string provisioningServiceName, ProvisioningServiceDescriptionData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string provisioningServiceName, DeviceProvisioningServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string provisioningServiceName, ProvisioningServiceDescriptionPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string provisioningServiceName, DeviceProvisioningServicePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string provisioningServiceName, ProvisioningServiceDescriptionPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string provisioningServiceName, DeviceProvisioningServicePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string provisioningServiceName, ProvisioningServiceDescriptionPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string provisioningServiceName, DeviceProvisioningServicePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -488,95 +488,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             }
         }
 
-        internal HttpMessage CreateGetOperationResultRequest(string subscriptionId, string resourceGroupName, string provisioningServiceName, string operationId, string asyncinfo)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Devices/provisioningServices/", false);
-            uri.AppendPath(provisioningServiceName, true);
-            uri.AppendPath("/operationresults/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendQuery("asyncinfo", asyncinfo, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets the status of a long running operation, such as create, update or delete a provisioning service. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> Resource group identifier. </param>
-        /// <param name="provisioningServiceName"> Name of provisioning service that the operation is running on. </param>
-        /// <param name="operationId"> Operation id corresponding to long running operation. Use this to poll for the status. </param>
-        /// <param name="asyncinfo"> Async header used to poll on the status of the operation, obtained while creating the long running operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/>, <paramref name="operationId"/> or <paramref name="asyncinfo"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AsyncOperationResult>> GetOperationResultAsync(string subscriptionId, string resourceGroupName, string provisioningServiceName, string operationId, string asyncinfo, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-            Argument.AssertNotNull(asyncinfo, nameof(asyncinfo));
-
-            using var message = CreateGetOperationResultRequest(subscriptionId, resourceGroupName, provisioningServiceName, operationId, asyncinfo);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AsyncOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AsyncOperationResult.DeserializeAsyncOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the status of a long running operation, such as create, update or delete a provisioning service. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> Resource group identifier. </param>
-        /// <param name="provisioningServiceName"> Name of provisioning service that the operation is running on. </param>
-        /// <param name="operationId"> Operation id corresponding to long running operation. Use this to poll for the status. </param>
-        /// <param name="asyncinfo"> Async header used to poll on the status of the operation, obtained while creating the long running operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/>, <paramref name="operationId"/> or <paramref name="asyncinfo"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AsyncOperationResult> GetOperationResult(string subscriptionId, string resourceGroupName, string provisioningServiceName, string operationId, string asyncinfo, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-            Argument.AssertNotNull(asyncinfo, nameof(asyncinfo));
-
-            using var message = CreateGetOperationResultRequest(subscriptionId, resourceGroupName, provisioningServiceName, operationId, asyncinfo);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AsyncOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AsyncOperationResult.DeserializeAsyncOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateListValidSkusRequest(string subscriptionId, string resourceGroupName, string provisioningServiceName)
         {
             var message = _pipeline.CreateMessage();
@@ -656,7 +567,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             }
         }
 
-        internal HttpMessage CreateCheckProvisioningServiceNameAvailabilityRequest(string subscriptionId, OperationInputs arguments)
+        internal HttpMessage CreateCheckProvisioningServiceNameAvailabilityRequest(string subscriptionId, DeviceProvisioningServicesNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -670,33 +581,33 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(arguments);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Check if a provisioning service name is available. This will validate if the name is syntactically valid and if the name is usable. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="arguments"> Set the name parameter in the OperationInputs structure to the name of the provisioning service to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the provisioning service to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="arguments"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NameAvailabilityInfo>> CheckProvisioningServiceNameAvailabilityAsync(string subscriptionId, OperationInputs arguments, CancellationToken cancellationToken = default)
+        public async Task<Response<DeviceProvisioningServicesNameAvailabilityResult>> CheckProvisioningServiceNameAvailabilityAsync(string subscriptionId, DeviceProvisioningServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(arguments, nameof(arguments));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckProvisioningServiceNameAvailabilityRequest(subscriptionId, arguments);
+            using var message = CreateCheckProvisioningServiceNameAvailabilityRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        NameAvailabilityInfo value = default;
+                        DeviceProvisioningServicesNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NameAvailabilityInfo.DeserializeNameAvailabilityInfo(document.RootElement);
+                        value = DeviceProvisioningServicesNameAvailabilityResult.DeserializeDeviceProvisioningServicesNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -706,24 +617,24 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
         /// <summary> Check if a provisioning service name is available. This will validate if the name is syntactically valid and if the name is usable. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="arguments"> Set the name parameter in the OperationInputs structure to the name of the provisioning service to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the provisioning service to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="arguments"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NameAvailabilityInfo> CheckProvisioningServiceNameAvailability(string subscriptionId, OperationInputs arguments, CancellationToken cancellationToken = default)
+        public Response<DeviceProvisioningServicesNameAvailabilityResult> CheckProvisioningServiceNameAvailability(string subscriptionId, DeviceProvisioningServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(arguments, nameof(arguments));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckProvisioningServiceNameAvailabilityRequest(subscriptionId, arguments);
+            using var message = CreateCheckProvisioningServiceNameAvailabilityRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        NameAvailabilityInfo value = default;
+                        DeviceProvisioningServicesNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NameAvailabilityInfo.DeserializeNameAvailabilityInfo(document.RootElement);
+                        value = DeviceProvisioningServicesNameAvailabilityResult.DeserializeDeviceProvisioningServicesNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -841,7 +752,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="keyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SharedAccessSignatureAuthorizationRuleAccessRightsDescription>> ListKeysForKeyNameAsync(string subscriptionId, string resourceGroupName, string provisioningServiceName, string keyName, CancellationToken cancellationToken = default)
+        public async Task<Response<DeviceProvisioningServicesSharedAccessKey>> ListKeysForKeyNameAsync(string subscriptionId, string resourceGroupName, string provisioningServiceName, string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -854,9 +765,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 case 200:
                     {
-                        SharedAccessSignatureAuthorizationRuleAccessRightsDescription value = default;
+                        DeviceProvisioningServicesSharedAccessKey value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SharedAccessSignatureAuthorizationRuleAccessRightsDescription.DeserializeSharedAccessSignatureAuthorizationRuleAccessRightsDescription(document.RootElement);
+                        value = DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -872,7 +783,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="keyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> ListKeysForKeyName(string subscriptionId, string resourceGroupName, string provisioningServiceName, string keyName, CancellationToken cancellationToken = default)
+        public Response<DeviceProvisioningServicesSharedAccessKey> ListKeysForKeyName(string subscriptionId, string resourceGroupName, string provisioningServiceName, string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -885,9 +796,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 case 200:
                     {
-                        SharedAccessSignatureAuthorizationRuleAccessRightsDescription value = default;
+                        DeviceProvisioningServicesSharedAccessKey value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SharedAccessSignatureAuthorizationRuleAccessRightsDescription.DeserializeSharedAccessSignatureAuthorizationRuleAccessRightsDescription(document.RootElement);
+                        value = DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1004,7 +915,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GroupIdInformationData>> GetPrivateLinkResourcesAsync(string subscriptionId, string resourceGroupName, string resourceName, string groupId, CancellationToken cancellationToken = default)
+        public async Task<Response<DeviceProvisioningServicesPrivateLinkResourceData>> GetPrivateLinkResourcesAsync(string subscriptionId, string resourceGroupName, string resourceName, string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1017,13 +928,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 case 200:
                     {
-                        GroupIdInformationData value = default;
+                        DeviceProvisioningServicesPrivateLinkResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GroupIdInformationData.DeserializeGroupIdInformationData(document.RootElement);
+                        value = DeviceProvisioningServicesPrivateLinkResourceData.DeserializeDeviceProvisioningServicesPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((GroupIdInformationData)null, message.Response);
+                    return Response.FromValue((DeviceProvisioningServicesPrivateLinkResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1037,7 +948,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GroupIdInformationData> GetPrivateLinkResources(string subscriptionId, string resourceGroupName, string resourceName, string groupId, CancellationToken cancellationToken = default)
+        public Response<DeviceProvisioningServicesPrivateLinkResourceData> GetPrivateLinkResources(string subscriptionId, string resourceGroupName, string resourceName, string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1050,13 +961,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 case 200:
                     {
-                        GroupIdInformationData value = default;
+                        DeviceProvisioningServicesPrivateLinkResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GroupIdInformationData.DeserializeGroupIdInformationData(document.RootElement);
+                        value = DeviceProvisioningServicesPrivateLinkResourceData.DeserializeDeviceProvisioningServicesPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((GroupIdInformationData)null, message.Response);
+                    return Response.FromValue((DeviceProvisioningServicesPrivateLinkResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

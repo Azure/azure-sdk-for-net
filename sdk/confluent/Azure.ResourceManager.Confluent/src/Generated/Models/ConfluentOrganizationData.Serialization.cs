@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Confluent
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<ConfluentProvisionState> provisioningState = default;
-            Optional<string> organizationId = default;
+            Optional<Guid> organizationId = default;
             Optional<Uri> ssoUrl = default;
             ConfluentOfferDetail offerDetail = default;
             ConfluentUserDetail userDetail = default;
@@ -134,7 +134,12 @@ namespace Azure.ResourceManager.Confluent
                         }
                         if (property0.NameEquals("organizationId"))
                         {
-                            organizationId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            organizationId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("ssoUrl"))
@@ -161,7 +166,7 @@ namespace Azure.ResourceManager.Confluent
                     continue;
                 }
             }
-            return new ConfluentOrganizationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createdTime), Optional.ToNullable(provisioningState), organizationId.Value, ssoUrl.Value, offerDetail, userDetail);
+            return new ConfluentOrganizationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createdTime), Optional.ToNullable(provisioningState), Optional.ToNullable(organizationId), ssoUrl.Value, offerDetail, userDetail);
         }
     }
 }

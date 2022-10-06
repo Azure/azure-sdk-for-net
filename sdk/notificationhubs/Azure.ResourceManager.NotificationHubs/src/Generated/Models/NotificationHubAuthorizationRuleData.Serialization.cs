@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.NotificationHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            modifiedTime = property0.Value.GetDateTimeOffset();
+                            modifiedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("createdTime"))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.NotificationHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            createdTime = property0.Value.GetDateTimeOffset();
+                            createdTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("revision"))

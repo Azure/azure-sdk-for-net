@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataBox
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _jobResourceJobsClientDiagnostics;
-        private JobsRestOperations _jobResourceJobsRestClient;
+        private ClientDiagnostics _dataBoxJobJobsClientDiagnostics;
+        private JobsRestOperations _dataBoxJobJobsRestClient;
         private ClientDiagnostics _serviceClientDiagnostics;
         private ServiceRestOperations _serviceRestClient;
 
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.DataBox
         {
         }
 
-        private ClientDiagnostics JobResourceJobsClientDiagnostics => _jobResourceJobsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBox", JobResource.ResourceType.Namespace, Diagnostics);
-        private JobsRestOperations JobResourceJobsRestClient => _jobResourceJobsRestClient ??= new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(JobResource.ResourceType));
+        private ClientDiagnostics DataBoxJobJobsClientDiagnostics => _dataBoxJobJobsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBox", DataBoxJobResource.ResourceType.Namespace, Diagnostics);
+        private JobsRestOperations DataBoxJobJobsRestClient => _dataBoxJobJobsRestClient ??= new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataBoxJobResource.ResourceType));
         private ClientDiagnostics ServiceClientDiagnostics => _serviceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBox", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ServiceRestOperations ServiceRestClient => _serviceRestClient ??= new ServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.DataBox
         /// </summary>
         /// <param name="skipToken"> $skipToken is supported on Get list of jobs, which provides the next page in the list of jobs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<JobResource> GetJobResourcesAsync(string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataBoxJobResource> GetDataBoxJobsAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<JobResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DataBoxJobResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = JobResourceJobsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetJobResources");
+                using var scope = DataBoxJobJobsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataBoxJobs");
                 scope.Start();
                 try
                 {
-                    var response = await JobResourceJobsRestClient.ListAsync(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await DataBoxJobJobsRestClient.ListAsync(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.DataBox
                     throw;
                 }
             }
-            async Task<Page<JobResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DataBoxJobResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = JobResourceJobsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetJobResources");
+                using var scope = DataBoxJobJobsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataBoxJobs");
                 scope.Start();
                 try
                 {
-                    var response = await JobResourceJobsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await DataBoxJobJobsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -98,17 +98,17 @@ namespace Azure.ResourceManager.DataBox
         /// </summary>
         /// <param name="skipToken"> $skipToken is supported on Get list of jobs, which provides the next page in the list of jobs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<JobResource> GetJobResources(string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataBoxJobResource> GetDataBoxJobs(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<JobResource> FirstPageFunc(int? pageSizeHint)
+            Page<DataBoxJobResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = JobResourceJobsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetJobResources");
+                using var scope = DataBoxJobJobsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataBoxJobs");
                 scope.Start();
                 try
                 {
-                    var response = JobResourceJobsRestClient.List(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = DataBoxJobJobsRestClient.List(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.DataBox
                     throw;
                 }
             }
-            Page<JobResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DataBoxJobResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = JobResourceJobsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetJobResources");
+                using var scope = DataBoxJobJobsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataBoxJobs");
                 scope.Start();
                 try
                 {
-                    var response = JobResourceJobsRestClient.ListNextPage(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = DataBoxJobJobsRestClient.ListNextPage(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -140,15 +140,15 @@ namespace Azure.ResourceManager.DataBox
         /// Operation Id: Service_ValidateAddress
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="validateAddress"> Shipping address of the customer. </param>
+        /// <param name="content"> Shipping address of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AddressValidationOutput>> ValidateAddressServiceAsync(AzureLocation location, ValidateAddress validateAddress, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AddressValidationOutput>> ValidateAddressAsync(AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateAddressService");
+            using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateAddress");
             scope.Start();
             try
             {
-                var response = await ServiceRestClient.ValidateAddressAsync(Id.SubscriptionId, location, validateAddress, cancellationToken).ConfigureAwait(false);
+                var response = await ServiceRestClient.ValidateAddressAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -164,15 +164,15 @@ namespace Azure.ResourceManager.DataBox
         /// Operation Id: Service_ValidateAddress
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="validateAddress"> Shipping address of the customer. </param>
+        /// <param name="content"> Shipping address of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AddressValidationOutput> ValidateAddressService(AzureLocation location, ValidateAddress validateAddress, CancellationToken cancellationToken = default)
+        public virtual Response<AddressValidationOutput> ValidateAddress(AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateAddressService");
+            using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateAddress");
             scope.Start();
             try
             {
-                var response = ServiceRestClient.ValidateAddress(Id.SubscriptionId, location, validateAddress, cancellationToken);
+                var response = ServiceRestClient.ValidateAddress(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -188,15 +188,15 @@ namespace Azure.ResourceManager.DataBox
         /// Operation Id: Service_ValidateInputs
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="validationRequest"> Inputs of the customer. </param>
+        /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ValidationResponse>> ValidateInputsServiceAsync(AzureLocation location, ValidationRequest validationRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateInputsService");
+            using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateInputs");
             scope.Start();
             try
             {
-                var response = await ServiceRestClient.ValidateInputsAsync(Id.SubscriptionId, location, validationRequest, cancellationToken).ConfigureAwait(false);
+                var response = await ServiceRestClient.ValidateInputsAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -212,15 +212,15 @@ namespace Azure.ResourceManager.DataBox
         /// Operation Id: Service_ValidateInputs
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="validationRequest"> Inputs of the customer. </param>
+        /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ValidationResponse> ValidateInputsService(AzureLocation location, ValidationRequest validationRequest, CancellationToken cancellationToken = default)
+        public virtual Response<DataBoxValidationResult> ValidateInputs(AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateInputsService");
+            using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateInputs");
             scope.Start();
             try
             {
-                var response = ServiceRestClient.ValidateInputs(Id.SubscriptionId, location, validationRequest, cancellationToken);
+                var response = ServiceRestClient.ValidateInputs(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -236,15 +236,15 @@ namespace Azure.ResourceManager.DataBox
         /// Operation Id: Service_RegionConfiguration
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="regionConfigurationRequest"> Request body to get the configuration for the region. </param>
+        /// <param name="content"> Request body to get the configuration for the region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RegionConfigurationResponse>> RegionConfigurationServiceAsync(AzureLocation location, RegionConfigurationRequest regionConfigurationRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RegionConfigurationResult>> GetRegionConfigurationAsync(AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.RegionConfigurationService");
+            using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionConfiguration");
             scope.Start();
             try
             {
-                var response = await ServiceRestClient.RegionConfigurationAsync(Id.SubscriptionId, location, regionConfigurationRequest, cancellationToken).ConfigureAwait(false);
+                var response = await ServiceRestClient.RegionConfigurationAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -260,15 +260,15 @@ namespace Azure.ResourceManager.DataBox
         /// Operation Id: Service_RegionConfiguration
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="regionConfigurationRequest"> Request body to get the configuration for the region. </param>
+        /// <param name="content"> Request body to get the configuration for the region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RegionConfigurationResponse> RegionConfigurationService(AzureLocation location, RegionConfigurationRequest regionConfigurationRequest, CancellationToken cancellationToken = default)
+        public virtual Response<RegionConfigurationResult> GetRegionConfiguration(AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.RegionConfigurationService");
+            using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionConfiguration");
             scope.Start();
             try
             {
-                var response = ServiceRestClient.RegionConfiguration(Id.SubscriptionId, location, regionConfigurationRequest, cancellationToken);
+                var response = ServiceRestClient.RegionConfiguration(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

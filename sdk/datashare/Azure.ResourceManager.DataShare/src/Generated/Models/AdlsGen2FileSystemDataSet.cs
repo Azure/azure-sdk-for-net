@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> An ADLS Gen 2 file system data set. </summary>
-    public partial class AdlsGen2FileSystemDataSet : DataSetData
+    public partial class AdlsGen2FileSystemDataSet : ShareDataSetData
     {
         /// <summary> Initializes a new instance of AdlsGen2FileSystemDataSet. </summary>
         /// <param name="fileSystem"> The file system name. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="resourceGroup"> Resource group of storage account. </param>
         /// <param name="storageAccountName"> Storage account name of the source data set. </param>
         /// <param name="subscriptionId"> Subscription id of storage account. </param>
-        internal AdlsGen2FileSystemDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string dataSetId, string fileSystem, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind)
+        internal AdlsGen2FileSystemDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, Guid? dataSetId, string fileSystem, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind)
         {
             DataSetId = dataSetId;
             FileSystem = fileSystem;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataShare.Models
         }
 
         /// <summary> Unique id for identifying a data set resource. </summary>
-        public string DataSetId { get; }
+        public Guid? DataSetId { get; }
         /// <summary> The file system name. </summary>
         public string FileSystem { get; set; }
         /// <summary> Resource group of storage account. </summary>

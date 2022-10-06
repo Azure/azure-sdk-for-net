@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics;
         private readonly AppServicePlansRestOperations _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansRestClient;
-        private readonly VnetGatewayData _data;
+        private readonly AppServiceVirtualNetworkGatewayData _data;
 
         /// <summary> Initializes a new instance of the <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/> class for mocking. </summary>
         protected AppServicePlanVirtualNetworkConnectionGatewayResource()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "AppServicePlanVirtualNetworkConnectionGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AppServicePlanVirtualNetworkConnectionGatewayResource(ArmClient client, VnetGatewayData data) : this(client, data.Id)
+        internal AppServicePlanVirtualNetworkConnectionGatewayResource(ArmClient client, AppServiceVirtualNetworkGatewayData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual VnetGatewayData Data
+        public virtual AppServiceVirtualNetworkGatewayData Data
         {
             get
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Definition of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AppServicePlanVirtualNetworkConnectionGatewayResource>> UpdateAsync(WaitUntil waitUntil, VnetGatewayData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AppServicePlanVirtualNetworkConnectionGatewayResource>> UpdateAsync(WaitUntil waitUntil, AppServiceVirtualNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Definition of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AppServicePlanVirtualNetworkConnectionGatewayResource> Update(WaitUntil waitUntil, VnetGatewayData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppServicePlanVirtualNetworkConnectionGatewayResource> Update(WaitUntil waitUntil, AppServiceVirtualNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(CustomLicenseAcquisitionUriTemplate))
             {
                 writer.WritePropertyName("customLicenseAcquisitionUrlTemplate");
-                writer.WriteStringValue(CustomLicenseAcquisitionUriTemplate.AbsoluteUri);
+                writer.WriteStringValue(CustomLicenseAcquisitionUriTemplate);
             }
             writer.WritePropertyName("allowPersistentLicense");
             writer.WriteBooleanValue(AllowPersistentLicense);
@@ -28,18 +27,13 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StreamingPolicyFairPlayConfiguration DeserializeStreamingPolicyFairPlayConfiguration(JsonElement element)
         {
-            Optional<Uri> customLicenseAcquisitionUriTemplate = default;
+            Optional<string> customLicenseAcquisitionUriTemplate = default;
             bool allowPersistentLicense = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customLicenseAcquisitionUrlTemplate"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        customLicenseAcquisitionUriTemplate = null;
-                        continue;
-                    }
-                    customLicenseAcquisitionUriTemplate = new Uri(property.Value.GetString());
+                    customLicenseAcquisitionUriTemplate = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("allowPersistentLicense"))

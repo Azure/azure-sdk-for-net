@@ -21,15 +21,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DataBoxEdgeSkuTier> tier = default;
             Optional<string> size = default;
             Optional<string> family = default;
-            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
             Optional<IReadOnlyList<string>> apiVersions = default;
-            Optional<IReadOnlyList<SkuLocationInfo>> locationInfo = default;
-            Optional<IReadOnlyList<SkuCost>> costs = default;
-            Optional<SkuSignupOption> signupOption = default;
-            Optional<SkuVersion> version = default;
-            Optional<SkuAvailability> availability = default;
-            Optional<IReadOnlyList<ShipmentType>> shipmentTypes = default;
-            Optional<IReadOnlyList<SkuCapability>> capabilities = default;
+            Optional<IReadOnlyList<DataBoxEdgeSkuLocationInfo>> locationInfo = default;
+            Optional<IReadOnlyList<DataBoxEdgeSkuCost>> costs = default;
+            Optional<DataBoxEdgeSkuSignupOption> signupOption = default;
+            Optional<DataBoxEdgeSkuVersion> version = default;
+            Optional<DataBoxEdgeSkuAvailability> availability = default;
+            Optional<IReadOnlyList<DataBoxEdgeShipmentType>> shipmentTypes = default;
+            Optional<IReadOnlyList<DataBoxEdgeSkuCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"))
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SkuLocationInfo> array = new List<SkuLocationInfo>();
+                    List<DataBoxEdgeSkuLocationInfo> array = new List<DataBoxEdgeSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuLocationInfo.DeserializeSkuLocationInfo(item));
+                        array.Add(DataBoxEdgeSkuLocationInfo.DeserializeDataBoxEdgeSkuLocationInfo(item));
                     }
                     locationInfo = array;
                     continue;
@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SkuCost> array = new List<SkuCost>();
+                    List<DataBoxEdgeSkuCost> array = new List<DataBoxEdgeSkuCost>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuCost.DeserializeSkuCost(item));
+                        array.Add(DataBoxEdgeSkuCost.DeserializeDataBoxEdgeSkuCost(item));
                     }
                     costs = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    signupOption = new SkuSignupOption(property.Value.GetString());
+                    signupOption = new DataBoxEdgeSkuSignupOption(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("version"))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    version = new SkuVersion(property.Value.GetString());
+                    version = new DataBoxEdgeSkuVersion(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("availability"))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    availability = new SkuAvailability(property.Value.GetString());
+                    availability = new DataBoxEdgeSkuAvailability(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("shipmentTypes"))
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ShipmentType> array = new List<ShipmentType>();
+                    List<DataBoxEdgeShipmentType> array = new List<DataBoxEdgeShipmentType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ShipmentType(item.GetString()));
+                        array.Add(new DataBoxEdgeShipmentType(item.GetString()));
                     }
                     shipmentTypes = array;
                     continue;
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SkuCapability> array = new List<SkuCapability>();
+                    List<DataBoxEdgeSkuCapability> array = new List<DataBoxEdgeSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuCapability.DeserializeSkuCapability(item));
+                        array.Add(DataBoxEdgeSkuCapability.DeserializeDataBoxEdgeSkuCapability(item));
                     }
                     capabilities = array;
                     continue;
