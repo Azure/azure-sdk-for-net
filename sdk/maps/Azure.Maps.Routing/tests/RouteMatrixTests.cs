@@ -30,7 +30,7 @@ namespace Azure.Maps.Routing.Tests
                 },
                 Destinations = new List<GeoPosition>() { new GeoPosition(123.767, 45.90625) },
             };
-            var result = await client.SyncRequestRouteMatrixAsync(routeMatrixQuery);
+            var result = await client.GetImmediateRouteMatrixAsync(routeMatrixQuery);
 
             Assert.AreEqual("0.0.1", result.Value.FormatVersion);
             Assert.AreEqual(2, result.Value.Matrix.Count);
@@ -57,7 +57,7 @@ namespace Azure.Maps.Routing.Tests
                 TravelTimeType = TravelTimeType.All,
             };
 
-            var result = await client.SyncRequestRouteMatrixAsync(routeMatrixOptions);
+            var result = await client.GetImmediateRouteMatrixAsync(routeMatrixOptions);
 
             Assert.AreEqual("0.0.1", result.Value.FormatVersion);
             Assert.AreEqual(2, result.Value.Matrix.Count);
@@ -80,7 +80,7 @@ namespace Azure.Maps.Routing.Tests
                 Destinations = new List<GeoPosition>(),
             };
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.SyncRequestRouteMatrixAsync(routeMatrixQuery));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetImmediateRouteMatrixAsync(routeMatrixQuery));
             Assert.AreEqual(400, ex.Status);
         }
 
@@ -101,7 +101,7 @@ namespace Azure.Maps.Routing.Tests
             {
                 TravelTimeType = TravelTimeType.All,
             };
-            var operation = await client.RequestRouteMatrixAsync(WaitUntil.Started, routeMatrixOptions);
+            var operation = await client.GetRouteMatrixAsync(WaitUntil.Started, routeMatrixOptions);
             // Sleep 400ms to wait for batch request to propagate
             Thread.Sleep(400);
             var result = operation.WaitForCompletion();
@@ -131,7 +131,7 @@ namespace Azure.Maps.Routing.Tests
                 TravelTimeType = TravelTimeType.All,
             };
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.RequestRouteMatrixAsync(WaitUntil.Started, routeMatrixOptions));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetRouteMatrixAsync(WaitUntil.Started, routeMatrixOptions));
             Assert.AreEqual(400, ex.Status);
         }
     }

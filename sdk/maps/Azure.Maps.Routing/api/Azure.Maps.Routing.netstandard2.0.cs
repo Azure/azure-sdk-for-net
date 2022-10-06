@@ -7,24 +7,25 @@ namespace Azure.Maps.Routing
         public MapsRoutingClient(Azure.AzureKeyCredential credential, Azure.Maps.Routing.MapsRoutingClientOptions options) { }
         public MapsRoutingClient(Azure.Core.TokenCredential credential, string clientId) { }
         public MapsRoutingClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Routing.MapsRoutingClientOptions options) { }
-        public virtual Azure.Response<Azure.Maps.Routing.Models.RouteDirections> GetDirections(Azure.Maps.Routing.Models.RouteDirectionQuery routeDirectionQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteDirections>> GetDirectionsAsync(Azure.Maps.Routing.Models.RouteDirectionQuery routeDirectionQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Routing.Models.RouteDirections> GetDirections(Azure.Maps.Routing.Models.RouteDirectionQuery query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteDirections>> GetDirectionsAsync(Azure.Maps.Routing.Models.RouteDirectionQuery query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Maps.Routing.Models.GetDirectionsOperation GetDirectionsBatch(Azure.WaitUntil waitUntil, System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.RouteDirectionQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Maps.Routing.Models.GetDirectionsOperation> GetDirectionsBatchAsync(Azure.WaitUntil waitUntil, System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.RouteDirectionQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult> GetDirectionsImmediateBatch(System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.RouteDirectionQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>> GetDirectionsImmediateBatchAsync(System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.RouteDirectionQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult> GetImmediateRouteMatrix(Azure.Maps.Routing.Models.RouteMatrixOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult> GetImmediateRouteMatrix(Azure.Maps.Routing.Models.RouteMatrixQuery routeMatrixQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult>> GetImmediateRouteMatrixAsync(Azure.Maps.Routing.Models.RouteMatrixOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult>> GetImmediateRouteMatrixAsync(Azure.Maps.Routing.Models.RouteMatrixQuery routeMatrixQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Maps.Routing.Models.GetRouteMatrixOperation GetRouteMatrix(Azure.WaitUntil waitUntil, Azure.Maps.Routing.Models.RouteMatrixOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Maps.Routing.Models.GetRouteMatrixOperation> GetRouteMatrixAsync(Azure.WaitUntil waitUntil, Azure.Maps.Routing.Models.RouteMatrixOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Routing.Models.RouteRangeResult> GetRouteRange(Azure.Maps.Routing.Models.RouteRangeOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteRangeResult>> GetRouteRangeAsync(Azure.Maps.Routing.Models.RouteRangeOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Maps.Routing.Models.RequestRouteDirectionsOperation RequestRouteDirectionsBatch(Azure.WaitUntil waitUntil, System.Collections.Generic.IList<Azure.Maps.Routing.Models.RouteDirectionQuery> routeDirectionsQueries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Maps.Routing.Models.RequestRouteDirectionsOperation> RequestRouteDirectionsBatchAsync(Azure.WaitUntil waitUntil, System.Collections.Generic.IList<Azure.Maps.Routing.Models.RouteDirectionQuery> routeDirectionsQueries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Maps.Routing.Models.RequestRouteMatrixOperation RequestRouteMatrix(Azure.WaitUntil waitUntil, Azure.Maps.Routing.Models.RouteMatrixOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Maps.Routing.Models.RequestRouteMatrixOperation> RequestRouteMatrixAsync(Azure.WaitUntil waitUntil, Azure.Maps.Routing.Models.RouteMatrixOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult> SyncRequestRouteDirectionsBatch(System.Collections.Generic.IList<Azure.Maps.Routing.Models.RouteDirectionQuery> routeDirectionQueries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>> SyncRequestRouteDirectionsBatchAsync(System.Collections.Generic.IList<Azure.Maps.Routing.Models.RouteDirectionQuery> routeDirectionQueries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult> SyncRequestRouteMatrix(Azure.Maps.Routing.Models.RouteMatrixOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult> SyncRequestRouteMatrix(Azure.Maps.Routing.Models.RouteMatrixQuery routeMatrixQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult>> SyncRequestRouteMatrixAsync(Azure.Maps.Routing.Models.RouteMatrixOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult>> SyncRequestRouteMatrixAsync(Azure.Maps.Routing.Models.RouteMatrixQuery routeMatrixQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MapsRoutingClientOptions : Azure.Core.ClientOptions
     {
         public MapsRoutingClientOptions(Azure.Maps.Routing.MapsRoutingClientOptions.ServiceVersion version = Azure.Maps.Routing.MapsRoutingClientOptions.ServiceVersion.V1_0, System.Uri endpoint = null) { }
+        public System.Uri Endpoint { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V1_0 = 1,
@@ -101,6 +102,38 @@ namespace Azure.Maps.Routing.Models
         internal EffectiveSetting() { }
         public string Key { get { throw null; } }
         public string Value { get { throw null; } }
+    }
+    public partial class GetDirectionsOperation : Azure.Operation<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>
+    {
+        protected GetDirectionsOperation() { }
+        public GetDirectionsOperation(Azure.Maps.Routing.MapsRoutingClient client, string id) { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Maps.Routing.Models.RouteDirectionsBatchResult Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public partial class GetRouteMatrixOperation : Azure.Operation<Azure.Maps.Routing.Models.RouteMatrixResult>
+    {
+        protected GetRouteMatrixOperation() { }
+        public GetRouteMatrixOperation(Azure.Maps.Routing.MapsRoutingClient client, string id) { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Maps.Routing.Models.RouteMatrixResult Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GuidanceInstructionType : System.IEquatable<Azure.Maps.Routing.Models.GuidanceInstructionType>
@@ -211,38 +244,6 @@ namespace Azure.Maps.Routing.Models
         public static bool operator !=(Azure.Maps.Routing.Models.JunctionType left, Azure.Maps.Routing.Models.JunctionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RequestRouteDirectionsOperation : Azure.Operation<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>
-    {
-        protected RequestRouteDirectionsOperation() { }
-        public RequestRouteDirectionsOperation(Azure.Maps.Routing.MapsRoutingClient client, string id) { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Maps.Routing.Models.RouteDirectionsBatchResult Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
-    }
-    public partial class RequestRouteMatrixOperation : Azure.Operation<Azure.Maps.Routing.Models.RouteMatrixResult>
-    {
-        protected RequestRouteMatrixOperation() { }
-        public RequestRouteMatrixOperation(Azure.Maps.Routing.MapsRoutingClient client, string id) { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Maps.Routing.Models.RouteMatrixResult Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResponseSectionType : System.IEquatable<Azure.Maps.Routing.Models.ResponseSectionType>
     {
@@ -333,13 +334,13 @@ namespace Azure.Maps.Routing.Models
         public double? AccelerationEfficiency { get { throw null; } set { } }
         public Azure.Maps.Routing.Models.AlternativeRouteType? AlternativeType { get { throw null; } set { } }
         public System.DateTimeOffset? ArriveAt { get { throw null; } set { } }
-        public double? AuxiliaryPowerInKw { get { throw null; } set { } }
+        public double? AuxiliaryPowerInKilowatt { get { throw null; } set { } }
         public double? AuxiliaryPowerInLitersPerHour { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Maps.Routing.Models.RouteAvoidType> Avoid { get { throw null; } }
         public bool? ComputeBestWaypointOrder { get { throw null; } set { } }
-        public string ConstantSpeedConsumptionInKwHPerHundredKm { get { throw null; } set { } }
-        public string ConstantSpeedConsumptionInLitersPerHundredKm { get { throw null; } set { } }
-        public double? CurrentChargeInKwH { get { throw null; } set { } }
+        public string ConstantSpeedConsumptionInKilowattHourPerHundredKilometer { get { throw null; } set { } }
+        public string ConstantSpeedConsumptionInLitersPerHundredKilometer { get { throw null; } set { } }
+        public double? CurrentChargeInKilowattHour { get { throw null; } set { } }
         public double? CurrentFuelInLiters { get { throw null; } set { } }
         public double? DecelerationEfficiency { get { throw null; } set { } }
         public System.DateTimeOffset? DepartAt { get { throw null; } set { } }
@@ -350,7 +351,7 @@ namespace Azure.Maps.Routing.Models
         public bool? IsCommercialVehicle { get { throw null; } set { } }
         public Azure.Maps.Routing.Models.RoutingLanguage Language { get { throw null; } set { } }
         public int? MaxAlternatives { get { throw null; } set { } }
-        public double? MaxChargeInKwH { get { throw null; } set { } }
+        public double? MaxChargeInKilowattHour { get { throw null; } set { } }
         public int? MinDeviationDistance { get { throw null; } set { } }
         public int? MinDeviationTime { get { throw null; } set { } }
         public Azure.Maps.Routing.Models.RouteDirectionParameters RouteDirectionParameters { get { throw null; } set { } }

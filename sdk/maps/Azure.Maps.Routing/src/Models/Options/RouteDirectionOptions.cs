@@ -151,7 +151,7 @@ namespace Azure.Maps.Routing.Models
         /// Sensible Values : 50,6.3:130,11.5
         /// Note : This parameter is required for the Combustion Consumption Model
         /// </summary>
-        public string ConstantSpeedConsumptionInLitersPerHundredKm { get; set; }
+        public string ConstantSpeedConsumptionInLitersPerHundredKilometer { get; set; }
 
         /// <summary>
         /// Specifies the current supply of fuel in liters.
@@ -219,30 +219,30 @@ namespace Azure.Maps.Routing.Models
         /// Sensible Values : 50,8.2:130,21.3
         /// This parameter is required for <c>Electric consumption model</c>.
         /// </summary>
-        public string ConstantSpeedConsumptionInKwHPerHundredKm { get; set; }
+        public string ConstantSpeedConsumptionInKilowattHourPerHundredKilometer { get; set; }
 
         /// <summary>
         /// Specifies the current electric energy supply in kilowatt hours (kWh).
-        /// This parameter co-exists with <c>maxChargeInkWh</c> parameter.
-        /// The range of values allowed are 0.0 to <c>maxChargeInkWh</c>.
+        /// This parameter co-exists with <c>MaxChargeInKilowattHour</c> parameter.
+        /// The range of values allowed are 0.0 to <c>MaxChargeInKilowattHour</c>.
         /// Sensible Values : 43
         /// </summary>
-        public double? CurrentChargeInKwH { get; set; }
+        public double? CurrentChargeInKilowattHour { get; set; }
 
         /// <summary>
         /// Specifies the maximum electric energy supply in kilowatt hours (kWh) that may be stored in the vehicle's battery.
-        /// This parameter co-exists with <c>currentChargeInkWh</c> parameter.
-        /// Minimum value has to be greater than or equal to <c>currentChargeInkWh</c>.
+        /// This parameter co-exists with <c>currentChargeInkilowattHour</c> parameter.
+        /// Minimum value has to be greater than or equal to <c>currentChargeInkilowattHour</c>.
         /// Sensible Values : 85
         /// </summary>
-        public double? MaxChargeInKwH { get; set; }
+        public double? MaxChargeInKilowattHour { get; set; }
 
         /// <summary>
         /// Specifies the amount of power consumed for sustaining auxiliary systems, in kilowatts (kW).
         /// It can be used to specify consumption due to devices and systems such as AC systems, radio, heating, etc.
         /// Sensible Values : 1.7
         /// </summary>
-        public double? AuxiliaryPowerInKw { get; set; }
+        public double? AuxiliaryPowerInKilowatt { get; set; }
 
         /// <summary>
         /// Used for reconstructing a route and for calculating zero or more alternative routes to this reference route.  The provided sequence of coordinates is used as input for route reconstruction. The alternative routes  are calculated between the origin and destination points specified in the base path parameter locations.  If both minDeviationDistance and minDeviationTime are set to zero, then these origin and destination points  are expected to be at (or very near) the beginning and end of the reference route, respectively. Intermediate  locations (waypoints) are not supported when using supportingPoints.

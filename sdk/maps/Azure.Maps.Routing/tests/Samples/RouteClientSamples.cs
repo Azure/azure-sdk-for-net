@@ -151,13 +151,13 @@ namespace Azure.Maps.Routing.Tests
             #endregion
         }
 
-        public void SyncRequestRouteDirectionsBatch()
+        public void GetDirectionsImmediateBatch()
         {
             TokenCredential credential = TestEnvironment.Credential;
             string clientId = TestEnvironment.MapAccountClientId;
             MapsRoutingClient client = new MapsRoutingClient(credential, clientId);
 
-            #region Snippet:SyncRequestRouteDirectionsBatch
+            #region Snippet:GetDirectionsImmediateBatch
             // Create a list of route direction queries
             IList<RouteDirectionQuery> queries = new List<RouteDirectionQuery>();
 
@@ -178,7 +178,7 @@ namespace Azure.Maps.Routing.Tests
             queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
 
             // Call synchronous route direction batch request
-            Response<RouteDirectionsBatchResult> response = client.SyncRequestRouteDirectionsBatch(queries);
+            Response<RouteDirectionsBatchResult> response = client.GetDirectionsImmediateBatch(queries);
             #endregion
 
             #region Snippet:RouteDirectionsBatchResult
@@ -234,7 +234,7 @@ namespace Azure.Maps.Routing.Tests
             queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
 
             // Invoke asynchronous route direction batch request, we can get the result later via assigning `WaitUntil.Started`
-            RequestRouteDirectionsOperation operation = await client.RequestRouteDirectionsBatchAsync(WaitUntil.Started, queries);
+            GetDirectionsOperation operation = await client.GetDirectionsBatchAsync(WaitUntil.Started, queries);
 
             // After a while, get the result back
             Response<RouteDirectionsBatchResult> result = operation.WaitForCompletion();
@@ -269,7 +269,7 @@ namespace Azure.Maps.Routing.Tests
             queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
 
             // Invoke asynchronous route direction batch request
-            RequestRouteDirectionsOperation operation = client.RequestRouteDirectionsBatch(WaitUntil.Started, queries);
+            GetDirectionsOperation operation = client.GetDirectionsBatch(WaitUntil.Started, queries);
 
             // Get the operation ID and store somewhere
             string operationId = operation.Id;
@@ -281,7 +281,7 @@ namespace Azure.Maps.Routing.Tests
             #region Snippet:AsyncRequestRouteDirectionsBatchWithOperationId2
             // Within 14 days, users can retrive the cached result with operation ID
             // The `endpoint` argument in `client` should be the same!
-            RequestRouteDirectionsOperation newRouteDirectionOperation = new RequestRouteDirectionsOperation(client, operationId);
+            GetDirectionsOperation newRouteDirectionOperation = new GetDirectionsOperation(client, operationId);
             Response<RouteDirectionsBatchResult> result = newRouteDirectionOperation.WaitForCompletion();
             #endregion
         }
@@ -293,7 +293,7 @@ namespace Azure.Maps.Routing.Tests
             string clientId = TestEnvironment.MapAccountClientId;
             MapsRoutingClient client = new MapsRoutingClient(credential, clientId);
 
-            #region Snippet:SimpleSyncRouteMatrix
+            #region Snippet:GetImmediateRouteMatrix
             // A simple route matrix request
             RouteMatrixQuery routeMatrixQuery = new RouteMatrixQuery
             {
@@ -306,7 +306,7 @@ namespace Azure.Maps.Routing.Tests
                 // one destination point
                 Destinations = new List<GeoPosition>() { new GeoPosition(123.767, 45.90625) },
             };
-            Response<RouteMatrixResult> result = client.SyncRequestRouteMatrix(routeMatrixQuery);
+            Response<RouteMatrixResult> result = client.GetImmediateRouteMatrix(routeMatrixQuery);
             #endregion
 
             Assert.AreEqual(2, result.Value.Matrix.Count);
@@ -345,7 +345,7 @@ namespace Azure.Maps.Routing.Tests
             options.Avoid.Add(RouteAvoidType.Ferries);
             options.Avoid.Add(RouteAvoidType.UnpavedRoads);
 
-            Response<RouteMatrixResult> result = client.SyncRequestRouteMatrix(options);
+            Response<RouteMatrixResult> result = client.GetImmediateRouteMatrix(options);
             #endregion
         }
 
@@ -377,7 +377,7 @@ namespace Azure.Maps.Routing.Tests
             };
 
             // Invoke an async route matrix request and directly wait for completion
-            RequestRouteMatrixOperation result = client.RequestRouteMatrix(WaitUntil.Completed, routeMatrixOptions);
+            GetRouteMatrixOperation result = client.GetRouteMatrix(WaitUntil.Completed, routeMatrixOptions);
             #endregion
 
             Assert.AreEqual(2, result.Value.Matrix.Count);
@@ -411,7 +411,7 @@ namespace Azure.Maps.Routing.Tests
 
             #region Snippet:AsyncRouteMatrixRequestWithOperationId
             // Invoke an async route matrix request and get the result later via assigning `WaitUntil.Started`
-            RequestRouteMatrixOperation operation = client.RequestRouteMatrix(WaitUntil.Started, routeMatrixOptions);
+            GetRouteMatrixOperation operation = client.GetRouteMatrix(WaitUntil.Started, routeMatrixOptions);
 
             // Get the operation ID and store somewhere
             string operationId = operation.Id;
@@ -423,7 +423,7 @@ namespace Azure.Maps.Routing.Tests
             #region Snippet:AsyncRouteMatrixRequestWithOperationId2
             // Within 14 days, users can retrive the cached result with operation ID
             // The `endpoint` argument in `client` should be the same!
-            RequestRouteMatrixOperation newRouteMatrixOperation = new RequestRouteMatrixOperation(client, operationId);
+            GetRouteMatrixOperation newRouteMatrixOperation = new GetRouteMatrixOperation(client, operationId);
             Response<RouteMatrixResult> result = newRouteMatrixOperation.WaitForCompletion();
             #endregion
 

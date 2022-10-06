@@ -24,7 +24,8 @@ namespace Azure.Maps.Routing
 
         internal string Version { get; }
 
-        internal Uri Endpoint { get; }
+        /// <summary> Azure Maps endpoint for every requests </summary>
+        public Uri Endpoint { get; set; }
 
         /// <summary> Initializes new instance of MapsRoutingClientOptions. </summary>
         /// <param name="version"> Route service version. </param>
