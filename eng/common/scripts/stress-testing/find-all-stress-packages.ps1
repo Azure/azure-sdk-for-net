@@ -13,6 +13,7 @@ class StressTestPackageInfo {
 }
 
 . $PSScriptRoot/../job-matrix/job-matrix-functions.ps1
+. $PSScriptRoot/generate-scenario-matrix.ps1
 
 function FindStressPackages(
     [string]$directory,
@@ -33,9 +34,9 @@ function FindStressPackages(
     foreach ($chartFile in $chartFiles) {
         $chart = ParseChart $chartFile
         if (matchesAnnotations $chart $filters) {
-            $matrixFilePath = (Join-Path $chartFile.Directory.FullName '/matrix.yaml')
+            $matrixFilePath = (Join-Path $chartFile.Directory.FullName '/scenarios-matrix.yaml')
             if (Test-Path $matrixFilePath) {
-                ScenariosMatrixGeneration `
+                GenerateScenarioMatrix `
                     -matrixFilePath $matrixFilePath `
                     -Selection $MatrixSelection `
                     -DisplayNameFilter $MatrixDisplayNameFilter `
@@ -80,50 +81,6 @@ function GetUsername() {
     return $stressUser.ToLower()
 }
 
-function ScenariosMatrixGeneration(
-    [string]$matrixFilePath,
-    [string]$Selection,
-    [Parameter(Mandatory=$False)][string]$DisplayNameFilter,
-    [Parameter(Mandatory=$False)][array]$Filters,
-    [Parameter(Mandatory=$False)][array]$Replace,
-    [Parameter(Mandatory=$False)][array]$NonSparseParameters
-) {
-    $yamlConfig = Get-Content $matrixFilePath -Raw
-
-    $prettySerializedMatrix = &"$PSScriptRoot/../job-matrix/Create-JobMatrix.ps1" `
-        -ConfigPath $matrixFilePath `
-        -Selection $Selection `
-        -DisplayNameFilter $DisplayNameFilter `
-        -Filters $Filters `
-        -Replace $Replace `
-        -NonSparseParameters $NonSparseParameters
-
-    $prettyMatrix = $prettySerializedMatrix | ConvertFrom-Json -AsHashtable
-
-    $scenariosMatrix = @()
-    foreach($permutation in $prettyMatrix.GetEnumerator()) {
-        $entry = @{}
-        $entry.Name = $permutation.key -replace '_', '-'
-        $entry.Scenario = $entry.Name
-        $entry.Remove("Name")
-        foreach ($param in $permutation.value.GetEnumerator()) {
-            $entry.add($param.key, $param.value)
-        }
-        $scenariosMatrix += $entry
-    }
-
-    $valuesYaml = Get-Content (Join-Path $matrixFilePath '../values.yaml') -Raw
-    $values = $valuesYaml | ConvertFrom-Yaml
-    if (!$values) {$values = @{}}
-
-    if ($values.ContainsKey('Scenarios')) {
-        throw "Please use matrix generation for stress test scenarios."
-    }
-
-    $values.scenarios = $scenariosMatrix
-    $values | ConvertTo-Yaml | Out-File -FilePath (Join-Path $matrixFilePath '../generatedValues.yaml')
-}
-
 function NewStressTestPackageInfo(
     [hashtable]$chart,
     [System.IO.FileInfo]$chartFile,
@@ -142,8 +99,8 @@ function NewStressTestPackageInfo(
         Namespace = $namespace.ToLower()
         Directory = $chartFile.DirectoryName
         ReleaseName = $chart.name
-        Dockerfile = $chart.annotations.dockerfile
-        DockerBuildDir = $chart.annotations.dockerbuilddir
+        Dockerfile = "dockerfile" -in $chart.annotations.keys ? $chart.annotations.dockerfile : $null
+        DockerBuildDir = "dockerbuilddir" -in $chart.annotations.keys ? $chart.annotations.dockerbuilddir : $null
     }
 }
 

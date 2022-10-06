@@ -193,9 +193,9 @@ function ParseFilter([string]$filter) {
 function GetMatrixConfigFromFile([String] $config)
 {
     [MatrixConfig]$config = try{
-        GetMatrixConfigFromJson($config)
+        GetMatrixConfigFromJson $config
     } catch {
-        GetMatrixConfigFromYaml($config)
+        GetMatrixConfigFromYaml $config
     }
     return $config
 }
@@ -381,7 +381,7 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Array]$n
         Write-Error "`$IMPORT path '$importPath' does not exist."
         exit 1
     }
-    $importedMatrixConfig = GetMatrixConfigFromYaml (Get-Content $importPath)
+    $importedMatrixConfig = GetMatrixConfigFromFile (Get-Content -Raw $importPath)
     $importedMatrix = GenerateMatrix `
                         -config $importedMatrixConfig `
                         -selectFromMatrixType $selection `

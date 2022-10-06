@@ -186,46 +186,50 @@ function DeployStressPackage(
     kubectl create namespace $pkg.Namespace --dry-run=client -o yaml | kubectl apply -f -
     if ($LASTEXITCODE) {exit $LASTEXITCODE}
 
-    $dockerFilePaths = @()
+    $dockerBuildConfigs = @()
     
     $genValFile = Join-Path $pkg.Directory "generatedValues.yaml"
-    $genVal = Get-Content $genValFile -Raw | ConvertFrom-Yaml
+    $genVal = Get-Content $genValFile -Raw | ConvertFrom-Yaml -Ordered
     if (Test-Path $genValFile) {
         $scenarios = $genVal.Scenarios
         foreach ($scenario in $scenarios) {
-            if ($scenario.image) {
-                $dockerfilePath = Join-Path $pkg.Directory $scenario.image
-                $dockerFilePath = [System.IO.Path]::GetFullPath($dockerFilePath)
-                $dockerFilePaths += $dockerFilePath
+            if ("image" -in $scenario.keys) {
+                $dockerFilePath = Join-Path $pkg.Directory $scenario.image
+            } else {
+                $dockerFilePath = "$($pkg.Directory)/Dockerfile"
             }
+            $dockerFilePath = [System.IO.Path]::GetFullPath($dockerFilePath).Trim()
+
+            if ("imageBuildDir" -in $scenario.keys) {
+                $dockerBuildDir = Join-Path $pkg.Directory $scenario.imageBuildDir
+            } else {
+                $dockerBuildDir = Split-Path $dockerFilePath
+            }
+            $dockerBuildDir = [System.IO.Path]::GetFullPath($dockerBuildDir).Trim()
+            $dockerBuildConfigs += @{"dockerFilePath"=$dockerFilePath; "dockerBuildDir"=$dockerBuildDir}
         }
-    } else {
-        if ($pkg.Dockerfile) {
-            $dockerFilePath = Join-Path $pkg.Directory $pkg.Dockerfile
-        } else {
-            $dockerFilePath = "$($pkg.Directory)/Dockerfile"
-        }
-        $dockerFilePath = [System.IO.Path]::GetFullPath($dockerFilePath)
-        $dockerFilePaths += $dockerFilePath
+    }
+    if ($pkg.Dockerfile -or $pkg.DockerBuildDir) {
+        throw "The chart.yaml docker config is depracated, please use the scenarios matrix instead."
     }
     
 
-    foreach ($dockerFilePath in $dockerFilePaths) {
-        if (!(Test-Path $dockerFilePath)) {continue}
-        $dockerfileName = ($dockerfilePath -split { $_ -in '\', '/' })[-1].ToLower()
+    foreach ($dockerBuildConfig in $dockerBuildConfigs) {
+        $dockerFilePath = $dockerBuildConfig.dockerFilePath
+        $dockerBuildFolder = $dockerBuildConfig.dockerBuildDir
+        if (!(Test-Path $dockerFilePath)) {
+            throw "Invalid dockerfile path, cannot find dockerfile at ${dockerFilePath}"
+        }
+        if (!(Test-Path $dockerBuildFolder)) {
+            throw "Invalid docker build directory, cannot find directory ${dockerBuildFolder}"
+        }
+        $dockerfileName = ($dockerFilePath -split { $_ -in '\', '/' })[-1].ToLower()
         $imageTag = $imageTagBase + "/${dockerfileName}:${deployId}"
         if ($pushImages) {
             Write-Host "Building and pushing stress test docker image '$imageTag'"
             $dockerFile = Get-ChildItem $dockerFilePath
-            $dockerBuildFolder = if ($pkg.DockerBuildDir) {
-                Join-Path $pkg.Directory $pkg.DockerBuildDir
-            } else {
-                $dockerFile.DirectoryName
-            }
-            $dockerBuildFolder = [System.IO.Path]::GetFullPath($dockerBuildFolder).Trim()
 
             Run docker build -t $imageTag -f $dockerFile $dockerBuildFolder
-            if ($LASTEXITCODE) { return }
 
             Write-Host "`nContainer image '$imageTag' successfully built. To run commands on the container locally:" -ForegroundColor Blue
             Write-Host "  docker run -it $imageTag" -ForegroundColor DarkBlue
@@ -240,13 +244,19 @@ function DeployStressPackage(
                 if ($login) {
                     Write-Warning "If docker push is failing due to authentication issues, try calling this script with '-Login'"
                 }
-                return
             }
         }
-        ($genVal.scenarios | Where-Object {
-                $dockerPath = Join-Path $pkg.Directory $_.image;
-                [System.IO.Path]::GetFullPath($dockerPath) -eq
-                $dockerFilePath }).ForEach({$_.imageTag = $imageTag})
+        $genVal.scenarios = foreach ($scenario in $genVal.scenarios) {
+            $dockerPath = Join-Path $pkg.Directory $scenario.image
+            if ("image" -notin $scenario) {
+                $dockerPath = $dockerFilePath
+            }
+            if ([System.IO.Path]::GetFullPath($dockerPath) -eq $dockerFilePath) {
+                $scenario.imageTag = $imageTag
+            }
+            $scenario
+        }
+
         $genVal | ConvertTo-Yaml | Out-File -FilePath $genValFile
     }
 
