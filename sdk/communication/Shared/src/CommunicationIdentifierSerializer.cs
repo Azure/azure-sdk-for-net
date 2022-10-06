@@ -11,12 +11,41 @@ namespace Azure.Communication
     {
         public static CommunicationIdentifier Deserialize(CommunicationIdentifierModel identifier)
         {
-           string rawId = AssertNotNull(identifier.RawId, nameof(identifier.RawId), nameof(CommunicationIdentifierModel));
+            string rawId = AssertNotNull(identifier.RawId, nameof(identifier.RawId), nameof(CommunicationIdentifierModel));
 
             AssertMaximumOneNestedModel(identifier);
 
-            if (identifier.CommunicationUser is CommunicationUserIdentifierModel user)
-                return new CommunicationUserIdentifier(AssertNotNull(user.Id, nameof(user.Id), nameof(CommunicationUserIdentifierModel)));
+            if (identifier.Kind is not null)
+            {
+                if (identifier.Kind == CommunicationIdentifierModelKind.CommunicationUser)
+                {
+                    return new CommunicationUserIdentifier(AssertNotNull(identifier.CommunicationUser.Id, nameof(identifier.CommunicationUser.Id), nameof(CommunicationUserIdentifierModel)));
+                }
+
+                if (identifier.Kind == CommunicationIdentifierModelKind.PhoneNumber)
+                {
+                    return new PhoneNumberIdentifier(
+                        AssertNotNull(identifier.PhoneNumber.Value, nameof(identifier.PhoneNumber.Value), nameof(PhoneNumberIdentifierModel)),
+                        AssertNotNull(identifier.RawId, nameof(identifier.RawId), nameof(PhoneNumberIdentifierModel)));
+                }
+
+                if (identifier.Kind == CommunicationIdentifierModelKind.MicrosoftTeamsUser)
+                {
+                    var user = identifier.MicrosoftTeamsUser;
+                    return new MicrosoftTeamsUserIdentifier(
+                        AssertNotNull(user.UserId, nameof(user.UserId), nameof(MicrosoftTeamsUserIdentifierModel)),
+                        AssertNotNull(user.IsAnonymous, nameof(user.IsAnonymous), nameof(MicrosoftTeamsUserIdentifierModel)),
+                        Deserialize(AssertNotNull(user.Cloud, nameof(user.Cloud), nameof(MicrosoftTeamsUserIdentifierModel))));
+                }
+
+                return new UnknownIdentifier(rawId);
+            }
+
+            if (identifier.CommunicationUser is CommunicationUserIdentifierModel communicationUser)
+            {
+                return new CommunicationUserIdentifier(
+                    AssertNotNull(communicationUser.Id, nameof(communicationUser.Id), nameof(CommunicationUserIdentifierModel)));
+            }
 
             if (identifier.PhoneNumber is PhoneNumberIdentifierModel phoneNumber)
             {
