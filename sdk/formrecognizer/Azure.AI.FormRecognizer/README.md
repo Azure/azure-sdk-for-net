@@ -734,7 +734,7 @@ Headers:
 
 Error codes and messages raised by the Form Recognizer service can be found in the [service documentation][formreco_errors].
 
-For more details about common issues, see our [troubleshooting guide](troubleshooting).
+For more details about common issues, see our [troubleshooting guide][troubleshooting].
 
 ### Setting up console logging
 The simplest way to see the logs is to enable the console logging.
