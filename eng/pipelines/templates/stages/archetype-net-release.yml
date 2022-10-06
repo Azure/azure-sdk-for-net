@@ -174,7 +174,7 @@ stages:
                             PackageInfoLocations:
                               - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
                             WorkingDirectory: $(System.DefaultWorkingDirectory)
-                            TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
+                            TargetDocRepoOwner: 'Azure'
                             TargetDocRepoName: ${{parameters.TargetDocRepoName}}
                             Language: 'dotnet'
                             SparseCheckoutPaths:
@@ -308,7 +308,7 @@ stages:
               - ${{ each artifact in parameters.Artifacts }}:
                 - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
             WorkingDirectory: $(System.DefaultWorkingDirectory)
-            TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
+            TargetDocRepoOwner: "azure-sdk"
             TargetDocRepoName: ${{parameters.TargetDocRepoName}}
             Language: 'dotnet'
             DailyDocsBuild: true
