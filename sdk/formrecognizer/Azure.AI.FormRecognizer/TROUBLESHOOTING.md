@@ -4,7 +4,6 @@ This troubleshooting guide contains instructions to diagnose frequently encounte
 
 ## Table of Contents
 * [Troubleshooting errors and exceptions](#troubleshooting-errors-and-exceptions)
-    * [Handling RequestFailedException](#handling-requestfailedexception)
     * [Build model error](#build-model-error)
        * [Invalid training data set](#invalid-training-data-set)
        * [Invalid SAS URL](#invalid-sas-url)
@@ -14,12 +13,9 @@ This troubleshooting guide contains instructions to diagnose frequently encounte
 * [Enable HTTP request/response logging](#enable-http-requestresponse-logging)
 
 ## Troubleshooting errors and exceptions
+The [RequestFailedException](https://learn.microsoft.com/dotnet/api/azure.requestfailedexception) class, defined in the Azure.Core library, is the `Exception` type thrown by the Azure.AI.FormRecognizer clients on a service request failure. Its `Message` property provides detailed information about what went wrong and includes corrective actions to fix common issues.
 
-### Handling RequestFailedException
-The client methods in this SDK raise a [RequestFailedException](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/RequestFailedException.cs) on request failure. The `RequestFailedException` raised by the Azure Form Recognizer client library includes detailed error response information that provides useful insights into what went wrong and includes corrective actions to fix common issues. This error information can be found inside the `Message` property of the `RequestFailedException` instance.
-
-Here is an example of how to catch it:
-
+For example, if you submit a receipt image with an invalid `Uri`, a 400 error is returned, indicating "Bad Request":
 ```C# Snippet:DocumentAnalysisBadRequest
 try
 {
@@ -31,13 +27,33 @@ catch (RequestFailedException e)
 }
 ```
 
+You will notice that additional information is logged, like the client request ID of the operation:
+```
+Message:
+    Azure.RequestFailedException: Service request failed.
+    Status: 400 (Bad Request)
+    ErrorCode: InvalidRequest
+
+Content:
+    {"error":{"code":"InvalidRequest","message":"Invalid request.","innererror":{"code":"InvalidContent","message":"The file is corrupted or format is unsupported. Refer to documentation for the list of supported formats."}}}
+
+Headers:
+    Transfer-Encoding: chunked
+    x-envoy-upstream-service-time: REDACTED
+    apim-request-id: REDACTED
+    Strict-Transport-Security: REDACTED
+    X-Content-Type-Options: REDACTED
+    Date: Fri, 01 Oct 2021 02:55:44 GMT
+    Content-Type: application/json; charset=utf-8
+```
+
+Error codes and messages raised by the Form Recognizer service can be found in the [service documentation](https://learn.microsoft.com/azure/applied-ai-services/form-recognizer/v3-error-guide).
+
 ### Build model error
-Build model errors may occur when trying to build a custom model. The most common scenarios when this might occur are when you attempt to build the model with an 
-[invalid data set](#invalid-training-data-set) or an [invalid SAS URL](#invalid-sas-url).
+Build model errors may occur when trying to build a custom model. Usually they are caused by attempting to build the model with an [invalid data set](#invalid-training-data-set) or an [invalid SAS URL](#invalid-sas-url).
 
 #### Invalid training data set
-This error indicates that the provided data set does not match the training data requirements.
-Learn more about building a training data set [here](https://aka.ms/customModelV3).
+This error indicates that the provided data set does not match the training data requirements. Learn more about building a training data set [here](https://aka.ms/customModelV3).
 
 Example error output:
 ```
@@ -140,7 +156,7 @@ Parameter name: modelId
 ### Unexpected time to build a custom model
 It is common to have a long completion time when building a custom model using the `Neural` build mode with `DocumentBuildMode.Neural`. Depending on the service load you can usually expect it to take around 10 minutes.
 
-For simpler use-cases, you can use `DocumentBuildMode.Template` which uses a different model building algorithm that takes less time (typically a few seconds to build). See more about `Template` custom models [here](https://aka.ms/custom-template-models). To see more information about `Neural` custom models (these models use deep learning to train and build), see the documentation [here](https://aka.ms/custom-neural-models).
+For simpler use-cases, you can use `DocumentBuildMode.Template` which uses a different model building algorithm that takes less time, typically a few seconds. See more about `Template` custom models [here](https://aka.ms/custom-template-models). To see more information about `Neural` custom models, see the documentation [here](https://aka.ms/custom-neural-models).
 
 ### Enable HTTP request/response logging
 Reviewing the HTTP request sent or response received over the wire to/from the Azure Form Recognizer service can be useful when troubleshooting issues.
