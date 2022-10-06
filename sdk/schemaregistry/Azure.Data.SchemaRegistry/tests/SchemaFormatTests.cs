@@ -12,5 +12,15 @@ namespace Azure.Data.SchemaRegistry.Tests
         {
             Assert.AreEqual("Avro", SchemaFormat.Avro.ToString());
         }
+        [Test]
+        public void VerifyJsonFormat()
+        {
+            Assert.AreEqual("JSON", SchemaFormat.Json.ToString());
+        }
+        [Test]
+        public void VerifyCustomFormat()
+        {
+            Assert.AreEqual("Custom", SchemaFormat.Custom.ToString());
+        }
     }
 }

@@ -20,9 +20,15 @@ namespace Azure.Data.SchemaRegistry
         }
 
         private const string AvroValue = "Avro";
+        private const string JsonValue = "JSON";
+        private const string CustomValue = "Custom";
 
         /// <summary> Avro Serialization schema type. </summary>
         public static SchemaFormat Avro { get; } = new SchemaFormat(AvroValue);
+        /// <summary> Json Serialization schema type. </summary>
+        public static SchemaFormat Json { get; } = new SchemaFormat(JsonValue);
+        /// <summary> Custom Serialization schema type. </summary>
+        public static SchemaFormat Custom { get; } = new SchemaFormat(CustomValue);
         /// <summary> Determines if two <see cref="SchemaFormat"/> values are the same. </summary>
         public static bool operator ==(SchemaFormat left, SchemaFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SchemaFormat"/> values are not the same. </summary>
