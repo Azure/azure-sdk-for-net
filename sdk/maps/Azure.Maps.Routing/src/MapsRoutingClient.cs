@@ -800,7 +800,7 @@ namespace Azure.Maps.Routing
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.RequestRouteMatrix");
+            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.GetRouteMatrix");
             scope.Start();
             try
             {
