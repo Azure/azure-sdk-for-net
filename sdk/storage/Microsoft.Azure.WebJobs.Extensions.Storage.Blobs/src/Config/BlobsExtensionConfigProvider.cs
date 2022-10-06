@@ -238,14 +238,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
         private static ParameterBindingData CreateParameterBindingData(object blobDetails)
         {
-            var bindingData = new ParameterBindingData
-            {
-                Version = "1.0.0",
-                ContentType = "application/json",
-                Source = AssemblyName.GetAssemblyName(Assembly.GetExecutingAssembly().Location).Name,
-                Content = blobDetails
-            };
-
+            var assemblyName = AssemblyName.GetAssemblyName(Assembly.GetExecutingAssembly().Location).Name;
+            var bindingData = new ParameterBindingData(assemblyName, blobDetails);
             return bindingData;
         }
 

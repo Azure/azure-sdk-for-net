@@ -134,8 +134,8 @@
     <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.18.0" />
     <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.18.0" />
     <PackageReference Update="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.9.0" />
-    <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.34-dev638000802633095360" />
-    <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.34-dev638000802633095360" />
+    <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.34-dev638006900649255460" />
+    <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.34-dev638006900649255460" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
