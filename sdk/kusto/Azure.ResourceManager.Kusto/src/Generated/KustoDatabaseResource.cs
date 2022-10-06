@@ -320,9 +320,10 @@ namespace Azure.ResourceManager.Kusto
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The database parameters supplied to the Update operation. </param>
+        /// <param name="callerRole"> By default, any user who run operation on a database become an Admin on it. This property allows the caller to exclude the caller from Admins list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<KustoDatabaseResource>> UpdateAsync(WaitUntil waitUntil, KustoDatabaseData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<KustoDatabaseResource>> UpdateAsync(WaitUntil waitUntil, KustoDatabaseData data, CallerRole? callerRole = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -330,8 +331,8 @@ namespace Azure.ResourceManager.Kusto
             scope.Start();
             try
             {
-                var response = await _kustoDatabaseDatabasesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation<KustoDatabaseResource>(new KustoDatabaseOperationSource(Client), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, _kustoDatabaseDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _kustoDatabaseDatabasesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, callerRole, cancellationToken).ConfigureAwait(false);
+                var operation = new KustoArmOperation<KustoDatabaseResource>(new KustoDatabaseOperationSource(Client), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, _kustoDatabaseDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, callerRole).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -350,9 +351,10 @@ namespace Azure.ResourceManager.Kusto
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The database parameters supplied to the Update operation. </param>
+        /// <param name="callerRole"> By default, any user who run operation on a database become an Admin on it. This property allows the caller to exclude the caller from Admins list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<KustoDatabaseResource> Update(WaitUntil waitUntil, KustoDatabaseData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<KustoDatabaseResource> Update(WaitUntil waitUntil, KustoDatabaseData data, CallerRole? callerRole = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -360,8 +362,8 @@ namespace Azure.ResourceManager.Kusto
             scope.Start();
             try
             {
-                var response = _kustoDatabaseDatabasesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new KustoArmOperation<KustoDatabaseResource>(new KustoDatabaseOperationSource(Client), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, _kustoDatabaseDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _kustoDatabaseDatabasesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, callerRole, cancellationToken);
+                var operation = new KustoArmOperation<KustoDatabaseResource>(new KustoDatabaseOperationSource(Client), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, _kustoDatabaseDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, callerRole).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

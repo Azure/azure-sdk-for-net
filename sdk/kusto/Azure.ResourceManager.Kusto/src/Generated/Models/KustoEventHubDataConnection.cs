@@ -38,10 +38,11 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="eventSystemProperties"> System properties of the event hub. </param>
         /// <param name="compression"> The event hub messages compression type. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="managedIdentityResourceId"> Empty for non-managed identity based data connection. For system assigned identity, provide cluster resource Id.  For user assigned identity (UAI) provide the UAI resource Id. </param>
+        /// <param name="managedIdentityResourceId"> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub. </param>
         /// <param name="managedIdentityObjectId"> The object ID of the managedIdentityResourceId. </param>
         /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
-        internal KustoEventHubDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, ResourceIdentifier eventHubResourceId, string consumerGroup, string tableName, string mappingRuleName, KustoEventHubDataFormat? dataFormat, IList<string> eventSystemProperties, EventHubMessagesCompressionType? compression, KustoProvisioningState? provisioningState, ResourceIdentifier managedIdentityResourceId, Guid? managedIdentityObjectId, KustoDatabaseRouting? databaseRouting) : base(id, name, resourceType, systemData, location, kind)
+        /// <param name="retrievalStartOn"> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </param>
+        internal KustoEventHubDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, ResourceIdentifier eventHubResourceId, string consumerGroup, string tableName, string mappingRuleName, KustoEventHubDataFormat? dataFormat, IList<string> eventSystemProperties, EventHubMessagesCompressionType? compression, KustoProvisioningState? provisioningState, ResourceIdentifier managedIdentityResourceId, Guid? managedIdentityObjectId, KustoDatabaseRouting? databaseRouting, DateTimeOffset? retrievalStartOn) : base(id, name, resourceType, systemData, location, kind)
         {
             EventHubResourceId = eventHubResourceId;
             ConsumerGroup = consumerGroup;
@@ -54,6 +55,7 @@ namespace Azure.ResourceManager.Kusto.Models
             ManagedIdentityResourceId = managedIdentityResourceId;
             ManagedIdentityObjectId = managedIdentityObjectId;
             DatabaseRouting = databaseRouting;
+            RetrievalStartOn = retrievalStartOn;
             Kind = kind;
         }
 
@@ -73,11 +75,13 @@ namespace Azure.ResourceManager.Kusto.Models
         public EventHubMessagesCompressionType? Compression { get; set; }
         /// <summary> The provisioned state of the resource. </summary>
         public KustoProvisioningState? ProvisioningState { get; }
-        /// <summary> Empty for non-managed identity based data connection. For system assigned identity, provide cluster resource Id.  For user assigned identity (UAI) provide the UAI resource Id. </summary>
+        /// <summary> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub. </summary>
         public ResourceIdentifier ManagedIdentityResourceId { get; set; }
         /// <summary> The object ID of the managedIdentityResourceId. </summary>
         public Guid? ManagedIdentityObjectId { get; }
         /// <summary> Indication for database routing information from the data connection, by default only database routing information is allowed. </summary>
         public KustoDatabaseRouting? DatabaseRouting { get; set; }
+        /// <summary> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </summary>
+        public DateTimeOffset? RetrievalStartOn { get; set; }
     }
 }
