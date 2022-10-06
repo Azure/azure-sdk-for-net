@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if !NETCOREAPP3_1
 namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
 {
     using System;
@@ -107,3 +108,4 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
         }
     }
 }
+#endif
