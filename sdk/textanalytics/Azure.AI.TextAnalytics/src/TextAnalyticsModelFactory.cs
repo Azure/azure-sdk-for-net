@@ -216,10 +216,26 @@ namespace Azure.AI.TextAnalytics
         /// <param name="confidenceScore">Sets the <see cref="DetectedLanguage.ConfidenceScore"/> property.</param>
         /// <param name="warnings">Sets the <see cref="DetectedLanguage.Warnings"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.DetectedLanguage"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DetectedLanguage DetectedLanguage(string name, string iso6391Name, double confidenceScore, IList<TextAnalyticsWarning> warnings = default)
         {
             warnings ??= new List<TextAnalyticsWarning>();
-            return new DetectedLanguage(new DetectedLanguageInternal(name, iso6391Name, confidenceScore), warnings);
+            return new DetectedLanguage(new DetectedLanguageInternal(name, iso6391Name, confidenceScore, default), warnings);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.DetectedLanguage"/> for mocking purposes.
+        /// </summary>
+        /// <param name="name">Sets the <see cref="DetectedLanguage.Name"/> property.</param>
+        /// <param name="iso6391Name">Sets the <see cref="DetectedLanguage.Iso6391Name"/> property.</param>
+        /// <param name="confidenceScore">Sets the <see cref="DetectedLanguage.ConfidenceScore"/> property.</param>
+        /// <param name="script">Sets the <see cref="DetectedLanguage.Script"/> property.</param>
+        /// <param name="warnings">Sets the <see cref="DetectedLanguage.Warnings"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.DetectedLanguage"/> for mocking purposes.</returns>
+        public static DetectedLanguage DetectedLanguage(string name, string iso6391Name, double confidenceScore, ScriptKind script, IList<TextAnalyticsWarning> warnings = default)
+        {
+            warnings ??= new List<TextAnalyticsWarning>();
+            return new DetectedLanguage(new DetectedLanguageInternal(name, iso6391Name, confidenceScore, script), warnings);
         }
 
         /// <summary>
