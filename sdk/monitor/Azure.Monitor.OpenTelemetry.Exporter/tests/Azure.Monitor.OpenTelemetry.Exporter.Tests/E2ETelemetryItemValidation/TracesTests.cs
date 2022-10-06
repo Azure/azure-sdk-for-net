@@ -13,6 +13,7 @@ using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Trace;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 {
@@ -22,6 +23,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
     /// </summary>
     public class TracesTests
     {
+        internal readonly TelemetryItemOutputHelper telemetryOutput;
+
+        public TracesTests(ITestOutputHelper output)
+        {
+            this.telemetryOutput = new TelemetryItemOutputHelper(output);
+        }
+
         [Theory]
         [InlineData(ActivityKind.Client)]
         [InlineData(ActivityKind.Producer)]
@@ -40,10 +48,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 .Build();
 
             // ACT
-            string traceId;
+            string spanId, traceId;
             using (var activity = activitySource.StartActivity(name: "SayHello", kind: activityKind ))
             {
                 traceId = activity.TraceId.ToHexString();
+                spanId = activity.SpanId.ToHexString();
 
                 activity.SetTag("integer", 1);
                 activity.SetTag("message", "Hello World!");
@@ -56,12 +65,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
-            var telemetryItem = telemetryItems.Single();
+            this.telemetryOutput.Write(telemetryItems);
+            var telemetryItem = telemetryItems.First(); // TODO: Change to Single(). Still investigating random duplicate export which only repros on build server.
 
             TelemetryItemValidationHelper.AssertActivity_As_DependencyTelemetry(
                 telemetryItem: telemetryItem,
                 expectedName: "SayHello",
                 expectedTraceId: traceId,
+                expectedSpanId: spanId,
                 expectedProperties: new Dictionary<string, string> { { "integer", "1" }, { "message", "Hello World!" }, { "intArray", "1,2,3" } });
         }
 
@@ -82,10 +93,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 .Build();
 
             // ACT
-            string traceId;
+            string spanId, traceId;
             using (var activity = activitySource.StartActivity(name: "SayHello", kind: activityKind))
             {
                 traceId = activity.TraceId.ToHexString();
+                spanId = activity.SpanId.ToHexString();
 
                 activity.SetTag("integer", 1);
                 activity.SetTag("message", "Hello World!");
@@ -98,13 +110,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
-            var telemetryItem = telemetryItems.Single();
+            this.telemetryOutput.Write(telemetryItems);
+            var telemetryItem = telemetryItems.First(); // TODO: Change to Single(). Still investigating random duplicate export which only repros on build server.
 
             TelemetryItemValidationHelper.AssertActivity_As_RequestTelemetry(
                 telemetryItem: telemetryItem,
                 activityKind: activityKind,
                 expectedName: "SayHello",
                 expectedTraceId: traceId,
+                expectedSpanId: spanId,
                 expectedProperties: new Dictionary<string, string> { { "integer", "1" }, { "message", "Hello World!" }, { "intArray", "1,2,3" } });
         }
 
@@ -144,8 +158,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ACT
             string spanId, traceId;
+            string activityName = $"TestActivity {nameof(VerifyLogWithinActivity)} {logLevel}";
 
-            using (var activity = activitySource.StartActivity(name: "SayHello"))
+            using (var activity = activitySource.StartActivity(name: activityName))
             {
                 spanId = activity.SpanId.ToHexString();
                 traceId = activity.TraceId.ToHexString();
@@ -165,16 +180,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             loggerFactory.Dispose();
 
             // ASSERT
-            Assert.True(activityTelemetryItems.Any(), "test project did not capture telemetry");
-            var activityTelemetryItem = activityTelemetryItems.Single();
+            Assert.True(activityTelemetryItems.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(activityTelemetryItems);
+            var activityTelemetryItem = activityTelemetryItems.First(); // TODO: Change to Single(). Still investigating random duplicate export which only repros on build server.
 
             TelemetryItemValidationHelper.AssertActivity_As_DependencyTelemetry(
                 telemetryItem: activityTelemetryItem,
-                expectedName: "SayHello",
+                expectedName: activityName,
                 expectedTraceId: traceId,
+                expectedSpanId: spanId,
                 expectedProperties: null);
 
             Assert.True(logTelemetryItems.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(logTelemetryItems);
             var logTelemetryItem = logTelemetryItems.Single();
 
             TelemetryItemValidationHelper.AssertLog_As_MessageTelemetry(

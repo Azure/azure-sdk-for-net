@@ -57,7 +57,9 @@ var processor = new EventProcessorClient(
 
 ### Load balancing intervals
 
-There are two intervals considered during load balancing which can influence its behavior.  The `LoadBalancingInterval` controls how frequently a load balancing cycle is run.  During the load balancing cycle, the `EventProcessorClient` will attempt to refresh its ownership record for each partition that it owns.  The `PartitionOwnershipExpirationInterval` controls how long an ownership record is considered valid.  If the processor does not update an ownership record before this interval elapses, the partition represented by this record is considered unowned and is eligible to be claimed by another processor.  
+There are two intervals considered during load balancing which can influence its behavior.  The `LoadBalancingUpdateInterval` controls how frequently a load balancing cycle is run.  During the load balancing cycle, the `EventProcessorClient` will attempt to refresh its ownership record for each partition that it owns.  The `PartitionOwnershipExpirationInterval` controls how long an ownership record is considered valid.  If the processor does not update an ownership record before this interval elapses, the partition represented by this record is considered unowned and is eligible to be claimed by another processor.  
+
+It is recommended that the `PartitionOwnershipExpirationInterval` be at least 3 times greater than the `LoadBalancingUpdateInterval` and very strongly advised that it should be no less than twice as long.  When these intervals are too close together, ownership may expire before it is renewed during load balancing which will cause partitions to migrate.
 
 ```C# Snippet:EventHubs_Processor_Sample02_LoadBalancingIntervals
 var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";

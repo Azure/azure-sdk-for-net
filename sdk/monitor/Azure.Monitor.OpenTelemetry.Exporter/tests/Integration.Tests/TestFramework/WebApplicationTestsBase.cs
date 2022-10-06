@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.AspNetCore.Mvc.Testing;
 
 using Xunit;

@@ -134,7 +134,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21796")]
         public async Task AnalyzeHealthcareEntitiesTestWithAssertions()
         {
             TextAnalyticsClient client = GetClient();
