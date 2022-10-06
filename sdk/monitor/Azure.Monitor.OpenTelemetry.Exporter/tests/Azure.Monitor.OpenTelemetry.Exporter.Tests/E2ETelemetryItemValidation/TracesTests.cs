@@ -15,6 +15,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
+using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Xunit;
 using Xunit.Abstractions;
@@ -140,7 +141,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // SETUP
             var uniqueTestId = Guid.NewGuid();
 
-            var listener = new TestListener();
+            using var listener = new TestListener();
 
             var activitySourceName = $"activitySourceName{uniqueTestId}";
             using var activitySource = new ActivitySource(activitySourceName);
@@ -265,7 +266,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // SETUP
             var uniqueTestId = Guid.NewGuid();
 
-            var listener = new TestListener();
+            using var listener = new TestListener();
 
             var activitySourceName = $"activitySourceName{uniqueTestId}";
             using var activitySource = new ActivitySource(activitySourceName);
@@ -351,6 +352,94 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             for (int i = 0; i < 10000; i++)
             {
                 this.LogWithinActivity_InMemoryExporterOnly(LogLevel.Trace);
+            }
+        }
+
+        [Theory]
+        [InlineData(LogLevel.Information)]
+        [InlineData(LogLevel.Warning)]
+        [InlineData(LogLevel.Error)]
+        [InlineData(LogLevel.Critical)]
+        [InlineData(LogLevel.Debug)]
+        [InlineData(LogLevel.Trace)]
+        public void LogWithinActivity_ActivityListener(LogLevel logLevel)
+        {
+            // SETUP
+            var uniqueTestId = Guid.NewGuid();
+
+            var activitySourceName = $"activitySourceName{uniqueTestId}";
+            using var activitySource = new ActivitySource(activitySourceName);
+            Assert.False(activitySource.HasListeners());
+
+            var logCategoryName = $"logCategoryName{uniqueTestId}";
+
+            var activityLogs = new List<string>();
+
+            using var listener = new ActivityListener
+            {
+                ActivityStarted = activity => activityLogs.Add($"ActivityStarted: {activity.OperationName}, {activity.Id}"),
+                ActivityStopped = activity => activityLogs.Add($"ActivityStopped: {activity.OperationName}, {activity.Id}"),
+                ShouldListenTo = activitySource => activitySource.Name.Equals(activitySourceName),
+                SampleUsingParentId = (ref ActivityCreationOptions<string> activityOptions) => ActivitySamplingResult.AllDataAndRecorded,
+                Sample = (ref ActivityCreationOptions<ActivityContext> activityOptions) => ActivitySamplingResult.AllDataAndRecorded,
+        };
+
+            ActivitySource.AddActivityListener(listener);
+            Assert.True(activitySource.HasListeners());
+
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+            });
+
+            // ACT
+            string spanId, traceId;
+            string activityName = $"TestActivity {nameof(this.LogWithinActivity_InMemoryExporterOnly)} {logLevel}";
+
+            using (var activity = activitySource.StartActivity(name: activityName))
+            {
+                spanId = activity.SpanId.ToHexString();
+                traceId = activity.TraceId.ToHexString();
+
+                var logger = loggerFactory.CreateLogger(logCategoryName);
+
+                logger.Log(
+                    logLevel: logLevel,
+                    eventId: 0,
+                    exception: null,
+                    message: "Hello {name}.",
+                    args: new object[] { "World" });
+            }
+
+            // CLEANUP
+            loggerFactory.Dispose();
+
+            // ASSERT
+            try
+            {
+                Assert.True(activityLogs.Count == 2, "Unexpected count of activity logs.");
+            }
+            catch (Exception)
+            {
+                this._outputHelper.WriteLine($"Activities Logs:{activityLogs.Count}\n");
+                this._outputHelper.WriteLine($"Expected TraceId:{traceId}  Expected SpanId:{spanId}\n");
+
+                foreach (var aLog in activityLogs)
+                {
+                    this._outputHelper.WriteLine(aLog);
+                }
+
+                throw;
+            }
+        }
+
+        [Fact]
+        public void StressTest_ActivityListener()
+        {
+            // Running this test on a loop to try and capture the intermittent failure.
+
+            for (int i = 0; i < 100000; i++)
+            {
+                this.LogWithinActivity_ActivityListener(LogLevel.Trace);
             }
         }
 
