@@ -5,8 +5,11 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.Shared;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.Extensions.Logging;
@@ -137,10 +140,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // SETUP
             var uniqueTestId = Guid.NewGuid();
 
+            var listener = new TestListener();
+
             var activitySourceName = $"activitySourceName{uniqueTestId}";
             using var activitySource = new ActivitySource(activitySourceName);
 
-            var logCategoryName = $"logCategoryName{uniqueTestId}"; ;
+            var logCategoryName = $"logCategoryName{uniqueTestId}";
 
             ConcurrentBag<TelemetryItem> logTelemetryItems = null;
             List<Activity> inMemoryActivities = new List<Activity>();
@@ -227,6 +232,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                     this._outputHelper.WriteLine($"\tSpanId: {activity.SpanId.ToHexString()}");
                 }
 
+                _outputHelper.WriteLine($"EVENT SOURCE LOGS:");
+                foreach (var e in listener.Events)
+                {
+                    _outputHelper.WriteLine(EventSourceEventFormatting.Format(e));
+                }
+
                 throw;
             }
         }
@@ -249,10 +260,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         [InlineData(LogLevel.Critical)]
         [InlineData(LogLevel.Debug)]
         [InlineData(LogLevel.Trace)]
-        public void LogWithinActivity(LogLevel logLevel)
+        public void LogWithinActivity_InMemoryExporterOnly(LogLevel logLevel)
         {
             // SETUP
             var uniqueTestId = Guid.NewGuid();
+
+            var listener = new TestListener();
 
             var activitySourceName = $"activitySourceName{uniqueTestId}";
             using var activitySource = new ActivitySource(activitySourceName);
@@ -279,7 +292,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ACT
             string spanId, traceId;
-            string activityName = $"TestActivity {nameof(this.LogWithinActivity)} {logLevel}";
+            string activityName = $"TestActivity {nameof(this.LogWithinActivity_InMemoryExporterOnly)} {logLevel}";
 
             using (var activity = activitySource.StartActivity(name: activityName))
             {
@@ -320,6 +333,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                     this._outputHelper.WriteLine($"\tSpanId: {activity.SpanId.ToHexString()}");
                 }
 
+                _outputHelper.WriteLine($"EVENT SOURCE LOGS:");
+                foreach (var e in listener.Events)
+                {
+                    _outputHelper.WriteLine(EventSourceEventFormatting.Format(e));
+                }
+
                 throw;
             }
         }
@@ -331,7 +350,50 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             for (int i = 0; i < 10000; i++)
             {
-                this.LogWithinActivity(LogLevel.Trace);
+                this.LogWithinActivity_InMemoryExporterOnly(LogLevel.Trace);
+            }
+        }
+
+        public class TestListener : EventListener
+        {
+            private readonly List<EventSource> eventSources = new();
+            private readonly Guid guid = Guid.NewGuid();
+
+            public List<EventWrittenEventArgs> Events = new();
+
+            public TestListener()
+            {
+                EventSource.SetCurrentThreadActivityId(guid);
+            }
+
+            public override void Dispose()
+            {
+                foreach (EventSource eventSource in this.eventSources)
+                {
+                    this.DisableEvents(eventSource);
+                }
+
+                base.Dispose();
+                GC.SuppressFinalize(this);
+            }
+
+            protected override void OnEventSourceCreated(EventSource eventSource)
+            {
+                if (eventSource?.Name == "OpenTelemetry-Sdk")
+                {
+                    this.eventSources.Add(eventSource);
+                    this.EnableEvents(eventSource, EventLevel.Verbose, EventKeywords.All);
+                }
+
+                base.OnEventSourceCreated(eventSource);
+            }
+
+            protected override void OnEventWritten(EventWrittenEventArgs eventData)
+            {
+                if (eventData.ActivityId == this.guid)
+                {
+                    this.Events.Add(eventData);
+                }
             }
         }
     }
