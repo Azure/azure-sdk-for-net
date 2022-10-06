@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the LoadTestService client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Azure SDK Code Generation LoadTestService for Azure Data Plane</AssemblyTitle>
@@ -16,7 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Text.Json" VersionOverride="6.0.6" />
   </ItemGroup>
 
 </Project>

@@ -13,6 +13,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Threading;
 
 namespace Azure.Developer.LoadTesting
 {
@@ -336,6 +338,131 @@ namespace Azure.Developer.LoadTesting
 
             Response response = await UploadTestFileAsync(testId, fileId, fileName, RequestContent.Create(file), fileType, context).ConfigureAwait(false);
             return response;
+        }
+
+        /// <summary>
+        /// enum to hold validation status
+        /// </summary>
+        public enum ValidationStatus
+        {
+            /// <summary>
+            /// Validatinon Initiated
+            /// </summary>
+            ValidationIntiated,
+
+            /// <summary>
+            /// Validation Success
+            /// </summary>
+            ValidationSuccess,
+
+            /// <summary>
+            /// Validation Failed
+            /// </summary>
+            ValidationFailed,
+
+            /// <summary>
+            /// Cjecking Timeout
+            /// </summary>
+            Timeout
+        }
+
+        /// <summary>
+        /// Will write summary here
+        /// </summary>
+        /// <param name="testId"></param>
+        /// <param name="refreshTime"></param>
+        /// <param name="timeOut"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public virtual ValidationStatus GetValidationStatus(string testId, int refreshTime = 10, int timeOut = 600)
+        {
+            DateTime startTime = DateTime.Now;
+            string status = ValidationStatus.ValidationIntiated.ToString();
+
+            while (true)
+            {
+                Response respone = GetLoadTest(testId);
+
+                try
+                {
+                    JsonNode jsonDocument = JsonNode.Parse(respone.Content.ToString());
+                    JsonNode validationStatus = jsonDocument!["inputArtifacts"]!["testScriptUrl"]!["validationStatus"]!;
+
+                    status = validationStatus.ToString();
+                }
+                catch
+                {
+                    throw new Exception($"No JMX file found with the TestId: {testId}");
+                }
+
+                if (status.Equals("VALIDATION_SUCCESS"))
+                {
+                    return ValidationStatus.ValidationSuccess;
+                }
+                else if (status.Equals("VALIDATION_FAILED"))
+                {
+                    return ValidationStatus.ValidationFailed;
+                }
+
+                DateTime timer = DateTime.Now;
+                int nextHitTime = (int)(timer - startTime).TotalSeconds + refreshTime;
+
+                if (nextHitTime > timeOut)
+                {
+                    return ValidationStatus.Timeout;
+                }
+
+                Thread.Sleep(refreshTime * 1000);
+            }
+        }
+
+        /// <summary>
+        /// Will add validation status here
+        /// </summary>
+        /// <param name="testId"></param>
+        /// <param name="refreshTime"></param>
+        /// <param name="timeOut"></param>
+        /// <returns></returns>
+        public virtual async Task<ValidationStatus> GetValidationStatusAsync(string testId, int refreshTime = 10, int timeOut = 600)
+        {
+            DateTime startTime = DateTime.Now;
+            string status = ValidationStatus.ValidationIntiated.ToString();
+
+            while (true)
+            {
+                Response respone = await GetLoadTestAsync(testId).ConfigureAwait(false);
+
+                try
+                {
+                    JsonNode jsonDocument = JsonNode.Parse(respone.Content.ToString());
+                    JsonNode validationStatus = jsonDocument!["inputArtifacts"]!["testScriptUrl"]!["validationStatus"]!;
+
+                    status = validationStatus.ToString();
+                }
+                catch
+                {
+                    throw new Exception($"No JMX file found with the TestId: {testId}");
+                }
+
+                if (status.Equals("VALIDATION_SUCCESS"))
+                {
+                    return ValidationStatus.ValidationSuccess;
+                }
+                else if (status.Equals("VALIDATION_FAILED"))
+                {
+                    return ValidationStatus.ValidationFailed;
+                }
+
+                DateTime timer = DateTime.Now;
+                int nextHitTime = (int)(timer - startTime).TotalSeconds + refreshTime;
+
+                if (nextHitTime > timeOut)
+                {
+                    return ValidationStatus.Timeout;
+                }
+
+                await Task.Delay(refreshTime * 1000).ConfigureAwait(false);
+            }
         }
     }
 }
