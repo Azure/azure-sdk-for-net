@@ -1002,8 +1002,8 @@ namespace Azure.Core.Pipeline
         protected virtual System.Threading.Tasks.ValueTask OnResponseAsync(Azure.Core.HttpMessage message) { throw null; }
         protected virtual void OnTryRequest(Azure.Core.HttpMessage message) { }
         protected virtual System.Threading.Tasks.ValueTask OnTryRequestAsync(Azure.Core.HttpMessage message) { throw null; }
-        public sealed override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
-        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
+        public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
         protected virtual bool ShouldRetry(Azure.Core.HttpMessage message) { throw null; }
         protected virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryAsync(Azure.Core.HttpMessage message) { throw null; }
     }
