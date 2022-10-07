@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "220",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-5709584e391304cf99cc49327da79335-7efb9e9f61bed2a5-00",
-        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20221005.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "502716d1f39cc84fa2dd6800be6bef0f",
+        "traceparent": "00-30cf8c314e3740489e416b53064c4712-20dfcdb27cccc448-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20221007.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "a6e9223a5bb0f562dd5d1e1b29a3ea98",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -32,11 +32,11 @@
         "Connection": "keep-alive",
         "Content-Length": "1157",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Oct 2022 17:36:03 GMT",
-        "mise-correlation-id": "9011e629-4f94-4648-8773-8628da2d58aa",
+        "Date": "Fri, 07 Oct 2022 14:08:07 GMT",
+        "mise-correlation-id": "77d8925b-f32c-45a0-9f12-9e39f72b3ed8",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "bda505af-db34-4767-ad41-20869218d191"
+        "x-ms-correlation-request-id": "3fbccf0e-b9ba-4f45-b0bd-c29e36fca118"
       },
       "ResponseBody": {
         "testId": "d7c68e2a-bcd8-423f-b9ce-fe9cccd00f1c",
@@ -57,7 +57,7 @@
         "inputArtifacts": {
           "configUrl": null,
           "testScriptUrl": {
-            "url": "https://stcntproddataeus.blob.core.windows.net/0f707b6c-09cb-4fa8-a12d-b243c792d9b4/1c2ccb7b-8f62-4f70-812e-70df2c3df314?sv=2020-04-08\u0026se=2022-10-05T18%3A36%3A03Z\u0026sr=b\u0026sp=r\u0026sig=Sanitized script is not valid. Exception: XmlPullParserException: only whitespace content allowed before start tag and not A (position: START_DOCUMENT seen A... @1:2)"
+            "url": "https://stcntproddataeus.blob.core.windows.net/0f707b6c-09cb-4fa8-a12d-b243c792d9b4/1c2ccb7b-8f62-4f70-812e-70df2c3df314?sv=2020-04-08\u0026se=2022-10-07T15%3A08%3A07Z\u0026sr=b\u0026sp=r\u0026sig=Sanitized script is not valid. Exception: XmlPullParserException: only whitespace content allowed before start tag and not A (position: START_DOCUMENT seen A... @1:2)"
           },
           "userPropUrl": null,
           "inputArtifactsZipFileurl": null,
@@ -75,6 +75,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "LOADTESTSERVICE_ENDPOINT": "eccdc9b7-7603-402b-879d-bde2b637db56.eus.cnt-prod.loadtesting.azure.com",
-    "RandomSeed": "1586656923"
+    "RandomSeed": "273865815"
   }
 }
