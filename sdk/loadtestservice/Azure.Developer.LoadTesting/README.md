@@ -82,6 +82,14 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
+## Next steps
+
+Get started with our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.LoadTesting/samples):
+
+- [Create or Update Load Test](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/samples/Sample01_CreateOrUpdateTest.md) 
+- [Upload JMX File](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/samples/Sample02_UploadTestFile.md)
+- [Create or Update App Component](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/samples/Sample03_CreateOrUpdateAppComponent.md)
+- [Create Test Run](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/samples/Sample04_CreateAndUpdateTestRun.md)
 
 ## Contributing
 
