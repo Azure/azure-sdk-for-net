@@ -60,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
             // Query
             var client = CreateClient();
 
-            string query = $"AppDependencies | where AppRoleName == '{roleName}'";
+            string query = $"AppDependencies | where AppRoleName == '{nameof(VerifyTraceExporter)}' | top 1 by TimeGenerated";
 
             LogsTable table = await CheckForRecord(client, query);
 
@@ -70,25 +70,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
 
         private async Task<LogsTable> CheckForRecord(LogsQueryClient client, string query)
         {
-            Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
-                TestEnvironment.WorkspaceId,
-                query,
-                new QueryTimeRange(TimeSpan.FromMinutes(30)));
-
-            LogsTable table = response.Value.Table;
-
-            int maxTries = 6;
-            while (table.Rows.Count() == 0 && maxTries > 0)
+            LogsTable table = null;
+            int count = 0;
+            int maxTries = 10;
+            while (count == 0 && maxTries > 0)
             {
                 await Task.Delay(TimeSpan.FromMinutes(5));
 
-                Response<LogsQueryResult> retryresponse = await client.QueryWorkspaceAsync(
+                Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
                 TestEnvironment.WorkspaceId,
                 query,
                 new QueryTimeRange(TimeSpan.FromMinutes(30)));
 
-                table = retryresponse.Value.Table;
+                table = response.Value.Table;
 
+                count = table.Rows.Count();
                 maxTries--;
             }
 
