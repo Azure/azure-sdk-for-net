@@ -13,7 +13,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Text.Json.Serialization;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 using System.Threading;
 
 namespace Azure.Developer.LoadTesting
