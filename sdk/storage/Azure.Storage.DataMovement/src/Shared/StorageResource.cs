@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.Shared;
 
 namespace Azure.Storage.DataMovement
 {
@@ -37,12 +37,14 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns></returns>
         /// internal abstract Task long? GetLength();
+
         /// <summary>
         /// Consumes the readable stream to upload
         /// </summary>
         /// <param name="stream"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
-        public abstract Task ConsumeReadableStream(Stream stream /*long length*/);
+        public abstract Task ConsumeReadableStream(Stream stream, CancellationToken token);
 
         /// <summary>
         /// Returns URL with SAS
@@ -61,18 +63,18 @@ namespace Azure.Storage.DataMovement
         /// returns path split up
         /// </summary>
         /// <returns></returns>
-        public abstract List<String> GetPath();
+        public abstract List<string> GetPath();
 
         /// <summary>
         /// Defines whether the object can consume a readable stream and upload it
         /// </summary>
         /// <returns></returns>
-        public abstract StreamReadableOptions CanConsumeReadableStream();
+        public abstract StreamConsumableType CanConsumeReadableStream();
 
         /// <summary>
         /// defines whether the object can generate a URL to consume
         /// </summary>
         /// <returns></returns>
-        public abstract ProduceUriOptions CanProduceUri();
+        public abstract ProduceUriType CanProduceUri();
     }
 }

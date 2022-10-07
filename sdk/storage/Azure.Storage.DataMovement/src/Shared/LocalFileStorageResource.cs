@@ -6,15 +6,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.Shared;
 
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Local File Storage Resource
     /// </summary>
-    public class LocalFileStorageResource : StorageResource
+    internal class LocalFileStorageResource : StorageResource
     {
         private List<string> _path;
         private string _originalPath;
@@ -30,13 +30,13 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Can consume readable stream
+        /// Cannot consume readable stream
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override StreamReadableOptions CanConsumeReadableStream()
+        public override StreamConsumableType CanConsumeReadableStream()
         {
-            return StreamReadableOptions.Consumable;
+            return StreamConsumableType.Consumable;
         }
 
         /// <summary>
@@ -44,30 +44,42 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override ProduceUriOptions CanProduceUri()
+        public override ProduceUriType CanProduceUri()
         {
-            return ProduceUriOptions.ProducesUri;
+            return ProduceUriType.ProducesUri;
         }
 
         /// <summary>
-        /// Cannot produce consumable stream
+        /// Cannot produce consumable stream, will throw a NotSupportException.
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <exception cref="NotSupportedException"></exception>
         public override Stream ConsumableStream()
         {
-            throw new NotImplementedException();
+            // Cannot produce consumable stream
+            throw new NotSupportedException();
         }
 
         /// <summary>
-        /// Can produce readable stream
+        /// Cannot consume readable stream, will throw a NotSupportedException.
         /// </summary>
-        /// <param name="stream"></param>
+        /// <param name="stream">Stream to append to the local file</param>
+        /// <param name="token">Cancellation Token</param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public override Task ConsumeReadableStream(Stream stream)
+        public override async Task ConsumeReadableStream(Stream stream, CancellationToken token = default)
         {
-            throw new NotImplementedException();
+            // Appends incoming stream to the local file resource
+            using (FileStream fileStream = new FileStream(
+                    _originalPath,
+                    FileMode.Append,
+                    FileAccess.Write))
+            {
+                await stream.CopyToAsync(
+                    fileStream,
+                    Constants.DefaultDownloadCopyBufferSize,
+                    token)
+                    .ConfigureAwait(false);
+            }
         }
 
         /// <summary>
@@ -75,7 +87,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="uri"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <exception cref="NotSupportedException"></exception>
         public override Task ConsumeUri(Uri uri)
         {
             throw new NotSupportedException();
@@ -84,8 +96,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Get length of the file
         /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <returns>Returns the lenght of the local file, however if the local file does not exist default will be returned.</returns>
         internal Task<long?> GetLength()
         {
             FileInfo fileInfo = new FileInfo(_originalPath);
@@ -112,10 +123,10 @@ namespace Azure.Storage.DataMovement
         /// Get the Uri
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <exception cref="NotSupportedException"></exception>
         public override Uri GetUri()
         {
-            return new Uri(_originalPath);
+            throw new NotSupportedException();
         }
 
         /// <summary>

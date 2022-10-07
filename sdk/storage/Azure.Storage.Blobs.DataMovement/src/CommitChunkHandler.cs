@@ -13,7 +13,7 @@ using System.Threading;
 
 namespace Azure.Storage.Blobs.DataMovement
 {
-    internal class CommitChunkController
+    internal class CommitChunkHandler
     {
         #region Delegate Definitions
         public delegate Task QueueCommitBlockTaskInternal();
@@ -41,7 +41,7 @@ namespace Azure.Storage.Blobs.DataMovement
         private long _bytesTransferred;
         private long _expectedLength;
 
-        public CommitChunkController(
+        public CommitChunkHandler(
             long expectedLength,
             Behaviors behaviors)
         {

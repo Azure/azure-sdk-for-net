@@ -5,13 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Storage.DataMovement.Shared
+namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Defines whether or not the stream is consumable and readable
     /// </summary>
     [Flags]
-    public enum StreamReadableOptions
+    public enum StreamConsumableType
     {
         /// <summary>
         /// Defines that the readable stream is consumable.

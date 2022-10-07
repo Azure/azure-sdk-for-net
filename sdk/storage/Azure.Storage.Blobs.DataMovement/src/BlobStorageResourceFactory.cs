@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement;
 
 namespace Azure.Storage.Blobs.DataMovement
@@ -24,14 +25,24 @@ namespace Azure.Storage.Blobs.DataMovement
         }
 
         /// <summary>
-        /// Generate blob container client
+        /// Generate blob virtual directory client
+        /// </summary>
+        /// <param name="containerClient">Container CLient</param>
+        /// <param name="encodedPath">Encoded Directory Path</param>
+        /// <returns></returns>
+        public static StorageResourceContainer GetBlobDirectoryResource(BlobContainerClient containerClient, List<string> encodedPath)
+        {
+            return new BlobDirectoryStorageResourceContainer(containerClient, encodedPath);
+        }
+
+        /// <summary>
+        /// Generate blob container client. Container to container copy is not currently supported.
         /// </summary>
         /// <param name="containerClient"></param>
-        /// <param name="directoryPrefix"></param>
         /// <returns></returns>
-        public static StorageResourceContainer GetBlobContainer(BlobContainerClient containerClient, string directoryPrefix = default)
+        public static StorageResourceContainer GetBlobContainerResource(BlobContainerClient containerClient)
         {
-            return new BlobStorageResourceContainer(containerClient, directoryPrefix);
+            return new BlobStorageResourceContainer(containerClient);
         }
     }
 }

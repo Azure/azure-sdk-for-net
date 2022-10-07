@@ -6,19 +6,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement;
-using Azure.Storage.DataMovement.Shared;
 
 namespace Azure.Storage.Blobs.DataMovement
 {
     /// <summary>
     /// Blob Storage Resource
     /// </summary>
-    public class BlobStorageResource : StorageResource
+    internal class BlobStorageResource : StorageResource
     {
         private BlobBaseClient blobClient;
 
@@ -55,12 +55,13 @@ namespace Azure.Storage.Blobs.DataMovement
         /// Consumes stream to upload
         /// </summary>
         /// <param name="stream"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
-        public override async Task ConsumeReadableStream(Stream stream /*long length*/)
+        public override async Task ConsumeReadableStream(Stream stream, CancellationToken token)
         {
-            // TODO: check for proper conversion
+            // TODO: change depending on type of blob and type single shot or parallel transfer
             BlockBlobClient blockBlobClient = (BlockBlobClient)blobClient;
-            await blockBlobClient.UploadAsync(stream).ConfigureAwait(false);
+            await blockBlobClient.UploadAsync(stream, default, cancellationToken:token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -74,7 +75,7 @@ namespace Azure.Storage.Blobs.DataMovement
         }
 
         /// <summary>
-        /// Consumes blob Url to upload /copy
+        /// Consumes blob Url to upload / copy
         /// </summary>
         /// <param name="uri"></param>
         /// <returns></returns>
@@ -90,7 +91,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// returns path split up
         /// </summary>
         /// <returns></returns>
-        public override List<String> GetPath()
+        public override List<string> GetPath()
         {
             return blobClient.Name.Split('/').ToList();
         }
@@ -99,18 +100,18 @@ namespace Azure.Storage.Blobs.DataMovement
         /// Defines whether the object can consume a stream
         /// </summary>
         /// <returns></returns>
-        public override StreamReadableOptions CanConsumeReadableStream()
+        public override StreamConsumableType CanConsumeReadableStream()
         {
-            return StreamReadableOptions.Consumable;
+            return StreamConsumableType.Consumable;
         }
 
         /// <summary>
         /// Defines whether the object can produce a SAS URL
         /// </summary>
         /// <returns></returns>
-        public override ProduceUriOptions CanProduceUri()
+        public override ProduceUriType CanProduceUri()
         {
-            return ProduceUriOptions.ProducesUri;
+            return ProduceUriType.ProducesUri;
         }
 
         /// <summary>

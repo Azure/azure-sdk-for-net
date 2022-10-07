@@ -232,7 +232,6 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
 
                     // Act
                     StorageResource resource = LocalStorageResourceFactory.GetFile(localSourceFile);
-
                     await blobTransferManager.ScheduleUploadAsync(resource, destClient, options[i]).ConfigureAwait(false);
                 }
 

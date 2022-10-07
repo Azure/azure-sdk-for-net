@@ -12,6 +12,9 @@ namespace Azure.Storage
     /// </summary>
     internal partial class Errors
     {
+        public static ArgumentException InvalidSourceDestinationParams()
+            => new ArgumentException($"Cannot perform transfer because neither source and destination resource cannot produce a Uri." +
+                $"Either the source or destination resource, or both resources needs to produce a Uri.");
         public static ArgumentException InvalidTransferId(string command, string transferId)
             => new ArgumentException($"Cannot process {command} for transfer id: \"{transferId}\". Because" +
                 $"the respective transfer job does not exist or is no longer stored in the transfer manager.");

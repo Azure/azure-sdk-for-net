@@ -282,7 +282,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <returns></returns>
         /// TODO: remove suppression
         public async Task<BlobTransferJobProperties> ScheduleFolderUploadAsync(
-            LocalDirectoryStorageResourceContainer sourceLocalPath,
+            StorageResourceContainer sourceLocalPath,
             BlobFolderClient destinationClient,
             bool overwrite = false,
             BlobFolderUploadOptions options = default)
@@ -305,7 +305,7 @@ namespace Azure.Storage.Blobs.DataMovement
             // As each local path is found, it is added to the queue as well.
             await QueueJobAsync(transferJob).ConfigureAwait(false);
 
-            PathScannerFactory scannerFactory = new PathScannerFactory(transferJob.SourceLocalPath.GetFullPath());
+            PathScannerFactory scannerFactory = new PathScannerFactory(string.Join("/",transferJob.SourceLocalPath.GetPath()));
             PathScanner scanner = scannerFactory.BuildPathScanner();
             IEnumerable<FileSystemInfo> pathList = scanner.Scan();
 

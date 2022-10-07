@@ -17,7 +17,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static LocalFileStorageResource GetFile(string path)
+        public static StorageResource GetFile(string path)
         {
             return new LocalFileStorageResource(path);
         }
@@ -27,7 +27,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static LocalDirectoryStorageResourceContainer GetDirectory(string path)
+        public static StorageResourceContainer GetDirectory(string path)
         {
             return new LocalDirectoryStorageResourceContainer(path);
         }

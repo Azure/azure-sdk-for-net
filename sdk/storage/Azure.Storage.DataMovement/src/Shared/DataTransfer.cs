@@ -29,7 +29,7 @@ namespace Azure.Storage.DataMovement
         /// Constructing intial DataTransfer
         /// </summary>
         /// <param name="id"></param>
-        protected DataTransfer(string id)
+        internal DataTransfer(string id)
         {
             _state = new DataTransferState()
             {

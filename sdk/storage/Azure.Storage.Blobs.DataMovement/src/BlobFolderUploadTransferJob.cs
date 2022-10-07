@@ -22,12 +22,12 @@ namespace Azure.Storage.Blobs.DataMovement
     /// </summary>
     internal class BlobFolderUploadTransferJob : BlobTransferJobInternal
     {
-        private LocalDirectoryStorageResourceContainer _sourceLocalPath;
+        private StorageResourceContainer _sourceLocalPath;
 
         /// <summary>
         /// Gets the local path of the source file.
         /// </summary>
-        public LocalDirectoryStorageResourceContainer SourceLocalPath => _sourceLocalPath;
+        public StorageResourceContainer SourceLocalPath => _sourceLocalPath;
 
         /// <summary>
         /// Holds Source Blob Configurations
@@ -80,7 +80,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <param name="queueChunkTask"></param>
         public BlobFolderUploadTransferJob(
             string transferId,
-            LocalDirectoryStorageResourceContainer sourceLocalPath,
+            StorageResourceContainer sourceLocalPath,
             bool overwrite,
             BlobFolderClient destinationClient,
             BlobFolderUploadOptions uploadOptions,
@@ -111,9 +111,9 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <returns></returns>
         internal async Task<Response<BlobContentInfo>> GetSingleUploadTaskAsync(string fullPathName)
         {
-            // Replace backward slashes meant to be directory name separators
-            string blobName = fullPathName.Substring(SourceLocalPath.GetFullPath().Length + 1);
-            blobName = blobName.Replace(@"\", "/");
+            // Remove parent directory path from blob name
+            string parentDirectoryPath = string.Join("/", SourceLocalPath.GetPath());
+            string blobName = fullPathName.Substring(parentDirectoryPath.Length + 1);
 
             BlobBaseClient blobClient = DestinationBlobDirectoryClient.GetBlobBaseClient(blobName);
             BlockBlobClient blockBlobClient = (BlockBlobClient) blobClient;

@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using Azure.Storage.Shared;
 using System.Security.Cryptography;
-using static Azure.Storage.Blobs.DataMovement.CommitChunkController;
+using static Azure.Storage.Blobs.DataMovement.CommitChunkHandler;
 
 namespace Azure.Storage.Blobs.DataMovement
 {
@@ -31,12 +31,18 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <summary>
         /// The path to the local file where the contents to be upload to the blob is stored.
         /// </summary>
-        internal StorageResource _sourceLocalPath;
+        internal string _sourceLocalPath;
 
         /// <summary>
         /// Gets the path to the local file where the contents to be upload to the blob is stored.
         /// </summary>
-        public StorageResource SourceLocalPath => _sourceLocalPath;
+        public string SourceLocalPath => _sourceLocalPath;
+
+        /// <summary>
+        /// Source Resource
+        /// </summary>
+        public StorageResource SourceResource => _sourceResource;
+        internal StorageResource _sourceResource;
 
         /// <summary>
         /// Holds Source Blob Configurations
@@ -46,7 +52,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <summary>
         /// Gets the destination blob client
         /// </summary>
-        internal BlockBlobClient DestinationBlobClient;
+        internal BlockBlobClient _destinationBlobClient;
 
         internal BlobSingleUploadOptions _uploadOptions;
 
@@ -62,7 +68,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// </summary>
         public ClientDiagnostics Diagnostics => _diagnostics;
 
-        internal CommitChunkController commitBlockHandler;
+        internal CommitChunkHandler commitBlockHandler;
 
         /// <summary>
         /// Array pool designated for upload file
@@ -105,9 +111,10 @@ namespace Azure.Storage.Blobs.DataMovement
                   errorHandling: errorOption,
                   queueChunkTask: queueChunkTask)
         {
-            _sourceLocalPath = sourceLocalPath;
+            _sourceResource = sourceLocalPath;
+            _sourceLocalPath = string.Join("/", sourceLocalPath.GetPath().ToArray());
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
-            DestinationBlobClient = destinationClient;
+            _destinationBlobClient = destinationClient;
             DestinationBlobConfiguration = new BlobBaseConfiguration()
             {
                 BlobContainerName = destinationClient.BlobContainerName,
@@ -137,7 +144,7 @@ namespace Azure.Storage.Blobs.DataMovement
                 singleUploadThreshold = Math.Min(UploadOptions.TransferOptions.InitialTransferSize.Value, Constants.Blob.Block.MaxUploadBytes);
             }
 
-            FileInfo fileInfo = new FileInfo(SourceLocalPath.GetUri().AbsoluteUri);
+            FileInfo fileInfo = new FileInfo(SourceLocalPath);
             long fileLength = fileInfo.Length;
             string operationName = $"{nameof(BlobTransferManager.ScheduleUploadAsync)}";
 
@@ -219,11 +226,11 @@ namespace Azure.Storage.Blobs.DataMovement
 
                     if (parsedConnectionString.BlobEndpoint.Host == sourceUriBuilder.Host)
                     {
-                        DestinationBlobClient = new BlockBlobClient(
+                        _destinationBlobClient = new BlockBlobClient(
                             connectionString,
                             DestinationBlobConfiguration.BlobContainerName,
                             DestinationBlobConfiguration.Name,
-                            BlobBaseClientInternals.GetClientOptions(DestinationBlobClient));
+                            BlobBaseClientInternals.GetClientOptions(_destinationBlobClient));
                     }
                     else
                     {
@@ -234,26 +241,26 @@ namespace Azure.Storage.Blobs.DataMovement
                 else if (destinationCredential.GetType() == typeof(AzureSasCredential))
                 {
                     AzureSasCredential sasCredential = (AzureSasCredential)destinationCredential;
-                    DestinationBlobClient = new BlockBlobClient(
+                    _destinationBlobClient = new BlockBlobClient(
                         DestinationBlobConfiguration.Uri,
                         sasCredential,
-                        BlobBaseClientInternals.GetClientOptions(DestinationBlobClient));
+                        BlobBaseClientInternals.GetClientOptions(_destinationBlobClient));
                 }
                 else if (destinationCredential.GetType() == typeof(StorageSharedKeyCredential))
                 {
                     StorageSharedKeyCredential sharedKeyCredential = (StorageSharedKeyCredential)destinationCredential;
-                    DestinationBlobClient = new BlockBlobClient(
+                    _destinationBlobClient = new BlockBlobClient(
                         DestinationBlobConfiguration.Uri,
                         sharedKeyCredential,
-                        BlobBaseClientInternals.GetClientOptions(DestinationBlobClient));
+                        BlobBaseClientInternals.GetClientOptions(_destinationBlobClient));
                 }
                 else if (destinationCredential.GetType() == typeof(TokenCredential))
                 {
                     TokenCredential tokenCredential = (TokenCredential)destinationCredential;
-                    DestinationBlobClient = new BlockBlobClient(
+                    _destinationBlobClient = new BlockBlobClient(
                         DestinationBlobConfiguration.Uri,
                         tokenCredential,
-                        BlobBaseClientInternals.GetClientOptions(DestinationBlobClient));
+                        BlobBaseClientInternals.GetClientOptions(_destinationBlobClient));
                 }
                 else
                 {
@@ -322,11 +329,11 @@ namespace Azure.Storage.Blobs.DataMovement
         {
             try
             {
-                using (FileStream stream = new FileStream(SourceLocalPath.GetUri().AbsoluteUri, FileMode.Open, FileAccess.Read))
+                using (FileStream stream = new FileStream(SourceLocalPath, FileMode.Open, FileAccess.Read))
                 {
                     await OnTransferStatusChanged(StorageTransferStatus.InProgress, true).ConfigureAwait(false);
                     Response<BlobContentInfo> response = await BlockBlobClientInternals.PutBlobCallAsync(
-                        DestinationBlobClient,
+                        _destinationBlobClient,
                         stream,
                         options,
                         operationName,
@@ -339,8 +346,8 @@ namespace Azure.Storage.Blobs.DataMovement
             {
                 options?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                     TransferId,
-                    SourceLocalPath,
-                    DestinationBlobClient,
+                    SourceResource,
+                    _destinationBlobClient,
                     ex,
                     false,
                     CancellationTokenSource.Token));
@@ -350,12 +357,12 @@ namespace Azure.Storage.Blobs.DataMovement
             catch (IOException ex)
             {
                 options?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
-                                TransferId,
-                                SourceLocalPath,
-                                DestinationBlobClient,
-                                ex,
-                                false,
-                                CancellationTokenSource.Token));
+                    TransferId,
+                    SourceResource,
+                    _destinationBlobClient,
+                    ex,
+                    false,
+                    CancellationTokenSource.Token));
                 StorageTransferStatus status = StorageTransferStatus.Completed;
                 await OnTransferStatusChanged(status, true).ConfigureAwait(false);
             }
@@ -369,8 +376,8 @@ namespace Azure.Storage.Blobs.DataMovement
                 // Unexpected exception
                 options?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                 TransferId,
-                                SourceLocalPath,
-                                DestinationBlobClient,
+                                SourceResource,
+                                _destinationBlobClient,
                                 ex,
                                 false,
                                 CancellationTokenSource.Token));
@@ -399,7 +406,7 @@ namespace Azure.Storage.Blobs.DataMovement
                 // Make sure it's opened only in Shared Read Only Mode
 
                 Stream slicedStream = Stream.Null;
-                using (FileStream stream = new FileStream(SourceLocalPath.GetUri().AbsoluteUri, FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (FileStream stream = new FileStream(SourceLocalPath, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
                     await OnTransferStatusChanged(StorageTransferStatus.InProgress, true).ConfigureAwait(false);
                     slicedStream = await GetOffsetPartitionInternal(
@@ -409,7 +416,7 @@ namespace Azure.Storage.Blobs.DataMovement
                         UploadArrayPool,
                         cancellationToken).ConfigureAwait(false);
                 }
-                await DestinationBlobClient.StageBlockAsync(
+                await _destinationBlobClient.StageBlockAsync(
                         Shared.StorageExtensions.GenerateBlockId(offset),
                         slicedStream,
                         // TODO #27253
@@ -439,8 +446,8 @@ namespace Azure.Storage.Blobs.DataMovement
                 options?.GetUploadFailed()?.Invoke(
                     new BlobUploadFailedEventArgs(
                                 TransferId,
-                                SourceLocalPath,
-                                DestinationBlobClient,
+                                SourceResource,
+                                _destinationBlobClient,
                                 ex,
                                 false,
                                 CancellationTokenSource.Token));
@@ -459,8 +466,8 @@ namespace Azure.Storage.Blobs.DataMovement
             {
                 options?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                 TransferId,
-                                SourceLocalPath,
-                                DestinationBlobClient,
+                                SourceResource,
+                                _destinationBlobClient,
                                 ex,
                                 false,
                                 CancellationTokenSource.Token));
@@ -485,8 +492,8 @@ namespace Azure.Storage.Blobs.DataMovement
                 // Unexpected exception
                 options?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                 TransferId,
-                                SourceLocalPath,
-                                DestinationBlobClient,
+                                SourceResource,
+                                _destinationBlobClient,
                                 ex,
                                 false,
                                 CancellationTokenSource.Token));
@@ -512,7 +519,7 @@ namespace Azure.Storage.Blobs.DataMovement
             };
             try
             {
-                Response<BlobContentInfo> response = await DestinationBlobClient.CommitBlockListAsync(
+                Response<BlobContentInfo> response = await _destinationBlobClient.CommitBlockListAsync(
                         partitions.Select(partition => Shared.StorageExtensions.GenerateBlockId(partition.Offset)),
                         options,
                         cancellationToken).ConfigureAwait(false);
@@ -523,8 +530,8 @@ namespace Azure.Storage.Blobs.DataMovement
             {
                 uploadOptions?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                 TransferId,
-                                SourceLocalPath,
-                                DestinationBlobClient,
+                                SourceResource,
+                                _destinationBlobClient,
                                 ex,
                                 false,
                                 CancellationTokenSource.Token));
@@ -535,8 +542,8 @@ namespace Azure.Storage.Blobs.DataMovement
             {
                 uploadOptions?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                 TransferId,
-                                SourceLocalPath,
-                                DestinationBlobClient,
+                                SourceResource,
+                                _destinationBlobClient,
                                 ex,
                                 false,
                                 CancellationTokenSource.Token));
@@ -553,8 +560,8 @@ namespace Azure.Storage.Blobs.DataMovement
                 // Unexpected exception
                 uploadOptions?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                 TransferId,
-                                SourceLocalPath,
-                                DestinationBlobClient,
+                                SourceResource,
+                                _destinationBlobClient,
                                 ex,
                                 false,
                                 CancellationTokenSource.Token));
@@ -572,7 +579,7 @@ namespace Azure.Storage.Blobs.DataMovement
         {
             // Wrap the staging and commit calls in an Upload span for
             // distributed tracing
-            StorageClientDiagnostics diagnostics = new StorageClientDiagnostics(BlobBaseClientInternals.GetClientOptions(DestinationBlobClient));
+            StorageClientDiagnostics diagnostics = new StorageClientDiagnostics(BlobBaseClientInternals.GetClientOptions(_destinationBlobClient));
             DiagnosticScope scope = diagnostics.CreateScope(operationName);
             scope.Start();
 
@@ -601,19 +608,19 @@ namespace Azure.Storage.Blobs.DataMovement
         #endregion
 
         #region CommitChunkController
-        internal static CommitChunkController GetCommitController(
+        internal static CommitChunkHandler GetCommitController(
             long expectedLength,
             CommitBlockTaskInternal commitBlockTask,
             BlobUploadTransferJob job)
-        => new CommitChunkController(
+        => new CommitChunkHandler(
             expectedLength,
             GetBlockListCommitHandlerBehaviors(commitBlockTask, job));
 
-        internal static CommitChunkController.Behaviors GetBlockListCommitHandlerBehaviors(
+        internal static CommitChunkHandler.Behaviors GetBlockListCommitHandlerBehaviors(
             CommitBlockTaskInternal commitBlockTask,
             BlobUploadTransferJob job)
         {
-            return new CommitChunkController.Behaviors
+            return new CommitChunkHandler.Behaviors
             {
                 // TODO #27253
                 QueueCommitBlockTask = async () =>
@@ -622,7 +629,7 @@ namespace Azure.Storage.Blobs.DataMovement
                             job.CancellationTokenSource.Token).ConfigureAwait(false),
                 ReportProgressInBytes = (long bytesWritten) =>
                     job.UploadOptions?.ProgressHandler?.Report(bytesWritten),
-                InvokeFailedHandler = async (ex) => await job.InvokeCopyFailed(ex).ConfigureAwait(false),
+                InvokeFailedHandler = async (ex) => await job.InvokeUploadFailed(ex, StorageTransferStatus.Completed).ConfigureAwait(false),
                 UpdateTransferStatus = async (StorageTransferStatus status)
                     => await job.OnTransferStatusChanged(status, true).ConfigureAwait(false)
             };
@@ -714,19 +721,19 @@ namespace Azure.Storage.Blobs.DataMovement
             }
         }
 
-        private async Task InvokeCopyFailed(Exception ex)
+        private async Task InvokeUploadFailed(Exception ex, StorageTransferStatus status)
         {
             UploadOptions?.GetUploadFailed()?.Invoke(
                 new BlobUploadFailedEventArgs(
                 TransferId,
-                SourceLocalPath,
-                DestinationBlobClient,
+                SourceResource,
+                _destinationBlobClient,
                 ex,
                 false,
                 CancellationTokenSource.Token));
             // Trigger job cancellation if the failed handler is enabled
             TriggerJobCancellation();
-            await OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
+            await OnTransferStatusChanged(status, true).ConfigureAwait(false);
         }
     }
 }

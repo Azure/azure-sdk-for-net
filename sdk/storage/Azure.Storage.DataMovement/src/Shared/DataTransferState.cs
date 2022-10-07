@@ -73,7 +73,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Sets the amount of bytes transferred
         /// </summary>
-        /// <param name="transferredBytes"></param>\
+        /// <param name="transferredBytes"></param>
         public void SetTransferBytes(long transferredBytes)
         {
             _transferredBytes = transferredBytes;

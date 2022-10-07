@@ -5,13 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Storage.DataMovement.Shared
+namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Defines whether or not the class can produce a URL
     /// </summary>
     [Flags]
-    public enum ProduceUriOptions
+    public enum ProduceUriType
     {
         /// <summary>
         /// Produces Uri

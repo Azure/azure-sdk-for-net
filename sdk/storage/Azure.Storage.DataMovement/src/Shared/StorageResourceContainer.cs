@@ -3,7 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Storage.DataMovement
 {
@@ -18,10 +21,34 @@ namespace Azure.Storage.DataMovement
         protected StorageResourceContainer() { }
 
         /// <summary>
-        /// returns path split up
+        /// Defines whether we can produce a Uri
         /// </summary>
         /// <returns></returns>
-        public abstract List<String> GetPath();
+        public abstract ProduceUriType CanProduceUri();
+
+        /// <summary>
+        /// Gets Uri
+        /// </summary>
+        /// <returns></returns>
+        public abstract Uri GetUri();
+
+        /// <summary>
+        /// Gets path split up
+        /// </summary>
+        /// <returns></returns>
+        public abstract List<string> GetPath();
+
+        /// <summary>
+        /// Lists the child storage resources in the container resource.
+        /// </summary>
+        /// <returns></returns>
+        public abstract ListStorageResourcesType CanList();
+
+        /// <summary>
+        /// Lists all the child storage resources in the path.
+        /// </summary>
+        /// <returns></returns>
+        public abstract IAsyncEnumerable<StorageResource> ListStorageResources(CancellationToken token);
 
         /// <summary>
         /// Returns storage resources from the parent resource container

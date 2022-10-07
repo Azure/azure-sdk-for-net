@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using System;
 using Azure.Storage.Blobs.DataMovement.Models;
+using Azure.Storage.DataMovement.Shared;
 
 namespace Azure.Storage.Blobs.DataMovement
 {
@@ -22,8 +23,8 @@ namespace Azure.Storage.Blobs.DataMovement
                     Resource = BlobTransferType.ResourceType.Blob,
                     Operation = BlobTransferType.OperationType.Upload,
                 },
-                SourceUri = transferJob.SourceLocalPath.GetUri(),
-                DestinationUri = transferJob.DestinationBlobClient.Uri,
+                SourceUri = transferJob.SourceResource.GetUri(),
+                DestinationUri = transferJob._destinationBlobClient.Uri,
             };
         }
 
@@ -42,7 +43,7 @@ namespace Azure.Storage.Blobs.DataMovement
                     Resource = BlobTransferType.ResourceType.BlobFolder,
                     Operation = BlobTransferType.OperationType.Upload,
                 },
-                SourceUri = new Uri(transferJob.SourceLocalPath.GetFullPath()),
+                SourceUri = new Uri(transferJob.SourceLocalPath.GetPath().ToLocalPathString()),
                 DestinationUri = transferJob.DestinationBlobDirectoryClient.Uri,
             };
         }

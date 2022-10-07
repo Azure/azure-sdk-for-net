@@ -49,7 +49,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// </summary>
         public BlobSingleCopyOptions CopyFromUriOptions => _copyFromUriOptions;
 
-        internal CommitChunkController commitBlockController;
+        internal CommitChunkHandler commitBlockController;
 
         /// <summary>
         /// Creates Single Copy Transfer Job
@@ -443,19 +443,19 @@ namespace Azure.Storage.Blobs.DataMovement
         #endregion
 
         #region CommitChunkController
-        internal static CommitChunkController GetCommitController(
+        internal static CommitChunkHandler GetCommitController(
             long expectedLength,
             List<(long Offset, long Length)> commitBlockList,
             BlockBlobServiceCopyTransferJob job)
-        => new CommitChunkController(
+        => new CommitChunkHandler(
             expectedLength,
             GetBlockListCommitHandlerBehaviors(commitBlockList, job));
 
-        internal static CommitChunkController.Behaviors GetBlockListCommitHandlerBehaviors(
+        internal static CommitChunkHandler.Behaviors GetBlockListCommitHandlerBehaviors(
             List<(long Offset, long Length)> commitBlockList,
             BlockBlobServiceCopyTransferJob job)
         {
-            return new CommitChunkController.Behaviors
+            return new CommitChunkHandler.Behaviors
             {
                 QueueCommitBlockTask = async () =>
                         await job.CommitBlockListInternal(

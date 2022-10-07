@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -19,38 +21,45 @@ namespace Azure.Storage.Blobs.DataMovement
     /// </summary>
     internal class BlobStorageResourceContainer : StorageResourceContainer
     {
-        private BlobContainerClient blobContainerClient;
-        private List<string> _directoryPrefix;
-        private string _originalPrefix;
+        private BlobContainerClient _blobContainerClient;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="blobContainerClient"></param>
-        /// <param name="directoryPrefix"></param>
-        public BlobStorageResourceContainer(BlobContainerClient blobContainerClient, string directoryPrefix)
+        public BlobStorageResourceContainer(BlobContainerClient blobContainerClient)
         {
-            this.blobContainerClient = blobContainerClient;
-            _originalPrefix = directoryPrefix;
-            _directoryPrefix = directoryPrefix.Split('/').ToList();
+            _blobContainerClient = blobContainerClient;
         }
 
         /// <summary>
-        /// returns path split up
+        /// Defines whether we can produce a Uri
         /// </summary>
         /// <returns></returns>
+        public override ProduceUriType CanProduceUri()
+        {
+            return ProduceUriType.ProducesUri;
+        }
+
+        /// <summary>
+        /// Gets Uri
+        /// </summary>
+        /// <returns></returns>
+        public override Uri GetUri()
+        {
+            return _blobContainerClient.GenerateSasUri(Sas.BlobContainerSasPermissions.All, DateTimeOffset.UtcNow.AddDays(7));
+        }
+
+        /// <summary>
+        /// Returns default since resource is at the root/container level.
+        /// </summary>
+        /// <returns>
+        /// Returns Directory Path split up in a List of Strings (delimited by '/').
+        /// Returns empty list of strings if the resource is at the root/container level.
+        /// </returns>
         public override List<string> GetPath()
         {
-            return _directoryPrefix;
-        }
-
-        /// <summary>
-        /// returns path split up
-        /// </summary>
-        /// <returns></returns>
-        public string GetFullPath()
-        {
-            return _originalPrefix;
+            return default;
         }
 
         /// <summary>
@@ -60,18 +69,45 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <returns></returns>
         public override StorageResource GetStorageResource(List<string> path)
         {
-            return new BlobStorageResource(blobContainerClient.GetBlobClient(string.Join("/", path)));
+            return new BlobStorageResource(_blobContainerClient.GetBlobClient(string.Join("/", path)));
         }
 
         /// <summary>
         /// Not supported
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="encodedPath">
+        /// The path to append to the current directory prefix (if one exists)</param>
         /// <returns></returns>
-        /// <exception cref="NotSupportedException"></exception>
-        public override StorageResourceContainer GetStorageResourceContainer(List<string> path)
+        public override StorageResourceContainer GetStorageResourceContainer(List<string> encodedPath)
         {
-            throw new NotSupportedException("No virtual directories supported in flat namespace");
+            return new BlobDirectoryStorageResourceContainer(_blobContainerClient, encodedPath);
+        }
+
+        /// <summary>
+        /// Lists the child storage resources in the container resource.
+        /// </summary>
+        /// <returns><see cref="ListStorageResourcesType"/></returns>
+        public override ListStorageResourcesType CanList()
+        {
+            return ListStorageResourcesType.PageableListCall;
+        }
+
+        /// <summary>
+        /// Lists the blob resources in the storage blob container.
+        ///
+        /// Because blobs is a flat namespace, virtual directories will not be returned.
+        /// </summary>
+        /// <returns>
+        /// <see cref="RequestFailedException"/> will be returned if a storage service request fails.</returns>
+        public override async IAsyncEnumerable<StorageResource> ListStorageResources(
+            [EnumeratorCancellation] CancellationToken token)
+        {
+            AsyncPageable<BlobItem> pages = _blobContainerClient.GetBlobsAsync(
+                cancellationToken: token);
+            await foreach (BlobItem blobItem in pages.ConfigureAwait(false))
+            {
+                yield return GetStorageResource(blobItem.Name.Split('/').ToList());
+            }
         }
     }
 }

@@ -3,15 +3,19 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
+using Azure.Storage.DataMovement.Shared;
 
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Defines the local directory to transfer to or from
     /// </summary>
-    public class LocalDirectoryStorageResourceContainer : StorageResourceContainer
+    internal class LocalDirectoryStorageResourceContainer : StorageResourceContainer
     {
         private List<string> _path;
         private string _originalPath;
@@ -50,10 +54,13 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public override StorageResource GetStorageResource(List<string> path)
         {
-            throw new NotImplementedException();
+            List<string> listPaths = new List<string>(_path.Count + path.Count);
+            listPaths.AddRange(_path);
+            listPaths.AddRange(path);
+            string concatPath = listPaths.ToLocalPathString();
+            return new LocalFileStorageResource(concatPath);
         }
 
         /// <summary>
@@ -65,6 +72,52 @@ namespace Azure.Storage.DataMovement
         public override StorageResourceContainer GetStorageResourceContainer(List<string> path)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Cannot produce Uri
+        /// </summary>
+        /// <returns></returns>
+        public override ProduceUriType CanProduceUri()
+        {
+            return ProduceUriType.NoUri;
+        }
+
+        /// <summary>
+        /// Cannot produce uri, will throw exception.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotSupportedException"></exception>
+        public override Uri GetUri()
+        {
+            throw new NotSupportedException();
+        }
+
+        /// <summary>
+        /// Can list the files and directories in the parent container.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public override ListStorageResourcesType CanList()
+        {
+            return ListStorageResourcesType.SingleListCall;
+        }
+
+        /// <summary>
+        /// Lists storage resource in the filesystem.
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        public override async IAsyncEnumerable<StorageResource> ListStorageResources(
+            [EnumeratorCancellation] CancellationToken token)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            PathScanner scanner = new PathScanner(_originalPath);
+            foreach (FileSystemInfo fileSystemInfo in scanner.Scan(false))
+            {
+                yield return GetStorageResource(fileSystemInfo.Name.Split('/').ToList());
+            }
         }
     }
 }

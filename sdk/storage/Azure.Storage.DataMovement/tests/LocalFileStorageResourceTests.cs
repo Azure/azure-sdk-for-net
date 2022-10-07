@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement;
-using Azure.Storage.DataMovement.Shared;
+
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -22,11 +22,12 @@ namespace Azure.Storage.DataMovement.Tests
         public void LocalFileStorageResource_Factory(string filePath)
         {
             // Act
-            LocalFileStorageResource resource = LocalStorageResourceFactory.GetFile(filePath);
+            StorageResource resource = LocalStorageResourceFactory.GetFile(filePath);
 
             // Assert
             Assert.NotNull(resource);
-            Assert.Equals(StreamReadableOptions.Consumable, resource.CanConsumeReadableStream());
+            Assert.Equals(StreamConsumableType.Consumable, resource.CanConsumeReadableStream());
+            Assert.Equals(ProduceUriType.ProducesUri ,resource.CanProduceUri());
         }
     }
 }
