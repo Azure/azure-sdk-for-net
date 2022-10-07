@@ -393,7 +393,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ACT
             string spanId, traceId;
-            string activityName = $"TestActivity {nameof(this.LogWithinActivity_InMemoryExporterOnly)} {logLevel}";
+            string activityName = $"TestActivity {nameof(this.LogWithinActivity_ActivityListener)} {logLevel}";
 
             using (var activity = activitySource.StartActivity(name: activityName))
             {
