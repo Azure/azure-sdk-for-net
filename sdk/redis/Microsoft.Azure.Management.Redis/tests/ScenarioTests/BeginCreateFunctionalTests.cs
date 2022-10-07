@@ -38,7 +38,7 @@ namespace AzureRedisCache.Tests
                                             },
                                             MinimumTlsVersion = TlsVersion.OneFullStopTwo,
                                             ReplicasPerMaster = 2,
-                                            RedisVersion = "6",
+                                            RedisVersion = "latest",
                                             RedisConfiguration = new RedisCommonPropertiesRedisConfiguration(
                                                 maxmemoryPolicy: "allkeys-lru",
                                             additionalProperties: new Dictionary<string, object>() { { "maxmemory-reserved", "700" } })
@@ -53,7 +53,7 @@ namespace AzureRedisCache.Tests
                 Assert.Equal(SkuFamily.P, response.Sku.Family);
                 Assert.Equal(TlsVersion.OneFullStopTwo, response.MinimumTlsVersion);
                 Assert.Equal(2, response.ReplicasPerMaster);
-                Assert.Equal("6", response.RedisVersion.Split(".")[0]);
+                Assert.Equal("6", response.RedisVersion.Split(".")[0]); // 6 is the current 'latest' version. Will change in the future. 
 
                 Assert.Equal(3, response.Instances.Count);
                 for (int i = 0; i < response.Instances.Count; i++)
