@@ -6,33 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "Connection": "keep-alive",
         "Content-Length": "225",
-        "Content-Type": "multipart/form-data;boundary=----WebkitFormBoundaryIajoMWevpH",
-        "traceparent": "00-56f81f371a27a54e98fbe746d795bc15-9ea5d89558b9ee44-00",
+        "Content-Type": "multipart/form-data;boundary=----WebkitFormBoundary7YJFPThl8Y",
+        "traceparent": "00-6859853030bd6949810b2bbc25b540c3-ba7db8498c497c43-00",
         "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20221007.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "5568523b0c27df019c930c85b719cb25",
+        "x-ms-client-request-id": "531461b84203039eddf86564e2a31ece",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "LS0tLS0tV2Via2l0Rm9ybUJvdW5kYXJ5SWFqb01XZXZwSA0KQ29udGVudC1EaXNwb3NpdGlvbjogZm9ybS1kYXRhOyBuYW1lPSJmaWxlIjsgZmlsZW5hbWU9InNhbXBsZS5qbXgiDQpDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9uL29jdGV0LXN0cmVhbQ0KDQpBenVyZS5Db3JlLlJlcXVlc3RDb250ZW50K1N0cmVhbUNvbnRlbnQNCg0KLS0tLS0tV2Via2l0Rm9ybUJvdW5kYXJ5SWFqb01XZXZwSC0t",
+      "RequestBody": "LS0tLS0tV2Via2l0Rm9ybUJvdW5kYXJ5N1lKRlBUaGw4WQ0KQ29udGVudC1EaXNwb3NpdGlvbjogZm9ybS1kYXRhOyBuYW1lPSJmaWxlIjsgZmlsZW5hbWU9InNhbXBsZS5qbXgiDQpDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9uL29jdGV0LXN0cmVhbQ0KDQpBenVyZS5Db3JlLlJlcXVlc3RDb250ZW50K1N0cmVhbUNvbnRlbnQNCg0KLS0tLS0tV2Via2l0Rm9ybUJvdW5kYXJ5N1lKRlBUaGw4WS0t",
       "StatusCode": 201,
       "ResponseHeaders": {
         "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview",
         "Connection": "keep-alive",
         "Content-Length": "407",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Oct 2022 14:08:09 GMT",
+        "Date": "Fri, 07 Oct 2022 14:46:11 GMT",
         "Location": "https://eccdc9b7-7603-402b-879d-bde2b637db56.eus.cnt-prod.loadtesting.azure.com/loadtests/d7c68e2a-bcd8-423f-b9ce-fe9cccd00f1c/files/1c2ccb7b-8f62-4f70-812e-70df2c3df314?resourceId=%2fsubscriptions%2f7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a%2fresourcegroups%2fyashika-rg%2fproviders%2fmicrosoft.loadtestservice%2floadtests%2floadtestsdk\u0026api-version=2022-06-01-preview",
-        "mise-correlation-id": "5b6b3e2c-22d6-46b9-9561-baed8e412c77",
+        "mise-correlation-id": "bd3f9570-dabb-4402-ba4c-1c841c9fb8a2",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "37fa5a3c-a9e4-4aaf-b970-5efa090521fe"
+        "x-ms-correlation-request-id": "a844031a-1075-45a8-ad6d-546719e68199"
       },
       "ResponseBody": {
-        "url": "https://stcntproddataeus.blob.core.windows.net/0f707b6c-09cb-4fa8-a12d-b243c792d9b4/1c2ccb7b-8f62-4f70-812e-70df2c3df314?sv=2020-04-08\u0026se=2022-10-07T14%3A18%3A09Z\u0026sr=b\u0026sp=r\u0026sig=yKo5Dbgn1HX2B2%2BNXKE205NPRsXSNVzWq%2FRCBi4SdR4%3D",
+        "url": "https://stcntproddataeus.blob.core.windows.net/0f707b6c-09cb-4fa8-a12d-b243c792d9b4/1c2ccb7b-8f62-4f70-812e-70df2c3df314?sv=2020-04-08\u0026se=2022-10-07T14%3A56%3A11Z\u0026sr=b\u0026sp=r\u0026sig=ufB43EKj1eG4MgrYmQySJ5VqR2BnYgku%2B66Ja9b%2B7UY%3D",
         "fileId": "1c2ccb7b-8f62-4f70-812e-70df2c3df314",
         "filename": "sample.jmx",
         "fileType": 0,
-        "expireTime": "2022-10-07T14:18:09.8140411",
+        "expireTime": "2022-10-07T14:56:11.3220932",
         "validationStatus": "VALIDATION_INITIATED"
       }
     }
@@ -40,6 +41,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "LOADTESTSERVICE_ENDPOINT": "eccdc9b7-7603-402b-879d-bde2b637db56.eus.cnt-prod.loadtesting.azure.com",
-    "RandomSeed": "304296478"
+    "RandomSeed": "652965050"
   }
 }
