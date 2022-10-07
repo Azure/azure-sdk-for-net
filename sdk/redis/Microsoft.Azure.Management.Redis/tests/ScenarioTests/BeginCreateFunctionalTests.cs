@@ -41,12 +41,12 @@ namespace AzureRedisCache.Tests
                                             RedisVersion = "6",
                                             RedisConfiguration = new RedisCommonPropertiesRedisConfiguration(
                                                 maxmemoryPolicy: "allkeys-lru",
-                                            additionalProperties: new Dictionary<string, object>() { { "maxmemory-reserved", "210" } })
+                                            additionalProperties: new Dictionary<string, object>() { { "maxmemory-reserved", "700" } })
                                         });
 
                 Assert.Contains(redisCacheName, response.Id);
-                Assert.Equal("210", response.RedisConfiguration.MaxmemoryDelta);
-                Assert.Equal("210", response.RedisConfiguration.MaxmemoryReserved);
+                Assert.Equal("700", response.RedisConfiguration.MaxmemoryDelta);
+                Assert.Equal("700", response.RedisConfiguration.MaxmemoryReserved);
                 Assert.Equal(redisCacheName, response.Name);
                 Assert.Equal(ProvisioningState.Creating, response.ProvisioningState, ignoreCase: true);
                 Assert.Equal(SkuName.Premium, response.Sku.Name);
