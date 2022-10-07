@@ -272,8 +272,6 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                Argument.AssertNotNull(setting, nameof(setting));
-
                 RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
 
                 using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
@@ -316,7 +314,6 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                Argument.AssertNotNull(setting, nameof(setting));
                 RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
 
                 using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
