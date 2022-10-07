@@ -112,10 +112,14 @@ namespace Azure.Communication.CallAutomation
                     return PlayCompleted.Deserialize(eventData);
                 case nameof(PlayFailed):
                     return PlayFailed.Deserialize(eventData);
+                case nameof(PlayCanceled):
+                    return PlayCanceled.Deserialize(eventData);
                 case nameof(RecognizeCompleted):
                     return RecognizeCompleted.Deserialize(eventData);
                 case nameof(RecognizeFailed):
                     return RecognizeFailed.Deserialize(eventData);
+                case nameof(RecognizeCanceled):
+                    return RecognizeCanceled.Deserialize(eventData);
                 default:
                     return null;
             }

@@ -9,38 +9,55 @@ function Update-CIFile() {
 
     $shouldRemove = $false
 
-    $lines = Get-Content $mgmtCiFile
-    $newLines = [System.Collections.ArrayList]::new()
-    foreach($line in $lines) {
-        if($line.StartsWith("    ArtifactName:")) {
-            Continue
-        }
-        if($line.StartsWith("trigger:") -or $line.StartsWith("pr:")) {
-            $prefix = $line.Substring(0, $line.IndexOf(":") + 1)
-            $newLines.Add("$prefix none") | Out-Null
-            $shouldRemove = $true
-            Continue
-        }
-        if($line.StartsWith("    - name:")) {
-            if($line -match "Azure.ResourceManager.") {
-                $shouldRemove = $false
-            }
-            else {
-                $shouldRemove = $true
-                Continue
-            }
-        }
-        if($shouldRemove) {
-            if($line.StartsWith(" ")) {
-                Continue
-            }
-            $shouldRemove = $false
-        }
+    $content = Get-Content $mgmtCiFile -Raw
 
-        $newLines.Add($line) | Out-Null
+    if ($content -match "(?s)ServiceDirectory:\s*(?<sd>[^\r\n]+).*-\s*name:\s*(?<p>[^\r\n]+)")
+    {
+        $serviceDirectory = $matches["sd"]
+        $packageName = $matches["p"]
+    }
+    else {
+        Write-Error "Could not parse out the service directory and package from $mgmtCiFile, so skipping."
+        return
     }
 
-    Set-Content -Path $mgmtCiFile $newLines
+    $relServiceDir = "sdk/$serviceDirectory"
+    $relPackageDir = "$relServiceDir/$packageName/"
+    $prtriggers = @"
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - $relServiceDir/ci.mgmt.yml
+    - $relPackageDir
+"@
+
+    $content = $content -replace "(?s)pr:[^\r\n]*(\r\n([ ]+[^\r\n]*|))*", "$prtriggers`r`n`r`n"
+    $content = $content -replace "(?s)trigger:[^\r\n]*(\r\n([ ]+[^\r\n]*|))*", "trigger: none`r`n"
+
+    if ($content -notmatch "LimitForPullRequest: true")
+    {
+        $content = $content -replace "(.*)Artifacts:", "`$1LimitForPullRequest: true`r`n`$1Artifacts:"
+    }
+
+    Set-Content -Path $mgmtCiFile $content -NoNewline
+
+
+    $ciFile = $mgmtCiFile.Replace("ci.mgmt", "ci")
+
+    if (Test-Path $ciFile)
+    {
+        $ciContent = Get-Content $ciFile -Raw
+
+        $ciContent = $ciContent -replace "(?s)(paths:\r\n(\s+)include:\r\n(?:\s+-[^\r\n]*\r\n)*(?:\s+-\s+$relServiceDir/?\r\n)(?:\s+-[^\r\n]*\r\n)*)(?!\s+exclude:)", "`$1`$2exclude:`r`n`$2- $relPackageDir`r`n"
+
+        Set-Content -Path $ciFile $ciContent -NoNewline
+    }
 }
 
 #update all Azure.ResourceManager libraries to use the new pattern for ci

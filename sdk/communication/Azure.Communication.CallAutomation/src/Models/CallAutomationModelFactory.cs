@@ -83,18 +83,15 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Initializes a new instance of add participant failed event.
         /// </summary>
-        public static AddParticipantsFailed AddParticipantsFailed(string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default, string version = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        public static AddParticipantsFailed AddParticipantsFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default)
         {
             var internalObject = new AddParticipantsFailedInternal(
-                CreateEventSource(callConnectionId),
-                operationContext,
-                resultInformation,
-                participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(),
-                version,
                 callConnectionId,
                 serverCallId,
                 correlationId,
-                CallAutomationEventParser.EventPrefix + nameof(AddParticipantsFailed)
+                operationContext,
+                resultInformation,
+                participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList()
                 );
 
             return new AddParticipantsFailed(internalObject);
@@ -103,18 +100,15 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Initializes a new instance of add participant success event.
         /// </summary>
-        public static AddParticipantsSucceeded AddParticipantsSucceeded(string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default, string version = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        public static AddParticipantsSucceeded AddParticipantsSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default)
         {
             var internalObject = new AddParticipantsSucceededInternal(
-                CreateEventSource(callConnectionId),
-                operationContext,
-                resultInformation,
-                participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(),
-                version,
                 callConnectionId,
                 serverCallId,
                 correlationId,
-                CallAutomationEventParser.EventPrefix + nameof(AddParticipantsFailed)
+                operationContext,
+                resultInformation,
+                participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList()
                 );
 
             return new AddParticipantsSucceeded(internalObject);
@@ -123,18 +117,13 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Initializes a new instance of Participants Updated event.
         /// </summary>
-        public static ParticipantsUpdated ParticipantsUpdated(IEnumerable<CommunicationIdentifier> participants = default, string version = default, string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        public static ParticipantsUpdated ParticipantsUpdated(string callConnectionId = default, string serverCallId = default, string correlationId = default, IEnumerable<CommunicationIdentifier> participants = default)
         {
             var internalObject = new ParticipantsUpdatedInternal(
-                CreateEventSource(callConnectionId),
-                participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(),
-                version,
-                operationContext,
-                resultInformation,
                 callConnectionId,
                 serverCallId,
                 correlationId,
-                CallAutomationEventParser.EventPrefix + nameof(ParticipantsUpdated)
+                participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList()
                 );
 
             return new ParticipantsUpdated(internalObject);

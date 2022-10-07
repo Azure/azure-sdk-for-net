@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_ListStaticSiteConfiguredRoles
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StringList>> GetConfiguredRolesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StaticSiteStringList>> GetConfiguredRolesAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetConfiguredRoles");
             scope.Start();
@@ -966,7 +966,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_ListStaticSiteConfiguredRoles
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StringList> GetConfiguredRoles(CancellationToken cancellationToken = default)
+        public virtual Response<StaticSiteStringList> GetConfiguredRoles(CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetConfiguredRoles");
             scope.Start();
