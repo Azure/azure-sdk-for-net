@@ -94,16 +94,16 @@ MapsGeolocationClient client = new MapsGeolocationClient(credential, clientId);
 
 This service will return the ISO country code for the provided IP address. Developers can use this information to block or alter certain content based on geographical locations where the application is being viewed from.
 
-```C# Snippet:GetLocation
+```C# Snippet:GetCountryCode
 //Get location by given IP address
 IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
-Response<GetLocationResult> result = client.GetLocation(ipAddress);
+Response<CountryRegionResult> result = client.GetCountryCode(ipAddress);
 
 //Get location result country code
 Console.WriteLine($"Country code results by given IP Address: {result.Value.IsoCode}");
 ```
 
-For more detailed examples, please see [geolocation samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Geolocation/samples/GetLocationSamples.md) page.
+For more detailed examples, please see [geolocation samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Geolocation/samples/GetCountryCodeSamples.md) page.
 
 ## Troubleshooting
 
@@ -119,7 +119,7 @@ try
     // An invalid IP address
     IPAddress inValidIpAddress = IPAddress.Parse("2001:4898:80e8:b:123123213123");
 
-    Response<GetLocationResult> result = client.GetLocation(inValidIpAddress);
+    Response<CountryRegionResult> result = client.GetCountryCode(inValidIpAddress);
     // Do something with result ...
 }
 catch (FormatException e)

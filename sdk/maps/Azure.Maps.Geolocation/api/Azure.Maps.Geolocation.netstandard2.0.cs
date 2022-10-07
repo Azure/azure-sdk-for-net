@@ -1,8 +1,8 @@
 namespace Azure.Maps.Geolocation
 {
-    public partial class GetLocationResult
+    public partial class CountryRegionResult
     {
-        internal GetLocationResult() { }
+        internal CountryRegionResult() { }
         public System.Net.IPAddress IpAddress { get { throw null; } }
         public string IsoCode { get { throw null; } }
     }
@@ -13,8 +13,8 @@ namespace Azure.Maps.Geolocation
         public MapsGeolocationClient(Azure.AzureKeyCredential credential, Azure.Maps.Geolocation.MapsGeolocationClientOptions options) { }
         public MapsGeolocationClient(Azure.Core.TokenCredential credential, string clientId) { }
         public MapsGeolocationClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Geolocation.MapsGeolocationClientOptions options) { }
-        public virtual Azure.Response<Azure.Maps.Geolocation.GetLocationResult> GetLocation(System.Net.IPAddress ipAddress, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Geolocation.GetLocationResult>> GetLocationAsync(System.Net.IPAddress ipAddress, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Geolocation.CountryRegionResult> GetCountryCode(System.Net.IPAddress ipAddress, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Geolocation.CountryRegionResult>> GetCountryCodeAsync(System.Net.IPAddress ipAddress, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MapsGeolocationClientOptions : Azure.Core.ClientOptions
     {

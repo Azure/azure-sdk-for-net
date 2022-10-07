@@ -71,7 +71,7 @@ namespace Azure.Maps.Geolocation
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
-        public async Task<Response<GetLocationResult>> GetLocationAsync(string ipAddress, JsonFormat? format = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CountryRegionResult>> GetLocationAsync(string ipAddress, JsonFormat? format = null, CancellationToken cancellationToken = default)
         {
             if (ipAddress == null)
             {
@@ -85,9 +85,9 @@ namespace Azure.Maps.Geolocation
             {
                 case 200:
                     {
-                        GetLocationResult value = default;
+                        CountryRegionResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GetLocationResult.DeserializeGetLocationResult(document.RootElement);
+                        value = CountryRegionResult.DeserializeCountryRegionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -105,7 +105,7 @@ namespace Azure.Maps.Geolocation
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
-        public Response<GetLocationResult> GetLocation(string ipAddress, JsonFormat? format = null, CancellationToken cancellationToken = default)
+        public Response<CountryRegionResult> GetLocation(string ipAddress, JsonFormat? format = null, CancellationToken cancellationToken = default)
         {
             if (ipAddress == null)
             {
@@ -119,9 +119,9 @@ namespace Azure.Maps.Geolocation
             {
                 case 200:
                     {
-                        GetLocationResult value = default;
+                        CountryRegionResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GetLocationResult.DeserializeGetLocationResult(document.RootElement);
+                        value = CountryRegionResult.DeserializeCountryRegionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

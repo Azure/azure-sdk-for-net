@@ -11,17 +11,17 @@ namespace Azure.Maps.Geolocation
 {
     /// <summary> This object is returned from a successful call to IP Address to country/region API. </summary>
     [CodeGenModel("IpAddressToLocationResult")]
-    public partial class GetLocationResult
+    public partial class CountryRegionResult
     {
-        /// <summary> Initializes a new instance of GetLocationResult. </summary>
-        internal GetLocationResult()
+        /// <summary> Initializes a new instance of CountryRegionResult. </summary>
+        internal CountryRegionResult()
         {
         }
 
-        /// <summary> Initializes a new instance of GetLocationResult. </summary>
+        /// <summary> Initializes a new instance of CountryRegionResult. </summary>
         /// <param name="countryRegion"> The object containing the country/region information. </param>
         /// <param name="ipAddress"> The IP Address of the request. </param>
-        internal GetLocationResult(CountryRegion countryRegion, IPAddress ipAddress)
+        internal CountryRegionResult(CountryRegion countryRegion, IPAddress ipAddress)
         {
             CountryRegion = countryRegion;
             IpAddress = ipAddress;

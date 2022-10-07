@@ -103,9 +103,9 @@ namespace Azure.Maps.Geolocation
         /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        public virtual async Task<Response<GetLocationResult>> GetLocationAsync(IPAddress ipAddress, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CountryRegionResult>> GetCountryCodeAsync(IPAddress ipAddress, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsGeolocationClient.GetLocation");
+            using var scope = _clientDiagnostics.CreateScope("MapsGeolocationClient.GetCountryCode");
             scope.Start();
             try
             {
@@ -130,9 +130,9 @@ namespace Azure.Maps.Geolocation
         /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        public virtual Response<GetLocationResult> GetLocation(IPAddress ipAddress, CancellationToken cancellationToken = default)
+        public virtual Response<CountryRegionResult> GetCountryCode(IPAddress ipAddress, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsGeolocationClient.GetLocation");
+            using var scope = _clientDiagnostics.CreateScope("MapsGeolocationClient.GetCountryCode");
             scope.Start();
             try
             {

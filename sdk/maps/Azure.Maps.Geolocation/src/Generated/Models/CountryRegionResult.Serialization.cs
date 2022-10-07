@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Maps.Geolocation
 {
-    public partial class GetLocationResult
+    public partial class CountryRegionResult
     {
-        internal static GetLocationResult DeserializeGetLocationResult(JsonElement element)
+        internal static CountryRegionResult DeserializeCountryRegionResult(JsonElement element)
         {
             Optional<CountryRegion> countryRegion = default;
             Optional<IPAddress> ipAddress = default;
@@ -40,7 +40,7 @@ namespace Azure.Maps.Geolocation
                     continue;
                 }
             }
-            return new GetLocationResult(countryRegion.Value, ipAddress.Value);
+            return new CountryRegionResult(countryRegion.Value, ipAddress.Value);
         }
     }
 }

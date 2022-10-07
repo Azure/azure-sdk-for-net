@@ -3,4 +3,4 @@
 
 using System.Runtime.CompilerServices;
 
-[assembly: Azure.Core.AzureResourceProviderNamespace("Azure.Maps.GeoLocation")]
+[assembly: Azure.Core.AzureResourceProviderNamespace("Azure.Maps.Geolocation")]

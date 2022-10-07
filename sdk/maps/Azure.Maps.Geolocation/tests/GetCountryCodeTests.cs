@@ -11,18 +11,18 @@ using NUnit.Framework;
 
 namespace Azure.Maps.Geolocation.Tests
 {
-    public class GetLocationTests : GeolocationClientLiveTestsBase
+    public class GetCountryCodeTests : GeolocationClientLiveTestsBase
     {
-        public GetLocationTests(bool isAsync) : base(isAsync)
+        public GetCountryCodeTests(bool isAsync) : base(isAsync)
         {
         }
 
         [RecordedTest]
-        public async Task CanGetLocation()
+        public async Task CanGetCountryCode()
         {
             var client = CreateClient();
             IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
-            var result = await client.GetLocationAsync(ipAddress);
+            var result = await client.GetCountryCodeAsync(ipAddress);
 
             Assert.AreEqual("US", result.Value.IsoCode);
             Assert.AreEqual(IPAddress.Parse("2001:4898:80e8:b::189"), result.Value.IpAddress);

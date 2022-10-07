@@ -10,7 +10,7 @@ using System.Net;
 namespace Azure.Maps.Geolocation
 {
     /// <summary> This object is returned from a successful call to IP Address to country/region API. </summary>
-    public partial class GetLocationResult
+    public partial class CountryRegionResult
     {
     }
 }

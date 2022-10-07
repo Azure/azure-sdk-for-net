@@ -39,16 +39,16 @@ namespace Azure.Maps.Geolocation.Tests
         }
 
         [Test]
-        public void GetLocationTest()
+        public void GetCountryCodeTest()
         {
             TokenCredential credential = TestEnvironment.Credential;
             string clientId = TestEnvironment.MapAccountClientId;
             MapsGeolocationClient client = new MapsGeolocationClient(credential, clientId);
 
-            #region Snippet:GetLocation
+            #region Snippet:GetCountryCode
             //Get location by given IP address
             IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
-            Response<GetLocationResult> result = client.GetLocation(ipAddress);
+            Response<CountryRegionResult> result = client.GetCountryCode(ipAddress);
 
             //Get location result country code
             Console.WriteLine($"Country code results by given IP Address: {result.Value.IsoCode}");
@@ -70,7 +70,7 @@ namespace Azure.Maps.Geolocation.Tests
                 // An invalid IP address
                 IPAddress inValidIpAddress = IPAddress.Parse("2001:4898:80e8:b:123123213123");
 
-                Response<GetLocationResult> result = client.GetLocation(inValidIpAddress);
+                Response<CountryRegionResult> result = client.GetCountryCode(inValidIpAddress);
                 // Do something with result ...
             }
             catch (FormatException e)

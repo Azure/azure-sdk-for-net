@@ -15,4 +15,4 @@ description: Samples for the Azure.Maps.Geolocation client library.
 
 For different APIs, please refer the following samples:
 
-[Get Location](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Geolocation/samples/GetLocationSamples.md)
+[Get Location](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Geolocation/samples/GetCountryCodeSamples.md)
