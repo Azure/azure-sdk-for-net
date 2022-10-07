@@ -130,7 +130,7 @@ namespace Azure.AI.TextAnalytics
         internal static DetectedLanguage ConvertToDetectedLanguage(Legacy.DocumentLanguage documentLanguage)
         {
             var detected = documentLanguage.DetectedLanguage;
-            return new DetectedLanguage(detected.Name, detected.Iso6391Name, detected.ConfidenceScore, default, ConvertToWarnings(documentLanguage.Warnings));
+            return new DetectedLanguage(detected.Name, detected.Iso6391Name, detected.ConfidenceScore, ConvertToWarnings(documentLanguage.Warnings));
         }
 
         internal static DetectLanguageResultCollection ConvertToDetectLanguageResultCollection(Legacy.LanguageResult results, IDictionary<string, int> idToIndexMap)

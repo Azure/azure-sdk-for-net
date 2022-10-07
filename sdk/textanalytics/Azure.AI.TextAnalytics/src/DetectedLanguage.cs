@@ -13,16 +13,15 @@ namespace Azure.AI.TextAnalytics
     public readonly struct DetectedLanguage
     {
         internal DetectedLanguage(DetectedLanguageInternal language, IList<TextAnalyticsWarning> warnings)
-            : this(language.Name, language.Iso6391Name, language.ConfidenceScore, language.Script, warnings)
+            : this(language.Name, language.Iso6391Name, language.ConfidenceScore, warnings)
         {
         }
 
-        internal DetectedLanguage(string name, string iso6391Name, double confidenceScore, ScriptKind? script, IList<TextAnalyticsWarning> warnings)
+        internal DetectedLanguage(string name, string iso6391Name, double confidenceScore, IList<TextAnalyticsWarning> warnings)
         {
             Name = name;
             Iso6391Name = iso6391Name;
             ConfidenceScore = confidenceScore;
-            Script = script;
             Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
         }
 
@@ -43,12 +42,6 @@ namespace Azure.AI.TextAnalytics
         /// indicate high certainty that the identified language is correct.
         /// </summary>
         public double ConfidenceScore { get; }
-
-        /// <summary>
-        /// Gets the non-native script of the detected language, if applicable
-        /// (for example, "Latin" in the case of romanized Hindi).
-        /// </summary>
-        public ScriptKind? Script { get; }
 
         /// <summary>
         /// Gets the warnings encountered while processing the document.
