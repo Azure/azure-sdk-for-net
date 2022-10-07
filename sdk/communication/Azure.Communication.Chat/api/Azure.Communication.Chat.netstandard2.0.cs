@@ -1,3 +1,26 @@
+namespace Azure.Communication
+{
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CommunicationIdentifierModelKind : System.IEquatable<Azure.Communication.CommunicationIdentifierModelKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CommunicationIdentifierModelKind(string value) { throw null; }
+        public static Azure.Communication.CommunicationIdentifierModelKind CommunicationUser { get { throw null; } }
+        public static Azure.Communication.CommunicationIdentifierModelKind MicrosoftTeamsUser { get { throw null; } }
+        public static Azure.Communication.CommunicationIdentifierModelKind PhoneNumber { get { throw null; } }
+        public static Azure.Communication.CommunicationIdentifierModelKind Unknown { get { throw null; } }
+        public bool Equals(Azure.Communication.CommunicationIdentifierModelKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.CommunicationIdentifierModelKind left, Azure.Communication.CommunicationIdentifierModelKind right) { throw null; }
+        public static implicit operator Azure.Communication.CommunicationIdentifierModelKind (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CommunicationIdentifierModelKind left, Azure.Communication.CommunicationIdentifierModelKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+}
 namespace Azure.Communication.Chat
 {
     public partial class AddChatParticipantsResult
