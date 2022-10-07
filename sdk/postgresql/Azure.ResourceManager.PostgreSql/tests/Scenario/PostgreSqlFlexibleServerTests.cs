@@ -95,5 +95,68 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             // Delete
             await serverFromGet.DeleteAsync(WaitUntil.Completed);
         }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task FastProvision()
+        {
+            var version = PostgreSqlFlexibleServerVersion.Ver12;
+            var storageSize = 32;
+            var location = AzureLocation.NorthEurope;
+            var skuName = "Standard_B1ms";
+            var tier = PostgreSqlFlexibleServerSkuTier.Burstable;
+            var backupRetention = 7;
+
+            // Fast create
+            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", location);
+            PostgreSqlFlexibleServerCollection serverCollection = rg.GetPostgreSqlFlexibleServers();
+
+            var data = new PostgreSqlFlexibleServerData(rg.Data.Location)
+            {
+                Sku = new PostgreSqlFlexibleServerSku(skuName, tier),
+                AdministratorLogin = "testUser",
+                AdministratorLoginPassword = "testPassword1!",
+                Version = version,
+                Storage = new PostgreSqlFlexibleServerStorage() { StorageSizeInGB = storageSize },
+                CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
+                Backup = new PostgreSqlFlexibleServerBackupProperties()
+                {
+                    BackupRetentionDays = backupRetention,
+                },
+                Tags = { { "key1", "val1" } },
+            };
+
+            var lro = await serverCollection.FastProvisionAsync(WaitUntil.Completed, data);
+            PostgreSqlFlexibleServerResource server = lro.Value;
+
+            string serverName = server.Data.Name;
+
+            Assert.AreEqual(location, server.Data.Location);
+            Assert.AreEqual(skuName, server.Data.Sku.Name);
+            Assert.AreEqual(tier, server.Data.Sku.Tier);
+            Assert.AreEqual(version, server.Data.Version);
+            Assert.AreEqual(storageSize, server.Data.Storage.StorageSizeInGB);
+            Assert.AreEqual(backupRetention, server.Data.Backup.BackupRetentionDays);
+
+            // Update
+            lro = await server.UpdateAsync(WaitUntil.Completed, new PostgreSqlFlexibleServerPatch()
+            {
+                Backup = new PostgreSqlFlexibleServerBackupProperties() { BackupRetentionDays = backupRetention + 10 },
+                Storage = new PostgreSqlFlexibleServerStorage() { StorageSizeInGB = storageSize * 2 },
+                Tags = { { "key2", "val2" } },
+            });
+            PostgreSqlFlexibleServerResource serverFromUpdate = lro.Value;
+
+            Assert.AreEqual(storageSize * 2, serverFromUpdate.Data.Storage.StorageSizeInGB);
+            Assert.AreEqual(backupRetention + 10, serverFromUpdate.Data.Backup.BackupRetentionDays);
+            Assert.AreEqual("val2", serverFromUpdate.Data.Tags["key2"]);
+
+            // Get
+            PostgreSqlFlexibleServerResource serverFromGet = await serverFromUpdate.GetAsync();
+            Assert.AreEqual(serverName, serverFromGet.Data.Name);
+
+            // Delete
+            await serverFromGet.DeleteAsync(WaitUntil.Completed);
+        }
     }
 }
