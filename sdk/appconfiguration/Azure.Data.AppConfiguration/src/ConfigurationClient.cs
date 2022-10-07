@@ -160,8 +160,7 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                RequestContext context = CreateContext(cancellationToken);
-                context.AddClassifier(412, isError: false);
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
 
                 using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
@@ -187,14 +186,6 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private static RequestContext CreateContext(CancellationToken cancellationToken)
-        {
-            return new RequestContext()
-            {
-                CancellationToken = cancellationToken,
-            };
-        }
-
         /// <summary>
         /// Creates a <see cref="ConfigurationSetting"/> only if the setting does not already exist in the configuration store.
         /// </summary>
@@ -209,8 +200,7 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                RequestContext context = CreateContext(cancellationToken);
-                context.AddClassifier(412, isError: false);
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
 
                 using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
@@ -276,34 +266,22 @@ namespace Azure.Data.AppConfiguration
         public virtual async Task<Response<ConfigurationSetting>> SetConfigurationSettingAsync(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(setting, nameof(setting));
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
-            scope.AddAttribute("key", setting?.Key);
-            scope.Start();
 
-            try
+            RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+
+            using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
+            ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
+            MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
+
+            using Response response = await SetConfigurationSettingAsync(setting.Key, content, contentType, setting.Label, requestOptions, context).ConfigureAwait(false);
+            return response.Status switch
             {
-                RequestContext context = CreateContext(cancellationToken);
-                context.AddClassifier(409, isError: false);
+                200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
+                409 => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(null, "The setting is read only")).ConfigureAwait(false),
 
-                using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
-                ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
-                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
-
-                using Response response = await SetConfigurationSettingAsync(setting.Key, content, contentType, setting.Label, requestOptions, context).ConfigureAwait(false);
-                return response.Status switch
-                {
-                    200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
-                    409 => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(null, "The setting is read only")).ConfigureAwait(false),
-
-                    // Throws on 412 if resource was modified.
-                    _ => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
-                };
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                // Throws on 412 if resource was modified.
+                _ => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
+            };
         }
 
         /// <summary>
@@ -319,35 +297,22 @@ namespace Azure.Data.AppConfiguration
         public virtual Response<ConfigurationSetting> SetConfigurationSetting(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(setting, nameof(setting));
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
-            scope.AddAttribute("key", setting?.Key);
-            scope.Start();
+            RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
 
-            try
+            using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
+            ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
+            MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
+
+            using Response response = SetConfigurationSetting(setting.Key, content, contentType, setting.Label, requestOptions, context);
+
+            return response.Status switch
             {
-                RequestContext context = CreateContext(cancellationToken);
-                context.AddClassifier(409, isError: false);
+                200 => CreateResponse(response),
+                409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
 
-                using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
-                ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
-                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
-
-                using Response response = SetConfigurationSetting(setting.Key, content, contentType, setting.Label, requestOptions, context);
-
-                return response.Status switch
-                {
-                    200 => CreateResponse(response),
-                    409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
-
-                    // Throws on 412 if resource was modified.
-                    _ => throw ClientDiagnostics.CreateRequestFailedException(response),
-                };
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                // Throws on 412 if resource was modified.
+                _ => throw ClientDiagnostics.CreateRequestFailedException(response),
+            };
         }
 
         /// <summary>
@@ -412,62 +377,36 @@ namespace Azure.Data.AppConfiguration
 
         private async Task<Response> DeleteConfigurationSettingAsync(string key, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
-            scope.AddAttribute("key", key);
-            scope.Start();
+            RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
 
-            try
+            using Response response = await DeleteConfigurationSettingAsync(key, label, requestOptions?.IfMatch, context).ConfigureAwait(false);
+
+            return response.Status switch
             {
-                RequestContext context = CreateContext(cancellationToken);
-                context.AddClassifier(409, isError: false);
+                200 => response,
+                204 => response,
+                409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
 
-                using Response response = await DeleteConfigurationSettingAsync(key, label, requestOptions?.IfMatch, context).ConfigureAwait(false);
-
-                return response.Status switch
-                {
-                    200 => response,
-                    204 => response,
-                    409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
-
-                    // Throws on 412 if resource was modified.
-                    _ => throw ClientDiagnostics.CreateRequestFailedException(response)
-                };
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                // Throws on 412 if resource was modified.
+                _ => throw ClientDiagnostics.CreateRequestFailedException(response)
+            };
         }
 
         private Response DeleteConfigurationSetting(string key, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
-            scope.AddAttribute("key", key);
-            scope.Start();
+            RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
 
-            try
+            using Response response = DeleteConfigurationSetting(key, label, requestOptions?.IfMatch, context);
+
+            return response.Status switch
             {
-                RequestContext context = CreateContext(cancellationToken);
-                context.AddClassifier(409, isError: false);
+                200 => response,
+                204 => response,
+                409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only.")),
 
-                using Response response = DeleteConfigurationSetting(key, label, requestOptions?.IfMatch, context);
-
-                return response.Status switch
-                {
-                    200 => response,
-                    204 => response,
-                    409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only.")),
-
-                    // Throws on 412 if resource was modified.
-                    _ => throw ClientDiagnostics.CreateRequestFailedException(response)
-                };
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                // Throws on 412 if resource was modified.
+                _ => throw ClientDiagnostics.CreateRequestFailedException(response)
+            };
         }
 
         /// <summary> Deletes a key-value. </summary>
@@ -719,30 +658,17 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
         internal virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label, DateTimeOffset? acceptDateTime, MatchConditions conditions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
-            scope.AddAttribute(nameof(key), key);
-            scope.Start();
+            RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
 
-            try
+            var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
+            using Response response = await GetConfigurationSettingAsync(key, label, dateTime, null, conditions, context).ConfigureAwait(false);
+
+            return response.Status switch
             {
-                RequestContext context = CreateContext(cancellationToken);
-                context.AddClassifier(304, isError: false);
-
-                var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
-                using Response response = await GetConfigurationSettingAsync(key, label, dateTime, null, conditions, context).ConfigureAwait(false);
-
-                return response.Status switch
-                {
-                    200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
-                    304 => CreateResourceModifiedResponse(response),
-                    _ => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
-                };
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
+                304 => CreateResourceModifiedResponse(response),
+                _ => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
+            };
         }
 
         /// <summary>
@@ -756,30 +682,17 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
         internal virtual Response<ConfigurationSetting> GetConfigurationSetting(string key, string label, DateTimeOffset? acceptDateTime, MatchConditions conditions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
-            scope.AddAttribute(nameof(key), key);
-            scope.Start();
+            RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
 
-            try
+            var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
+            using Response response = GetConfigurationSetting(key, label, dateTime, null, conditions, context);
+
+            return response.Status switch
             {
-                RequestContext context = CreateContext(cancellationToken);
-                context.AddClassifier(304, isError: false);
-
-                var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
-                using Response response = GetConfigurationSetting(key, label, dateTime, null, conditions, context);
-
-                return response.Status switch
-                {
-                    200 => CreateResponse(response),
-                    304 => CreateResourceModifiedResponse(response),
-                    _ => throw ClientDiagnostics.CreateRequestFailedException(response),
-                };
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                200 => CreateResponse(response),
+                304 => CreateResourceModifiedResponse(response),
+                _ => throw ClientDiagnostics.CreateRequestFailedException(response),
+            };
         }
 
         /// <summary> Gets a single key-value. </summary>
@@ -948,7 +861,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(selector, nameof(selector));
             var dateTime = selector.AcceptDateTime.HasValue ? selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
-            RequestContext context = CreateContext(cancellationToken);
+            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<String> fieldsString = selector.Fields == SettingFields.All ? null : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
 
             AsyncPageable<BinaryData> pageableBinaryData = GetConfigurationSettingsAsync(selector.KeyFilter, selector.LabelFilter, null, dateTime, fieldsString, context);
@@ -964,7 +877,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(selector, nameof(selector));
             var dateTime = selector.AcceptDateTime.HasValue ? selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
-            RequestContext context = CreateContext(cancellationToken);
+            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<String> fieldsString = selector.Fields == SettingFields.All ? null : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
 
             Pageable<BinaryData> pageableBinaryData = GetConfigurationSettings(selector.KeyFilter, selector.LabelFilter, null, dateTime, fieldsString, context);
@@ -1004,7 +917,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(selector, nameof(selector));
             var dateTime = selector.AcceptDateTime.HasValue ? selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
-            RequestContext context = CreateContext(cancellationToken);
+            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<String> fieldsString = selector.Fields == SettingFields.All ? null : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
 
             AsyncPageable<BinaryData> pageableBinaryData = GetRevisionsAsync(selector.KeyFilter, selector.LabelFilter, null, dateTime, fieldsString, context);
@@ -1020,7 +933,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(selector, nameof(selector));
             var dateTime = selector.AcceptDateTime.HasValue ? selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
-            RequestContext context = CreateContext(cancellationToken);
+            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<String> fieldsString = selector.Fields == SettingFields.All ? null : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
 
             Pageable<BinaryData> pageableBinaryData = GetRevisions(selector.KeyFilter, selector.LabelFilter, null, dateTime, fieldsString, context);
@@ -1119,7 +1032,7 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                RequestContext context = CreateContext(cancellationToken);
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
                 using Response response = async ? await ToCreateAsyncResponse(key, label, requestOptions, isReadOnly, context).ConfigureAwait(false) : ToCreateResponse(key, label, requestOptions, isReadOnly, context);
 
                 return response.Status switch
@@ -1159,6 +1072,15 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(token, nameof(token));
             _syncTokenPolicy.AddToken(token);
+        }
+
+        private static RequestContext CreateRequestContext(ErrorOptions errorOptions, CancellationToken cancellationToken)
+        {
+            return new RequestContext()
+            {
+                ErrorOptions = errorOptions,
+                CancellationToken = cancellationToken
+            };
         }
     }
 }
