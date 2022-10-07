@@ -47,8 +47,8 @@ namespace Azure.Maps.Routing
         /// <summary> Fuel budget in liters that determines maximal range which can be travelled using the specified Combustion Consumption Model. </summary>
         public double? FuelBudgetInLiters { get; set; }
 
-        /// <summary> Electric energy budget in kilowatt hours (kWh) that determines maximal range which can be travelled using the specified Electric Consumption Model.&lt;br&gt; When energyBudgetInkWh is used, it is mandatory to specify a detailed Electric Consumption Model. </summary>
-        public double? EnergyBudgetInKwH { get; set; }
+        /// <summary> Electric energy budget in kilowatt hours (kWh) that determines maximal range which can be travelled using the specified Electric Consumption Model.&lt;br&gt; When EnergyBudgetInKilowattHours is used, it is mandatory to specify a detailed Electric Consumption Model. </summary>
+        public double? EnergyBudgetInKilowattHours { get; set; }
 
         /// <summary> Time budget in `TimeSpan` that determines maximal range which can be travelled using driving time. The Consumption Model will only affect the range when routeType is eco. </summary>
         public TimeSpan? TimeBudget { get; set; }
@@ -103,7 +103,7 @@ namespace Azure.Maps.Routing
         /// <item><description> A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour. </description></item>
         /// </list>
         /// </summary>
-        public int? VehicleMaxSpeedInKmPerHour { get; set; }
+        public int? VehicleMaxSpeedInKilometersPerHour { get; set; }
 
         /// <summary>
         /// Weight of the vehicle in kilograms.
@@ -140,7 +140,7 @@ namespace Azure.Maps.Routing
         /// Sensible Values : 50,6.3:130,11.5
         /// <c>Note</c> : This parameter is required for The Combustion Consumption Model.
         /// </summary>
-        public string ConstantSpeedConsumptionInLitersPerHundredKm { get; set; }
+        public string ConstantSpeedConsumptionInLitersPerHundredKilometer { get; set; }
 
         /// <summary>
         /// Specifies the current supply of fuel in liters.
@@ -208,29 +208,29 @@ namespace Azure.Maps.Routing
         /// Sensible Values : 50,8.2:130,21.3
         /// This parameter is required for Electric consumption model.
         /// </summary>
-        public string ConstantSpeedConsumptionInKwHPerHundredKm { get; set; }
+        public string ConstantSpeedConsumptionInKilowattHoursPerHundredKilometer { get; set; }
 
         /// <summary>
         /// Specifies the current electric energy supply in kilowatt hours (kWh).
-        /// This parameter co-exists with <c>MaxChargeInKwH</c> parameter.
-        /// The range of values allowed are 0.0 to <c>MaxChargeInkWh</c>.
+        /// This parameter co-exists with <c>MaxChargeInKilowattHours</c> parameter.
+        /// The range of values allowed are 0.0 to <c>MaxChargeInKilowattHours</c>.
         /// Sensible Values : 43
         /// </summary>
-        public double? CurrentChargeInKwH { get; set; }
+        public double? CurrentChargeInKilowattHours { get; set; }
 
         /// <summary>
         /// Specifies the maximum electric energy supply in kilowatt hours (kWh) that may be stored in the vehicle's battery.
-        /// This parameter co-exists with <c>CurrentChargeInkWh</c> parameter.
-        /// Minimum value has to be greater than or equal to <c>CurrentChargeInkWh</c>.
+        /// This parameter co-exists with <c>CurrentChargeInKilowattHours</c> parameter.
+        /// Minimum value has to be greater than or equal to <c>CurrentChargeInKilowattHours</c>.
         /// Sensible Values : 85
         /// </summary>
-        public double? MaxChargeInKwH { get; set; }
+        public double? MaxChargeInKilowattHours { get; set; }
 
         /// <summary>
         /// Specifies the amount of power consumed for sustaining auxiliary systems, in kilowatts (kW).
         /// It can be used to specify consumption due to devices and systems such as AC systems, radio, heating, etc.
         /// Sensible Values : 1.7
         /// </summary>
-        public double? AuxiliaryPowerInKw { get; set; }
+        public double? AuxiliaryPowerInKilowatts { get; set; }
     }
 }

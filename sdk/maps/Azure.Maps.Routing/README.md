@@ -210,7 +210,7 @@ RouteMatrixOptions routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery)
     TravelTimeType = TravelTimeType.All,
 };
 
-// Invoke an async route matrix request and directly wait for completion
+// Invoke an long-running operation route matrix request and directly wait for completion
 GetRouteMatrixOperation result = client.GetRouteMatrix(WaitUntil.Completed, routeMatrixOptions);
 ```
 

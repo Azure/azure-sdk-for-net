@@ -114,7 +114,7 @@ namespace Azure.Maps.Routing
         /// <item><description> A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour. </description></item>
         /// </list>
         /// </summary>
-        public int? VehicleMaxSpeedInKmPerHour { get; set; }
+        public int? VehicleMaxSpeedInKilometersPerHour { get; set; }
 
         /// <summary>
         /// Weight of the vehicle in kilograms.
@@ -219,7 +219,7 @@ namespace Azure.Maps.Routing
         /// Sensible Values : 50,8.2:130,21.3
         /// This parameter is required for <c>Electric consumption model</c>.
         /// </summary>
-        public string ConstantSpeedConsumptionInKilowattHourPerHundredKilometer { get; set; }
+        public string ConstantSpeedConsumptionInKilowattHoursPerHundredKilometer { get; set; }
 
         /// <summary>
         /// Specifies the current electric energy supply in kilowatt hours (kWh).
@@ -227,7 +227,7 @@ namespace Azure.Maps.Routing
         /// The range of values allowed are 0.0 to <c>MaxChargeInKilowattHour</c>.
         /// Sensible Values : 43
         /// </summary>
-        public double? CurrentChargeInKilowattHour { get; set; }
+        public double? CurrentChargeInKilowattHours { get; set; }
 
         /// <summary>
         /// Specifies the maximum electric energy supply in kilowatt hours (kWh) that may be stored in the vehicle's battery.
@@ -235,14 +235,14 @@ namespace Azure.Maps.Routing
         /// Minimum value has to be greater than or equal to <c>currentChargeInkilowattHour</c>.
         /// Sensible Values : 85
         /// </summary>
-        public double? MaxChargeInKilowattHour { get; set; }
+        public double? MaxChargeInKilowattHours { get; set; }
 
         /// <summary>
         /// Specifies the amount of power consumed for sustaining auxiliary systems, in kilowatts (kW).
         /// It can be used to specify consumption due to devices and systems such as AC systems, radio, heating, etc.
         /// Sensible Values : 1.7
         /// </summary>
-        public double? AuxiliaryPowerInKilowatt { get; set; }
+        public double? AuxiliaryPowerInKilowatts { get; set; }
 
         /// <summary>
         /// Used for reconstructing a route and for calculating zero or more alternative routes to this reference route.  The provided sequence of coordinates is used as input for route reconstruction. The alternative routes  are calculated between the origin and destination points specified in the base path parameter locations.  If both minDeviationDistance and minDeviationTime are set to zero, then these origin and destination points  are expected to be at (or very near) the beginning and end of the reference route, respectively. Intermediate  locations (waypoints) are not supported when using supportingPoints.

@@ -97,13 +97,13 @@ namespace Azure.Maps.Routing
         public double? AccelerationEfficiency { get { throw null; } set { } }
         public Azure.Maps.Routing.AlternativeRouteType? AlternativeType { get { throw null; } set { } }
         public System.DateTimeOffset? ArriveAt { get { throw null; } set { } }
-        public double? AuxiliaryPowerInKilowatt { get { throw null; } set { } }
+        public double? AuxiliaryPowerInKilowatts { get { throw null; } set { } }
         public double? AuxiliaryPowerInLitersPerHour { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Maps.Routing.RouteAvoidType> Avoid { get { throw null; } }
         public bool? ComputeBestWaypointOrder { get { throw null; } set { } }
-        public string ConstantSpeedConsumptionInKilowattHourPerHundredKilometer { get { throw null; } set { } }
+        public string ConstantSpeedConsumptionInKilowattHoursPerHundredKilometer { get { throw null; } set { } }
         public string ConstantSpeedConsumptionInLitersPerHundredKilometer { get { throw null; } set { } }
-        public double? CurrentChargeInKilowattHour { get { throw null; } set { } }
+        public double? CurrentChargeInKilowattHours { get { throw null; } set { } }
         public double? CurrentFuelInLiters { get { throw null; } set { } }
         public double? DecelerationEfficiency { get { throw null; } set { } }
         public System.DateTimeOffset? DepartAt { get { throw null; } set { } }
@@ -114,7 +114,7 @@ namespace Azure.Maps.Routing
         public bool? IsCommercialVehicle { get { throw null; } set { } }
         public Azure.Maps.Routing.RoutingLanguage Language { get { throw null; } set { } }
         public int? MaxAlternatives { get { throw null; } set { } }
-        public double? MaxChargeInKilowattHour { get { throw null; } set { } }
+        public double? MaxChargeInKilowattHours { get { throw null; } set { } }
         public int? MinDeviationDistance { get { throw null; } set { } }
         public int? MinDeviationTime { get { throw null; } set { } }
         public Azure.Maps.Routing.RouteDirectionParameters RouteDirectionParameters { get { throw null; } set { } }
@@ -132,7 +132,7 @@ namespace Azure.Maps.Routing
         public double? VehicleHeightInMeters { get { throw null; } set { } }
         public double? VehicleLengthInMeters { get { throw null; } set { } }
         public Azure.Maps.Routing.VehicleLoadType? VehicleLoadType { get { throw null; } set { } }
-        public int? VehicleMaxSpeedInKmPerHour { get { throw null; } set { } }
+        public int? VehicleMaxSpeedInKilometersPerHour { get { throw null; } set { } }
         public int? VehicleWeightInKilograms { get { throw null; } set { } }
         public double? VehicleWidthInMeters { get { throw null; } set { } }
         public Azure.Maps.Routing.WindingnessLevel? Windingness { get { throw null; } set { } }
@@ -189,7 +189,7 @@ namespace Azure.Maps.Routing
         public double? VehicleHeightInMeters { get { throw null; } set { } }
         public double? VehicleLengthInMeters { get { throw null; } set { } }
         public Azure.Maps.Routing.VehicleLoadType? VehicleLoadType { get { throw null; } set { } }
-        public int? VehicleMaxSpeedInKmPerHour { get { throw null; } set { } }
+        public int? VehicleMaxSpeedInKilometersPerHour { get { throw null; } set { } }
         public int? VehicleWeightInKilograms { get { throw null; } set { } }
         public double? VehicleWidthInMeters { get { throw null; } set { } }
         public Azure.Maps.Routing.WindingnessLevel? Windingness { get { throw null; } set { } }
@@ -206,23 +206,23 @@ namespace Azure.Maps.Routing
         public RouteRangeOptions(Azure.Core.GeoJson.GeoPosition routeRangePoint) { }
         public RouteRangeOptions(double longitude, double latitude) { }
         public double? AccelerationEfficiency { get { throw null; } set { } }
-        public double? AuxiliaryPowerInKw { get { throw null; } set { } }
+        public double? AuxiliaryPowerInKilowatts { get { throw null; } set { } }
         public double? AuxiliaryPowerInLitersPerHour { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Maps.Routing.RouteAvoidType> Avoid { get { throw null; } }
-        public string ConstantSpeedConsumptionInKwHPerHundredKm { get { throw null; } set { } }
-        public string ConstantSpeedConsumptionInLitersPerHundredKm { get { throw null; } set { } }
-        public double? CurrentChargeInKwH { get { throw null; } set { } }
+        public string ConstantSpeedConsumptionInKilowattHoursPerHundredKilometer { get { throw null; } set { } }
+        public string ConstantSpeedConsumptionInLitersPerHundredKilometer { get { throw null; } set { } }
+        public double? CurrentChargeInKilowattHours { get { throw null; } set { } }
         public double? CurrentFuelInLiters { get { throw null; } set { } }
         public double? DecelerationEfficiency { get { throw null; } set { } }
         public System.DateTimeOffset? DepartAt { get { throw null; } set { } }
         public double? DistanceBudgetInMeters { get { throw null; } set { } }
         public double? DownhillEfficiency { get { throw null; } set { } }
-        public double? EnergyBudgetInKwH { get { throw null; } set { } }
+        public double? EnergyBudgetInKilowattHours { get { throw null; } set { } }
         public double? FuelBudgetInLiters { get { throw null; } set { } }
         public double? FuelEnergyDensityInMegajoulesPerLiter { get { throw null; } set { } }
         public Azure.Maps.Routing.InclineLevel? InclineLevel { get { throw null; } set { } }
         public bool? IsCommercialVehicle { get { throw null; } set { } }
-        public double? MaxChargeInKwH { get { throw null; } set { } }
+        public double? MaxChargeInKilowattHours { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<double> Query { get { throw null; } }
         public Azure.Maps.Routing.RouteType? RouteType { get { throw null; } set { } }
         public System.TimeSpan? TimeBudget { get { throw null; } set { } }
@@ -234,7 +234,7 @@ namespace Azure.Maps.Routing
         public double? VehicleHeightInMeters { get { throw null; } set { } }
         public double? VehicleLengthInMeters { get { throw null; } set { } }
         public Azure.Maps.Routing.VehicleLoadType? VehicleLoadType { get { throw null; } set { } }
-        public int? VehicleMaxSpeedInKmPerHour { get { throw null; } set { } }
+        public int? VehicleMaxSpeedInKilometersPerHour { get { throw null; } set { } }
         public int? VehicleWeightInKilograms { get { throw null; } set { } }
         public double? VehicleWidthInMeters { get { throw null; } set { } }
         public Azure.Maps.Routing.WindingnessLevel? Windingness { get { throw null; } set { } }

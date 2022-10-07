@@ -132,7 +132,7 @@ namespace Azure.Maps.Routing
                     options?.VehicleLengthInMeters,
                     options?.VehicleHeightInMeters,
                     options?.VehicleWidthInMeters,
-                    options?.VehicleMaxSpeedInKmPerHour,
+                    options?.VehicleMaxSpeedInKilometersPerHour,
                     options?.VehicleWeightInKilograms,
                     options?.Windingness,
                     options?.InclineLevel,
@@ -181,7 +181,7 @@ namespace Azure.Maps.Routing
                     options?.VehicleLengthInMeters,
                     options?.VehicleHeightInMeters,
                     options?.VehicleWidthInMeters,
-                    options?.VehicleMaxSpeedInKmPerHour,
+                    options?.VehicleMaxSpeedInKilometersPerHour,
                     options?.VehicleWeightInKilograms,
                     options?.Windingness,
                     options?.InclineLevel,
@@ -227,7 +227,7 @@ namespace Azure.Maps.Routing
                     options?.VehicleLengthInMeters,
                     options?.VehicleHeightInMeters,
                     options?.VehicleWidthInMeters,
-                    options?.VehicleMaxSpeedInKmPerHour,
+                    options?.VehicleMaxSpeedInKilometersPerHour,
                     options?.VehicleWeightInKilograms,
                     options?.Windingness,
                     options?.InclineLevel,
@@ -274,7 +274,7 @@ namespace Azure.Maps.Routing
                     options?.VehicleLengthInMeters,
                     options?.VehicleHeightInMeters,
                     options?.VehicleWidthInMeters,
-                    options?.VehicleMaxSpeedInKmPerHour,
+                    options?.VehicleMaxSpeedInKilometersPerHour,
                     options?.VehicleWeightInKilograms,
                     options?.Windingness,
                     options?.InclineLevel,
@@ -340,7 +340,7 @@ namespace Azure.Maps.Routing
                         options?.VehicleWidthInMeters,
                         options?.VehicleHeightInMeters,
                         options?.VehicleLengthInMeters,
-                        options?.VehicleMaxSpeedInKmPerHour,
+                        options?.VehicleMaxSpeedInKilometersPerHour,
                         options?.VehicleWeightInKilograms,
                         options?.IsCommercialVehicle,
                         options?.Windingness,
@@ -359,10 +359,10 @@ namespace Azure.Maps.Routing
                         options?.DecelerationEfficiency,
                         options?.UphillEfficiency,
                         options?.DownhillEfficiency,
-                        options?.ConstantSpeedConsumptionInKilowattHourPerHundredKilometer,
-                        options?.CurrentChargeInKilowattHour,
-                        options?.MaxChargeInKilowattHour,
-                        options?.AuxiliaryPowerInKilowatt,
+                        options?.ConstantSpeedConsumptionInKilowattHoursPerHundredKilometer,
+                        options?.CurrentChargeInKilowattHours,
+                        options?.MaxChargeInKilowattHours,
+                        options?.AuxiliaryPowerInKilowatts,
                         cancellationToken
                     ).ConfigureAwait(false);
                 }
@@ -390,7 +390,7 @@ namespace Azure.Maps.Routing
                         options?.VehicleLengthInMeters,
                         options?.VehicleHeightInMeters,
                         options?.VehicleWidthInMeters,
-                        options?.VehicleMaxSpeedInKmPerHour,
+                        options?.VehicleMaxSpeedInKilometersPerHour,
                         options?.VehicleWeightInKilograms,
                         options?.IsCommercialVehicle,
                         options?.Windingness,
@@ -409,10 +409,10 @@ namespace Azure.Maps.Routing
                         options?.DecelerationEfficiency,
                         options?.UphillEfficiency,
                         options?.DownhillEfficiency,
-                        options?.ConstantSpeedConsumptionInKilowattHourPerHundredKilometer,
-                        options?.CurrentChargeInKilowattHour,
-                        options?.MaxChargeInKilowattHour,
-                        options?.AuxiliaryPowerInKilowatt,
+                        options?.ConstantSpeedConsumptionInKilowattHoursPerHundredKilometer,
+                        options?.CurrentChargeInKilowattHours,
+                        options?.MaxChargeInKilowattHours,
+                        options?.AuxiliaryPowerInKilowatts,
                         cancellationToken
                     ).ConfigureAwait(false);
                 }
@@ -472,7 +472,7 @@ namespace Azure.Maps.Routing
                         options?.VehicleWidthInMeters,
                         options?.VehicleHeightInMeters,
                         options?.VehicleLengthInMeters,
-                        options?.VehicleMaxSpeedInKmPerHour,
+                        options?.VehicleMaxSpeedInKilometersPerHour,
                         options?.VehicleWeightInKilograms,
                         options?.IsCommercialVehicle,
                         options?.Windingness,
@@ -491,10 +491,10 @@ namespace Azure.Maps.Routing
                         options?.DecelerationEfficiency,
                         options?.UphillEfficiency,
                         options?.DownhillEfficiency,
-                        options?.ConstantSpeedConsumptionInKilowattHourPerHundredKilometer,
-                        options?.CurrentChargeInKilowattHour,
-                        options?.MaxChargeInKilowattHour,
-                        options?.AuxiliaryPowerInKilowatt,
+                        options?.ConstantSpeedConsumptionInKilowattHoursPerHundredKilometer,
+                        options?.CurrentChargeInKilowattHours,
+                        options?.MaxChargeInKilowattHours,
+                        options?.AuxiliaryPowerInKilowatts,
                         cancellationToken
                     );
                 }
@@ -522,7 +522,7 @@ namespace Azure.Maps.Routing
                         options?.VehicleLengthInMeters,
                         options?.VehicleHeightInMeters,
                         options?.VehicleWidthInMeters,
-                        options?.VehicleMaxSpeedInKmPerHour,
+                        options?.VehicleMaxSpeedInKilometersPerHour,
                         options?.VehicleWeightInKilograms,
                         options?.IsCommercialVehicle,
                         options?.Windingness,
@@ -541,10 +541,10 @@ namespace Azure.Maps.Routing
                         options?.DecelerationEfficiency,
                         options?.UphillEfficiency,
                         options?.DownhillEfficiency,
-                        options?.ConstantSpeedConsumptionInKilowattHourPerHundredKilometer,
-                        options?.CurrentChargeInKilowattHour,
-                        options?.MaxChargeInKilowattHour,
-                        options?.AuxiliaryPowerInKilowatt,
+                        options?.ConstantSpeedConsumptionInKilowattHoursPerHundredKilometer,
+                        options?.CurrentChargeInKilowattHours,
+                        options?.MaxChargeInKilowattHours,
+                        options?.AuxiliaryPowerInKilowatts,
                         cancellationToken
                     );
                 }
@@ -576,7 +576,7 @@ namespace Azure.Maps.Routing
                     options.Query,
                     ResponseFormat.Json,
                     options.FuelBudgetInLiters,
-                    options.EnergyBudgetInKwH,
+                    options.EnergyBudgetInKilowattHours,
                     options.TimeBudget?.TotalSeconds,
                     options.DistanceBudgetInMeters,
                     options.DepartAt,
@@ -590,12 +590,12 @@ namespace Azure.Maps.Routing
                     options.VehicleWidthInMeters,
                     options.VehicleHeightInMeters,
                     options.VehicleLengthInMeters,
-                    options.VehicleMaxSpeedInKmPerHour,
+                    options.VehicleMaxSpeedInKilometersPerHour,
                     options.VehicleWeightInKilograms,
                     options.IsCommercialVehicle,
                     options.VehicleLoadType,
                     options.VehicleEngineType,
-                    options.ConstantSpeedConsumptionInLitersPerHundredKm,
+                    options.ConstantSpeedConsumptionInLitersPerHundredKilometer,
                     options.CurrentFuelInLiters,
                     options.AuxiliaryPowerInLitersPerHour,
                     options.FuelEnergyDensityInMegajoulesPerLiter,
@@ -603,10 +603,10 @@ namespace Azure.Maps.Routing
                     options.DecelerationEfficiency,
                     options.UphillEfficiency,
                     options.DownhillEfficiency,
-                    options.ConstantSpeedConsumptionInKwHPerHundredKm,
-                    options.CurrentChargeInKwH,
-                    options.MaxChargeInKwH,
-                    options.AuxiliaryPowerInKw,
+                    options.ConstantSpeedConsumptionInKilowattHoursPerHundredKilometer,
+                    options.CurrentChargeInKilowattHours,
+                    options.MaxChargeInKilowattHours,
+                    options.AuxiliaryPowerInKilowatts,
                     cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -636,7 +636,7 @@ namespace Azure.Maps.Routing
                     options.Query,
                     ResponseFormat.Json,
                     options.FuelBudgetInLiters,
-                    options.EnergyBudgetInKwH,
+                    options.EnergyBudgetInKilowattHours,
                     options.TimeBudget?.TotalSeconds,
                     options.DistanceBudgetInMeters,
                     options.DepartAt,
@@ -650,12 +650,12 @@ namespace Azure.Maps.Routing
                     options.VehicleWidthInMeters,
                     options.VehicleHeightInMeters,
                     options.VehicleLengthInMeters,
-                    options.VehicleMaxSpeedInKmPerHour,
+                    options.VehicleMaxSpeedInKilometersPerHour,
                     options.VehicleWeightInKilograms,
                     options.IsCommercialVehicle,
                     options.VehicleLoadType,
                     options.VehicleEngineType,
-                    options.ConstantSpeedConsumptionInLitersPerHundredKm,
+                    options.ConstantSpeedConsumptionInLitersPerHundredKilometer,
                     options.CurrentFuelInLiters,
                     options.AuxiliaryPowerInLitersPerHour,
                     options.FuelEnergyDensityInMegajoulesPerLiter,
@@ -663,10 +663,10 @@ namespace Azure.Maps.Routing
                     options.DecelerationEfficiency,
                     options.UphillEfficiency,
                     options.DownhillEfficiency,
-                    options.ConstantSpeedConsumptionInKwHPerHundredKm,
-                    options.CurrentChargeInKwH,
-                    options.MaxChargeInKwH,
-                    options.AuxiliaryPowerInKw,
+                    options.ConstantSpeedConsumptionInKilowattHoursPerHundredKilometer,
+                    options.CurrentChargeInKilowattHours,
+                    options.MaxChargeInKilowattHours,
+                    options.AuxiliaryPowerInKilowatts,
                     cancellationToken);
             }
             catch (Exception e)
@@ -757,7 +757,7 @@ namespace Azure.Maps.Routing
                     options?.VehicleLengthInMeters,
                     options?.VehicleHeightInMeters,
                     options?.VehicleWidthInMeters,
-                    options?.VehicleMaxSpeedInKmPerHour,
+                    options?.VehicleMaxSpeedInKilometersPerHour,
                     options?.VehicleWeightInKilograms,
                     options?.Windingness,
                     options?.InclineLevel,
@@ -816,7 +816,7 @@ namespace Azure.Maps.Routing
                     options?.VehicleLengthInMeters,
                     options?.VehicleHeightInMeters,
                     options?.VehicleWidthInMeters,
-                    options?.VehicleMaxSpeedInKmPerHour,
+                    options?.VehicleMaxSpeedInKilometersPerHour,
                     options?.VehicleWeightInKilograms,
                     options?.Windingness,
                     options?.InclineLevel,
@@ -960,9 +960,9 @@ namespace Azure.Maps.Routing
                 {
                     uri.AppendQuery("vehicleWidth", options.VehicleWidthInMeters.Value, true);
                 }
-                if (options?.VehicleMaxSpeedInKmPerHour != null)
+                if (options?.VehicleMaxSpeedInKilometersPerHour != null)
                 {
-                    uri.AppendQuery("vehicleMaxSpeed", options.VehicleMaxSpeedInKmPerHour.Value, true);
+                    uri.AppendQuery("vehicleMaxSpeed", options.VehicleMaxSpeedInKilometersPerHour.Value, true);
                 }
                 if (options?.VehicleWeightInKilograms != null)
                 {
