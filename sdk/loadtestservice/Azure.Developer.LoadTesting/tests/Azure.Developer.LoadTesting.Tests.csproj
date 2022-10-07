@@ -21,6 +21,7 @@
   <ItemGroup>
     <Folder Include="infrastructure\" />
     <Folder Include="SessionRecords\LoadTestingClientTest\" />
+    <Folder Include="files\" />
   </ItemGroup>
 
   <ItemGroup>

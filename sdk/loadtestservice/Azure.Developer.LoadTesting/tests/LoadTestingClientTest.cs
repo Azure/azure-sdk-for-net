@@ -79,7 +79,7 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             LoadTestAdministrationClient loadTestAdministration = CreateAdministrationClient();
 
-            Response response = await loadTestAdministration.UploadTestFileAsync(testId, fileId, File.OpenRead(".\\tests\\sample.jmx"));
+            Response response = await loadTestAdministration.UploadTestFileAsync(testId, fileId, File.OpenRead(Path.Combine("files", "sample.jmx")));
 
             Assert.NotNull(response);
         }
