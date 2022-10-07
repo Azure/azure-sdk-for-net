@@ -11,11 +11,12 @@ using Azure.Core.Pipeline;
 namespace Azure.Maps.Routing.Models
 {
     /// <summary>
-    /// An <see cref="Operation{RouteDirectionsBatchResult}"/> for tracking the status of a RequestRouteDirectionsBatch
-    /// request.  Its <see cref="Operation{RouteDirectionsBatchResult}.Value"/> upon successful
-    /// completion will be the route directions batch result.
+    /// An <see cref="Operation{RouteMatrixResult}"/> for tracking the status of a
+    /// <see cref="MapsRoutingClient.GetRouteMatrix(WaitUntil, RouteMatrixOptions, CancellationToken)"/>
+    /// request.  Its <see cref="Operation{RouteMatrixResult}.Value"/> upon successful
+    /// completion will be the route matrix result.
     /// </summary>
-    public class RequestRouteDirectionsOperation : Operation<RouteDirectionsBatchResult>
+    public class GetRouteMatrixOperation : Operation<RouteMatrixResult>
     {
         /// <summary>
         /// The client used to check for completion.
@@ -33,14 +34,14 @@ namespace Azure.Maps.Routing.Models
         private bool _hasCompleted;
 
         /// <summary>
-        /// Gets the route directions batch result.
+        /// Gets the route matrix batch result.
         /// </summary>
-        private RouteDirectionsBatchResult _value;
+        private RouteMatrixResult _value;
 
         private Response _rawResponse;
 
         /// <summary>
-        /// The request ID used in route direction request
+        /// The request ID used in route matrix request
         /// </summary>
         private string _id;
 
@@ -51,8 +52,8 @@ namespace Azure.Maps.Routing.Models
 
         /// <summary>
         /// Indicating whether the operation completed and
-        /// successfully produced a value.  The <see cref="Operation{RouteDirectionsBatchResult}.Value"/>
-        /// property is the route directions batch result.
+        /// successfully produced a value.  The <see cref="Operation{RouteMatrixResult}.Value"/>
+        /// property is the route matrix result.
         /// </summary>
         public override bool HasValue => _value != null;
 
@@ -60,34 +61,35 @@ namespace Azure.Maps.Routing.Models
         public override string Id => _id;
 
         /// <summary>
-        /// Gets the will be the route directions batch result.
+        /// Gets the will be the route matrix result.
         /// </summary>
-        public override RouteDirectionsBatchResult Value => _value;
+        public override RouteMatrixResult Value => _value;
 
         /// <inheritdoc />
         public override Response GetRawResponse() => _rawResponse;
 
         /// <inheritdoc />
-        public override async ValueTask<Response<RouteDirectionsBatchResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override async ValueTask<Response<RouteMatrixResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             await WaitForCompletionAsync(true, cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc />
-        public override async ValueTask<Response<RouteDirectionsBatchResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+        public override async ValueTask<Response<RouteMatrixResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
             await WaitForCompletionAsync(true, cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc />
-        public override Response<RouteDirectionsBatchResult> WaitForCompletion(CancellationToken cancellationToken = default) =>
+        public override Response<RouteMatrixResult> WaitForCompletion(CancellationToken cancellationToken = default) =>
             WaitForCompletionAsync(false, cancellationToken).EnsureCompleted();
 
         /// <inheritdoc />
-        public override Response<RouteDirectionsBatchResult> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+        public override Response<RouteMatrixResult> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
             WaitForCompletionAsync(false, cancellationToken).EnsureCompleted();
 
-        private async ValueTask<Response<RouteDirectionsBatchResult>> WaitForCompletionAsync(bool async, CancellationToken cancellationToken = default)
+        /// <inheritdoc />
+        private async ValueTask<Response<RouteMatrixResult>> WaitForCompletionAsync(bool async, CancellationToken cancellationToken = default)
         {
-            ResponseWithHeaders<RouteGetRouteDirectionsBatchHeaders> update = async
-                ? await _client.RestClient.GetRouteDirectionsBatchAsync(_id, cancellationToken).ConfigureAwait(false)
-                : _client.RestClient.GetRouteDirectionsBatch(_id, cancellationToken);
+            ResponseWithHeaders<RouteGetRouteMatrixHeaders> update = async
+                ? await _client.RestClient.GetRouteMatrixAsync(_id, cancellationToken).ConfigureAwait(false)
+                : _client.RestClient.GetRouteMatrix(_id, cancellationToken);
 
             Response response = update.GetRawResponse();
 
@@ -97,7 +99,7 @@ namespace Azure.Maps.Routing.Models
                 _hasCompleted = true;
 
                 using var document = JsonDocument.Parse(response.ContentStream);
-                _value = RouteDirectionsBatchResult.DeserializeRouteDirectionsBatchResult(document.RootElement);
+                _value = RouteMatrixResult.DeserializeRouteMatrixResult(document.RootElement);
                 return Response.FromValue(_value, response);
             }
             else
@@ -107,26 +109,24 @@ namespace Azure.Maps.Routing.Models
                 _id = paths[paths.Length - 1];
             }
 
-            RouteDirectionsBatchResult result = null;
+            RouteMatrixResult result = null;
             return Response.FromValue(result, response);
         }
 
         /// <summary>
-        /// Initializes a new <see cref="RequestRouteDirectionsOperation"/> instance for
+        /// Initializes a new <see cref="GetRouteMatrixOperation"/> instance for
         /// mocking.
         /// </summary>
-        protected RequestRouteDirectionsOperation()
+        protected GetRouteMatrixOperation()
         {
         }
 
         /// <summary>
-        /// Initializes a new <see cref="RequestRouteDirectionsOperation"/> instance
+        /// Initializes a new <see cref="GetRouteMatrixOperation"/> instance
         /// </summary>
-        /// <param name="client">
-        /// <param name="followUpUrl">Follow up URL of the request.</param>
-        /// The client used to check for completion.
-        /// </param>
-        internal RequestRouteDirectionsOperation(MapsRoutingClient client, Uri followUpUrl)
+        /// <param name="client"> The client used to check for completion. </param>
+        /// <param name="followUpUrl"> Follow up URL for route matrix operation. </param>
+        internal GetRouteMatrixOperation(MapsRoutingClient client, Uri followUpUrl)
         {
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNull(followUpUrl, nameof(followUpUrl));
@@ -151,22 +151,21 @@ namespace Azure.Maps.Routing.Models
         }
 
         /// <summary>
-        /// Initializes a new <see cref="RequestRouteMatrixOperation"/> instance
+        /// Initializes a new <see cref="GetRouteMatrixOperation"/> instance
         /// </summary>
         /// <param name="client"> The client used to check for completion. </param>
         /// <param name="id"> An ID representing a specific operation.</param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="id"/> is null. </exception>
-        public RequestRouteDirectionsOperation(MapsRoutingClient client, string id) :
+        /// <exception cref="FormatException"> <paramref name="id"/> format error. </exception>
+        public GetRouteMatrixOperation(MapsRoutingClient client, string id) :
             this(client, id, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new <see cref="RequestRouteDirectionsOperation"/> instance
+        /// Initializes a new <see cref="GetRouteMatrixOperation"/> instance
         /// </summary>
-        /// <param name="client">
-        /// The client used to check for completion.
-        /// </param>
+        /// <param name="client"> The client used to check for completion. </param>
         /// <param name="id"> An ID representing a specific operation.</param>
         /// <param name="initialResponse">
         /// Either the response from initiating the operation or getting the
@@ -177,7 +176,7 @@ namespace Azure.Maps.Routing.Models
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="id"/> is null. </exception>
-        internal RequestRouteDirectionsOperation(
+        internal GetRouteMatrixOperation(
             MapsRoutingClient client,
             string id,
             Response initialResponse,
@@ -242,9 +241,9 @@ namespace Azure.Maps.Routing.Models
             }
 
             // Get the latest status
-            ResponseWithHeaders<RouteGetRouteDirectionsBatchHeaders> update = async
-                ? await _client.RestClient.GetRouteDirectionsBatchAsync(_id, cancellationToken).ConfigureAwait(false)
-                : _client.RestClient.GetRouteDirectionsBatch(_id, cancellationToken);
+            ResponseWithHeaders<RouteGetRouteMatrixHeaders> update = async
+                ? await _client.RestClient.GetRouteMatrixAsync(_id, cancellationToken).ConfigureAwait(false)
+                : _client.RestClient.GetRouteMatrix(_id, cancellationToken);
 
             // Check if the operation is no longer running
             if (update.Headers.Location == null)

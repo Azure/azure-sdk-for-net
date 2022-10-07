@@ -172,7 +172,7 @@ For more detailed examples, please see the [route direction samples](https://git
 
 To find the route matrix between multiple origins and destinations, Azure Maps route matrix APIs should suite your needs. A simple route matrix request example looks like the snippet below:
 
-```C# Snippet:SimpleSyncRouteMatrix
+```C# Snippet:GetImmediateRouteMatrix
 // A simple route matrix request
 RouteMatrixQuery routeMatrixQuery = new RouteMatrixQuery
 {
@@ -185,7 +185,7 @@ RouteMatrixQuery routeMatrixQuery = new RouteMatrixQuery
     // one destination point
     Destinations = new List<GeoPosition>() { new GeoPosition(123.767, 45.90625) },
 };
-Response<RouteMatrixResult> result = client.SyncRequestRouteMatrix(routeMatrixQuery);
+Response<RouteMatrixResult> result = client.GetImmediateRouteMatrix(routeMatrixQuery);
 ```
 
 An async route matrix request looks like below. This is useful when you have `origin * destination > 100` data points.
@@ -210,8 +210,8 @@ RouteMatrixOptions routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery)
     TravelTimeType = TravelTimeType.All,
 };
 
-// Invoke an async route matrix request and directly wait for completion
-RequestRouteMatrixOperation result = client.RequestRouteMatrix(WaitUntil.Completed, routeMatrixOptions);
+// Invoke an long-running operation route matrix request and directly wait for completion
+GetRouteMatrixOperation result = client.GetRouteMatrix(WaitUntil.Completed, routeMatrixOptions);
 ```
 
 For more detailed examples, please see the [route matrix samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Routing/samples/RouteMatrixSamples.md) page.
