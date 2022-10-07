@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Storage properties of a server. </summary>
-    internal partial class PostgreSqlFlexibleServerStorage
+    public partial class PostgreSqlFlexibleServerStorage
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorage. </summary>
         public PostgreSqlFlexibleServerStorage()

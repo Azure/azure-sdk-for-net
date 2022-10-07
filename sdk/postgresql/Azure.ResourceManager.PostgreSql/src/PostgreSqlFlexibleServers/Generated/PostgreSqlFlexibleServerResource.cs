@@ -89,6 +89,80 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of PostgreSqlFlexibleServerDatabaseResources in the PostgreSqlFlexibleServer. </summary>
+        /// <returns> An object representing collection of PostgreSqlFlexibleServerDatabaseResources and their operations over a PostgreSqlFlexibleServerDatabaseResource. </returns>
+        public virtual PostgreSqlFlexibleServerDatabaseCollection GetPostgreSqlFlexibleServerDatabases()
+        {
+            return GetCachedClient(Client => new PostgreSqlFlexibleServerDatabaseCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets information about a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/databases/{databaseName}
+        /// Operation Id: Databases_Get
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PostgreSqlFlexibleServerDatabaseResource>> GetPostgreSqlFlexibleServerDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
+        {
+            return await GetPostgreSqlFlexibleServerDatabases().GetAsync(databaseName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/databases/{databaseName}
+        /// Operation Id: Databases_Get
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PostgreSqlFlexibleServerDatabaseResource> GetPostgreSqlFlexibleServerDatabase(string databaseName, CancellationToken cancellationToken = default)
+        {
+            return GetPostgreSqlFlexibleServerDatabases().Get(databaseName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PostgreSqlFlexibleServerServerBackupResources in the PostgreSqlFlexibleServer. </summary>
+        /// <returns> An object representing collection of PostgreSqlFlexibleServerServerBackupResources and their operations over a PostgreSqlFlexibleServerServerBackupResource. </returns>
+        public virtual PostgreSqlFlexibleServerServerBackupCollection GetPostgreSqlFlexibleServerServerBackups()
+        {
+            return GetCachedClient(Client => new PostgreSqlFlexibleServerServerBackupCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// List all the backups for a given server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/backups/{backupName}
+        /// Operation Id: Backups_Get
+        /// </summary>
+        /// <param name="backupName"> The name of the backup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PostgreSqlFlexibleServerServerBackupResource>> GetPostgreSqlFlexibleServerServerBackupAsync(string backupName, CancellationToken cancellationToken = default)
+        {
+            return await GetPostgreSqlFlexibleServerServerBackups().GetAsync(backupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List all the backups for a given server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/backups/{backupName}
+        /// Operation Id: Backups_Get
+        /// </summary>
+        /// <param name="backupName"> The name of the backup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PostgreSqlFlexibleServerServerBackupResource> GetPostgreSqlFlexibleServerServerBackup(string backupName, CancellationToken cancellationToken = default)
+        {
+            return GetPostgreSqlFlexibleServerServerBackups().Get(backupName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of PostgreSqlFlexibleServerFirewallRuleResources in the PostgreSqlFlexibleServer. </summary>
         /// <returns> An object representing collection of PostgreSqlFlexibleServerFirewallRuleResources and their operations over a PostgreSqlFlexibleServerFirewallRuleResource. </returns>
         public virtual PostgreSqlFlexibleServerFirewallRuleCollection GetPostgreSqlFlexibleServerFirewallRules()
@@ -161,43 +235,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         public virtual Response<PostgreSqlFlexibleServerConfigurationResource> GetPostgreSqlFlexibleServerConfiguration(string configurationName, CancellationToken cancellationToken = default)
         {
             return GetPostgreSqlFlexibleServerConfigurations().Get(configurationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PostgreSqlFlexibleServerDatabaseResources in the PostgreSqlFlexibleServer. </summary>
-        /// <returns> An object representing collection of PostgreSqlFlexibleServerDatabaseResources and their operations over a PostgreSqlFlexibleServerDatabaseResource. </returns>
-        public virtual PostgreSqlFlexibleServerDatabaseCollection GetPostgreSqlFlexibleServerDatabases()
-        {
-            return GetCachedClient(Client => new PostgreSqlFlexibleServerDatabaseCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets information about a database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/databases/{databaseName}
-        /// Operation Id: Databases_Get
-        /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PostgreSqlFlexibleServerDatabaseResource>> GetPostgreSqlFlexibleServerDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
-        {
-            return await GetPostgreSqlFlexibleServerDatabases().GetAsync(databaseName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about a database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/databases/{databaseName}
-        /// Operation Id: Databases_Get
-        /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PostgreSqlFlexibleServerDatabaseResource> GetPostgreSqlFlexibleServerDatabase(string databaseName, CancellationToken cancellationToken = default)
-        {
-            return GetPostgreSqlFlexibleServerDatabases().Get(databaseName, cancellationToken);
         }
 
         /// <summary>

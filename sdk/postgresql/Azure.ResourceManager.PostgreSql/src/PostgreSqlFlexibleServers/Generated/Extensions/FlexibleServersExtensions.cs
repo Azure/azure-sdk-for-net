@@ -230,6 +230,59 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return resourceGroupResource.GetPostgreSqlFlexibleServers().Get(serverName, cancellationToken);
         }
 
+        /// <summary>
+        /// Get available cached server name for fast provisioning
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/getCachedServerName
+        /// Operation Id: GetCachedServerName_Execute
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="content"> The required parameters for get cached name available for fast provisioning. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<PostgreSqlFlexibleServerCachedServerName>> ExecuteGetCachedServerNameAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, PostgreSqlFlexibleServerCachedServerNameContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetExtensionClient(resourceGroupResource).ExecuteGetCachedServerNameAsync(locationName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get available cached server name for fast provisioning
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/getCachedServerName
+        /// Operation Id: GetCachedServerName_Execute
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="content"> The required parameters for get cached name available for fast provisioning. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<PostgreSqlFlexibleServerCachedServerName> ExecuteGetCachedServerName(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, PostgreSqlFlexibleServerCachedServerNameContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetExtensionClient(resourceGroupResource).ExecuteGetCachedServerName(locationName, content, cancellationToken);
+        }
+
+        #region PostgreSqlFlexibleServerDatabaseResource
+        /// <summary>
+        /// Gets an object representing a <see cref="PostgreSqlFlexibleServerDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlFlexibleServerDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PostgreSqlFlexibleServerDatabaseResource" /> object. </returns>
+        public static PostgreSqlFlexibleServerDatabaseResource GetPostgreSqlFlexibleServerDatabaseResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                PostgreSqlFlexibleServerDatabaseResource.ValidateResourceId(id);
+                return new PostgreSqlFlexibleServerDatabaseResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region PostgreSqlFlexibleServerResource
         /// <summary>
         /// Gets an object representing a <see cref="PostgreSqlFlexibleServerResource" /> along with the instance operations that can be performed on it but with no data.
@@ -244,6 +297,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 PostgreSqlFlexibleServerResource.ValidateResourceId(id);
                 return new PostgreSqlFlexibleServerResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region PostgreSqlFlexibleServerServerBackupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="PostgreSqlFlexibleServerServerBackupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlFlexibleServerServerBackupResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerServerBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PostgreSqlFlexibleServerServerBackupResource" /> object. </returns>
+        public static PostgreSqlFlexibleServerServerBackupResource GetPostgreSqlFlexibleServerServerBackupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                PostgreSqlFlexibleServerServerBackupResource.ValidateResourceId(id);
+                return new PostgreSqlFlexibleServerServerBackupResource(client, id);
             }
             );
         }
@@ -282,25 +354,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 PostgreSqlFlexibleServerConfigurationResource.ValidateResourceId(id);
                 return new PostgreSqlFlexibleServerConfigurationResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region PostgreSqlFlexibleServerDatabaseResource
-        /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlFlexibleServerDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlFlexibleServerDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlFlexibleServerDatabaseResource" /> object. </returns>
-        public static PostgreSqlFlexibleServerDatabaseResource GetPostgreSqlFlexibleServerDatabaseResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                PostgreSqlFlexibleServerDatabaseResource.ValidateResourceId(id);
-                return new PostgreSqlFlexibleServerDatabaseResource(client, id);
             }
             );
         }

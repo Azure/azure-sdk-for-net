@@ -14,13 +14,13 @@ modelerfour:
 
 batch:
   - tag: package-2020-01-01
-  - tag: package-flexibleserver-2021-06
+  - tag: flexibleserver-2022-03-privatepreview
 ```
 
 ``` yaml $(tag) == 'package-2020-01-01'
 
 namespace: Azure.ResourceManager.PostgreSql
-require: https://github.com/Azure/azure-rest-api-specs/blob/eca38ee0caf445cb1e79c8e7bbaf9e1dca36479a/specification/postgresql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/05a9cdab363b8ec824094ee73950c04594325172/specification/postgresql/resource-manager/readme.md
 output-folder: $(this-folder)/PostgreSql/Generated
 
 format-by-name-rules:
@@ -142,10 +142,10 @@ directive:
       $.RecoverableServerProperties.properties.lastAvailableBackupDateTime['format'] = 'date-time';
 ```
 
-``` yaml $(tag) == 'package-flexibleserver-2021-06'
+``` yaml $(tag) == 'flexibleserver-2022-03-privatepreview'
 
 namespace: Azure.ResourceManager.PostgreSql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/eca38ee0caf445cb1e79c8e7bbaf9e1dca36479a/specification/postgresql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/05a9cdab363b8ec824094ee73950c04594325172/specification/postgresql/resource-manager/readme.md
 output-folder: $(this-folder)/PostgreSqlFlexibleServers/Generated
 
 format-by-name-rules:
@@ -239,6 +239,11 @@ rename-mapping:
   CapabilityProperties.supportedHAMode: SupportedHAModes
   StorageEditionCapability.supportedStorageMB: SupportedStorageCapabilities
   Server.properties.pointInTimeUTC: PointInTimeUtc
+  CachedServerName: PostgreSqlFlexibleServerCachedServerName
+  CachedServerNameRequest: PostgreSqlFlexibleServerCachedServerNameRequest
+  ServerBackup: PostgreSqlFlexibleServerServerBackup
+  ServerBackupProperties: PostgreSqlFlexibleServerServerBackupProperties
+  ServerBackupListResult: PostgreSqlFlexibleServerServerBackupListResult
 override-operation-name:
   CheckNameAvailability_Execute: CheckPostgreSqlFlexibleServerNameAvailability
 ```

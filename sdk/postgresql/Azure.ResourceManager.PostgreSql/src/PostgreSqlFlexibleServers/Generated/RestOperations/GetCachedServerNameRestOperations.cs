@@ -16,28 +16,28 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    internal partial class CheckNameAvailabilityRestOperations
+    internal partial class GetCachedServerNameRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilityRestOperations. </summary>
+        /// <summary> Initializes a new instance of GetCachedServerNameRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CheckNameAvailabilityRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public GetCachedServerNameRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-01-20-preview";
+            _apiVersion = apiVersion ?? "2022-03-08-privatepreview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateExecuteRequest(string subscriptionId, PostgreSqlFlexibleServerNameAvailabilityContent content)
+        internal HttpMessage CreateExecuteRequest(string subscriptionId, string resourceGroupName, AzureLocation locationName, PostgreSqlFlexibleServerCachedServerNameContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -46,7 +46,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/checkNameAvailability", false);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/getCachedServerName", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -58,26 +62,29 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return message;
         }
 
-        /// <summary> Check the availability of name for resource. </summary>
+        /// <summary> Get available cached server name for fast provisioning. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="content"> The required parameters for checking if resource name is available. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="content"> The required parameters for get cached name available for fast provisioning. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> ExecuteAsync(string subscriptionId, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PostgreSqlFlexibleServerCachedServerName>> ExecuteAsync(string subscriptionId, string resourceGroupName, AzureLocation locationName, PostgreSqlFlexibleServerCachedServerNameContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateExecuteRequest(subscriptionId, content);
+            using var message = CreateExecuteRequest(subscriptionId, resourceGroupName, locationName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PostgreSqlFlexibleServerNameAvailabilityResult value = default;
+                        PostgreSqlFlexibleServerCachedServerName value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PostgreSqlFlexibleServerNameAvailabilityResult.DeserializePostgreSqlFlexibleServerNameAvailabilityResult(document.RootElement);
+                        value = PostgreSqlFlexibleServerCachedServerName.DeserializePostgreSqlFlexibleServerCachedServerName(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -85,26 +92,29 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
-        /// <summary> Check the availability of name for resource. </summary>
+        /// <summary> Get available cached server name for fast provisioning. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="content"> The required parameters for checking if resource name is available. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="content"> The required parameters for get cached name available for fast provisioning. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PostgreSqlFlexibleServerNameAvailabilityResult> Execute(string subscriptionId, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PostgreSqlFlexibleServerCachedServerName> Execute(string subscriptionId, string resourceGroupName, AzureLocation locationName, PostgreSqlFlexibleServerCachedServerNameContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateExecuteRequest(subscriptionId, content);
+            using var message = CreateExecuteRequest(subscriptionId, resourceGroupName, locationName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PostgreSqlFlexibleServerNameAvailabilityResult value = default;
+                        PostgreSqlFlexibleServerCachedServerName value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PostgreSqlFlexibleServerNameAvailabilityResult.DeserializePostgreSqlFlexibleServerNameAvailabilityResult(document.RootElement);
+                        value = PostgreSqlFlexibleServerCachedServerName.DeserializePostgreSqlFlexibleServerCachedServerName(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
