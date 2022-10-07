@@ -35,5 +35,3 @@ extends:
     Artifacts:
     - name: Azure.Data.AppConfiguration
       safeName: AzureDataAppConfiguration
-    exclude:
-    - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/

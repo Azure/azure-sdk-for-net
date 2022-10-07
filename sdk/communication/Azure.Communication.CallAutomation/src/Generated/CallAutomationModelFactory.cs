@@ -130,6 +130,17 @@ namespace Azure.Communication.CallAutomation
             return new PlayFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
+        /// <summary> Initializes a new instance of PlayCanceled. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <returns> A new <see cref="CallAutomation.PlayCanceled"/> instance for mocking. </returns>
+        public static PlayCanceled PlayCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
+        {
+            return new PlayCanceled(callConnectionId, serverCallId, correlationId, operationContext);
+        }
+
         /// <summary> Initializes a new instance of RecognizeCompleted. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
@@ -167,6 +178,17 @@ namespace Azure.Communication.CallAutomation
         public static RecognizeFailed RecognizeFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
             return new RecognizeFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+        }
+
+        /// <summary> Initializes a new instance of RecognizeCanceled. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <returns> A new <see cref="CallAutomation.RecognizeCanceled"/> instance for mocking. </returns>
+        public static RecognizeCanceled RecognizeCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
+        {
+            return new RecognizeCanceled(callConnectionId, serverCallId, correlationId, operationContext);
         }
     }
 }
