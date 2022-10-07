@@ -158,7 +158,7 @@ namespace Azure.AI.TextAnalytics
 
         #region Recognize Entities
 
-        internal static List<CategorizedEntity> ConvertToCategorizedEntityList(List<Entity> entities)
+        internal static List<CategorizedEntity> ConvertToCategorizedEntityList(List<EntityWithResolution> entities)
             => entities.Select((entity) => new CategorizedEntity(entity)).ToList();
 
         internal static CategorizedEntityCollection ConvertToCategorizedEntityCollection(EntitiesResultDocumentsItem documentEntities)
