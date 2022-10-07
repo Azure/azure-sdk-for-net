@@ -375,14 +375,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             var activityLogs = new List<string>();
 
-            using var listener = new ActivityListener
+            var listener = new ActivityListener
             {
                 ActivityStarted = activity => activityLogs.Add($"ActivityStarted: {activity.OperationName}, {activity.Id}"),
                 ActivityStopped = activity => activityLogs.Add($"ActivityStopped: {activity.OperationName}, {activity.Id}"),
                 ShouldListenTo = activitySource => activitySource.Name.Equals(activitySourceName),
-                SampleUsingParentId = (ref ActivityCreationOptions<string> activityOptions) => ActivitySamplingResult.AllDataAndRecorded,
+                // SampleUsingParentId = (ref ActivityCreationOptions<string> activityOptions) => ActivitySamplingResult.AllDataAndRecorded,
                 Sample = (ref ActivityCreationOptions<ActivityContext> activityOptions) => ActivitySamplingResult.AllDataAndRecorded,
-        };
+            };
 
             ActivitySource.AddActivityListener(listener);
             //Assert.True(activitySource.HasListeners());
@@ -411,6 +411,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             }
 
             // CLEANUP
+            listener.Dispose();
             loggerFactory.Dispose();
 
             // ASSERT
