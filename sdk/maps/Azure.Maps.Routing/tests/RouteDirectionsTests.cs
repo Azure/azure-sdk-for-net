@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.GeoJson;
 using Azure.Core.TestFramework;
-using Azure.Maps.Routing.Models;
 using NUnit.Framework;
 
 namespace Azure.Maps.Routing.Tests

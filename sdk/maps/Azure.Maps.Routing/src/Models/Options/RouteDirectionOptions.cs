@@ -6,7 +6,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Maps.Routing.Models
+namespace Azure.Maps.Routing
 {
     /// <summary> Options for rendering static images. </summary>
     public class RouteDirectionOptions
@@ -48,7 +48,7 @@ namespace Azure.Maps.Routing.Models
 
         /// <summary>
         /// The language parameter determines the language of the guidance messages. Proper nouns (the names of streets, plazas, etc.) are returned in the specified  language, or if that is not available, they are returned in an available language  that is close to it. Allowed values are (a subset of) the IETF language tags. The currently supported  languages are listed in the <see href="https://docs.microsoft.com/azure/azure-maps/supported-languages">Supported languages  section</see>.
-        /// Default value: <c>RoutingLanguage.EnglishGreatBritain</c>
+        /// Default value: <see cref="RoutingLanguage.EnglishGreatBritain" />
         /// </summary>
         public RoutingLanguage Language { get; set; }
 
