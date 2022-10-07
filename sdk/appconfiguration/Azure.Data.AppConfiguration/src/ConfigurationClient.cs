@@ -266,22 +266,35 @@ namespace Azure.Data.AppConfiguration
         public virtual async Task<Response<ConfigurationSetting>> SetConfigurationSettingAsync(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(setting, nameof(setting));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
+            scope.AddAttribute("key", setting?.Key);
+            scope.Start();
 
-            RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
-
-            using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
-            ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
-            MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
-
-            using Response response = await SetConfigurationSettingAsync(setting.Key, content, contentType, setting.Label, requestOptions, context).ConfigureAwait(false);
-            return response.Status switch
+            try
             {
-                200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
-                409 => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(null, "The setting is read only")).ConfigureAwait(false),
+                Argument.AssertNotNull(setting, nameof(setting));
 
-                // Throws on 412 if resource was modified.
-                _ => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
-            };
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+
+                using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
+                ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
+                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
+
+                using Response response = await SetConfigurationSettingAsync(setting.Key, content, contentType, setting.Label, requestOptions, context).ConfigureAwait(false);
+                return response.Status switch
+                {
+                    200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
+                    409 => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(null, "The setting is read only")).ConfigureAwait(false),
+
+                    // Throws on 412 if resource was modified.
+                    _ => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -297,22 +310,35 @@ namespace Azure.Data.AppConfiguration
         public virtual Response<ConfigurationSetting> SetConfigurationSetting(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(setting, nameof(setting));
-            RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
+            scope.AddAttribute("key", setting?.Key);
+            scope.Start();
 
-            using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
-            ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
-            MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
-
-            using Response response = SetConfigurationSetting(setting.Key, content, contentType, setting.Label, requestOptions, context);
-
-            return response.Status switch
+            try
             {
-                200 => CreateResponse(response),
-                409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
+                Argument.AssertNotNull(setting, nameof(setting));
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
 
-                // Throws on 412 if resource was modified.
-                _ => throw ClientDiagnostics.CreateRequestFailedException(response),
-            };
+                using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
+                ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
+                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
+
+                using Response response = SetConfigurationSetting(setting.Key, content, contentType, setting.Label, requestOptions, context);
+
+                return response.Status switch
+                {
+                    200 => CreateResponse(response),
+                    409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
+
+                    // Throws on 412 if resource was modified.
+                    _ => throw ClientDiagnostics.CreateRequestFailedException(response),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -377,36 +403,60 @@ namespace Azure.Data.AppConfiguration
 
         private async Task<Response> DeleteConfigurationSettingAsync(string key, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
-            RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
+            scope.AddAttribute("key", key);
+            scope.Start();
 
-            using Response response = await DeleteConfigurationSettingAsync(key, label, requestOptions?.IfMatch, context).ConfigureAwait(false);
-
-            return response.Status switch
+            try
             {
-                200 => response,
-                204 => response,
-                409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
 
-                // Throws on 412 if resource was modified.
-                _ => throw ClientDiagnostics.CreateRequestFailedException(response)
-            };
+                using Response response = await DeleteConfigurationSettingAsync(key, label, requestOptions?.IfMatch, context).ConfigureAwait(false);
+
+                return response.Status switch
+                {
+                    200 => response,
+                    204 => response,
+                    409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
+
+                    // Throws on 412 if resource was modified.
+                    _ => throw ClientDiagnostics.CreateRequestFailedException(response)
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         private Response DeleteConfigurationSetting(string key, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
-            RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
+            scope.AddAttribute("key", key);
+            scope.Start();
 
-            using Response response = DeleteConfigurationSetting(key, label, requestOptions?.IfMatch, context);
-
-            return response.Status switch
+            try
             {
-                200 => response,
-                204 => response,
-                409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only.")),
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
 
-                // Throws on 412 if resource was modified.
-                _ => throw ClientDiagnostics.CreateRequestFailedException(response)
-            };
+                using Response response = DeleteConfigurationSetting(key, label, requestOptions?.IfMatch, context);
+
+                return response.Status switch
+                {
+                    200 => response,
+                    204 => response,
+                    409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only.")),
+
+                    // Throws on 412 if resource was modified.
+                    _ => throw ClientDiagnostics.CreateRequestFailedException(response)
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes a key-value. </summary>
@@ -658,17 +708,29 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
         internal virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label, DateTimeOffset? acceptDateTime, MatchConditions conditions, CancellationToken cancellationToken = default)
         {
-            RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
+            scope.AddAttribute(nameof(key), key);
+            scope.Start();
 
-            var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
-            using Response response = await GetConfigurationSettingAsync(key, label, dateTime, null, conditions, context).ConfigureAwait(false);
-
-            return response.Status switch
+            try
             {
-                200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
-                304 => CreateResourceModifiedResponse(response),
-                _ => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
-            };
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+
+                var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
+                using Response response = await GetConfigurationSettingAsync(key, label, dateTime, null, conditions, context).ConfigureAwait(false);
+
+                return response.Status switch
+                {
+                    200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
+                    304 => CreateResourceModifiedResponse(response),
+                    _ => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -682,17 +744,29 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
         internal virtual Response<ConfigurationSetting> GetConfigurationSetting(string key, string label, DateTimeOffset? acceptDateTime, MatchConditions conditions, CancellationToken cancellationToken = default)
         {
-            RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
+            scope.AddAttribute(nameof(key), key);
+            scope.Start();
 
-            var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
-            using Response response = GetConfigurationSetting(key, label, dateTime, null, conditions, context);
-
-            return response.Status switch
+            try
             {
-                200 => CreateResponse(response),
-                304 => CreateResourceModifiedResponse(response),
-                _ => throw ClientDiagnostics.CreateRequestFailedException(response),
-            };
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+
+                var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
+                using Response response = GetConfigurationSetting(key, label, dateTime, null, conditions, context);
+
+                return response.Status switch
+                {
+                    200 => CreateResponse(response),
+                    304 => CreateResourceModifiedResponse(response),
+                    _ => throw ClientDiagnostics.CreateRequestFailedException(response),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Gets a single key-value. </summary>
