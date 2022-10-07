@@ -17,25 +17,29 @@ namespace Azure.Communication
 
             if (identifier.Kind is not null)
             {
-                if (identifier.Kind == CommunicationIdentifierModelKind.CommunicationUser)
+                if (identifier.Kind == CommunicationIdentifierModelKind.CommunicationUser
+                    && identifier.CommunicationUser is not null)
                 {
                     return new CommunicationUserIdentifier(AssertNotNull(identifier.CommunicationUser.Id, nameof(identifier.CommunicationUser.Id), nameof(CommunicationUserIdentifierModel)));
                 }
 
-                if (identifier.Kind == CommunicationIdentifierModelKind.PhoneNumber)
+                if (identifier.Kind == CommunicationIdentifierModelKind.PhoneNumber
+                    && identifier.PhoneNumber is not null)
                 {
                     return new PhoneNumberIdentifier(
                         AssertNotNull(identifier.PhoneNumber.Value, nameof(identifier.PhoneNumber.Value), nameof(PhoneNumberIdentifierModel)),
                         AssertNotNull(identifier.RawId, nameof(identifier.RawId), nameof(PhoneNumberIdentifierModel)));
                 }
 
-                if (identifier.Kind == CommunicationIdentifierModelKind.MicrosoftTeamsUser)
+                if (identifier.Kind == CommunicationIdentifierModelKind.MicrosoftTeamsUser
+                    && identifier.MicrosoftTeamsUser is not null)
                 {
                     var user = identifier.MicrosoftTeamsUser;
                     return new MicrosoftTeamsUserIdentifier(
-                        AssertNotNull(user.UserId, nameof(user.UserId), nameof(MicrosoftTeamsUserIdentifierModel)),
-                        AssertNotNull(user.IsAnonymous, nameof(user.IsAnonymous), nameof(MicrosoftTeamsUserIdentifierModel)),
-                        Deserialize(AssertNotNull(user.Cloud, nameof(user.Cloud), nameof(MicrosoftTeamsUserIdentifierModel))));
+                          AssertNotNull(user.UserId, nameof(user.UserId), nameof(MicrosoftTeamsUserIdentifierModel)),
+                          AssertNotNull(user.IsAnonymous, nameof(user.IsAnonymous), nameof(MicrosoftTeamsUserIdentifierModel)),
+                          Deserialize(AssertNotNull(user.Cloud, nameof(user.Cloud), nameof(MicrosoftTeamsUserIdentifierModel))),
+                          rawId);
                 }
 
                 return new UnknownIdentifier(rawId);

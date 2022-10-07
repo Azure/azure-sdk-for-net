@@ -172,5 +172,45 @@ namespace Azure.Communication
             Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
             Assert.AreEqual(expectedIdentifier, identifier);
         }
+
+        [Test]
+        public void DeserializeMicrosoftTeamsUser_WithKind_DeserializesSuccessfully()
+        {
+            MicrosoftTeamsUserIdentifier identifier = (MicrosoftTeamsUserIdentifier)CommunicationIdentifierSerializer.Deserialize(
+                new CommunicationIdentifierModel
+                {
+                    Kind = CommunicationIdentifierModelKind.MicrosoftTeamsUser,
+                    MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel(TestTeamsUserId)
+                    {
+                        IsAnonymous = false,
+                        Cloud = TestTeamsCloud,
+                    },
+                    RawId = TestRawId,
+                });
+
+            MicrosoftTeamsUserIdentifier expectedIdentifier = new(TestTeamsUserId, false, CommunicationCloudEnvironment.Gcch, TestRawId);
+
+            Assert.AreEqual(expectedIdentifier.UserId, identifier.UserId);
+            Assert.AreEqual(expectedIdentifier.IsAnonymous, identifier.IsAnonymous);
+            Assert.AreEqual(expectedIdentifier.Cloud, identifier.Cloud);
+            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            Assert.AreEqual(expectedIdentifier, identifier);
+        }
+
+        [Test]
+        public void DeserializeMicrosoftTeamsUser_WithKindAndNoUser_DeserializesUnknownIdentifier()
+        {
+            UnknownIdentifier identifier = (UnknownIdentifier)CommunicationIdentifierSerializer.Deserialize(
+                new CommunicationIdentifierModel
+                {
+                    Kind = CommunicationIdentifierModelKind.MicrosoftTeamsUser,
+                    RawId = TestRawId,
+                });
+
+            UnknownIdentifier expectedIdentifier = new(TestRawId);
+
+            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            Assert.AreEqual(expectedIdentifier, identifier);
+        }
     }
 }
