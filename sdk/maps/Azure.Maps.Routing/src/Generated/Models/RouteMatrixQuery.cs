@@ -5,7 +5,9 @@
 
 #nullable disable
 
-namespace Azure.Maps.Routing.Models
+using Azure.Maps.Routing.Models;
+
+namespace Azure.Maps.Routing
 {
     /// <summary> An object with a matrix of coordinates. </summary>
     public partial class RouteMatrixQuery

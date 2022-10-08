@@ -1,13 +1,23 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
-
-pr: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/eventgrid/ci.mgmt.yml
+    - sdk/eventgrid/Azure.ResourceManager.EventGrid/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: eventgrid
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.EventGrid
       safeName: AzureResourceManagerEventGrid

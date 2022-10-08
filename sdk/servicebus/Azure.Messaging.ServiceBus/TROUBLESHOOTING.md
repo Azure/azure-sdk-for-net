@@ -25,6 +25,7 @@ This troubleshooting guide covers failure investigation techniques, common error
   - [Message or session lock is lost before lock expiration time](#message-or-session-lock-is-lost-before-lock-expiration-time)
   - [How to browse scheduled or deferred messages](#how-to-browse-scheduled-or-deferred-messages)
   - [How to browse session messages across all sessions](#how-to-browse-session-messages-across-all-sessions)
+  - [NotSupportedException thrown when accessing Body property](#notsupportedexception-thrown-when-accessing-message-body)
 - [Troubleshoot processor issues](#troubleshoot-processor-issues)
   - [Autolock renewal does not appear to be working](#autolock-renewal-is-not-working)
   - [Processor appears to hang or have latency issues when using extremely high concurrency](#processor-appears-to-hang-or-have-latency-issues-when-using-high-concurrency)
@@ -221,6 +222,10 @@ When working with topics, you cannot peek scheduled messages on the subscription
 
 You can use a regular [ServiceBusReceiver][ServiceBusReceiver] to peek across all sessions. To peek for a specific session you can use the [ServiceBusSessionReceiver][ServiceBusSessionReceiver], but you will need to obtain a session lock.
 
+### NotSupportedException thrown when accessing message body
+
+This issue occurs most often in interop scenarios when receiving a message sent from a different library that uses a different AMQP message body format. If you are interacting with these types of messages, see the [AMQP message body sample][MessageBody] to learn how to access the message body. 
+
 ## Troubleshoot processor issues
 
 ### Autolock renewal is not working
@@ -313,3 +318,4 @@ Information about Service Bus quotas can be found [here][ServiceBusQuotas].
 [DebugThreadPoolStarvation]: https://docs.microsoft.com/dotnet/core/diagnostics/debug-threadpool-starvation
 [DiagnoseThreadPoolExhaustion]: https://docs.microsoft.com/shows/on-net/diagnosing-thread-pool-exhaustion-issues-in-net-core-apps
 [TransactionTimeout]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions#timeout
+[MessageBody]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample14_AMQPMessage.md#message-body

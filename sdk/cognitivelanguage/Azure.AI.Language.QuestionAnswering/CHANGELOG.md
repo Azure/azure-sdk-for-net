@@ -6,6 +6,10 @@
 
 ### Breaking Changes
 
+- Renamed the `QuestionAnsweringProjectsClient` to `QuestionAnsweringAuthoringClient` and moved it to the `Azure.AI.Language.QuestionAnswering.Authoring` namespace.
+- Changed method return types of `QuestionAnsweringAuthoringClient.UpdateQnas` and `UpdateQnasAsync` to return an `Operation<Pageable<BinaryData>>` and `Operation<AsyncPageable<BinaryData>>` respectively.
+- Changed method return types of `QuestionAnsweringAuthoringClient.UpdateSources` and `UpdateSourcesAsync` to return an `Operation<Pageable<BinaryData>>` and `Operation<AsyncPageable<BinaryData>>` respectively.
+
 ### Bugs Fixed
 
 ### Other Changes

@@ -15,11 +15,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name.Value.ToString());
-            }
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name.ToString());
             if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier");
@@ -30,17 +27,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         internal static ElasticSanSku DeserializeElasticSanSku(JsonElement element)
         {
-            Optional<ElasticSanSkuName> name = default;
-            Optional<ElasticSanTier> tier = default;
+            ElasticSanSkuName name = default;
+            Optional<ElasticSanSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     name = new ElasticSanSkuName(property.Value.GetString());
                     continue;
                 }
@@ -51,11 +43,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tier = new ElasticSanTier(property.Value.GetString());
+                    tier = new ElasticSanSkuTier(property.Value.GetString());
                     continue;
                 }
             }
-            return new ElasticSanSku(Optional.ToNullable(name), Optional.ToNullable(tier));
+            return new ElasticSanSku(name, Optional.ToNullable(tier));
         }
     }
 }

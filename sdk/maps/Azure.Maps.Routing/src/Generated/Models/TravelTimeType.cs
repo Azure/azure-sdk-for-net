@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Routing.Models
+namespace Azure.Maps.Routing
 {
     /// <summary> The ComputeTravelTime. </summary>
     public readonly partial struct TravelTimeType : IEquatable<TravelTimeType>

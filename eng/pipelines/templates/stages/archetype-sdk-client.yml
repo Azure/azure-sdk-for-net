@@ -3,7 +3,7 @@ resources:
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
-      ref: refs/tags/azure-sdk-build-tools_20211215.1
+      ref: refs/tags/azure-sdk-build-tools_20220920.1
 
 parameters:
 - name: Artifacts
@@ -55,6 +55,9 @@ parameters:
 - name: TestDependsOnDependency
   type: string
   default: not-specified
+- name: LimitForPullRequest
+  type: boolean
+  default: false
 
 variables:
   - template: ../variables/globals.yml
@@ -70,6 +73,7 @@ stages:
         ${{ if eq(parameters.ServiceDirectory, 'template') }}:
           TestPipeline: true
         ArtifactName: packages
+        LimitForPullRequest: ${{ parameters.LimitForPullRequest }}
         BuildSnippets: ${{ parameters.BuildSnippets }}
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
         TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}

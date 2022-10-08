@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WritePropertyName("datasource");
                 writer.WriteObjectValue(Datasource);
             }
-            if (Optional.IsDefined(TimeWindow))
+            if (Optional.IsDefined(TimeFrame))
             {
                 writer.WritePropertyName("timeWindow");
-                writer.WriteStringValue(TimeWindow.Value);
+                writer.WriteStringValue(TimeFrame.Value, "T");
             }
             if (Optional.IsDefined(SizeWindow))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<StreamingJobOutputDataSource> datasource = default;
-            Optional<DateTimeOffset> timeWindow = default;
+            Optional<TimeSpan> timeWindow = default;
             Optional<float> sizeWindow = default;
             Optional<StreamAnalyticsDataSerialization> serialization = default;
             Optional<StreamingJobDiagnostics> diagnostics = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            timeWindow = property0.Value.GetDateTimeOffset();
+                            timeWindow = property0.Value.GetTimeSpan("T");
                             continue;
                         }
                         if (property0.NameEquals("sizeWindow"))

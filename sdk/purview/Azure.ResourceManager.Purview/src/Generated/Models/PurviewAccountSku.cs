@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> Initializes a new instance of PurviewAccountSku. </summary>
         /// <param name="capacity"> Gets or sets the sku capacity. </param>
         /// <param name="name"> Gets or sets the sku name. </param>
-        internal PurviewAccountSku(int? capacity, Name? name)
+        internal PurviewAccountSku(int? capacity, PurviewAccountSkuName? name)
         {
             Capacity = capacity;
             Name = name;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> Gets or sets the sku capacity. </summary>
         public int? Capacity { get; }
         /// <summary> Gets or sets the sku name. </summary>
-        public Name? Name { get; }
+        public PurviewAccountSkuName? Name { get; }
     }
 }

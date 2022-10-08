@@ -13,7 +13,7 @@ security: AADToken
 security-scopes: https://monitor.azure.com//.default
 ```
 
-### Renames paramter in Upload methods to streamName
+### Renames parameter in Upload methods to streamName
 ``` yaml
 directive:
 - from: swagger-document
@@ -33,4 +33,11 @@ directive:
 - from: swagger-document
   where: $.paths["/dataCollectionRules/{ruleId}/streams/{stream}"].post.parameters[3]
   transform: $["x-ms-client-default"] = "gzip";
+```
+### Update auto-generated Upload/UploadAsync methods to internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.paths["/dataCollectionRules/{ruleId}/streams/{stream}"].post
+  transform: $['x-accessibility'] = "internal";
 ```

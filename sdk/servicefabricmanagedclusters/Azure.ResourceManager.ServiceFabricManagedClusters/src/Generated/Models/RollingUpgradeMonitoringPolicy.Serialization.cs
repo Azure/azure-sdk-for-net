@@ -23,27 +23,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WritePropertyName("healthCheckStableDuration");
             writer.WriteStringValue(HealthCheckStableDuration, "c");
             writer.WritePropertyName("healthCheckRetryTimeout");
-            writer.WriteStringValue(HealthCheckRetryTimeout);
+            writer.WriteStringValue(HealthCheckRetryTimeout, "c");
             writer.WritePropertyName("upgradeTimeout");
-            writer.WriteStringValue(UpgradeTimeout);
+            writer.WriteStringValue(UpgradeTimeout, "c");
             writer.WritePropertyName("upgradeDomainTimeout");
-            writer.WriteStringValue(UpgradeDomainTimeout);
+            writer.WriteStringValue(UpgradeDomainTimeout, "c");
             writer.WriteEndObject();
         }
 
         internal static RollingUpgradeMonitoringPolicy DeserializeRollingUpgradeMonitoringPolicy(JsonElement element)
         {
-            FailureAction failureAction = default;
+            PolicyViolationCompensationAction failureAction = default;
             TimeSpan healthCheckWaitDuration = default;
             TimeSpan healthCheckStableDuration = default;
-            string healthCheckRetryTimeout = default;
-            string upgradeTimeout = default;
-            string upgradeDomainTimeout = default;
+            TimeSpan healthCheckRetryTimeout = default;
+            TimeSpan upgradeTimeout = default;
+            TimeSpan upgradeDomainTimeout = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failureAction"))
                 {
-                    failureAction = new FailureAction(property.Value.GetString());
+                    failureAction = new PolicyViolationCompensationAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("healthCheckWaitDuration"))
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (property.NameEquals("healthCheckRetryTimeout"))
                 {
-                    healthCheckRetryTimeout = property.Value.GetString();
+                    healthCheckRetryTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (property.NameEquals("upgradeTimeout"))
                 {
-                    upgradeTimeout = property.Value.GetString();
+                    upgradeTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (property.NameEquals("upgradeDomainTimeout"))
                 {
-                    upgradeDomainTimeout = property.Value.GetString();
+                    upgradeDomainTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
             }
