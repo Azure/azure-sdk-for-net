@@ -101,9 +101,9 @@ This is a template, but your SDK readme should include details on how to contrib
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/loadtestservice/Azure.Developer.LoadTesting/README.png)
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
-[authenticate_with_token]: https://learn.microsoft.com/en-us/azure/developer/java/sdk/identity-user-auth
+[authenticate_with_token]: https://learn.microsoft.com/aspnet/core/security/authentication/identity?view=aspnetcore-6.0&tabs=visual-studio
 [azure_identity_credentials]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#credentials
 [azure_identity_nuget]: https://www.nuget.org/packages/Azure.Identity/1.7.0
-[client_secret_credential]: https://learn.microsoft.com/en-us/dotnet/api/azure.identity.clientsecretcredential?view=azure-dotnet-preview
+[client_secret_credential]: https://learn.microsoft.com/dotnet/api/azure.identity.clientsecretcredential?view=azure-dotnet-preview
 [nuget]: https://www.nuget.org/
 [azure_sub]: https://azure.microsoft.com/free/
