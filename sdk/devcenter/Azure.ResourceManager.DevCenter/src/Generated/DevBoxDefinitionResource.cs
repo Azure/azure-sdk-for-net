@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DevCenter
     /// from an instance of <see cref="ArmClient" /> using the GetDevBoxDefinitionResource method.
     /// Otherwise you can get one from its parent resource <see cref="DevCenterResource" /> using the GetDevBoxDefinition method.
     /// </summary>
-    public partial class DevBoxDefinitionResource : ArmResource
+    public partial class DevBoxDefinitionResource : BaseDevBoxDefinitionResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevBoxDefinitionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string devCenterName, string devBoxDefinitionName)
@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.DevCenter
 
         private readonly ClientDiagnostics _devBoxDefinitionClientDiagnostics;
         private readonly DevBoxDefinitionsRestOperations _devBoxDefinitionRestClient;
-        private readonly DevBoxDefinitionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DevBoxDefinitionResource"/> class for mocking. </summary>
         protected DevBoxDefinitionResource()
@@ -45,10 +44,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Initializes a new instance of the <see cref = "DevBoxDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DevBoxDefinitionResource(ArmClient client, DevBoxDefinitionData data) : this(client, data.Id)
+        internal DevBoxDefinitionResource(ArmClient client, DevBoxDefinitionData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _devBoxDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string devBoxDefinitionApiVersion);
+            _devBoxDefinitionRestClient = new DevBoxDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devBoxDefinitionApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="DevBoxDefinitionResource"/> class. </summary>
@@ -67,21 +70,6 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/devboxdefinitions";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DevBoxDefinitionData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -94,7 +82,7 @@ namespace Azure.ResourceManager.DevCenter
         /// Operation Id: DevBoxDefinitions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DevBoxDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<BaseDevBoxDefinitionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _devBoxDefinitionClientDiagnostics.CreateScope("DevBoxDefinitionResource.Get");
             scope.Start();
@@ -103,7 +91,7 @@ namespace Azure.ResourceManager.DevCenter
                 var response = await _devBoxDefinitionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevBoxDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,7 +106,20 @@ namespace Azure.ResourceManager.DevCenter
         /// Operation Id: DevBoxDefinitions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DevBoxDefinitionResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<DevBoxDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((DevBoxDefinitionResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Gets a Dev Box definition
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}
+        /// Operation Id: DevBoxDefinitions_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<BaseDevBoxDefinitionResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _devBoxDefinitionClientDiagnostics.CreateScope("DevBoxDefinitionResource.Get");
             scope.Start();
@@ -127,13 +128,26 @@ namespace Azure.ResourceManager.DevCenter
                 var response = _devBoxDefinitionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevBoxDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets a Dev Box definition
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}
+        /// Operation Id: DevBoxDefinitions_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new Response<DevBoxDefinitionResource> Get(CancellationToken cancellationToken = default)
+        {
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((DevBoxDefinitionResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -276,7 +290,7 @@ namespace Azure.ResourceManager.DevCenter
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new DevBoxDefinitionPatch();
                     foreach (var tag in current.Tags)
                     {
@@ -322,7 +336,7 @@ namespace Azure.ResourceManager.DevCenter
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new DevBoxDefinitionPatch();
                     foreach (var tag in current.Tags)
                     {
@@ -367,7 +381,7 @@ namespace Azure.ResourceManager.DevCenter
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new DevBoxDefinitionPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -408,7 +422,7 @@ namespace Azure.ResourceManager.DevCenter
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new DevBoxDefinitionPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
@@ -448,7 +462,7 @@ namespace Azure.ResourceManager.DevCenter
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new DevBoxDefinitionPatch();
                     foreach (var tag in current.Tags)
                     {
@@ -492,7 +506,7 @@ namespace Azure.ResourceManager.DevCenter
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new DevBoxDefinitionPatch();
                     foreach (var tag in current.Tags)
                     {
