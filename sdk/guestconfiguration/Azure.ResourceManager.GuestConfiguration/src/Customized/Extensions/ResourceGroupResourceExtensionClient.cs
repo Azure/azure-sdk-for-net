@@ -11,11 +11,6 @@ using Azure.Core;
 namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    [CodeGenSuppress("GetGuestConfigurationAssignmentsAsync", typeof(CancellationToken))]
-    [CodeGenSuppress("GetGuestConfigurationAssignments", typeof(CancellationToken))]
-    [CodeGenSuppress("GetGuestConfigurationVmAssignments", typeof(string))]
-    [CodeGenSuppress("GetGuestConfigurationHcrpAssignments", typeof(string))]
-    [CodeGenSuppress("GetGuestConfigurationVmssAssignments", typeof(string))]
     internal partial class ResourceGroupResourceExtensionClient : ArmResource
     {
         /// <summary>
@@ -29,11 +24,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             async Task<Page<GuestConfigurationAssignmentData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = GuestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGuestConfigurationAssignmentQueryResults");
+                using var scope = GuestConfigurationAssignmentClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllGuestConfigurationAssignmentData");
                 scope.Start();
                 try
                 {
-                    var response = await GuestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.RGListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await GuestConfigurationAssignmentRestClient.RGListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -56,11 +51,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Page<GuestConfigurationAssignmentData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = GuestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGuestConfigurationAssignmentQueryResults");
+                using var scope = GuestConfigurationAssignmentClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllGuestConfigurationAssignmentData");
                 scope.Start();
                 try
                 {
-                    var response = GuestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.RGList(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = GuestConfigurationAssignmentRestClient.RGList(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)

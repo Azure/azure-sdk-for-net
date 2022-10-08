@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -12,19 +13,6 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.GuestConfiguration. </summary>
-    [CodeGenSuppress("GetGuestConfigurationAssignmentsAsync", typeof(SubscriptionResource), typeof(CancellationToken))]
-    [CodeGenSuppress("GetGuestConfigurationAssignments", typeof(SubscriptionResource), typeof(CancellationToken))]
-    [CodeGenSuppress("GetGuestConfigurationAssignmentsAsync", typeof(ResourceGroupResource), typeof(CancellationToken))]
-    [CodeGenSuppress("GetGuestConfigurationAssignments", typeof(ResourceGroupResource), typeof(CancellationToken))]
-    [CodeGenSuppress("GetGuestConfigurationVmAssignments", typeof(ResourceGroupResource), typeof(string))]
-    [CodeGenSuppress("GetGuestConfigurationHcrpAssignments", typeof(ResourceGroupResource), typeof(string))]
-    [CodeGenSuppress("GetGuestConfigurationVmssAssignments", typeof(ResourceGroupResource), typeof(string))]
-    [CodeGenSuppress("GetGuestConfigurationVmAssignmentAsync", typeof(ResourceGroupResource), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetGuestConfigurationVmAssignment", typeof(ResourceGroupResource), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetGuestConfigurationHcrpAssignmentAsync", typeof(ResourceGroupResource), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetGuestConfigurationHcrpAssignment", typeof(ResourceGroupResource), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetGuestConfigurationVmssAssignmentAsync", typeof(ResourceGroupResource), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetGuestConfigurationVmssAssignment", typeof(ResourceGroupResource), typeof(string), typeof(string), typeof(CancellationToken))]
     public static partial class GuestConfigurationExtensions
     {
         /// <summary>
@@ -35,6 +23,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GuestConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentDataAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAllGuestConfigurationAssignmentDataAsync(cancellationToken);
@@ -48,6 +37,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GuestConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentData(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAllGuestConfigurationAssignmentData(cancellationToken);
@@ -61,6 +51,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GuestConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentDataAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroupResource).GetAllGuestConfigurationAssignmentDataAsync(cancellationToken);
@@ -74,6 +65,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GuestConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentData(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroupResource).GetAllGuestConfigurationAssignmentData(cancellationToken);

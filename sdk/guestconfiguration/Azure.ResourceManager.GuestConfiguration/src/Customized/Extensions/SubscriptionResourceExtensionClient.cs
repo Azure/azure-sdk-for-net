@@ -11,8 +11,6 @@ using Azure.Core;
 namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    [CodeGenSuppress("GetGuestConfigurationAssignmentsAsync", typeof(CancellationToken))]
-    [CodeGenSuppress("GetGuestConfigurationAssignments", typeof(CancellationToken))]
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
         /// <summary>
@@ -26,11 +24,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             async Task<Page<GuestConfigurationAssignmentData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = GuestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGuestConfigurationAssignmentQueryResults");
+                using var scope = GuestConfigurationAssignmentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllGuestConfigurationAssignmentData");
                 scope.Start();
                 try
                 {
-                    var response = await GuestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.SubscriptionListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await GuestConfigurationAssignmentRestClient.SubscriptionListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -53,11 +51,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Page<GuestConfigurationAssignmentData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = GuestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGuestConfigurationAssignmentQueryResults");
+                using var scope = GuestConfigurationAssignmentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllGuestConfigurationAssignmentData");
                 scope.Start();
                 try
                 {
-                    var response = GuestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.SubscriptionList(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = GuestConfigurationAssignmentRestClient.SubscriptionList(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)

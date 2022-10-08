@@ -102,6 +102,11 @@ parameter-rename-mapping:
   GuestConfigurationAssignmentReportsVMSS_Get:
     id: reportId
 
+generate-virtual-operations:
+- GuestConfigurationHCRPAssignments_Get
+- GuestConfigurationAssignments_Get
+- GuestConfigurationAssignmentsVMSS_Get
+
 directive:
   - from: guestconfiguration.json
     where: $.definitions

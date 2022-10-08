@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<GuestConfigurationVmAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<GuestConfigurationVmAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((GuestConfigurationVmAssignmentResource)result.Value, result.GetRawResponse());
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<GuestConfigurationVmAssignmentResource> Get(CancellationToken cancellationToken = default)
+        public virtual new Response<GuestConfigurationVmAssignmentResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
             return Response.FromValue((GuestConfigurationVmAssignmentResource)result.Value, result.GetRawResponse());
