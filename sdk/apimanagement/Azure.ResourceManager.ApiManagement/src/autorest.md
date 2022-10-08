@@ -81,6 +81,26 @@ rename-rules:
   Url: Uri
   Etag: ETag|etag
 
+generate-virtual-operations:
+- ApiDiagnostic_Get
+- ApiDiagnostic_Update
+- Diagnostic_Get
+- Diagnostic_Update
+- Policy_Get
+- Policy_CreateOrUpdate
+- ProductPolicy_Get
+- ProductPolicy_CreateOrUpdate
+- Tag_GetByProduct
+- UserSubscription_Get
+- Subscription_Get
+- Tag_Get
+- ApiPolicy_Get
+- ApiPolicy_CreateOrUpdate
+- ApiOperationPolicy_Get
+- ApiOperationPolicy_CreateOrUpdate
+- Tag_GetByOperation
+- Tag_GetByApi
+
 override-operation-name:
   NetworkStatus_ListByLocation: GetNetworkStatusByLocation
   TenantAccessGit_RegeneratePrimaryKey: RegeneratePrimaryKeyForGit
@@ -106,7 +126,6 @@ override-operation-name:
   ContentType_ListByService: GetContentTypes
   ContentItem_ListByService: GetContentItems
   ContentItem_GetEntityTag: GetContentItemEntityTag
-  ProductSubscriptions_List: GetAllProductSubscriptionData # temporary - to be removed once the polymorphic resource change is merged.
 
 prepend-rp-prefix:
 - ResourceSkuCapacity

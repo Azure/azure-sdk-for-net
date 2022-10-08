@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<ApiManagementDiagnosticResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<ApiManagementDiagnosticResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((ApiManagementDiagnosticResource)result.Value, result.GetRawResponse());
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<ApiManagementDiagnosticResource> Get(CancellationToken cancellationToken = default)
+        public virtual new Response<ApiManagementDiagnosticResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
             return Response.FromValue((ApiManagementDiagnosticResource)result.Value, result.GetRawResponse());
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new async Task<Response<ApiManagementDiagnosticResource>> UpdateAsync(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<ApiManagementDiagnosticResource>> UpdateAsync(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new Response<ApiManagementDiagnosticResource> Update(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
+        public virtual new Response<ApiManagementDiagnosticResource> Update(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

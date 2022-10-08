@@ -4,14 +4,10 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -27,6 +23,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SubscriptionContractData" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<SubscriptionContractData> GetAllProductSubscriptionDataAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SubscriptionContractData>> FirstPageFunc(int? pageSizeHint)
@@ -72,6 +69,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionContractData" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<SubscriptionContractData> GetAllProductSubscriptionData(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Page<SubscriptionContractData> FirstPageFunc(int? pageSizeHint)

@@ -98,33 +98,5 @@ namespace Azure.ResourceManager.ApiManagement
                 return _data;
             }
         }
-
-        /// <summary> The core implementation for operation Get. </summary>
-        /// <param name="expandCommentsAttachments"> Expand the comment attachments. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Task<Response<IssueContractResource>> GetCoreAsync(bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default);
-
-        /// <summary> The default implementation for operation Get. </summary>
-        /// <param name="expandCommentsAttachments"> Expand the comment attachments. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public async Task<Response<IssueContractResource>> GetAsync(bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
-        {
-            return await GetCoreAsync(expandCommentsAttachments, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> The core implementation for operation Get. </summary>
-        /// <param name="expandCommentsAttachments"> Expand the comment attachments. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Response<IssueContractResource> GetCore(bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default);
-
-        /// <summary> The default implementation for operation Get. </summary>
-        /// <param name="expandCommentsAttachments"> Expand the comment attachments. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public Response<IssueContractResource> Get(bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
-        {
-            return GetCore(expandCommentsAttachments, cancellationToken);
-        }
     }
 }

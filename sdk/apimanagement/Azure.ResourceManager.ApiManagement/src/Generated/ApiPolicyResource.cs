@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<ApiPolicyResource>> GetAsync(PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<ApiPolicyResource>> GetAsync(PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(format, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((ApiPolicyResource)result.Value, result.GetRawResponse());
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<ApiPolicyResource> Get(PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual new Response<ApiPolicyResource> Get(PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
             var result = GetCore(format, cancellationToken);
             return Response.FromValue((ApiPolicyResource)result.Value, result.GetRawResponse());
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new async Task<ArmOperation<ApiPolicyResource>> UpdateAsync(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual new async Task<ArmOperation<ApiPolicyResource>> UpdateAsync(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new ArmOperation<ApiPolicyResource> Update(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual new ArmOperation<ApiPolicyResource> Update(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
