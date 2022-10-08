@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService
     /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotExtensionResource method.
     /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource" /> using the GetSiteSlotExtension method.
     /// </summary>
-    public partial class SiteSlotExtensionResource : MSDeployStatusResource
+    public partial class SiteSlotExtensionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteSlotExtensionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot)
@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _siteSlotExtensionWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteSlotExtensionWebAppsRestClient;
+        private readonly MSDeployStatusData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotExtensionResource"/> class for mocking. </summary>
         protected SiteSlotExtensionResource()
@@ -43,14 +44,10 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "SiteSlotExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteSlotExtensionResource(ArmClient client, MSDeployStatusData data) : base(client, data)
+        internal SiteSlotExtensionResource(ArmClient client, MSDeployStatusData data) : this(client, data.Id)
         {
-            _siteSlotExtensionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string siteSlotExtensionWebAppsApiVersion);
-            _siteSlotExtensionWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotExtensionWebAppsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            HasData = true;
+            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotExtensionResource"/> class. </summary>
@@ -69,6 +66,21 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/extensions";
 
+        /// <summary> Gets whether or not the current instance has data. </summary>
+        public virtual bool HasData { get; }
+
+        /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
+        public virtual MSDeployStatusData Data
+        {
+            get
+            {
+                if (!HasData)
+                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                return _data;
+            }
+        }
+
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -81,7 +93,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetMSDeployStatusSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override async Task<Response<MSDeployStatusResource>> GetCoreAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotExtensionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotExtensionWebAppsClientDiagnostics.CreateScope("SiteSlotExtensionResource.Get");
             scope.Start();
@@ -90,7 +102,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotExtensionWebAppsRestClient.GetMSDeployStatusSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -105,20 +117,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetMSDeployStatusSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public new async Task<Response<SiteSlotExtensionResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((SiteSlotExtensionResource)result.Value, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// Description for Get the status of the last MSDeploy operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy
-        /// Operation Id: WebApps_GetMSDeployStatusSlot
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override Response<MSDeployStatusResource> GetCore(CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotExtensionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotExtensionWebAppsClientDiagnostics.CreateScope("SiteSlotExtensionResource.Get");
             scope.Start();
@@ -127,26 +126,13 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteSlotExtensionWebAppsRestClient.GetMSDeployStatusSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Description for Get the status of the last MSDeploy operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy
-        /// Operation Id: WebApps_GetMSDeployStatusSlot
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public new Response<SiteSlotExtensionResource> Get(CancellationToken cancellationToken = default)
-        {
-            var result = GetCore(cancellationToken);
-            return Response.FromValue((SiteSlotExtensionResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -158,7 +144,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
-        protected override async Task<ArmOperation<MSDeployStatusResource>> CreateOrUpdateCoreAsync(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteSlotExtensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, WebAppMSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(msDeploy, nameof(msDeploy));
 
@@ -167,7 +153,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotExtensionWebAppsRestClient.CreateMSDeployOperationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<MSDeployStatusResource>(new MSDeployStatusOperationSource(Client), _siteSlotExtensionWebAppsClientDiagnostics, Pipeline, _siteSlotExtensionWebAppsRestClient.CreateCreateMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<SiteSlotExtensionResource>(new SiteSlotExtensionOperationSource(Client), _siteSlotExtensionWebAppsClientDiagnostics, Pipeline, _siteSlotExtensionWebAppsRestClient.CreateCreateMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -188,30 +174,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
-        [ForwardsClientCalls]
-        public new async Task<ArmOperation<SiteSlotExtensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(msDeploy, nameof(msDeploy));
-
-            var result = await CreateOrUpdateCoreAsync(waitUntil, msDeploy, cancellationToken).ConfigureAwait(false);
-            if (waitUntil == WaitUntil.Completed)
-            {
-                return new AppServiceArmOperation<SiteSlotExtensionResource>(Response.FromValue((SiteSlotExtensionResource)result.Value, result.GetRawResponse()));
-            }
-            var operation = new AppServiceArmOperation<SiteSlotExtensionResource>(new SiteSlotExtensionOperationSource(Client), _siteSlotExtensionWebAppsClientDiagnostics, Pipeline, _siteSlotExtensionWebAppsRestClient.CreateCreateMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
-            return operation;
-        }
-
-        /// <summary>
-        /// Description for Invoke the MSDeploy web app extension.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy
-        /// Operation Id: WebApps_CreateMSDeployOperationSlot
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="msDeploy"> Details of MSDeploy operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
-        protected override ArmOperation<MSDeployStatusResource> CreateOrUpdateCore(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteSlotExtensionResource> CreateOrUpdate(WaitUntil waitUntil, WebAppMSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(msDeploy, nameof(msDeploy));
 
@@ -220,7 +183,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotExtensionWebAppsRestClient.CreateMSDeployOperationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy, cancellationToken);
-                var operation = new AppServiceArmOperation<MSDeployStatusResource>(new MSDeployStatusOperationSource(Client), _siteSlotExtensionWebAppsClientDiagnostics, Pipeline, _siteSlotExtensionWebAppsRestClient.CreateCreateMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<SiteSlotExtensionResource>(new SiteSlotExtensionOperationSource(Client), _siteSlotExtensionWebAppsClientDiagnostics, Pipeline, _siteSlotExtensionWebAppsRestClient.CreateCreateMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -233,35 +196,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Invoke the MSDeploy web app extension.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy
-        /// Operation Id: WebApps_CreateMSDeployOperationSlot
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="msDeploy"> Details of MSDeploy operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
-        [ForwardsClientCalls]
-        public new ArmOperation<SiteSlotExtensionResource> CreateOrUpdate(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(msDeploy, nameof(msDeploy));
-
-            var result = CreateOrUpdateCore(waitUntil, msDeploy, cancellationToken);
-            if (waitUntil == WaitUntil.Completed)
-            {
-                return new AppServiceArmOperation<SiteSlotExtensionResource>(Response.FromValue((SiteSlotExtensionResource)result.Value, result.GetRawResponse()));
-            }
-            var operation = new AppServiceArmOperation<SiteSlotExtensionResource>(new SiteSlotExtensionOperationSource(Client), _siteSlotExtensionWebAppsClientDiagnostics, Pipeline, _siteSlotExtensionWebAppsRestClient.CreateCreateMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
-            return operation;
-        }
-
-        /// <summary>
         /// Description for Get the MSDeploy Log for the last MSDeploy operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy/log
         /// Operation Id: WebApps_GetMSDeployLogSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MSDeployLog>> GetMSDeployLogSlotAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebAppMSDeployLog>> GetMSDeployLogSlotAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotExtensionWebAppsClientDiagnostics.CreateScope("SiteSlotExtensionResource.GetMSDeployLogSlot");
             scope.Start();
@@ -283,7 +223,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetMSDeployLogSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MSDeployLog> GetMSDeployLogSlot(CancellationToken cancellationToken = default)
+        public virtual Response<WebAppMSDeployLog> GetMSDeployLogSlot(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotExtensionWebAppsClientDiagnostics.CreateScope("SiteSlotExtensionResource.GetMSDeployLogSlot");
             scope.Start();

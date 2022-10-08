@@ -1061,6 +1061,11 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   If <see cref="EventProcessorOptions.MaximumWaitTime"/> is <c>null</c>, the event processor will continue reading from the Event Hub
         ///   partition until a batch with at least one event could be formed and will not dispatch any empty batches to this method.
         ///
+        ///   This method will be invoked concurrently, limited to one call per partition. The processor will await each invocation to ensure
+        ///   that the events from the same partition are processed in the order that they were read from the partition.  No time limit is
+        ///   imposed on an invocation of this handler; the processor will wait indefinitely for execution to complete before dispatching another
+        ///   event for the associated partition.  It is safe for implementations to perform long-running operations, retries, delays, and dead-lettering activities.
+        ///
         ///   Should an exception occur within the code for this method, the event processor will allow it to propagate up the stack without attempting to handle it in any way.
         ///   On most hosts, this will fault the task responsible for partition processing, causing it to be restarted from the last checkpoint.  On some hosts, it may crash the process.
         ///   Developers are strongly encouraged to take all exception scenarios into account and guard against them using try/catch blocks and other means as appropriate.
@@ -1099,6 +1104,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         ///   As with event processing, should an exception occur in the code for the error handler, the event processor will allow it to bubble and will not attempt to handle
         ///   it in any way.  Developers are strongly encouraged to take exception scenarios into account and guard against them using try/catch blocks and other means as appropriate.
+        ///
+        ///   This method will be invoked concurrently and is not awaited by the processor, as each error is independent.  No time limit is imposed on an invocation; it is safe for
+        ///   implementations to perform long-running operations and retries as needed.
         /// </remarks>
         ///
         /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/TROUBLESHOOTING.md">Troubleshoot Event Hubs issues</seealso>
@@ -1118,6 +1126,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <remarks>
         ///   It is not recommended that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
         ///   a deadlock scenario, especially if using the synchronous form of the call.
+        ///
+        ///   This method will be invoked concurrently, limited to one call per partition.  The processor will await each invocation before beginning to process
+        ///   the associated partition.
+        ///
+        ///   The processor will wait indefinitely for execution of the handler to complete. It is recommended for implementations to avoid
+        ///   long-running operations, as they will delay processing for the associated partition.
         /// </remarks>
         ///
         protected virtual Task OnInitializingPartitionAsync(TPartition partition,
@@ -1135,6 +1149,10 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <remarks>
         ///   It is not recommended that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
         ///   a deadlock scenario, especially if using the synchronous form of the call.
+        ///
+        ///   This method will be invoked concurrently, as each close is independent.  No time limit is imposed on an invocation; it is safe for implementations
+        ///   to perform long-running operations and retries as needed.  This handler has no influence on processing for the associated partition and offers no
+        ///   guarantee that execution will complete before processing for the partition is restarted or migrates to a new host.
         /// </remarks>
         ///
         protected virtual Task OnPartitionProcessingStoppedAsync(TPartition partition,
@@ -1285,6 +1303,25 @@ namespace Azure.Messaging.EventHubs.Primitives
                     {
                         Logger.ProcessorStoppingCancellationWarning(Identifier, EventHubName, ConsumerGroup, cancelEx.Message);
                     }
+                }
+
+                // Ensure the load balancing and partition ownership intervals are not configured too closely.  The ownership
+                // interval should be at least twice the load balancing interval.  Documented guidance recommends a factor of
+                // three.
+                //
+                // A smaller gap is valid and may be desirable in some unusual scenarios, but is likely to cause
+                // issues for mainline scenarios.  Emit a warning to the error handler and logs, but allow starting to proceed.
+
+                var ownershipSeconds = Options.PartitionOwnershipExpirationInterval.TotalSeconds;
+                var loadBalancingSeconds = Options.LoadBalancingUpdateInterval.TotalSeconds;
+
+                if (ownershipSeconds < (loadBalancingSeconds * 2))
+                {
+                    Logger.ProcessorLoadBalancingIntervalsTooCloseWarning(Identifier, EventHubName, loadBalancingSeconds, ownershipSeconds);
+
+                    var message = string.Format(CultureInfo.InvariantCulture, Resources.ProcessorLoadBalancingIntervalsTooCloseMask, loadBalancingSeconds, ownershipSeconds);
+                    var intervalException = new EventHubsException(true, EventHubName, message, EventHubsException.FailureReason.GeneralError);
+                    _ = InvokeOnProcessingErrorAsync(intervalException, null, Resources.OperationLoadBalancing, CancellationToken.None);
                 }
             }
             catch (OperationCanceledException ex)

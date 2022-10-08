@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Search.Models
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
             Optional<IReadOnlyList<string>> requiredZoneNames = default;
-            Optional<IReadOnlyList<ShareablePrivateLinkResourceType>> shareablePrivateLinkResourceTypes = default;
+            Optional<IReadOnlyList<ShareableSearchServicePrivateLinkResourceType>> shareablePrivateLinkResourceTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupId"))
@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ShareablePrivateLinkResourceType> array = new List<ShareablePrivateLinkResourceType>();
+                    List<ShareableSearchServicePrivateLinkResourceType> array = new List<ShareableSearchServicePrivateLinkResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ShareablePrivateLinkResourceType.DeserializeShareablePrivateLinkResourceType(item));
+                        array.Add(ShareableSearchServicePrivateLinkResourceType.DeserializeShareableSearchServicePrivateLinkResourceType(item));
                     }
                     shareablePrivateLinkResourceTypes = array;
                     continue;

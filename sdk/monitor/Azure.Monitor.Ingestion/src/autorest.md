@@ -13,7 +13,7 @@ security: AADToken
 security-scopes: https://monitor.azure.com//.default
 ```
 
-### Renames paramter in Upload methods to streamName
+### Renames parameter in Upload methods to streamName
 ``` yaml
 directive:
 - from: swagger-document

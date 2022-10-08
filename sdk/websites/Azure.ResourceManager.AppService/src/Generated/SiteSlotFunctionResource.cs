@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
-        public virtual async Task<Response<KeyInfo>> CreateOrUpdateFunctionSecretSlotAsync(string keyName, KeyInfo info, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebAppKeyInfo>> CreateOrUpdateFunctionSecretSlotAsync(string keyName, WebAppKeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             Argument.AssertNotNull(info, nameof(info));
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
-        public virtual Response<KeyInfo> CreateOrUpdateFunctionSecretSlot(string keyName, KeyInfo info, CancellationToken cancellationToken = default)
+        public virtual Response<WebAppKeyInfo> CreateOrUpdateFunctionSecretSlot(string keyName, WebAppKeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             Argument.AssertNotNull(info, nameof(info));

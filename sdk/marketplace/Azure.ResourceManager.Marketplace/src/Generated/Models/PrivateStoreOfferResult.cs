@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="createdOn"> Private store offer creation date. </param>
         /// <param name="modifiedOn"> Private store offer modification date. </param>
         /// <param name="specificPlanIdsLimitation"> Plan ids limitation for this offer. </param>
-        /// <param name="isUpdateSuppressedDueIdempotence"> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </param>
+        /// <param name="isUpdateSuppressedDueToIdempotence"> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </param>
         /// <param name="iconFileUris"> Icon File Uris. </param>
         /// <param name="plans"> Offer plans. </param>
-        internal PrivateStoreOfferResult(string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IReadOnlyList<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueIdempotence, IReadOnlyDictionary<string, Uri> iconFileUris, IReadOnlyList<PrivateStorePlan> plans)
+        internal PrivateStoreOfferResult(string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IReadOnlyList<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IReadOnlyDictionary<string, Uri> iconFileUris, IReadOnlyList<PrivateStorePlan> plans)
         {
             UniqueOfferId = uniqueOfferId;
             OfferDisplayName = offerDisplayName;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             CreatedOn = createdOn;
             ModifiedOn = modifiedOn;
             SpecificPlanIdsLimitation = specificPlanIdsLimitation;
-            IsUpdateSuppressedDueIdempotence = isUpdateSuppressedDueIdempotence;
+            IsUpdateSuppressedDueToIdempotence = isUpdateSuppressedDueToIdempotence;
             IconFileUris = iconFileUris;
             Plans = plans;
         }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Plan ids limitation for this offer. </summary>
         public IReadOnlyList<string> SpecificPlanIdsLimitation { get; }
         /// <summary> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </summary>
-        public bool? IsUpdateSuppressedDueIdempotence { get; }
+        public bool? IsUpdateSuppressedDueToIdempotence { get; }
         /// <summary> Icon File Uris. </summary>
         public IReadOnlyDictionary<string, Uri> IconFileUris { get; }
         /// <summary> Offer plans. </summary>

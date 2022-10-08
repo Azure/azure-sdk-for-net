@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService
     /// from an instance of <see cref="ArmClient" /> using the GetSiteVirtualNetworkConnectionResource method.
     /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteVirtualNetworkConnection method.
     /// </summary>
-    public partial class SiteVirtualNetworkConnectionResource : VnetInfoResource
+    public partial class SiteVirtualNetworkConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteVirtualNetworkConnectionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string vnetName)
@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _siteVirtualNetworkConnectionWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteVirtualNetworkConnectionWebAppsRestClient;
+        private readonly AppServiceVirtualNetworkData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteVirtualNetworkConnectionResource"/> class for mocking. </summary>
         protected SiteVirtualNetworkConnectionResource()
@@ -42,14 +43,10 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "SiteVirtualNetworkConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteVirtualNetworkConnectionResource(ArmClient client, VnetInfoResourceData data) : base(client, data)
+        internal SiteVirtualNetworkConnectionResource(ArmClient client, AppServiceVirtualNetworkData data) : this(client, data.Id)
         {
-            _siteVirtualNetworkConnectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string siteVirtualNetworkConnectionWebAppsApiVersion);
-            _siteVirtualNetworkConnectionWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteVirtualNetworkConnectionWebAppsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            HasData = true;
+            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteVirtualNetworkConnectionResource"/> class. </summary>
@@ -67,6 +64,21 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/virtualNetworkConnections";
+
+        /// <summary> Gets whether or not the current instance has data. </summary>
+        public virtual bool HasData { get; }
+
+        /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
+        public virtual AppServiceVirtualNetworkData Data
+        {
+            get
+            {
+                if (!HasData)
+                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                return _data;
+            }
+        }
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -117,7 +129,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetVnetConnection
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override async Task<Response<VnetInfoResource>> GetCoreAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteVirtualNetworkConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionResource.Get");
             scope.Start();
@@ -126,7 +138,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteVirtualNetworkConnectionWebAppsRestClient.GetVnetConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteVirtualNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,20 +153,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetVnetConnection
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public new async Task<Response<SiteVirtualNetworkConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((SiteVirtualNetworkConnectionResource)result.Value, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// Description for Gets a virtual network the app (or deployment slot) is connected to by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
-        /// Operation Id: WebApps_GetVnetConnection
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override Response<VnetInfoResource> GetCore(CancellationToken cancellationToken = default)
+        public virtual Response<SiteVirtualNetworkConnectionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionResource.Get");
             scope.Start();
@@ -163,26 +162,13 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteVirtualNetworkConnectionWebAppsRestClient.GetVnetConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteVirtualNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Description for Gets a virtual network the app (or deployment slot) is connected to by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
-        /// Operation Id: WebApps_GetVnetConnection
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public new Response<SiteVirtualNetworkConnectionResource> Get(CancellationToken cancellationToken = default)
-        {
-            var result = GetCore(cancellationToken);
-            return Response.FromValue((SiteVirtualNetworkConnectionResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -245,7 +231,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<SiteVirtualNetworkConnectionResource>> UpdateAsync(VnetInfoResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteVirtualNetworkConnectionResource>> UpdateAsync(AppServiceVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -271,7 +257,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<SiteVirtualNetworkConnectionResource> Update(VnetInfoResourceData data, CancellationToken cancellationToken = default)
+        public virtual Response<SiteVirtualNetworkConnectionResource> Update(AppServiceVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

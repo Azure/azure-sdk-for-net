@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevCenter
     /// from an instance of <see cref="ArmClient" /> using the GetProjectDevBoxDefinitionResource method.
     /// Otherwise you can get one from its parent resource <see cref="ProjectResource" /> using the GetProjectDevBoxDefinition method.
     /// </summary>
-    public partial class ProjectDevBoxDefinitionResource : BaseDevBoxDefinitionResource
+    public partial class ProjectDevBoxDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ProjectDevBoxDefinitionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName, string devBoxDefinitionName)
@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.DevCenter
 
         private readonly ClientDiagnostics _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics;
         private readonly DevBoxDefinitionsRestOperations _projectDevBoxDefinitionDevBoxDefinitionsRestClient;
+        private readonly DevBoxDefinitionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ProjectDevBoxDefinitionResource"/> class for mocking. </summary>
         protected ProjectDevBoxDefinitionResource()
@@ -42,14 +43,10 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Initializes a new instance of the <see cref = "ProjectDevBoxDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ProjectDevBoxDefinitionResource(ArmClient client, DevBoxDefinitionData data) : base(client, data)
+        internal ProjectDevBoxDefinitionResource(ArmClient client, DevBoxDefinitionData data) : this(client, data.Id)
         {
-            _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string projectDevBoxDefinitionDevBoxDefinitionsApiVersion);
-            _projectDevBoxDefinitionDevBoxDefinitionsRestClient = new DevBoxDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, projectDevBoxDefinitionDevBoxDefinitionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            HasData = true;
+            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ProjectDevBoxDefinitionResource"/> class. </summary>
@@ -68,6 +65,21 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/devboxdefinitions";
 
+        /// <summary> Gets whether or not the current instance has data. </summary>
+        public virtual bool HasData { get; }
+
+        /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
+        public virtual DevBoxDefinitionData Data
+        {
+            get
+            {
+                if (!HasData)
+                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                return _data;
+            }
+        }
+
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -80,7 +92,7 @@ namespace Azure.ResourceManager.DevCenter
         /// Operation Id: DevBoxDefinitions_GetByProject
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override async Task<Response<BaseDevBoxDefinitionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectDevBoxDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevBoxDefinitionResource.Get");
             scope.Start();
@@ -89,7 +101,7 @@ namespace Azure.ResourceManager.DevCenter
                 var response = await _projectDevBoxDefinitionDevBoxDefinitionsRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectDevBoxDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -104,20 +116,7 @@ namespace Azure.ResourceManager.DevCenter
         /// Operation Id: DevBoxDefinitions_GetByProject
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public new async Task<Response<ProjectDevBoxDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((ProjectDevBoxDefinitionResource)result.Value, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// Gets a Dev Box definition configured for a project
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions/{devBoxDefinitionName}
-        /// Operation Id: DevBoxDefinitions_GetByProject
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override Response<BaseDevBoxDefinitionResource> GetCore(CancellationToken cancellationToken = default)
+        public virtual Response<ProjectDevBoxDefinitionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevBoxDefinitionResource.Get");
             scope.Start();
@@ -126,26 +125,13 @@ namespace Azure.ResourceManager.DevCenter
                 var response = _projectDevBoxDefinitionDevBoxDefinitionsRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectDevBoxDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Gets a Dev Box definition configured for a project
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions/{devBoxDefinitionName}
-        /// Operation Id: DevBoxDefinitions_GetByProject
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public new Response<ProjectDevBoxDefinitionResource> Get(CancellationToken cancellationToken = default)
-        {
-            var result = GetCore(cancellationToken);
-            return Response.FromValue((ProjectDevBoxDefinitionResource)result.Value, result.GetRawResponse());
         }
     }
 }

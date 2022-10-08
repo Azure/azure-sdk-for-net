@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<Capability>>> ListCapabilitiesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<AppServiceSkuCapability>>> ListCapabilitiesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -548,12 +548,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<Capability> value = default;
+                        IReadOnlyList<AppServiceSkuCapability> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<Capability> array = new List<Capability>();
+                        List<AppServiceSkuCapability> array = new List<AppServiceSkuCapability>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Capability.DeserializeCapability(item));
+                            array.Add(AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<Capability>> ListCapabilities(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<AppServiceSkuCapability>> ListCapabilities(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -582,12 +582,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<Capability> value = default;
+                        IReadOnlyList<AppServiceSkuCapability> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<Capability> array = new List<Capability>();
+                        List<AppServiceSkuCapability> array = new List<AppServiceSkuCapability>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Capability.DeserializeCapability(item));
+                            array.Add(AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -898,7 +898,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceCollection>> ListWebAppsByHybridConnectionAsync(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServicePlanResourceListResult>> ListWebAppsByHybridConnectionAsync(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -912,9 +912,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ResourceCollection value = default;
+                        AppServicePlanResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ResourceCollection.DeserializeResourceCollection(document.RootElement);
+                        value = AppServicePlanResourceListResult.DeserializeAppServicePlanResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -931,7 +931,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceCollection> ListWebAppsByHybridConnection(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public Response<AppServicePlanResourceListResult> ListWebAppsByHybridConnection(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -945,9 +945,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ResourceCollection value = default;
+                        AppServicePlanResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ResourceCollection.DeserializeResourceCollection(document.RootElement);
+                        value = AppServicePlanResourceListResult.DeserializeAppServicePlanResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1479,7 +1479,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<VnetInfoResourceData>>> ListVnetsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<AppServiceVirtualNetworkData>>> ListVnetsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1491,12 +1491,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<VnetInfoResourceData> value = default;
+                        IReadOnlyList<AppServiceVirtualNetworkData> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<VnetInfoResourceData> array = new List<VnetInfoResourceData>();
+                        List<AppServiceVirtualNetworkData> array = new List<AppServiceVirtualNetworkData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VnetInfoResourceData.DeserializeVnetInfoResourceData(item));
+                            array.Add(AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -1513,7 +1513,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<VnetInfoResourceData>> ListVnets(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<AppServiceVirtualNetworkData>> ListVnets(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1525,12 +1525,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<VnetInfoResourceData> value = default;
+                        IReadOnlyList<AppServiceVirtualNetworkData> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<VnetInfoResourceData> array = new List<VnetInfoResourceData>();
+                        List<AppServiceVirtualNetworkData> array = new List<AppServiceVirtualNetworkData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VnetInfoResourceData.DeserializeVnetInfoResourceData(item));
+                            array.Add(AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -1570,7 +1570,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="vnetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VnetInfoResourceData>> GetVnetFromServerFarmAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceVirtualNetworkData>> GetVnetFromServerFarmAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1583,13 +1583,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        VnetInfoResourceData value = default;
+                        AppServiceVirtualNetworkData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VnetInfoResourceData.DeserializeVnetInfoResourceData(document.RootElement);
+                        value = AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VnetInfoResourceData)null, message.Response);
+                    return Response.FromValue((AppServiceVirtualNetworkData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1603,7 +1603,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="vnetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VnetInfoResourceData> GetVnetFromServerFarm(string subscriptionId, string resourceGroupName, string name, string vnetName, CancellationToken cancellationToken = default)
+        public Response<AppServiceVirtualNetworkData> GetVnetFromServerFarm(string subscriptionId, string resourceGroupName, string name, string vnetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1616,13 +1616,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        VnetInfoResourceData value = default;
+                        AppServiceVirtualNetworkData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VnetInfoResourceData.DeserializeVnetInfoResourceData(document.RootElement);
+                        value = AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VnetInfoResourceData)null, message.Response);
+                    return Response.FromValue((AppServiceVirtualNetworkData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1661,7 +1661,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VnetGatewayData>> GetVnetGatewayAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceVirtualNetworkGatewayData>> GetVnetGatewayAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1675,13 +1675,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        VnetGatewayData value = default;
+                        AppServiceVirtualNetworkGatewayData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VnetGatewayData.DeserializeVnetGatewayData(document.RootElement);
+                        value = AppServiceVirtualNetworkGatewayData.DeserializeAppServiceVirtualNetworkGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VnetGatewayData)null, message.Response);
+                    return Response.FromValue((AppServiceVirtualNetworkGatewayData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1696,7 +1696,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VnetGatewayData> GetVnetGateway(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, CancellationToken cancellationToken = default)
+        public Response<AppServiceVirtualNetworkGatewayData> GetVnetGateway(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1710,19 +1710,19 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        VnetGatewayData value = default;
+                        AppServiceVirtualNetworkGatewayData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VnetGatewayData.DeserializeVnetGatewayData(document.RootElement);
+                        value = AppServiceVirtualNetworkGatewayData.DeserializeAppServiceVirtualNetworkGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VnetGatewayData)null, message.Response);
+                    return Response.FromValue((AppServiceVirtualNetworkGatewayData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateVnetGatewayRequest(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData data)
+        internal HttpMessage CreateUpdateVnetGatewayRequest(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, AppServiceVirtualNetworkGatewayData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1760,7 +1760,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VnetGatewayData>> UpdateVnetGatewayAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceVirtualNetworkGatewayData>> UpdateVnetGatewayAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, AppServiceVirtualNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1775,9 +1775,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        VnetGatewayData value = default;
+                        AppServiceVirtualNetworkGatewayData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VnetGatewayData.DeserializeVnetGatewayData(document.RootElement);
+                        value = AppServiceVirtualNetworkGatewayData.DeserializeAppServiceVirtualNetworkGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1795,7 +1795,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VnetGatewayData> UpdateVnetGateway(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData data, CancellationToken cancellationToken = default)
+        public Response<AppServiceVirtualNetworkGatewayData> UpdateVnetGateway(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, AppServiceVirtualNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1810,9 +1810,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        VnetGatewayData value = default;
+                        AppServiceVirtualNetworkGatewayData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VnetGatewayData.DeserializeVnetGatewayData(document.RootElement);
+                        value = AppServiceVirtualNetworkGatewayData.DeserializeAppServiceVirtualNetworkGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1851,7 +1851,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="vnetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<VnetRoute>>> ListRoutesForVnetAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<AppServiceVirtualNetworkRoute>>> ListRoutesForVnetAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1864,12 +1864,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<VnetRoute> value = default;
+                        IReadOnlyList<AppServiceVirtualNetworkRoute> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<VnetRoute> array = new List<VnetRoute>();
+                        List<AppServiceVirtualNetworkRoute> array = new List<AppServiceVirtualNetworkRoute>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VnetRoute.DeserializeVnetRoute(item));
+                            array.Add(AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -1887,7 +1887,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="vnetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<VnetRoute>> ListRoutesForVnet(string subscriptionId, string resourceGroupName, string name, string vnetName, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<AppServiceVirtualNetworkRoute>> ListRoutesForVnet(string subscriptionId, string resourceGroupName, string name, string vnetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1900,12 +1900,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<VnetRoute> value = default;
+                        IReadOnlyList<AppServiceVirtualNetworkRoute> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<VnetRoute> array = new List<VnetRoute>();
+                        List<AppServiceVirtualNetworkRoute> array = new List<AppServiceVirtualNetworkRoute>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VnetRoute.DeserializeVnetRoute(item));
+                            array.Add(AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -1915,7 +1915,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateVnetRouteRequest(string subscriptionId, string resourceGroupName, string name, string vnetName, string routeName, VnetRoute route)
+        internal HttpMessage CreateCreateOrUpdateVnetRouteRequest(string subscriptionId, string resourceGroupName, string name, string vnetName, string routeName, AppServiceVirtualNetworkRoute route)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1953,7 +1953,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VnetRoute>> CreateOrUpdateVnetRouteAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, string routeName, VnetRoute route, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceVirtualNetworkRoute>> CreateOrUpdateVnetRouteAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, string routeName, AppServiceVirtualNetworkRoute route, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1968,9 +1968,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        VnetRoute value = default;
+                        AppServiceVirtualNetworkRoute value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VnetRoute.DeserializeVnetRoute(document.RootElement);
+                        value = AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1988,7 +1988,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VnetRoute> CreateOrUpdateVnetRoute(string subscriptionId, string resourceGroupName, string name, string vnetName, string routeName, VnetRoute route, CancellationToken cancellationToken = default)
+        public Response<AppServiceVirtualNetworkRoute> CreateOrUpdateVnetRoute(string subscriptionId, string resourceGroupName, string name, string vnetName, string routeName, AppServiceVirtualNetworkRoute route, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2003,9 +2003,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        VnetRoute value = default;
+                        AppServiceVirtualNetworkRoute value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VnetRoute.DeserializeVnetRoute(document.RootElement);
+                        value = AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2093,7 +2093,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateVnetRouteRequest(string subscriptionId, string resourceGroupName, string name, string vnetName, string routeName, VnetRoute route)
+        internal HttpMessage CreateUpdateVnetRouteRequest(string subscriptionId, string resourceGroupName, string name, string vnetName, string routeName, AppServiceVirtualNetworkRoute route)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2131,7 +2131,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VnetRoute>> UpdateVnetRouteAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, string routeName, VnetRoute route, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceVirtualNetworkRoute>> UpdateVnetRouteAsync(string subscriptionId, string resourceGroupName, string name, string vnetName, string routeName, AppServiceVirtualNetworkRoute route, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2146,9 +2146,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        VnetRoute value = default;
+                        AppServiceVirtualNetworkRoute value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VnetRoute.DeserializeVnetRoute(document.RootElement);
+                        value = AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2166,7 +2166,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VnetRoute> UpdateVnetRoute(string subscriptionId, string resourceGroupName, string name, string vnetName, string routeName, VnetRoute route, CancellationToken cancellationToken = default)
+        public Response<AppServiceVirtualNetworkRoute> UpdateVnetRoute(string subscriptionId, string resourceGroupName, string name, string vnetName, string routeName, AppServiceVirtualNetworkRoute route, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2181,9 +2181,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        VnetRoute value = default;
+                        AppServiceVirtualNetworkRoute value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VnetRoute.DeserializeVnetRoute(document.RootElement);
+                        value = AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2438,7 +2438,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceCollection>> ListWebAppsByHybridConnectionNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServicePlanResourceListResult>> ListWebAppsByHybridConnectionNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -2453,9 +2453,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ResourceCollection value = default;
+                        AppServicePlanResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ResourceCollection.DeserializeResourceCollection(document.RootElement);
+                        value = AppServicePlanResourceListResult.DeserializeAppServicePlanResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2473,7 +2473,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceCollection> ListWebAppsByHybridConnectionNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public Response<AppServicePlanResourceListResult> ListWebAppsByHybridConnectionNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -2488,9 +2488,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ResourceCollection value = default;
+                        AppServicePlanResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ResourceCollection.DeserializeResourceCollection(document.RootElement);
+                        value = AppServicePlanResourceListResult.DeserializeAppServicePlanResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
