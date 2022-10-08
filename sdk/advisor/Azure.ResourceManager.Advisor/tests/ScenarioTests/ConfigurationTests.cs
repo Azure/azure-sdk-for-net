@@ -17,15 +17,8 @@ namespace Azure.ResourceManager.Advisor.Tests
         {
         }
 
-        private ResourceGroupResource ResourceGroup { get; set; }
-
         private CpuThreshold TestThreshold = CpuThreshold.Twenty;
         private CpuThreshold DefaultThreshold = CpuThreshold.Five;
-
-        private async Task SetCollection()
-        {
-            ResourceGroup = await CreateResourceGroupAsync();
-        }
 
         [Test]
         public async Task ConfigureSubscriptionTest()
@@ -37,14 +30,14 @@ namespace Azure.ResourceManager.Advisor.Tests
                 LowCpuThreshold = TestThreshold
             };
 
-            await DefaultSubscription.CreateInSubscriptionConfigurationAsync(configName, configData);
-            var data = await DefaultSubscription.GetConfigurationsBySubscriptionAsync().ToEnumerableAsync();
+            await DefaultSubscription.CreateConfigurationAsync(configName, configData);
+            var data = await DefaultSubscription.GetConfigurationsAsync().ToEnumerableAsync();
             Assert.AreEqual(TestThreshold, data.FirstOrDefault(x => x.Name.Equals(configName)).LowCpuThreshold);
             Assert.IsFalse(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude);
 
             configData.LowCpuThreshold = DefaultThreshold;
-            await DefaultSubscription.CreateInSubscriptionConfigurationAsync(configName, configData);
-            data = await DefaultSubscription.GetConfigurationsBySubscriptionAsync().ToEnumerableAsync();
+            await DefaultSubscription.CreateConfigurationAsync(configName, configData);
+            data = await DefaultSubscription.GetConfigurationsAsync().ToEnumerableAsync();
             Assert.AreEqual(DefaultThreshold, data.FirstOrDefault(x => x.Name.Equals(configName)).LowCpuThreshold);
             Assert.IsFalse(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude);
         }
@@ -52,18 +45,17 @@ namespace Azure.ResourceManager.Advisor.Tests
         [Test]
         public async Task ConfigureResourceGroupTest()
         {
-            await SetCollection();
-
             string configName = "default";
             var configData = new ConfigData { Exclude = true };
 
-            await ResourceGroup.CreateInResourceGroupConfigurationAsync(configName, configData);
-            var data = await ResourceGroup.GetConfigurationsByResourceGroupAsync().ToEnumerableAsync();
+            var resourceGroup = await CreateResourceGroupAsync();
+            await resourceGroup.CreateConfigurationAsync(configName, configData);
+            var data = await resourceGroup.GetConfigurationsAsync().ToEnumerableAsync();
             Assert.IsTrue(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude);
 
             configData.Exclude = false;
-            await ResourceGroup.CreateInResourceGroupConfigurationAsync(configName, configData);
-            data = await ResourceGroup.GetConfigurationsByResourceGroupAsync().ToEnumerableAsync();
+            await resourceGroup.CreateConfigurationAsync(configName, configData);
+            data = await resourceGroup.GetConfigurationsAsync().ToEnumerableAsync();
             Assert.IsFalse(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude);
         }
     }
