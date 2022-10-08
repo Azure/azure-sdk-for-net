@@ -14,6 +14,8 @@ namespace Azure.Data.Tables
         {
             public const string DisableEscapeSingleQuotesOnGetEntitySwitchName = "Azure.Data.Tables.DisableEscapeSingleQuotesOnGetEntity";
             public const string DisableEscapeSingleQuotesOnGetEntityEnvVar = "AZURE_DATA_TABLES_DISABLE_ESCAPESINGLEQUOTESONGETENTITY";
+            public const string DisableEscapeSingleQuotesOnDeleteEntitySwitchName = "Azure.Data.Tables.DisableEscapeSingleQuotesOnDeleteEntity";
+            public const string DisableEscapeSingleQuotesOnDeleteEntityEnvVar = "AZURE_DATA_TABLES_DISABLE_ESCAPESINGLEQUOTESONDELETEENTITY";
         }
 
         internal static class HeaderNames

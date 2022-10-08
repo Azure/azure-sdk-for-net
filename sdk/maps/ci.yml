@@ -9,6 +9,8 @@ trigger:
   paths:
     include:
     - sdk/maps/
+    exclude:
+    - sdk/maps/Azure.ResourceManager.Maps/
 
 pr:
   branches:
@@ -20,6 +22,8 @@ pr:
   paths:
     include:
     - sdk/maps/
+    exclude:
+    - sdk/maps/Azure.ResourceManager.Maps/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
