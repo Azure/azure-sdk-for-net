@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "220",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-8063b456c6c9ee4fbd2402cbc812afda-f12d4690fcde0342-00",
+        "traceparent": "00-7660e89145d6954da0728c406459229f-3505eef2d432ce41-00",
         "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20221008.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "1523157c79091ab1aed36849d5797d01",
+        "x-ms-client-request-id": "a2d1d47ca525ede235ba5663e0280334",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,13 +30,13 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview",
         "Connection": "keep-alive",
-        "Content-Length": "1215",
+        "Content-Length": "1157",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 08 Oct 2022 13:22:37 GMT",
-        "mise-correlation-id": "faddef84-dc68-47db-84ba-9b5dceea89a6",
+        "Date": "Sat, 08 Oct 2022 14:07:34 GMT",
+        "mise-correlation-id": "f20a5ef2-4369-4d02-a15a-f2dedbdf8322",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0763924b-57bc-4cd3-b9df-744fa5b83745"
+        "x-ms-correlation-request-id": "22aede84-0f7e-4de1-898c-9e525ae54f79"
       },
       "ResponseBody": {
         "testId": "d7c68e2a-bcd8-423f-b9ce-fe9cccd00f1c",
@@ -57,12 +57,7 @@
         "inputArtifacts": {
           "configUrl": null,
           "testScriptUrl": {
-            "url": "https://stcntproddataeus.blob.core.windows.net/0f707b6c-09cb-4fa8-a12d-b243c792d9b4/1c2ccb7b-8f62-4f70-812e-70df2c3df314?sv=2020-04-08\u0026se=2022-10-08T14%3A22%3A37Z\u0026sr=b\u0026sp=r\u0026sig=xFjW9oE3GJcRdeWBeQkVzPc%2FyQBo5FMmce9Q2pCsoBE%3D",
-            "fileId": "1c2ccb7b-8f62-4f70-812e-70df2c3df314",
-            "filename": "sample.jmx",
-            "fileType": 0,
-            "expireTime": "2022-10-08T13:32:37.3120392\u002B00:00",
-            "validationStatus": "VALIDATION_INITIATED"
+            "url": "https://stcntproddataeus.blob.core.windows.net/0f707b6c-09cb-4fa8-a12d-b243c792d9b4/1c2ccb7b-8f62-4f70-812e-70df2c3df314?sv=2020-04-08\u0026se=2022-10-08T15%3A07%3A34Z\u0026sr=b\u0026sp=r\u0026sig=Sanitized script is not valid. Exception: XmlPullParserException: only whitespace content allowed before start tag and not A (position: START_DOCUMENT seen A... @1:2)"
           },
           "userPropUrl": null,
           "inputArtifactsZipFileurl": null,
@@ -80,6 +75,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "LOADTESTSERVICE_ENDPOINT": "eccdc9b7-7603-402b-879d-bde2b637db56.eus.cnt-prod.loadtesting.azure.com",
-    "RandomSeed": "204932911"
+    "RandomSeed": "1123779199"
   }
 }

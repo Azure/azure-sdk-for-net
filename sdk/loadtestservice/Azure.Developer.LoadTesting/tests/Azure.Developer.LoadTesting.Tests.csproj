@@ -21,9 +21,11 @@
   <ItemGroup>
     <Folder Include="infrastructure\" />
     <Folder Include="SessionRecords\LoadTestingClientTest\" />
-    <Folder Include="files\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="sample.jmx" Link="sample.jmx" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.Developer.LoadTesting.csproj" />
   </ItemGroup>
