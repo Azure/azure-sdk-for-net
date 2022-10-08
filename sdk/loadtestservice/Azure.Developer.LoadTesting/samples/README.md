@@ -4,7 +4,6 @@ languages:
 - csharp
 products:
 - azure
-- devops
 name: Azure.Developer.LoadTesting samples for .NET
 description: Samples for the Azure.Developer.LoadTesting client library.
 ---
