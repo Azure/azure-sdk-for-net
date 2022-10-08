@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The weight Unit of measurement. </summary>
-    public readonly partial struct WeightUnit : IEquatable<WeightUnit>
+    internal readonly partial struct WeightUnit : IEquatable<WeightUnit>
     {
         private readonly string _value;
 

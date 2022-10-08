@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The entity resolution object kind. </summary>
-    public readonly partial struct ResolutionKind : IEquatable<ResolutionKind>
+    internal readonly partial struct ResolutionKind : IEquatable<ResolutionKind>
     {
         private readonly string _value;
 

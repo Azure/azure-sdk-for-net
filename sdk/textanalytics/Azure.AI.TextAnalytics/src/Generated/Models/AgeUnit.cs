@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The Age Unit of measurement. </summary>
-    public readonly partial struct AgeUnit : IEquatable<AgeUnit>
+    internal readonly partial struct AgeUnit : IEquatable<AgeUnit>
     {
         private readonly string _value;
 

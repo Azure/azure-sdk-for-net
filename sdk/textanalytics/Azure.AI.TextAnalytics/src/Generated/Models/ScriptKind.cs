@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Identifies the script of the input document. </summary>
-    public readonly partial struct ScriptKind : IEquatable<ScriptKind>
+    internal readonly partial struct ScriptKind : IEquatable<ScriptKind>
     {
         private readonly string _value;
 

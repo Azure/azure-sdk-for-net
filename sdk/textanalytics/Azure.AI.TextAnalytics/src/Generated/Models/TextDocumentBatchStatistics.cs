@@ -28,7 +28,5 @@ namespace Azure.AI.TextAnalytics
             TransactionCount = transactionCount;
             AdditionalProperties = additionalProperties;
         }
-        /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
     }
 }

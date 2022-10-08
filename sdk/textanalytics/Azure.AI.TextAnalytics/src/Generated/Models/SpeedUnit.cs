@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The speed Unit of measurement. </summary>
-    public readonly partial struct SpeedUnit : IEquatable<SpeedUnit>
+    internal readonly partial struct SpeedUnit : IEquatable<SpeedUnit>
     {
         private readonly string _value;
 

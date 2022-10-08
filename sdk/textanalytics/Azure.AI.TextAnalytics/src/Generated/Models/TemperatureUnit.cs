@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The temperature Unit of measurement. </summary>
-    public readonly partial struct TemperatureUnit : IEquatable<TemperatureUnit>
+    internal readonly partial struct TemperatureUnit : IEquatable<TemperatureUnit>
     {
         private readonly string _value;
 

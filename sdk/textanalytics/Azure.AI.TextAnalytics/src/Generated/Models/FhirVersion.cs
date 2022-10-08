@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The FHIR Spec version that the result will use to format the fhirBundle. For additional information see https://www.hl7.org/fhir/overview.html. </summary>
-    public readonly partial struct FhirVersion : IEquatable<FhirVersion>
+    internal readonly partial struct FhirVersion : IEquatable<FhirVersion>
     {
         private readonly string _value;
 

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The Volume Unit of measurement. </summary>
-    public readonly partial struct VolumeUnit : IEquatable<VolumeUnit>
+    internal readonly partial struct VolumeUnit : IEquatable<VolumeUnit>
     {
         private readonly string _value;
 

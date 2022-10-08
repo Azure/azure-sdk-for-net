@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The kind of range that the resolution object represents. </summary>
-    public readonly partial struct RangeKind : IEquatable<RangeKind>
+    internal readonly partial struct RangeKind : IEquatable<RangeKind>
     {
         private readonly string _value;
 

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The area Unit of measurement. </summary>
-    public readonly partial struct AreaUnit : IEquatable<AreaUnit>
+    internal readonly partial struct AreaUnit : IEquatable<AreaUnit>
     {
         private readonly string _value;
 

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The type of the extracted number entity. </summary>
-    public readonly partial struct NumberKind : IEquatable<NumberKind>
+    internal readonly partial struct NumberKind : IEquatable<NumberKind>
     {
         private readonly string _value;
 
