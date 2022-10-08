@@ -16,9 +16,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> This is the base client representation of the following resources <see cref="HostingEnvironmentMultiRolePoolResource" /> or <see cref="HostingEnvironmentWorkerPoolResource" />. </summary>
-    public abstract partial class WorkerPoolResource : ArmResource
+    public abstract partial class AppServiceWorkerPoolResource : ArmResource
     {
-        internal static WorkerPoolResource GetResource(ArmClient client, WorkerPoolData data)
+        internal static AppServiceWorkerPoolResource GetResource(ArmClient client, AppServiceWorkerPoolData data)
         {
             if (IsHostingEnvironmentMultiRolePoolResource(data.Id))
             {
@@ -66,26 +66,26 @@ namespace Azure.ResourceManager.AppService
             return true;
         }
 
-        private readonly WorkerPoolData _data;
+        private readonly AppServiceWorkerPoolData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="WorkerPoolResource"/> class for mocking. </summary>
-        protected WorkerPoolResource()
+        /// <summary> Initializes a new instance of the <see cref="AppServiceWorkerPoolResource"/> class for mocking. </summary>
+        protected AppServiceWorkerPoolResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WorkerPoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "AppServiceWorkerPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WorkerPoolResource(ArmClient client, WorkerPoolData data) : this(client, data.Id)
+        internal AppServiceWorkerPoolResource(ArmClient client, AppServiceWorkerPoolData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkerPoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppServiceWorkerPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal WorkerPoolResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AppServiceWorkerPoolResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual WorkerPoolData Data
+        public virtual AppServiceWorkerPoolData Data
         {
             get
             {
@@ -106,24 +106,24 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Task<Response<WorkerPoolResource>> GetCoreAsync(CancellationToken cancellationToken = default);
+        protected abstract Task<Response<AppServiceWorkerPoolResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public async Task<Response<WorkerPoolResource>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceWorkerPoolResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Response<WorkerPoolResource> GetCore(CancellationToken cancellationToken = default);
+        protected abstract Response<AppServiceWorkerPoolResource> GetCore(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public Response<WorkerPoolResource> Get(CancellationToken cancellationToken = default)
+        public Response<AppServiceWorkerPoolResource> Get(CancellationToken cancellationToken = default)
         {
             return GetCore(cancellationToken);
         }
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        protected abstract Task<Response<WorkerPoolResource>> UpdateCoreAsync(WorkerPoolData data, CancellationToken cancellationToken = default);
+        protected abstract Task<Response<AppServiceWorkerPoolResource>> UpdateCoreAsync(AppServiceWorkerPoolData data, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Update. </summary>
         /// <param name="data"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public async Task<Response<WorkerPoolResource>> UpdateAsync(WorkerPoolData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceWorkerPoolResource>> UpdateAsync(AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -150,14 +150,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        protected abstract Response<WorkerPoolResource> UpdateCore(WorkerPoolData data, CancellationToken cancellationToken = default);
+        protected abstract Response<AppServiceWorkerPoolResource> UpdateCore(AppServiceWorkerPoolData data, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Update. </summary>
         /// <param name="data"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public Response<WorkerPoolResource> Update(WorkerPoolData data, CancellationToken cancellationToken = default)
+        public Response<AppServiceWorkerPoolResource> Update(AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

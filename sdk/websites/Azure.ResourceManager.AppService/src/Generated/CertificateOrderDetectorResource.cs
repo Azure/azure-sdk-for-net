@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<CertificateOrderDetectorResource>> GetAsync(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<CertificateOrderDetectorResource>> GetAsync(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((CertificateOrderDetectorResource)result.Value, result.GetRawResponse());
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<CertificateOrderDetectorResource> Get(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual new Response<CertificateOrderDetectorResource> Get(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             var result = GetCore(startTime, endTime, timeGrain, cancellationToken);
             return Response.FromValue((CertificateOrderDetectorResource)result.Value, result.GetRawResponse());

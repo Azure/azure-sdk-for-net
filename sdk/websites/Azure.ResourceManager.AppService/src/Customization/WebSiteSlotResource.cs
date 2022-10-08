@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService
     /// from an instance of <see cref="ArmClient" /> using the GetWebSiteSlotResource method.
     /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetWebSiteSlot method.
     /// </summary>
-    public partial class WebSiteSlotResource : ArmResource
+    public partial class WebSiteSlotResource
     {
         /// <summary>
         /// Description for List the configurations of an app

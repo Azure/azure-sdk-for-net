@@ -16,9 +16,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> This is the base client representation of the following resources <see cref="SiteBackupResource" /> or <see cref="SiteSlotBackupResource" />. </summary>
-    public abstract partial class BackupItemResource : ArmResource
+    public abstract partial class WebAppBackupResource : ArmResource
     {
-        internal static BackupItemResource GetResource(ArmClient client, BackupItemData data)
+        internal static WebAppBackupResource GetResource(ArmClient client, WebAppBackupData data)
         {
             if (IsSiteBackupResource(data.Id))
             {
@@ -61,26 +61,26 @@ namespace Azure.ResourceManager.AppService
             return true;
         }
 
-        private readonly BackupItemData _data;
+        private readonly WebAppBackupData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="BackupItemResource"/> class for mocking. </summary>
-        protected BackupItemResource()
+        /// <summary> Initializes a new instance of the <see cref="WebAppBackupResource"/> class for mocking. </summary>
+        protected WebAppBackupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BackupItemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "WebAppBackupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BackupItemResource(ArmClient client, BackupItemData data) : this(client, data.Id)
+        internal WebAppBackupResource(ArmClient client, WebAppBackupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BackupItemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebAppBackupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BackupItemResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WebAppBackupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual BackupItemData Data
+        public virtual WebAppBackupData Data
         {
             get
             {
@@ -101,24 +101,24 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Task<Response<BackupItemResource>> GetCoreAsync(CancellationToken cancellationToken = default);
+        protected abstract Task<Response<WebAppBackupResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public async Task<Response<BackupItemResource>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppBackupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Response<BackupItemResource> GetCore(CancellationToken cancellationToken = default);
+        protected abstract Response<WebAppBackupResource> GetCore(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public Response<BackupItemResource> Get(CancellationToken cancellationToken = default)
+        public Response<WebAppBackupResource> Get(CancellationToken cancellationToken = default)
         {
             return GetCore(cancellationToken);
         }

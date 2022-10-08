@@ -15,26 +15,26 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> This is the base client representation of the following resources <see cref="SiteDeploymentResource" /> or <see cref="SiteSlotDeploymentResource" />. </summary>
-    public abstract partial class DeploymentResource : ArmResource
+    /// <summary> This is the base client representation of the following resources <see cref="SiteDomainOwnershipIdentifierResource" /> or <see cref="SiteSlotDomainOwnershipIdentifierResource" />. </summary>
+    public abstract partial class AppServiceIdentifierResource : ArmResource
     {
-        internal static DeploymentResource GetResource(ArmClient client, DeploymentData data)
+        internal static AppServiceIdentifierResource GetResource(ArmClient client, AppServiceIdentifierData data)
         {
-            if (IsSiteDeploymentResource(data.Id))
+            if (IsSiteDomainOwnershipIdentifierResource(data.Id))
             {
-                return new SiteDeploymentResource(client, data);
+                return new SiteDomainOwnershipIdentifierResource(client, data);
             }
-            if (IsSiteSlotDeploymentResource(data.Id))
+            if (IsSiteSlotDomainOwnershipIdentifierResource(data.Id))
             {
-                return new SiteSlotDeploymentResource(client, data);
+                return new SiteSlotDomainOwnershipIdentifierResource(client, data);
             }
-            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: SiteDeploymentResource or SiteSlotDeploymentResource");
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: SiteDomainOwnershipIdentifierResource or SiteSlotDomainOwnershipIdentifierResource");
         }
 
-        private static bool IsSiteDeploymentResource(ResourceIdentifier id)
+        private static bool IsSiteDomainOwnershipIdentifierResource(ResourceIdentifier id)
         {
             // checking the resource type
-            if (id.ResourceType != SiteDeploymentResource.ResourceType)
+            if (id.ResourceType != SiteDomainOwnershipIdentifierResource.ResourceType)
             {
                 return false;
             }
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.AppService
             return true;
         }
 
-        private static bool IsSiteSlotDeploymentResource(ResourceIdentifier id)
+        private static bool IsSiteSlotDomainOwnershipIdentifierResource(ResourceIdentifier id)
         {
             // checking the resource type
-            if (id.ResourceType != SiteSlotDeploymentResource.ResourceType)
+            if (id.ResourceType != SiteSlotDomainOwnershipIdentifierResource.ResourceType)
             {
                 return false;
             }
@@ -61,26 +61,26 @@ namespace Azure.ResourceManager.AppService
             return true;
         }
 
-        private readonly DeploymentData _data;
+        private readonly AppServiceIdentifierData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DeploymentResource"/> class for mocking. </summary>
-        protected DeploymentResource()
+        /// <summary> Initializes a new instance of the <see cref="AppServiceIdentifierResource"/> class for mocking. </summary>
+        protected AppServiceIdentifierResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeploymentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "AppServiceIdentifierResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DeploymentResource(ArmClient client, DeploymentData data) : this(client, data.Id)
+        internal AppServiceIdentifierResource(ArmClient client, AppServiceIdentifierData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeploymentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppServiceIdentifierResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DeploymentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AppServiceIdentifierResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DeploymentData Data
+        public virtual AppServiceIdentifierData Data
         {
             get
             {
@@ -101,24 +101,24 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Task<Response<DeploymentResource>> GetCoreAsync(CancellationToken cancellationToken = default);
+        protected abstract Task<Response<AppServiceIdentifierResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public async Task<Response<DeploymentResource>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceIdentifierResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Response<DeploymentResource> GetCore(CancellationToken cancellationToken = default);
+        protected abstract Response<AppServiceIdentifierResource> GetCore(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public Response<DeploymentResource> Get(CancellationToken cancellationToken = default)
+        public Response<AppServiceIdentifierResource> Get(CancellationToken cancellationToken = default)
         {
             return GetCore(cancellationToken);
         }
@@ -152,43 +152,39 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> The core implementation for operation Update. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Deployment details. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        protected abstract Task<ArmOperation<DeploymentResource>> UpdateCoreAsync(WaitUntil waitUntil, DeploymentData data, CancellationToken cancellationToken = default);
+        protected abstract Task<Response<AppServiceIdentifierResource>> UpdateCoreAsync(AppServiceIdentifierData data, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Update. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Deployment details. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public async Task<ArmOperation<DeploymentResource>> UpdateAsync(WaitUntil waitUntil, DeploymentData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceIdentifierResource>> UpdateAsync(AppServiceIdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            return await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            return await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The core implementation for operation Update. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Deployment details. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        protected abstract ArmOperation<DeploymentResource> UpdateCore(WaitUntil waitUntil, DeploymentData data, CancellationToken cancellationToken = default);
+        protected abstract Response<AppServiceIdentifierResource> UpdateCore(AppServiceIdentifierData data, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Update. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Deployment details. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public ArmOperation<DeploymentResource> Update(WaitUntil waitUntil, DeploymentData data, CancellationToken cancellationToken = default)
+        public Response<AppServiceIdentifierResource> Update(AppServiceIdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            return UpdateCore(waitUntil, data, cancellationToken);
+            return UpdateCore(data, cancellationToken);
         }
     }
 }

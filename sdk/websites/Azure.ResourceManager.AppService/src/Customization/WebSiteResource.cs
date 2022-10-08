@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService
     /// from an instance of <see cref="ArmClient" /> using the GetWebSiteResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetWebSite method.
     /// </summary>
-    public partial class WebSiteResource : ArmResource
+    public partial class WebSiteResource
     {
         /// <summary>
         /// Description for List the configurations of an app

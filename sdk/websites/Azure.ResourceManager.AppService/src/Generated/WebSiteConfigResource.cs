@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<WebSiteConfigResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<WebSiteConfigResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((WebSiteConfigResource)result.Value, result.GetRawResponse());
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<WebSiteConfigResource> Get(CancellationToken cancellationToken = default)
+        public virtual new Response<WebSiteConfigResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
             return Response.FromValue((WebSiteConfigResource)result.Value, result.GetRawResponse());

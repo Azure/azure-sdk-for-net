@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<SiteSlotDetectorResource>> GetAsync(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<SiteSlotDetectorResource>> GetAsync(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((SiteSlotDetectorResource)result.Value, result.GetRawResponse());
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<SiteSlotDetectorResource> Get(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual new Response<SiteSlotDetectorResource> Get(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             var result = GetCore(startTime, endTime, timeGrain, cancellationToken);
             return Response.FromValue((SiteSlotDetectorResource)result.Value, result.GetRawResponse());

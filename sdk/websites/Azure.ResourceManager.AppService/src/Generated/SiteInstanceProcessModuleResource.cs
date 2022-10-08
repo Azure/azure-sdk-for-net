@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<SiteInstanceProcessModuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<SiteInstanceProcessModuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((SiteInstanceProcessModuleResource)result.Value, result.GetRawResponse());
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<SiteInstanceProcessModuleResource> Get(CancellationToken cancellationToken = default)
+        public virtual new Response<SiteInstanceProcessModuleResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
             return Response.FromValue((SiteInstanceProcessModuleResource)result.Value, result.GetRawResponse());

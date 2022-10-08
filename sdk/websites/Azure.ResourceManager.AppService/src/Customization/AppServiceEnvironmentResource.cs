@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService
     /// from an instance of <see cref="ArmClient" /> using the GetAppServiceEnvironmentResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAppServiceEnvironment method.
     /// </summary>
-    public partial class AppServiceEnvironmentResource : ArmResource
+    public partial class AppServiceEnvironmentResource
     {
         /// <summary>
         /// Description for Get all apps in an App Service Environment.

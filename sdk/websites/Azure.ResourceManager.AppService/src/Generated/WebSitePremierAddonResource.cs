@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<WebSitePremierAddonResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<WebSitePremierAddonResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((WebSitePremierAddonResource)result.Value, result.GetRawResponse());
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<WebSitePremierAddonResource> Get(CancellationToken cancellationToken = default)
+        public virtual new Response<WebSitePremierAddonResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
             return Response.FromValue((WebSitePremierAddonResource)result.Value, result.GetRawResponse());
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
         [ForwardsClientCalls]
-        public new async Task<Response<WebSitePremierAddonResource>> UpdateAsync(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<WebSitePremierAddonResource>> UpdateAsync(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
 
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
         [ForwardsClientCalls]
-        public new Response<WebSitePremierAddonResource> Update(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
+        public virtual new Response<WebSitePremierAddonResource> Update(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
 

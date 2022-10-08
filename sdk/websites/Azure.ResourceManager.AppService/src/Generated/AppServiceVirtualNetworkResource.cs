@@ -16,9 +16,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> This is the base client representation of the following resources <see cref="AppServicePlanVirtualNetworkConnectionResource" />, <see cref="SiteSlotVirtualNetworkConnectionResource" /> or <see cref="SiteVirtualNetworkConnectionResource" />. </summary>
-    public abstract partial class VnetInfoResource : ArmResource
+    public abstract partial class AppServiceVirtualNetworkResource : ArmResource
     {
-        internal static VnetInfoResource GetResource(ArmClient client, VnetInfoResourceData data)
+        internal static AppServiceVirtualNetworkResource GetResource(ArmClient client, AppServiceVirtualNetworkData data)
         {
             if (IsAppServicePlanVirtualNetworkConnectionResource(data.Id))
             {
@@ -80,26 +80,26 @@ namespace Azure.ResourceManager.AppService
             return true;
         }
 
-        private readonly VnetInfoResourceData _data;
+        private readonly AppServiceVirtualNetworkData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="VnetInfoResource"/> class for mocking. </summary>
-        protected VnetInfoResource()
+        /// <summary> Initializes a new instance of the <see cref="AppServiceVirtualNetworkResource"/> class for mocking. </summary>
+        protected AppServiceVirtualNetworkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VnetInfoResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "AppServiceVirtualNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VnetInfoResource(ArmClient client, VnetInfoResourceData data) : this(client, data.Id)
+        internal AppServiceVirtualNetworkResource(ArmClient client, AppServiceVirtualNetworkData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VnetInfoResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppServiceVirtualNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VnetInfoResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AppServiceVirtualNetworkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual VnetInfoResourceData Data
+        public virtual AppServiceVirtualNetworkData Data
         {
             get
             {
@@ -120,24 +120,24 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Task<Response<VnetInfoResource>> GetCoreAsync(CancellationToken cancellationToken = default);
+        protected abstract Task<Response<AppServiceVirtualNetworkResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public async Task<Response<VnetInfoResource>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceVirtualNetworkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Response<VnetInfoResource> GetCore(CancellationToken cancellationToken = default);
+        protected abstract Response<AppServiceVirtualNetworkResource> GetCore(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public Response<VnetInfoResource> Get(CancellationToken cancellationToken = default)
+        public Response<AppServiceVirtualNetworkResource> Get(CancellationToken cancellationToken = default)
         {
             return GetCore(cancellationToken);
         }

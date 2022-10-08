@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<HostingEnvironmentRecommendationResource>> GetAsync(bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<HostingEnvironmentRecommendationResource>> GetAsync(bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(updateSeen, recommendationId, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((HostingEnvironmentRecommendationResource)result.Value, result.GetRawResponse());
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<HostingEnvironmentRecommendationResource> Get(bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        public virtual new Response<HostingEnvironmentRecommendationResource> Get(bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             var result = GetCore(updateSeen, recommendationId, cancellationToken);
             return Response.FromValue((HostingEnvironmentRecommendationResource)result.Value, result.GetRawResponse());
