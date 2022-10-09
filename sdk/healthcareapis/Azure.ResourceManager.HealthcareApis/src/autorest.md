@@ -16,6 +16,14 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+generate-virtual-operations:
+- PrivateEndpointConnections_Get
+- PrivateEndpointConnections_CreateOrUpdate
+- PrivateLinkResources_Get
+- WorkspacePrivateEndpointConnections_Get
+- WorkspacePrivateEndpointConnections_CreateOrUpdate
+- WorkspacePrivateLinkResources_Get
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'

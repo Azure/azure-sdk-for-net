@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<HealthcareApisServicePrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<HealthcareApisServicePrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((HealthcareApisServicePrivateEndpointConnectionResource)result.Value, result.GetRawResponse());
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<HealthcareApisServicePrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
+        public virtual new Response<HealthcareApisServicePrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
             return Response.FromValue((HealthcareApisServicePrivateEndpointConnectionResource)result.Value, result.GetRawResponse());
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new async Task<ArmOperation<HealthcareApisServicePrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, HealthcareApisPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual new async Task<ArmOperation<HealthcareApisServicePrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, HealthcareApisPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new ArmOperation<HealthcareApisServicePrivateEndpointConnectionResource> Update(WaitUntil waitUntil, HealthcareApisPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual new ArmOperation<HealthcareApisServicePrivateEndpointConnectionResource> Update(WaitUntil waitUntil, HealthcareApisPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
