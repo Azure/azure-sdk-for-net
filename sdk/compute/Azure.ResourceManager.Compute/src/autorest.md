@@ -21,6 +21,15 @@ modelerfour:
 update-required-copy:
   GalleryImage: OSType
 
+base-resource-name-mapping:
+  VirtualMachineRunCommand: RunCommand
+
+generate-virtual-operations:
+- VirtualMachineRunCommands_GetByVirtualMachine
+- VirtualMachineRunCommands_Update
+- VirtualMachineScaleSetVMRunCommands_Get
+- VirtualMachineScaleSetVMRunCommands_Update
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'
