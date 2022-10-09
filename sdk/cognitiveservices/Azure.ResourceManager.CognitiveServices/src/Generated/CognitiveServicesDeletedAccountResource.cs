@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<CognitiveServicesDeletedAccountResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<CognitiveServicesDeletedAccountResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((CognitiveServicesDeletedAccountResource)result.Value, result.GetRawResponse());
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<CognitiveServicesDeletedAccountResource> Get(CancellationToken cancellationToken = default)
+        public virtual new Response<CognitiveServicesDeletedAccountResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
             return Response.FromValue((CognitiveServicesDeletedAccountResource)result.Value, result.GetRawResponse());
