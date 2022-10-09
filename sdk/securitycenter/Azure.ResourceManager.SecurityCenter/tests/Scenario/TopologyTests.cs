@@ -23,17 +23,24 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [SetUp]
-        public async void TestSetUp()
+        public async Task TestSetUp()
         {
             _resourceGroup = await CreateResourceGroup();
             _TopologyCollection = _resourceGroup.GetTopologyResources();
         }
 
         [RecordedTest]
-        public async Task Get()
+        [Ignore("The SDK does not support create Topology.")]
+        public async Task TopologyE2EOperation()
         {
             string ascLocation = "";
             string topologyResourceName = "";
+
+            // Exist
+            bool flag = await _TopologyCollection.ExistsAsync(ascLocation, topologyResourceName);
+            Assert.IsTrue(flag);
+
+            // Get
             var topology = await _TopologyCollection.GetAsync(ascLocation, topologyResourceName);
             Assert.IsNotNull(topology);
         }
