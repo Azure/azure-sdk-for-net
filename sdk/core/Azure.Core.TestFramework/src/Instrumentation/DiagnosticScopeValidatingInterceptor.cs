@@ -179,6 +179,11 @@ namespace Azure.Core.TestFramework
                 methodName.Substring(0, methodName.Length - 5) :
                 methodName;
 
+            // check if this methodInfo is a "Core" method in mgmt plane, if it is, trim the Core suffix from the method name
+            if (methodInfo.IsFamily && methodNameWithoutSuffix.EndsWith("Core"))
+            {
+                methodNameWithoutSuffix = methodNameWithoutSuffix.Substring(0, methodNameWithoutSuffix.Length - 4);
+            }
             var expectedName = declaringType.Name + "." + methodNameWithoutSuffix;
             var forwardAttribute = methodInfo.GetCustomAttributes(true).FirstOrDefault(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
             bool strict = forwardAttribute is null && !methodInfo.IsAbstract;

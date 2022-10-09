@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [OneTimeTearDown]
-        public virtual void GlobalTeardown()
+        public async Task GlobalTeardown()
         {
             if (_keyspaceAccountIdentifier != null)
             {
-                ArmClient.GetCosmosDBAccountResource(_keyspaceAccountIdentifier).Delete(WaitUntil.Completed);
+                await ArmClient.GetCosmosDBAccountResource(_keyspaceAccountIdentifier).DeleteAsync(WaitUntil.Completed);
             }
         }
 

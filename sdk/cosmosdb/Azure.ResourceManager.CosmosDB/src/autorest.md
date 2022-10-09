@@ -17,6 +17,26 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+generate-virtual-operations:
+- CassandraResources_GetCassandraKeyspaceThroughput
+- CassandraResources_UpdateCassandraKeyspaceThroughput
+- CassandraResources_UpdateCassandraTableThroughput
+- CassandraResources_GetCassandraTableThroughput
+- SqlResources_UpdateSqlContainerThroughput
+- SqlResources_GetSqlContainerThroughput
+- SqlResources_UpdateSqlDatabaseThroughput
+- SqlResources_GetSqlDatabaseThroughput
+- TableResources_UpdateTableThroughput
+- TableResources_GetTableThroughput
+- GremlinResources_UpdateGremlinDatabaseThroughput
+- GremlinResources_GetGremlinDatabaseThroughput
+- GremlinResources_GetGremlinGraphThroughput
+- GremlinResources_UpdateGremlinGraphThroughput
+- MongoDBResources_GetMongoDBCollectionThroughput
+- MongoDBResources_UpdateMongoDBCollectionThroughput
+- MongoDBResources_GetMongoDBDatabaseThroughput
+- MongoDBResources_UpdateMongoDBDatabaseThroughput
+
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default: CassandraKeyspaceThroughputSetting
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}/throughputSettings/default: CassandraTableThroughputSetting
