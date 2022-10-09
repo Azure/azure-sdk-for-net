@@ -35,6 +35,8 @@ namespace Azure.Developer.LoadTesting.Tests
             {
                 GroupForReplace = "group"
             });
+
+            SanitizedHeaders.Add("Content-Type");
         }
 
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
@@ -74,15 +76,15 @@ namespace Azure.Developer.LoadTesting.Tests
             Assert.NotNull(response);
         }
 
-        [Test]
-        public async Task UploadTestFile()
-        {
-            LoadTestAdministrationClient loadTestAdministration = CreateAdministrationClient();
+        //[Test]
+        //public async Task UploadTestFile()
+        //{
+        //    LoadTestAdministrationClient loadTestAdministration = CreateAdministrationClient();
 
-            Response response = await loadTestAdministration.UploadTestFileAsync(testId, fileId, File.OpenRead(Path.Combine("sample.jmx")));
+        //    Response response = await loadTestAdministration.UploadTestFileAsync(testId, fileId, File.OpenRead(Path.Combine("tests","sample.jmx")));
 
-            Assert.NotNull(response);
-        }
+        //    Assert.NotNull(response);
+        //}
 
         [Test]
         public async Task CreateOrUpdateAppComponent()

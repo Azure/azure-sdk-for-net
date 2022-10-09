@@ -7,58 +7,31 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "416",
-        "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-495fc12c11a18e4783fdebfd0220e833-8beee6e4de45c349-00",
+        "Content-Type": "Sanitized",
+        "traceparent": "00-82da2575c87c6341aeedab565d106b79-bcd85708cc7c3943-00",
         "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20221008.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "57ea479282cd8185d09856364478d4f7",
+        "x-ms-client-request-id": "eafbe536bb2a2b24fde9890a2d06b682",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": {
-        "testid": "d7c68e2a-bcd8-423f-b9ce-fe9cccd00f1c",
-        "name": "New App Component",
-        "value": {
-          "appComponentConnectionString": {
-            "resourceId": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo",
-            "resourceName": "App-Service-Sample-Demo",
-            "resourceType": "Microsoft.Web/sites",
-            "subscriptionId": "7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a"
-          }
-        }
-      },
+      "RequestBody": "eyJ0ZXN0aWQiOiJkN2M2OGUyYS1iY2Q4LTQyM2YtYjljZS1mZTljY2NkMDBmMWMiLCJuYW1lIjoiTmV3IEFwcCBDb21wb25lbnQiLCJ2YWx1ZSI6eyJhcHBDb21wb25lbnRDb25uZWN0aW9uU3RyaW5nIjp7InJlc291cmNlSWQiOiIvc3Vic2NyaXB0aW9ucy83YzcxYjU2My0wZGMwLTRiYzAtYmNmNi0wNmY4ZjA1MTZjN2EvcmVzb3VyY2VHcm91cHMvQXBwLVNlcnZpY2UtU2FtcGxlLURlbW8tcmcvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvQXBwLVNlcnZpY2UtU2FtcGxlLURlbW8iLCJyZXNvdXJjZU5hbWUiOiJBcHAtU2VydmljZS1TYW1wbGUtRGVtbyIsInJlc291cmNlVHlwZSI6Ik1pY3Jvc29mdC5XZWIvc2l0ZXMiLCJzdWJzY3JpcHRpb25JZCI6IjdjNzFiNTYzLTBkYzAtNGJjMC1iY2Y2LTA2ZjhmMDUxNmM3YSJ9fX0=",
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview",
         "Connection": "keep-alive",
         "Content-Length": "798",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 08 Oct 2022 14:07:33 GMT",
-        "mise-correlation-id": "6c7979c8-9eaa-4e01-8ca9-33809b66dc61",
+        "Content-Type": "Sanitized",
+        "Date": "Sun, 09 Oct 2022 08:41:32 GMT",
+        "mise-correlation-id": "e01b3837-0da9-43ab-ac83-8582caa0dbe9",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "448c5dd2-0deb-4f0d-83bc-5bc390f0bd17"
+        "x-ms-correlation-request-id": "e8968963-2312-4728-9f56-96e1c8e343ae"
       },
-      "ResponseBody": {
-        "resourceId": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourcegroups/yashika-rg/providers/microsoft.loadtestservice/loadtests/loadtestsdk",
-        "testId": "d7c68e2a-bcd8-423f-b9ce-fe9cccd00f1c",
-        "testRunId": null,
-        "name": "ff0be495-eb8b-43f7-b18b-7877d33d98e7",
-        "value": {
-          "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo": {
-            "resourceId": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo",
-            "resourceName": "App-Service-Sample-Demo",
-            "resourceType": "Microsoft.Web/sites",
-            "displayName": null,
-            "resourceGroup": "App-Service-Sample-Demo-rg",
-            "subscriptionId": "7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a",
-            "kind": null
-          }
-        }
-      }
+      "ResponseBody": "eyJyZXNvdXJjZUlkIjoiL3N1YnNjcmlwdGlvbnMvN2M3MWI1NjMtMGRjMC00YmMwLWJjZjYtMDZmOGYwNTE2YzdhL3Jlc291cmNlZ3JvdXBzL3lhc2hpa2EtcmcvcHJvdmlkZXJzL21pY3Jvc29mdC5sb2FkdGVzdHNlcnZpY2UvbG9hZHRlc3RzL2xvYWR0ZXN0c2RrIiwidGVzdElkIjoiZDdjNjhlMmEtYmNkOC00MjNmLWI5Y2UtZmU5Y2NjZDAwZjFjIiwidGVzdFJ1bklkIjpudWxsLCJuYW1lIjoiZmYwYmU0OTUtZWI4Yi00M2Y3LWIxOGItNzg3N2QzM2Q5OGU3IiwidmFsdWUiOnsiL3N1YnNjcmlwdGlvbnMvN2M3MWI1NjMtMGRjMC00YmMwLWJjZjYtMDZmOGYwNTE2YzdhL3Jlc291cmNlR3JvdXBzL0FwcC1TZXJ2aWNlLVNhbXBsZS1EZW1vLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuV2ViL3NpdGVzL0FwcC1TZXJ2aWNlLVNhbXBsZS1EZW1vIjp7InJlc291cmNlSWQiOiIvc3Vic2NyaXB0aW9ucy83YzcxYjU2My0wZGMwLTRiYzAtYmNmNi0wNmY4ZjA1MTZjN2EvcmVzb3VyY2VHcm91cHMvQXBwLVNlcnZpY2UtU2FtcGxlLURlbW8tcmcvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvQXBwLVNlcnZpY2UtU2FtcGxlLURlbW8iLCJyZXNvdXJjZU5hbWUiOiJBcHAtU2VydmljZS1TYW1wbGUtRGVtbyIsInJlc291cmNlVHlwZSI6Ik1pY3Jvc29mdC5XZWIvc2l0ZXMiLCJkaXNwbGF5TmFtZSI6bnVsbCwicmVzb3VyY2VHcm91cCI6IkFwcC1TZXJ2aWNlLVNhbXBsZS1EZW1vLXJnIiwic3Vic2NyaXB0aW9uSWQiOiI3YzcxYjU2My0wZGMwLTRiYzAtYmNmNi0wNmY4ZjA1MTZjN2EiLCJraW5kIjpudWxsfX19"
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "LOADTESTSERVICE_ENDPOINT": "eccdc9b7-7603-402b-879d-bde2b637db56.eus.cnt-prod.loadtesting.azure.com",
-    "RandomSeed": "629579970"
+    "RandomSeed": "1677299121"
   }
 }
