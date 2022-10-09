@@ -19,6 +19,14 @@ modelerfour:
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/operations/{operationId}
 
+generate-virtual-operations:
+- WorkflowRunActionRepetitionsRequestHistories_Get
+- WorkflowRunActionRepetitions_Get
+- WorkflowRunActionRequestHistories_Get
+- WorkflowRunActionScopeRepetitions_Get
+- WorkflowRunOperations_Get
+- WorkflowRuns_Get
+
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/operations/{operationId}: LogicWorkflowRunOperation
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}: LogicWorkflowRun
@@ -160,7 +168,7 @@ rename-mapping:
   X12AcknowledgementSettings.batchTechnicalAcknowledgements: BatchTechnicalAcknowledgement
   X12AcknowledgementSettings.batchFunctionalAcknowledgements: BatchFunctionalAcknowledgement
   X12AcknowledgementSettings.batchImplementationAcknowledgements: BatchImplementationAcknowledgement
-  
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'

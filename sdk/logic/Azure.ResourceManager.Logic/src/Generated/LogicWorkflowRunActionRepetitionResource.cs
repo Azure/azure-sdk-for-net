@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<LogicWorkflowRunActionRepetitionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<LogicWorkflowRunActionRepetitionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((LogicWorkflowRunActionRepetitionResource)result.Value, result.GetRawResponse());
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<LogicWorkflowRunActionRepetitionResource> Get(CancellationToken cancellationToken = default)
+        public virtual new Response<LogicWorkflowRunActionRepetitionResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
             return Response.FromValue((LogicWorkflowRunActionRepetitionResource)result.Value, result.GetRawResponse());

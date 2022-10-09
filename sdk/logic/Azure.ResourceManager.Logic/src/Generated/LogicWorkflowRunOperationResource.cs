@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<LogicWorkflowRunOperationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<LogicWorkflowRunOperationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((LogicWorkflowRunOperationResource)result.Value, result.GetRawResponse());
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<LogicWorkflowRunOperationResource> Get(CancellationToken cancellationToken = default)
+        public virtual new Response<LogicWorkflowRunOperationResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
             return Response.FromValue((LogicWorkflowRunOperationResource)result.Value, result.GetRawResponse());
