@@ -23,59 +23,51 @@ namespace Azure.ResourceManager.Maps.Tests
         {
         }
 
-        private ResourceGroupResource ResourceGroup { get; set; }
-
-        private MapsAccountCollection MapCollection { get; set; }
-
-        private async Task SetCollection()
-        {
-            ResourceGroup = await CreateResourceGroupAsync();
-            MapCollection = ResourceGroup.GetMapsAccounts();
-        }
-
         [Test]
         public async Task MapsAccountCreateTest()
         {
-            await SetCollection();
+            var resourceGroup = await CreateResourceGroupAsync();
+            var mapCollection = resourceGroup.GetMapsAccounts();
 
-            // prepare account properties
+            // Prepare account properties
             string accountName = Recording.GenerateAssetName("maps");
             var parameters = GetDefaultMapsAccountData();
 
             // Create account
-            var newAccount = (await MapCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
+            var newAccount = (await mapCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
             VerifyAccountProperties(newAccount.Data, true, Name.S0);
 
-            // now get the account
-            var account = (await MapCollection.GetAsync(accountName)).Value;
+            // Now get the account
+            var account = (await mapCollection.GetAsync(accountName)).Value;
             VerifyAccountProperties(account.Data, true, Name.S0);
 
-            // now delete the account
+            // Now delete the account
             await account.DeleteAsync(WaitUntil.Completed);
-            var falseResult = (await MapCollection.ExistsAsync(accountName)).Value;
+            var falseResult = (await mapCollection.ExistsAsync(accountName)).Value;
             Assert.IsFalse(falseResult);
         }
 
         [Test]
         public async Task MapsAccountUpdateTest()
         {
-            await SetCollection();
+            var resourceGroup = await CreateResourceGroupAsync();
+            var mapCollection = resourceGroup.GetMapsAccounts();
 
-            // prepare account properties
+            // Prepare account properties
             string accountName = Recording.GenerateAssetName("maps");
             var parameters = GetDefaultMapsAccountData();
 
             // Create account
-            var newAccount = (await MapCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
+            var newAccount = (await mapCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
             VerifyAccountProperties(newAccount.Data, true, Name.S0);
 
-            // create new parameters which are almost the same, but have different tags
+            // Create new parameters which are almost the same, but have different tags
             var newParameters = GetDefaultMapsAccountData();
             newParameters.Tags.Clear();
             newParameters.Tags.Add("key3", "value3");
             newParameters.Tags.Add("key4", "value4");
             newParameters.Sku.Name = Name.S1;
-            var updatedAccount = (await MapCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, newParameters)).Value;
+            var updatedAccount = (await mapCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, newParameters)).Value;
             VerifyAccountProperties(updatedAccount.Data, false, skuName: Name.S1);
             Assert.AreEqual(2, updatedAccount.Data.Tags.Count);
             Assert.AreEqual("value3", updatedAccount.Data.Tags["key3"]);
@@ -85,19 +77,16 @@ namespace Azure.ResourceManager.Maps.Tests
         [Test]
         public async Task MapsAccountDeleteTest()
         {
-            await SetCollection();
+            var resourceGroup = await CreateResourceGroupAsync();
+            var mapCollection = resourceGroup.GetMapsAccounts();
 
             // Delete an account which does not exist
-            var id = MapsAccountResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, ResourceGroup.Data.Name, "missingaccount");
-            var falseAccount = new MapsAccountResource(Client, id);
+            var id = MapsAccountResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, resourceGroup.Data.Name, "missingaccount");
+            var falseAccount = Client.GetMapsAccountResource(id);
             await falseAccount.DeleteAsync(WaitUntil.Completed);
 
-            // prepare account properties
-            string accountName = Recording.GenerateAssetName("maps");
-            var parameters = GetDefaultMapsAccountData();
-
             // Create account
-            var newAccount = (await MapCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
+            var newAccount = await CreateDefaultMapsAccount(mapCollection, resourceGroup.Data.Name);
 
             // Delete an account
             await newAccount.DeleteAsync(WaitUntil.Completed);
@@ -109,16 +98,17 @@ namespace Azure.ResourceManager.Maps.Tests
         [Test]
         public async Task MapsAccountListByResourceGroupTest()
         {
-            await SetCollection();
+            var resourceGroup = await CreateResourceGroupAsync();
+            var mapCollection = resourceGroup.GetMapsAccounts();
 
-            var accounts = await MapCollection.GetAllAsync().ToEnumerableAsync();
+            var accounts = await mapCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(accounts.Count, 0);
 
             // Create accounts
-            var accountName1 = await CreateDefaultMapsAccount(MapCollection, ResourceGroup.Data.Name);
-            var accountName2 = await CreateDefaultMapsAccount(MapCollection, ResourceGroup.Data.Name);
+            await CreateDefaultMapsAccount(mapCollection, resourceGroup.Data.Name);
+            await CreateDefaultMapsAccount(mapCollection, resourceGroup.Data.Name);
 
-            accounts = await MapCollection.GetAllAsync().ToEnumerableAsync();
+            accounts = await mapCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(2, accounts.Count);
 
             VerifyAccountProperties(accounts.First().Data, true, Name.S0);
@@ -129,39 +119,36 @@ namespace Azure.ResourceManager.Maps.Tests
         public async Task MapsAccountListBySubscriptionTest()
         {
             // Create account
-            await SetCollection();
-            var accountName1 = await CreateDefaultMapsAccount(MapCollection, ResourceGroup.Data.Name);
+            var resourceGroup = await CreateResourceGroupAsync();
+            var mapCollection = resourceGroup.GetMapsAccounts();
+            var accountName1 = await CreateDefaultMapsAccount(mapCollection, resourceGroup.Data.Name);
 
             // Create different resource group and account
-            var rg2 = await CreateResourceGroupAsync();
-            var mapCollection2 = rg2.GetMapsAccounts();
-            var accountName2 = await CreateDefaultMapsAccount(mapCollection2, rg2.Data.Name);
+            var resourceGroup2 = await CreateResourceGroupAsync();
+            var mapCollection2 = resourceGroup2.GetMapsAccounts();
+            var accountName2 = await CreateDefaultMapsAccount(mapCollection2, resourceGroup2.Data.Name);
 
             var accounts = await DefaultSubscription.GetMapsAccountsAsync().ToEnumerableAsync();
 
             Assert.GreaterOrEqual(accounts.Count, 2);
 
             var account1 = accounts.First(
-                t => StringComparer.OrdinalIgnoreCase.Equals(t.Data.Name, accountName1));
+                t => StringComparer.OrdinalIgnoreCase.Equals(t.Data.Name, accountName1.Data.Name));
             VerifyAccountProperties(account1.Data, true, Name.S0);
 
             var account2 = accounts.First(
-                t => StringComparer.OrdinalIgnoreCase.Equals(t.Data.Name, accountName2));
+                t => StringComparer.OrdinalIgnoreCase.Equals(t.Data.Name, accountName2.Data.Name));
             VerifyAccountProperties(account2.Data, true, Name.S0);
         }
 
         [Test]
         public async Task MapsAccountListKeysTest()
         {
-            await SetCollection();
-
-            // prepare account properties
-            string accountName = Recording.GenerateAssetName("maps");
-            var parameters = GetDefaultMapsAccountData();
+            var resourceGroup = await CreateResourceGroupAsync();
+            var mapCollection = resourceGroup.GetMapsAccounts();
 
             // Create account
-            var newAccount = (await MapCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
-            VerifyAccountProperties(newAccount.Data, true, Name.S0);
+            var newAccount = await CreateDefaultMapsAccount(mapCollection, resourceGroup.Data.Name);
 
             // List keys
             var keys = (await newAccount.GetKeysAsync()).Value;
@@ -177,15 +164,11 @@ namespace Azure.ResourceManager.Maps.Tests
         [Test]
         public async Task MapsAccountRegenerateKeyTest()
         {
-            await SetCollection();
-
-            // prepare account properties
-            string accountName = Recording.GenerateAssetName("maps");
-            var parameters = GetDefaultMapsAccountData();
+            var resourceGroup = await CreateResourceGroupAsync();
+            var mapCollection = resourceGroup.GetMapsAccounts();
 
             // Create account
-            var newAccount = (await MapCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
-            VerifyAccountProperties(newAccount.Data, true, Name.S0);
+            var newAccount = await CreateDefaultMapsAccount(mapCollection, resourceGroup.Data.Name);
 
             // List keys
             var keys = (await newAccount.GetKeysAsync()).Value;
