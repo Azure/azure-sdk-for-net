@@ -17,9 +17,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> This is the base client representation of the following resources <see cref="EventHubsNamespaceAuthorizationRuleResource" />, <see cref="EventHubAuthorizationRuleResource" /> or <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource" />. </summary>
-    public abstract partial class EventHubsAuthorizationRuleResource : ArmResource
+    public abstract partial class AuthorizationRuleResource : ArmResource
     {
-        internal static EventHubsAuthorizationRuleResource GetResource(ArmClient client, EventHubsAuthorizationRuleData data)
+        internal static AuthorizationRuleResource GetResource(ArmClient client, EventHubsAuthorizationRuleData data)
         {
             if (IsEventHubsNamespaceAuthorizationRuleResource(data.Id))
             {
@@ -83,24 +83,24 @@ namespace Azure.ResourceManager.EventHubs
 
         private readonly EventHubsAuthorizationRuleData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="EventHubsAuthorizationRuleResource"/> class for mocking. </summary>
-        protected EventHubsAuthorizationRuleResource()
+        /// <summary> Initializes a new instance of the <see cref="AuthorizationRuleResource"/> class for mocking. </summary>
+        protected AuthorizationRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventHubsAuthorizationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "AuthorizationRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EventHubsAuthorizationRuleResource(ArmClient client, EventHubsAuthorizationRuleData data) : this(client, data.Id)
+        internal AuthorizationRuleResource(ArmClient client, EventHubsAuthorizationRuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EventHubsAuthorizationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AuthorizationRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal EventHubsAuthorizationRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AuthorizationRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -121,24 +121,24 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Task<Response<EventHubsAuthorizationRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default);
+        protected abstract Task<Response<AuthorizationRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public async Task<Response<EventHubsAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<AuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Response<EventHubsAuthorizationRuleResource> GetCore(CancellationToken cancellationToken = default);
+        protected abstract Response<AuthorizationRuleResource> GetCore(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public Response<EventHubsAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
+        public Response<AuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
         {
             return GetCore(cancellationToken);
         }

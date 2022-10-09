@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventHubs
     /// from an instance of <see cref="ArmClient" /> using the GetEventHubsDisasterRecoveryAuthorizationRuleResource method.
     /// Otherwise you can get one from its parent resource <see cref="EventHubsDisasterRecoveryResource" /> using the GetEventHubsDisasterRecoveryAuthorizationRule method.
     /// </summary>
-    public partial class EventHubsDisasterRecoveryAuthorizationRuleResource : EventHubsAuthorizationRuleResource
+    public partial class EventHubsDisasterRecoveryAuthorizationRuleResource : AuthorizationRuleResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName)
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: DisasterRecoveryConfigs_GetAuthorizationRule
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override async Task<Response<EventHubsAuthorizationRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<AuthorizationRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryAuthorizationRuleResource.Get");
             scope.Start();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<EventHubsDisasterRecoveryAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<EventHubsDisasterRecoveryAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((EventHubsDisasterRecoveryAuthorizationRuleResource)result.Value, result.GetRawResponse());
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: DisasterRecoveryConfigs_GetAuthorizationRule
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override Response<EventHubsAuthorizationRuleResource> GetCore(CancellationToken cancellationToken = default)
+        protected override Response<AuthorizationRuleResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryAuthorizationRuleResource.Get");
             scope.Start();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<EventHubsDisasterRecoveryAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
+        public virtual new Response<EventHubsDisasterRecoveryAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
             return Response.FromValue((EventHubsDisasterRecoveryAuthorizationRuleResource)result.Value, result.GetRawResponse());

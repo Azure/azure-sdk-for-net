@@ -15,6 +15,14 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+generate-virtual-operations:
+- EventHubs_GetAuthorizationRule
+- DisasterRecoveryConfigs_GetAuthorizationRule
+- Namespaces_GetAuthorizationRule
+
+base-resource-name-mapping:
+  EventHubsAuthorizationRule: AuthorizationRule
+
 request-path-to-resource-name:
     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}: EventHubsDisasterRecovery
     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}: EventHubsDisasterRecoveryAuthorizationRule

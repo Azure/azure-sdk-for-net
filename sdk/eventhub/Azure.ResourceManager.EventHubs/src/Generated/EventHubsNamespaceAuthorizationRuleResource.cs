@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventHubs
     /// from an instance of <see cref="ArmClient" /> using the GetEventHubsNamespaceAuthorizationRuleResource method.
     /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource" /> using the GetEventHubsNamespaceAuthorizationRule method.
     /// </summary>
-    public partial class EventHubsNamespaceAuthorizationRuleResource : EventHubsAuthorizationRuleResource
+    public partial class EventHubsNamespaceAuthorizationRuleResource : AuthorizationRuleResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventHubsNamespaceAuthorizationRuleResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName)
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: Namespaces_GetAuthorizationRule
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override async Task<Response<EventHubsAuthorizationRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<AuthorizationRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _eventHubsNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleResource.Get");
             scope.Start();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<EventHubsNamespaceAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<EventHubsNamespaceAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((EventHubsNamespaceAuthorizationRuleResource)result.Value, result.GetRawResponse());
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: Namespaces_GetAuthorizationRule
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override Response<EventHubsAuthorizationRuleResource> GetCore(CancellationToken cancellationToken = default)
+        protected override Response<AuthorizationRuleResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _eventHubsNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleResource.Get");
             scope.Start();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<EventHubsNamespaceAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
+        public virtual new Response<EventHubsNamespaceAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
             return Response.FromValue((EventHubsNamespaceAuthorizationRuleResource)result.Value, result.GetRawResponse());
