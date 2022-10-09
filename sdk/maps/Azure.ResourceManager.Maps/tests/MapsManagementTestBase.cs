@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Maps.Tests
             }
         }
 
-        public async Task<MapsAccountResource> CreateDefaultMapsAccount(MapsAccountCollection mapCollection, string rgname)
+        public async Task<MapsAccountResource> CreateDefaultMapsAccount(MapsAccountCollection mapCollection)
         {
             var accountName = Recording.GenerateAssetName("maps");
             var parameters = GetDefaultMapsAccountData();

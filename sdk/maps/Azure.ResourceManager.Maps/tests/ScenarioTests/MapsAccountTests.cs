@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Maps.Tests
             await falseAccount.DeleteAsync(WaitUntil.Completed);
 
             // Create account
-            var newAccount = await CreateDefaultMapsAccount(mapCollection, resourceGroup.Data.Name);
+            var newAccount = await CreateDefaultMapsAccount(mapCollection);
 
             // Delete an account
             await newAccount.DeleteAsync(WaitUntil.Completed);
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.Maps.Tests
             Assert.AreEqual(accounts.Count, 0);
 
             // Create accounts
-            await CreateDefaultMapsAccount(mapCollection, resourceGroup.Data.Name);
-            await CreateDefaultMapsAccount(mapCollection, resourceGroup.Data.Name);
+            await CreateDefaultMapsAccount(mapCollection);
+            await CreateDefaultMapsAccount(mapCollection);
 
             accounts = await mapCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(2, accounts.Count);
@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.Maps.Tests
             // Create account
             var resourceGroup = await CreateResourceGroupAsync();
             var mapCollection = resourceGroup.GetMapsAccounts();
-            var accountName1 = await CreateDefaultMapsAccount(mapCollection, resourceGroup.Data.Name);
+            var accountName1 = await CreateDefaultMapsAccount(mapCollection);
 
             // Create different resource group and account
             var resourceGroup2 = await CreateResourceGroupAsync();
             var mapCollection2 = resourceGroup2.GetMapsAccounts();
-            var accountName2 = await CreateDefaultMapsAccount(mapCollection2, resourceGroup2.Data.Name);
+            var accountName2 = await CreateDefaultMapsAccount(mapCollection2);
 
             var accounts = await DefaultSubscription.GetMapsAccountsAsync().ToEnumerableAsync();
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Maps.Tests
             var mapCollection = resourceGroup.GetMapsAccounts();
 
             // Create account
-            var newAccount = await CreateDefaultMapsAccount(mapCollection, resourceGroup.Data.Name);
+            var newAccount = await CreateDefaultMapsAccount(mapCollection);
 
             // List keys
             var keys = (await newAccount.GetKeysAsync()).Value;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Maps.Tests
             var mapCollection = resourceGroup.GetMapsAccounts();
 
             // Create account
-            var newAccount = await CreateDefaultMapsAccount(mapCollection, resourceGroup.Data.Name);
+            var newAccount = await CreateDefaultMapsAccount(mapCollection);
 
             // List keys
             var keys = (await newAccount.GetKeysAsync()).Value;
