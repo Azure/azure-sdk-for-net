@@ -1259,11 +1259,11 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceHealthMetadataResource> GetAllResourceHealthMetadataAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceHealthMetadataResource> GetResourceHealthMetadataResourcesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ResourceHealthMetadataResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllResourceHealthMetadata");
+                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceHealthMetadataResources");
                 scope.Start();
                 try
                 {
@@ -1278,7 +1278,7 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<ResourceHealthMetadataResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllResourceHealthMetadata");
+                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceHealthMetadataResources");
                 scope.Start();
                 try
                 {
@@ -1301,11 +1301,11 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceHealthMetadataResource> GetAllResourceHealthMetadata(CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceHealthMetadataResource> GetResourceHealthMetadataResources(CancellationToken cancellationToken = default)
         {
             Page<ResourceHealthMetadataResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllResourceHealthMetadata");
+                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceHealthMetadataResources");
                 scope.Start();
                 try
                 {
@@ -1320,7 +1320,7 @@ namespace Azure.ResourceManager.AppService
             }
             Page<ResourceHealthMetadataResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllResourceHealthMetadata");
+                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceHealthMetadataResources");
                 scope.Start();
                 try
                 {
@@ -1596,6 +1596,92 @@ namespace Azure.ResourceManager.AppService
                 {
                     var response = DefaultRestClient.ListGeoRegionsNextPage(nextLink, Id.SubscriptionId, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Description for List all apps that are assigned to a hostname.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
+        /// Operation Id: ListSiteIdentifiersAssignedToHostName
+        /// </summary>
+        /// <param name="nameIdentifier"> Hostname information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AppServiceIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceIdentifierResource> GetSiteIdentifiersAssignedToHostNameAsync(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<AppServiceIdentifierResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSiteIdentifiersAssignedToHostName");
+                scope.Start();
+                try
+                {
+                    var response = await DefaultRestClient.ListSiteIdentifiersAssignedToHostNameAsync(Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => AppServiceIdentifierResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<AppServiceIdentifierResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSiteIdentifiersAssignedToHostName");
+                scope.Start();
+                try
+                {
+                    var response = await DefaultRestClient.ListSiteIdentifiersAssignedToHostNameNextPageAsync(nextLink, Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => AppServiceIdentifierResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Description for List all apps that are assigned to a hostname.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
+        /// Operation Id: ListSiteIdentifiersAssignedToHostName
+        /// </summary>
+        /// <param name="nameIdentifier"> Hostname information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AppServiceIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceIdentifierResource> GetSiteIdentifiersAssignedToHostName(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        {
+            Page<AppServiceIdentifierResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSiteIdentifiersAssignedToHostName");
+                scope.Start();
+                try
+                {
+                    var response = DefaultRestClient.ListSiteIdentifiersAssignedToHostName(Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => AppServiceIdentifierResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<AppServiceIdentifierResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSiteIdentifiersAssignedToHostName");
+                scope.Start();
+                try
+                {
+                    var response = DefaultRestClient.ListSiteIdentifiersAssignedToHostNameNextPage(nextLink, Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => AppServiceIdentifierResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

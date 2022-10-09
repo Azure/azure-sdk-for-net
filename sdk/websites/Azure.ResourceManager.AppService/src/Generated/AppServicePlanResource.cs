@@ -385,11 +385,11 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HybridConnectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HybridConnectionResource> GetHybridConnectionRelaysAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<HybridConnectionResource> GetHybridConnectionRelayResourcesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<HybridConnectionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnectionRelays");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnectionRelayResources");
                 scope.Start();
                 try
                 {
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<HybridConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnectionRelays");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnectionRelayResources");
                 scope.Start();
                 try
                 {
@@ -427,11 +427,11 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HybridConnectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HybridConnectionResource> GetHybridConnectionRelays(CancellationToken cancellationToken = default)
+        public virtual Pageable<HybridConnectionResource> GetHybridConnectionRelayResources(CancellationToken cancellationToken = default)
         {
             Page<HybridConnectionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnectionRelays");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnectionRelayResources");
                 scope.Start();
                 try
                 {
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.AppService
             }
             Page<HybridConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnectionRelays");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnectionRelayResources");
                 scope.Start();
                 try
                 {
@@ -518,11 +518,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> List page size. If specified, results are paged. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BaseWebSiteResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BaseWebSiteResource> GetWebAppsAsync(string skipToken = null, string filter = null, string top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BaseWebSiteResource> GetWebSitesAsync(string skipToken = null, string filter = null, string top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<BaseWebSiteResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetWebApps");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetWebSites");
                 scope.Start();
                 try
                 {
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<BaseWebSiteResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetWebApps");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetWebSites");
                 scope.Start();
                 try
                 {
@@ -563,11 +563,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> List page size. If specified, results are paged. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BaseWebSiteResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BaseWebSiteResource> GetWebApps(string skipToken = null, string filter = null, string top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BaseWebSiteResource> GetWebSites(string skipToken = null, string filter = null, string top = null, CancellationToken cancellationToken = default)
         {
             Page<BaseWebSiteResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetWebApps");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetWebSites");
                 scope.Start();
                 try
                 {
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.AppService
             }
             Page<BaseWebSiteResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetWebApps");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetWebSites");
                 scope.Start();
                 try
                 {

@@ -4,15 +4,10 @@
 #nullable disable
 
 using System;
-using System.Globalization;
-using System.Linq;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
@@ -33,6 +28,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="propertiesToInclude"> Comma separated list of app properties to include. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebSiteData" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<WebSiteData> GetAllWebAppDataAsync(string propertiesToInclude = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<WebSiteData>> FirstPageFunc(int? pageSizeHint)
@@ -76,6 +72,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="propertiesToInclude"> Comma separated list of app properties to include. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebSiteData" /> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<WebSiteData> GetAllWebAppData(string propertiesToInclude = null, CancellationToken cancellationToken = default)
         {
             Page<WebSiteData> FirstPageFunc(int? pageSizeHint)

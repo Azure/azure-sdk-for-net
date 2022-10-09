@@ -863,9 +863,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceHealthMetadataResource> GetAllResourceHealthMetadataAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ResourceHealthMetadataResource> GetResourceHealthMetadataResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAllResourceHealthMetadataAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetResourceHealthMetadataResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -876,9 +876,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceHealthMetadataResource> GetAllResourceHealthMetadata(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<ResourceHealthMetadataResource> GetResourceHealthMetadataResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAllResourceHealthMetadata(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetResourceHealthMetadataResources(cancellationToken);
         }
 
         /// <summary>
@@ -999,6 +999,40 @@ namespace Azure.ResourceManager.AppService
         public static Pageable<AppServiceGeoRegion> GetGeoRegions(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetGeoRegions(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for List all apps that are assigned to a hostname.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
+        /// Operation Id: ListSiteIdentifiersAssignedToHostName
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="nameIdentifier"> Hostname information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AppServiceIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppServiceIdentifierResource> GetSiteIdentifiersAssignedToHostNameAsync(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
+
+            return GetExtensionClient(subscriptionResource).GetSiteIdentifiersAssignedToHostNameAsync(nameIdentifier, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for List all apps that are assigned to a hostname.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
+        /// Operation Id: ListSiteIdentifiersAssignedToHostName
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="nameIdentifier"> Hostname information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
+        /// <returns> A collection of <see cref="AppServiceIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppServiceIdentifierResource> GetSiteIdentifiersAssignedToHostName(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
+
+            return GetExtensionClient(subscriptionResource).GetSiteIdentifiersAssignedToHostName(nameIdentifier, cancellationToken);
         }
 
         /// <summary>

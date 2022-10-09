@@ -231,8 +231,6 @@ override-operation-name:
   StaticSites_ResetStaticSiteApiKey: ResetApiKey
   StaticSites_UpdateStaticSiteUser: UpdateUser
   CheckNameAvailability: CheckAppServiceNameAvailability
-  AppServicePlans_ListHybridConnections: GetHybridConnectionRelays
-  AppServicePlans_GetHybridConnection: GetHybridConnectionRelays
   StaticSites_CreateOrUpdateStaticSiteBuildAppSettings: CreateOrUpdateAppSettings
   StaticSites_CreateOrUpdateStaticSiteBuildFunctionAppSettings: CreateOrUpdateFunctionAppSettings
   StaticSites_ListStaticSiteBuildFunctions: GetFunctions
@@ -248,20 +246,12 @@ override-operation-name:
   Recommendations_DisableRecommendationForSubscription: DisableAppServiceRecommendation
   WebApps_ListSnapshotsSlot: GetSlotSnapshots
   WebApps_ListSnapshotsFromDRSecondarySlot: GetSlotSnapshotsFromDRSecondary
-  # All bellowing operations should be EBNerver once the polymorphic change is ready
-  AppServiceEnvironments_ListWebApps: GetAllWebAppData
-#   ResourceHealthMetadata_ListByResourceGroup: GetAllResourceHealthMetadataData
-  ListSiteIdentifiersAssignedToHostName: GetAllSiteIdentifierData
-  WebApps_ListConfigurations: GetAllConfigurationData
-  WebApps_ListHybridConnections: GetAllHybridConnectionData
-  WebApps_ListPremierAddOns: GetAllPremierAddOnData
-  WebApps_ListRelayServiceConnections: GetAllRelayServiceConnectionData
-  WebApps_ListSiteBackups: GetAllSiteBackupData
-  WebApps_ListConfigurationsSlot: GetAllConfigurationSlotData
-  WebApps_ListHybridConnectionsSlot: GetAllHybridConnectionSlotData
-  WebApps_ListPremierAddOnsSlot: GetAllPremierAddOnSlotData
-  WebApps_ListRelayServiceConnectionsSlot: GetAllRelayServiceConnectionSlotData
-  WebApps_ListSiteBackupsSlot: GetAllSiteBackupSlotData
+  # Fixes for some old obsolete methods
+  AppServicePlans_ListHybridConnections: GetHybridConnectionRelayResources
+  ResourceHealthMetadata_List: GetResourceHealthMetadataResources
+  AppServicePlans_ListWebApps: GetWebSites
+  WebApps_Backup: CreateBackup
+  WebApps_BackupSlot: CreateBackup
 
 no-property-type-replacement:
 - ApiManagementConfig

@@ -195,5 +195,41 @@ namespace Azure.ResourceManager.AppService
 
             return UpdateCore(info, cancellationToken);
         }
+
+        /// <summary> The core implementation for operation CreateBackup. </summary>
+        /// <param name="info"> Backup configuration. You can use the JSON response from the POST action as input here. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        protected abstract Task<Response<WebAppBackupResource>> CreateBackupCoreAsync(WebAppBackupInfo info, CancellationToken cancellationToken = default);
+
+        /// <summary> The default implementation for operation CreateBackup. </summary>
+        /// <param name="info"> Backup configuration. You can use the JSON response from the POST action as input here. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        [ForwardsClientCalls]
+        public async Task<Response<WebAppBackupResource>> CreateBackupAsync(WebAppBackupInfo info, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(info, nameof(info));
+
+            return await CreateBackupCoreAsync(info, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> The core implementation for operation CreateBackup. </summary>
+        /// <param name="info"> Backup configuration. You can use the JSON response from the POST action as input here. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        protected abstract Response<WebAppBackupResource> CreateBackupCore(WebAppBackupInfo info, CancellationToken cancellationToken = default);
+
+        /// <summary> The default implementation for operation CreateBackup. </summary>
+        /// <param name="info"> Backup configuration. You can use the JSON response from the POST action as input here. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        [ForwardsClientCalls]
+        public Response<WebAppBackupResource> CreateBackup(WebAppBackupInfo info, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(info, nameof(info));
+
+            return CreateBackupCore(info, cancellationToken);
+        }
     }
 }
