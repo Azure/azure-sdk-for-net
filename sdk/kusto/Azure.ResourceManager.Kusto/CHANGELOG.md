@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.1 (2022-10-09)
 
 ### Bugs Fixed
 
-### Other Changes
+- Added `KustoDatabasePrincipalAssignmentData.DatabasePrincipalId` to replace the old property `KustoDatabasePrincipalAssignmentData.PrincipalId` to fix the issue https://github.com/Azure/azure-sdk-for-net/issues/31618.
 
 ## 1.0.0 (2022-09-19)
 
