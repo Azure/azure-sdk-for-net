@@ -74,6 +74,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                     })
                 ));
         }
+
         public ContainerRegistryBlobClient CreateBlobClient(string repository)
         {
             string endpoint = TestEnvironment.Endpoint;

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29709.97
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.31903.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Containers.ContainerRegistry", "src\Azure.Containers.ContainerRegistry.csproj", "{E33D09D9-D809-472C-82E6-6A26BDB86FC2}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Containers.ContainerRegistry.Tests", "tests\Azure.Containers.ContainerRegistry.Tests.csproj", "{3AEC1467-61D0-4A91-93FA-2BD391122D21}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Containers.ContainerRegistry.Perf", "perf\Azure.Containers.ContainerRegistry.Perf\Azure.Containers.ContainerRegistry.Perf.csproj", "{D8B4B378-8339-44AB-BBEC-056B82A15A0A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{A2213888-EEED-4C6B-8B68-818E8EA17531}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,14 +43,14 @@ Global
 		{3AEC1467-61D0-4A91-93FA-2BD391122D21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AEC1467-61D0-4A91-93FA-2BD391122D21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AEC1467-61D0-4A91-93FA-2BD391122D21}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F62DCD51-5101-4427-B6C9-C24974F9DD3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F62DCD51-5101-4427-B6C9-C24974F9DD3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F62DCD51-5101-4427-B6C9-C24974F9DD3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F62DCD51-5101-4427-B6C9-C24974F9DD3F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D8B4B378-8339-44AB-BBEC-056B82A15A0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D8B4B378-8339-44AB-BBEC-056B82A15A0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8B4B378-8339-44AB-BBEC-056B82A15A0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8B4B378-8339-44AB-BBEC-056B82A15A0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2213888-EEED-4C6B-8B68-818E8EA17531}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2213888-EEED-4C6B-8B68-818E8EA17531}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2213888-EEED-4C6B-8B68-818E8EA17531}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2213888-EEED-4C6B-8B68-818E8EA17531}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
