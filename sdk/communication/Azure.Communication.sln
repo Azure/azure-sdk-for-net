@@ -3,21 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{3CC93F1F-AF2A-4CB3-A7FF-5205836C1311}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Sms", "Azure.Communication.Sms\src\Azure.Communication.Sms.csproj", "{E33D09D9-D809-472C-82E6-6A26BDB86FC2}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Sms.Tests", "Azure.Communication.Sms\tests\Azure.Communication.Sms.Tests.csproj", "{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{378D2940-7617-424D-8A16-8DDD8BBCED5B}"
-	ProjectSection(SolutionItems) = preProject
-		ci.yml = ci.yml
-		Directory.Build.props = Directory.Build.props
-		test-resources.json = test-resources.json
-	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Common", "Azure.Communication.Common\src\Azure.Communication.Common.csproj", "{A3844101-D370-4963-B450-71851034C3D6}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Common.Tests", "Azure.Communication.Common\tests\Azure.Communication.Common.Tests.csproj", "{2C4BDD98-F38F-48D6-BAC0-B8BB88D1621A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Communication", "Azure.ResourceManager.Communication\src\Azure.ResourceManager.Communication.csproj", "{86776D3F-0ACA-4933-9318-21B9E35AA689}"
@@ -74,22 +59,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3CC93F1F-AF2A-4CB3-A7FF-5205836C1311}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3CC93F1F-AF2A-4CB3-A7FF-5205836C1311}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3CC93F1F-AF2A-4CB3-A7FF-5205836C1311}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3CC93F1F-AF2A-4CB3-A7FF-5205836C1311}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E33D09D9-D809-472C-82E6-6A26BDB86FC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E33D09D9-D809-472C-82E6-6A26BDB86FC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E33D09D9-D809-472C-82E6-6A26BDB86FC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E33D09D9-D809-472C-82E6-6A26BDB86FC2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A3844101-D370-4963-B450-71851034C3D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A3844101-D370-4963-B450-71851034C3D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A3844101-D370-4963-B450-71851034C3D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A3844101-D370-4963-B450-71851034C3D6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2C4BDD98-F38F-48D6-BAC0-B8BB88D1621A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2C4BDD98-F38F-48D6-BAC0-B8BB88D1621A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C4BDD98-F38F-48D6-BAC0-B8BB88D1621A}.Release|Any CPU.ActiveCfg = Release|Any CPU

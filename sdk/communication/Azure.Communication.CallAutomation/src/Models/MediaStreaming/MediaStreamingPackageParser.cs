@@ -42,18 +42,15 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="NotImplementedException"></exception>
         public static MediaStreamingPackageBase Parse(string stringJson)
         {
-            if (stringJson.Contains("format"))
+            if (stringJson.Contains("AudioMetadata"))
             {
-                MediaStreamingMetadataInternal metadataInternal = JsonSerializer.Deserialize<MediaStreamingMetadataInternal>(stringJson);
-                MediaStreamingFormat mediaStreamingFormat = new MediaStreamingFormat(
-                    metadataInternal.Format.Encoding, metadataInternal.Format.SampleRate, metadataInternal.Format.Channels, metadataInternal.Format.Length);
-                return new MediaStreamingMetadata(metadataInternal.MediaSubscriptionId, mediaStreamingFormat);
+                return JsonSerializer.Deserialize<MediaStreamingMetadata>(stringJson);
             }
-            else if (stringJson.Contains("data"))
+            else if (stringJson.Contains("AudioData"))
             {
                 MediaStreamingAudioInternal audioInternal = JsonSerializer.Deserialize<MediaStreamingAudioInternal>(stringJson);
                 return new MediaStreamingAudio(
-                    audioInternal.Data, audioInternal.Timestamp, audioInternal.ParticipantId, audioInternal.IsSilence);
+                    audioInternal.Data, audioInternal.Timestamp, audioInternal.ParticipantRawId, audioInternal.Silent);
             }
             else
                 throw new NotSupportedException(stringJson);

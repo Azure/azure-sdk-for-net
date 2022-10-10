@@ -12,18 +12,18 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class MediaStreamingAudio : MediaStreamingPackageBase
     {
-        internal MediaStreamingAudio(byte[] data, DateTime timestamp, string participantId, bool isSilence)
+        internal MediaStreamingAudio(string data, DateTime timestamp, string participantId, bool silent)
         {
             Data = data;
             Timestamp = timestamp;
             Participant = new CommunicationUserIdentifier(participantId);
-            IsSilent = isSilence;
+            IsSilent = silent;
         }
 
         /// <summary>
-        /// The audio data.
+        /// The audio data in base64 string.
         /// </summary>
-        public byte[] Data { get; }
+        public string Data { get; }
 
         /// <summary>
         /// The timestamp of thwn the media was sourced.
@@ -33,6 +33,7 @@ namespace Azure.Communication.CallAutomation
         /// Participant ID
         /// </summary>
         public CommunicationIdentifier Participant { get; }
+
         /// <summary>
         /// Indicates if the received audio buffer contains only silence.
         /// </summary>
