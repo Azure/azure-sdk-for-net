@@ -278,10 +278,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
         public async Task CanPushArtifact()
         {
             // Arrange
-            var client = CreateBlobClient("oci-artifact-big");
+            var client = CreateBlobClient("oci-artifact");
 
             // Act
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact-big");
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact");
 
             OciManifest manifest = new OciManifest();
             manifest.SchemaVersion = 2;
@@ -292,12 +292,16 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 using (var fs = File.OpenRead(configFilePath))
                 {
+                    // TODO: put this on uploadResult?
+                    // TODO: Why do we close the stream?
+                    var length = fs.Length;
+
                     var uploadResult = await client.UploadBlobAsync(fs);
 
                     // Update manifest
                     OciBlobDescriptor descriptor = new OciBlobDescriptor();
                     descriptor.Digest = uploadResult.Value.Digest;
-                    descriptor.Size = fs.Position;
+                    descriptor.Size = length;
                     descriptor.MediaType = "application/vnd.acme.rocket.config";
 
                     manifest.Config = descriptor;
@@ -308,16 +312,18 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var manifestFilePath = Path.Combine(path, "manifest.json");
             foreach (var file in Directory.GetFiles(path))
             {
-                if (file != manifestFilePath)
+                if (file != manifestFilePath && file != configFilePath)
                 {
                     using (var fs = File.OpenRead(file))
                     {
+                        var length = fs.Length;
+
                         var uploadResult = await client.UploadBlobAsync(fs);
 
                         // Update manifest
                         OciBlobDescriptor descriptor = new OciBlobDescriptor();
                         descriptor.Digest = uploadResult.Value.Digest;
-                        descriptor.Size = fs.Position;
+                        descriptor.Size = length;
                         descriptor.MediaType = "application/vnd.oci.image.layer.v1.tar";
 
                         manifest.Config = descriptor;
