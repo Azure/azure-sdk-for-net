@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task FastProvision()
+        public async Task FastCreate()
         {
             var version = PostgreSqlFlexibleServerVersion.Ver12;
             var storageSize = 32;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 Tags = { { "key1", "val1" } },
             };
 
-            var lro = await serverCollection.FastProvisionAsync(WaitUntil.Completed, data);
+            var lro = await serverCollection.FastCreateAsync(WaitUntil.Completed, data);
             PostgreSqlFlexibleServerResource server = lro.Value;
 
             string serverName = server.Data.Name;
