@@ -96,11 +96,12 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                Random random = new Random();
+                //Random random = new Random();
 
-                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-                string randomBoundry = new string(Enumerable.Repeat(chars, 10).Select(s => s[random.Next(s.Length)]).ToArray());
+                //const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+                //string randomBoundry = new string(Enumerable.Repeat(chars, 10).Select(s => s[random.Next(s.Length)]).ToArray());
 
+                string randomBoundry = "hybboH2feH";
                 string boundary = "----WebkitFormBoundary" + randomBoundry;
 
                 String newline = "" + (char)0x0D + (char)0x0A;
@@ -247,11 +248,12 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                Random random = new Random();
+                //Random random = new Random();
 
-                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-                string randomBoundry = new string(Enumerable.Repeat(chars, 10).Select(s => s[random.Next(s.Length)]).ToArray());
+                //const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+                //string randomBoundry = new string(Enumerable.Repeat(chars, 10).Select(s => s[random.Next(s.Length)]).ToArray());
 
+                string randomBoundry = "hybboH2feH";
                 string boundary = "----WebkitFormBoundary" + randomBoundry;
 
                 String newline = "" + (char)0x0D + (char)0x0A;
