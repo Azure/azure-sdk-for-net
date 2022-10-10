@@ -1,3 +1,26 @@
+namespace Azure.Communication
+{
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CommunicationIdentifierModelKind : System.IEquatable<Azure.Communication.CommunicationIdentifierModelKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CommunicationIdentifierModelKind(string value) { throw null; }
+        public static Azure.Communication.CommunicationIdentifierModelKind CommunicationUser { get { throw null; } }
+        public static Azure.Communication.CommunicationIdentifierModelKind MicrosoftTeamsUser { get { throw null; } }
+        public static Azure.Communication.CommunicationIdentifierModelKind PhoneNumber { get { throw null; } }
+        public static Azure.Communication.CommunicationIdentifierModelKind Unknown { get { throw null; } }
+        public bool Equals(Azure.Communication.CommunicationIdentifierModelKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.CommunicationIdentifierModelKind left, Azure.Communication.CommunicationIdentifierModelKind right) { throw null; }
+        public static implicit operator Azure.Communication.CommunicationIdentifierModelKind (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CommunicationIdentifierModelKind left, Azure.Communication.CommunicationIdentifierModelKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+}
 namespace Azure.Communication.MediaComposition
 {
     public partial class ActivePresenter : Azure.Communication.MediaComposition.Models.MediaInput
@@ -21,7 +44,7 @@ namespace Azure.Communication.MediaComposition
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.MediaComposition.AudiencePosition left, Azure.Communication.MediaComposition.AudiencePosition right) { throw null; }
-        public static implicit operator Azure.Communication.MediaComposition.AudiencePosition(string value) { throw null; }
+        public static implicit operator Azure.Communication.MediaComposition.AudiencePosition (string value) { throw null; }
         public static bool operator !=(Azure.Communication.MediaComposition.AudiencePosition left, Azure.Communication.MediaComposition.AudiencePosition right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -35,26 +58,6 @@ namespace Azure.Communication.MediaComposition
         public AutoGridLayout(System.Collections.Generic.IEnumerable<string> inputIds) { }
         public bool? HighlightDominantSpeaker { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> InputIds { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CommunicationIdentifierModelKind : System.IEquatable<Azure.Communication.MediaComposition.CommunicationIdentifierModelKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CommunicationIdentifierModelKind(string value) { throw null; }
-        public static Azure.Communication.MediaComposition.CommunicationIdentifierModelKind CommunicationUser { get { throw null; } }
-        public static Azure.Communication.MediaComposition.CommunicationIdentifierModelKind MicrosoftTeamsUser { get { throw null; } }
-        public static Azure.Communication.MediaComposition.CommunicationIdentifierModelKind PhoneNumber { get { throw null; } }
-        public static Azure.Communication.MediaComposition.CommunicationIdentifierModelKind Unknown { get { throw null; } }
-        public bool Equals(Azure.Communication.MediaComposition.CommunicationIdentifierModelKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.MediaComposition.CommunicationIdentifierModelKind left, Azure.Communication.MediaComposition.CommunicationIdentifierModelKind right) { throw null; }
-        public static implicit operator Azure.Communication.MediaComposition.CommunicationIdentifierModelKind(string value) { throw null; }
-        public static bool operator !=(Azure.Communication.MediaComposition.CommunicationIdentifierModelKind left, Azure.Communication.MediaComposition.CommunicationIdentifierModelKind right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class CompositionStreamState
     {
@@ -118,7 +121,7 @@ namespace Azure.Communication.MediaComposition
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.MediaComposition.InputGroupType left, Azure.Communication.MediaComposition.InputGroupType right) { throw null; }
-        public static implicit operator Azure.Communication.MediaComposition.InputGroupType(string value) { throw null; }
+        public static implicit operator Azure.Communication.MediaComposition.InputGroupType (string value) { throw null; }
         public static bool operator !=(Azure.Communication.MediaComposition.InputGroupType left, Azure.Communication.MediaComposition.InputGroupType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -136,7 +139,7 @@ namespace Azure.Communication.MediaComposition
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.MediaComposition.LayerVisibility left, Azure.Communication.MediaComposition.LayerVisibility right) { throw null; }
-        public static implicit operator Azure.Communication.MediaComposition.LayerVisibility(string value) { throw null; }
+        public static implicit operator Azure.Communication.MediaComposition.LayerVisibility (string value) { throw null; }
         public static bool operator !=(Azure.Communication.MediaComposition.LayerVisibility left, Azure.Communication.MediaComposition.LayerVisibility right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -157,7 +160,7 @@ namespace Azure.Communication.MediaComposition
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.MediaComposition.LayoutType left, Azure.Communication.MediaComposition.LayoutType right) { throw null; }
-        public static implicit operator Azure.Communication.MediaComposition.LayoutType(string value) { throw null; }
+        public static implicit operator Azure.Communication.MediaComposition.LayoutType (string value) { throw null; }
         public static bool operator !=(Azure.Communication.MediaComposition.LayoutType left, Azure.Communication.MediaComposition.LayoutType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -228,7 +231,7 @@ namespace Azure.Communication.MediaComposition
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.MediaComposition.MediaInputType left, Azure.Communication.MediaComposition.MediaInputType right) { throw null; }
-        public static implicit operator Azure.Communication.MediaComposition.MediaInputType(string value) { throw null; }
+        public static implicit operator Azure.Communication.MediaComposition.MediaInputType (string value) { throw null; }
         public static bool operator !=(Azure.Communication.MediaComposition.MediaInputType left, Azure.Communication.MediaComposition.MediaInputType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -249,7 +252,7 @@ namespace Azure.Communication.MediaComposition
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.MediaComposition.MediaOutputType left, Azure.Communication.MediaComposition.MediaOutputType right) { throw null; }
-        public static implicit operator Azure.Communication.MediaComposition.MediaOutputType(string value) { throw null; }
+        public static implicit operator Azure.Communication.MediaComposition.MediaOutputType (string value) { throw null; }
         public static bool operator !=(Azure.Communication.MediaComposition.MediaOutputType left, Azure.Communication.MediaComposition.MediaOutputType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -300,7 +303,7 @@ namespace Azure.Communication.MediaComposition
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.MediaComposition.RtmpMode left, Azure.Communication.MediaComposition.RtmpMode right) { throw null; }
-        public static implicit operator Azure.Communication.MediaComposition.RtmpMode(string value) { throw null; }
+        public static implicit operator Azure.Communication.MediaComposition.RtmpMode (string value) { throw null; }
         public static bool operator !=(Azure.Communication.MediaComposition.RtmpMode left, Azure.Communication.MediaComposition.RtmpMode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -344,7 +347,7 @@ namespace Azure.Communication.MediaComposition
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.MediaComposition.StreamStatus left, Azure.Communication.MediaComposition.StreamStatus right) { throw null; }
-        public static implicit operator Azure.Communication.MediaComposition.StreamStatus(string value) { throw null; }
+        public static implicit operator Azure.Communication.MediaComposition.StreamStatus (string value) { throw null; }
         public static bool operator !=(Azure.Communication.MediaComposition.StreamStatus left, Azure.Communication.MediaComposition.StreamStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -364,7 +367,7 @@ namespace Azure.Communication.MediaComposition
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.MediaComposition.SupportPosition left, Azure.Communication.MediaComposition.SupportPosition right) { throw null; }
-        public static implicit operator Azure.Communication.MediaComposition.SupportPosition(string value) { throw null; }
+        public static implicit operator Azure.Communication.MediaComposition.SupportPosition (string value) { throw null; }
         public static bool operator !=(Azure.Communication.MediaComposition.SupportPosition left, Azure.Communication.MediaComposition.SupportPosition right) { throw null; }
         public override string ToString() { throw null; }
     }

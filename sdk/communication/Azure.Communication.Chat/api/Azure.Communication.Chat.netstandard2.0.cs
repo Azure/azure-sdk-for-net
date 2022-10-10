@@ -82,7 +82,7 @@ namespace Azure.Communication.Chat
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.Chat.ChatMessageType left, Azure.Communication.Chat.ChatMessageType right) { throw null; }
-        public static implicit operator Azure.Communication.Chat.ChatMessageType(string value) { throw null; }
+        public static implicit operator Azure.Communication.Chat.ChatMessageType (string value) { throw null; }
         public static bool operator !=(Azure.Communication.Chat.ChatMessageType left, Azure.Communication.Chat.ChatMessageType right) { throw null; }
         public override string ToString() { throw null; }
     }
