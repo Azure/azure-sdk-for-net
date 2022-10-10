@@ -60,9 +60,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     checkpointStore,
                     _loggerFactory));
 
-            if (singleDispatch)
-            {
-                _targetScaler = new Lazy<EventHubTargetScaler>(
+           _targetScaler = new Lazy<EventHubTargetScaler>(
                     () => new EventHubTargetScaler(
                         functionId,
                         consumerClient,
@@ -70,7 +68,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                         _loggerFactory,
                         _checkpointStore
                         ));
-            }
 
             _details = $"'namespace='{eventProcessorHost?.FullyQualifiedNamespace}', eventHub='{eventProcessorHost?.EventHubName}', " +
                 $"consumerGroup='{eventProcessorHost?.ConsumerGroup}', functionId='{functionId}', singleDispatch='{singleDispatch}'";
