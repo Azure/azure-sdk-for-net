@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -326,13 +327,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
                         descriptor.Size = length;
                         descriptor.MediaType = "application/vnd.oci.image.layer.v1.tar";
 
-                        manifest.Config = descriptor;
+                        manifest.Layers.Add(descriptor);
                     }
                 }
             }
 
             // Finally, upload manifest
-            await client.UploadManifestAsync(manifest, new UploadManifestOptions("v1"));
+            var uploadManifestResult = await client.UploadManifestAsync(manifest, new UploadManifestOptions("v1"));
 
             // Assert
 
