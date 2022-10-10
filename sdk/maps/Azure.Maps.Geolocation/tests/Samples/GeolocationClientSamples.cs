@@ -58,7 +58,7 @@ namespace Azure.Maps.Geolocation.Tests
         }
 
         [Test]
-        public void GetGeolocationDirectionsError()
+        public void GetCountryCodeError()
         {
             TokenCredential credential = TestEnvironment.Credential;
             string clientId = TestEnvironment.MapAccountClientId;
