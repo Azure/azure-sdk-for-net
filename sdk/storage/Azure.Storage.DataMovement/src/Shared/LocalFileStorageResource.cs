@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -61,12 +62,17 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Cannot consume readable stream, will throw a NotSupportedException.
+        /// Can consume stream. Will append stream to end of file.
+        /// Will create file if it doesn't already exist.
         /// </summary>
         /// <param name="stream">Stream to append to the local file</param>
+        /// <param name="options"></param>
         /// <param name="token">Cancellation Token</param>
         /// <returns></returns>
-        public override async Task ConsumeReadableStream(Stream stream, CancellationToken token = default)
+        public override async Task ConsumeReadableStream(
+            Stream stream,
+            ConsumeReadableStreamOptions options,
+            CancellationToken token = default)
         {
             // Appends incoming stream to the local file resource
             using (FileStream fileStream = new FileStream(
@@ -78,6 +84,36 @@ namespace Azure.Storage.DataMovement
                     fileStream,
                     Constants.DefaultDownloadCopyBufferSize,
                     token)
+                    .ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Consumes the readable stream to upload
+        /// </summary>
+        /// <param name="offset"></param>
+        /// <param name="length"></param>
+        /// <param name="stream"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public override async Task ConsumePartialOffsetReadableStream(
+            long offset,
+            long length,
+            Stream stream,
+            ConsumePartialReadableStreamOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            // Appends incoming stream to the local file resource
+            using (FileStream fileStream = new FileStream(
+                    _originalPath,
+                    FileMode.Append,
+                    FileAccess.Write))
+            {
+                await stream.CopyToAsync(
+                    fileStream,
+                    Constants.DefaultDownloadCopyBufferSize,
+                    cancellationToken)
                     .ConfigureAwait(false);
             }
         }
@@ -130,13 +166,44 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Gets the readable input stream
+        /// Gets the readable input stream.
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         public override Stream ReadableInputStream()
         {
             return new FileStream(_originalPath, FileMode.Open, FileAccess.Read);
+        }
+
+        /// <summary>
+        /// Get properties of the resource.
+        /// </summary>
+        /// <returns>Returns the length of the storage resource</returns>
+        public override Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken)
+        {
+            FileInfo fileInfo = new FileInfo(_originalPath);
+            if (fileInfo.Exists)
+            {
+                return Task.FromResult(fileInfo.ToStorageResourceProperties());
+            }
+            return Task.FromResult<StorageResourceProperties>(default);
+        }
+
+        /// <summary>
+        /// Does not require Commit List operation.
+        /// </summary>
+        /// <returns></returns>
+        public override CanCommitListType CanCommitBlockListType()
+        {
+            return CanCommitListType.None;
+        }
+
+        /// <summary>
+        /// Commits the block list given.
+        /// </summary>
+        public override Task CommitBlockList(IEnumerable<string> base64BlockIds, CancellationToken cancellationToken)
+        {
+            throw new NotSupportedException();
         }
     }
 }

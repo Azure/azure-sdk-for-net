@@ -5,13 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Azure.Core;
-using Azure.Storage.Blobs.DataMovement.Models;
-using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement;
 using System.Threading.Tasks;
 using System.Threading;
+using Azure.Storage.Blobs.DataMovement.Models;
 
-namespace Azure.Storage.Blobs.DataMovement
+namespace Azure.Storage.DataMovement
 {
     internal class CommitChunkHandler
     {
@@ -35,8 +34,8 @@ namespace Azure.Storage.Blobs.DataMovement
             public InvokeFailedEventHandlerInternal InvokeFailedHandler { get; set; }
         }
 
-        private event SyncAsyncEventHandler<BlobStageChunkEventArgs> _commitBlockHandler;
-        internal SyncAsyncEventHandler<BlobStageChunkEventArgs> GetCommitBlockHandler() => _commitBlockHandler;
+        private event SyncAsyncEventHandler<StageChunkEventArgs> _commitBlockHandler;
+        internal SyncAsyncEventHandler<StageChunkEventArgs> GetCommitBlockHandler() => _commitBlockHandler;
 
         private long _bytesTransferred;
         private long _expectedLength;
@@ -60,10 +59,8 @@ namespace Azure.Storage.Blobs.DataMovement
             _updateTransferStatus = behaviors.UpdateTransferStatus
                 ?? throw Errors.ArgumentNull(nameof(behaviors.UpdateTransferStatus));
 
-            // Set values
+            // Set expected length to perform commit task
             _expectedLength = expectedLength;
-            _queueCommitBlockTask = behaviors.QueueCommitBlockTask;
-            _updateTransferStatus = behaviors.UpdateTransferStatus;
 
             // Set bytes transferred to 0
             _bytesTransferred = 0;
@@ -73,7 +70,7 @@ namespace Azure.Storage.Blobs.DataMovement
 
         public void AddCommitBlockEvent()
         {
-            _commitBlockHandler += async (BlobStageChunkEventArgs args) =>
+            _commitBlockHandler += async (StageChunkEventArgs args) =>
             {
                 if (args.Success)
                 {
@@ -101,12 +98,12 @@ namespace Azure.Storage.Blobs.DataMovement
             };
         }
 
-        public void AddEvent(SyncAsyncEventHandler<BlobStageChunkEventArgs> stageBlockEvent)
+        public void AddEvent(SyncAsyncEventHandler<StageChunkEventArgs> stageBlockEvent)
         {
             _commitBlockHandler += stageBlockEvent;
         }
 
-        public async Task InvokeEvent(BlobStageChunkEventArgs args)
+        public async Task InvokeEvent(StageChunkEventArgs args)
         {
             await _commitBlockHandler.Invoke(args).ConfigureAwait(false);
         }

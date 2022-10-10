@@ -19,9 +19,9 @@ namespace Azure.Storage.Blobs.DataMovement
         /// </summary>
         /// <param name="blobClient"></param>
         /// <returns></returns>
-        public static StorageResource GenerateBlobResource(BlobClient blobClient)
+        public static StorageResource GenerateBlockBlobResource(BlockBlobClient blobClient)
         {
-            return new BlobStorageResource(blobClient);
+            return new BlockBlobStorageResource(blobClient);
         }
 
         /// <summary>

@@ -49,7 +49,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// </summary>
         public BlobSingleCopyOptions CopyFromUriOptions => _copyFromUriOptions;
 
-        internal CommitChunkHandler commitBlockController;
+        //internal CommitChunkHandler commitBlockController;
 
         /// <summary>
         /// Creates Single Copy Transfer Job
@@ -139,11 +139,12 @@ namespace Azure.Storage.Blobs.DataMovement
                                 contentLength.Value,
                                 CopyFromUriOptions,
                                 CancellationTokenSource.Token).ConfigureAwait(false);
-
+                            /*
                             commitBlockController = GetCommitController(
                                 contentLength.Value,
                                 commitBlockList,
                                 this);
+                            */
                         }
                         else
                         {
@@ -365,6 +366,7 @@ namespace Azure.Storage.Blobs.DataMovement
                     Shared.StorageExtensions.GenerateBlockId(offset),
                     copyOptions,
                     cancellationToken).ConfigureAwait(false);
+                /*
                 await commitBlockController.InvokeEvent(
                     new BlobStageChunkEventArgs(
                         TransferId,
@@ -373,6 +375,7 @@ namespace Azure.Storage.Blobs.DataMovement
                         blockLength,
                         true,
                         cancellationToken)).ConfigureAwait(false);
+                */
             }
             catch (Exception ex)
             {
@@ -443,6 +446,7 @@ namespace Azure.Storage.Blobs.DataMovement
         #endregion
 
         #region CommitChunkController
+        /*
         internal static CommitChunkHandler GetCommitController(
             long expectedLength,
             List<(long Offset, long Length)> commitBlockList,
@@ -469,6 +473,7 @@ namespace Azure.Storage.Blobs.DataMovement
                     => await job.OnTransferStatusChanged(status, true).ConfigureAwait(false)
             };
         }
+        */
         #endregion
 
         /// <summary>

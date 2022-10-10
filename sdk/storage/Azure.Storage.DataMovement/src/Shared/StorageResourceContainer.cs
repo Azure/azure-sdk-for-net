@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -48,7 +49,9 @@ namespace Azure.Storage.DataMovement
         /// Lists all the child storage resources in the path.
         /// </summary>
         /// <returns></returns>
-        public abstract IAsyncEnumerable<StorageResource> ListStorageResources(CancellationToken token);
+        public abstract IAsyncEnumerable<StorageResource> ListStorageResources(
+            ListStorageResourceOptions options = default,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns storage resources from the parent resource container

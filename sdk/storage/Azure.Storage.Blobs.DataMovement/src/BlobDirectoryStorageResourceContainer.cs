@@ -12,6 +12,7 @@ using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.Blobs.DataMovement
 {
@@ -91,7 +92,7 @@ namespace Azure.Storage.Blobs.DataMovement
             // Recreate the blobName using the existing parent directory path
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(_blobContainerClient.Uri);
             blobUriBuilder.BlobName += String.Join("/", encodedPath);
-            return new BlobStorageResource(new BlobClient(blobUriBuilder.ToUri()));
+            return new BlockBlobStorageResource(new BlockBlobClient(blobUriBuilder.ToUri()));
         }
 
         /// <summary>
@@ -140,13 +141,16 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <summary>
         /// Lists the child paths in the resource
         /// </summary>
-        /// <param name="token">Cancellation Token</param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns>List of the child resources in the storage container</returns>
-        public override async IAsyncEnumerable<StorageResource> ListStorageResources([EnumeratorCancellation] CancellationToken token)
+        public override async IAsyncEnumerable<StorageResource> ListStorageResources(
+            ListStorageResourceOptions options = default,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             AsyncPageable<BlobItem> pages = _blobContainerClient.GetBlobsAsync(
                 prefix: string.Join("/", _directoryPrefix),
-                cancellationToken: token);
+                cancellationToken: cancellationToken);
             await foreach (BlobItem blobItem in pages.ConfigureAwait(false))
             {
                 yield return GetStorageResource(blobItem.Name.Split('/').ToList());

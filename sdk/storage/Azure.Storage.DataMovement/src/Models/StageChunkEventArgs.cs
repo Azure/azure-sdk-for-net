@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement;
 
 namespace Azure.Storage.Blobs.DataMovement.Models
@@ -20,7 +19,7 @@ namespace Azure.Storage.Blobs.DataMovement.Models
     /// will end up using this internal event argument to track the success
     /// and the bytes transferred to ensure the correct amount of bytes are tranferred.
     /// </summary>
-    internal class BlobStageChunkEventArgs : StorageTransferEventArgs
+    internal class StageChunkEventArgs : StorageTransferEventArgs
     {
         public bool Success { get; }
 
@@ -40,7 +39,7 @@ namespace Azure.Storage.Blobs.DataMovement.Models
         /// <param name="bytesTransferred"></param>
         /// <param name="isRunningSynchronously"></param>
         /// <param name="cancellationToken"></param>
-        public BlobStageChunkEventArgs(
+        public StageChunkEventArgs(
             string transferId,
             bool success,
             long offset,

@@ -22,7 +22,7 @@ namespace Azure.Storage.DataMovement
         ContinueOnFailure = 1,
 
         /// <summary>
-        /// If set and by default all the transfer jobs will terminate
+        /// Default. If set and by default all the transfer jobs will terminate
         /// quickly on encountering failures from the storage service
         /// and filesystem failures.
         /// </summary>

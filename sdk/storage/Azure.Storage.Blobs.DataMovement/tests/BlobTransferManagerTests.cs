@@ -117,7 +117,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             var containerName = GetNewContainerName();
             var directoryName = GetNewBlobDirectoryName();
 
-            StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
+            DataControllerOptions managerOptions = new DataControllerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
@@ -143,7 +143,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             long size = Constants.KB,
             int waitTimeInSec = 10,
             int blobCount = 1,
-            StorageTransferManagerOptions transferManagerOptions = default,
+            DataControllerOptions transferManagerOptions = default,
             List<string> blobNames = default,
             List<BlobSingleUploadOptions> options = default)
         {
@@ -177,7 +177,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
                 Assert.AreEqual(blobCount, options.Count);
             }
 
-            transferManagerOptions ??= new StorageTransferManagerOptions()
+            transferManagerOptions ??= new DataControllerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
@@ -396,7 +396,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
 
             List<string> blobNames = new List<string>() { blobName };
 
-            StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
+            DataControllerOptions managerOptions = new DataControllerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
@@ -446,7 +446,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             long size = Constants.KB,
             int waitTimeInSec = 10,
             int blobCount = 1,
-            StorageTransferManagerOptions transferManagerOptions = default,
+            DataControllerOptions transferManagerOptions = default,
             List<string> blobNames = default,
             List<BlobSingleDownloadOptions> options = default)
         {
@@ -480,7 +480,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
                 Assert.AreEqual(blobCount, options.Count);
             }
 
-            transferManagerOptions ??= new StorageTransferManagerOptions()
+            transferManagerOptions ??= new DataControllerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
@@ -746,7 +746,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
         {
             AutoResetEvent CompletedProgressBytesWait = new AutoResetEvent(false);
 
-            StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
+            DataControllerOptions managerOptions = new DataControllerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = concurrency,

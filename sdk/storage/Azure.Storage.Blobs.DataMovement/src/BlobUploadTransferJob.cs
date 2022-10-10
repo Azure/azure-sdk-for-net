@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using Azure.Storage.Shared;
 using System.Security.Cryptography;
-using static Azure.Storage.Blobs.DataMovement.CommitChunkHandler;
 
 namespace Azure.Storage.Blobs.DataMovement
 {
@@ -68,7 +67,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// </summary>
         public ClientDiagnostics Diagnostics => _diagnostics;
 
-        internal CommitChunkHandler commitBlockHandler;
+        //internal CommitChunkHandler commitBlockHandler;
 
         /// <summary>
         /// Array pool designated for upload file
@@ -176,7 +175,7 @@ namespace Azure.Storage.Blobs.DataMovement
                     operationName,
                     UploadOptions,
                     cancellationToken).ConfigureAwait(false);
-
+                /*
                 commitBlockHandler = GetCommitController(
                     expectedLength: fileLength,
                     commitBlockTask: async (options, cancellationToken) =>
@@ -185,6 +184,7 @@ namespace Azure.Storage.Blobs.DataMovement
                         options,
                         cancellationToken).ConfigureAwait(false),
                     job: this);
+                */
             }
             else
             {
@@ -430,6 +430,7 @@ namespace Azure.Storage.Blobs.DataMovement
                         conditions,
                         default,
                         cancellationToken).ConfigureAwait(false);
+                /*
                 await commitBlockHandler.InvokeEvent(
                     new BlobStageChunkEventArgs(
                         TransferId,
@@ -438,6 +439,7 @@ namespace Azure.Storage.Blobs.DataMovement
                         blockLength,
                         true,
                         cancellationToken)).ConfigureAwait(false);
+                */
             }
             // If we fail to stage a block, we need to make sure the rest of the stage blocks are cancelled
             // (Core already performs the retry policy on the one stage block request which means the rest are not worth to continue)
@@ -453,6 +455,7 @@ namespace Azure.Storage.Blobs.DataMovement
                                 CancellationTokenSource.Token));
                 StorageTransferStatus status = StorageTransferStatus.Completed;
                 await OnTransferStatusChanged(status, true).ConfigureAwait(false);
+                /*
                 await commitBlockHandler.InvokeEvent(
                     new BlobStageChunkEventArgs(
                         TransferId,
@@ -461,6 +464,7 @@ namespace Azure.Storage.Blobs.DataMovement
                         0,
                         true,
                         cancellationToken)).ConfigureAwait(false);
+                */
             }
             catch (IOException ex)
             {
@@ -473,6 +477,7 @@ namespace Azure.Storage.Blobs.DataMovement
                                 CancellationTokenSource.Token));
                 StorageTransferStatus status = StorageTransferStatus.Completed;
                 await OnTransferStatusChanged(status, true).ConfigureAwait(false);
+                /*
                 await commitBlockHandler.InvokeEvent(
                     new BlobStageChunkEventArgs(
                         TransferId,
@@ -481,6 +486,7 @@ namespace Azure.Storage.Blobs.DataMovement
                         0,
                         false,
                         cancellationToken)).ConfigureAwait(false);
+                */
             }
             catch (OperationCanceledException)
             {
@@ -608,6 +614,7 @@ namespace Azure.Storage.Blobs.DataMovement
         #endregion
 
         #region CommitChunkController
+        /*
         internal static CommitChunkHandler GetCommitController(
             long expectedLength,
             CommitBlockTaskInternal commitBlockTask,
@@ -634,6 +641,7 @@ namespace Azure.Storage.Blobs.DataMovement
                     => await job.OnTransferStatusChanged(status, true).ConfigureAwait(false)
             };
         }
+        */
         #endregion
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously

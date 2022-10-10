@@ -16,7 +16,7 @@ namespace Azure.Storage.Blobs.DataMovement.Models
     /// Converts the existing Page of Blob Items to BlobStorageResource
     /// as each call to ListBlobs come backs
     /// </summary>
-    internal class GetStorageResourceBlobsAsyncCollection : StorageCollectionEnumerator<BlobStorageResource>
+    internal class GetStorageResourceBlobsAsyncCollection : StorageCollectionEnumerator<BlockBlobStorageResource>
     {
         private StorageCollectionEnumerator<BlobItem> _getBlobsCollection;
 
@@ -37,7 +37,7 @@ namespace Azure.Storage.Blobs.DataMovement.Models
         /// <param name="async"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override ValueTask<Page<BlobStorageResource>> GetNextPageAsync(
+        public override ValueTask<Page<BlockBlobStorageResource>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
             bool async,

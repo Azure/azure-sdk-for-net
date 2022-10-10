@@ -106,12 +106,12 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <summary>
         /// Transfer Manager options
         /// </summary>
-        private StorageTransferManagerOptions _options;
+        private DataControllerOptions _options;
 
         /// <summary>
         /// Transfer Manager options
         /// </summary>
-        private StorageTransferManagerOptions Options => _options;
+        private DataControllerOptions Options => _options;
 
         /// <summary>
         /// Constructor for mocking
@@ -125,7 +125,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// class.
         /// </summary>
         /// <param name="options">Directory path where transfer state is kept.</param>
-        public BlobTransferManager(StorageTransferManagerOptions options)
+        public BlobTransferManager(DataControllerOptions options)
             : this()
         {
             _jobDictionary = new Dictionary<string, BlobTransferJobInternal>();
@@ -173,7 +173,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// to go through each exception and resolve each one.
         /// </param>
         /// <param name="options"></param>
-        public BlobTransferManager(string transferStateDirectoryPath, StorageTransferManagerOptions options)
+        public BlobTransferManager(string transferStateDirectoryPath, DataControllerOptions options)
             : this(options)
         {
             _transferStateLocalDirectoryPath = transferStateDirectoryPath;
@@ -197,7 +197,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// to go through each exception and resolve each one.
         /// </param>
         /// <param name="options"></param>
-        internal BlobTransferManager(BlobFolderClient transferStateFolderClient, StorageTransferManagerOptions options)
+        internal BlobTransferManager(BlobFolderClient transferStateFolderClient, DataControllerOptions options)
             : this(options)
         {
             TransferStateDirectoryClient = transferStateFolderClient;

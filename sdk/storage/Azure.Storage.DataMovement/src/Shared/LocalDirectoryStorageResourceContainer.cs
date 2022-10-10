@@ -8,7 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
-using Azure.Storage.DataMovement.Shared;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -106,11 +106,13 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Lists storage resource in the filesystem.
         /// </summary>
-        /// <param name="token"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public override async IAsyncEnumerable<StorageResource> ListStorageResources(
-            [EnumeratorCancellation] CancellationToken token)
+            ListStorageResourceOptions options = default,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             PathScanner scanner = new PathScanner(_originalPath);

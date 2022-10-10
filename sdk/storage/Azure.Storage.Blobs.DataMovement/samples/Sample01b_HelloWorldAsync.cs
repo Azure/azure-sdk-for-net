@@ -64,9 +64,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 BlockBlobClient destinationBlob2 = container.GetBlockBlobClient(Randomize("sample-blob"));
 
                 // Upload file data
-                StorageTransferManagerOptions options = new StorageTransferManagerOptions();
-                {
-                }
+                DataControllerOptions options = new DataControllerOptions();
                 BlobTransferManager transferManager = new BlobTransferManager(default);
 
                 // Create simple transfer single blob upload job
@@ -230,7 +228,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 BlobFolderClient destinationBlob2 = container.GetBlobFolderClient(Randomize("sample-blob-directory"));
 
                 // Create BlobTransferManager with event handler in Options bag
-                StorageTransferManagerOptions options = new StorageTransferManagerOptions();
+                DataControllerOptions options = new DataControllerOptions();
                 BlobFolderUploadOptions uploadOptions = new BlobFolderUploadOptions()
                 {
                     AccessTier = AccessTier.Cool,
@@ -319,7 +317,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 await container.UploadBlobAsync("third", File.OpenRead(CreateTempFile()));
 
                 // Create BlobTransferManager with event handler in Options bag
-                StorageTransferManagerOptions options = new StorageTransferManagerOptions();
+                DataControllerOptions options = new DataControllerOptions();
                 BlobFolderDownloadOptions downloadOptions = new BlobFolderDownloadOptions();
                 downloadOptions.DownloadFailedEventHandler += async (BlobDownloadFailedEventArgs args) =>
                 {
@@ -553,7 +551,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
 
                 // Set configurations up to continue to on storage failures
                 // but not on local filesystem errors
-                StorageTransferManagerOptions options = new StorageTransferManagerOptions()
+                DataControllerOptions options = new DataControllerOptions()
                 {
                     MaximumConcurrency = 4
                 };
@@ -656,7 +654,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
 
                 // Set configurations up to continue to on storage failures
                 // but not on local filesystem errors
-                StorageTransferManagerOptions options = new StorageTransferManagerOptions()
+                DataControllerOptions options = new DataControllerOptions()
                 {
                     MaximumConcurrency = 4
                 };
@@ -751,7 +749,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
 
                 // Set configurations up to continue to on storage failures
                 // but not on local filesystem errors
-                StorageTransferManagerOptions options = new StorageTransferManagerOptions()
+                DataControllerOptions options = new DataControllerOptions()
                 {
                     MaximumConcurrency = 4,
                 };
@@ -878,7 +876,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
 
                 // Set configurations up to continue to on storage failures
                 // but not on local filesystem errors
-                StorageTransferManagerOptions options = new StorageTransferManagerOptions()
+                DataControllerOptions options = new DataControllerOptions()
                 {
                     MaximumConcurrency = 4,
                 };

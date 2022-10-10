@@ -64,7 +64,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             long size = Constants.KB,
             int waitTimeInSec = 10,
             int blobCount = 1,
-            StorageTransferManagerOptions transferManagerOptions = default,
+            DataControllerOptions transferManagerOptions = default,
             List<string> blobNames = default,
             BlobCopyMethod copyMethod = BlobCopyMethod.Copy,
             List<BlobSingleCopyOptions> options = default)
@@ -99,7 +99,7 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
                 Assert.AreEqual(blobCount, options.Count);
             }
 
-            transferManagerOptions ??= new StorageTransferManagerOptions()
+            transferManagerOptions ??= new DataControllerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };

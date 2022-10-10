@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Azure.Storage.DataMovement
 {
@@ -12,8 +13,8 @@ namespace Azure.Storage.DataMovement
     internal class DataTransferState
     {
         private string _id;
-        private bool _completed;
-        private long _transferredBytes;
+        private StorageTransferStatus _status;
+        private long _currentTransferredBytes;
 
         /// <summary>
         /// constructor
@@ -21,8 +22,8 @@ namespace Azure.Storage.DataMovement
         public DataTransferState()
         {
             _id = Guid.NewGuid().ToString();
-            _completed = false;
-            _transferredBytes = 0;
+            _status = StorageTransferStatus.Queued;
+            _currentTransferredBytes = 0;
         }
 
         /// <summary>
@@ -39,7 +40,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public bool IsCompleted
         {
-            get { return _completed; }
+            get { return _status == StorageTransferStatus.Completed; }
             internal set { }
         }
 
@@ -48,7 +49,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public long TransferredBytes
         {
-            get { return _transferredBytes; }
+            get { return _currentTransferredBytes; }
             internal set { }
         }
 
@@ -64,19 +65,30 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Sets the completion status
         /// </summary>
-        /// <param name="completed"></param>
-        public void SetCompleted(bool completed)
+        /// <param name="status"></param>
+        public void SetTransferStatus(StorageTransferStatus status)
         {
-            _completed = completed;
+            if (_status != status)
+            {
+                _status = status;
+            }
         }
 
         /// <summary>
-        /// Sets the amount of bytes transferred
+        /// Incrementes the amount of bytes to the current value
+        /// </summary>
+        public void ResetTransferredBytes()
+        {
+            Volatile.Write(ref _currentTransferredBytes, 0);
+        }
+
+        /// <summary>
+        /// Incrementes the amount of bytes to the current value
         /// </summary>
         /// <param name="transferredBytes"></param>
-        public void SetTransferBytes(long transferredBytes)
+        public void UpdateTransferBytes(long transferredBytes)
         {
-            _transferredBytes = transferredBytes;
+            Interlocked.Add(ref _currentTransferredBytes, transferredBytes);
         }
     }
 }

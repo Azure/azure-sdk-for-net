@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Azure.Storage.DataMovement;
+using System.Threading.Tasks;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -13,13 +13,12 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public class BlobDataController : DataController
     {
-        private List<DataTransfer> _dataTransfers;
         /// <summary>
         /// Constructor
         /// </summary>
-        public BlobDataController()
+        public BlobDataController(DataControllerOptions options)
+            : base(options)
         {
-            _dataTransfers = new List<DataTransfer>();
         }
 
         /// <summary>
@@ -27,18 +26,45 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="sourceResource"></param>
         /// <param name="destinationResource"></param>
+        /// <param name="transferOptions"></param>
         /// <returns></returns>
-        public DataTransfer StartTransfer(StorageResource sourceResource, StorageResource destinationResource)
+        public async Task<DataTransfer> StartTransferAsync(
+            StorageResource sourceResource,
+            StorageResource destinationResource,
+            SingleTransferOptions transferOptions = default)
         {
+            if (sourceResource == default)
+            {
+                throw Errors.ArgumentNull(nameof(sourceResource));
+            }
+            if (destinationResource == default)
+            {
+                throw Errors.ArgumentNull(nameof(destinationResource));
+            }
+
+            transferOptions = transferOptions == default ? new SingleTransferOptions(): transferOptions;
+
             // If the resource cannot produce a Uri, it means it can only produce a local path
             // From here we only support an upload job
+            DataTransfer dataTransfer = new DataTransfer();
+            TransferJobInternal transferJobInternal;
             if (sourceResource.CanProduceUri() == ProduceUriType.NoUri)
             {
                 if (destinationResource.CanProduceUri() == ProduceUriType.ProducesUri)
                 {
-                    // Upload Operation
-                    // BlobTransferUploadJob();
-                    throw new NotImplementedException();
+                    // Stream to Uri job (Upload Job)
+                    transferJobInternal = new StreamToUriTransferJob(
+                        dataTransfer: dataTransfer,
+                        sourceResource: sourceResource,
+                        destinationResource: destinationResource,
+                        transferOptions: transferOptions,
+                        queueChunkTask: QueueJobChunkAsync,
+                        CheckPointFolderPath: Options.CheckPointFolderPath,
+                        errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
+                        arrayPool: _arrayPool);
+                    // Queue Job
+                    await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
+                    _dataTransfers.Add(dataTransfer);
                 }
                 else // Invalid argument that both resources do not produce a Uri
                 {
@@ -60,8 +86,6 @@ namespace Azure.Storage.DataMovement
                     throw new NotImplementedException();
                 }
             }
-            DataTransfer dataTransfer = new DataTransfer("");
-            _dataTransfers.Add(dataTransfer);
             return dataTransfer;
         }
 
@@ -70,18 +94,45 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="sourceResource"></param>
         /// <param name="destinationResource"></param>
+        /// <param name="transferOptions"></param>
         /// <returns></returns>
-        public DataTransfer StartTransfer(StorageResourceContainer sourceResource, StorageResourceContainer destinationResource)
+        public async Task<DataTransfer> StartTransferAsync(
+            StorageResourceContainer sourceResource,
+            StorageResourceContainer destinationResource,
+            ContainerTransferOptions transferOptions = default)
         {
+            if (sourceResource == default)
+            {
+                throw Errors.ArgumentNull(nameof(sourceResource));
+            }
+            if (destinationResource == default)
+            {
+                throw Errors.ArgumentNull(nameof(destinationResource));
+            }
+
+            transferOptions = transferOptions == default ? new ContainerTransferOptions() : transferOptions;
+
             // If the resource cannot produce a Uri, it means it can only produce a local path
             // From here we only support an upload job
+            DataTransfer dataTransfer = new DataTransfer();
+            TransferJobInternal transferJobInternal;
             if (sourceResource.CanProduceUri() == ProduceUriType.NoUri)
             {
                 if (destinationResource.CanProduceUri() == ProduceUriType.ProducesUri)
                 {
-                    // Upload Operation
-                    // BlobTransferUploadJob();
-                    throw new NotImplementedException();
+                    // Stream to Uri job (Upload Job)
+                    transferJobInternal = new StreamToUriTransferJob(
+                        dataTransfer: dataTransfer,
+                        sourceResource: sourceResource,
+                        destinationResource: destinationResource,
+                        transferOptions: transferOptions,
+                        queueChunkTask: QueueJobChunkAsync,
+                        CheckPointFolderPath: Options.CheckPointFolderPath,
+                        errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
+                        arrayPool: _arrayPool);
+                    // Queue Job
+                    await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
+                    _dataTransfers.Add(dataTransfer);
                 }
                 else // Invalid argument that both resources do not produce a Uri
                 {
@@ -94,26 +145,16 @@ namespace Azure.Storage.DataMovement
                 if (destinationResource.CanProduceUri() == ProduceUriType.ProducesUri)
                 {
                     // Most likely a copy operation.
+                    throw new NotImplementedException();
                 }
                 else
                 {
                     // Download to local operation
                     // BlobDownloadJob();
+                    throw new NotImplementedException();
                 }
             }
-            DataTransfer dataTransfer = new DataTransfer("");
-            _dataTransfers.Add(dataTransfer);
             return dataTransfer;
-        }
-
-        private DataTransfer transferViaUri(StorageResource from, StorageResource to)
-        {
-            throw new NotImplementedException();
-        }
-
-        private DataTransfer transferViaStream(StorageResource from, StorageResource to)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -4,13 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Azure.Core;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Options for the StorageTransferManager.
     /// </summary>
-    public class StorageTransferManagerOptions
+    public class DataControllerOptions
     {
         /// <summary>
         /// Optional event handler containing all possible status event status holders
@@ -29,5 +30,10 @@ namespace Azure.Storage.DataMovement
         /// The maximum number of workers that may be used in a parallel transfer.
         /// </summary>
         public int? MaximumConcurrency { get; set; }
+
+        /// <summary>
+        /// Optional. Can specify where the job plan files will live
+        /// </summary>
+        public string CheckPointFolderPath { get; set; }
     }
 }

@@ -13,6 +13,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.Blobs.DataMovement
 {
@@ -69,7 +70,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <returns></returns>
         public override StorageResource GetStorageResource(List<string> path)
         {
-            return new BlobStorageResource(_blobContainerClient.GetBlobClient(string.Join("/", path)));
+            return new BlockBlobStorageResource(_blobContainerClient.GetBlockBlobClient(string.Join("/", path)));
         }
 
         /// <summary>
@@ -100,10 +101,11 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <returns>
         /// <see cref="RequestFailedException"/> will be returned if a storage service request fails.</returns>
         public override async IAsyncEnumerable<StorageResource> ListStorageResources(
-            [EnumeratorCancellation] CancellationToken token)
+            ListStorageResourceOptions options = default,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             AsyncPageable<BlobItem> pages = _blobContainerClient.GetBlobsAsync(
-                cancellationToken: token);
+                cancellationToken: cancellationToken);
             await foreach (BlobItem blobItem in pages.ConfigureAwait(false))
             {
                 yield return GetStorageResource(blobItem.Name.Split('/').ToList());

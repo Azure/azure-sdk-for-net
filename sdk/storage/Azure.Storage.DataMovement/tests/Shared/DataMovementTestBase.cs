@@ -8,11 +8,9 @@ using Azure.Core.Pipeline;
 // Licensed under the MIT License.
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
-using Azure.Storage.DataMovement.Tests;
-using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 
-namespace Azure.Storage.DataMovement.Tests.Shared
+namespace Azure.Storage.DataMovement.Tests
 {
     /// <summary>
     /// Base class for Common tests

@@ -7,6 +7,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -33,18 +34,48 @@ namespace Azure.Storage.DataMovement
         public abstract Stream ConsumableStream();
 
         /// <summary>
-        /// Get length of blob
+        /// Defines whether the object can consume a readable stream and upload it
         /// </summary>
         /// <returns></returns>
-        /// internal abstract Task long? GetLength();
+        public abstract StreamConsumableType CanConsumeReadableStream();
 
         /// <summary>
         /// Consumes the readable stream to upload
         /// </summary>
         /// <param name="stream"></param>
-        /// <param name="token"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task ConsumeReadableStream(Stream stream, CancellationToken token);
+        public abstract Task ConsumeReadableStream(
+            Stream stream,
+            ConsumeReadableStreamOptions options,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Consumes the readable stream to upload
+        /// </summary>
+        /// <param name="offset">
+        /// The offset which the stream will be copied to.
+        /// </param>
+        /// <param name="length">
+        /// The length of the stream.
+        /// </param>
+        /// <param name="stream"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public abstract Task ConsumePartialOffsetReadableStream(
+            long offset,
+            long length,
+            Stream stream,
+            ConsumePartialReadableStreamOptions options,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Defines whether the object can generate a URL to consume
+        /// </summary>
+        /// <returns></returns>
+        public abstract ProduceUriType CanProduceUri();
 
         /// <summary>
         /// Returns URL with SAS
@@ -66,15 +97,22 @@ namespace Azure.Storage.DataMovement
         public abstract List<string> GetPath();
 
         /// <summary>
-        /// Defines whether the object can consume a readable stream and upload it
+        /// Get lengths of the resource.
         /// </summary>
-        /// <returns></returns>
-        public abstract StreamConsumableType CanConsumeReadableStream();
+        /// <returns>Returns the properties of the storage resource</returns>
+        public abstract Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken token);
 
         /// <summary>
-        /// defines whether the object can generate a URL to consume
+        /// Determines whether or not the resource requires a commit block list (e.g. Commit Block List)
+        /// to determine which blocks will make up the resource.
         /// </summary>
-        /// <returns></returns>
-        public abstract ProduceUriType CanProduceUri();
+        /// <returns><see cref="CanCommitListType"/></returns>
+        public abstract CanCommitListType CanCommitBlockListType();
+
+        /// <summary>
+        /// Commits the block list given.
+        /// </summary>
+        /// <returns>The Task which Commits the list of ids</returns>
+        public abstract Task CommitBlockList(IEnumerable<string> base64BlockIds, CancellationToken cancellationToken);
     }
 }

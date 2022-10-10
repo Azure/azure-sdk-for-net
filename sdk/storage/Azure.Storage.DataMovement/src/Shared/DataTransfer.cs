@@ -17,26 +17,23 @@ namespace Azure.Storage.DataMovement
         /// Defines whether the DataTransfer has completed.
         /// </summary>
         public bool IsCompleted => _state.IsCompleted;
-        private DataTransferState _state;
+
+        /// <summary>
+        /// DataTransfer Identification
+        /// </summary>
+        public string Id => _state.Id;
+
+        /// <summary>
+        /// Defines the current state of the transfer
+        /// </summary>
+        internal DataTransferState _state;
 
         /// <summary>
         /// For mocking
         /// </summary>
-        protected DataTransfer()
-        { }
-
-        /// <summary>
-        /// Constructing intial DataTransfer
-        /// </summary>
-        /// <param name="id"></param>
-        internal DataTransfer(string id)
+        internal DataTransfer()
         {
-            _state = new DataTransferState()
-            {
-                IsCompleted = false,
-                Id = id,
-                TransferredBytes = 0,
-            };
+            _state = new DataTransferState();
         }
     }
 }
