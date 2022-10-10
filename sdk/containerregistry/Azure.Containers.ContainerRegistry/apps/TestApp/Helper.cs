@@ -83,10 +83,13 @@ namespace TestApp
 
                 using (FileStream fs = File.Create(fileName))
                 {
-                    var response = await client.GetChunkAsync(name, layerFile.Digest, "bytes=0-14");
-                    await response.Content.ToStream().CopyToAsync(fs);
-                    response = await client.GetChunkAsync(name, layerFile.Digest, "bytes=15-28");
-                    await response.Content.ToStream().CopyToAsync(fs);
+                    var response15_28 = await client.GetChunkAsync(name, layerFile.Digest, "bytes=15-28");
+                    fs.Position = 15;
+                    await response15_28.Content.ToStream().CopyToAsync(fs);
+
+                    var response0_14 = await client.GetChunkAsync(name, layerFile.Digest, "bytes=0-14");
+                    fs.Position = 0;
+                    await response0_14.Content.ToStream().CopyToAsync(fs);
                 }
             }
         }
