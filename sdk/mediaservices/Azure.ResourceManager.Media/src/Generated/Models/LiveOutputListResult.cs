@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of LiveOutputListResult. </summary>
         internal LiveOutputListResult()
         {
-            Value = new ChangeTrackingList<LiveOutputData>();
+            Value = new ChangeTrackingList<MediaLiveOutputData>();
         }
 
         /// <summary> Initializes a new instance of LiveOutputListResult. </summary>
         /// <param name="value"> The result of the List LiveOutput operation. </param>
         /// <param name="odataCount"> The number of result. </param>
         /// <param name="odataNextLink"> The link to the next set of results. Not empty if value contains incomplete list of live outputs. </param>
-        internal LiveOutputListResult(IReadOnlyList<LiveOutputData> value, int? odataCount, string odataNextLink)
+        internal LiveOutputListResult(IReadOnlyList<MediaLiveOutputData> value, int? odataCount, string odataNextLink)
         {
             Value = value;
             OdataCount = odataCount;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
         }
 
         /// <summary> The result of the List LiveOutput operation. </summary>
-        public IReadOnlyList<LiveOutputData> Value { get; }
+        public IReadOnlyList<MediaLiveOutputData> Value { get; }
         /// <summary> The number of result. </summary>
         public int? OdataCount { get; }
         /// <summary> The link to the next set of results. Not empty if value contains incomplete list of live outputs. </summary>

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="container"> The name of the asset blob container. </param>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="storageEncryptionFormat"> The Asset encryption format. One of None or MediaStorageEncryption. </param>
-        internal MediaAssetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? assetId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string alternateId, string description, string container, string storageAccountName, AssetStorageEncryptionFormat? storageEncryptionFormat) : base(id, name, resourceType, systemData)
+        internal MediaAssetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? assetId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string alternateId, string description, string container, string storageAccountName, MediaAssetStorageEncryptionFormat? storageEncryptionFormat) : base(id, name, resourceType, systemData)
         {
             AssetId = assetId;
             CreatedOn = createdOn;
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.Media
         /// <summary> The name of the storage account. </summary>
         public string StorageAccountName { get; set; }
         /// <summary> The Asset encryption format. One of None or MediaStorageEncryption. </summary>
-        public AssetStorageEncryptionFormat? StorageEncryptionFormat { get; }
+        public MediaAssetStorageEncryptionFormat? StorageEncryptionFormat { get; }
     }
 }

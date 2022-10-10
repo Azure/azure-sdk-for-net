@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UserMetricsModelData>> GetAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<TrafficManagerUserMetricData>> GetAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 case 200:
                     {
-                        UserMetricsModelData value = default;
+                        TrafficManagerUserMetricData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UserMetricsModelData.DeserializeUserMetricsModelData(document.RootElement);
+                        value = TrafficManagerUserMetricData.DeserializeTrafficManagerUserMetricData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((UserMetricsModelData)null, message.Response);
+                    return Response.FromValue((TrafficManagerUserMetricData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UserMetricsModelData> Get(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<TrafficManagerUserMetricData> Get(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -78,13 +78,13 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 case 200:
                     {
-                        UserMetricsModelData value = default;
+                        TrafficManagerUserMetricData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UserMetricsModelData.DeserializeUserMetricsModelData(document.RootElement);
+                        value = TrafficManagerUserMetricData.DeserializeTrafficManagerUserMetricData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((UserMetricsModelData)null, message.Response);
+                    return Response.FromValue((TrafficManagerUserMetricData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UserMetricsModelData>> CreateOrUpdateAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<TrafficManagerUserMetricData>> CreateOrUpdateAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 case 201:
                     {
-                        UserMetricsModelData value = default;
+                        TrafficManagerUserMetricData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UserMetricsModelData.DeserializeUserMetricsModelData(document.RootElement);
+                        value = TrafficManagerUserMetricData.DeserializeTrafficManagerUserMetricData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UserMetricsModelData> CreateOrUpdate(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<TrafficManagerUserMetricData> CreateOrUpdate(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 case 201:
                     {
-                        UserMetricsModelData value = default;
+                        TrafficManagerUserMetricData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UserMetricsModelData.DeserializeUserMetricsModelData(document.RootElement);
+                        value = TrafficManagerUserMetricData.DeserializeTrafficManagerUserMetricData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

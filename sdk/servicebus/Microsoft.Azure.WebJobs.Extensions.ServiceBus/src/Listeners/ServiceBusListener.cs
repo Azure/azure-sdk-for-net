@@ -116,7 +116,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _singleDispatch = singleDispatch;
             _serviceBusOptions = options;
 
-            _details = new Lazy<string>(() => $"namespace='{_client.Value?.FullyQualifiedNamespace}', enityPath='{_entityPath}', singleDispatch='{_singleDispatch}', " +
+            _details = new Lazy<string>(() => $"namespace='{_client.Value?.FullyQualifiedNamespace}', entityPath='{_entityPath}', singleDispatch='{_singleDispatch}', " +
                 $"isSessionsEnabled='{_isSessionsEnabled}', functionId='{_functionId}'");
         }
 

@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.Search
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityOutput>> CheckNameAvailabilityServiceAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<SearchServiceNameAvailabilityResult>> CheckSearchServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityServiceAsync(content, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckSearchServiceNameAvailabilityAsync(content, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.Search
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckNameAvailabilityOutput> CheckNameAvailabilityService(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public static Response<SearchServiceNameAvailabilityResult> CheckSearchServiceNameAvailability(this SubscriptionResource subscriptionResource, SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityService(content, searchManagementRequestOptions, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckSearchServiceNameAvailability(content, searchManagementRequestOptions, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -179,20 +179,20 @@ namespace Azure.ResourceManager.Search
         }
         #endregion
 
-        #region SharedPrivateLinkResource
+        #region SharedSearchServicePrivateLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="SharedPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SharedPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SharedSearchServicePrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SharedSearchServicePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SharedSearchServicePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SharedPrivateLinkResource" /> object. </returns>
-        public static SharedPrivateLinkResource GetSharedPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SharedSearchServicePrivateLinkResource" /> object. </returns>
+        public static SharedSearchServicePrivateLinkResource GetSharedSearchServicePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SharedPrivateLinkResource.ValidateResourceId(id);
-                return new SharedPrivateLinkResource(client, id);
+                SharedSearchServicePrivateLinkResource.ValidateResourceId(id);
+                return new SharedSearchServicePrivateLinkResource(client, id);
             }
             );
         }

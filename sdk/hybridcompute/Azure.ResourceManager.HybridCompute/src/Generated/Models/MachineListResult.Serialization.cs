@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         internal static MachineListResult DeserializeMachineListResult(JsonElement element)
         {
-            IReadOnlyList<MachineData> value = default;
+            IReadOnlyList<HybridComputeMachineData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<MachineData> array = new List<MachineData>();
+                    List<HybridComputeMachineData> array = new List<HybridComputeMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineData.DeserializeMachineData(item));
+                        array.Add(HybridComputeMachineData.DeserializeHybridComputeMachineData(item));
                     }
                     value = array;
                     continue;

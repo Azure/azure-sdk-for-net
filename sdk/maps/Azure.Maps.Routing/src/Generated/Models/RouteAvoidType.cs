@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Routing.Models
+namespace Azure.Maps.Routing
 {
     /// <summary> The RouteAvoidType. </summary>
     public readonly partial struct RouteAvoidType : IEquatable<RouteAvoidType>

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ArcConfiguration DeserializeArcConfiguration(JsonElement element)
         {
-            Optional<StorageType> artifactsStorageType = default;
+            Optional<ArtifactStorageType> artifactsStorageType = default;
             Optional<string> artifactStorageClassName = default;
             Optional<string> artifactStorageMountPath = default;
             Optional<string> artifactStorageNodeName = default;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    artifactsStorageType = property.Value.GetString().ToStorageType();
+                    artifactsStorageType = property.Value.GetString().ToArtifactStorageType();
                     continue;
                 }
                 if (property.NameEquals("artifactStorageClassName"))

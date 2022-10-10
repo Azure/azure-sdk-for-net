@@ -24,8 +24,6 @@ namespace Azure.ResourceManager.Media
         private MediaservicesRestOperations _mediaServicesAccountMediaservicesRestClient;
         private ClientDiagnostics _locationsClientDiagnostics;
         private LocationsRestOperations _locationsRestClient;
-        private ClientDiagnostics _mediaServicesOperationStatusesClientDiagnostics;
-        private MediaServicesOperationStatusesRestOperations _mediaServicesOperationStatusesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -43,8 +41,6 @@ namespace Azure.ResourceManager.Media
         private MediaservicesRestOperations MediaServicesAccountMediaservicesRestClient => _mediaServicesAccountMediaservicesRestClient ??= new MediaservicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MediaServicesAccountResource.ResourceType));
         private ClientDiagnostics LocationsClientDiagnostics => _locationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Media", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LocationsRestOperations LocationsRestClient => _locationsRestClient ??= new LocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics MediaServicesOperationStatusesClientDiagnostics => _mediaServicesOperationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Media", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private MediaServicesOperationStatusesRestOperations MediaServicesOperationStatusesRestClient => _mediaServicesOperationStatusesRestClient ??= new MediaServicesOperationStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -144,9 +140,9 @@ namespace Azure.ResourceManager.Media
         /// <param name="locationName"> Location name. </param>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MediaNameAvailabilityResult>> CheckMediaNameAvailabilityAsync(AzureLocation locationName, MediaNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaServicesNameAvailabilityResult>> CheckMediaServicesNameAvailabilityAsync(AzureLocation locationName, MediaServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMediaNameAvailability");
+            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMediaServicesNameAvailability");
             scope.Start();
             try
             {
@@ -168,61 +164,13 @@ namespace Azure.ResourceManager.Media
         /// <param name="locationName"> Location name. </param>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MediaNameAvailabilityResult> CheckMediaNameAvailability(AzureLocation locationName, MediaNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<MediaServicesNameAvailabilityResult> CheckMediaServicesNameAvailability(AzureLocation locationName, MediaServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMediaNameAvailability");
+            using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMediaServicesNameAvailability");
             scope.Start();
             try
             {
                 var response = LocationsRestClient.CheckNameAvailability(Id.SubscriptionId, locationName, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get media service operation status.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationStatuses/{operationId}
-        /// Operation Id: MediaServicesOperationStatuses_Get
-        /// </summary>
-        /// <param name="locationName"> Location name. </param>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MediaServicesOperationStatus>> GetMediaServicesOperationStatusAsync(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = MediaServicesOperationStatusesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMediaServicesOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = await MediaServicesOperationStatusesRestClient.GetAsync(Id.SubscriptionId, locationName, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get media service operation status.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationStatuses/{operationId}
-        /// Operation Id: MediaServicesOperationStatuses_Get
-        /// </summary>
-        /// <param name="locationName"> Location name. </param>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MediaServicesOperationStatus> GetMediaServicesOperationStatus(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = MediaServicesOperationStatusesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMediaServicesOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = MediaServicesOperationStatusesRestClient.Get(Id.SubscriptionId, locationName, operationId, cancellationToken);
                 return response;
             }
             catch (Exception e)

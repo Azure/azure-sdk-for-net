@@ -25,18 +25,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="user"> This element is associated with the datasource element. This is the user name that will be used to connect to the SQL Database instance. </param>
         /// <param name="password"> This element is associated with the datasource element. This is the password that will be used to connect to the SQL Database instance. </param>
         /// <param name="refreshType"> Indicates the type of data refresh option. </param>
-        /// <param name="refreshRate"> This element is associated with the datasource element. This indicates how frequently the data will be fetched from the database. It is of DateTime format. </param>
+        /// <param name="refreshInterval"> This element is associated with the datasource element. This indicates how frequently the data will be fetched from the database. It is of DateTime format. </param>
         /// <param name="fullSnapshotQuery"> This element is associated with the datasource element. This query is used to fetch data from the sql database. </param>
         /// <param name="deltaSnapshotQuery"> This element is associated with the datasource element. This query is used to fetch incremental changes from the SQL database. To use this option, we recommend using temporal tables in Azure SQL Database. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
-        internal SqlReferenceInputDataSource(string referenceInputDataSourceType, string server, string database, string user, string password, DataRefreshType? refreshType, DateTimeOffset? refreshRate, string fullSnapshotQuery, string deltaSnapshotQuery, StreamAnalyticsAuthenticationMode? authenticationMode) : base(referenceInputDataSourceType)
+        internal SqlReferenceInputDataSource(string referenceInputDataSourceType, string server, string database, string user, string password, DataRefreshType? refreshType, TimeSpan? refreshInterval, string fullSnapshotQuery, string deltaSnapshotQuery, StreamAnalyticsAuthenticationMode? authenticationMode) : base(referenceInputDataSourceType)
         {
             Server = server;
             Database = database;
             User = user;
             Password = password;
             RefreshType = refreshType;
-            RefreshRate = refreshRate;
+            RefreshInterval = refreshInterval;
             FullSnapshotQuery = fullSnapshotQuery;
             DeltaSnapshotQuery = deltaSnapshotQuery;
             AuthenticationMode = authenticationMode;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Indicates the type of data refresh option. </summary>
         public DataRefreshType? RefreshType { get; set; }
         /// <summary> This element is associated with the datasource element. This indicates how frequently the data will be fetched from the database. It is of DateTime format. </summary>
-        public DateTimeOffset? RefreshRate { get; set; }
+        public TimeSpan? RefreshInterval { get; set; }
         /// <summary> This element is associated with the datasource element. This query is used to fetch data from the sql database. </summary>
         public string FullSnapshotQuery { get; set; }
         /// <summary> This element is associated with the datasource element. This query is used to fetch incremental changes from the SQL database. To use this option, we recommend using temporal tables in Azure SQL Database. </summary>

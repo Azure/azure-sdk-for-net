@@ -5,7 +5,7 @@ azure-arm: true
 csharp: true
 library-name: Automanage
 namespace: Azure.ResourceManager.Automanage
-require: https://github.com/Azure/azure-rest-api-specs/blob/d32cece9ca8814ef42085d4bbc426dc35bbcaf87/specification/automanage/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/4b5fe2fb0a5066c4ff2bd429dbd5e1afda6afab3/specification/automanage/resource-manager/readme.md
 tag: package-2022-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -52,12 +52,6 @@ directive:
   - remove-operation: BestPracticesVersions_ListByTenant
   - remove-operation: ServicePrincipals_ListBySubscription
   - remove-operation: ServicePrincipals_Get
-
-# add 'format: duration' to swagger (will be updated via Swagger spec file)
-  - from: automanage.json
-    where: $.definitions.AssignmentReportProperties.properties.duration
-    transform: |
-      $.format = "duration"
 
 #use scope parameter on the two paths that are defined multiple times
   - from: automanage.json
