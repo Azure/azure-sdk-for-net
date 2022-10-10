@@ -1,6 +1,7 @@
 function Get-Namespaces-From-DLL($dllPath) {
     $file = [System.IO.File]::OpenRead($dllPath)
     try {
+        # Use to parse the namespaces out from the dll file.
         $pe = [System.Reflection.PortableExecutable.PEReader]::new($file)
         try {
             $meta = [System.Reflection.Metadata.PEReaderExtensions]::GetMetadataReader($pe)
@@ -31,11 +32,13 @@ function Fetch-Namespaces-From-Dotnet-Nupkg ($nupkgFilePath, $destination) {
         New-Item -ItemType Directory -Path $tempLocation -Force | Out-Null
     }
 
-    Write-Host "Before zip..."
+    Write-Host "Before unzip nupkg..."
     Write-Host $nupkgFilePath
     Add-Type -AssemblyName System.IO.Compression.FileSystem
     [System.IO.Compression.ZipFile]::ExtractToDirectory($nupkgFilePath, $tempLocation)
-    Write-Host "After zip..."
+    Write-Host "After unzip nupkg..."
+    # .NET core includes multiple target framework. We currently have the same namespaces for different framework. 
+    # Will use whatever the first dll file.
     $firstDllFiles = Get-ChildItem "$tempLocation/lib" -Filter '*.dll' -Recurse
     if (!$firstDllFiles) {
         Write-Error "Can't find any dll file from dotnet $nupkgFilePath."
