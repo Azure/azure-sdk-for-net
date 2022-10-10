@@ -5,129 +5,88 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq.Expressions;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
+using static System.Net.WebRequestMethods;
 
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// .
+    /// A class representing either a primitive value or an expression.
+    /// For details on DataFactoryExpressions see https://learn.microsoft.com/en-us/azure/data-factory/control-flow-expression-language-functions#expressions.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T"> Can be one of <see cref="string"/>, <see cref="bool"/>, <see cref="int"/>, <see cref="float"/>, <see cref="List{T}"/>. </typeparam>
 #pragma warning disable SA1649 // File name should match first type name
-    public class DataFactoryExpression<T> : IUtf8JsonSerializable
+    public class DataFactoryExpression<T> : DataFactoryExpression, IUtf8JsonSerializable
 #pragma warning restore SA1649 // File name should match first type name
     {
-        /// <summary>
-        /// .
-        /// </summary>
-        internal string Type { get; }
+        private string _type;
+        private T _value;
+        private string _expression;
 
         /// <summary>
-        /// .
+        /// Gets whether this instance was constructed by a primitive value.
         /// </summary>
-        internal bool HasValue { get; }
+        public bool HasValue { get; }
 
-        /// <summary>
-        /// .
-        /// </summary>
-        internal T Value { get; }
-
-        /// <summary>
-        /// .
-        /// </summary>
-        internal string Expression { get; }
-
-        /// <summary>
-        /// .
-        /// </summary>
-        protected DataFactoryExpression() { }
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="value"></param>
-        public DataFactoryExpression(T value)
+        internal DataFactoryExpression(Optional<T> value, string expression)
         {
-            Value = value;
-            HasValue = true;
-            Expression = value.ToString();
-        }
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="expression"></param>
-        public DataFactoryExpression(string expression)
-        {
-            if (!expression.Contains("@"))
+            if (value.HasValue)
             {
-                Value = (T)(object)expression;
                 HasValue = true;
-                Expression = expression;
+                _value = value.Value;
             }
             else
             {
-                Type = "Expression";
-                Expression = expression;
+                _type = "Expression";
+                _expression = expression;
             }
         }
 
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        /// <inheritdoc/>
         public override string ToString()
         {
             if (HasValue)
-                return Value.ToString();
-            return Expression;
+                return _value.ToString();
+            return _expression;
         }
 
         /// <summary>
-        /// .
+        /// Gets the primitive value unless this instance is an expression.
         /// </summary>
-        /// <returns></returns>
-        public string GetString() => ToString();
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
         public bool TryGetValue(out T value)
         {
             value = default;
             if (HasValue)
             {
-                value = Value;
+                value = _value;
                 return true;
             }
             return false;
         }
 
         /// <summary>
-        /// .
+        /// Converts a primitive value into a expression representing that value.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator DataFactoryExpression<T>(T value) => new DataFactoryExpression<T>(value);
+        public static implicit operator DataFactoryExpression<T>(T value) => new DataFactoryExpression<T>(value, null);
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             if (HasValue)
             {
-                writer.WriteObjectValue(Value);
+                writer.WriteObjectValue(_value);
             }
             else
             {
                 writer.WriteStartObject();
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(_type);
                 writer.WritePropertyName("value");
-                writer.WriteStringValue(Expression);
+                writer.WriteStringValue(_expression);
                 writer.WriteEndObject();
             }
         }
@@ -135,6 +94,7 @@ namespace Azure.ResourceManager.DataFactory
         internal static DataFactoryExpression<T> DeserializeActivityDependency(JsonElement element)
         {
             string expression = default;
+            Optional<T> value = default;
 
             if (element.ValueKind == JsonValueKind.Object)
             {
@@ -146,11 +106,11 @@ namespace Azure.ResourceManager.DataFactory
                         continue;
                     }
                 }
-                return new DataFactoryExpression<T>(expression);
+                return new DataFactoryExpression<T>(value, expression);
             }
             else
             {
-                return new DataFactoryExpression<T>((T)element.GetObject());
+                return new DataFactoryExpression<T>((T)element.GetObject(), null);
             }
         }
     }

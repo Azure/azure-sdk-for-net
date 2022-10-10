@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Tests
         {
             var inputName = "InputDatasetExpression";
             var outputName = "OutputDatasetExpression";
-            var expressionString = useExpression ? "-@{ pipeline().TriggerTime}" : string.Empty;
+            var expressionString = useExpression ? "-@{pipeline().TriggerTime}" : string.Empty;
             await CreateInputDatasetAsync(inputName, "dfecontainer/input/", "emp.txt");
             await CreateInputDatasetAsync(outputName, $"dfecontainer/output{expressionString}/", null);
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Tests
             var pipeline = (await _dataFactory.GetFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, pipelineData)).Value;
 
             var result = await pipeline.CreateRunAsync();
-            DateTime timeout = DateTime.Now.AddMinutes(1);
+            DateTime timeout = DateTime.Now.AddMinutes(2);
             int sleep = Mode == RecordedTestMode.Playback ? 0 : 2000;
             do
             {
@@ -100,11 +100,8 @@ namespace Azure.ResourceManager.DataFactory.Tests
             AzureBlobDataset abDataset = new AzureBlobDataset(linkedServiceReference);
             abDataset.Format = new DatasetStorageFormat();
             abDataset.Format.DatasetStorageFormatType = "TextFormat";
-            //abDataset.FolderPath = BinaryData.FromObjectAsJson(new { type = "Expression", value = folder });
-            //abDataset.FolderPath = BinaryData.FromObjectAsJson(new { type = "string", value = folder });
-            //abDataset.FolderPath = BinaryData.FromObjectAsJson(folder);
 
-            abDataset.FolderPath = new DataFactoryExpression<string>(folder);
+            abDataset.FolderPath = DataFactoryExpression.FromExpression<string>(folder);
 
             if (file != null)
                 abDataset.FileName = BinaryData.FromObjectAsJson(file);
