@@ -178,8 +178,8 @@ stages:
                             TargetDocRepoName: ${{parameters.TargetDocRepoName}}
                             Language: 'dotnet'
                             SparseCheckoutPaths:
-                              - api/overview/azure/
-                              - metadata/
+                              - /api/overview/azure/
+                              - /metadata/
 
             - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
               - deployment: PublishDocs
@@ -306,5 +306,5 @@ stages:
             Language: 'dotnet'
             DailyDocsBuild: true
             SparseCheckoutPaths:
-              - api/overview/azure/
-              - metadata/
+              - /api/overview/azure/
+              - /metadata/
