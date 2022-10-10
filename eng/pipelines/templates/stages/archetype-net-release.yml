@@ -178,16 +178,8 @@ stages:
                             TargetDocRepoName: ${{parameters.TargetDocRepoName}}
                             Language: 'dotnet'
                             SparseCheckoutPaths:
-                              - api/overview/azure/
-                              - metadata/
-                        - template: /eng/pipelines/templates/steps/fetch-package-list.yml
-                          parameters:
-                            JavaDocJarLocation: "$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.groupId}}/${{artifact.name}}"
-                            ArtifactName: ${{artifact.name}}
-                            TargetBranch: $(TargetBranchName)
-                            DocRepoLocation: $(DocRepoLocation)
-                            TargetDocRepoName: ${{parameters.TargetDocRepoName}}
-                            TargetDocRepoOwner: "Azure"
+                              - /api/overview/azure/
+                              - /metadata/
             - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
               - deployment: PublishDocs
                 displayName: Publish Docs to GitHub pages
@@ -313,8 +305,8 @@ stages:
             Language: 'dotnet'
             DailyDocsBuild: true
             SparseCheckoutPaths:
-              - api/overview/azure/
-              - metadata/
+              - /api/overview/azure/
+              - /metadata/
         - ${{ each artifact in parameters.Artifacts }}:
           - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
             - template: /eng/pipelines/templates/steps/fetch-package-list.yml

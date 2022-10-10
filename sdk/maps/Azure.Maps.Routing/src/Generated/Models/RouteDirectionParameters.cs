@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Maps.Routing.Models;
 
-namespace Azure.Maps.Routing.Models
+namespace Azure.Maps.Routing
 {
     /// <summary> Post body parameters for Route directions. </summary>
     public partial class RouteDirectionParameters
