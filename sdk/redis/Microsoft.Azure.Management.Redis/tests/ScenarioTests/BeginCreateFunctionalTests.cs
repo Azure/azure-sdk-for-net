@@ -74,6 +74,37 @@ namespace AzureRedisCache.Tests
                     TestUtilities.Wait(new TimeSpan(0, 0, 30));
                 }
 
+                Sku p2 = new Sku()
+                {
+                    Name = SkuName.Premium,
+                    Family = SkuFamily.P,
+                    Capacity = 2
+                };
+                RedisResource updateResponse = _client.Redis.BeginUpdate(resourceGroupName, redisCacheName, parameters: new RedisUpdateParameters
+                {
+
+                    Sku = p2,
+                    MinimumTlsVersion = TlsVersion.OneFullStopTwo,
+                    ReplicasPerMaster = 2,
+                    RedisVersion = "latest",
+                    RedisConfiguration = new RedisCommonPropertiesRedisConfiguration(
+                                                maxmemoryPolicy: "allkeys-lru",
+                                            additionalProperties: new Dictionary<string, object>() { { "maxmemory-reserved", "700" } })
+                });
+
+                Assert.Equal(ProvisioningState.Scaling, updateResponse.ProvisioningState);
+
+                for (int i = 0; i < 60; i++)
+                {
+                    updateResponse = _client.Redis.Get(resourceGroupName, redisCacheName);
+                    if (ProvisioningState.Succeeded.Equals(updateResponse.ProvisioningState, StringComparison.OrdinalIgnoreCase))
+                    {
+                        break;
+                    }
+                    TestUtilities.Wait(new TimeSpan(0, 0, 30));
+                }
+                Assert.Equal(p2, updateResponse.Sku);
+
                 _client.Redis.Delete(resourceGroupName: resourceGroupName, name: redisCacheName);
                 _redisCacheManagementHelper.DeleteResourceGroup(resourceGroupName);
             }
