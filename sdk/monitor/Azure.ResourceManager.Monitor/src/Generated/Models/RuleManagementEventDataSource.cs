@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> A rule management event data source. The discriminator fields is always RuleManagementEventDataSource in this case. </summary>
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="status"> The status of the operation that should be checked for. If no status is provided, any status will match. </param>
         /// <param name="subStatus"> the substatus. </param>
         /// <param name="claims"> the claims. </param>
-        internal RuleManagementEventDataSource(string odataType, string resourceId, string legacyResourceId, string resourceLocation, string metricNamespace, string eventName, string eventSource, string level, string operationName, string resourceGroupName, string resourceProviderName, string status, string subStatus, RuleManagementEventClaimsDataSource claims) : base(odataType, resourceId, legacyResourceId, resourceLocation, metricNamespace)
+        internal RuleManagementEventDataSource(string odataType, ResourceIdentifier resourceId, ResourceIdentifier legacyResourceId, string resourceLocation, string metricNamespace, string eventName, string eventSource, string level, string operationName, string resourceGroupName, string resourceProviderName, string status, string subStatus, RuleManagementEventClaimsDataSource claims) : base(odataType, resourceId, legacyResourceId, resourceLocation, metricNamespace)
         {
             EventName = eventName;
             EventSource = eventSource;

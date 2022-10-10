@@ -92,9 +92,14 @@ namespace Microsoft.Azure.Management.EventGrid
         public virtual IDomainTopicsOperations DomainTopics { get; private set; }
 
         /// <summary>
-        /// Gets the IEventChannelsOperations.
+        /// Gets the ITopicEventSubscriptionsOperations.
         /// </summary>
-        public virtual IEventChannelsOperations EventChannels { get; private set; }
+        public virtual ITopicEventSubscriptionsOperations TopicEventSubscriptions { get; private set; }
+
+        /// <summary>
+        /// Gets the IDomainEventSubscriptionsOperations.
+        /// </summary>
+        public virtual IDomainEventSubscriptionsOperations DomainEventSubscriptions { get; private set; }
 
         /// <summary>
         /// Gets the IEventSubscriptionsOperations.
@@ -105,16 +110,6 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Gets the IDomainTopicEventSubscriptionsOperations.
         /// </summary>
         public virtual IDomainTopicEventSubscriptionsOperations DomainTopicEventSubscriptions { get; private set; }
-
-        /// <summary>
-        /// Gets the ITopicEventSubscriptionsOperations.
-        /// </summary>
-        public virtual ITopicEventSubscriptionsOperations TopicEventSubscriptions { get; private set; }
-
-        /// <summary>
-        /// Gets the IDomainEventSubscriptionsOperations.
-        /// </summary>
-        public virtual IDomainEventSubscriptionsOperations DomainEventSubscriptions { get; private set; }
 
         /// <summary>
         /// Gets the ISystemTopicEventSubscriptionsOperations.
@@ -132,14 +127,14 @@ namespace Microsoft.Azure.Management.EventGrid
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
+        /// Gets the ITopicsOperations.
+        /// </summary>
+        public virtual ITopicsOperations Topics { get; private set; }
+
+        /// <summary>
         /// Gets the IPartnerConfigurationsOperations.
         /// </summary>
         public virtual IPartnerConfigurationsOperations PartnerConfigurations { get; private set; }
-
-        /// <summary>
-        /// Gets the IPartnerDestinationsOperations.
-        /// </summary>
-        public virtual IPartnerDestinationsOperations PartnerDestinations { get; private set; }
 
         /// <summary>
         /// Gets the IPartnerNamespacesOperations.
@@ -170,11 +165,6 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Gets the ISystemTopicsOperations.
         /// </summary>
         public virtual ISystemTopicsOperations SystemTopics { get; private set; }
-
-        /// <summary>
-        /// Gets the ITopicsOperations.
-        /// </summary>
-        public virtual ITopicsOperations Topics { get; private set; }
 
         /// <summary>
         /// Gets the IExtensionTopicsOperations.
@@ -435,28 +425,26 @@ namespace Microsoft.Azure.Management.EventGrid
             Channels = new ChannelsOperations(this);
             Domains = new DomainsOperations(this);
             DomainTopics = new DomainTopicsOperations(this);
-            EventChannels = new EventChannelsOperations(this);
-            EventSubscriptions = new EventSubscriptionsOperations(this);
-            DomainTopicEventSubscriptions = new DomainTopicEventSubscriptionsOperations(this);
             TopicEventSubscriptions = new TopicEventSubscriptionsOperations(this);
             DomainEventSubscriptions = new DomainEventSubscriptionsOperations(this);
+            EventSubscriptions = new EventSubscriptionsOperations(this);
+            DomainTopicEventSubscriptions = new DomainTopicEventSubscriptionsOperations(this);
             SystemTopicEventSubscriptions = new SystemTopicEventSubscriptionsOperations(this);
             PartnerTopicEventSubscriptions = new PartnerTopicEventSubscriptionsOperations(this);
             Operations = new Operations(this);
+            Topics = new TopicsOperations(this);
             PartnerConfigurations = new PartnerConfigurationsOperations(this);
-            PartnerDestinations = new PartnerDestinationsOperations(this);
             PartnerNamespaces = new PartnerNamespacesOperations(this);
             PartnerRegistrations = new PartnerRegistrationsOperations(this);
             PartnerTopics = new PartnerTopicsOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             SystemTopics = new SystemTopicsOperations(this);
-            Topics = new TopicsOperations(this);
             ExtensionTopics = new ExtensionTopicsOperations(this);
             TopicTypes = new TopicTypesOperations(this);
             VerifiedPartners = new VerifiedPartnersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-10-15-preview";
+            ApiVersion = "2022-06-15";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -486,18 +474,12 @@ namespace Microsoft.Azure.Management.EventGrid
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PartnerDestinationInfo>("endpointType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PartnerDestinationInfo>("endpointType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PartnerClientAuthentication>("clientAuthenticationType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PartnerClientAuthentication>("clientAuthenticationType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PartnerUpdateDestinationInfo>("endpointType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PartnerUpdateDestinationInfo>("endpointType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<InputSchemaMapping>("inputSchemaMappingType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<InputSchemaMapping>("inputSchemaMappingType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AdvancedFilter>("operatorType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AdvancedFilter>("operatorType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<EventSubscriptionDestination>("endpointType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<EventSubscriptionDestination>("endpointType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AdvancedFilter>("operatorType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AdvancedFilter>("operatorType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DeadLetterDestination>("endpointType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DeadLetterDestination>("endpointType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DeliveryAttributeMapping>("type"));

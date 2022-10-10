@@ -14,7 +14,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure Network management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.Network --prerelease
+dotnet add package Azure.ResourceManager.Network
 ```
 
 ### Prerequisites
@@ -53,7 +53,7 @@ Key concepts of the Azure .NET SDK can be found [here](https://azure.github.io/a
 
 Documentation is available to help you learn how to use this package
 
-- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/mgmt_preview_quickstart.md)
+- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md)
 - [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet)
 - [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md)
 

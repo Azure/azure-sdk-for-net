@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -31,7 +32,11 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data");
-                writer.WriteStringValue(Data);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Data);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Data.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -43,8 +48,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<string> data = default;
-            Optional<string> validatedCertData = default;
+            Optional<BinaryData> data = default;
+            Optional<BinaryData> validatedCertData = default;
             Optional<string> clientCertIssuerDN = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -95,12 +100,22 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         if (property0.NameEquals("data"))
                         {
-                            data = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            data = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("validatedCertData"))
                         {
-                            validatedCertData = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            validatedCertData = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clientCertIssuerDN"))

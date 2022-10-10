@@ -197,7 +197,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         [RecordedTest]
         [Ignore("LRO not implemented")]
         public async Task ExtractKeyPhrasesWithMultipleActions()
@@ -233,6 +233,27 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IList<string> expected = new List<string> { "ExtractKeyPhrases", "ExtractKeyPhrasesWithDisabledServiceLogs" };
             CollectionAssert.AreEquivalent(expected, ExtractKeyPhrasesActionsResults.Select(result => result.ActionName));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public async Task ExtractKeyPhrasesBatchDisableServiceLogs()
+        {
+            TextAnalyticsClient client = GetClient();
+            ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(batchConvenienceDocuments, "en", options: new TextAnalyticsRequestOptions { DisableServiceLogs = true });
+
+            ValidateBatchDocumentsResult(results, 3);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_0)]
+        public void ExtractKeyPhrasesBatchDisableServiceLogsThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.ExtractKeyPhrasesBatchAsync(batchConvenienceDocuments, "en", options: new TextAnalyticsRequestOptions { DisableServiceLogs = true }));
+            Assert.AreEqual("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
         }
 
         private void ValidateInDocumenResult(KeyPhraseCollection keyPhrases, int minKeyPhrasesCount = default)

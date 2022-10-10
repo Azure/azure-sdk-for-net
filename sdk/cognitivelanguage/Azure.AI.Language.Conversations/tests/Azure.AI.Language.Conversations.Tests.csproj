@@ -18,6 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Remove the generated HLC clients that are needed to generate HLC serialization code. -->
+    <Compile Remove="Generated\*" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\..\test-resources.json" />
   </ItemGroup>
 </Project>

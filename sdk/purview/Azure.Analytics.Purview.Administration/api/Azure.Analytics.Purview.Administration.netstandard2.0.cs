@@ -25,10 +25,10 @@ namespace Azure.Analytics.Purview.Administration
     }
     public partial class PurviewAccountClientOptions : Azure.Core.ClientOptions
     {
-        public PurviewAccountClientOptions(Azure.Analytics.Purview.Administration.PurviewAccountClientOptions.ServiceVersion version = Azure.Analytics.Purview.Administration.PurviewAccountClientOptions.ServiceVersion.V2019_11_01_preview) { }
+        public PurviewAccountClientOptions(Azure.Analytics.Purview.Administration.PurviewAccountClientOptions.ServiceVersion version = Azure.Analytics.Purview.Administration.PurviewAccountClientOptions.ServiceVersion.V2019_11_01_Preview) { }
         public enum ServiceVersion
         {
-            V2019_11_01_preview = 1,
+            V2019_11_01_Preview = 1,
         }
     }
     public partial class PurviewCollection

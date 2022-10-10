@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="description"/> is null. </exception>
-        public SqlPrivateLinkServiceConnectionStateProperty(PrivateLinkServiceConnectionStateStatus status, string description)
+        public SqlPrivateLinkServiceConnectionStateProperty(SqlPrivateLinkServiceConnectionStatus status, string description)
         {
             if (description == null)
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>
-        internal SqlPrivateLinkServiceConnectionStateProperty(PrivateLinkServiceConnectionStateStatus status, string description, PrivateLinkServiceConnectionStateActionsRequire? actionsRequired)
+        internal SqlPrivateLinkServiceConnectionStateProperty(SqlPrivateLinkServiceConnectionStatus status, string description, SqlPrivateLinkServiceConnectionActionsRequired? actionsRequired)
         {
             Status = status;
             Description = description;
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The private link service connection status. </summary>
-        public PrivateLinkServiceConnectionStateStatus Status { get; set; }
+        public SqlPrivateLinkServiceConnectionStatus Status { get; set; }
         /// <summary> The private link service connection description. </summary>
         public string Description { get; set; }
         /// <summary> The actions required for private link service connection. </summary>
-        public PrivateLinkServiceConnectionStateActionsRequire? ActionsRequired { get; }
+        public SqlPrivateLinkServiceConnectionActionsRequired? ActionsRequired { get; }
     }
 }

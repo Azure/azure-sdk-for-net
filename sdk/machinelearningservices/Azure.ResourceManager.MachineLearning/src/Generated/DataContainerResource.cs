@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.MachineLearning
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DataVersionBaseResources in the DataContainer. </summary>
-        /// <returns> An object representing collection of DataVersionBaseResources and their operations over a DataVersionBaseResource. </returns>
-        public virtual DataVersionBaseCollection GetDataVersionBases()
+        /// <summary> Gets a collection of DataVersionResources in the DataContainer. </summary>
+        /// <returns> An object representing collection of DataVersionResources and their operations over a DataVersionResource. </returns>
+        public virtual DataVersionCollection GetDataVersions()
         {
-            return GetCachedClient(Client => new DataVersionBaseCollection(Client, Id));
+            return GetCachedClient(Client => new DataVersionCollection(Client, Id));
         }
 
         /// <summary>
@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataVersionBaseResource>> GetDataVersionBaseAsync(string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataVersionResource>> GetDataVersionAsync(string version, CancellationToken cancellationToken = default)
         {
-            return await GetDataVersionBases().GetAsync(version, cancellationToken).ConfigureAwait(false);
+            return await GetDataVersions().GetAsync(version, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataVersionBaseResource> GetDataVersionBase(string version, CancellationToken cancellationToken = default)
+        public virtual Response<DataVersionResource> GetDataVersion(string version, CancellationToken cancellationToken = default)
         {
-            return GetDataVersionBases().Get(version, cancellationToken);
+            return GetDataVersions().Get(version, cancellationToken);
         }
 
         /// <summary>

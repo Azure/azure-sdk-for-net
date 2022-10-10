@@ -1,80 +1,67 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://adu-sdk-testing.api.adu.microsoft.com/deviceupdate/sdkinstance/management/groups?api-version=2021-06-01-preview",
+      "RequestUri": "https://adu-sdk-testing.api.adu.microsoft.com/deviceUpdate/sdkinstance/management/groups?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-02cb9845c195b5448d9a7f08591ddb32-69a71a25ba1fb840-00",
-        "User-Agent": [
-          "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20211130.1",
-          "(.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )"
-        ],
-        "x-ms-client-request-id": "9789670a71e49ee51e45b3826c1617c8",
+        "traceparent": "00-15117db7d44e90489267f3f74c756531-0c6470337d1f6644-00",
+        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220901.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "464c305f4b7bac4f4db064b239426a67",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "1334",
+        "Content-Length": "1095",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 30 Nov 2021 02:33:52 GMT",
-        "traceparent": "00-02cb9845c195b5448d9a7f08591ddb32-69a71a25ba1fb840-00"
+        "Date": "Thu, 01 Sep 2022 20:26:15 GMT",
+        "mise-correlation-id": "0ddde349-92f2-4309-a6ec-6f8f96528317",
+        "traceparent": "00-15117db7d44e90489267f3f74c756531-0c6470337d1f6644-00"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: [\r\n",
-        "    {\r\n",
-        "      \u0022deploymentId\u0022: \u0022test20211117112017\u0022,\r\n",
-        "      \u0022groupId\u0022: \u0022testgroup\u0022,\r\n",
-        "      \u0022tags\u0022: [\r\n",
-        "        \u0022testgroup\u0022\r\n",
-        "      ],\r\n",
-        "      \u0022createdDateTime\u0022: \u00222021-11-16T00:49:25.141\u002B00:00\u0022,\r\n",
-        "      \u0022groupType\u0022: \u0022DeviceClassIdAndIoTHubTag\u0022,\r\n",
-        "      \u0022deviceCount\u0022: 2,\r\n",
-        "      \u0022deviceClassId\u0022: \u00220919e3ae422a2bfa8c84ff905813e60351e456d1\u0022\r\n",
-        "    },\r\n",
-        "    {\r\n",
-        "      \u0022groupId\u0022: \u0022Invalidtestgroup\u0022,\r\n",
-        "      \u0022tags\u0022: [\r\n",
-        "        \u0022testgroup\u0022\r\n",
-        "      ],\r\n",
-        "      \u0022createdDateTime\u0022: \u00222021-11-16T00:49:25.141\u002B00:00\u0022,\r\n",
-        "      \u0022groupType\u0022: \u0022InvalidDeviceClassIdAndIoTHubTag\u0022,\r\n",
-        "      \u0022deviceCount\u0022: 0,\r\n",
-        "      \u0022deviceClassId\u0022: \u00220919e3ae422a2bfa8c84ff905813e60351e456d1\u0022\r\n",
-        "    },\r\n",
-        "    {\r\n",
-        "      \u0022deploymentId\u0022: \u0022test1118014304\u0022,\r\n",
-        "      \u0022groupId\u0022: \u0022dpokluda-edgevm\u0022,\r\n",
-        "      \u0022tags\u0022: [\r\n",
-        "        \u0022dpokluda-edgevm\u0022\r\n",
-        "      ],\r\n",
-        "      \u0022createdDateTime\u0022: \u00222021-11-17T22:57:28.78\u002B00:00\u0022,\r\n",
-        "      \u0022groupType\u0022: \u0022DeviceClassIdAndIoTHubTag\u0022,\r\n",
-        "      \u0022deviceCount\u0022: 1,\r\n",
-        "      \u0022deviceClassId\u0022: \u00220919e3ae422a2bfa8c84ff905813e60351e456d1\u0022\r\n",
-        "    },\r\n",
-        "    {\r\n",
-        "      \u0022groupId\u0022: \u0022Invaliddpokluda-edgevm\u0022,\r\n",
-        "      \u0022tags\u0022: [\r\n",
-        "        \u0022dpokluda-edgevm\u0022\r\n",
-        "      ],\r\n",
-        "      \u0022createdDateTime\u0022: \u00222021-11-17T22:57:28.78\u002B00:00\u0022,\r\n",
-        "      \u0022groupType\u0022: \u0022InvalidDeviceClassIdAndIoTHubTag\u0022,\r\n",
-        "      \u0022deviceCount\u0022: 0,\r\n",
-        "      \u0022deviceClassId\u0022: \u00220919e3ae422a2bfa8c84ff905813e60351e456d1\u0022\r\n",
-        "    }\r\n",
-        "  ]\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": [
+          {
+            "groupId": "$default",
+            "groupType": "DefaultNoTag",
+            "createdDateTime": "2022-06-08T23:58:17.7255595\u002B00:00",
+            "deviceCount": 0,
+            "subgroupsWithNewUpdatesAvailableCount": 0,
+            "subgroupsWithUpdatesInProgressCount": 0,
+            "subgroupsWithOnLatestUpdateCount": 0,
+            "deployments": []
+          },
+          {
+            "groupId": "dpokluda-test",
+            "groupType": "IoTHubTag",
+            "createdDateTime": "2022-06-09T00:08:48.4487\u002B00:00",
+            "deviceCount": 1,
+            "subgroupsWithNewUpdatesAvailableCount": 1,
+            "subgroupsWithUpdatesInProgressCount": 0,
+            "subgroupsWithOnLatestUpdateCount": 0,
+            "deployments": [
+              "a5f6a54b-938d-44b6-8baa-8dc72017ae54"
+            ]
+          },
+          {
+            "groupId": "testgroup",
+            "groupType": "IoTHubTag",
+            "createdDateTime": "2022-08-09T19:17:24.9549445\u002B00:00",
+            "deviceCount": 1,
+            "subgroupsWithNewUpdatesAvailableCount": 1,
+            "subgroupsWithUpdatesInProgressCount": 0,
+            "subgroupsWithOnLatestUpdateCount": 0,
+            "deployments": []
+          }
+        ]
+      }
     }
   ],
   "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "DEVICEUPDATE_ACCOUNT_ENDPOINT": "adu-sdk-testing.api.adu.microsoft.com",
     "DEVICEUPDATE_INSTANCE_ID": "sdkinstance",
-    "RandomSeed": "707706313"
+    "RandomSeed": "1645995190"
   }
 }

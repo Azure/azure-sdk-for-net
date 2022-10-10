@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Azure FirstParty Managed Certificate provided by other first party resource providers to enable HTTPS. </summary>
-    public partial class AzureFirstPartyManagedCertificateProperties : SecretProperties
+    public partial class AzureFirstPartyManagedCertificateProperties : FrontDoorSecretProperties
     {
         /// <summary> Initializes a new instance of AzureFirstPartyManagedCertificateProperties. </summary>
         public AzureFirstPartyManagedCertificateProperties()

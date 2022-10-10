@@ -35,13 +35,27 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountId))
             {
-                writer.WritePropertyName("storageAccountId");
-                writer.WriteStringValue(StorageAccountId);
+                if (StorageAccountId != null)
+                {
+                    writer.WritePropertyName("storageAccountId");
+                    writer.WriteStringValue(StorageAccountId);
+                }
+                else
+                {
+                    writer.WriteNull("storageAccountId");
+                }
             }
             if (Optional.IsDefined(ServiceBusRuleId))
             {
-                writer.WritePropertyName("serviceBusRuleId");
-                writer.WriteStringValue(ServiceBusRuleId);
+                if (ServiceBusRuleId != null)
+                {
+                    writer.WritePropertyName("serviceBusRuleId");
+                    writer.WriteStringValue(ServiceBusRuleId);
+                }
+                else
+                {
+                    writer.WriteNull("serviceBusRuleId");
+                }
             }
             writer.WritePropertyName("locations");
             writer.WriteStartArray();

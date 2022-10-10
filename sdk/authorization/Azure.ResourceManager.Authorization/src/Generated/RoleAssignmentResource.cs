@@ -88,18 +88,19 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary>
-        /// Get the specified role assignment.
+        /// Get a role assignment by scope and name.
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
         /// Operation Id: RoleAssignments_Get
         /// </summary>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RoleAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RoleAssignmentResource>> GetAsync(string tenantId = null, CancellationToken cancellationToken = default)
         {
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = await _roleAssignmentRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _roleAssignmentRestClient.GetAsync(Id.Parent, Id.Name, tenantId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RoleAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -112,18 +113,19 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary>
-        /// Get the specified role assignment.
+        /// Get a role assignment by scope and name.
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
         /// Operation Id: RoleAssignments_Get
         /// </summary>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RoleAssignmentResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<RoleAssignmentResource> Get(string tenantId = null, CancellationToken cancellationToken = default)
         {
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = _roleAssignmentRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                var response = _roleAssignmentRestClient.Get(Id.Parent, Id.Name, tenantId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RoleAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -136,19 +138,20 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary>
-        /// Deletes a role assignment.
+        /// Delete a role assignment by scope and name.
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
         /// Operation Id: RoleAssignments_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<RoleAssignmentResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RoleAssignmentResource>> DeleteAsync(WaitUntil waitUntil, string tenantId = null, CancellationToken cancellationToken = default)
         {
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _roleAssignmentRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _roleAssignmentRestClient.DeleteAsync(Id.Parent, Id.Name, tenantId, cancellationToken).ConfigureAwait(false);
                 var operation = new AuthorizationArmOperation<RoleAssignmentResource>(Response.FromValue(new RoleAssignmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -162,19 +165,20 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary>
-        /// Deletes a role assignment.
+        /// Delete a role assignment by scope and name.
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
         /// Operation Id: RoleAssignments_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<RoleAssignmentResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RoleAssignmentResource> Delete(WaitUntil waitUntil, string tenantId = null, CancellationToken cancellationToken = default)
         {
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Delete");
             scope.Start();
             try
             {
-                var response = _roleAssignmentRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
+                var response = _roleAssignmentRestClient.Delete(Id.Parent, Id.Name, tenantId, cancellationToken);
                 var operation = new AuthorizationArmOperation<RoleAssignmentResource>(Response.FromValue(new RoleAssignmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -188,7 +192,7 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary>
-        /// Creates a role assignment.
+        /// Create or update a role assignment by scope and name.
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
         /// Operation Id: RoleAssignments_Create
         /// </summary>
@@ -218,7 +222,7 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary>
-        /// Creates a role assignment.
+        /// Create or update a role assignment by scope and name.
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
         /// Operation Id: RoleAssignments_Create
         /// </summary>

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="target"> The ID of the targeted resource, only VM is currently supported. </param>
         /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. </param>
         /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="storageLocation"> The storage location for a packet capture session. </param>
         /// <param name="filters"> A list of packet capture filters. </param>
         /// <param name="provisioningState"> The provisioning state of the packet capture session. </param>
-        internal PacketCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, string target, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IReadOnlyList<PacketCaptureFilter> filters, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal PacketCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string target, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IReadOnlyList<PacketCaptureFilter> filters, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
-            ETag = eTag;
+            ETag = etag;
             Target = target;
             BytesToCapturePerPacket = bytesToCapturePerPacket;
             TotalBytesPerSession = totalBytesPerSession;

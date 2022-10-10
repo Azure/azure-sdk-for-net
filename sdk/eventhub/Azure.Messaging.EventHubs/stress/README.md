@@ -6,6 +6,7 @@ Test runs can call any of the following tests:
 - "BufferedProducerTest"
 - "BurstBufferedProducerTest"
 - "ProcessorTest"
+- "ConsumerTest"
 
 Or, you can run all tests with the "--all" flag.
 
@@ -56,27 +57,35 @@ This test requires an event hub namespace, an event hub, and an application insi
 ```
 
 ### Scenario: Event Buffered Producer Test
-This test requires an event hub namespace, an event hub, and an application insights resource. High CPU usage may be experienced if too few partitions are used. This test creates 2 producers and continuously sends to each producer separately. This is a long-running, consistent volume test. To run this test in interactive mode, run the following:
+This test requires an event hub namespace, an event hub, and an application insights resource. This test creates 2 producers and continuously sends to each producer separately. This is a long-running, consistent volume test. To run this test in interactive mode, run the following:
 ```cmd
 (env) <git root>/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0> dotnet Azure.Messaging.EventHubs.Stress.dll --tests BufferedProducerTest --interactive
 ```
 
-### Scenario: Concurrent Buffered Producer Test
-This test requires an event hub namespace, an event hub, and an application insights resource. High CPU usage may be experienced if too few partitions are used. This test creates 2 producers and has 5 concurrent processes per producer continuously sending events. This is a long-running, consistent volume test. To run this test in interactive mode, run the following:
-```cmd
-(env) <git root>/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0> dotnet Azure.Messaging.EventHubs.Stress.dll --tests ConcurrentBufferedProducerTest --interactive
-```
-
 ### Scenario: Burst Buffered Producer Test
-This test requires an event hub namespace, an event hub, and an application insights resource. Note that this test may have a high CPU usage. This test creates 2 producers and sends sets of events to each producer separately every 15 minutes. This is a long-running, variable volume test. To run this test in interactive mode, run the following:
+This test requires an event hub namespace, an event hub, and an application insights resource. This test creates 2 producers and sends sets of events to each producer separately every 15 minutes. This is a long-running, variable volume test. To run this test in interactive mode, run the following:
 ```cmd
 (env) <git root>/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0> dotnet Azure.Messaging.EventHubs.Stress.dll --tests BurstBufferedProducerTest --interactive
+```
+
+### Scenario: Processor Test
+This test requires an event hub namespace, an event hub, a storage account, a storage blob and an application insights resource. This test creates a producer for each partition. Events are augmented with properties to help the processor independently validate ordering and delivery. This test creates two processors to do this. To run this test in interactive mode, run the following:
+```cmd
+(env) <git root>/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0> dotnet Azure.Messaging.EventHubs.Stress.dll --tests ProcessorTest --interactive
+```
+
+### Scenario: Consumer Test
+This test requires an event hub namespace, an event hub, and an application insights resource. This test creates a producer for each partition. Events are augmented with properties to help the consumers independently validate ordering and delivery. This test creates a consumer for each partition within the same process to do this. To run this test in interactive mode, run the following:
+```cmd
+(env) <git root>/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0> dotnet Azure.Messaging.EventHubs.Stress.dll --tests ConsumerTest --interactive
 ```
 
 ### Seeing Metrics and Logging in App Insights
 All metrics and logging are sent to App Insights via the Instrumentation Key provided during the initialization of the test. A brief explanation of the metrics collection approach is described below.
 - Any exceptions that occur are tracked by the telemetry client as exception telemetry. They can be accessed through the logs by filtering for exceptions, or through the application insights portal in the "Exceptions" blade. If an exception occured during send, the exception telemetry will include a "process" property containing "send"
 - Successful enqueues and sends are tracked through Metrics. For the buffered producer, the total number of enqueues is tracked, and the actual sends include the ability to separate counts into partition Ids.
+
+See the `Metrics.cs` file for more information about individual metrics and what they mean.
 
 ## Examples
 
@@ -94,7 +103,7 @@ Without a .env file:
 
 ## Troubleshooting
 
-- Ensure that all connection strings, istrumentation keys, and event hub names are correct.
+- Ensure that all connection strings, instrumentation keys, and event hub names are correct. If using an environment file, make sure they are properly defined and set in the correct variables as defined in `EnvironmentVariables.cs`
 
 ## Next steps
 
@@ -107,7 +116,7 @@ In order to deploy stress tests to be run in kubernetes clusters, run:
 ```
 This command requires Azure login credentials.
 
-## Contributing  
+## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
 

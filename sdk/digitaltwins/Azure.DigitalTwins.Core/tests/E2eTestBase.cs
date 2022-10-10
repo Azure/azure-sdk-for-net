@@ -117,7 +117,7 @@ namespace Azure.DigitalTwins.Core.Tests
         /// <param name="delayDuration">Delay duration.</param>
         protected async Task WaitIfLiveAsync(TimeSpan delayDuration)
         {
-            if (TestEnvironment.Mode == RecordedTestMode.Live)
+            if (TestEnvironment.Mode == RecordedTestMode.Live || TestEnvironment.Mode == RecordedTestMode.Record)
             {
                 await Task.Delay(delayDuration);
             }

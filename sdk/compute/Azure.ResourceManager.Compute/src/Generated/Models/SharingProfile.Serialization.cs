@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -25,11 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(CommunityGalleryInfo))
             {
                 writer.WritePropertyName("communityGalleryInfo");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(CommunityGalleryInfo);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(CommunityGalleryInfo.ToString()).RootElement);
-#endif
+                writer.WriteObjectValue(CommunityGalleryInfo);
             }
             writer.WriteEndObject();
         }
@@ -38,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<GallerySharingPermissionType> permissions = default;
             Optional<IReadOnlyList<SharingProfileGroup>> groups = default;
-            Optional<BinaryData> communityGalleryInfo = default;
+            Optional<CommunityGalleryInfo> communityGalleryInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("permissions"))
@@ -73,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    communityGalleryInfo = BinaryData.FromString(property.Value.GetRawText());
+                    communityGalleryInfo = CommunityGalleryInfo.DeserializeCommunityGalleryInfo(property.Value);
                     continue;
                 }
             }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="frontendIPConfiguration"> A reference to frontend IP addresses. </param>
         /// <param name="backendIPConfiguration"> A reference to a private IP address defined on a network interface of a VM. Traffic sent to the frontend port of each of the frontend IP configurations is forwarded to the backend IP. </param>
         /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableFloatingIP"> Configures a virtual machine&apos;s endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can&apos;t be changed after you create the endpoint. </param>
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="provisioningState"> The provisioning state of the inbound NAT rule resource. </param>
-        internal InboundNatRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, WritableSubResource frontendIPConfiguration, NetworkInterfaceIPConfigurationData backendIPConfiguration, LoadBalancingTransportProtocol? protocol, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal InboundNatRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource frontendIPConfiguration, NetworkInterfaceIPConfigurationData backendIPConfiguration, LoadBalancingTransportProtocol? protocol, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            ETag = eTag;
+            ETag = etag;
             FrontendIPConfiguration = frontendIPConfiguration;
             BackendIPConfiguration = backendIPConfiguration;
             Protocol = protocol;

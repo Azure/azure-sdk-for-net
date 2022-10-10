@@ -19,22 +19,12 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("ManagedIdentity", "Operations", "2021-09-30-preview"),
-                new Tuple<string, string, string>("ManagedIdentity", "SystemAssignedIdentities", "2021-09-30-preview"),
-                new Tuple<string, string, string>("ManagedIdentity", "UserAssignedIdentities", "2021-09-30-preview"),
+                new Tuple<string, string, string>("ManagedIdentity", "FederatedIdentityCredentials", "2022-01-31-preview"),
+                new Tuple<string, string, string>("ManagedIdentity", "Operations", "2022-01-31-preview"),
+                new Tuple<string, string, string>("ManagedIdentity", "SystemAssignedIdentities", "2022-01-31-preview"),
+                new Tuple<string, string, string>("ManagedIdentity", "UserAssignedIdentities", "2022-01-31-preview"),
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "2.0.4421";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/msi/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=D:\\dev\\azure-sdk-for-net\\sdk";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "140d83c74936b2ca952209efce04a6847eff9c02";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-

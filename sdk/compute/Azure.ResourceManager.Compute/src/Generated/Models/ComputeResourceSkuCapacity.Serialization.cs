@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<long> minimum = default;
             Optional<long> maximum = default;
             Optional<long> @default = default;
-            Optional<ResourceSkuCapacityScaleType> scaleType = default;
+            Optional<ComputeResourceSkuCapacityScaleType> scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimum"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scaleType = property.Value.GetString().ToResourceSkuCapacityScaleType();
+                    scaleType = property.Value.GetString().ToComputeResourceSkuCapacityScaleType();
                     continue;
                 }
             }

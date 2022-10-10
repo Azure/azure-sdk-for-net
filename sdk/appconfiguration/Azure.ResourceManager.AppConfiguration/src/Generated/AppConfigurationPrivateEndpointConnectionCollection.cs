@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
     /// A class representing a collection of <see cref="AppConfigurationPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="AppConfigurationPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="ConfigurationStoreResource" />.
-    /// To get an <see cref="AppConfigurationPrivateEndpointConnectionCollection" /> instance call the GetAppConfigurationPrivateEndpointConnections method from an instance of <see cref="ConfigurationStoreResource" />.
+    /// Each <see cref="AppConfigurationPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="AppConfigurationStoreResource" />.
+    /// To get an <see cref="AppConfigurationPrivateEndpointConnectionCollection" /> instance call the GetAppConfigurationPrivateEndpointConnections method from an instance of <see cref="AppConfigurationStoreResource" />.
     /// </summary>
     public partial class AppConfigurationPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<AppConfigurationPrivateEndpointConnectionResource>, IAsyncEnumerable<AppConfigurationPrivateEndpointConnectionResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppConfiguration
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ConfigurationStoreResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ConfigurationStoreResource.ResourceType), nameof(id));
+            if (id.ResourceType != AppConfigurationStoreResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppConfigurationStoreResource.ResourceType), nameof(id));
         }
 
         /// <summary>

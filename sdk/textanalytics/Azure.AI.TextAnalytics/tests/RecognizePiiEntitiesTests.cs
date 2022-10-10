@@ -237,7 +237,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         [RecordedTest]
         [Ignore("LRO not implemented")]
         public async Task RecognizePiiEntitiesWithMultipleActions()

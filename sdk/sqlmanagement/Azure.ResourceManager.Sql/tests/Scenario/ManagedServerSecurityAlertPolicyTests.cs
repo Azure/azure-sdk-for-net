@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 State = SecurityAlertsPolicyState.Enabled,
                 DisabledAlerts = { },
                 EmailAddresses = { },
-                EmailAccountAdmins = false,
+                SendToEmailAccountAdmins = false,
                 RetentionDays = 0,
             };
             var securityAlertPolicie = await collection.CreateOrUpdateAsync(WaitUntil.Completed, securityAlertPoliciesName, data);

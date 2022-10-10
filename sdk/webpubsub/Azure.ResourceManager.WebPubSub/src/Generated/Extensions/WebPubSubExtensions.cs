@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<NameAvailability>> CheckWebPubSubNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<WebPubSubNameAvailability>> CheckWebPubSubNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<NameAvailability> CheckWebPubSubNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<WebPubSubNameAvailability> CheckWebPubSubNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -222,20 +222,20 @@ namespace Azure.ResourceManager.WebPubSub
         }
         #endregion
 
-        #region SharedPrivateLinkResource
+        #region WebPubSubSharedPrivateLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="SharedPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SharedPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebPubSubSharedPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebPubSubSharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="WebPubSubSharedPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SharedPrivateLinkResource" /> object. </returns>
-        public static SharedPrivateLinkResource GetSharedPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebPubSubSharedPrivateLinkResource" /> object. </returns>
+        public static WebPubSubSharedPrivateLinkResource GetWebPubSubSharedPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SharedPrivateLinkResource.ValidateResourceId(id);
-                return new SharedPrivateLinkResource(client, id);
+                WebPubSubSharedPrivateLinkResource.ValidateResourceId(id);
+                return new WebPubSubSharedPrivateLinkResource(client, id);
             }
             );
         }

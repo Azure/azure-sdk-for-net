@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Exchange request properties. </summary>
@@ -16,6 +18,6 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> SessionId that was returned by CalculateExchange API. </summary>
-        public string SessionId { get; set; }
+        public Guid? SessionId { get; set; }
     }
 }

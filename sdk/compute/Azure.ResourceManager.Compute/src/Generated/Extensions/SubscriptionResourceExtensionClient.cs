@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Compute
         private DedicatedHostGroupsRestOperations _dedicatedHostGroupRestClient;
         private ClientDiagnostics _sshPublicKeyClientDiagnostics;
         private SshPublicKeysRestOperations _sshPublicKeyRestClient;
-        private ClientDiagnostics _imageClientDiagnostics;
-        private ImagesRestOperations _imageRestClient;
+        private ClientDiagnostics _diskImageImagesClientDiagnostics;
+        private ImagesRestOperations _diskImageImagesRestClient;
         private ClientDiagnostics _restorePointGroupRestorePointCollectionsClientDiagnostics;
         private RestorePointCollectionsRestOperations _restorePointGroupRestorePointCollectionsRestClient;
         private ClientDiagnostics _capacityReservationGroupClientDiagnostics;
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Compute
         private DedicatedHostGroupsRestOperations DedicatedHostGroupRestClient => _dedicatedHostGroupRestClient ??= new DedicatedHostGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DedicatedHostGroupResource.ResourceType));
         private ClientDiagnostics SshPublicKeyClientDiagnostics => _sshPublicKeyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", SshPublicKeyResource.ResourceType.Namespace, Diagnostics);
         private SshPublicKeysRestOperations SshPublicKeyRestClient => _sshPublicKeyRestClient ??= new SshPublicKeysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SshPublicKeyResource.ResourceType));
-        private ClientDiagnostics ImageClientDiagnostics => _imageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ImageResource.ResourceType.Namespace, Diagnostics);
-        private ImagesRestOperations ImageRestClient => _imageRestClient ??= new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ImageResource.ResourceType));
+        private ClientDiagnostics DiskImageImagesClientDiagnostics => _diskImageImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", DiskImageResource.ResourceType.Namespace, Diagnostics);
+        private ImagesRestOperations DiskImageImagesRestClient => _diskImageImagesRestClient ??= new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DiskImageResource.ResourceType));
         private ClientDiagnostics RestorePointGroupRestorePointCollectionsClientDiagnostics => _restorePointGroupRestorePointCollectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", RestorePointGroupResource.ResourceType.Namespace, Diagnostics);
         private RestorePointCollectionsRestOperations RestorePointGroupRestorePointCollectionsRestClient => _restorePointGroupRestorePointCollectionsRestClient ??= new RestorePointCollectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RestorePointGroupResource.ResourceType));
         private ClientDiagnostics CapacityReservationGroupClientDiagnostics => _capacityReservationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", CapacityReservationGroupResource.ResourceType.Namespace, Diagnostics);
@@ -1658,17 +1658,17 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: Images_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ImageResource> GetImagesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DiskImageResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiskImageResource> GetDiskImagesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ImageResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DiskImageResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ImageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetImages");
+                using var scope = DiskImageImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiskImages");
                 scope.Start();
                 try
                 {
-                    var response = await ImageRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await DiskImageImagesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1676,14 +1676,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            async Task<Page<ImageResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DiskImageResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ImageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetImages");
+                using var scope = DiskImageImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiskImages");
                 scope.Start();
                 try
                 {
-                    var response = await ImageRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await DiskImageImagesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1700,17 +1700,17 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: Images_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ImageResource> GetImages(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiskImageResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiskImageResource> GetDiskImages(CancellationToken cancellationToken = default)
         {
-            Page<ImageResource> FirstPageFunc(int? pageSizeHint)
+            Page<DiskImageResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ImageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetImages");
+                using var scope = DiskImageImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiskImages");
                 scope.Start();
                 try
                 {
-                    var response = ImageRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = DiskImageImagesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1718,14 +1718,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            Page<ImageResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DiskImageResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ImageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetImages");
+                using var scope = DiskImageImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiskImages");
                 scope.Start();
                 try
                 {
-                    var response = ImageRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = DiskImageImagesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2497,11 +2497,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ComputeResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ComputeResourceSku> GetResourceSkusAsync(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ComputeResourceSku> GetComputeResourceSkusAsync(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ComputeResourceSku>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
+                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetComputeResourceSkus");
                 scope.Start();
                 try
                 {
@@ -2516,7 +2516,7 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<ComputeResourceSku>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
+                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetComputeResourceSkus");
                 scope.Start();
                 try
                 {
@@ -2541,11 +2541,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ComputeResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ComputeResourceSku> GetResourceSkus(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ComputeResourceSku> GetComputeResourceSkus(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             Page<ComputeResourceSku> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
+                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetComputeResourceSkus");
                 scope.Start();
                 try
                 {
@@ -2560,7 +2560,7 @@ namespace Azure.ResourceManager.Compute
             }
             Page<ComputeResourceSku> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
+                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetComputeResourceSkus");
                 scope.Start();
                 try
                 {

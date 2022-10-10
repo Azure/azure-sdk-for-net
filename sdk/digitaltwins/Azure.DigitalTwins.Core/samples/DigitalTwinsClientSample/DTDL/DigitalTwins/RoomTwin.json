@@ -1,6 +1,12 @@
 ﻿{
     "$metadata": {
-        "$model": "dtmi:com:samples:Room;1"
+        "$model": "dtmi:com:samples:Room;1",
+        "Temperature": {
+            "sourceTime": "2022-05-31T19:01:31.073819Z"
+        },
+        "Humidity": {
+            "sourceTime": "2022-05-31T19:01:31.120392Z"
+        }
     },
     "Temperature": 80,
     "Humidity": 25,
@@ -8,8 +14,12 @@
     "EmployeeId": "Employee1",
     "wifiAccessPoint": {
         "$metadata": {
+            "TransmissionPower": {
+                "sourceTime": "2022-05-31T19:01:30.736273Z"
+            }
         },
         "RouterName": "Cisco1",
-        "Network": "Room1"
+        "Network": "Room1",
+        "TransmissionPower": 100.0
     }
 }

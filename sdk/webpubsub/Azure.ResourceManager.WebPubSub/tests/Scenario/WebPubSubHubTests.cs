@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
         private async Task<WebPubSubHubResource> CreateDefaultWebPubSubHub(WebPubSubHubCollection collection, string name)
         {
-            IList<Models.EventHandler> eventHandlers = new List<Models.EventHandler>()
+            IList<Models.WebPubSubEventHandler> eventHandlers = new List<Models.WebPubSubEventHandler>()
             {
-                new Models.EventHandler("http://example.com/api/{hub}/{event}")
+                new Models.WebPubSubEventHandler("http://example.com/api/{hub}/{event}")
                 {
                     SystemEvents ={"none"},
                     Auth = new UpstreamAuthSettings(),
@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Needs to be fixed before GA")]
         public async Task CreateOrUpdate()
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
@@ -88,7 +87,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Needs to be fixed before GA")]
         public async Task CheckIfExist()
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
@@ -103,7 +101,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Needs to be fixed before GA")]
         public async Task Get()
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
@@ -121,7 +118,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Needs to be fixed before GA")]
         public async Task GetAll()
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
@@ -139,7 +135,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Needs to be fixed before GA")]
         public async Task Delete()
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");

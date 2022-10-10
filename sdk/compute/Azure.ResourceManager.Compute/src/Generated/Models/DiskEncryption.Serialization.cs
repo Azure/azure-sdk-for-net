@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static DiskEncryption DeserializeDiskEncryption(JsonElement element)
         {
             Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Optional<EncryptionType> type = default;
+            Optional<ComputeEncryptionType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskEncryptionSetId"))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new EncryptionType(property.Value.GetString());
+                    type = new ComputeEncryptionType(property.Value.GetString());
                     continue;
                 }
             }

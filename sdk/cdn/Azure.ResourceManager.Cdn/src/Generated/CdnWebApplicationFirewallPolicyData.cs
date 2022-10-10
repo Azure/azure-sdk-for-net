@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="policySettings"> Describes  policySettings for policy. </param>
         /// <param name="rateLimitSettings"> Describes rate limit rules inside the policy. </param>
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointLinks"> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </param>
         /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
         /// <param name="resourceState"> Resource status of the policy. </param>
-        internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, CdnSku sku, WafPolicySettings policySettings, RateLimitRuleList rateLimitSettings, CustomRuleList customSettings, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> endpointLinks, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState) : base(id, name, resourceType, systemData, tags, location)
+        internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, CdnSku sku, WafPolicySettings policySettings, RateLimitRuleList rateLimitSettings, CustomRuleList customSettings, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> endpointLinks, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = eTag;
+            ETag = etag;
             Sku = sku;
             PolicySettings = policySettings;
             RateLimitSettings = rateLimitSettings;

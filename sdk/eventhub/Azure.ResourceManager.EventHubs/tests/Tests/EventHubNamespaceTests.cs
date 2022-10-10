@@ -20,24 +20,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
     public class EventHubNamespaceTests : EventHubTestBase
     {
         private ResourceGroupResource _resourceGroup;
-        public EventHubNamespaceTests(bool isAsync) : base(isAsync)
+        public EventHubNamespaceTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
-        }
-
-        [TearDown]
-        public async Task ClearNamespaces()
-        {
-            //remove all namespaces under current resource group
-            if (_resourceGroup != null)
-            {
-                EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
-                List<EventHubsNamespaceResource> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
-                foreach (EventHubsNamespaceResource eventHubNamespace in namespaceList)
-                {
-                    await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
-                }
-                _resourceGroup = null;
-            }
         }
 
         [Test]
@@ -296,19 +281,19 @@ namespace Azure.ResourceManager.EventHubs.Tests
                     {
                         Name = "default1",
                         AddressPrefix = "10.0.0.0/24",
-                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
+                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.EventHub" } }
                     },
                     new SubnetData
                     {
                         Name = "default2",
                         AddressPrefix = "10.0.1.0/24",
-                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
+                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.EventHub" } }
                     },
                     new SubnetData
                     {
                         Name = "default3",
                         AddressPrefix = "10.0.2.0/24",
-                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
+                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.EventHub" } }
                     }
                 },
                 Location = "eastus2"
@@ -353,10 +338,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
             await virtualNetwork.DeleteAsync(WaitUntil.Completed);
         }
 
-        [Test]
-        [RecordedTest]
-        public async Task AddSetRemoveTag()
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task AddSetRemoveTag(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();

@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of RequiredTraffic. </summary>
         /// <param name="protocol"> The protocol of required traffic. </param>
         /// <param name="port"> The port of required traffic. </param>
-        /// <param name="iPs"> The ip list of required traffic. </param>
+        /// <param name="ips"> The ip list of required traffic. </param>
         /// <param name="fqdns"> The FQDN list of required traffic. </param>
         /// <param name="direction"> The direction of required traffic. </param>
-        internal RequiredTraffic(string protocol, int? port, IReadOnlyList<string> iPs, IReadOnlyList<string> fqdns, TrafficDirection? direction)
+        internal RequiredTraffic(string protocol, int? port, IReadOnlyList<string> ips, IReadOnlyList<string> fqdns, TrafficDirection? direction)
         {
             Protocol = protocol;
             Port = port;
-            IPs = iPs;
+            IPs = ips;
             Fqdns = fqdns;
             Direction = direction;
         }

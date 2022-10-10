@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
         /// <param name="service"> Service endpoint name. </param>
         /// <param name="serviceResources"> A list of service resources. </param>
         /// <param name="provisioningState"> The provisioning state of the service endpoint policy definition resource. </param>
-        internal ServiceEndpointPolicyDefinitionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, string description, string service, IList<ResourceIdentifier> serviceResources, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ServiceEndpointPolicyDefinitionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string description, string service, IList<ResourceIdentifier> serviceResources, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            ETag = eTag;
+            ETag = etag;
             Description = description;
             Service = service;
             ServiceResources = serviceResources;

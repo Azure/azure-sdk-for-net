@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="creationOn"> Timestamp when this instance was created. </param>
+        /// <param name="createdOn"> Timestamp when this instance was created. </param>
         /// <param name="recommendationId"> A GUID value that each recommendation object is associated with. </param>
         /// <param name="resourceId"> Full ARM resource ID string that this recommendation object is associated with. </param>
         /// <param name="resourceScope"> Name of a resource type this recommendation applies, e.g. Subscription, ServerFarm, Site. </param>
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="bladeName"> Deep link to a blade on the portal. </param>
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? creationOn, Guid? recommendationId, string resourceId, ResourceScopeType? resourceScope, string ruleName, string displayName, string message, NotificationLevel? level, Channel? channels, IReadOnlyList<string> categoryTags, string actionName, int? enabled, IList<string> states, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? nextNotificationOn, DateTimeOffset? notificationExpirationOn, DateTimeOffset? notifiedOn, double? score, bool? isDynamic, string extensionName, string bladeName, string forwardLink, string kind) : base(id, name, resourceType, systemData)
+        internal AppServiceRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, Guid? recommendationId, ResourceIdentifier resourceId, ResourceScopeType? resourceScope, string ruleName, string displayName, string message, NotificationLevel? level, RecommendationChannel? channels, IReadOnlyList<string> categoryTags, string actionName, int? enabled, IList<string> states, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? nextNotificationOn, DateTimeOffset? notificationExpirationOn, DateTimeOffset? notifiedOn, double? score, bool? isDynamic, string extensionName, string bladeName, string forwardLink, string kind) : base(id, name, resourceType, systemData)
         {
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             RecommendationId = recommendationId;
             ResourceId = resourceId;
             ResourceScope = resourceScope;
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Timestamp when this instance was created. </summary>
-        public DateTimeOffset? CreationOn { get; set; }
+        public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> A GUID value that each recommendation object is associated with. </summary>
         public Guid? RecommendationId { get; set; }
         /// <summary> Full ARM resource ID string that this recommendation object is associated with. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Name of a resource type this recommendation applies, e.g. Subscription, ServerFarm, Site. </summary>
         public ResourceScopeType? ResourceScope { get; set; }
         /// <summary> Unique name of the rule. </summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Level indicating how critical this recommendation can impact. </summary>
         public NotificationLevel? Level { get; set; }
         /// <summary> List of channels that this recommendation can apply. </summary>
-        public Channel? Channels { get; set; }
+        public RecommendationChannel? Channels { get; set; }
         /// <summary> The list of category tags that this recommendation belongs to. </summary>
         public IReadOnlyList<string> CategoryTags { get; }
         /// <summary> Name of action recommended by this object. </summary>

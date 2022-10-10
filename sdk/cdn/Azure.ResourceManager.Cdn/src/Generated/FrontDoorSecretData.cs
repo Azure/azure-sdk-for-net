@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> The name of the profile which holds the secret. </param>
         /// <param name="properties">
         /// object which contains secret parameters
-        /// Please note <see cref="SecretProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FrontDoorSecretProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="ManagedCertificateProperties"/> and <see cref="UriSigningKeyProperties"/>.
         /// </param>
-        internal FrontDoorSecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, string profileName, SecretProperties properties) : base(id, name, resourceType, systemData)
+        internal FrontDoorSecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, string profileName, FrontDoorSecretProperties properties) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Cdn
         public string ProfileName { get; }
         /// <summary>
         /// object which contains secret parameters
-        /// Please note <see cref="SecretProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FrontDoorSecretProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="ManagedCertificateProperties"/> and <see cref="UriSigningKeyProperties"/>.
         /// </summary>
-        public SecretProperties Properties { get; set; }
+        public FrontDoorSecretProperties Properties { get; set; }
     }
 }

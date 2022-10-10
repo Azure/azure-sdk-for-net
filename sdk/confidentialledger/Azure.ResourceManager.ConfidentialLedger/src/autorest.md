@@ -17,7 +17,7 @@ modelerfour:
   flatten-payloads: false
 
 override-operation-name:
-  CheckNameAvailability: CheckLedgerNameAvailability
+  CheckNameAvailability: CheckConfidentialLedgerNameAvailability
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -25,13 +25,14 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'principalId': 'uuid'
 
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -41,22 +42,23 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
   AAD: Aad
 
-directive:
-  - from: confidentialledger.json
-    where: $.definitions
-    transform: >
-      $.ProvisioningState['x-ms-enum']['name'] = 'LedgerProvisioningState';
-  - from: types.json
-    where: $.definitions
-    transform: >
-      $.CheckNameAvailabilityRequest['x-ms-client-name'] = 'LedgerNameAvailabilityRequest';
-      $.CheckNameAvailabilityResponse['x-ms-client-name'] = 'LedgerNameAvailabilityResult';
+rename-mapping:
+  CheckNameAvailabilityRequest: ConfidentialLedgerNameAvailabilityContent
+  CheckNameAvailabilityRequest.type: -|resource-type
+  CheckNameAvailabilityResponse: ConfidentialLedgerNameAvailabilityResult
+  CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
+  CheckNameAvailabilityReason: ConfidentialLedgerNameUnavailableReason
+  LedgerProperties: ConfidentialLedgerProperties
+  LedgerRoleName: ConfidentialLedgerRoleName
+  LedgerType: ConfidentialLedgerType
+  ProvisioningState: ConfidentialLedgerProvisioningState
 
 ```

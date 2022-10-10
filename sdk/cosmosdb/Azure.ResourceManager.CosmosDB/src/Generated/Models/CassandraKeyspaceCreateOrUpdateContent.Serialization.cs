@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            CassandraKeyspaceResource resource = default;
-            Optional<CreateUpdateOptions> options = default;
+            CassandraKeyspaceResourceInfo resource = default;
+            Optional<CosmosDBCreateUpdateConfig> options = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         if (property0.NameEquals("resource"))
                         {
-                            resource = CassandraKeyspaceResource.DeserializeCassandraKeyspaceResource(property0.Value);
+                            resource = CassandraKeyspaceResourceInfo.DeserializeCassandraKeyspaceResourceInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("options"))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            options = CreateUpdateOptions.DeserializeCreateUpdateOptions(property0.Value);
+                            options = CosmosDBCreateUpdateConfig.DeserializeCosmosDBCreateUpdateConfig(property0.Value);
                             continue;
                         }
                     }

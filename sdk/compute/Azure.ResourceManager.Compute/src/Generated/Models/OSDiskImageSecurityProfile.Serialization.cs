@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static OSDiskImageSecurityProfile DeserializeOSDiskImageSecurityProfile(JsonElement element)
         {
-            Optional<ConfidentialVmEncryptionType> confidentialVMEncryptionType = default;
-            Optional<string> secureVMDiskEncryptionSetId = default;
+            Optional<ConfidentialVmEncryptionType> confidentialVmEncryptionType = default;
+            Optional<string> secureVmDiskEncryptionSetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("confidentialVMEncryptionType"))
@@ -41,16 +41,16 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    confidentialVMEncryptionType = new ConfidentialVmEncryptionType(property.Value.GetString());
+                    confidentialVmEncryptionType = new ConfidentialVmEncryptionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("secureVMDiskEncryptionSetId"))
                 {
-                    secureVMDiskEncryptionSetId = property.Value.GetString();
+                    secureVmDiskEncryptionSetId = property.Value.GetString();
                     continue;
                 }
             }
-            return new OSDiskImageSecurityProfile(Optional.ToNullable(confidentialVMEncryptionType), secureVMDiskEncryptionSetId.Value);
+            return new OSDiskImageSecurityProfile(Optional.ToNullable(confidentialVmEncryptionType), secureVmDiskEncryptionSetId.Value);
         }
     }
 }

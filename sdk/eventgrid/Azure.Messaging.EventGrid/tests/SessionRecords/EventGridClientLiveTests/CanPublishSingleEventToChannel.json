@@ -1,0 +1,36 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://jolovegtsts111112partner-namespace.westus2-1.eventgrid.azure.net/api/events?api-version=2018-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "aeg-channel-name": "jolovegtsts111112partner-channel",
+        "aeg-sas-key": "Sanitized",
+        "Content-Length": "250",
+        "Content-Type": "application/cloudevents-batch\u002Bjson; charset=utf-8",
+        "traceparent": "00-1867c2356a43124d9b82ad42e63cb399-9c2881f8e918304f-00",
+        "User-Agent": "azsdk-net-Messaging.EventGrid/4.11.0-alpha.20220629.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "0f521f7c11c00983f99e1fd9d0d480a7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{\u0022id\u0022:\u0022fa20b593-7fa3-843b-543b-176cd927f851\u0022,\u0022source\u0022:\u0022record\u0022,\u0022type\u0022:\u0022Microsoft.MockPublisher.TestEvent\u0022,\u0022data\u0022:{\u0022Name\u0022:\u0022name\u0022,\u0022Age\u0022:1},\u0022time\u0022:\u00222022-06-29T19:43:32.8831098-07:00\u0022,\u0022specversion\u0022:\u00221.0\u0022,\u0022subject\u0022:\u0022Subject-1\u0022,\u0022traceparent\u0022:\u0022Sanitized\u0022}]",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2018-01-01",
+        "Content-Length": "0",
+        "Date": "Thu, 30 Jun 2022 02:43:32 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-request-id": "0b2e675f-7441-4e26-be21-23bf8bea7f5e"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2022-06-29T19:43:32.8831098-07:00",
+    "EVENT_GRID_PARTNER_CHANNEL_NAME": "jolovegtsts111112partner-channel",
+    "EVENT_GRID_PARTNER_NAMESPACE_ENDPOINT": "https://jolovegtsts111112partner-namespace.westus2-1.eventgrid.azure.net/api/events",
+    "EVENT_GRID_PARTNER_NAMESPACE_KEY": "Kg==",
+    "RandomSeed": "669616680"
+  }
+}

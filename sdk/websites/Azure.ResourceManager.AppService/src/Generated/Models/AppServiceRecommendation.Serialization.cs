@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreationOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime");
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(RecommendationId))
             {
@@ -153,13 +153,13 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<Guid> recommendationId = default;
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<ResourceScopeType> resourceScope = default;
             Optional<string> ruleName = default;
             Optional<string> displayName = default;
             Optional<string> message = default;
             Optional<NotificationLevel> level = default;
-            Optional<Channel> channels = default;
+            Optional<RecommendationChannel> channels = default;
             Optional<IReadOnlyList<string>> categoryTags = default;
             Optional<string> actionName = default;
             Optional<int> enabled = default;
@@ -237,7 +237,12 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("resourceId"))
                         {
-                            resourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("resourceScope"))
@@ -282,7 +287,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            channels = property0.Value.GetString().ToChannel();
+                            channels = property0.Value.GetString().ToRecommendationChannel();
                             continue;
                         }
                         if (property0.NameEquals("categoryTags"))

@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="collectorPolicies"> Collector Policies for Azure Traffic Collector. </param>
         /// <param name="virtualHub"> The virtualHub to which the Azure Traffic Collector belongs. </param>
         /// <param name="provisioningState"> The provisioning state of the application rule collection resource. </param>
-        internal AzureTrafficCollectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, IList<CollectorPolicyData> collectorPolicies, SubResource virtualHub, CollectorProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal AzureTrafficCollectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<CollectorPolicyData> collectorPolicies, SubResource virtualHub, CollectorProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = eTag;
+            ETag = etag;
             CollectorPolicies = collectorPolicies;
             VirtualHub = virtualHub;
             ProvisioningState = provisioningState;

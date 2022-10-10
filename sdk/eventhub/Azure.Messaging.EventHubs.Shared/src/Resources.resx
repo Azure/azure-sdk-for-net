@@ -265,7 +265,7 @@
     <value>The last enqueued event properties cannot be read when an event is not available.</value>
   </data>
   <data name="DeveloperCodeError" xml:space="preserve">
-    <value>An error was encountered while executing custom code, such as in an event handler.</value>
+    <value>An error was encountered while executing developer-provided code, such as in an event handler.</value>
   </data>
   <data name="DeveloperCodeExceptionMessageMask" xml:space="preserve">
     <value>[Developer Code Exception]: {0}.</value>
@@ -319,7 +319,7 @@
     <value>This handler cannot be changed after an event has been enqueued; closing or disposing the producer will unregister any current hander.</value>
   </data>
   <data name="ProcessorLoadBalancingCycleSlowMask" xml:space="preserve">
-    <value>"A load balancing cycle has taken too long to complete.  A slow cycle can cause stability issues with partition ownership.  Consider investigating storage latency and thread pool health.  Common causes are soft delete being enabled for storage and too many partitions owned.  You may also want to consider increasing the 'PartitionOwnershipExpirationInterval' in the processor options.  Cycle Duration: '{0:0.00}' seconds.  Partition Ownership Interval '{1:0:00}' seconds.")]</value>
+    <value>WARNING: A load balancing cycle has taken too long to complete.  A slow cycle can cause stability issues with partition ownership.  Consider investigating storage latency and thread pool health.  Common causes are soft delete being enabled for storage and too many partitions owned.  You may also want to consider increasing the 'PartitionOwnershipExpirationInterval' in the processor options.  Cycle Duration: '{0:0.00}' seconds.  Partition Ownership Interval '{1:0:00}' seconds.</value>
   </data>
   <data name="CannotEnqueueEventWithoutHandler" xml:space="preserve">
     <value>Events cannot be enqueued for processing without the '{0}' handler set.</value>
@@ -329,5 +329,17 @@
   </data>
   <data name="EventTooLargeMask" xml:space="preserve">
     <value>The event is too large for be published to the Event Hub: '{0}`.  Size limit: {1} bytes.</value>
+  </data>
+  <data name="DeveloperCodeEventProcessingError" xml:space="preserve">
+    <value>An error was encountered while executing developer-provided code to process events.  On most hosts, this will fault the task responsible for partition processing, causing it to be restarted from the last checkpoint.  On some hosts, it may crash the process.  It is very strongly advised that all developer-provided code include a try/catch wrapper and ensure that no exceptions are allowed to propagate up the stack.  Exception details can be found in the inner exception.</value>
+  </data>
+  <data name="OperationEventProcessingDeveloperCode" xml:space="preserve">
+    <value>Executing developer-provided code to process events.</value>
+  </data>
+  <data name="ProcessorLoadBalancingIntervalsTooCloseMask" xml:space="preserve">
+    <value>WARNING: The 'PartitionOwnershipExpirationInterval' and 'LoadBalancingUpdateInterval' are configured for intervals that may cause stability issues with partition ownership.  It is recommended that the 'PartitionOwnershipExpirationInterval' be at least 3 times greater than the 'LoadBalancingUpdateInterval' and very strongly advised that it should be no less than twice as long.  When these intervals are too close together, ownership may expire before it is renewed during load balancing which will cause partitions to migrate.  Consider adjusting the intervals in the processor options if you experience issues.  Load Balancing Interval '{0:0:00}' seconds.  Partition Ownership Interval '{1:0:00}' seconds.</value>
+  </data>
+  <data name="TroubleshootingGuideLink" xml:space="preserve">
+    <value>For troubleshooting information, see https://aka.ms/azsdk/net/eventhubs/exceptions/troubleshoot</value>
   </data>
 </root>

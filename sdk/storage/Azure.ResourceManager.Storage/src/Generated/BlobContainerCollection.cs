@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BlobContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BlobContainerResource> GetAllAsync(string maxpagesize = null, string filter = null, ListContainersInclude? include = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BlobContainerResource> GetAllAsync(string maxpagesize = null, string filter = null, BlobContainerState? include = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<BlobContainerResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BlobContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BlobContainerResource> GetAll(string maxpagesize = null, string filter = null, ListContainersInclude? include = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BlobContainerResource> GetAll(string maxpagesize = null, string filter = null, BlobContainerState? include = null, CancellationToken cancellationToken = default)
         {
             Page<BlobContainerResource> FirstPageFunc(int? pageSizeHint)
             {

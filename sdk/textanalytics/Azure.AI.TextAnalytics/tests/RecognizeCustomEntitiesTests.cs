@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
+    [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
     public class RecognizeCustomEntitiesTests : TextAnalyticsClientLiveTestBase
     {
         public RecognizeCustomEntitiesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
@@ -286,6 +286,52 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IList<string> expected = new List<string> { "RecognizeCustomEntities", "RecognizeCustomEntitiesWithDisabledServiceLogs" };
             CollectionAssert.AreEquivalent(expected, RecognizeCustomEntitiesActionsResults.Select(result => result.ActionName));
+        }
+
+        [RecordedTest]
+        public async Task StartRecognizeCustomEntities()
+        {
+            TextAnalyticsClient client = GetClient();
+            RecognizeCustomEntitiesOperation operation = await client.StartRecognizeCustomEntitiesAsync(s_batchDocuments, TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName);
+
+            await PollUntilTimeout(operation);
+            Assert.IsTrue(operation.HasCompleted);
+
+            // Take the first page.
+            RecognizeCustomEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "1", e_document1ExpectedOutput },
+                { "2", s_document1ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(resultCollection, expectedOutput);
+        }
+
+        [RecordedTest]
+        public async Task StartRecognizeCustomEntitiesWithName()
+        {
+            TextAnalyticsClient client = GetClient();
+            RecognizeCustomEntitiesOperation operation = await client.StartRecognizeCustomEntitiesAsync(s_batchDocuments, TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName, new RecognizeCustomEntitiesOptions
+            {
+                DisplayName = "StartRecognizeCustomEntitiesWithName",
+            });
+
+            await PollUntilTimeout(operation);
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.AreEqual("StartRecognizeCustomEntitiesWithName", operation.DisplayName);
+
+            // Take the first page.
+            RecognizeCustomEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "1", e_document1ExpectedOutput },
+                { "2", s_document1ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(resultCollection, expectedOutput);
         }
 
         private RecognizeCustomEntitiesResultCollection ExtractDocumentsResultsFromResponse(AnalyzeActionsOperation analyzeActionOperation)

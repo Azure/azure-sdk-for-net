@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string StandardLRSValue = "Standard_LRS";
-        private const string PremiumLRSValue = "Premium_LRS";
-        private const string StandardZRSValue = "Standard_ZRS";
+        private const string StandardLrsValue = "Standard_LRS";
+        private const string PremiumLrsValue = "Premium_LRS";
+        private const string StandardZrsValue = "Standard_ZRS";
 
         /// <summary> Standard HDD locally redundant storage. </summary>
-        public static SnapshotStorageAccountType StandardLRS { get; } = new SnapshotStorageAccountType(StandardLRSValue);
+        public static SnapshotStorageAccountType StandardLrs { get; } = new SnapshotStorageAccountType(StandardLrsValue);
         /// <summary> Premium SSD locally redundant storage. </summary>
-        public static SnapshotStorageAccountType PremiumLRS { get; } = new SnapshotStorageAccountType(PremiumLRSValue);
+        public static SnapshotStorageAccountType PremiumLrs { get; } = new SnapshotStorageAccountType(PremiumLrsValue);
         /// <summary> Standard zone redundant storage. </summary>
-        public static SnapshotStorageAccountType StandardZRS { get; } = new SnapshotStorageAccountType(StandardZRSValue);
+        public static SnapshotStorageAccountType StandardZrs { get; } = new SnapshotStorageAccountType(StandardZrsValue);
         /// <summary> Determines if two <see cref="SnapshotStorageAccountType"/> values are the same. </summary>
         public static bool operator ==(SnapshotStorageAccountType left, SnapshotStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SnapshotStorageAccountType"/> values are not the same. </summary>

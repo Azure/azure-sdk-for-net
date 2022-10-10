@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             Optional<DateTimeOffset> updatedAt = default;
             Optional<string> serviceBusEndpoint = default;
             Optional<string> metricId = default;
-            Optional<EncryptionProperties> encryption = default;
+            Optional<ServiceBusEncryption> encryption = default;
             Optional<IList<ServiceBusPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> alternateName = default;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
+                            encryption = ServiceBusEncryption.DeserializeServiceBusEncryption(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"))

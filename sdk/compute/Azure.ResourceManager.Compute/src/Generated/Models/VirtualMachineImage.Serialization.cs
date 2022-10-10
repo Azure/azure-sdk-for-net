@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsDefined(Id))
             {
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -262,7 +263,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineImage(id.Value, name, location, Optional.ToDictionary(tags), extendedLocation.Value, plan.Value, osDiskImage.Value, Optional.ToList(dataDiskImages), automaticOSUpgradeProperties.Value, Optional.ToNullable(hyperVGeneration), disallowed.Value, Optional.ToList(features), Optional.ToNullable(architecture));
+            return new VirtualMachineImage(id.Value, name, location, Optional.ToDictionary(tags), extendedLocation, plan.Value, osDiskImage.Value, Optional.ToList(dataDiskImages), automaticOSUpgradeProperties.Value, Optional.ToNullable(hyperVGeneration), disallowed.Value, Optional.ToList(features), Optional.ToNullable(architecture));
         }
     }
 }

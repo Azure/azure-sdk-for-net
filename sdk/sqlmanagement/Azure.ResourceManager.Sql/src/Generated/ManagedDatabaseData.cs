@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="failoverGroupId"> Instance Failover Group resource identifier that this managed database belongs to. </param>
         /// <param name="recoverableDatabaseId"> The resource identifier of the recoverable database associated with create operation of this database. </param>
         /// <param name="longTermRetentionBackupResourceId"> The name of the Long Term Retention backup to be used for restore of this managed database. </param>
-        /// <param name="autoCompleteRestore"> Whether to auto complete restore of this managed database. </param>
+        /// <param name="allowAutoCompleteRestore"> Whether to auto complete restore of this managed database. </param>
         /// <param name="lastBackupName"> Last backup file name for restore of this managed database. </param>
-        internal ManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, string storageContainerSasToken, string failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? autoCompleteRestore, string lastBackupName) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, string storageContainerSasToken, ResourceIdentifier failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName) : base(id, name, resourceType, systemData, tags, location)
         {
             Collation = collation;
             Status = status;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql
             FailoverGroupId = failoverGroupId;
             RecoverableDatabaseId = recoverableDatabaseId;
             LongTermRetentionBackupResourceId = longTermRetentionBackupResourceId;
-            AutoCompleteRestore = autoCompleteRestore;
+            AllowAutoCompleteRestore = allowAutoCompleteRestore;
             LastBackupName = lastBackupName;
         }
 
@@ -75,6 +75,8 @@ namespace Azure.ResourceManager.Sql
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Earliest restore point in time for point in time restore. </summary>
         public DateTimeOffset? EarliestRestorePoint { get; }
+        /// <summary> Conditional. If createMode is PointInTimeRestore, this value is required. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
+        public DateTimeOffset? RestorePointInTime { get; set; }
         /// <summary> Geo paired region. </summary>
         public AzureLocation? DefaultSecondaryLocation { get; }
         /// <summary> Collation of the metadata catalog. </summary>
@@ -90,13 +92,13 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the storage container sas token. </summary>
         public string StorageContainerSasToken { get; set; }
         /// <summary> Instance Failover Group resource identifier that this managed database belongs to. </summary>
-        public string FailoverGroupId { get; }
+        public ResourceIdentifier FailoverGroupId { get; }
         /// <summary> The resource identifier of the recoverable database associated with create operation of this database. </summary>
         public ResourceIdentifier RecoverableDatabaseId { get; set; }
         /// <summary> The name of the Long Term Retention backup to be used for restore of this managed database. </summary>
         public ResourceIdentifier LongTermRetentionBackupResourceId { get; set; }
         /// <summary> Whether to auto complete restore of this managed database. </summary>
-        public bool? AutoCompleteRestore { get; set; }
+        public bool? AllowAutoCompleteRestore { get; set; }
         /// <summary> Last backup file name for restore of this managed database. </summary>
         public string LastBackupName { get; set; }
     }

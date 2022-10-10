@@ -88,27 +88,22 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(1, metrics.PartitionCount);
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
-            // Partition got its first message (Offset == null, LastEnqueued == 0)
-            this._checkpoints = new EventProcessorCheckpoint[]
-            {
-                new BlobCheckpointStoreInternal.BlobStorageCheckpoint { Offset = null,  SequenceNumber = 0 }
-            };
-
+            // Partition got its first message (no checkpoint, LastEnqueued == 0)
+            this._checkpoints = new EventProcessorCheckpoint[0];
             metrics = await _scaleMonitor.GetMetricsAsync();
 
             Assert.AreEqual(1, metrics.EventCount);
             Assert.AreEqual(1, metrics.PartitionCount);
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
-            // No instances assigned to process events on partition (Offset == null, LastEnqueued > 0)
-            this._checkpoints = new EventProcessorCheckpoint[]
-            {
-                new BlobCheckpointStoreInternal.BlobStorageCheckpoint { Offset = null, SequenceNumber = 0 }
-            };
+            // No instances assigned to process events on partition (no checkpoint, LastEnqueued > 0)
+            this._checkpoints = new EventProcessorCheckpoint[0];
 
             _partitions = new List<PartitionProperties>
             {
-                new TestPartitionProperties(lastSequenceNumber: 5)
+                new TestPartitionProperties(
+                    beginningSequenceNumber: 5,
+                    lastSequenceNumber: 10)
             };
 
             metrics = await _scaleMonitor.GetMetricsAsync();
@@ -117,10 +112,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(1, metrics.PartitionCount);
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
-            // Checkpointing is ahead of partition info (SequenceNumber > LastEnqueued)
+            // Checkpointing is ahead of partition info and invalid (SequenceNumber > LastEnqueued)
             this._checkpoints = new EventProcessorCheckpoint[]
             {
-                new BlobCheckpointStoreInternal.BlobStorageCheckpoint { Offset = 25, SequenceNumber = 11 }
+                new BlobCheckpointStoreInternal.BlobStorageCheckpoint { Offset = 999, SequenceNumber = 11 }
             };
 
             _partitions = new List<PartitionProperties>

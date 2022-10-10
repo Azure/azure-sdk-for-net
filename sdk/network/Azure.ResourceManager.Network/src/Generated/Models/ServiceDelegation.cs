@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="serviceName"> The name of the service to whom the subnet should be delegated (e.g. Microsoft.Sql/servers). </param>
         /// <param name="actions"> The actions permitted to the service upon delegation. </param>
         /// <param name="provisioningState"> The provisioning state of the service delegation resource. </param>
-        internal ServiceDelegation(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, string serviceName, IReadOnlyList<string> actions, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ServiceDelegation(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string serviceName, IReadOnlyList<string> actions, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            ETag = eTag;
+            ETag = etag;
             ServiceName = serviceName;
             Actions = actions;
             ProvisioningState = provisioningState;

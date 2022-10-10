@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Cosmos DB location metadata. </param>
-        internal CosmosDBLocationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LocationProperties properties) : base(id, name, resourceType, systemData)
+        internal CosmosDBLocationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CosmosDBLocationProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> Cosmos DB location metadata. </summary>
-        public LocationProperties Properties { get; set; }
+        public CosmosDBLocationProperties Properties { get; set; }
     }
 }

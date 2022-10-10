@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="backupOn"> The time the backup was taken. </param>
         /// <param name="backupExpireOn"> The time the long term retention backup will expire. </param>
         /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
-        internal ManagedInstanceLongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedInstanceName, DateTimeOffset? managedInstanceCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, BackupStorageRedundancy? backupStorageRedundancy) : base(id, name, resourceType, systemData)
+        internal ManagedInstanceLongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedInstanceName, DateTimeOffset? managedInstanceCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, SqlBackupStorageRedundancy? backupStorageRedundancy) : base(id, name, resourceType, systemData)
         {
             ManagedInstanceName = managedInstanceName;
             ManagedInstanceCreateOn = managedInstanceCreateOn;
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The time the long term retention backup will expire. </summary>
         public DateTimeOffset? BackupExpireOn { get; }
         /// <summary> The storage redundancy type of the backup. </summary>
-        public BackupStorageRedundancy? BackupStorageRedundancy { get; }
+        public SqlBackupStorageRedundancy? BackupStorageRedundancy { get; }
     }
 }

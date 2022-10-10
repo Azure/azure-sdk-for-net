@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of DatabaseAccountListConnectionStringsResult. </summary>
         internal DatabaseAccountListConnectionStringsResult()
         {
-            ConnectionStrings = new ChangeTrackingList<DatabaseAccountConnectionString>();
+            ConnectionStrings = new ChangeTrackingList<CosmosDBAccountConnectionString>();
         }
 
         /// <summary> Initializes a new instance of DatabaseAccountListConnectionStringsResult. </summary>
         /// <param name="connectionStrings"> An array that contains the connection strings for the Cosmos DB account. </param>
-        internal DatabaseAccountListConnectionStringsResult(IReadOnlyList<DatabaseAccountConnectionString> connectionStrings)
+        internal DatabaseAccountListConnectionStringsResult(IReadOnlyList<CosmosDBAccountConnectionString> connectionStrings)
         {
             ConnectionStrings = connectionStrings;
         }
 
         /// <summary> An array that contains the connection strings for the Cosmos DB account. </summary>
-        public IReadOnlyList<DatabaseAccountConnectionString> ConnectionStrings { get; }
+        public IReadOnlyList<CosmosDBAccountConnectionString> ConnectionStrings { get; }
     }
 }

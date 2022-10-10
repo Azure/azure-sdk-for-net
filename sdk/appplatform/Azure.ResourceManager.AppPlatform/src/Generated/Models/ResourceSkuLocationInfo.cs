@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         internal ResourceSkuLocationInfo()
         {
             Zones = new ChangeTrackingList<string>();
-            ZoneDetails = new ChangeTrackingList<ResourceSkuZoneDetails>();
+            ZoneDetails = new ChangeTrackingList<AppPlatformResourceSkuZoneDetails>();
         }
 
         /// <summary> Initializes a new instance of ResourceSkuLocationInfo. </summary>
         /// <param name="location"> Gets location of the SKU. </param>
         /// <param name="zones"> Gets list of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Gets details of capabilities available to a SKU in specific zones. </param>
-        internal ResourceSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<ResourceSkuZoneDetails> zoneDetails)
+        internal ResourceSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<AppPlatformResourceSkuZoneDetails> zoneDetails)
         {
             Location = location;
             Zones = zones;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Gets list of availability zones where the SKU is supported. </summary>
         public IReadOnlyList<string> Zones { get; }
         /// <summary> Gets details of capabilities available to a SKU in specific zones. </summary>
-        public IReadOnlyList<ResourceSkuZoneDetails> ZoneDetails { get; }
+        public IReadOnlyList<AppPlatformResourceSkuZoneDetails> ZoneDetails { get; }
     }
 }

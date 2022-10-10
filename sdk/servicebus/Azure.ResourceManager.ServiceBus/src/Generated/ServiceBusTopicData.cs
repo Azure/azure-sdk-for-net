@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="enablePartitioning"> Value that indicates whether the topic to be partitioned across multiple message brokers is enabled. </param>
         /// <param name="enableExpress"> Value that indicates whether Express Entities are enabled. An express topic holds a message in memory temporarily before writing it to persistent storage. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal ServiceBusTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? sizeInBytes, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? accessedOn, int? subscriptionCount, MessageCountDetails countDetails, TimeSpan? defaultMessageTimeToLive, int? maxSizeInMegabytes, long? maxMessageSizeInKilobytes, bool? requiresDuplicateDetection, TimeSpan? duplicateDetectionHistoryTimeWindow, bool? enableBatchedOperations, EntityStatus? status, bool? supportOrdering, TimeSpan? autoDeleteOnIdle, bool? enablePartitioning, bool? enableExpress, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal ServiceBusTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? sizeInBytes, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? accessedOn, int? subscriptionCount, MessageCountDetails countDetails, TimeSpan? defaultMessageTimeToLive, int? maxSizeInMegabytes, long? maxMessageSizeInKilobytes, bool? requiresDuplicateDetection, TimeSpan? duplicateDetectionHistoryTimeWindow, bool? enableBatchedOperations, ServiceBusMessagingEntityStatus? status, bool? supportOrdering, TimeSpan? autoDeleteOnIdle, bool? enablePartitioning, bool? enableExpress, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             SizeInBytes = sizeInBytes;
             CreatedOn = createdOn;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Value that indicates whether server-side batched operations are enabled. </summary>
         public bool? EnableBatchedOperations { get; set; }
         /// <summary> Enumerates the possible values for the status of a messaging entity. </summary>
-        public EntityStatus? Status { get; set; }
+        public ServiceBusMessagingEntityStatus? Status { get; set; }
         /// <summary> Value that indicates whether the topic supports ordering. </summary>
         public bool? SupportOrdering { get; set; }
         /// <summary> ISO 8601 timespan idle interval after which the topic is automatically deleted. The minimum duration is 5 minutes. </summary>

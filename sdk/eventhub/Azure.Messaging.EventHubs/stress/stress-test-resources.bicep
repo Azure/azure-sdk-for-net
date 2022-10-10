@@ -11,28 +11,18 @@ param testApplicationOid string
 param location string = resourceGroup().location
 
 var namespaceName = resourceGroup().name
-var shortNamespaceName = substring(replace(namespaceName, '-',''), 0, 15)
+var storageAccountName = 'storage${uniqueString(namespaceName)}'
 var defaultSASKeyName = 'RootManageSharedAccessKey'
 var eventHubsAuthRuleResourceId = resourceId('Microsoft.EventHub/namespaces/authorizationRules', namespaceName, defaultSASKeyName)
 
-var bufferedProducerName = 'bufferedproducertest'
-var bufferproducerEventHubPartitions = 10
-
-var eventProducerName = 'eventproducertest'
-var eventProducerEventHubPartitions = 10
-
-var burstBufferedProducerName = 'burstbufferedproducertest'
-var burstBufferedProducerEventHubPartitions = 10
-
-var concurrentBufferedProducerName = 'concurrentbufferedproducertest'
-var concurrentBufferedProducerEventHubPartitions = 10
+var eventHubName = 'stresstesteh'
+var eventHubPartitions = 8
 
 var processorTestName = 'processortest'
-var processorTestEventHubPartitions = 10
 
 // Storage Account Creation
 resource sa 'Microsoft.Storage/storageAccounts@2021-06-01' = {
-  name: shortNamespaceName
+  name: storageAccountName
   location: location
   sku: {
     name: 'Standard_LRS'
@@ -61,48 +51,12 @@ resource eventHubsNamespace 'Microsoft.EventHub/Namespaces@2015-08-01' = {
 }
 
 // Event Hubs Creation
-resource eventHubBufferedProducer 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
+resource eventHub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
   parent: eventHubsNamespace
-  name: bufferedProducerName
+  name: eventHubName
   properties: {
     messageRetentionInDays: 7
-    partitionCount: bufferproducerEventHubPartitions
-  }
-}
-
-resource eventHubEventProducer 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
-  parent: eventHubsNamespace
-  name: eventProducerName
-  properties: {
-    messageRetentionInDays: 7
-    partitionCount: eventProducerEventHubPartitions
-  }
-}
-
-resource eventHubBurstBufferedProducer 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
-  parent: eventHubsNamespace
-  name: burstBufferedProducerName
-  properties: {
-    messageRetentionInDays: 7
-    partitionCount: burstBufferedProducerEventHubPartitions
-  }
-}
-
-resource eventHubConcurrentBufferedProducer 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
-  parent: eventHubsNamespace
-  name: concurrentBufferedProducerName
-  properties: {
-    messageRetentionInDays: 7
-    partitionCount: concurrentBufferedProducerEventHubPartitions
-  }
-}
-
-resource eventHubProcessor 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
-  parent: eventHubsNamespace
-  name: processorTestName
-  properties: {
-    messageRetentionInDays: 7
-    partitionCount: processorTestEventHubPartitions
+    partitionCount: eventHubPartitions
   }
 }
 
@@ -114,15 +68,15 @@ output EVENTHUB_PER_TEST_LIMIT_MINUTES string = perTestExecutionLimitMinutes
 output EVENTHUB_NAMESPACE_CONNECTION_STRING string = listkeys(eventHubsAuthRuleResourceId, '2015-08-01').primaryConnectionString
 
 // Outputs for the BufferedProducerTest scenario
-output EVENTHUB_NAME_BUFFERED_PRODUCER_TEST string = eventHubBufferedProducer.name
+output EVENTHUB_NAME_BUFFERED_PRODUCER_TEST string = eventHub.name
 
 // Outputs for the EventProducerTest
-output EVENTHUB_NAME_EVENT_PRODUCER_TEST string = eventHubEventProducer.name
+output EVENTHUB_NAME_EVENT_PRODUCER_TEST string = eventHub.name
 
 // Outputs for the BurstBufferedProducerTest scenario
-output EVENTHUB_NAME_BURST_BUFFERED_PRODUCER_TEST string = eventHubBurstBufferedProducer.name
+output EVENTHUB_NAME_BURST_BUFFERED_PRODUCER_TEST string = eventHub.name
 
 // Outputs for the ProcessorTest scenario
-output EVENTHUB_NAME_PROCESSOR_TEST string = eventHubProcessor.name
+output EVENTHUB_NAME_PROCESSOR_TEST string = eventHub.name
 output STORAGE_BLOB_PROCESSOR_TEST string = processorTestName
 output STORAGE_ACCOUNT_PROCESSOR_TEST string = blobStorageConnectionString

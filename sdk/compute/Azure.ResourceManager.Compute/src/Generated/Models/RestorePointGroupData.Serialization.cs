@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute
             Optional<SystemData> systemData = default;
             Optional<RestorePointGroupSource> source = default;
             Optional<string> provisioningState = default;
-            Optional<string> restorePointCollectionId = default;
+            Optional<string> restorePointGroupId = default;
             Optional<IReadOnlyList<RestorePointData>> restorePoints = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute
                         }
                         if (property0.NameEquals("restorePointCollectionId"))
                         {
-                            restorePointCollectionId = property0.Value.GetString();
+                            restorePointGroupId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("restorePoints"))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new RestorePointGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, source.Value, provisioningState.Value, restorePointCollectionId.Value, Optional.ToList(restorePoints));
+            return new RestorePointGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, source.Value, provisioningState.Value, restorePointGroupId.Value, Optional.ToList(restorePoints));
         }
     }
 }

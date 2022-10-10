@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.KeyVault
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of VaultResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VaultResources and their operations over a VaultResource. </returns>
-        public virtual VaultCollection GetVaults()
+        /// <summary> Gets a collection of KeyVaultResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of KeyVaultResources and their operations over a KeyVaultResource. </returns>
+        public virtual KeyVaultCollection GetKeyVaults()
         {
-            return GetCachedClient(Client => new VaultCollection(Client, Id));
+            return GetCachedClient(Client => new KeyVaultCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ManagedHsmResources in the ResourceGroupResource. </summary>

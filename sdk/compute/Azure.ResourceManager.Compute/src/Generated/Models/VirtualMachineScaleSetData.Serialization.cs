@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -145,19 +145,19 @@ namespace Azure.ResourceManager.Compute
             Optional<ComputePlan> plan = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IList<string>> zones = default;
-            Optional<Models.ExtendedLocation> extendedLocation = default;
+            Optional<ExtendedLocation> extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<UpgradePolicy> upgradePolicy = default;
+            Optional<VirtualMachineScaleSetUpgradePolicy> upgradePolicy = default;
             Optional<AutomaticRepairsPolicy> automaticRepairsPolicy = default;
             Optional<VirtualMachineScaleSetVmProfile> virtualMachineProfile = default;
             Optional<string> provisioningState = default;
             Optional<bool> overprovision = default;
-            Optional<bool> doNotRunExtensionsOnOverprovisionedVMs = default;
+            Optional<bool> doNotRunExtensionsOnOverprovisionedVms = default;
             Optional<string> uniqueId = default;
             Optional<bool> singlePlacementGroup = default;
             Optional<bool> zoneBalance = default;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = Models.ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            upgradePolicy = UpgradePolicy.DeserializeUpgradePolicy(property0.Value);
+                            upgradePolicy = VirtualMachineScaleSetUpgradePolicy.DeserializeVirtualMachineScaleSetUpgradePolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("automaticRepairsPolicy"))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            doNotRunExtensionsOnOverprovisionedVMs = property0.Value.GetBoolean();
+                            doNotRunExtensionsOnOverprovisionedVms = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("uniqueId"))
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, plan.Value, identity, Optional.ToList(zones), extendedLocation.Value, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, provisioningState.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVMs), uniqueId.Value, Optional.ToNullable(singlePlacementGroup), Optional.ToNullable(zoneBalance), Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup, hostGroup, additionalCapabilities.Value, scaleInPolicy.Value, Optional.ToNullable(orchestrationMode), spotRestorePolicy.Value, Optional.ToNullable(timeCreated));
+            return new VirtualMachineScaleSetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, plan.Value, identity, Optional.ToList(zones), extendedLocation, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, provisioningState.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVms), uniqueId.Value, Optional.ToNullable(singlePlacementGroup), Optional.ToNullable(zoneBalance), Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup, hostGroup, additionalCapabilities.Value, scaleInPolicy.Value, Optional.ToNullable(orchestrationMode), spotRestorePolicy.Value, Optional.ToNullable(timeCreated));
         }
     }
 }

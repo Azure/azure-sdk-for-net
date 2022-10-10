@@ -4,7 +4,7 @@ This sample demonstrates how to extract key phrases from one or more documents.
 
 ## Creating a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to extract key phrases from a document, you need a Cognitive Services or Language service endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client. See [README][README] for links and instructions.
+To create a new `TextAnalyticsClient` to extract key phrases from a document, you need a Cognitive Services or Language service endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Language service API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client. See [README][README] for links and instructions.
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
@@ -19,7 +19,7 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 To extract key phrases from a document, use the `ExtractKeyPhrases` method.  The returned value the collection of `KeyPhrases` that were extracted from the document.
 
 ```C# Snippet:ExtractKeyPhrases
-string document = @"My cat might need to see a veterinarian. It has been sneezing more than normal, and although my 
+string document = @"My cat might need to see a veterinarian. It has been sneezing more than normal, and although my
                     little sister thinks it is funny, I am worried it has the cold that I got last week.
                     We are going to call tomorrow and try to schedule an appointment for this week. Hopefully it
                     will be covered by the cat's insurance.

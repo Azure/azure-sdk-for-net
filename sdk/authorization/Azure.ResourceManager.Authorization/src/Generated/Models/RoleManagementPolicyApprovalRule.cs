@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
-        /// <param name="setting"> The approval setting. </param>
-        internal RoleManagementPolicyApprovalRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, ApprovalSettings setting) : base(id, ruleType, target)
+        /// <param name="settings"> The approval setting. </param>
+        internal RoleManagementPolicyApprovalRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, RoleManagementApprovalSettings settings) : base(id, ruleType, target)
         {
-            Setting = setting;
+            Settings = settings;
             RuleType = ruleType;
         }
 
         /// <summary> The approval setting. </summary>
-        public ApprovalSettings Setting { get; set; }
+        public RoleManagementApprovalSettings Settings { get; set; }
     }
 }

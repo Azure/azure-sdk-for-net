@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="content"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageAccountNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = StorageAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckStorageAccountNameAvailability");
             scope.Start();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="content"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResult> CheckStorageAccountNameAvailability(StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<StorageAccountNameAvailabilityResult> CheckStorageAccountNameAvailability(StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = StorageAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckStorageAccountNameAvailability");
             scope.Start();

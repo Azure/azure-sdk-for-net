@@ -177,16 +177,15 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task GetCheckpointReturnsNullIfTheContainerDoesNotExist()
+        public async Task GetCheckpointDetectsWhenTheContainerDoesNotExist()
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, $"test-container-{Guid.NewGuid()}");
                 var checkpointStore = new BlobCheckpointStoreInternal(containerClient);
-                var checkpoints = await checkpointStore.GetCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partition", default);
 
-                Assert.That(checkpoints, Is.Null);
+                Assert.That(async () => await checkpointStore.GetCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partition", default), Throws.Exception);
             }
         }
 

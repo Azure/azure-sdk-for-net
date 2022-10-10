@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.EventHubs
     public partial class EventHubsDisasterRecoveryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventHubsDisasterRecoveryResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string alias)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string @alias)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{@alias}";
             return new ResourceIdentifier(resourceId);
         }
 

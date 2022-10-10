@@ -14,7 +14,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure AppService management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.AppService --prerelease
+dotnet add package Azure.ResourceManager.AppService
 ```
 
 ### Prerequisites
@@ -29,7 +29,7 @@ More information and different authentication approaches using Azure Identity ca
 
 ### Authenticate the Client
 
-To create an authenticated client and start interacting with Azure resources, please see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/mgmt_preview_quickstart.md)
+To create an authenticated client and start interacting with Azure resources, please see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md)
 
 ## Key concepts
 
@@ -39,7 +39,7 @@ Key concepts of the Azure .NET SDK can be found [here](https://github.com/Azure/
 
 Documentation is available to help you learn how to use this package
 
-- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/mgmt_preview_quickstart.md)
+- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md)
 - [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet)
 - [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md)
 

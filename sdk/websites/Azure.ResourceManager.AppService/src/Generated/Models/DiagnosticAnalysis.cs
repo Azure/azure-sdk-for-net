@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
         public DiagnosticAnalysis()
         {
             AbnormalTimePeriods = new ChangeTrackingList<AbnormalTimePeriod>();
-            Payload = new ChangeTrackingList<AnalysisData>();
+            Payload = new ChangeTrackingList<AnalysisDetectorEvidences>();
             NonCorrelatedDetectors = new ChangeTrackingList<DetectorDefinition>();
         }
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="payload"> Data by each detector. </param>
         /// <param name="nonCorrelatedDetectors"> Data by each detector for detectors that did not corelate. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal DiagnosticAnalysis(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, IList<AbnormalTimePeriod> abnormalTimePeriods, IList<AnalysisData> payload, IList<DetectorDefinition> nonCorrelatedDetectors, string kind) : base(id, name, resourceType, systemData)
+        internal DiagnosticAnalysis(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, IList<AbnormalTimePeriod> abnormalTimePeriods, IList<AnalysisDetectorEvidences> payload, IList<DetectorDefinition> nonCorrelatedDetectors, string kind) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> List of time periods. </summary>
         public IList<AbnormalTimePeriod> AbnormalTimePeriods { get; }
         /// <summary> Data by each detector. </summary>
-        public IList<AnalysisData> Payload { get; }
+        public IList<AnalysisDetectorEvidences> Payload { get; }
         /// <summary> Data by each detector for detectors that did not corelate. </summary>
         public IList<DetectorDefinition> NonCorrelatedDetectors { get; }
         /// <summary> Kind of resource. </summary>

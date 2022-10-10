@@ -9,7 +9,7 @@ extends:
     CloudConfig:
       Public:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-        Location: westus2
+        Location: westcentralus
       Canary:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
         Location: eastus2euap

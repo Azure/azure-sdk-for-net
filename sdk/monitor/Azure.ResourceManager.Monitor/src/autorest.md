@@ -7,25 +7,27 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Monitor
 namespace: Azure.ResourceManager.Monitor
-require: https://github.com/Azure/azure-rest-api-specs/blob/35f8a4df47aedc1ce185c854595cba6b83fa6c71/specification/monitor/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/ec4eca7eb6e4c1ce2bda56a6831d03d47490202f/specification/monitor/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  lenient-model-deduplication: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'locations': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
 rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -36,233 +38,291 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
-  Etag: ETag
+  Etag: ETag|etag
+  Odatatype: OdataType
+  AutoScale: Autoscale
+  MMM: Mmm
+  MM: Mm
+  HH: Hh
+  DD: Dd
+  SS: Ss
+
+irregular-plural-words:
+  status: status
+
+prepend-rp-prefix:
+- Action
+- Recurrence
+- Response
+- OdataType
+- Metric
+- Incident
+- Enabled
+- Dimension
+- Schedule
+- Criteria
+- Source
+- OperationType
+
+override-operation-name:
+  ActionGroups_GetTestNotifications: GetNotificationStatus
+  ActionGroups_GetTestNotificationsAtResourceGroupLevel: GetNotificationStatus
+  ActionGroups_GetTestNotificationsAtActionGroupResourceLevel: GetNotificationStatus
+  ActionGroups_PostTestNotifications: CreateNotifications
+  ActionGroups_CreateNotificationsAtResourceGroupLevel: CreateNotifications
+  ActionGroups_CreateNotificationsAtActionGroupResourceLevel: CreateNotifications
+
+rename-mapping:
+  AutoscaleSetting: AutoscaleSettingProperties
+  AutoscaleSettingResource: AutoscaleSetting
+  AutoscaleSettingResource.properties.targetResourceUri: targetResourceId|arm-id
+  AutoscaleSettingResource.properties.enabled: IsEnabled
+  AutoscaleSettingResource.properties.name: AutoscaleSettingName
+  AutoscaleSettingResource.properties.targetResourceLocation: -|azure-location
+  AutoscaleSettingResourcePatch.properties.targetResourceUri: targetResourceId|arm-id
+  AutoscaleSettingResourcePatch.properties.enabled: IsEnabled
+  AutoscaleSettingResourcePatch.properties.name: AutoscaleSettingName
+  AutoscaleSettingResourcePatch.properties.targetResourceLocation: -|azure-location
+  AzureMonitorPrivateLinkScope: MonitorPrivateLinkScope
+  AccessModeSettings: MonitorPrivateLinkAccessModeSettings
+  AccessModeSettingsExclusion: MonitorPrivateLinkAccessModeSettingsExclusion
+  AccessMode: MonitorPrivateLinkAccessMode
+  ScopedResource: MonitorPrivateLinkScopedResource
+  ScopedResource.properties.linkedResourceId: -|arm-id
+  ActivityLogAlertActionGroup.actionGroupId: -|arm-id
+  DataCollectionRuleAssociation: DataCollectionRuleAssociationProperties
+  DataCollectionRuleAssociationProxyOnlyResource: DataCollectionRuleAssociation
+  DataCollectionRuleAssociationProxyOnlyResource.properties.dataCollectionRuleId: -|arm-id
+  DataCollectionRuleAssociationProxyOnlyResource.properties.dataCollectionEndpointId: -|arm-id
+  LogProfileResource.properties.storageAccountId: -|arm-id
+  LogProfileResource.properties.serviceBusRuleId: -|arm-id
+  LogProfileResourcePatch.properties.storageAccountId: -|arm-id
+  LogProfileResourcePatch.properties.serviceBusRuleId: -|arm-id
+  ActionGroup: ActionGroupProperties
+  ActionGroupResource: ActionGroup
+  ActionGroupResource.properties.enabled: IsEnabled
+  ActionGroupPatchBody.properties.enabled: IsEnabled
+  MetricAlertResource: MetricAlert
+  MetricAlertResource.properties.targetResourceType: -|resource-type
+  MetricAlertResource.properties.targetResourceRegion: -|azure-location
+  MetricAlertResourcePatch.properties.targetResourceType: -|resource-type
+  MetricAlertResourcePatch.properties.targetResourceRegion: -|azure-location
+  DiagnosticSettings: DiagnosticSettingsProperties
+  DiagnosticSettingsResource: DiagnosticSettings
+  DiagnosticSettingsResource.properties.workspaceId: -|arm-id
+  DiagnosticSettingsResource.properties.storageAccountId: -|arm-id
+  DiagnosticSettingsResource.properties.serviceBusRuleId: -|arm-id
+  DiagnosticSettingsResource.properties.eventHubAuthorizationRuleId: -|arm-id
+  DiagnosticSettingsResource.properties.marketplacePartnerId: -|arm-id
+  ActivityLogAlert: ActivityLogAlertProperties
+  ActivityLogAlertResource: ActivityLogAlert
+  ActivityLogAlertResource.properties.enabled: IsEnabled
+  ActivityLogAlertResourcePatch.properties.enabled: IsEnabled
+  AlertRulePatchObject.properties.enabled: IsEnabled
+  AlertRule: AlertRuleProperties
+  AlertRuleResource: AlertRule
+  AlertRuleResource.properties.name: AlertRuleName
+  DataCollectionEndpoint: DataCollectionEndpointProperties
+  DataCollectionEndpointResource: DataCollectionEndpoint
+  DataCollectionRule: DataCollectionRuleProperties
+  DataCollectionRuleResource.properties.dataCollectionEndpointId: -|arm-id
+  DataCollectionRuleResource: DataCollectionRule
+  DiagnosticSettingsCategory: DiagnosticSettingsCategoryProperties
+  DiagnosticSettingsCategoryResource: DiagnosticSettingsCategory
+  LogProfileResource: LogProfile
+  LogSearchRule: LogSearchRuleProperties
+  LogSearchRuleResource: LogSearchRule
+  LogAnalyticsDestination.workspaceResourceId: -|arm-id
+  RuleDataSource.resourceUri: resourceId|arm-id
+  MetricAlertResource.properties.autoMitigate: IsAutoMitigateEnabled
+  MetricAlertResource.properties.enabled: IsEnabled
+  MetricAlertResourcePatch.properties.autoMitigate: IsAutoMitigateEnabled
+  MetricAlertResourcePatch.properties.enabled: IsEnabled
+  MetricSettings.enabled: IsEnabled
+  EventData: EventDataInfo
+  EventData.resourceId: -|arm-id
+  PredictiveResponse: AutoscaleSettingPredicativeResult
+  PredictiveResponse.targetResourceId: -|arm-id
+  LogSettings.enabled: IsEnabled
+  RetentionPolicy.enabled: IsEnabled
+  TimeWindow.start: StartOn
+  TimeWindow.end: EndOn
+  AlertRuleAnyOfOrLeafCondition: ActivityLogAlertAnyOfOrLeafCondition
+  RuleAction: AlertRuleAction
+  RuleCondition: AlertRuleCondition
+  KnownPublicNetworkAccessOptions: MonitorPublicNetworkAccess
+  KnownDataCollectionEndpointProvisioningState: DataCollectionEndpointProvisioningState
+  KnownDataCollectionRuleAssociationProvisioningState: DataCollectionRuleAssociationProvisioningState
+  KnownDataCollectionRuleProvisioningState: DataCollectionRuleProvisioningState
+  KnownDataFlowStreams: DataFlowStreams
+  KnownExtensionDataSourceStreams: ExtensionDataSourceStreams
+  KnownPerfCounterDataSourceStreams: PerfCounterDataSourceStreams
+  KnownSyslogDataSourceFacilityNames: SyslogDataSourceFacilityNames
+  KnownSyslogDataSourceLogLevels: SyslogDataSourceLogLevels
+  KnownSyslogDataSourceStreams: SyslogDataSourceStreams
+  KnownWindowsEventLogDataSourceStreams: WindowsEventLogDataSourceStreams
+  KnownDataCollectionEndpointResourceKind: DataCollectionEndpointResourceKind
+  KnownDataCollectionRuleResourceKind: DataCollectionRuleResourceKind
+  ProvisioningState: MonitorProvisioningState
+  LocalizableString: MonitorLocalizableString
+  MetricTrigger.metricResourceUri: metricResourceId|arm-id
+  MetricTrigger.metricResourceLocation: -|azure-location
+  MetricTrigger.dividePerInstance: IsDividedPerInstance
+  NotificationRequestBody: NotificationContent
+  Context: NotificationContext
+  TestNotificationDetailsResponse: NotificationStatus
+  ActionDetail: NotificationActionDetail
+  TimeWindow: MonitorTimeWindow
+  ArmRoleReceiver: MonitorArmRoleReceiver
+  AutomationRunbookReceiver: MonitorAutomationRunbookReceiver
+  AutomationRunbookReceiver.automationAccountId: -|arm-id
+  AutomationRunbookReceiver.webhookResourceId: -|arm-id
+  AzureAppPushReceiver: MonitorAzureAppPushReceiver
+  AzureFunctionReceiver: MonitorAzureFunctionReceiver
+  AzureFunctionReceiver.functionAppResourceId: -|arm-id
+  Source.dataSourceId: -|arm-id
+  EmailReceiver: MonitorEmailReceiver
+  EventHubReceiver: MonitorEventHubReceiver
+  ItsmReceiver: MonitorItsmReceiver
+  ItsmReceiver.region: -|azure-location
+  LogicAppReceiver: MonitorLogicAppReceiver
+  LogicAppReceiver.resourceId: -|arm-id
+  SmsReceiver: MonitorSmsReceiver
+  VoiceReceiver: MonitorVoiceReceiver
+  WebhookReceiver: MonitorWebhookReceiver
+  WorkspaceInfo: DataContainerWorkspace
+  WorkspaceInfo.id: -|arm-id
+  CategoryType: MonitorCategoryType
+  EventLevel: MonitorEventLevel
+  ScaleAction: MonitorScaleAction
+  ScaleDirection: MonitorScaleDirection
+  ScaleType: MonitorScaleType
+  ScaleCapacity.minimum: -|integer
+  ScaleCapacity.maximum: -|integer
+  ScaleCapacity.default: -|integer
+  ScaleCapacity: MonitorScaleCapacity
+  ReceiverStatus: MonitorReceiverStatus
+  EnableRequest: ActionGroupEnableContent
+  OperationStatus: MonitorPrivateLinkScopeOperationStatus
+  QueryType: MonitorSourceQueryType
+  RuleDataSource.legacyResourceId: -|arm-id
+  LogSearchRuleResource.properties.autoMitigate: IsAutoMitigateEnabled
+  ScaleRule: AutoscaleRule
+  ScaleRuleMetricDimension: AutoscaleRuleMetricDimension
+  TestNotificationDetailsResponse.completedTime: -|date-time
+  TestNotificationDetailsResponse.createdTime: -|date-time
+  HttpRequestInfo: EventDataHttpRequestInfo
+  HttpRequestInfo.clientIpAddress: -|ip-address
+  MetricAlertAction.actionGroupId: -|arm-id
+  WebtestLocationAvailabilityCriteria.webTestId: -|arm-id
+  WebtestLocationAvailabilityCriteria.componentId: -|arm-id
+  ColumnDefinition: DataColumnDefinition
+  StreamDeclaration: DataStreamDeclaration
+  KnownColumnDefinitionType: DataColumnDefinitionType
+  KnownLogFilesDataSourceFormat: LogFilesDataSourceFormat
+  KnownLogFileTextSettingsRecordStartTimestampFormat: LogFileTextSettingsRecordStartTimestampFormat
+  VMInsightsOnboardingStatus.properties.resourceId: -|arm-id
+  LogSearchRuleResourcePatch.properties.enabled: IsEnabled
+  ScheduledQueryRuleResource: ScheduledQueryRule
+  Actions: ScheduledQueryRuleActions
+  DimensionOperator: MonitorDimensionOperator
+  Condition: ScheduledQueryRuleCondition
+  ScheduledQueryRuleResource.properties.enabled: IsEnabled
+  ScheduledQueryRuleResourcePatch.properties.enabled: IsEnabled
+  Kind: ScheduledQueryRuleKind
+  AggregationTypeEnum: MetricCriteriaTimeAggregationType
+  TimeAggregationOperator: ThresholdRuleConditionTimeAggregationType
+  TimeAggregationType: MetricTriggerTimeAggregationType
+  TimeAggregation: ScheduledQueryRuleTimeAggregationType
+  Operator: MetricCriteriaOperator
+  ComparisonOperationType: MetricTriggerComparisonOperation
+  ConditionOperator: MonitorConditionOperator
 
 directive:
-  - from: autoscale_API.json
-    where: $.definitions.MetricTrigger.properties.metricResourceUri
-    transform: $["x-ms-client-name"] = "metricResourceId"
-  - from: autoscale_API.json
-    where: $.definitions.AutoscaleSetting.properties.targetResourceUri
-    transform: $["x-ms-client-name"] = "targetResourceId"
+  # fixing the format since rename-mapping has bugs on this
+  - from: swagger-document
+    where: $.definitions.ActionDetail.properties.SendTime
+    transform: $['format'] = 'date-time';
+  # nullable issue resolution
   - from: swagger-document
     where: $.definitions.ActivityLogAlert.properties.actions
-    transform: >
-        $["x-nullable"] = true;
+    transform: $['x-nullable'] = true;
   - from: swagger-document
     where: $.definitions.MetricAlertProperties.properties.criteria
-    transform: >
-        $["x-nullable"] = true;
+    transform: $['x-nullable'] = true;
   - from: swagger-document
     where: $.definitions.MetricTrigger.properties.dimensions
-    transform: >
-        $["x-nullable"] = true;
+    transform: $['x-nullable'] = true;
   - from: swagger-document
     where: $.definitions.AutoscaleSetting.properties.notifications
-    transform: >
-        $["x-nullable"] = true;
-  - rename-model:
-      from: AzureMonitorPrivateLinkScope
-      to: PrivateLinkScope
-  - rename-model:
-      from: ScopedResource
-      to: ScopedPrivateLink
-  - rename-model:
-      from: PrivateLinkResource
-      to: PrivateLink
-  - rename-model:
-      from: MetricAlertResource
-      to: MetricAlert
+    transform: $['x-nullable'] = true;
   - from: swagger-document
-    where: $.definitions.DataCollectionRuleAssociationProxyOnlyResource.properties.properties
-    transform:  >
-        $ = {
-          "description": "Resource properties.",
-          "allOf": [
-            {
-              "$ref": "#/definitions/DataCollectionRuleAssociation"
-            }
-          ],
-          "x-ms-client-flatten": false
-        }
-#   - rename-model:
-#       from: DataCollectionRuleAssociation
-#       to: DataCollectionRuleAssociationProperties
+    where: $.definitions.LogProfileProperties.properties.storageAccountId
+    transform: $['x-nullable'] = true;
   - from: swagger-document
-    where: $.definitions.DataCollectionRuleAssociation
-    transform: $["x-ms-client-name"] = "DataCollectionRuleAssociationProperties"
-  - rename-model:
-      from: DataCollectionRuleAssociationProxyOnlyResource
-      to: DataCollectionRuleAssociation
-  - rename-model:
-      from: ActionGroup
-      to: ActionGroupProperties
-  - rename-model:
-      from: ActionGroupResource
-      to: ActionGroup
-  - rename-model:
-      from: ActivityLogAlert
-      to: ActivityLogAlertProperties
-  - rename-model:
-      from: ActivityLogAlertResource
-      to: ActivityLogAlert
-  - rename-model:
-      from: AlertRule
-      to: AlertRuleProperties
-  - rename-model:
-      from: AlertRuleResource
-      to: AlertRule
-  - rename-model:
-      from: AutoscaleSetting
-      to: AutoscaleSettingProperties
-  - rename-model:
-      from: AutoscaleSettingResource
-      to: AutoscaleSetting
-  - rename-model:
-      from: Action
-      to: MonitorAction
-  - rename-model:
-      from: Recurrence
-      to: MonitorRecurrence
-  - rename-model:
-      from: Operator
-      to: MonitorOperator
-  - rename-model:
-      from: Response
-      to: MonitorResponse
-  - rename-model:
-      from: Odatatype
-      to: MonitorOdatatype
-  - rename-model:
-      from: Metric
-      to: MonitorMetric
-  - rename-model:
-      from: Metric
-      to: MonitorMetric
-  - rename-model:
-      from: Incident
-      to: MonitorIncident
-  - rename-model:
-      from: Enabled
-      to: MonitorEnabled
-  - rename-model:
-      from: Dimension
-      to: MonitorDimension
-  - rename-model:
-      from: Schedule
-      to: MonitorSchedule
-  - rename-model:
-      from: Criteria
-      to: MonitorCriteria
-  - rename-model:
-      from: Source
-      to: MonitorSource
+    where: $.definitions.LogProfileProperties.properties.serviceBusRuleId
+    transform: $['x-nullable'] = true;
   - from: swagger-document
-    where: $.definitions.DataCollectionEndpointResource.properties.properties
-    transform:  >
-        $ = {
-          "description": "Resource properties.",
-          "allOf": [
-            {
-              "$ref": "#/definitions/DataCollectionEndpoint"
-            }
-          ],
-          "x-ms-client-flatten": false
-        }
-#   - rename-model:
-#       from: DataCollectionEndpoint
-#       to: DataCollectionEndpointProperties
-  - from: swagger-document
-    where: $.definitions.DataCollectionEndpoint
-    transform: $["x-ms-client-name"] = "DataCollectionEndpointProperties"
-  - rename-model:
-      from: DataCollectionEndpointResource
-      to: DataCollectionEndpoint
-  - from: swagger-document
-    where: $.definitions.DataCollectionRuleResource.properties.properties
-    transform:  >
-        $ = {
-          "description": "Resource properties.",
-          "allOf": [
-            {
-              "$ref": "#/definitions/DataCollectionRule"
-            }
-          ],
-          "x-ms-client-flatten": false
-        }
-#   - rename-model:
-#       from: DataCollectionRule
-#       to: DataCollectionRuleProperties
-  - from: swagger-document
-    where: $.definitions.DataCollectionRule
-    transform: $["x-ms-client-name"] = "DataCollectionRuleProperties"
-  - rename-model:
-      from: DataCollectionRuleResource
-      to: DataCollectionRule
-  - rename-model:
-      from: DiagnosticSettingsCategory
-      to: DiagnosticSettingsCategoryProperties
-  - rename-model:
-      from: DiagnosticSettingsCategoryResource
-      to: DiagnosticSettingsCategory
-  - rename-model:
-      from: DiagnosticSettings
-      to: DiagnosticSettingsProperties
-  - rename-model:
-      from: DiagnosticSettingsResource
-      to: DiagnosticSettings
-  - rename-model:
-      from: LogProfileResource
-      to: LogProfile
-  - rename-model:
-      from: LogSearchRule
-      to: LogSearchRuleProperties
-  - rename-model:
-      from: LogSearchRuleResource
-      to: LogSearchRule
-  - rename-model:
-      from: VMInsightsOnboardingStatus
-      to: VmInsightsOnboardingStatus
-#   - rename-model:
-#       from: Resource
-#       to: MonitorResource
+    where: $.definitions.AutoscaleSetting.properties.predictiveAutoscalePolicy
+    transform: $['x-nullable'] = true;
+  # duplicate schema resolution
   - from: activityLogAlerts_API.json
+    where: $.definitions.AzureResource
+    transform: $['x-ms-client-name'] = 'ActivityLogAlertsResource'
+  - from: activityLogAlerts_API.json
+    where: $.definitions.ActionGroup
+    transform: $['x-ms-client-name'] = 'ActivityLogAlertActionGroup'
+  - from: activityLogAlerts_API.json
+    where: $.definitions.ErrorResponse
+    transform: $['x-ms-client-name'] = 'ActivityLogAlertErrorResponse'
+  - from: scheduledQueryRule_API.json
     where: $.definitions.Resource
-    transform: $["x-ms-client-name"] = "ActivityLogAlertsResource"
+    transform: $['x-ms-client-name'] = 'ScheduledQueryRuleResource'
+  - from: autoscale_API.json
+    where: $.definitions.Resource
+    transform: $['x-ms-client-name'] = 'AutoScaleResource'
+  - from: types.json
+    where: $.definitions.Resource
+    transform: $['x-ms-client-name'] = 'CommonResource'
+  - from: types.json
+    where: $.definitions.ProxyResource
+    transform: $['x-ms-client-name'] = 'CommonProxyResource'
+  # in order to let the ResponseError replace the ErrorResponseCommon in monitor, we need to add a target property to it
   - from: swagger-document
-    where: $.definitions.RuleDataSource.properties
-    transform:  >
-        $ = {
-          "odata.type": {
-            "type": "string",
-            "description": "specifies the type of data source. There are two types of rule data sources: RuleMetricDataSource and RuleManagementEventDataSource"
-          },
-          "resourceId": {
-            "type": "string",
-            "description": "the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule."
-          },
-          "legacyResourceId": {
-            "type": "string",
-            "description": "the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule."
-          },
-          "resourceLocation": {
-            "type": "string",
-            "description": "the location of the resource."
-          },
-          "metricNamespace": {
-            "type": "string",
-            "description": "the namespace of the metric."
-          }
-        }  
-  - from: swagger-document
-    where: $.paths
-    remove: "/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}"
-  - from: swagger-document
-    where: $.paths
-    remove: "/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings"
+    where: $.definitions.ErrorResponseCommon.properties
+    transform: >
+      $['target'] = {
+        'readOnly': true,
+        'type': 'string'
+      }
+  # remove unnecessary property for resources in action groups
+  - from: scheduledQueryRule_API.json
+    where: $.definitions.Resource.properties
+    transform: >
+      $['kind'] = undefined;
+  # The value of days are DayOfWeek
+  - from: autoscale_API.json
+    where: $.definitions
+    transform: >
+      $.RecurrentSchedule.properties.days.items = {
+              'type': 'string',
+              'enum': [
+                  'Sunday',
+                  'Monday',
+                  'Tuesday',
+                  'Wednesday',
+                  'Thursday',
+                  'Friday',
+                  'Saturday'
+                ],
+              'x-ms-enum': {
+                  'name': 'MonitorDayOfWeek',
+                  'modelAsString': true
+                }
+            };
 ```

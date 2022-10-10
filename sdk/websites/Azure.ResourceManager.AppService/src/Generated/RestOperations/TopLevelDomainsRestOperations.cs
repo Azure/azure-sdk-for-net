@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.TopLevelDomainCollection>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<TopLevelDomainListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.TopLevelDomainCollection value = default;
+                        TopLevelDomainListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.TopLevelDomainCollection.DeserializeTopLevelDomainCollection(document.RootElement);
+                        value = TopLevelDomainListResult.DeserializeTopLevelDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.TopLevelDomainCollection> List(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<TopLevelDomainListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.TopLevelDomainCollection value = default;
+                        TopLevelDomainListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.TopLevelDomainCollection.DeserializeTopLevelDomainCollection(document.RootElement);
+                        value = TopLevelDomainListResult.DeserializeTopLevelDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="name"/> or <paramref name="agreementOption"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TldLegalAgreementCollection>> ListAgreementsAsync(string subscriptionId, string name, TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
+        public async Task<Response<TldLegalAgreementListResult>> ListAgreementsAsync(string subscriptionId, string name, TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -222,9 +222,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        TldLegalAgreementCollection value = default;
+                        TldLegalAgreementListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TldLegalAgreementCollection.DeserializeTldLegalAgreementCollection(document.RootElement);
+                        value = TldLegalAgreementListResult.DeserializeTldLegalAgreementListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="name"/> or <paramref name="agreementOption"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TldLegalAgreementCollection> ListAgreements(string subscriptionId, string name, TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
+        public Response<TldLegalAgreementListResult> ListAgreements(string subscriptionId, string name, TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -251,9 +251,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        TldLegalAgreementCollection value = default;
+                        TldLegalAgreementListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TldLegalAgreementCollection.DeserializeTldLegalAgreementCollection(document.RootElement);
+                        value = TldLegalAgreementListResult.DeserializeTldLegalAgreementListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.TopLevelDomainCollection>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<TopLevelDomainListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.TopLevelDomainCollection value = default;
+                        TopLevelDomainListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.TopLevelDomainCollection.DeserializeTopLevelDomainCollection(document.RootElement);
+                        value = TopLevelDomainListResult.DeserializeTopLevelDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.TopLevelDomainCollection> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<TopLevelDomainListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -319,9 +319,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.TopLevelDomainCollection value = default;
+                        TopLevelDomainListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.TopLevelDomainCollection.DeserializeTopLevelDomainCollection(document.RootElement);
+                        value = TopLevelDomainListResult.DeserializeTopLevelDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="name"/> or <paramref name="agreementOption"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TldLegalAgreementCollection>> ListAgreementsNextPageAsync(string nextLink, string subscriptionId, string name, TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
+        public async Task<Response<TldLegalAgreementListResult>> ListAgreementsNextPageAsync(string nextLink, string subscriptionId, string name, TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -364,9 +364,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        TldLegalAgreementCollection value = default;
+                        TldLegalAgreementListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TldLegalAgreementCollection.DeserializeTldLegalAgreementCollection(document.RootElement);
+                        value = TldLegalAgreementListResult.DeserializeTldLegalAgreementListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="name"/> or <paramref name="agreementOption"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TldLegalAgreementCollection> ListAgreementsNextPage(string nextLink, string subscriptionId, string name, TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
+        public Response<TldLegalAgreementListResult> ListAgreementsNextPage(string nextLink, string subscriptionId, string name, TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -395,9 +395,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        TldLegalAgreementCollection value = default;
+                        TldLegalAgreementListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TldLegalAgreementCollection.DeserializeTldLegalAgreementCollection(document.RootElement);
+                        value = TldLegalAgreementListResult.DeserializeTldLegalAgreementListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

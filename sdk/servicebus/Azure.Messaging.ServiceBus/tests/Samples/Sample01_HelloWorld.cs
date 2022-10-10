@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Identity;
 using NUnit.Framework;
@@ -240,6 +241,47 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             }
         }
 
+        [Test]
+        public async Task SendAndReceiveMessageUsingTopic()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
+            {
+                #region Snippet:ServiceBusSendAndReceiveTopic
+#if SNIPPET
+                string connectionString = "<connection_string>";
+                string topicName = "<topic_name>";
+                string subscriptionName = "<subscription_name>";
+#else
+                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string topicName = scope.TopicName;
+                string subscriptionName = scope.SubscriptionNames.First();
+#endif
+                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+                await using var client = new ServiceBusClient(connectionString);
+
+                // create the sender that we will use to send to our topic
+                ServiceBusSender sender = client.CreateSender(topicName);
+
+                // create a message that we can send. UTF-8 encoding is used when providing a string.
+                ServiceBusMessage message = new ServiceBusMessage("Hello world!");
+
+                // send the message
+                await sender.SendMessageAsync(message);
+
+                // create a receiver for our subscription that we can use to receive the message
+                ServiceBusReceiver receiver = client.CreateReceiver(topicName, subscriptionName);
+
+                // the received message is a different type as it contains some service set properties
+                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+
+                // get the message body as a string
+                string body = receivedMessage.Body.ToString();
+                Console.WriteLine(body);
+                #endregion
+                Assert.AreEqual("Hello world!", receivedMessage.Body.ToString());
+            }
+        }
+
         /// <summary>
         /// Authenticate with <see cref="DefaultAzureCredential"/>.
         /// </summary>
@@ -253,7 +295,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
 
         /// <summary>
-        /// Authenticate with a connection string/>.
+        /// Authenticate with a connection string.
         /// </summary>
         public void AuthenticateWithConnectionString()
         {
@@ -261,6 +303,25 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             // Create a ServiceBusClient that will authenticate using a connection string
             string connectionString = "<connection_string>";
             ServiceBusClient client = new ServiceBusClient(connectionString);
+            #endregion
+        }
+
+        /// <summary>
+        /// Connect to the service using a custom endpoint address.
+        /// </summary>
+        public void ConnectUsingCustomEndpoint()
+        {
+            #region Snippet:ServiceBusCustomEndpoint
+            // Connect to the service using a custom endpoint
+            string connectionString = "<connection_string>";
+            string customEndpoint = "<custom_endpoint>";
+
+            var options = new ServiceBusClientOptions
+            {
+                CustomEndpointAddress = new Uri(customEndpoint)
+            };
+
+            ServiceBusClient client = new ServiceBusClient(connectionString, options);
             #endregion
         }
 
@@ -279,6 +340,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 // Take action based on a service timeout
             }
+            #endregion
+        }
+
+        /// <summary>
+        /// Set the TimeToLive on a message.
+        /// </summary>
+        public void SetMessageTimeToLive()
+        {
+            #region Snippet:ServiceBusMessageTimeToLive
+            var message = new ServiceBusMessage("Hello world!") { TimeToLive = TimeSpan.FromMinutes(5) };
             #endregion
         }
     }

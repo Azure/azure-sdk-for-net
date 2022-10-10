@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         internal static ResourceUploadResult DeserializeResourceUploadResult(JsonElement element)
         {
             Optional<string> relativePath = default;
-            Optional<Uri> uploadUrl = default;
+            Optional<Uri> uploadUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("relativePath"))
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        uploadUrl = null;
+                        uploadUri = null;
                         continue;
                     }
-                    uploadUrl = new Uri(property.Value.GetString());
+                    uploadUri = new Uri(property.Value.GetString());
                     continue;
                 }
             }
-            return new ResourceUploadResult(relativePath.Value, uploadUrl.Value);
+            return new ResourceUploadResult(relativePath.Value, uploadUri.Value);
         }
     }
 }
