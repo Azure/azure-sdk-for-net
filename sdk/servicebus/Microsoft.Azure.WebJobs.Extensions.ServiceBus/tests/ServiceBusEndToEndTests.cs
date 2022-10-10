@@ -1263,7 +1263,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     Assert.AreEqual("correlationId", correlationIdArray[i]);
                     Assert.AreEqual("application/json", contentTypeArray[i]);
                     Assert.AreEqual("partitionKey", partitionKeyArray[i]);
-                    Assert.AreEqual("transactionPartitionKey", transactionPartitionKeyArray[i]);
+                    Assert.AreEqual("partitionKey", transactionPartitionKeyArray[i]);
                     Assert.AreEqual("value", applicationPropertiesArray[i]["key"]);
                     Assert.AreEqual("value", userPropertiesArray[i]["key"]);
                     Assert.Greater(expiresAtUtcArray[i], DateTime.UtcNow);
