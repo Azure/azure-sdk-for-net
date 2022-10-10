@@ -93,14 +93,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             long totalUnprocessedEventCount = 0;
             bool logPartitionInfo = alwaysLog ? true : DateTime.UtcNow >= _nextPartitionLogTime;
             bool logPartitionWarning = alwaysLog ? true : DateTime.UtcNow >= _nextPartitionWarningTime;
+            Dictionary<uint, long> eventCountPerPartition = new Dictionary<uint, long>();
 
             // For each partition, get the last enqueued sequence number.
             // If the last enqueued sequence number does not equal the SequenceNumber from the lease info in storage,
             // accumulate new event counts across partitions to derive total new event counts.
             List<string> partitionErrors = new List<string>();
-            for (int i = 0; i < partitionRuntimeInfo.Count; i++)
+            for (uint i = 0; i < partitionRuntimeInfo.Count; i++)
             {
-                var partitionProperties = partitionRuntimeInfo[i];
+                var partitionProperties = partitionRuntimeInfo[Convert.ToInt32(i)];
 
                 var checkpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoints.SingleOrDefault(c => c?.PartitionId == partitionProperties.Id);
 
@@ -111,6 +112,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
                     || (checkpoint == null && partitionProperties.LastEnqueuedSequenceNumber >= 0))
                 {
                     long partitionUnprocessedEventCount = GetUnprocessedEventCount(partitionProperties, checkpoint);
+                    eventCountPerPartition.Add(i, partitionUnprocessedEventCount);
                     totalUnprocessedEventCount += partitionUnprocessedEventCount;
                 }
             }
@@ -133,7 +135,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             {
                 Timestamp = DateTime.UtcNow,
                 PartitionCount = partitionRuntimeInfo.Count,
-                EventCount = totalUnprocessedEventCount
+                EventCount = totalUnprocessedEventCount,
+                EventCountPerPartition = eventCountPerPartition
             };
         }
         private static long GetUnprocessedEventCount(PartitionProperties partitionInfo, BlobCheckpointStoreInternal.BlobStorageCheckpoint checkpoint)

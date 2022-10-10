@@ -304,7 +304,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         [Test]
-        public void CreateListener_TargetScalerIsNull_MultipleDispatch()
+        public void CreateListener_TargetScaler_MultipleDispatch()
         {
             EventHubOptions config = new EventHubOptions();
             var functionId = "FunctionId";
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                new EventHubOptions(),
                Mock.Of<LoggerFactory>());
 
-            Assert.IsNull((listener as ITargetScalerProvider).GetTargetScaler());
+            Assert.IsNotNull((listener as ITargetScalerProvider).GetTargetScaler());
         }
     }
 }

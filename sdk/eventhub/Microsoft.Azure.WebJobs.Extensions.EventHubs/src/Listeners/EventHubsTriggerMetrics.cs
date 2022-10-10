@@ -19,5 +19,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         /// The number of partitions.
         /// </summary>
         public int PartitionCount { get; set; }
+        /// <summary>
+        /// The number of events per partition
+        /// </summary>
+        public Dictionary<uint, long> EventCountPerPartition { get; set; }
     }
 }
