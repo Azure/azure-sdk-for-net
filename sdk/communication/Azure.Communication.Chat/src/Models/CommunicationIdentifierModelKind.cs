@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 // This is a temporary solution.
-// Please remove when updated to a swagger version that supports 'kind' property.
+// Please remove when updated to a swagger version that supports 'kind' property: https://github.com/Azure/azure-rest-api-specs/pull/19675
 
 #nullable disable
 
@@ -12,7 +12,7 @@ using System.ComponentModel;
 namespace Azure.Communication
 {
     /// <summary> Type of CommunicationIdentifierModel. </summary>
-    public readonly partial struct CommunicationIdentifierModelKind : IEquatable<CommunicationIdentifierModelKind>
+    internal readonly partial struct CommunicationIdentifierModelKind : IEquatable<CommunicationIdentifierModelKind>
     {
         private readonly string _value;
 

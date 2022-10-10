@@ -1,7 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// This is a temporary solution. Please remove this code when swagger is updated to support `kind` property.
+// This is a temporary solution.
+// Please remove this code when swagger is updated to support `kind` property: https://github.com/Azure/azure-rest-api-specs/pull/19675
 using Azure.Core;
 
 namespace Azure.Communication
