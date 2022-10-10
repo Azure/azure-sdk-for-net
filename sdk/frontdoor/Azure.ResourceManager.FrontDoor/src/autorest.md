@@ -19,10 +19,6 @@ override-operation-name:
   Endpoints_PurgeContent: PurgeContent
   FrontDoorNameAvailabilityWithSubscription_Check: CheckFrontDoorNameAvailability
 
-no-property-type-replacement:
-- SubResource
-- RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink
-- FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink
 rename-mapping:
   Experiment: FrontDoorExperiment
   State: FrontDoorExperimentState

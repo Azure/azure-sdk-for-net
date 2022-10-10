@@ -154,13 +154,6 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         public Uri GeoRedundantSecondaryUri { get; set; }
 
-        /// <summary>
-        /// Strategy to take when sending requests and retries between primary and secondary endpoints.
-        /// Ignored when <see cref="GeoRedundantSecondaryUri"/> is not set.
-        /// Defaults to <see cref="GeoRedundantReadMode.PrimaryThenSecondary"/>.
-        /// </summary>
-        public GeoRedundantReadMode GeoRedundantReadMode { get; set; }
-
         /// <inheritdoc />
         public bool EnableTenantDiscovery { get; set; }
 
@@ -323,7 +316,7 @@ namespace Azure.Storage.Files.DataLake
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(HttpPipelinePolicy authentication = null)
         {
-            return this.Build(authentication, GeoRedundantSecondaryUri, GeoRedundantReadMode);
+            return this.Build(authentication, GeoRedundantSecondaryUri);
         }
 
         /// <summary>
@@ -333,7 +326,7 @@ namespace Azure.Storage.Files.DataLake
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(object credentials)
         {
-            return this.Build(credentials, GeoRedundantSecondaryUri, GeoRedundantReadMode);
+            return this.Build(credentials, GeoRedundantSecondaryUri);
         }
     }
 }

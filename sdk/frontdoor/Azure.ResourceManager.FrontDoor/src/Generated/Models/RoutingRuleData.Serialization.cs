@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in FrontendEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -70,27 +71,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             if (Optional.IsDefined(RulesEngine))
             {
-                if (RulesEngine != null)
-                {
-                    writer.WritePropertyName("rulesEngine");
-                    writer.WriteObjectValue(RulesEngine);
-                }
-                else
-                {
-                    writer.WriteNull("rulesEngine");
-                }
+                writer.WritePropertyName("rulesEngine");
+                JsonSerializer.Serialize(writer, RulesEngine);
             }
             if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
-                if (WebApplicationFirewallPolicyLink != null)
-                {
-                    writer.WritePropertyName("webApplicationFirewallPolicyLink");
-                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
-                }
-                else
-                {
-                    writer.WriteNull("webApplicationFirewallPolicyLink");
-                }
+                writer.WritePropertyName("webApplicationFirewallPolicyLink");
+                JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -101,13 +88,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<IList<SubResource>> frontendEndpoints = default;
+            Optional<IList<WritableSubResource>> frontendEndpoints = default;
             Optional<IList<FrontDoorProtocol>> acceptedProtocols = default;
             Optional<IList<string>> patternsToMatch = default;
             Optional<RoutingRuleEnabledState> enabledState = default;
             Optional<RouteConfiguration> routeConfiguration = default;
-            Optional<SubResource> rulesEngine = default;
-            Optional<RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink> webApplicationFirewallPolicyLink = default;
+            Optional<WritableSubResource> rulesEngine = default;
+            Optional<WritableSubResource> webApplicationFirewallPolicyLink = default;
             Optional<FrontDoorResourceState> resourceState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -152,10 +139,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubResource.DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             frontendEndpoints = array;
                             continue;
@@ -214,20 +201,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                rulesEngine = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            rulesEngine = SubResource.DeserializeSubResource(property0.Value);
+                            rulesEngine = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("webApplicationFirewallPolicyLink"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                webApplicationFirewallPolicyLink = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            webApplicationFirewallPolicyLink = RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink.DeserializeRoutingRuleUpdateParametersWebApplicationFirewallPolicyLink(property0.Value);
+                            webApplicationFirewallPolicyLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("resourceState"))
@@ -244,7 +231,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new RoutingRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToList(frontendEndpoints), Optional.ToList(acceptedProtocols), Optional.ToList(patternsToMatch), Optional.ToNullable(enabledState), routeConfiguration.Value, rulesEngine.Value, webApplicationFirewallPolicyLink.Value, Optional.ToNullable(resourceState));
+            return new RoutingRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToList(frontendEndpoints), Optional.ToList(acceptedProtocols), Optional.ToList(patternsToMatch), Optional.ToNullable(enabledState), routeConfiguration.Value, rulesEngine, webApplicationFirewallPolicyLink, Optional.ToNullable(resourceState));
         }
     }
 }

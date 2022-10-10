@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="loadBalancingSettings"> Load balancing settings for a backend pool. </param>
         /// <param name="healthProbeSettings"> L7 health probe settings for a backend pool. </param>
         /// <param name="resourceState"> Resource status. </param>
-        internal FrontDoorBackendPool(ResourceIdentifier id, string name, ResourceType? resourceType, IList<FrontDoorBackend> backends, SubResource loadBalancingSettings, SubResource healthProbeSettings, FrontDoorResourceState? resourceState) : base(id, name, resourceType)
+        internal FrontDoorBackendPool(ResourceIdentifier id, string name, ResourceType? resourceType, IList<FrontDoorBackend> backends, WritableSubResource loadBalancingSettings, WritableSubResource healthProbeSettings, FrontDoorResourceState? resourceState) : base(id, name, resourceType)
         {
             Backends = backends;
             LoadBalancingSettings = loadBalancingSettings;
@@ -38,29 +39,29 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> The set of backends for this pool. </summary>
         public IList<FrontDoorBackend> Backends { get; }
         /// <summary> Load balancing settings for a backend pool. </summary>
-        internal SubResource LoadBalancingSettings { get; set; }
-        /// <summary> Resource ID. </summary>
-        public string LoadBalancingSettingsId
+        internal WritableSubResource LoadBalancingSettings { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier LoadBalancingSettingsId
         {
             get => LoadBalancingSettings is null ? default : LoadBalancingSettings.Id;
             set
             {
                 if (LoadBalancingSettings is null)
-                    LoadBalancingSettings = new SubResource();
+                    LoadBalancingSettings = new WritableSubResource();
                 LoadBalancingSettings.Id = value;
             }
         }
 
         /// <summary> L7 health probe settings for a backend pool. </summary>
-        internal SubResource HealthProbeSettings { get; set; }
-        /// <summary> Resource ID. </summary>
-        public string HealthProbeSettingsId
+        internal WritableSubResource HealthProbeSettings { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier HealthProbeSettingsId
         {
             get => HealthProbeSettings is null ? default : HealthProbeSettings.Id;
             set
             {
                 if (HealthProbeSettings is null)
-                    HealthProbeSettings = new SubResource();
+                    HealthProbeSettings = new WritableSubResource();
                 HealthProbeSettings.Id = value;
             }
         }

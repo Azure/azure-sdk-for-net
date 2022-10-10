@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.FrontDoor
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? ResourceState { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState? SessionAffinityEnabledState { get { throw null; } set { } }
         public int? SessionAffinityTtlInSeconds { get { throw null; } set { } }
-        public string WebApplicationFirewallPolicyLinkId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier WebApplicationFirewallPolicyLinkId { get { throw null; } set { } }
     }
     public partial class FrontendEndpointResource : Azure.ResourceManager.ArmResource
     {
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public partial class ForwardingConfiguration : Azure.ResourceManager.FrontDoor.Models.RouteConfiguration
     {
         public ForwardingConfiguration() { }
-        public string BackendPoolId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier BackendPoolId { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorCacheConfiguration CacheConfiguration { get { throw null; } set { } }
         public string CustomForwardingPath { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorForwardingProtocol? ForwardingProtocol { get { throw null; } set { } }
@@ -452,8 +452,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         public FrontDoorBackendPool() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.FrontDoorBackend> Backends { get { throw null; } }
-        public string HealthProbeSettingsId { get { throw null; } set { } }
-        public string LoadBalancingSettingsId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier HealthProbeSettingsId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LoadBalancingSettingsId { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? ResourceState { get { throw null; } }
     }
     public partial class FrontDoorCacheConfiguration
@@ -1320,12 +1320,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public RoutingRuleData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.FrontDoorProtocol> AcceptedProtocols { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.RoutingRuleEnabledState? EnabledState { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.SubResource> FrontendEndpoints { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> FrontendEndpoints { get { throw null; } }
         public System.Collections.Generic.IList<string> PatternsToMatch { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? ResourceState { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.RouteConfiguration RouteConfiguration { get { throw null; } set { } }
-        public string RulesEngineId { get { throw null; } set { } }
-        public string WebApplicationFirewallPolicyLinkId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier RulesEngineId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier WebApplicationFirewallPolicyLinkId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RoutingRuleEnabledState : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.RoutingRuleEnabledState>
@@ -1511,11 +1511,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState left, Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class SubResource
-    {
-        public SubResource() { }
-        public string Id { get { throw null; } set { } }
     }
     public partial class WebApplicationCustomRule
     {

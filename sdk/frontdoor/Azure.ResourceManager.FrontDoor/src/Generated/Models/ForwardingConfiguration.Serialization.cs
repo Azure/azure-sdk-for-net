@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(BackendPool))
             {
                 writer.WritePropertyName("backendPool");
-                writer.WriteObjectValue(BackendPool);
+                JsonSerializer.Serialize(writer, BackendPool);
             }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(OdataType);
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<string> customForwardingPath = default;
             Optional<FrontDoorForwardingProtocol> forwardingProtocol = default;
             Optional<FrontDoorCacheConfiguration> cacheConfiguration = default;
-            Optional<SubResource> backendPool = default;
+            Optional<WritableSubResource> backendPool = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    backendPool = SubResource.DeserializeSubResource(property.Value);
+                    backendPool = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new ForwardingConfiguration(odataType, customForwardingPath.Value, Optional.ToNullable(forwardingProtocol), cacheConfiguration.Value, backendPool.Value);
+            return new ForwardingConfiguration(odataType, customForwardingPath.Value, Optional.ToNullable(forwardingProtocol), cacheConfiguration.Value, backendPool);
         }
     }
 }

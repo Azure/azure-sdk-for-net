@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Routing.Models
+namespace Azure.Maps.Routing
 {
     /// <summary> The VehicleLoadType. </summary>
     public readonly partial struct VehicleLoadType : IEquatable<VehicleLoadType>

@@ -75,6 +75,10 @@ namespace Azure.Core.Tests
                 Assert.IsTrue(scope.IsEnabled);
 
                 scope.Start();
+
+                // Validate that the default activity kind is used
+                Assert.AreEqual(ActivityKind.Internal, Activity.Current.Kind);
+
                 scope.Dispose();
 
                 Assert.AreEqual(1, activityListener.Activities.Count);

@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.FrontDoor
             Optional<FrontDoorWebApplicationFirewallPolicySettings> policySettings = default;
             Optional<CustomRuleList> customRules = default;
             Optional<ManagedRuleSetList> managedRules = default;
-            Optional<IReadOnlyList<Resources.Models.SubResource>> frontendEndpointLinks = default;
-            Optional<IReadOnlyList<Resources.Models.SubResource>> routingRuleLinks = default;
-            Optional<IReadOnlyList<Resources.Models.SubResource>> securityPolicyLinks = default;
+            Optional<IReadOnlyList<SubResource>> frontendEndpointLinks = default;
+            Optional<IReadOnlyList<SubResource>> routingRuleLinks = default;
+            Optional<IReadOnlyList<SubResource>> securityPolicyLinks = default;
             Optional<string> provisioningState = default;
             Optional<FrontDoorWebApplicationFirewallPolicyResourceState> resourceState = default;
             foreach (var property in element.EnumerateObject())
@@ -195,10 +195,10 @@ namespace Azure.ResourceManager.FrontDoor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Resources.Models.SubResource> array = new List<Resources.Models.SubResource>();
+                            List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<Resources.Models.SubResource>(item.ToString()));
+                                array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
                             }
                             frontendEndpointLinks = array;
                             continue;
@@ -210,10 +210,10 @@ namespace Azure.ResourceManager.FrontDoor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Resources.Models.SubResource> array = new List<Resources.Models.SubResource>();
+                            List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<Resources.Models.SubResource>(item.ToString()));
+                                array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
                             }
                             routingRuleLinks = array;
                             continue;
@@ -225,10 +225,10 @@ namespace Azure.ResourceManager.FrontDoor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Resources.Models.SubResource> array = new List<Resources.Models.SubResource>();
+                            List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<Resources.Models.SubResource>(item.ToString()));
+                                array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
                             }
                             securityPolicyLinks = array;
                             continue;

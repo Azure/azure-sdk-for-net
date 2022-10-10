@@ -29,7 +29,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 string ngrok = "https://localhost";
                 string playAudioUri = "https://localhost/bot-hold-music-2.wav";
                 var targets = new CommunicationIdentifier[] { targetUser };
-                var callResponse = await client.CreateCallAsync(new CreateCallOptions(new CallSource(user), targets, new Uri(ngrok))).ConfigureAwait(false);
+                var createCallOptions = new CreateCallOptions(new CallSource(user), targets, new Uri(ngrok))
+                {
+                    RepeatabilityHeaders = new RepeatabilityHeaders(new Guid("619e45a5-41f2-40bd-a20e-98b13944e146"), new DateTimeOffset(2022, 9, 19, 22, 20, 00, new TimeSpan(0, 0, 0)))
+                };
+                var callResponse = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                 Assert.NotNull(callResponse);
                 Assert.NotNull(callResponse.Value);
                 await WaitForOperationCompletion().ConfigureAwait(false);
@@ -49,7 +53,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             finally
             {
                 var callConnection = client.GetCallConnection(callConnectionId);
-                await callConnection.HangUpAsync(true).ConfigureAwait(false);
+                var hangUpOptions = new HangUpOptions(true) {
+                    RepeatabilityHeaders = new RepeatabilityHeaders(new Guid("fed6e917-f1df-4e21-b7de-c26d0947124b"), new DateTimeOffset(2022, 9, 19, 22, 20, 00, new TimeSpan(0, 0, 0)))
+                };
+                await callConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
             }
         }
 
@@ -69,7 +76,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 string callbackUri = TestEnvironment.AppCallbackUrl;
                 string promptUrl = "https://localhost/audio/bot-hold-music-2.wav";
                 var targets = new CommunicationIdentifier[] { targetUser };
-                var callResponse = await client.CreateCallAsync(new CreateCallOptions(new CallSource(user), targets, new Uri(callbackUri))).ConfigureAwait(false);
+                var createCallOptions = new CreateCallOptions(new CallSource(user), targets, new Uri(callbackUri))
+                {
+                    RepeatabilityHeaders = new RepeatabilityHeaders(new Guid("619e45a5-41f2-40bd-a20e-98b13944e146"), new DateTimeOffset(2022, 9, 19, 22, 20, 00, new TimeSpan(0, 0, 0)))
+                };
+                var callResponse = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                 await WaitForOperationCompletion().ConfigureAwait(false);
                 Assert.NotNull(callResponse);
                 Assert.NotNull(callResponse.Value);
@@ -92,7 +103,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             finally
             {
                 var callConnection = client.GetCallConnection(callConnectionId);
-                await callConnection.HangUpAsync(true).ConfigureAwait(false);
+                var hangUpOptions = new HangUpOptions(true)
+                {
+                    RepeatabilityHeaders = new RepeatabilityHeaders(new Guid("fed6e917-f1df-4e21-b7de-c26d0947124b"), new DateTimeOffset(2022, 9, 19, 22, 20, 00, new TimeSpan(0, 0, 0)))
+                };
+                await callConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
             }
         }
     }
