@@ -3,13 +3,14 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/recoveryservices/resource-manager/readme.md --csharp --version=V2 --reflect-api-versions --csharp-sdks-folder=C:\azure-sdk-for-net\sdk
-Autorest CSharp Version: 2.3.82
-2021-08-12 09:10:28 UTC
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/recoveryservices/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\sdk\azure-sdk-for-net\sdk
+2022-06-30 11:19:26 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
-Branch:      master
-Commit:      70626b932d16a97361673e0bcba7570284fe0813
+Branch:      main
+Commit:      3c5a948022b2bb99facdcf60ddb2abe2b16615ae
 AutoRest information
-Requested version: V2
-Bootstrapper version:    autorest@3.1.5
+Requested version: 2.0.4421
+Bootstrapper version:    autorest@2.0.4413
+npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
+npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.

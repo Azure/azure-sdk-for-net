@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network
             Optional<ExpressRouteCircuitPeeringConfig> microsoftPeeringConfig = default;
             Optional<ExpressRouteCircuitStats> stats = default;
             Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<string> gatewayManagerEtag = default;
+            Optional<string> gatewayManagerETag = default;
             Optional<string> lastModifiedBy = default;
             Optional<WritableSubResource> routeFilter = default;
             Optional<IPv6ExpressRouteCircuitPeeringConfig> ipv6PeeringConfig = default;
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("gatewayManagerEtag"))
                         {
-                            gatewayManagerEtag = property0.Value.GetString();
+                            gatewayManagerETag = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedBy"))
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteCircuitPeeringData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(peeringType), Optional.ToNullable(state), Optional.ToNullable(azureASN), Optional.ToNullable(peerASN), primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, primaryAzurePort.Value, secondaryAzurePort.Value, sharedKey.Value, Optional.ToNullable(vlanId), microsoftPeeringConfig.Value, stats.Value, Optional.ToNullable(provisioningState), gatewayManagerEtag.Value, lastModifiedBy.Value, routeFilter, ipv6PeeringConfig.Value, expressRouteConnection, Optional.ToList(connections), Optional.ToList(peeredConnections));
+            return new ExpressRouteCircuitPeeringData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(peeringType), Optional.ToNullable(state), Optional.ToNullable(azureASN), Optional.ToNullable(peerASN), primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, primaryAzurePort.Value, secondaryAzurePort.Value, sharedKey.Value, Optional.ToNullable(vlanId), microsoftPeeringConfig.Value, stats.Value, Optional.ToNullable(provisioningState), gatewayManagerETag.Value, lastModifiedBy.Value, routeFilter, ipv6PeeringConfig.Value, expressRouteConnection, Optional.ToList(connections), Optional.ToList(peeredConnections));
         }
     }
 }

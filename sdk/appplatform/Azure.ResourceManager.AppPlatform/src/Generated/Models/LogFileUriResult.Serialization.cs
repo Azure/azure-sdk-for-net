@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static LogFileUriResult DeserializeLogFileUriResult(JsonElement element)
         {
-            Uri url = default;
+            Uri uri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"))
                 {
-                    url = new Uri(property.Value.GetString());
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
             }
-            return new LogFileUriResult(url);
+            return new LogFileUriResult(uri);
         }
     }
 }

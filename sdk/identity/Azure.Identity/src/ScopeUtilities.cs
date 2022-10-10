@@ -13,7 +13,7 @@ namespace Azure.Identity
     internal static class ScopeUtilities
     {
         private const string DefaultSuffix = "/.default";
-        private const string ScopePattern = "^[0-9a-zA-Z-.:/]+$";
+        private const string ScopePattern = "^[0-9a-zA-Z-_.:/]+$";
 
         private const string InvalidScopeMessage = "The specified scope is not in expected format. Only alphanumeric characters, '.', '-', ':', and '/' are allowed";
         private static readonly Regex scopeRegex = new Regex(ScopePattern);

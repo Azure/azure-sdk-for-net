@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("subnetResourceId");
                 writer.WriteStringValue(SubnetResourceId);
             }
-            if (Optional.IsDefined(SwiftSupported))
+            if (Optional.IsDefined(IsSwiftSupported))
             {
                 writer.WritePropertyName("swiftSupported");
-                writer.WriteBooleanValue(SwiftSupported.Value);
+                writer.WriteBooleanValue(IsSwiftSupported.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> subnetResourceId = default;
+            Optional<ResourceIdentifier> subnetResourceId = default;
             Optional<bool> swiftSupported = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -89,7 +89,12 @@ namespace Azure.ResourceManager.AppService
                     {
                         if (property0.NameEquals("subnetResourceId"))
                         {
-                            subnetResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            subnetResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("swiftSupported"))

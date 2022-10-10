@@ -30,10 +30,10 @@ namespace Azure.AI.AnomalyDetector
     }
     public partial class AnomalyDetectorClientOptions : Azure.Core.ClientOptions
     {
-        public AnomalyDetectorClientOptions(Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions.ServiceVersion version = Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions.ServiceVersion.V1_1_preview_1) { }
+        public AnomalyDetectorClientOptions(Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions.ServiceVersion version = Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions.ServiceVersion.V1_1_Preview_1) { }
         public enum ServiceVersion
         {
-            V1_1_preview_1 = 1,
+            V1_1_Preview_1 = 1,
         }
     }
 }

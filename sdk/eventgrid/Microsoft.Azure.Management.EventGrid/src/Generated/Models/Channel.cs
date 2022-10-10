@@ -37,20 +37,17 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="name">Name of the resource.</param>
         /// <param name="type">Type of the resource.</param>
         /// <param name="channelType">The type of the event channel which
-        /// represents the  direction flow of events. Possible values include:
-        /// 'PartnerTopic', 'PartnerDestination'</param>
+        /// represents the direction flow of events. Possible values include:
+        /// 'PartnerTopic'</param>
         /// <param name="partnerTopicInfo">This property should be populated
         /// when channelType is PartnerTopic and represents information about
         /// the partner topic resource corresponding to the channel.</param>
-        /// <param name="partnerDestinationInfo">This property should be
-        /// populated when channelType is PartnerDestination and represents
-        /// information about the partner destination resource corresponding to
-        /// the channel.</param>
         /// <param name="messageForActivation">Context or helpful message that
         /// can be used during the approval process by the subscriber.</param>
         /// <param name="provisioningState">Provisioning state of the channel.
         /// Possible values include: 'Creating', 'Updating', 'Deleting',
-        /// 'Succeeded', 'Canceled', 'Failed'</param>
+        /// 'Succeeded', 'Canceled', 'Failed',
+        /// 'IdleDueToMirroredPartnerTopicDeletion'</param>
         /// <param name="readinessState">The readiness state of the
         /// corresponding partner topic. Possible values include:
         /// 'NeverActivated', 'Activated'</param>
@@ -60,12 +57,11 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// the channel and corresponding partner topic are deleted.</param>
         /// <param name="systemData">The system metadata relating to Channel
         /// resource.</param>
-        public Channel(string id = default(string), string name = default(string), string type = default(string), string channelType = default(string), PartnerTopicInfo partnerTopicInfo = default(PartnerTopicInfo), PartnerDestinationInfo partnerDestinationInfo = default(PartnerDestinationInfo), string messageForActivation = default(string), string provisioningState = default(string), string readinessState = default(string), System.DateTime? expirationTimeIfNotActivatedUtc = default(System.DateTime?), SystemData systemData = default(SystemData))
+        public Channel(string id = default(string), string name = default(string), string type = default(string), string channelType = default(string), PartnerTopicInfo partnerTopicInfo = default(PartnerTopicInfo), string messageForActivation = default(string), string provisioningState = default(string), string readinessState = default(string), System.DateTime? expirationTimeIfNotActivatedUtc = default(System.DateTime?), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             ChannelType = channelType;
             PartnerTopicInfo = partnerTopicInfo;
-            PartnerDestinationInfo = partnerDestinationInfo;
             MessageForActivation = messageForActivation;
             ProvisioningState = provisioningState;
             ReadinessState = readinessState;
@@ -81,8 +77,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
 
         /// <summary>
         /// Gets or sets the type of the event channel which represents the
-        /// direction flow of events. Possible values include: 'PartnerTopic',
-        /// 'PartnerDestination'
+        /// direction flow of events. Possible values include: 'PartnerTopic'
         /// </summary>
         [JsonProperty(PropertyName = "properties.channelType")]
         public string ChannelType { get; set; }
@@ -96,14 +91,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public PartnerTopicInfo PartnerTopicInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets this property should be populated when channelType is
-        /// PartnerDestination and represents information about the partner
-        /// destination resource corresponding to the channel.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.partnerDestinationInfo")]
-        public PartnerDestinationInfo PartnerDestinationInfo { get; set; }
-
-        /// <summary>
         /// Gets or sets context or helpful message that can be used during the
         /// approval process by the subscriber.
         /// </summary>
@@ -113,7 +100,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Gets or sets provisioning state of the channel. Possible values
         /// include: 'Creating', 'Updating', 'Deleting', 'Succeeded',
-        /// 'Canceled', 'Failed'
+        /// 'Canceled', 'Failed', 'IdleDueToMirroredPartnerTopicDeletion'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }

@@ -60,7 +60,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="vnetEncryptionSupported">Whether the virtual machine
         /// this nic is attached to supports encryption.</param>
         /// <param name="enableAcceleratedNetworking">If the network interface
-        /// is accelerated networking enabled.</param>
+        /// is configured for accelerated networking. Not applicable to VM
+        /// sizes which require accelerated networking.</param>
+        /// <param name="disableTcpStateTracking">Indicates whether to disable
+        /// tcp state tracking.</param>
         /// <param name="enableIPForwarding">Indicates whether IP forwarding is
         /// enabled on this network interface.</param>
         /// <param name="hostedWorkloads">A list of references to linked
@@ -86,7 +89,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Floating'</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public NetworkInterface(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), SubResource virtualMachine = default(SubResource), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), IList<NetworkInterfaceIPConfiguration> ipConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<NetworkInterfaceTapConfiguration> tapConfigurations = default(IList<NetworkInterfaceTapConfiguration>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? vnetEncryptionSupported = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? enableIPForwarding = default(bool?), IList<string> hostedWorkloads = default(IList<string>), SubResource dscpConfiguration = default(SubResource), string resourceGuid = default(string), string provisioningState = default(string), string workloadType = default(string), string nicType = default(string), PrivateLinkService privateLinkService = default(PrivateLinkService), string migrationPhase = default(string), string auxiliaryMode = default(string), string etag = default(string))
+        public NetworkInterface(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), SubResource virtualMachine = default(SubResource), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), IList<NetworkInterfaceIPConfiguration> ipConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<NetworkInterfaceTapConfiguration> tapConfigurations = default(IList<NetworkInterfaceTapConfiguration>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? vnetEncryptionSupported = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? disableTcpStateTracking = default(bool?), bool? enableIPForwarding = default(bool?), IList<string> hostedWorkloads = default(IList<string>), SubResource dscpConfiguration = default(SubResource), string resourceGuid = default(string), string provisioningState = default(string), string workloadType = default(string), string nicType = default(string), PrivateLinkService privateLinkService = default(PrivateLinkService), string migrationPhase = default(string), string auxiliaryMode = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             ExtendedLocation = extendedLocation;
@@ -100,6 +103,7 @@ namespace Microsoft.Azure.Management.Network.Models
             Primary = primary;
             VnetEncryptionSupported = vnetEncryptionSupported;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
+            DisableTcpStateTracking = disableTcpStateTracking;
             EnableIPForwarding = enableIPForwarding;
             HostedWorkloads = hostedWorkloads;
             DscpConfiguration = dscpConfiguration;
@@ -183,11 +187,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? VnetEncryptionSupported { get; private set; }
 
         /// <summary>
-        /// Gets or sets if the network interface is accelerated networking
-        /// enabled.
+        /// Gets or sets if the network interface is configured for accelerated
+        /// networking. Not applicable to VM sizes which require accelerated
+        /// networking.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableAcceleratedNetworking")]
         public bool? EnableAcceleratedNetworking { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether to disable tcp state tracking.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disableTcpStateTracking")]
+        public bool? DisableTcpStateTracking { get; set; }
 
         /// <summary>
         /// Gets or sets indicates whether IP forwarding is enabled on this

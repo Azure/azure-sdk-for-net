@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ServiceBus
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant");
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (Optional.IsDefined(Encryption))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus
             Optional<string> serviceBusEndpoint = default;
             Optional<string> metricId = default;
             Optional<bool> zoneRedundant = default;
-            Optional<Models.EncryptionProperties> encryption = default;
+            Optional<ServiceBusEncryption> encryption = default;
             Optional<IList<ServiceBusPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> alternateName = default;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ServiceBus
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
+                            encryption = ServiceBusEncryption.DeserializeServiceBusEncryption(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"))

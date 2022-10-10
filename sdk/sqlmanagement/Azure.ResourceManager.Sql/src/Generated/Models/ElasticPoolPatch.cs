@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The per database settings for the elastic pool. </summary>
         public ElasticPoolPerDatabaseSettings PerDatabaseSettings { get; set; }
         /// <summary> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </summary>
-        public bool? ZoneRedundant { get; set; }
+        public bool? IsZoneRedundant { get; set; }
         /// <summary> The license type to apply for this elastic pool. </summary>
         public ElasticPoolLicenseType? LicenseType { get; set; }
         /// <summary> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </summary>

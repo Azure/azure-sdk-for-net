@@ -166,6 +166,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to An error was encountered while executing developer-provided to process events.  This will normally fault the task responsible for partition processing, causing it to be restarted from the last checkpoint.  On some hosts, it may crash the process.  It is very strongly advised that all developer-provided code include a try/catch wrapper and no exceptions are allowed to bubble..
+        /// </summary>
+        internal static string DeveloperCodeEventProcessingError
+        {
+            get
+            {
+                return ResourceManager.GetString("DeveloperCodeEventProcessingError", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to An error was encountered while executing custom code, such as in an event handler..
         /// </summary>
         internal static string DeveloperCodeError
@@ -584,6 +595,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Executing developer-provided code to process events..
+        /// </summary>
+        internal static string OperationEventProcessingDeveloperCode
+        {
+            get
+            {
+                return ResourceManager.GetString("OperationEventProcessingDeveloperCode", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Retrieving list of ownership from the storage service..
         /// </summary>
         internal static string OperationListOwnership
@@ -815,13 +837,24 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to A load balancing cycle has taken too long to complete.  A slow cycle can cause stability issues with partition ownership.  Consider investigating storage latency and thread pool health.  Common causes are soft delete being enabled for storage and too many partitions owned.  You may also want to consider increasing the 'PartitionOwnershipExpirationInterval' in the processor options.  Cycle Duration: '{0}' seconds.  Partition Ownership Interval '{1}' seconds..
+        ///   Looks up a localized string similar to WARNING: A load balancing cycle has taken too long to complete.  A slow cycle can cause stability issues with partition ownership.  Consider investigating storage latency and thread pool health.  Common causes are soft delete being enabled for storage and too many partitions owned.  You may also want to consider increasing the 'PartitionOwnershipExpirationInterval' in the processor options.  Cycle Duration: '{0}' seconds.  Partition Ownership Interval '{1}' seconds..
         /// </summary>
         internal static string ProcessorLoadBalancingCycleSlowMask
         {
             get
             {
                 return ResourceManager.GetString("ProcessorLoadBalancingCycleSlowMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to WARNING: The 'PartitionOwnershipExpirationInterval' and 'LoadBalancingUpdateInterval' are configured for intervals that may cause stability issues with partition ownership.  It is recommended that the 'PartitionOwnershipExpirationInterval' be at least 3 times greater than the 'LoadBalancingUpdateInterval' and very strongly advised that it should be no less than twice as long.  It is advised to adjust the intervals in the processor options.  Load Balancing Interval '{1:0:00}' seconds.  Partition Ownership Interval '{1:0:00}' seconds..
+        /// </summary>
+        internal static string ProcessorLoadBalancingIntervalsTooCloseMask
+        {
+            get
+            {
+                return ResourceManager.GetString("ProcessorLoadBalancingIntervalsTooCloseMask", resourceCulture);
             }
         }
 
@@ -855,6 +888,17 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("EventTooLargeMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to For troubleshooting information, see https://aka.ms/azsdk/net/eventhubs/exceptions/troubleshoot.
+        /// </summary>
+        internal static string TroubleshootingGuideLink
+        {
+            get
+            {
+                return ResourceManager.GetString("TroubleshootingGuideLink", resourceCulture);
             }
         }
     }

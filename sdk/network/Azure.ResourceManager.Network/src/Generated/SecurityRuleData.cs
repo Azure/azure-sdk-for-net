@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
         /// <param name="protocol"> Network protocol this rule applies to. </param>
         /// <param name="sourcePortRange"> The source port or range. Integer or range between 0 and 65535. Asterisk &apos;*&apos; can also be used to match all ports. </param>
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="priority"> The priority of the rule. The value can be between 100 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
         /// <param name="direction"> The direction of the rule. The direction specifies if rule will be evaluated on incoming or outgoing traffic. </param>
         /// <param name="provisioningState"> The provisioning state of the security rule resource. </param>
-        internal SecurityRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, string description, SecurityRuleProtocol? protocol, string sourcePortRange, string destinationPortRange, string sourceAddressPrefix, IList<string> sourceAddressPrefixes, IList<ApplicationSecurityGroupData> sourceApplicationSecurityGroups, string destinationAddressPrefix, IList<string> destinationAddressPrefixes, IList<ApplicationSecurityGroupData> destinationApplicationSecurityGroups, IList<string> sourcePortRanges, IList<string> destinationPortRanges, SecurityRuleAccess? access, int? priority, SecurityRuleDirection? direction, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal SecurityRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string description, SecurityRuleProtocol? protocol, string sourcePortRange, string destinationPortRange, string sourceAddressPrefix, IList<string> sourceAddressPrefixes, IList<ApplicationSecurityGroupData> sourceApplicationSecurityGroups, string destinationAddressPrefix, IList<string> destinationAddressPrefixes, IList<ApplicationSecurityGroupData> destinationApplicationSecurityGroups, IList<string> sourcePortRanges, IList<string> destinationPortRanges, SecurityRuleAccess? access, int? priority, SecurityRuleDirection? direction, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            ETag = eTag;
+            ETag = etag;
             Description = description;
             Protocol = protocol;
             SourcePortRange = sourcePortRange;

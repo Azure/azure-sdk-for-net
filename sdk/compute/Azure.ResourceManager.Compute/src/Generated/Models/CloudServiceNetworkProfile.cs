@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CloudServiceNetworkProfile. </summary>
         public CloudServiceNetworkProfile()
         {
-            LoadBalancerConfigurations = new ChangeTrackingList<LoadBalancerConfiguration>();
+            LoadBalancerConfigurations = new ChangeTrackingList<CloudServiceLoadBalancerConfiguration>();
         }
 
         /// <summary> Initializes a new instance of CloudServiceNetworkProfile. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// If not specified, the default value is Production.
         /// </param>
         /// <param name="swappableCloudService"> The id reference of the cloud service containing the target IP with which the subject cloud service can perform a swap. This property cannot be updated once it is set. The swappable cloud service referred by this id must be present otherwise an error will be thrown. </param>
-        internal CloudServiceNetworkProfile(IList<LoadBalancerConfiguration> loadBalancerConfigurations, CloudServiceSlotType? slotType, WritableSubResource swappableCloudService)
+        internal CloudServiceNetworkProfile(IList<CloudServiceLoadBalancerConfiguration> loadBalancerConfigurations, CloudServiceSlotType? slotType, WritableSubResource swappableCloudService)
         {
             LoadBalancerConfigurations = loadBalancerConfigurations;
             SlotType = slotType;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> List of Load balancer configurations. Cloud service can have up to two load balancer configurations, corresponding to a Public Load Balancer and an Internal Load Balancer. </summary>
-        public IList<LoadBalancerConfiguration> LoadBalancerConfigurations { get; }
+        public IList<CloudServiceLoadBalancerConfiguration> LoadBalancerConfigurations { get; }
         /// <summary>
         /// Slot type for the cloud service.
         /// Possible values are &lt;br /&gt;&lt;br /&gt;**Production**&lt;br /&gt;&lt;br /&gt;**Staging**&lt;br /&gt;&lt;br /&gt;

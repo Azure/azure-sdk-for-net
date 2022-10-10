@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -26,26 +27,26 @@ namespace Azure.ResourceManager.Storage
         /// <param name="storageAccountResourceId"> Full resource id of the original storage account. </param>
         /// <param name="location"> Location of the deleted account. </param>
         /// <param name="restoreReference"> Can be used to attempt recovering this deleted account via PutStorageAccount API. </param>
-        /// <param name="creationTime"> Creation time of the deleted account. </param>
-        /// <param name="deletionTime"> Deletion time of the deleted account. </param>
-        internal DeletedAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string storageAccountResourceId, AzureLocation? location, string restoreReference, string creationTime, string deletionTime) : base(id, name, resourceType, systemData)
+        /// <param name="createdOn"> Creation time of the deleted account. </param>
+        /// <param name="deletedOn"> Deletion time of the deleted account. </param>
+        internal DeletedAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier storageAccountResourceId, AzureLocation? location, string restoreReference, DateTimeOffset? createdOn, DateTimeOffset? deletedOn) : base(id, name, resourceType, systemData)
         {
             StorageAccountResourceId = storageAccountResourceId;
             Location = location;
             RestoreReference = restoreReference;
-            CreationTime = creationTime;
-            DeletionTime = deletionTime;
+            CreatedOn = createdOn;
+            DeletedOn = deletedOn;
         }
 
         /// <summary> Full resource id of the original storage account. </summary>
-        public string StorageAccountResourceId { get; }
+        public ResourceIdentifier StorageAccountResourceId { get; }
         /// <summary> Location of the deleted account. </summary>
         public AzureLocation? Location { get; }
         /// <summary> Can be used to attempt recovering this deleted account via PutStorageAccount API. </summary>
         public string RestoreReference { get; }
         /// <summary> Creation time of the deleted account. </summary>
-        public string CreationTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> Deletion time of the deleted account. </summary>
-        public string DeletionTime { get; }
+        public DateTimeOffset? DeletedOn { get; }
     }
 }

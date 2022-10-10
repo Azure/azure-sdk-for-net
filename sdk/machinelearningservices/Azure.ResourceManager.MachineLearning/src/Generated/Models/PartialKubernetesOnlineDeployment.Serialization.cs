@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class PartialKubernetesOnlineDeployment : IUtf8JsonSerializable
+    public partial class PartialKubernetesOnlineDeployment : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

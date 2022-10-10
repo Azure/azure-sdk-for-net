@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<RestorableSqlContainerPropertiesResource> resource = default;
+            Optional<ExtendedRestorableSqlContainerResourceInfo> resource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resource = RestorableSqlContainerPropertiesResource.DeserializeRestorableSqlContainerPropertiesResource(property0.Value);
+                            resource = ExtendedRestorableSqlContainerResourceInfo.DeserializeExtendedRestorableSqlContainerResourceInfo(property0.Value);
                             continue;
                         }
                     }

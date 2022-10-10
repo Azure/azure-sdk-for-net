@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -22,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
         private TextAnalyticsClient CreateTestClient(HttpPipelineTransport transport)
         {
-            var options = new TextAnalyticsClientOptions(TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)
+            var options = new TextAnalyticsClientOptions(TextAnalyticsClientOptions.ServiceVersion.V3_1)
             {
                 Transport = transport
             };
@@ -170,6 +172,81 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             Assert.IsInstanceOf<ArgumentNullException>(ex.InnerException);
         }
 
+        [Test]
+        public async Task CancelAnalyzeOperation()
+        {
+            RequestUriBuilder actionUri = new();
+            actionUri.Reset(new Uri(s_endpoint));
+            actionUri.Path = "/text/analytics/v3.1/analyze";
+
+            RequestUriBuilder statusUri = new();
+            statusUri.Reset(new Uri(s_endpoint));
+            statusUri.Path = "/text/analytics/v3.1/analyze/jobs/12341234-1234-1234-1234-123412341234";
+
+            ConcurrentQueue<(MockRequest Request, MockResponse Response)> messages = new(new[]
+            {
+                (
+                    new MockRequest { Method = RequestMethod.Post, Uri = actionUri },
+                    new MockResponse(202).WithHeader("operation-location", "/language/analyze-text/jobs/12341234-1234-1234-1234-123412341234")
+                ),
+                (
+                    new MockRequest { Method = RequestMethod.Get, Uri = statusUri },
+                    new MockResponse(200).WithContent(@"{""jobId"":""12341234-1234-1234-1234-123412341234"",""status"":""running"",""tasks"":{""total"":1,""completed"":0,""failed"":0,""inProgress"":1}}")
+                ),
+            });
+
+            MockTransport transport = new(request =>
+            {
+                if (!messages.TryDequeue(out (MockRequest Request, MockResponse Response) message))
+                {
+                    throw new AssertionException($"No more response for request to {request.Method} {request.Uri}");
+                }
+
+                if (RequestComparer.Shared.Equals(message.Request, request))
+                {
+                    return message.Response;
+                }
+
+                throw new AssertionException($"Request to {request.Method} {request.Uri} does not match queued request to {message.Request.Method} {message.Request.Uri}");
+            })
+            {
+                ExpectSyncPipeline = !IsAsync,
+            };
+
+            var documents = new List<TextDocumentInput>
+            {
+                new TextDocumentInput("134234", "Elon Musk is the CEO of SpaceX and Tesla.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("324232", "Tesla stock is up by 400% this year.")
+                {
+                     Language = "en",
+                }
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
+            };
+
+            TextAnalyticsClient client = InstrumentClient(CreateTestClient(transport));
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await operation.CancelAsync());
+
+            Assert.AreEqual("Cancellation is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
+        }
+
         #endregion Analyze
 
         #region Healthcare
@@ -299,6 +376,109 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             Assert.IsInstanceOf<ArgumentNullException>(ex.InnerException);
         }
 
+        [Test]
+        public async Task CancelHealthcareOperation()
+        {
+            RequestUriBuilder actionUri = new();
+            actionUri.Reset(new Uri(s_endpoint));
+            actionUri.Path = "/text/analytics/v3.1/entities/health/jobs";
+
+            RequestUriBuilder statusUri = new();
+            statusUri.Reset(new Uri(s_endpoint));
+            statusUri.Path = "/text/analytics/v3.1/entities/health/jobs/12341234-1234-1234-1234-123412341234";
+
+            ConcurrentQueue<(MockRequest Request, MockResponse Response)> messages = new(new[]
+            {
+                (
+                    new MockRequest { Method = RequestMethod.Post, Uri = actionUri },
+                    new MockResponse(202).WithHeader("operation-location", "/text/analytics/v3.1/entities/health/jobs/12341234-1234-1234-1234-123412341234")
+                ),
+                (
+                    new MockRequest { Method = RequestMethod.Get, Uri = statusUri },
+                    new MockResponse(200).WithContent(@"{""jobId"":""12341234-1234-1234-1234-123412341234"",""status"":""running"",""tasks"":{""total"":1,""completed"":0,""failed"":0,""inProgress"":1}}")
+                ),
+                (
+                    new MockRequest { Method = RequestMethod.Delete, Uri = statusUri },
+                    new MockResponse(202).WithHeader("operation-location", "/text/analytics/v3.1/entities/health/jobs/12341234-1234-1234-1234-123412341234")
+                ),
+                (
+                    new MockRequest { Method = RequestMethod.Get, Uri = statusUri },
+                    new MockResponse(200).WithContent(@"{""jobId"":""12341234-1234-1234-1234-123412341234"",""status"":""cancelled"",""tasks"":{""total"":1,""completed"":0,""failed"":0,""inProgress"":0}}")
+                ),
+            });
+
+            MockTransport transport = new(request =>
+            {
+                if (!messages.TryDequeue(out (MockRequest Request, MockResponse Response) message))
+                {
+                    throw new AssertionException($"No more response for request to {request.Method} {request.Uri}");
+                }
+
+                if (RequestComparer.Shared.Equals(message.Request, request))
+                {
+                    return message.Response;
+                }
+
+                throw new AssertionException($"Request to {request.Method} {request.Uri} does not match queued request to {message.Request.Method} {message.Request.Uri}");
+            })
+            {
+                ExpectSyncPipeline = !IsAsync,
+            };
+
+            TextAnalyticsClient client = InstrumentClient(CreateTestClient(transport));
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(new[] { "100mg ibuprofen" }, "en");
+
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+                await operation.CancelAsync();
+
+                RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
+                Assert.That(ex.Message, Contains.Substring("canceled"));
+            }
+            else
+            {
+                operation.UpdateStatus();
+                operation.Cancel();
+
+                RequestFailedException ex = Assert.Throws<RequestFailedException>(() => operation.WaitForCompletion());
+                Assert.That(ex.Message, Contains.Substring("canceled"));
+            }
+        }
+
         #endregion Healthcare
+
+        #region Recognize Custom Entities
+
+        [Test]
+        public void CancelRecognizeCustomEntitiesOperation()
+        {
+            TextAnalyticsClient client = CreateTestClient(new MockTransport());
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartRecognizeCustomEntitiesAsync(new[] { "100mg ibuprofen" }, "project", "deployment", "en"));
+        }
+
+        #endregion
+
+        #region Single Label Classify
+
+        [Test]
+        public void CancelSingleLabelClassifyDocumentOperation()
+        {
+            TextAnalyticsClient client = CreateTestClient(new MockTransport());
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartSingleLabelClassifyAsync(new[] { "It was the best of times, it was the worst of times." }, "project", "deployment", "en"));
+        }
+
+        #endregion
+
+        #region Multi Label Classify
+
+        [Test]
+        public void CancelMultiLabelClassifyDocumentOperation()
+        {
+            TextAnalyticsClient client = CreateTestClient(new MockTransport());
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartMultiLabelClassifyAsync(new[] { "It was the best of times, it was the worst of times." }, "project", "deployment", "en"));
+        }
+
+        #endregion
     }
 }

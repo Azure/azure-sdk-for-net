@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<SupportedOperatingSystemType> osType = default;
             Optional<VirtualHardDisk> image = default;
             Optional<IList<string>> vhdContainers = default;
-            Optional<VirtualMachineScaleSetManagedDiskParameters> managedDisk = default;
+            Optional<VirtualMachineScaleSetManagedDisk> managedDisk = default;
             Optional<DiskDeleteOptionType> deleteOption = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    managedDisk = VirtualMachineScaleSetManagedDiskParameters.DeserializeVirtualMachineScaleSetManagedDiskParameters(property.Value);
+                    managedDisk = VirtualMachineScaleSetManagedDisk.DeserializeVirtualMachineScaleSetManagedDisk(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deleteOption"))

@@ -155,14 +155,14 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     }
     public partial class ObjectAnchorsConversionClientOptions : Azure.Core.ClientOptions
     {
-        public ObjectAnchorsConversionClientOptions(Azure.MixedReality.ObjectAnchors.Conversion.ObjectAnchorsConversionClientOptions.ServiceVersion version = Azure.MixedReality.ObjectAnchors.Conversion.ObjectAnchorsConversionClientOptions.ServiceVersion.V0_3_preview_0) { }
+        public ObjectAnchorsConversionClientOptions(Azure.MixedReality.ObjectAnchors.Conversion.ObjectAnchorsConversionClientOptions.ServiceVersion version = Azure.MixedReality.ObjectAnchors.Conversion.ObjectAnchorsConversionClientOptions.ServiceVersion.V0_3_Preview_0) { }
         public System.Uri MixedRealityAuthenticationEndpoint { get { throw null; } set { } }
         public Azure.MixedReality.Authentication.MixedRealityStsClientOptions MixedRealityAuthenticationOptions { get { throw null; } set { } }
         public System.Uri ServiceEndpoint { get { throw null; } set { } }
         public enum ServiceVersion
         {
-            V0_2_preview_0 = 1,
-            V0_3_preview_0 = 2,
+            V0_2_Preview_0 = 1,
+            V0_3_Preview_0 = 2,
         }
     }
     public static partial class ObjectAnchorsConversionModelFactory

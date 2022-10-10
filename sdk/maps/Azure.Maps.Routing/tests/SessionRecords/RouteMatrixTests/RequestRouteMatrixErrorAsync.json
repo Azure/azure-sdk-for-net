@@ -1,0 +1,60 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/route/matrix/json?api-version=1.0\u0026waitForResults=false\u0026computeTravelTimeFor=all",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "140",
+        "Content-Type": "application/json",
+        "traceparent": "00-736e87cac3c0d158d8c31199ffa79b99-f67fbbdfa5940a05-00",
+        "User-Agent": "azsdk-net-Maps.Route/1.0.0-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "447ffe9f2b75aaee42a1847fa38ace0a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "origins": {
+          "coordinates": [
+            [
+              123.751,
+              45.9375
+            ],
+            [
+              123.791,
+              45.96875
+            ]
+          ],
+          "type": "MultiPoint"
+        },
+        "destinations": {
+          "coordinates": [],
+          "type": "MultiPoint"
+        }
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Length": "73",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 Aug 2022 09:22:48 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: FD3748BC795940FC9E52B94EDE7CD7DE Ref B: TYBEDGE0511 Ref C: 2022-08-26T09:22:49Z"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "400 BadRequest",
+          "message": "Invalid coordinates value"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "602256393"
+  }
+}

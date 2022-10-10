@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Storage
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<CorsRules> cors = default;
+            Optional<StorageCorsRules> cors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            cors = CorsRules.DeserializeCorsRules(property0.Value);
+                            cors = StorageCorsRules.DeserializeStorageCorsRules(property0.Value);
                             continue;
                         }
                     }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyList<string>> zones = default;
-            Optional<IReadOnlyList<ResourceSkuZoneDetails>> zoneDetails = default;
+            Optional<IReadOnlyList<AppPlatformResourceSkuZoneDetails>> zoneDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceSkuZoneDetails> array = new List<ResourceSkuZoneDetails>();
+                    List<AppPlatformResourceSkuZoneDetails> array = new List<AppPlatformResourceSkuZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuZoneDetails.DeserializeResourceSkuZoneDetails(item));
+                        array.Add(AppPlatformResourceSkuZoneDetails.DeserializeAppPlatformResourceSkuZoneDetails(item));
                     }
                     zoneDetails = array;
                     continue;

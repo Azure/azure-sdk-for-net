@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("includePrivacy");
                 writer.WriteBooleanValue(IncludePrivacy.Value);
             }
-            if (Optional.IsDefined(ForTransfer))
+            if (Optional.IsDefined(IsForTransfer))
             {
                 writer.WritePropertyName("forTransfer");
-                writer.WriteBooleanValue(ForTransfer.Value);
+                writer.WriteBooleanValue(IsForTransfer.Value);
             }
             writer.WriteEndObject();
         }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<FrontDoorProvisioningState> provisioningState = default;
             Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
             Optional<string> profileName = default;
-            Optional<SecretProperties> parameters = default;
+            Optional<FrontDoorSecretProperties> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            parameters = SecretProperties.DeserializeSecretProperties(property0.Value);
+                            parameters = FrontDoorSecretProperties.DeserializeFrontDoorSecretProperties(property0.Value);
                             continue;
                         }
                     }

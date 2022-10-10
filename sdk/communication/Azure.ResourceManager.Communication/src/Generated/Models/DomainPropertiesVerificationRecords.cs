@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="dkim"> A class that represents a VerificationStatus record. </param>
         /// <param name="dkim2"> A class that represents a VerificationStatus record. </param>
         /// <param name="dmarc"> A class that represents a VerificationStatus record. </param>
-        internal DomainPropertiesVerificationRecords(DnsRecord domain, DnsRecord spf, DnsRecord dkim, DnsRecord dkim2, DnsRecord dmarc)
+        internal DomainPropertiesVerificationRecords(VerificationDnsRecord domain, VerificationDnsRecord spf, VerificationDnsRecord dkim, VerificationDnsRecord dkim2, VerificationDnsRecord dmarc)
         {
             Domain = domain;
             Spf = spf;
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         /// <summary> A class that represents a VerificationStatus record. </summary>
-        public DnsRecord Domain { get; }
+        public VerificationDnsRecord Domain { get; }
         /// <summary> A class that represents a VerificationStatus record. </summary>
-        public DnsRecord Spf { get; }
+        public VerificationDnsRecord Spf { get; }
         /// <summary> A class that represents a VerificationStatus record. </summary>
-        public DnsRecord Dkim { get; }
+        public VerificationDnsRecord Dkim { get; }
         /// <summary> A class that represents a VerificationStatus record. </summary>
-        public DnsRecord Dkim2 { get; }
+        public VerificationDnsRecord Dkim2 { get; }
         /// <summary> A class that represents a VerificationStatus record. </summary>
-        public DnsRecord Dmarc { get; }
+        public VerificationDnsRecord Dmarc { get; }
     }
 }

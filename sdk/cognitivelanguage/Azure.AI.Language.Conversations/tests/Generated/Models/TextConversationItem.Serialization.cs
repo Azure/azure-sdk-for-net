@@ -31,6 +31,11 @@ namespace Azure.AI.Language.Conversations
                 writer.WritePropertyName("modality");
                 writer.WriteStringValue(Modality.Value.ToString());
             }
+            if (Optional.IsDefined(Role))
+            {
+                writer.WritePropertyName("role");
+                writer.WriteStringValue(Role.Value.ToString());
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);

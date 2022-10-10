@@ -6,8 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 azure-arm: true
 namespace: Azure.ResourceManager.DeviceUpdate
-require: https://github.com/Azure/azure-rest-api-specs/blob/32143b0f5f230ee2601e3c5d1990188666a5058d/specification/deviceupdate/resource-manager/readme.md
-tag: package-2022-04-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/a1081882ea6ae33e65da9b86f6a031175c1f8fda/specification/deviceupdate/resource-manager/readme.md
+tag: package-2022-10-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -29,7 +29,7 @@ rename-rules:
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -40,11 +40,12 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
 
 directive:
   - from: swagger-document

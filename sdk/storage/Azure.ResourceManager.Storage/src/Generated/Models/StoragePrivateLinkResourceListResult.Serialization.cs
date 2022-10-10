@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static StoragePrivateLinkResourceListResult DeserializeStoragePrivateLinkResourceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<StoragePrivateLinkResource>> value = default;
+            Optional<IReadOnlyList<StoragePrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<StoragePrivateLinkResource> array = new List<StoragePrivateLinkResource>();
+                    List<StoragePrivateLinkResourceData> array = new List<StoragePrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePrivateLinkResource.DeserializeStoragePrivateLinkResource(item));
+                        array.Add(StoragePrivateLinkResourceData.DeserializeStoragePrivateLinkResourceData(item));
                     }
                     value = array;
                     continue;

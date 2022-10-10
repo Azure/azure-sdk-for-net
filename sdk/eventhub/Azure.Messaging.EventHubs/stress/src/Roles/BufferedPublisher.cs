@@ -2,15 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Tests;
 
@@ -26,36 +20,30 @@ namespace Azure.Messaging.EventHubs.Stress;
 ///
 internal class BufferedPublisher
 {
-    /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="Publisher" /> instance.</summary>
+    /// <summary>The <see cref="Metrics"/> instance associated with this <see cref="BufferedPublisher"/> instance.</summary>
     private readonly Metrics _metrics;
 
-    /// <summary>The <see cref="BufferedPublisherConfiguration" /> used to configure the instance of this role.</summary>
+    /// <summary>The <see cref="BufferedPublisherConfiguration"/> used to configure the instance of this role.</summary>
     private readonly BufferedPublisherConfiguration _bufferedPublisherConfiguration;
 
-    /// <summary>The <see cref="TestConfiguration" /> used to configure this test run.</summary>
-    private readonly TestConfiguration _testConfiguration;
-
-    /// <summary>The name of the test being run for metrics collection.</summary>
-    private readonly string _testName;
+    /// <summary>The <see cref="TestParameters"/> used to configure this test run.</summary>
+    private readonly TestParameters _testParameters;
 
     /// <summary>
-    ///   Initializes a new <see cref="BufferedPublisher" \> instance.
+    ///   Initializes a new <see cref="BufferedPublisher"\> instance.
     /// </summary>
     ///
-    /// <param name="testConfiguration">The <see cref="TestConfiguration" /> used to configure the processor test scenario run.</param>
+    /// <param name="testParameters">The <see cref="TestParameters" /> used to configure the processor test scenario run.</param>
     /// <param name="bufferedPublisherConfiguration">The <see cref="BufferedPublisherConfiguration" /> instance used to configure this instance of <see cref="BufferedPublisher" />.</param>
     /// <param name="metrics">The <see cref="Metrics" /> instance used to send metrics to Application Insights.</param>
-    /// <param name="testName">The name of the test being run in order to organize metrics being collected.</param>
     ///
-    public BufferedPublisher(TestConfiguration testConfiguration,
+    public BufferedPublisher(TestParameters testParameters,
                              BufferedPublisherConfiguration bufferedPublisherConfiguration,
-                             Metrics metrics,
-                             string testName)
+                             Metrics metrics)
     {
         _metrics = metrics;
-        _testConfiguration = testConfiguration;
+        _testParameters = testParameters;
         _bufferedPublisherConfiguration = bufferedPublisherConfiguration;
-        _testName = testName;
     }
 
     /// <summary>
@@ -65,7 +53,7 @@ internal class BufferedPublisher
     ///
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task Start(CancellationToken cancellationToken)
+    public async Task RunAsync(CancellationToken cancellationToken)
     {
         var enqueueTasks = new List<Task>();
 
@@ -84,7 +72,7 @@ internal class BufferedPublisher
                 },
                 MaximumWaitTime = _bufferedPublisherConfiguration.MaxWaitTime
             };
-            var producer = new EventHubBufferedProducerClient(_testConfiguration.EventHubsConnectionString, _testConfiguration.EventHub, options);
+            var producer = new EventHubBufferedProducerClient(_testParameters.EventHubsConnectionString, _testParameters.EventHub, options);
 
             try
             {
@@ -92,8 +80,8 @@ internal class BufferedPublisher
                 {
                     var numEvents = args.EventBatch.Count;
 
-                    _metrics.Client.GetMetric(Metrics.SuccessfullySentFromQueue, Metrics.PartitionId, Metrics.TestName).TrackValue(numEvents, args.PartitionId, _testName);
-                    _metrics.Client.GetMetric(Metrics.BatchesPublished, Metrics.TestName).TrackValue(1, _testName);
+                    _metrics.Client.GetMetric(Metrics.SuccessfullySentFromQueue, Metrics.PartitionId).TrackValue(numEvents, args.PartitionId);
+                    _metrics.Client.GetMetric(Metrics.BatchesPublished).TrackValue(1);
 
                     return Task.CompletedTask;
                 };
@@ -101,11 +89,9 @@ internal class BufferedPublisher
                 producer.SendEventBatchFailedAsync += args =>
                 {
                     var numEvents = args.EventBatch.Count;
-                    var exceptionProperties = new Dictionary<string, string>();
-                    exceptionProperties.Add(Metrics.TestName, _testName);
 
-                    _metrics.Client.GetMetric(Metrics.EventsNotSentAfterEnqueue, Metrics.PartitionId, Metrics.TestName).TrackValue(numEvents, args.PartitionId, _testName);
-                    _metrics.Client.TrackException(args.Exception, exceptionProperties);
+                    _metrics.Client.GetMetric(Metrics.EventsNotSentAfterEnqueue, Metrics.PartitionId).TrackValue(numEvents, args.PartitionId);
+                    _metrics.Client.TrackException(args.Exception);
 
                     return Task.CompletedTask;
                 };
@@ -166,11 +152,8 @@ internal class BufferedPublisher
             {
                 // If this catch is hit, it means the producer has restarted, collect metrics.
 
-                _metrics.Client.GetMetric(Metrics.ProducerRestarted, Metrics.TestName).TrackValue(1, _testName);
-
-                var exceptionProperties = new Dictionary<string, string>();
-                exceptionProperties.Add(Metrics.TestName, _testName);
-                _metrics.Client.TrackException(ex, exceptionProperties);
+                _metrics.Client.GetMetric(Metrics.ProducerRestarted).TrackValue(1);
+                _metrics.Client.TrackException(ex);
             }
             finally
             {
@@ -185,7 +168,7 @@ internal class BufferedPublisher
     /// </summary>
     ///
     /// <param name="producer">The <see cref="EventHubBufferedProducerClient" /> to enqueue events to for this test scenario run.</param>
-    /// <param name="cancellationToken">The <see cref="CancellationToke"/> instance to signal the request to cancel the operation.</param>
+    /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
     private async Task PerformEnqueue(EventHubBufferedProducerClient producer,
                                       CancellationToken cancellationToken)
@@ -200,7 +183,7 @@ internal class BufferedPublisher
         {
             await producer.EnqueueEventsAsync(events, cancellationToken).ConfigureAwait(false);
 
-            _metrics.Client.GetMetric(Metrics.EventsEnqueued, Metrics.TestName).TrackValue(_bufferedPublisherConfiguration.EventEnqueueListSize, _testName);
+            _metrics.Client.GetMetric(Metrics.EventsEnqueued).TrackValue(_bufferedPublisherConfiguration.EventEnqueueListSize);
         }
         catch (TaskCanceledException)
         {
@@ -213,7 +196,6 @@ internal class BufferedPublisher
             // Track that the exception took place during the enqueuing of an event
 
             exceptionProperties.Add("Process", "Enqueue");
-            exceptionProperties.Add(Metrics.TestName, _testName);
 
             _metrics.Client.TrackException(ex, exceptionProperties);
         }

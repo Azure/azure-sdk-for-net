@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static CosmosDBLocationData DeserializeCosmosDBLocationData(JsonElement element)
         {
-            Optional<LocationProperties> properties = default;
+            Optional<CosmosDBLocationProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = LocationProperties.DeserializeLocationProperties(property.Value);
+                    properties = CosmosDBLocationProperties.DeserializeCosmosDBLocationProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))

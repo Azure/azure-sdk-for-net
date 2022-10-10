@@ -2,12 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
@@ -26,7 +24,7 @@ namespace Azure.Messaging.EventHubs.Stress;
 internal class Processor
 {
     /// <summary>A unique identifier used to identify this processor instance.</summary>
-    private string _identifier { get; } = Convert.ToBase64String(Guid.NewGuid().ToByteArray()).TrimEnd('=').ToUpperInvariant();
+    public string Identifier { get; } = Convert.ToBase64String(Guid.NewGuid().ToByteArray()).TrimEnd('=').ToUpperInvariant();
 
     /// <summary>The number of current handler calls happening within the same partition.</summary>
     private int[] _partitionHandlerCalls { get; }
@@ -34,36 +32,30 @@ internal class Processor
     /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="Processor" /> instance.</summary>
     private Metrics _metrics { get; }
 
-    /// <summary>The <see cref="TestConfiguration" /> used to configure this test run.</summary>
-    private TestConfiguration _testConfiguration { get; }
+    /// <summary>The <see cref="TestParameters" /> used to run this test.</summary>
+    private TestParameters _testParameters { get; }
 
     /// <summary>The <see cref="ProcessorConfiguration" /> used to configure the instance of this role.</summary>
     private ProcessorConfiguration _processorConfiguration { get; }
-
-    /// <summary>The name of the test being run for metrics collection.</summary>
-    private readonly string _testName;
 
     /// <summary>
     ///   Initializes a new <see cref="Processor" \> instance.
     /// </summary>
     ///
-    /// <param name="testConfiguration">The <see cref="TestConfiguration" /> used to configure the processor test scenario run.</param>
+    /// <param name="testParameters">The <see cref="TestParameters" /> used to run the processor test scenario.</param>
     /// <param name="processorConfiguration">The <see cref="ProcessorConfiguration" /> instance used to configure this instance of <see cref="Processor" />.</param>
     /// <param name="metrics">The <see cref="Metrics" /> instance used to send metrics to Application Insights.</param>
     /// <param name="partitionCount">The number of partitions in the Event Hub associated with this processor.</param>
-    /// <param name="testName">The name of the test being run in order to organize metrics being collected.</param>
     ///
-    public Processor(TestConfiguration testConfiguration,
+    public Processor(TestParameters testParameters,
                      ProcessorConfiguration processorConfiguration,
                      Metrics metrics,
-                     int partitionCount,
-                     string testName)
+                     int partitionCount)
     {
-        _testConfiguration = testConfiguration;
+        _testParameters = testParameters;
         _processorConfiguration = processorConfiguration;
         _metrics = metrics;
         _partitionHandlerCalls = Enumerable.Range(0, partitionCount).Select(index => 0).ToArray();
-        _testName = testName;
     }
 
     /// <summary>
@@ -72,15 +64,19 @@ internal class Processor
     ///   <see cref="Publisher"/> role.
     /// </summary>
     ///
-    /// <param name="cancellationToken">The <see cref="CancellationToke"/> instance to signal the request to cancel the operation.</param>
+    /// <param name="processEventHandler">The method to use for the <see cref="EventHubProcessorClient"/> process event handler.</param>
+    /// <param name="processErrorHandler">The method to use for the <see cref="EventHubProcessorClient"/> process error handler.</param>
+    /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task Start(CancellationToken cancellationToken)
+    public async Task RunAsync(Func<ProcessEventArgs, Task> processEventHandler,
+                               Func<ProcessErrorEventArgs, Task> processErrorHandler,
+                               CancellationToken cancellationToken)
     {
         while (!cancellationToken.IsCancellationRequested)
         {
             var options = new EventProcessorClientOptions
             {
-                Identifier = _identifier,
+                Identifier = Identifier,
                 LoadBalancingStrategy = LoadBalancingStrategy.Greedy,
 
                 RetryOptions = new EventHubsRetryOptions
@@ -93,11 +89,11 @@ internal class Processor
 
             try
             {
-                var storageClient = new BlobContainerClient(_testConfiguration.StorageConnectionString, _testConfiguration.BlobContainer);
-                processor = new EventProcessorClient(storageClient, EventHubConsumerClient.DefaultConsumerGroupName, _testConfiguration.EventHubsConnectionString, _testConfiguration.EventHub, options);
+                var storageClient = new BlobContainerClient(_testParameters.StorageConnectionString, _testParameters.BlobContainer);
+                processor = new EventProcessorClient(storageClient, EventHubConsumerClient.DefaultConsumerGroupName, _testParameters.EventHubsConnectionString, _testParameters.EventHub, options);
 
-                processor.ProcessEventAsync += ProcessEventHandler;
-                processor.ProcessErrorAsync += ProcessErrorHandler;
+                processor.ProcessEventAsync += processEventHandler;
+                processor.ProcessErrorAsync += processErrorHandler;
 
                 await processor.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
                 await Task.Delay(Timeout.Infinite, cancellationToken).ConfigureAwait(false);
@@ -115,11 +111,8 @@ internal class Processor
             }
             catch (Exception ex)
             {
-                _metrics.Client.GetMetric(Metrics.ProcessorRestarted, Metrics.TestName).TrackValue(1, _testName);
-
-                var exceptionProperties = new Dictionary<string, string>();
-                exceptionProperties.Add(Metrics.TestName, _testName);
-                _metrics.Client.TrackException(ex, exceptionProperties);
+                _metrics.Client.GetMetric(Metrics.ProcessorRestarted).TrackValue(1);
+                _metrics.Client.TrackException(ex);
             }
             finally
             {
@@ -132,91 +125,18 @@ internal class Processor
                 {
                     if (processor != null)
                     {
+                        _metrics.Client.TrackEvent("Stopping processing events");
                         await processor.StopProcessingAsync(cancellationSource.Token).ConfigureAwait(false);
                     }
                 }
                 catch (Exception ex)
                 {
-                    _metrics.Client.GetMetric(Metrics.ProcessorRestarted, Metrics.TestName).TrackValue(1, _testName);
-
-                    var exceptionProperties = new Dictionary<string, string>();
-                    exceptionProperties.Add(Metrics.TestName, _testName);
-                    _metrics.Client.TrackException(ex, exceptionProperties);
+                    _metrics.Client.GetMetric(Metrics.ProcessorRestarted).TrackValue(1);
+                    _metrics.Client.TrackException(ex);
                 }
-
-                processor.ProcessEventAsync -= ProcessEventHandler;
-                processor.ProcessErrorAsync -= ProcessErrorHandler;
+                processor.ProcessEventAsync -= processEventHandler;
+                processor.ProcessErrorAsync -= processErrorHandler;
             }
         }
-    }
-
-    /// <summary>
-    ///   The method to pass to the <see cref="EventProcessorClient" /> instance as the <see cref="EventProcessorClient.ProcessEventAsync" />
-    ///   event handler.
-    /// </summary>
-    ///
-    /// <param name="args">The <see cref="ProcessEventArgs" /> used to pass information to the event handler.</param>
-    ///
-    private Task ProcessEventHandler(ProcessEventArgs args)
-    {
-        var partitionIndex = int.Parse(args.Partition.PartitionId);
-
-        try
-        {
-            // There should only be one active call for a given partition; track any concurrent calls for this partition
-            // and report them as an error.
-
-            var activeCalls = Interlocked.Increment(ref _partitionHandlerCalls[partitionIndex]);
-
-            if (activeCalls > 1)
-            {
-                if (!args.Data.Properties.TryGetValue(nameof(EventGenerator), out var duplicateId))
-                {
-                    duplicateId = "(unknown)";
-                }
-
-                var exceptionProperties = new Dictionary<string, string>();
-                exceptionProperties.Add(Metrics.TestName, _testName);
-                _metrics.Client.TrackException(new InvalidOperationException($"The handler for processing events was invoked concurrently for processor: `{ _identifier }`,  partition: `{ args.Partition.PartitionId }`, event: `{ duplicateId }`.  Count: `{ activeCalls }`"), exceptionProperties);
-            }
-
-            // increment total service operations metric
-            if (args.HasEvent)
-            {
-                _metrics.Client.GetMetric(Metrics.EventsRead, Metrics.TestName).TrackValue(1, _testName);
-
-                // TODO: event body and sequence validation
-
-                _metrics.Client.GetMetric(Metrics.EventsProcessed, Metrics.TestName).TrackValue(1, _testName);
-            }
-        }
-        catch (Exception ex)
-        {
-            var exceptionProperties = new Dictionary<string, string>();
-            exceptionProperties.Add(Metrics.TestName, _testName);
-            _metrics.Client.TrackException(ex, exceptionProperties);
-        }
-        finally
-        {
-            _metrics.Client.GetMetric(Metrics.EventHandlerCalls, Metrics.Identifier, Metrics.TestName).TrackValue(1, _identifier, _testName);
-            Interlocked.Decrement(ref _partitionHandlerCalls[partitionIndex]);
-        }
-
-        return Task.CompletedTask;
-    }
-
-    /// <summary>
-    ///   The method to pass to the <see cref="EventProcessorClient" /> instance as the <see cref="EventProcessorClient.ProcessErrorAsync" />
-    ///   event handler.
-    /// </summary>
-    ///
-    /// <param name="args">The <see cref="ProcessErrorEventArgs" /> used to pass information to the errpr handler.</param>
-    ///
-    private Task ProcessErrorHandler(ProcessErrorEventArgs args)
-    {
-        var exceptionProperties = new Dictionary<string, string>();
-        exceptionProperties.Add(Metrics.TestName, _testName);
-        _metrics.Client.TrackException(args.Exception, exceptionProperties);
-        return Task.CompletedTask;
     }
 }

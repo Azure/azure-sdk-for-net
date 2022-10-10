@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.ServiceBus
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<WritableSubResource> privateEndpoint = default;
-            Optional<ConnectionState> privateLinkServiceConnectionState = default;
-            Optional<EndpointProvisioningState> provisioningState = default;
+            Optional<ServiceBusPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<ServiceBusPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ServiceBus
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateLinkServiceConnectionState = ConnectionState.DeserializeConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = ServiceBusPrivateLinkServiceConnectionState.DeserializeServiceBusPrivateLinkServiceConnectionState(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceBus
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new EndpointProvisioningState(property0.Value.GetString());
+                            provisioningState = new ServiceBusPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

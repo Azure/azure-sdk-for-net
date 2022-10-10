@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the dedicated host. Only tags, autoReplaceOnFailure and licenseType may be updated. </summary>
-    public partial class DedicatedHostPatch : ComputeUpdateResourceData
+    public partial class DedicatedHostPatch : ComputeResourcePatch
     {
         /// <summary> Initializes a new instance of DedicatedHostPatch. </summary>
         public DedicatedHostPatch()

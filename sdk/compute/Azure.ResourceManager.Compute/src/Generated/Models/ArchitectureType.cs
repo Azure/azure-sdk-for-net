@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The architecture of the image. Applicable to OS disks only. </summary>
+    /// <summary> Specifies the Architecture Type. </summary>
     public readonly partial struct ArchitectureType : IEquatable<ArchitectureType>
     {
         private readonly string _value;

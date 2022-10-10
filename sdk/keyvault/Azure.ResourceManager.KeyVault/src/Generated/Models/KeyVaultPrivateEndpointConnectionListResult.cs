@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionListResult. </summary>
         internal KeyVaultPrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<VaultPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<KeyVaultPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionListResult. </summary>
         /// <param name="value"> The list of private endpoint connections. </param>
         /// <param name="nextLink"> The URL to get the next set of private endpoint connections. </param>
-        internal KeyVaultPrivateEndpointConnectionListResult(IReadOnlyList<VaultPrivateEndpointConnectionData> value, string nextLink)
+        internal KeyVaultPrivateEndpointConnectionListResult(IReadOnlyList<KeyVaultPrivateEndpointConnectionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of private endpoint connections. </summary>
-        public IReadOnlyList<VaultPrivateEndpointConnectionData> Value { get; }
+        public IReadOnlyList<KeyVaultPrivateEndpointConnectionData> Value { get; }
         /// <summary> The URL to get the next set of private endpoint connections. </summary>
         public string NextLink { get; }
     }

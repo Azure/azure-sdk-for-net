@@ -1,16 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027alebxprl\u0027)/docs/search.index?api-version=2020-06-30",
+      "RequestUri": "https://shreja-search-service.search.windows.net/indexes(\u0027jtqwyqoe\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
+        "Connection": "keep-alive",
         "Content-Length": "39",
         "Content-Type": "application/json",
-        "traceparent": "00-27516f26d526014ba899d29a659489ce-82dba9f0c176ad4d-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.4.0-alpha.20211209.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "5b7a5fd0a94f97e17e6b330be74c4346",
+        "traceparent": "00-537fc0daca39f446a4d0137bbfadd755-b6aaa81c92576348-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.4.0-alpha.20220708.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "3eff1b009327a4d0a67e674332a652b8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -23,24 +24,23 @@
       "StatusCode": 400,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "5b7a5fd0-a94f-97e1-7e6b-330be74c4346",
+        "client-request-id": "3eff1b00-9327-a4d0-a67e-674332a652b8",
         "Content-Language": "en",
-        "Content-Length": "191",
-        "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Thu, 09 Dec 2021 23:35:55 GMT",
-        "elapsed-time": "100",
+        "Content-Length": "254",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 08 Jul 2022 17:02:07 GMT",
+        "elapsed-time": "64",
         "Expires": "-1",
-        "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "5b7a5fd0-a94f-97e1-7e6b-330be74c4346",
+        "request-id": "3eff1b00-9327-a4d0-a67e-674332a652b8",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "5b7a5fd0-a94f-97e1-7e6b-330be74c4346"
+        "x-ms-client-request-id": "3eff1b00-9327-a4d0-a67e-674332a652b8"
       },
       "ResponseBody": {
         "error": {
           "code": "OperationNotAllowed",
-          "message": "The request is invalid.",
+          "message": "The request is invalid. Details: actions : 0: Document key cannot be missing or empty.",
           "details": [
             {
               "code": "MissingKeyField",
@@ -51,38 +51,38 @@
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027alebxprl\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://shreja-search-service.search.windows.net/indexes(\u0027jtqwyqoe\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "0",
-        "traceparent": "00-f31966ad0981984f83b7a4fe9e3a9906-2b93751649dcf24f-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.4.0-alpha.20211209.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "1a64b49ebca2a540edace84365545e9d",
+        "traceparent": "00-1c5b7e1a63a307438a937ac46c63e6b9-e311175dc2901d49-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.4.0-alpha.20220708.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "b6ae5336e23c82e04a74fa9744c5078a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "1a64b49e-bca2-a540-edac-e84365545e9d",
-        "Date": "Thu, 09 Dec 2021 23:36:23 GMT",
-        "elapsed-time": "200",
+        "client-request-id": "b6ae5336-e23c-82e0-4a74-fa9744c5078a",
+        "Date": "Fri, 08 Jul 2022 17:02:07 GMT",
+        "elapsed-time": "236",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "request-id": "1a64b49e-bca2-a540-edac-e84365545e9d",
+        "request-id": "b6ae5336-e23c-82e0-4a74-fa9744c5078a",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "1a64b49e-bca2-a540-edac-e84365545e9d"
+        "x-ms-client-request-id": "b6ae5336-e23c-82e0-4a74-fa9744c5078a"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
-    "RandomSeed": "1932606626",
-    "SearchIndexName": "alebxprl",
+    "RandomSeed": "974682411",
+    "SearchIndexName": "jtqwyqoe",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_ENDPOINT_SUFFIX": null,
-    "SEARCH_SERVICE_NAME": "mohitc-acs"
+    "SEARCH_SERVICE_NAME": "shreja-search-service"
   }
 }

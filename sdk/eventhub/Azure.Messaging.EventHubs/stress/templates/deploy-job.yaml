@@ -10,6 +10,10 @@ spec:
   parallelism: 2
   {{ end }}
   {{ if eq .Stress.Scenario "Processor" }}
+  completions: 3
+  parallelism: 3
+  {{ end }}
+  {{ if eq .Stress.Scenario "Consumer" }}
   completions: 2
   parallelism: 2
   {{ end }}

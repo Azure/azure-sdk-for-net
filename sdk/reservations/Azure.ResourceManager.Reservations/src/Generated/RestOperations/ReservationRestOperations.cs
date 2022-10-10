@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateAvailableScopesRequest(string reservationOrderId, string reservationId, AvailableScopeContent content)
+        internal HttpMessage CreateAvailableScopesRequest(Guid reservationOrderId, Guid reservationId, AvailableScopesContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,14 +66,11 @@ namespace Azure.ResourceManager.Reservations
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
-        /// <param name="content"> The AvailableScopeContent to use. </param>
+        /// <param name="content"> The AvailableScopesContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> AvailableScopesAsync(string reservationOrderId, string reservationId, AvailableScopeContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public async Task<Response> AvailableScopesAsync(Guid reservationOrderId, Guid reservationId, AvailableScopesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateAvailableScopesRequest(reservationOrderId, reservationId, content);
@@ -93,14 +90,11 @@ namespace Azure.ResourceManager.Reservations
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
-        /// <param name="content"> The AvailableScopeContent to use. </param>
+        /// <param name="content"> The AvailableScopesContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response AvailableScopes(string reservationOrderId, string reservationId, AvailableScopeContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public Response AvailableScopes(Guid reservationOrderId, Guid reservationId, AvailableScopesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateAvailableScopesRequest(reservationOrderId, reservationId, content);
@@ -114,7 +108,7 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        internal HttpMessage CreateSplitRequest(string reservationOrderId, SplitContent content)
+        internal HttpMessage CreateSplitRequest(Guid reservationOrderId, SplitContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -139,11 +133,9 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed to Split a reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> SplitAsync(string reservationOrderId, SplitContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public async Task<Response> SplitAsync(Guid reservationOrderId, SplitContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateSplitRequest(reservationOrderId, content);
@@ -162,11 +154,9 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed to Split a reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Split(string reservationOrderId, SplitContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public Response Split(Guid reservationOrderId, SplitContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateSplitRequest(reservationOrderId, content);
@@ -181,7 +171,7 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        internal HttpMessage CreateMergeRequest(string reservationOrderId, MergeContent content)
+        internal HttpMessage CreateMergeRequest(Guid reservationOrderId, MergeContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -206,11 +196,9 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed for commercial request for a reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> MergeAsync(string reservationOrderId, MergeContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public async Task<Response> MergeAsync(Guid reservationOrderId, MergeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateMergeRequest(reservationOrderId, content);
@@ -229,11 +217,9 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed for commercial request for a reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Merge(string reservationOrderId, MergeContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public Response Merge(Guid reservationOrderId, MergeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateMergeRequest(reservationOrderId, content);
@@ -248,7 +234,7 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        internal HttpMessage CreateListRequest(string reservationOrderId)
+        internal HttpMessage CreateListRequest(Guid reservationOrderId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -268,12 +254,8 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> List `Reservation`s within a single `ReservationOrder`. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReservationList>> ListAsync(string reservationOrderId, CancellationToken cancellationToken = default)
+        public async Task<Response<ReservationList>> ListAsync(Guid reservationOrderId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-
             using var message = CreateListRequest(reservationOrderId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -293,12 +275,8 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> List `Reservation`s within a single `ReservationOrder`. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReservationList> List(string reservationOrderId, CancellationToken cancellationToken = default)
+        public Response<ReservationList> List(Guid reservationOrderId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-
             using var message = CreateListRequest(reservationOrderId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
@@ -315,7 +293,7 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        internal HttpMessage CreateGetRequest(string reservationOrderId, string reservationId, string expand)
+        internal HttpMessage CreateGetRequest(Guid reservationOrderId, Guid reservationId, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -342,26 +320,21 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReservationResponseData>> GetAsync(string reservationOrderId, string reservationId, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReservationDetailData>> GetAsync(Guid reservationOrderId, Guid reservationId, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-
             using var message = CreateGetRequest(reservationOrderId, reservationId, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReservationResponseData value = default;
+                        ReservationDetailData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReservationResponseData.DeserializeReservationResponseData(document.RootElement);
+                        value = ReservationDetailData.DeserializeReservationDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ReservationResponseData)null, message.Response);
+                    return Response.FromValue((ReservationDetailData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -372,32 +345,27 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReservationResponseData> Get(string reservationOrderId, string reservationId, string expand = null, CancellationToken cancellationToken = default)
+        public Response<ReservationDetailData> Get(Guid reservationOrderId, Guid reservationId, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-
             using var message = CreateGetRequest(reservationOrderId, reservationId, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReservationResponseData value = default;
+                        ReservationDetailData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReservationResponseData.DeserializeReservationResponseData(document.RootElement);
+                        value = ReservationDetailData.DeserializeReservationDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ReservationResponseData)null, message.Response);
+                    return Response.FromValue((ReservationDetailData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string reservationOrderId, string reservationId, ReservationResponsePatch patch)
+        internal HttpMessage CreateUpdateRequest(Guid reservationOrderId, Guid reservationId, ReservationDetailPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -412,9 +380,9 @@ namespace Azure.ResourceManager.Reservations
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(patch);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -424,12 +392,9 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="patch"> Information needed to patch a reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string reservationOrderId, string reservationId, ReservationResponsePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public async Task<Response> UpdateAsync(Guid reservationOrderId, Guid reservationId, ReservationDetailPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
             Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(reservationOrderId, reservationId, patch);
@@ -449,12 +414,9 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="patch"> Information needed to patch a reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string reservationOrderId, string reservationId, ReservationResponsePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public Response Update(Guid reservationOrderId, Guid reservationId, ReservationDetailPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
             Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(reservationOrderId, reservationId, patch);
@@ -469,7 +431,119 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        internal HttpMessage CreateListRevisionsRequest(string reservationOrderId, string reservationId)
+        internal HttpMessage CreateArchiveRequest(Guid reservationOrderId, Guid reservationId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendPath("/archive", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Archiving a `Reservation` moves it to `Archived` state. </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> ArchiveAsync(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateArchiveRequest(reservationOrderId, reservationId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Archiving a `Reservation` moves it to `Archived` state. </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response Archive(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateArchiveRequest(reservationOrderId, reservationId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUnarchiveRequest(Guid reservationOrderId, Guid reservationId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendPath("/unarchive", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary>
+        /// Unarchiving a `Reservation` moves it to the state it was before archiving.
+        /// 
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> UnarchiveAsync(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateUnarchiveRequest(reservationOrderId, reservationId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary>
+        /// Unarchiving a `Reservation` moves it to the state it was before archiving.
+        /// 
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="reservationId"> Id of the Reservation Item. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response Unarchive(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateUnarchiveRequest(reservationOrderId, reservationId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListRevisionsRequest(Guid reservationOrderId, Guid reservationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -492,13 +566,8 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReservationList>> ListRevisionsAsync(string reservationOrderId, string reservationId, CancellationToken cancellationToken = default)
+        public async Task<Response<ReservationList>> ListRevisionsAsync(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-
             using var message = CreateListRevisionsRequest(reservationOrderId, reservationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -519,13 +588,8 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReservationList> ListRevisions(string reservationOrderId, string reservationId, CancellationToken cancellationToken = default)
+        public Response<ReservationList> ListRevisions(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-
             using var message = CreateListRevisionsRequest(reservationOrderId, reservationId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
@@ -633,7 +697,7 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string reservationOrderId)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, Guid reservationOrderId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -651,12 +715,10 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="reservationOrderId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReservationList>> ListNextPageAsync(string nextLink, string reservationOrderId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public async Task<Response<ReservationList>> ListNextPageAsync(string nextLink, Guid reservationOrderId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
 
             using var message = CreateListNextPageRequest(nextLink, reservationOrderId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -678,12 +740,10 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="reservationOrderId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReservationList> ListNextPage(string nextLink, string reservationOrderId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public Response<ReservationList> ListNextPage(string nextLink, Guid reservationOrderId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
 
             using var message = CreateListNextPageRequest(nextLink, reservationOrderId);
             _pipeline.Send(message, cancellationToken);
@@ -701,7 +761,7 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        internal HttpMessage CreateListRevisionsNextPageRequest(string nextLink, string reservationOrderId, string reservationId)
+        internal HttpMessage CreateListRevisionsNextPageRequest(string nextLink, Guid reservationOrderId, Guid reservationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -720,13 +780,10 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReservationList>> ListRevisionsNextPageAsync(string nextLink, string reservationOrderId, string reservationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public async Task<Response<ReservationList>> ListRevisionsNextPageAsync(string nextLink, Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
 
             using var message = CreateListRevisionsNextPageRequest(nextLink, reservationOrderId, reservationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -749,13 +806,10 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReservationList> ListRevisionsNextPage(string nextLink, string reservationOrderId, string reservationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public Response<ReservationList> ListRevisionsNextPage(string nextLink, Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
 
             using var message = CreateListRevisionsNextPageRequest(nextLink, reservationOrderId, reservationId);
             _pipeline.Send(message, cancellationToken);

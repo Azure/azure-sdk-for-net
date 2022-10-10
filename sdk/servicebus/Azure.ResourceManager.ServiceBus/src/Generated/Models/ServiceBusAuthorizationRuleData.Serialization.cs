@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceBus
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<AccessRight>> rights = default;
+            Optional<IList<ServiceBusAccessRight>> rights = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.ServiceBus
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AccessRight> array = new List<AccessRight>();
+                            List<ServiceBusAccessRight> array = new List<ServiceBusAccessRight>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString().ToAccessRight());
+                                array.Add(item.GetString().ToServiceBusAccessRight());
                             }
                             rights = array;
                             continue;

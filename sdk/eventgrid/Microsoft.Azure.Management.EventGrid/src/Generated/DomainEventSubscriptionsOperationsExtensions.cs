@@ -22,6 +22,58 @@ namespace Microsoft.Azure.Management.EventGrid
     public static partial class DomainEventSubscriptionsOperationsExtensions
     {
             /// <summary>
+            /// Get delivery attributes for an event subscription for domain.
+            /// </summary>
+            /// <remarks>
+            /// Get all delivery attributes for an event subscription for domain.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='domainName'>
+            /// Name of the domain topic.
+            /// </param>
+            /// <param name='eventSubscriptionName'>
+            /// Name of the event subscription.
+            /// </param>
+            public static DeliveryAttributeListResult GetDeliveryAttributes(this IDomainEventSubscriptionsOperations operations, string resourceGroupName, string domainName, string eventSubscriptionName)
+            {
+                return operations.GetDeliveryAttributesAsync(resourceGroupName, domainName, eventSubscriptionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get delivery attributes for an event subscription for domain.
+            /// </summary>
+            /// <remarks>
+            /// Get all delivery attributes for an event subscription for domain.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='domainName'>
+            /// Name of the domain topic.
+            /// </param>
+            /// <param name='eventSubscriptionName'>
+            /// Name of the event subscription.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeliveryAttributeListResult> GetDeliveryAttributesAsync(this IDomainEventSubscriptionsOperations operations, string resourceGroupName, string domainName, string eventSubscriptionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDeliveryAttributesWithHttpMessagesAsync(resourceGroupName, domainName, eventSubscriptionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get an event subscription of a domain.
             /// </summary>
             /// <remarks>
@@ -375,58 +427,6 @@ namespace Microsoft.Azure.Management.EventGrid
             public static async Task<IPage<EventSubscription>> ListAsync(this IDomainEventSubscriptionsOperations operations, string resourceGroupName, string domainName, string filter = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, domainName, filter, top, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Get delivery attributes for an event subscription for domain.
-            /// </summary>
-            /// <remarks>
-            /// Get all delivery attributes for an event subscription for domain.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
-            /// </param>
-            /// <param name='domainName'>
-            /// Name of the domain topic.
-            /// </param>
-            /// <param name='eventSubscriptionName'>
-            /// Name of the event subscription.
-            /// </param>
-            public static DeliveryAttributeListResult GetDeliveryAttributes(this IDomainEventSubscriptionsOperations operations, string resourceGroupName, string domainName, string eventSubscriptionName)
-            {
-                return operations.GetDeliveryAttributesAsync(resourceGroupName, domainName, eventSubscriptionName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get delivery attributes for an event subscription for domain.
-            /// </summary>
-            /// <remarks>
-            /// Get all delivery attributes for an event subscription for domain.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
-            /// </param>
-            /// <param name='domainName'>
-            /// Name of the domain topic.
-            /// </param>
-            /// <param name='eventSubscriptionName'>
-            /// Name of the event subscription.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<DeliveryAttributeListResult> GetDeliveryAttributesAsync(this IDomainEventSubscriptionsOperations operations, string resourceGroupName, string domainName, string eventSubscriptionName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetDeliveryAttributesWithHttpMessagesAsync(resourceGroupName, domainName, eventSubscriptionName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

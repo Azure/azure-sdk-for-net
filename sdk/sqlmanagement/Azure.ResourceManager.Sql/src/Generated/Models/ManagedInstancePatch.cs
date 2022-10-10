@@ -61,9 +61,11 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </summary>
         public string DnsZonePartner { get; set; }
         /// <summary> Whether or not the public data endpoint is enabled. </summary>
-        public bool? PublicDataEndpointEnabled { get; set; }
+        public bool? IsPublicDataEndpointEnabled { get; set; }
         /// <summary> The resource identifier of the source managed instance associated with create operation of this instance. </summary>
         public ResourceIdentifier SourceManagedInstanceId { get; set; }
+        /// <summary> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
+        public DateTimeOffset? RestorePointInTime { get; set; }
         /// <summary> Connection type used for connecting to the instance. </summary>
         public ManagedInstanceProxyOverride? ProxyOverride { get; set; }
         /// <summary>
@@ -84,18 +86,18 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Minimal TLS version. Allowed values: &apos;None&apos;, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </summary>
         public string MinimalTlsVersion { get; set; }
         /// <summary> The storage account type used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </summary>
-        public BackupStorageRedundancy? CurrentBackupStorageRedundancy { get; }
+        public SqlBackupStorageRedundancy? CurrentBackupStorageRedundancy { get; }
         /// <summary> The storage account type to be used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </summary>
-        public BackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
+        public SqlBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
         /// <summary> Whether or not the multi-az is enabled. </summary>
-        public bool? ZoneRedundant { get; set; }
+        public bool? IsZoneRedundant { get; set; }
         /// <summary> The resource id of a user assigned identity to be used by default. </summary>
         public ResourceIdentifier PrimaryUserAssignedIdentityId { get; set; }
         /// <summary> A CMK URI of the key to use for encryption. </summary>
-        public string KeyId { get; set; }
+        public Uri KeyId { get; set; }
         /// <summary> The Azure Active Directory administrator of the server. </summary>
         public ManagedInstanceExternalAdministrator Administrators { get; set; }
         /// <summary> The managed instance&apos;s service principal. </summary>
-        public ServicePrincipal ServicePrincipal { get; set; }
+        public SqlServicePrincipal ServicePrincipal { get; set; }
     }
 }

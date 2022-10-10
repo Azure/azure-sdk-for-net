@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of InboundEndpointListResult. </summary>
         internal InboundEndpointListResult()
         {
-            Value = new ChangeTrackingList<InboundEndpointData>();
+            Value = new ChangeTrackingList<DnsResolverInboundEndpointData>();
         }
 
         /// <summary> Initializes a new instance of InboundEndpointListResult. </summary>
         /// <param name="value"> Enumeration of the inbound endpoints for a DNS resolver. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
-        internal InboundEndpointListResult(IReadOnlyList<InboundEndpointData> value, string nextLink)
+        internal InboundEndpointListResult(IReadOnlyList<DnsResolverInboundEndpointData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Enumeration of the inbound endpoints for a DNS resolver. </summary>
-        public IReadOnlyList<InboundEndpointData> Value { get; }
+        public IReadOnlyList<DnsResolverInboundEndpointData> Value { get; }
         /// <summary> The continuation token for the next page of results. </summary>
         public string NextLink { get; }
     }

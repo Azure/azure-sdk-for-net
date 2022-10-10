@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -22,14 +23,43 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayProbeHealthResponseMatch. </summary>
         /// <param name="body"> Body that must be contained in the health response. Default value is empty. </param>
         /// <param name="statusCodes"> Allowed ranges of healthy status codes. Default range of healthy status codes is 200-399. </param>
-        internal ApplicationGatewayProbeHealthResponseMatch(string body, IList<string> statusCodes)
+        internal ApplicationGatewayProbeHealthResponseMatch(BinaryData body, IList<string> statusCodes)
         {
             Body = body;
             StatusCodes = statusCodes;
         }
 
-        /// <summary> Body that must be contained in the health response. Default value is empty. </summary>
-        public string Body { get; set; }
+        /// <summary>
+        /// Body that must be contained in the health response. Default value is empty.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Body { get; set; }
         /// <summary> Allowed ranges of healthy status codes. Default range of healthy status codes is 200-399. </summary>
         public IList<string> StatusCodes { get; }
     }

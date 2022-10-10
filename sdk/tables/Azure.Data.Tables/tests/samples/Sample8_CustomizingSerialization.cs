@@ -20,8 +20,6 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string tableName = "OfficeSupplies" + _random.Next();
 
-            #region Snippet:CustomSerialization
-
             // Construct a new TableClient using a TokenCredential.
             var client = new TableClient(
                 new Uri(storageUri),
@@ -61,11 +59,7 @@ namespace Azure.Data.Tables.Samples
             {
                 Console.WriteLine(propertyName);
             }
-
-            #endregion
         }
-
-        #region Snippet:TablesDefineCustomSerialzedEntity
 
         // Define a strongly typed entity by implementing the ITableEntity interface.
         public class CustomSerializationEntity : ITableEntity
@@ -82,7 +76,5 @@ namespace Azure.Data.Tables.Samples
 
             [DataMember(Name = "rename_me")] public string RenameMe { get; set; }
         }
-
-        #endregion
     }
 }

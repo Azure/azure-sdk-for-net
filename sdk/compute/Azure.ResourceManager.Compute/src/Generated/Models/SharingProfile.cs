@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="permission"> This property allows you to specify the permission of sharing gallery. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Private** &lt;br&gt;&lt;br&gt; **Groups** &lt;br&gt;&lt;br&gt; **Community**. </param>
         /// <param name="groups"> A list of sharing profile groups. </param>
         /// <param name="communityGalleryInfo"> Information of community gallery if current gallery is shared to community. </param>
-        internal SharingProfile(GallerySharingPermissionType? permission, IReadOnlyList<SharingProfileGroup> groups, BinaryData communityGalleryInfo)
+        internal SharingProfile(GallerySharingPermissionType? permission, IReadOnlyList<SharingProfileGroup> groups, CommunityGalleryInfo communityGalleryInfo)
         {
             Permission = permission;
             Groups = groups;
@@ -36,6 +35,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> A list of sharing profile groups. </summary>
         public IReadOnlyList<SharingProfileGroup> Groups { get; }
         /// <summary> Information of community gallery if current gallery is shared to community. </summary>
-        public BinaryData CommunityGalleryInfo { get; set; }
+        public CommunityGalleryInfo CommunityGalleryInfo { get; set; }
     }
 }

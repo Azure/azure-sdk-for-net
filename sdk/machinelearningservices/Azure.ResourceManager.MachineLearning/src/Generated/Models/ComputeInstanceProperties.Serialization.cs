@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<SetupScripts> setupScripts = default;
             Optional<ComputeInstanceLastOperation> lastOperation = default;
             Optional<ComputeSchedules> schedules = default;
-            Optional<bool> enableNodePublicIp = default;
+            Optional<bool> enableNodePublicIP = default;
             Optional<IReadOnlyList<ComputeInstanceContainer>> containers = default;
             Optional<IReadOnlyList<ComputeInstanceDataDisk>> dataDisks = default;
             Optional<IReadOnlyList<ComputeInstanceDataMount>> dataMounts = default;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enableNodePublicIp = property.Value.GetBoolean();
+                    enableNodePublicIP = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("containers"))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new ComputeInstanceProperties(vmSize.Value, subnet.Value, Optional.ToNullable(applicationSharingPolicy), sshSettings.Value, connectivityEndpoints.Value, Optional.ToList(applications), createdBy.Value, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToNullable(computeInstanceAuthorizationType), personalComputeInstanceSettings.Value, setupScripts.Value, lastOperation.Value, schedules.Value, Optional.ToNullable(enableNodePublicIp), Optional.ToList(containers), Optional.ToList(dataDisks), Optional.ToList(dataMounts), versions.Value);
+            return new ComputeInstanceProperties(vmSize.Value, subnet.Value, Optional.ToNullable(applicationSharingPolicy), sshSettings.Value, connectivityEndpoints.Value, Optional.ToList(applications), createdBy.Value, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToNullable(computeInstanceAuthorizationType), personalComputeInstanceSettings.Value, setupScripts.Value, lastOperation.Value, schedules.Value, Optional.ToNullable(enableNodePublicIP), Optional.ToList(containers), Optional.ToList(dataDisks), Optional.ToList(dataMounts), versions.Value);
         }
     }
 }

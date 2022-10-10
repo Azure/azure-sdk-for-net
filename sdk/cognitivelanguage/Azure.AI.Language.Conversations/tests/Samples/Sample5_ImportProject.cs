@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         public void CreateConversationAuthoringClient()
         {
             #region Snippet:ConversationAuthoringClient_Create
-            Uri endpoint = new Uri("https://myaccount.cognitive.microsoft.com");
+            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
             AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
@@ -182,6 +182,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [AsyncOnly]
         [RecordedTest]
+        [ServiceVersion(Max = ConversationsClientOptions.ServiceVersion.V2022_05_01)] // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/29600
         public async Task ImportProjectAsync()
         {
             ConversationAuthoringClient client = ProjectsClient;

@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.Network
             Optional<IList<BackendAddressPoolData>> loadBalancerBackendAddressPools = default;
             Optional<IList<InboundNatRuleData>> loadBalancerInboundNatRules = default;
             Optional<string> privateIPAddress = default;
-            Optional<IPAllocationMethod> privateIPAllocationMethod = default;
-            Optional<IPVersion> privateIPAddressVersion = default;
+            Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
+            Optional<NetworkIPVersion> privateIPAddressVersion = default;
             Optional<SubnetData> subnet = default;
             Optional<bool> primary = default;
             Optional<PublicIPAddressData> publicIPAddress = default;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateIPAllocationMethod = new IPAllocationMethod(property0.Value.GetString());
+                            privateIPAllocationMethod = new NetworkIPAllocationMethod(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateIPAddressVersion"))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateIPAddressVersion = new IPVersion(property0.Value.GetString());
+                            privateIPAddressVersion = new NetworkIPVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("subnet"))

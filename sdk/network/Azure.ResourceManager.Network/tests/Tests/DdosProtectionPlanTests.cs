@@ -20,7 +20,8 @@ namespace Azure.ResourceManager.Network.Tests
         private Resources.ResourceGroupResource resourceGroup;
         private Resources.SubscriptionResource _subscription;
 
-        public DdosProtectionPlanTests(bool isAsync) : base(isAsync)
+        public DdosProtectionPlanTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -40,10 +41,12 @@ namespace Azure.ResourceManager.Network.Tests
             return resourceGroup.GetDdosProtectionPlans();
         }
 
-        [Test]
-        [RecordedTest]
-        public async Task DdosProtectionPlanApiTest()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task DdosProtectionPlanApiTest(bool? useTagResource)
         {
+            SetTagResourceUsage(ArmClient, useTagResource);
             var container = GetCollection();
             var name = Recording.GenerateAssetName(NamePrefix);
 

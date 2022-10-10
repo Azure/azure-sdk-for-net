@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new JobOutput(description.Value, jobOutputType);
+            return new UnknownJobOutput(description.Value, jobOutputType);
         }
     }
 }

@@ -18,8 +18,8 @@ ToC node layout:
   * Client Package 2 (package level overview page)
   ...
   * Management
-    * Management Package 1
-    * Management Package 2
+    * Management Package 1 (package level overview page)
+    * Management Package 2 (package level overview page)
     ...
 
 .PARAMETER DocRepoLocation
@@ -45,9 +45,9 @@ Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
 
 Set-StrictMode -Version 3
 
-function GetClientPackageNode($clientPackage) {
+function GetPackageNode($package) {
   $packageInfo = &$GetDocsMsTocDataFn `
-    -packageMetadata $clientPackage `
+    -packageMetadata $package `
     -docRepoLocation $DocRepoLocation
 
   return [PSCustomObject]@{
@@ -181,22 +181,20 @@ foreach ($service in $serviceNameList) {
   $clientPackages = $packagesForToc.Values.Where({ $_.ServiceName -eq $service -and ('client' -eq $_.Type) })
   $clientPackages = $clientPackages | Sort-Object -Property Package
   foreach ($clientPackage in $clientPackages) {
-    $packageItems += GetClientPackageNode -clientPackage $clientPackage
+    $packageItems += GetPackageNode -package $clientPackage
   }
 
   # All management packages go under a single `Management` header in the ToC
   $mgmtPackages = $packagesForToc.Values.Where({ $_.ServiceName -eq $service -and ('mgmt' -eq $_.Type) })
   $mgmtPackages = $mgmtPackages | Sort-Object -Property Package
-  if ($mgmtPackages) {
-    $children = &$GetDocsMsTocChildrenForManagementPackagesFn `
-      -packageMetadata $mgmtPackages `
-      -docRepoLocation $DocRepoLocation
-
+  $mgmtItems = @()
+  foreach ($pkg in $mgmtPackages) {
+    $mgmtItems += GetPackageNode -package $pkg
+  }
+  if ($mgmtItems) {
     $packageItems += [PSCustomObject]@{
       name     = 'Management'
-      # There could be multiple packages, ensure this is treated as an array
-      # even if it is a single package
-      children = @($children)
+      items    = $mgmtItems
     }
   }
 
@@ -266,12 +264,12 @@ if ($otherPackages) {
 
       if ($null -ne $currentNode) {
         $otherPackage.DisplayName = $segments[$segments.Count - 1]
-        $currentNode.Add((GetClientPackageNode $otherPackage))
+        $currentNode.Add((GetPackageNode $otherPackage))
       }
 
     }
     else {
-      $otherPackageItems.Add((GetClientPackageNode $otherPackage))
+      $otherPackageItems.Add((GetPackageNode $otherPackage))
     }
   }
 }

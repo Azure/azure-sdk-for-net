@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.ServiceBus
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<FilterAction> action = default;
-            Optional<FilterType> filterType = default;
-            Optional<SqlFilter> sqlFilter = default;
-            Optional<CorrelationFilter> correlationFilter = default;
+            Optional<ServiceBusFilterAction> action = default;
+            Optional<ServiceBusFilterType> filterType = default;
+            Optional<ServiceBusSqlFilter> sqlFilter = default;
+            Optional<ServiceBusCorrelationFilter> correlationFilter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ServiceBus
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            action = FilterAction.DeserializeFilterAction(property0.Value);
+                            action = ServiceBusFilterAction.DeserializeServiceBusFilterAction(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("filterType"))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ServiceBus
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            filterType = property0.Value.GetString().ToFilterType();
+                            filterType = property0.Value.GetString().ToServiceBusFilterType();
                             continue;
                         }
                         if (property0.NameEquals("sqlFilter"))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ServiceBus
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sqlFilter = SqlFilter.DeserializeSqlFilter(property0.Value);
+                            sqlFilter = ServiceBusSqlFilter.DeserializeServiceBusSqlFilter(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("correlationFilter"))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ServiceBus
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            correlationFilter = CorrelationFilter.DeserializeCorrelationFilter(property0.Value);
+                            correlationFilter = ServiceBusCorrelationFilter.DeserializeServiceBusCorrelationFilter(property0.Value);
                             continue;
                         }
                     }

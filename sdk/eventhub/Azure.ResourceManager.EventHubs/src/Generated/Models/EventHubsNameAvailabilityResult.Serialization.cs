@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         {
             Optional<string> message = default;
             Optional<bool> nameAvailable = default;
-            Optional<UnavailableReason> reason = default;
+            Optional<EventHubsNameUnavailableReason> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reason = property.Value.GetString().ToUnavailableReason();
+                    reason = property.Value.GetString().ToEventHubsNameUnavailableReason();
                     continue;
                 }
             }

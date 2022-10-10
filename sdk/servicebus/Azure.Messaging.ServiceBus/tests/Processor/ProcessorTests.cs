@@ -125,6 +125,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
             var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
             var client = new ServiceBusClient(connString);
+            var identifier = "MyProcessor";
             var options = new ServiceBusProcessorOptions
             {
                 AutoCompleteMessages = false,
@@ -133,12 +134,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete,
                 MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(60),
                 MaxReceiveWaitTime = TimeSpan.FromSeconds(10),
-                SubQueue = SubQueue.DeadLetter
+                SubQueue = SubQueue.DeadLetter,
+                Identifier = identifier
             };
             var processor = client.CreateProcessor("queueName", options);
             Assert.AreEqual(options.AutoCompleteMessages, processor.AutoCompleteMessages);
             Assert.AreEqual(options.MaxConcurrentCalls, processor.MaxConcurrentCalls);
             Assert.AreEqual(options.PrefetchCount, processor.PrefetchCount);
+            Assert.AreEqual(options.Identifier, processor.Identifier);
             Assert.AreEqual(options.ReceiveMode, processor.ReceiveMode);
             Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
             Assert.AreEqual(options.MaxReceiveWaitTime, processor.MaxReceiveWaitTime);
@@ -320,10 +323,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var mockProcessor = new MockProcessor();
             bool processMessageCalled = false;
             bool processErrorCalled = false;
+            var mockReceiver = new Mock<ServiceBusReceiver>();
+            mockReceiver.Setup(r => r.FullyQualifiedNamespace).Returns("namespace");
+            mockReceiver.Setup(r => r.EntityPath).Returns("entityPath");
 
             var processArgs = new ProcessMessageEventArgs(
                 ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1"),
-                new Mock<ServiceBusReceiver>().Object,
+                mockReceiver.Object,
                 CancellationToken.None);
 
             var errorArgs = new ProcessErrorEventArgs(
@@ -337,6 +343,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             {
                 processMessageCalled = true;
                 Assert.AreEqual("1", args.Message.MessageId);
+                Assert.AreEqual("namespace", args.FullyQualifiedNamespace);
+                Assert.AreEqual("entityPath", args.EntityPath);
                 return Task.CompletedTask;
             };
 

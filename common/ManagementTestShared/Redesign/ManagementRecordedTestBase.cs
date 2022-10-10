@@ -9,6 +9,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.TestFramework
@@ -24,6 +25,8 @@ namespace Azure.ResourceManager.TestFramework
 
         protected ManagementGroupCleanupPolicy OneTimeManagementGroupCleanupPolicy = new ManagementGroupCleanupPolicy();
 
+        protected ResponseNullFilterPolicy NullFilterPolicy = new ResponseNullFilterPolicy();
+
         protected ArmClient GlobalClient { get; private set; }
 
         public TestEnvironment SessionEnvironment { get; private set; }
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.TestFramework
         private ArmClient _cleanupClient;
         private WaitUntil _waitForCleanup;
         private ResourceType _resourceType;
-        private string _apiVersion;
+        protected string ApiVersion { get; }
 
         protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default)
             : base(isAsync, mode)
@@ -49,7 +52,13 @@ namespace Azure.ResourceManager.TestFramework
             : this(isAsync, mode)
         {
             _resourceType = resourceType;
-            _apiVersion = apiVersion;
+            ApiVersion = apiVersion;
+        }
+
+        protected void SetTagResourceUsage(ArmClient client, bool? useTagResource)
+        {
+            var target = client.GetType().GetField("__target", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(client);
+            target.GetType().GetField("_canUseTagResource", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(target, useTagResource);
         }
 
         private void Initialize()
@@ -77,8 +86,9 @@ namespace Azure.ResourceManager.TestFramework
             options.Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl);
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
-            if (_apiVersion is not null)
-                options.SetApiVersion(_resourceType, _apiVersion);
+            options.AddPolicy(NullFilterPolicy, HttpPipelinePosition.PerRetry);
+            if (ApiVersion is not null)
+                options.SetApiVersion(_resourceType, ApiVersion);
 
             return InstrumentClient(new ArmClient(
                 TestEnvironment.Credential,

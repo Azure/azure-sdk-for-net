@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="runtimeVersion"> Application stack major version (runtime only). </param>
         /// <param name="isDefault"> &lt;code&gt;true&lt;/code&gt; if this is the default major version; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="minorVersions"> Minor versions associated with the major version. </param>
-        /// <param name="applicationInsights"> &lt;code&gt;true&lt;/code&gt; if this supports Application Insights; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isApplicationInsights"> &lt;code&gt;true&lt;/code&gt; if this supports Application Insights; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isPreview"> &lt;code&gt;true&lt;/code&gt; if this stack is in Preview, otherwise &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isDeprecated"> &lt;code&gt;true&lt;/code&gt; if this stack has been deprecated, otherwise &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isHidden"> &lt;code&gt;true&lt;/code&gt; if this stack should be hidden for new customers on portal, otherwise &lt;code&gt;false&lt;/code&gt;. </param>
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// &lt;/siteConfigProperties&gt;
         ///  Example: All Linux Function Apps, need Use32BitWorkerProcess to be set to 0
         /// </param>
-        internal StackMajorVersion(string displayVersion, string runtimeVersion, bool? isDefault, IList<StackMinorVersion> minorVersions, bool? applicationInsights, bool? isPreview, bool? isDeprecated, bool? isHidden, IDictionary<string, BinaryData> appSettingsDictionary, IDictionary<string, BinaryData> siteConfigPropertiesDictionary)
+        internal StackMajorVersion(string displayVersion, string runtimeVersion, bool? isDefault, IList<StackMinorVersion> minorVersions, bool? isApplicationInsights, bool? isPreview, bool? isDeprecated, bool? isHidden, IDictionary<string, BinaryData> appSettingsDictionary, IDictionary<string, BinaryData> siteConfigPropertiesDictionary)
         {
             DisplayVersion = displayVersion;
             RuntimeVersion = runtimeVersion;
             IsDefault = isDefault;
             MinorVersions = minorVersions;
-            ApplicationInsights = applicationInsights;
+            IsApplicationInsights = isApplicationInsights;
             IsPreview = isPreview;
             IsDeprecated = isDeprecated;
             IsHidden = isHidden;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Minor versions associated with the major version. </summary>
         public IList<StackMinorVersion> MinorVersions { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this supports Application Insights; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? ApplicationInsights { get; set; }
+        public bool? IsApplicationInsights { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this stack is in Preview, otherwise &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsPreview { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this stack has been deprecated, otherwise &lt;code&gt;false&lt;/code&gt;. </summary>
@@ -78,6 +78,33 @@ namespace Azure.ResourceManager.AppService.Models
         ///  &lt;appSetting name=&quot;FUNCTIONS_WORKER_RUNTIME&quot; value=&quot;dotnet&quot; /&gt;
         /// &lt;/appSettings&gt;
         ///  Example: All the function apps need AppSetting: &quot;FUNCTIONS_WORKER_RUNTIME&quot; to be set stack name
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> AppSettingsDictionary { get; }
         /// <summary>
@@ -85,6 +112,33 @@ namespace Azure.ResourceManager.AppService.Models
         ///  &lt;siteConfigProperty name=&quot;Use32BitWorkerProcess&quot; value=&quot;false&quot; /&gt;
         /// &lt;/siteConfigProperties&gt;
         ///  Example: All Linux Function Apps, need Use32BitWorkerProcess to be set to 0
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> SiteConfigPropertiesDictionary { get; }
     }

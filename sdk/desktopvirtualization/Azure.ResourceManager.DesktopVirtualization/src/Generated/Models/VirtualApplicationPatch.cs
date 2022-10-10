@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Specifies a path for the executable file for the application. </summary>
         public string FilePath { get; set; }
         /// <summary> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </summary>
-        public CommandLineSetting? CommandLineSetting { get; set; }
+        public VirtualApplicationCommandLineSetting? CommandLineSetting { get; set; }
         /// <summary> Command Line Arguments for Application. </summary>
         public string CommandLineArguments { get; set; }
         /// <summary> Specifies whether to show the RemoteApp program in the RD Web Access server. </summary>

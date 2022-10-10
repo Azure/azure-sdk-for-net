@@ -5,8 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.ApplicationInsights.Query" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
 
     <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
@@ -43,7 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)\HttpPipelineMessageHandler.cs" LinkBase="Shared" />
+    <Compile Include="..\Azure.Monitor.OpenTelemetry.Exporter.Tests\CommonTestFramework\**" Link="CommonTestFramework\%(Filename)%(Extension)" />
   </ItemGroup>
-
+  
 </Project>

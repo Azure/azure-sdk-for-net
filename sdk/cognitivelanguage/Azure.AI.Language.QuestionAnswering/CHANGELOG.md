@@ -1,14 +1,24 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- Renamed the `QuestionAnsweringProjectsClient` to `QuestionAnsweringAuthoringClient` and moved it to the `Azure.AI.Language.QuestionAnswering.Authoring` namespace.
+- Changed method return types of `QuestionAnsweringAuthoringClient.UpdateQnas` and `UpdateQnasAsync` to return an `Operation<Pageable<BinaryData>>` and `Operation<AsyncPageable<BinaryData>>` respectively.
+- Changed method return types of `QuestionAnsweringAuthoringClient.UpdateSources` and `UpdateSourcesAsync` to return an `Operation<Pageable<BinaryData>>` and `Operation<AsyncPageable<BinaryData>>` respectively.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.2 (2022-07-19)
+
+### Features Added
+
+- Added support for Azure Active Directory (AAD) authentication.
 
 ## 1.1.0-beta.1 (2022-02-08)
 

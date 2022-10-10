@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Storage
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Policy))
+            if (Optional.IsDefined(PolicySchema))
             {
                 writer.WritePropertyName("policy");
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue(PolicySchema);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

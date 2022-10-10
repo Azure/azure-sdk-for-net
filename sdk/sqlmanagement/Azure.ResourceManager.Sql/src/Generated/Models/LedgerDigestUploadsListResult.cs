@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of LedgerDigestUploadsListResult. </summary>
         internal LedgerDigestUploadsListResult()
         {
-            Value = new ChangeTrackingList<LedgerDigestUploadsData>();
+            Value = new ChangeTrackingList<LedgerDigestUploadData>();
         }
 
         /// <summary> Initializes a new instance of LedgerDigestUploadsListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal LedgerDigestUploadsListResult(IReadOnlyList<LedgerDigestUploadsData> value, string nextLink)
+        internal LedgerDigestUploadsListResult(IReadOnlyList<LedgerDigestUploadData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<LedgerDigestUploadsData> Value { get; }
+        public IReadOnlyList<LedgerDigestUploadData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

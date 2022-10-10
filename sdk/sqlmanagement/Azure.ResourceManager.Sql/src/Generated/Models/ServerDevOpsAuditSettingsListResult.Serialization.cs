@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ServerDevOpsAuditSettingsListResult DeserializeServerDevOpsAuditSettingsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServerDevOpsAuditingSettingsData>> value = default;
+            Optional<IReadOnlyList<SqlServerDevOpsAuditingSettingData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServerDevOpsAuditingSettingsData> array = new List<ServerDevOpsAuditingSettingsData>();
+                    List<SqlServerDevOpsAuditingSettingData> array = new List<SqlServerDevOpsAuditingSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerDevOpsAuditingSettingsData.DeserializeServerDevOpsAuditingSettingsData(item));
+                        array.Add(SqlServerDevOpsAuditingSettingData.DeserializeSqlServerDevOpsAuditingSettingData(item));
                     }
                     value = array;
                     continue;
