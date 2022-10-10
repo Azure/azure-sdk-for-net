@@ -27,7 +27,7 @@ dotnet add package Azure.AI.TextAnalytics
 
 This table shows the relationship between SDK versions and supported API versions of the service:
 
-> Note that `5.2.0` is the first stable version of the client library that targets the Azure Cognitive Service for Language APIs, which include the existing text analysis and natural language processing features found in the Text Analytics client library. In addition, the service API has changed from semantic to date-based versioning.
+> Note that `5.2.0` is the first stable version of the client library that targets the Azure Cognitive Service for Language APIs which includes the existing text analysis and natural language processing features found in the Text Analytics client library. In addition, the service API has changed from semantic to date-based versioning.
 
 |SDK version|Supported API version of service
 |-----------|--------------------------------|
