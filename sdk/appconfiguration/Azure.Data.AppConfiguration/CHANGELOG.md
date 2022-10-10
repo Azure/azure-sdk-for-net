@@ -8,7 +8,6 @@
 ### Bugs Fixed
 - Fixed throwing `NullReferenceException` if the value of a `SecretReferenceConfigurationSetting` is null [(#31588)](https://github.com/Azure/azure-sdk-for-net/pull/31588).
 
-
 ## 1.2.0 (2021-10-05)
 
 ### Features Added
