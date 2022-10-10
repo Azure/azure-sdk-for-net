@@ -54,21 +54,11 @@ directive:
   transform: $["format"] = "url"
 
 # Update documentation.
-- from: swagger-document
-  where: $["paths"]["/query-knowledgebases/projects/{projectName}/feedback"]["post"]
+- where-operation: QuestionAnsweringProjects_AddFeedback
   transform: >
     $["summary"] = "Add Active Learning feedback";
 
 # Define HTTP 200 responses for LROs to document result model.
-- where-operation: QuestionAnsweringProjects_DeleteProject
-  transform: |
-    $.responses["200"] = {
-      description: "Project delete job status.",
-      schema: {
-        "$ref": "#/definitions/JobState"
-      }
-    };
-
 - where-operation: QuestionAnsweringProjects_DeployProject
   transform: |
     $.responses["200"] = {
@@ -112,4 +102,32 @@ directive:
         "$ref": "#/definitions/QnaSources"
       }
     };
+
+# Add links to REST documentation. Use any renamed operations preceeding this transform.
+# BUGBUG: Cannot use where-operation-match: https://github.com/Azure/azure-sdk-for-net/issues/31451
+- from: questionanswering-authoring.json
+  where: $.paths.*.*
+  transform: |
+    var operationId = $.operationId.replace(/_/g, "/").replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+    $["externalDocs"] = {
+        url: "https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/" + operationId
+    };
+
+```
+
+### C# customizations
+
+``` yaml
+directive:
+# Remove explicit paging parameters until Azure/azure-sdk-for-net#29342 is resolved.
+- from: questionanswering-authoring.json
+  where: $.paths.*[?(@["x-ms-pageable"])]
+  transform: |
+    var paramRefs = [
+        "common.json#/parameters/TopParameter",
+        "common.json#/parameters/SkipParameter",
+        "common.json#/parameters/MaxPageSizeParameter"
+    ];
+    $.parameters = $.parameters.filter(param => !paramRefs.includes(param["$ref"]));
+
 ```

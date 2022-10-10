@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Search/searchServices/privateEndpointConnections";
+        public static readonly ResourceType ResourceType = "Microsoft.Search/searchServices/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

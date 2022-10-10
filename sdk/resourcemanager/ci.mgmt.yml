@@ -52,9 +52,11 @@ trigger:
     - sdk/datalake-analytics/Azure.ResourceManager.DataLakeAnalytics
     - sdk/datalake-store/Azure.ResourceManager.DataLakeStore
     - sdk/datamigration/Azure.ResourceManager.DataMigration
+    - sdk/dataprotection/Azure.ResourceManager.DataProtection
     - sdk/datashare/Azure.ResourceManager.DataShare
     - sdk/deploymentmanager/Azure.ResourceManager.DeploymentManager
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
+    - sdk/devcenter/Azure.ResourceManager.DevCenter
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
     - sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate
     - sdk/devspaces/Azure.ResourceManager.DevSpaces
@@ -203,9 +205,11 @@ pr:
     - sdk/datalake-analytics/Azure.ResourceManager.DataLakeAnalytics
     - sdk/datalake-store/Azure.ResourceManager.DataLakeStore
     - sdk/datamigration/Azure.ResourceManager.DataMigration
+    - sdk/dataprotection/Azure.ResourceManager.DataProtection
     - sdk/datashare/Azure.ResourceManager.DataShare
     - sdk/deploymentmanager/Azure.ResourceManager.DeploymentManager
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
+    - sdk/devcenter/Azure.ResourceManager.DevCenter
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
     - sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate
     - sdk/devspaces/Azure.ResourceManager.DevSpaces
