@@ -29,7 +29,7 @@ namespace IotHubToEventHubsSample
         ///
         public static async Task<int> Main(string[] args)
         {
-            var connectionString = default(string);
+            var connectionString = "HostName=test-this-thing.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=2u+Yzq9wmHlTVsuUyCy8eTzK0gNpcbYbz/UUbXYSjZc="; //default(string);
 
             try
             {
