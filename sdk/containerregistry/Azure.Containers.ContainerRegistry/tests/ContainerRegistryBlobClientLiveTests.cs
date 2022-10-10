@@ -359,7 +359,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using (FileStream fs = File.Create(manifestFile))
             {
                 Stream stream = manifestResult.Value.ManifestStream;
-                await stream.CopyToAsync(fs).ConfigureAwait(false);
+                await stream.CopyToAsync(fs);
             }
 
             OciManifest manifest = manifestResult.Value.Manifest;
@@ -370,7 +370,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 var layerResult = await client.DownloadBlobAsync(manifest.Config.Digest);
                 Stream stream = layerResult.Value.Content;
-                await stream.CopyToAsync(fs).ConfigureAwait(false);
+                await stream.CopyToAsync(fs);
             }
 
             // Write Layers
@@ -382,7 +382,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 {
                     var layerResult = await client.DownloadBlobAsync(layerFile.Digest);
                     Stream stream = layerResult.Value.Content;
-                    await stream.CopyToAsync(fs).ConfigureAwait(false);
+                    await stream.CopyToAsync(fs);
                 }
             }
         }

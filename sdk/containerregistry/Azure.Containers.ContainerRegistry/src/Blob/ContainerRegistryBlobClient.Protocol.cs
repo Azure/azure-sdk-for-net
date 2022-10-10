@@ -17,9 +17,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     /// <summary> The ContainerRegistryBlob service client. </summary>
     public partial class ContainerRegistryBlobClient
     {
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -52,7 +49,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetBlob");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetBlob");
             scope.Start();
             try
             {
@@ -95,7 +92,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetBlob");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetBlob");
             scope.Start();
             try
             {
@@ -132,7 +129,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.CheckBlobExists");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.CheckBlobExists");
             scope.Start();
             try
             {
@@ -169,7 +166,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.CheckBlobExists");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.CheckBlobExists");
             scope.Start();
             try
             {
@@ -212,7 +209,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.DeleteBlob");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.DeleteBlob");
             scope.Start();
             try
             {
@@ -255,7 +252,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.DeleteBlob");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.DeleteBlob");
             scope.Start();
             try
             {
@@ -294,7 +291,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(mount, nameof(mount));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.MountBlob");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.MountBlob");
             scope.Start();
             try
             {
@@ -333,7 +330,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(mount, nameof(mount));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.MountBlob");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.MountBlob");
             scope.Start();
             try
             {
@@ -367,7 +364,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             Argument.AssertNotNull(location, nameof(location));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetUploadStatus");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetUploadStatus");
             scope.Start();
             try
             {
@@ -401,7 +398,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             Argument.AssertNotNull(location, nameof(location));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetUploadStatus");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetUploadStatus");
             scope.Start();
             try
             {
@@ -439,7 +436,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNull(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.UploadChunk");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.UploadChunk");
             scope.Start();
             try
             {
@@ -477,7 +474,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNull(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.UploadChunk");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.UploadChunk");
             scope.Start();
             try
             {
@@ -516,7 +513,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNull(location, nameof(location));
             Argument.AssertNotNull(digest, nameof(digest));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.CompleteUpload");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.CompleteUpload");
             scope.Start();
             try
             {
@@ -555,7 +552,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNull(location, nameof(location));
             Argument.AssertNotNull(digest, nameof(digest));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.CompleteUpload");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.CompleteUpload");
             scope.Start();
             try
             {
@@ -589,7 +586,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             Argument.AssertNotNull(location, nameof(location));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.CancelUpload");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.CancelUpload");
             scope.Start();
             try
             {
@@ -623,7 +620,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             Argument.AssertNotNull(location, nameof(location));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.CancelUpload");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.CancelUpload");
             scope.Start();
             try
             {
@@ -658,7 +655,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.StartUpload");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.StartUpload");
             scope.Start();
             try
             {
@@ -693,7 +690,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.StartUpload");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.StartUpload");
             scope.Start();
             try
             {
@@ -738,7 +735,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
             Argument.AssertNotNull(range, nameof(range));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetChunk");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetChunk");
             scope.Start();
             try
             {
@@ -783,7 +780,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
             Argument.AssertNotNull(range, nameof(range));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetChunk");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetChunk");
             scope.Start();
             try
             {
@@ -822,7 +819,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
             Argument.AssertNotNull(range, nameof(range));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.CheckChunkExists");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.CheckChunkExists");
             scope.Start();
             try
             {
@@ -861,7 +858,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
             Argument.AssertNotNull(range, nameof(range));
 
-            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.CheckChunkExists");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.CheckChunkExists");
             scope.Start();
             try
             {
