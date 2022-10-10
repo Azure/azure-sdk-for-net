@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.DomainOwnershipIdentifierCollection>> ListOwnershipIdentifiersAsync(string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
+        public async Task<Response<DomainOwnershipIdentifierListResult>> ListOwnershipIdentifiersAsync(string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -758,9 +758,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.DomainOwnershipIdentifierCollection value = default;
+                        DomainOwnershipIdentifierListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.DomainOwnershipIdentifierCollection.DeserializeDomainOwnershipIdentifierCollection(document.RootElement);
+                        value = DomainOwnershipIdentifierListResult.DeserializeDomainOwnershipIdentifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -775,7 +775,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.DomainOwnershipIdentifierCollection> ListOwnershipIdentifiers(string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
+        public Response<DomainOwnershipIdentifierListResult> ListOwnershipIdentifiers(string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -787,9 +787,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.DomainOwnershipIdentifierCollection value = default;
+                        DomainOwnershipIdentifierListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.DomainOwnershipIdentifierCollection.DeserializeDomainOwnershipIdentifierCollection(document.RootElement);
+                        value = DomainOwnershipIdentifierListResult.DeserializeDomainOwnershipIdentifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1452,7 +1452,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.DomainOwnershipIdentifierCollection>> ListOwnershipIdentifiersNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
+        public async Task<Response<DomainOwnershipIdentifierListResult>> ListOwnershipIdentifiersNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1465,9 +1465,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.DomainOwnershipIdentifierCollection value = default;
+                        DomainOwnershipIdentifierListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.DomainOwnershipIdentifierCollection.DeserializeDomainOwnershipIdentifierCollection(document.RootElement);
+                        value = DomainOwnershipIdentifierListResult.DeserializeDomainOwnershipIdentifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1483,7 +1483,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.DomainOwnershipIdentifierCollection> ListOwnershipIdentifiersNextPage(string nextLink, string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
+        public Response<DomainOwnershipIdentifierListResult> ListOwnershipIdentifiersNextPage(string nextLink, string subscriptionId, string resourceGroupName, string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1496,9 +1496,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        Models.DomainOwnershipIdentifierCollection value = default;
+                        DomainOwnershipIdentifierListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.DomainOwnershipIdentifierCollection.DeserializeDomainOwnershipIdentifierCollection(document.RootElement);
+                        value = DomainOwnershipIdentifierListResult.DeserializeDomainOwnershipIdentifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
