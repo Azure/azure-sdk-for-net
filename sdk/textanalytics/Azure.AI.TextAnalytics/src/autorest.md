@@ -37,6 +37,10 @@ directive:
   where: $.definitions.*
   transform: >
     $["x-accessibility"] = "internal"
+- from: swagger-document
+  where: $.definitions..properties.*
+  transform: >
+    $["x-accessibility"] = "internal"
 ```
 
 ### Add nullable annotations
