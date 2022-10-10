@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -278,17 +277,7 @@ namespace Azure.Data.SchemaRegistry
                     response = RestClient.GetSchemaVersion(groupName, schemaName, version, cancellationToken);
                 }
 
-                string contentType = response.Headers.ContentType;
-
-                SchemaFormat format;
-                if (contentType.Contains("="))
-                {
-                    format = new SchemaFormat(response.Headers.ContentType.Split('=')[1]);
-                }
-                else
-                {
-                    format = new SchemaFormat(response.Headers.ContentType.Split('+')[1]);
-                }
+                SchemaFormat format = ConstructFormat(response.Headers.ContentType);
 
                 var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
                 var schema = new SchemaRegistrySchema(properties, BinaryData.FromStream(response.Value).ToString());
@@ -318,17 +307,7 @@ namespace Azure.Data.SchemaRegistry
                     response = RestClient.GetById(schemaId, cancellationToken);
                 }
 
-                string contentType = response.Headers.ContentType;
-
-                SchemaFormat format;
-                if (contentType.Contains("="))
-                {
-                    format = new SchemaFormat(response.Headers.ContentType.Split('=')[1]);
-                }
-                else
-                {
-                    format = new SchemaFormat(response.Headers.ContentType.Split('+')[1]);
-                }
+                SchemaFormat format = ConstructFormat(response.Headers.ContentType);
 
                 var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion!.Value);
                 var schema = new SchemaRegistrySchema(properties, BinaryData.FromStream(response.Value).ToString());
@@ -340,6 +319,21 @@ namespace Azure.Data.SchemaRegistry
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private static SchemaFormat ConstructFormat(string contentType)
+        {
+            SchemaFormat format;
+            if (contentType.Contains("="))
+            {
+                format = new SchemaFormat(contentType.Split('=')[1]);
+            }
+            else
+            {
+                format = new SchemaFormat(contentType.Split('+')[1]);
+            }
+
+            return format;
         }
     }
 }
