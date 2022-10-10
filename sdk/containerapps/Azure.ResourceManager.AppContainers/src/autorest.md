@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
-require: https://github.com/Azure/azure-rest-api-specs/blob/792db17291c758b2bfdbbc0d35d0e2f5b5a1bd05/specification/app/resource-manager/readme.md
-tag: package-2022-03
+require: https://github.com/Azure/azure-rest-api-specs/blob/feeb526db8bd6d1382cb57779b82f79115be0479/specification/app/resource-manager/readme.md
+tag: package-preview-2022-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
