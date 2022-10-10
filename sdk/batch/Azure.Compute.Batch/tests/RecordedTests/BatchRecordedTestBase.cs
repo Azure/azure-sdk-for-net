@@ -2,15 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Reflection;
-using System.Reflection.Metadata.Ecma335;
-using System.Text.Json;
-using System.Threading.Tasks;
+using System.Text;
 using Azure.Compute.Batch;
 using Azure.Compute.Batch.Models;
 using Azure.Compute.Batch.Tests;
@@ -23,11 +18,36 @@ namespace Azure.Compute.Tests.SessionTests
 {
     public class BatchRecordedTestBase : RecordedTestBase<BatchClientTestEnvironment>
     {
+        protected string idBase;
+        private string guid;
+
         public BatchRecordedTestBase(bool isAsync) : base(isAsync)
         {
         }
 
-        protected BatchServiceClient CreateClient()
+        [SetUp]
+        public void Setup()
+        {
+            guid = Guid.NewGuid().ToString();
+        }
+
+        protected virtual string GetIdBase()
+        {
+            return GetType().Name;
+        }
+
+        protected string GetId(string name, int maxLength = 64)
+        {
+            StringBuilder stringBuilder = new StringBuilder(GetIdBase());
+            if (IsAsync)
+            {
+                stringBuilder.Append("Async");
+            }
+            stringBuilder.Append($"_{name}_{guid}");
+            return stringBuilder.ToString().Substring(0, 64);
+        }
+
+        protected BatchServiceClient CreateServiceClient()
         {
             HttpClientHandler httpHandler = new();
             httpHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) =>
@@ -51,11 +71,11 @@ namespace Azure.Compute.Tests.SessionTests
             return batchClient;
         }
 
-        /*
         [RecordedTest]
         public async System.Threading.Tasks.Task TestOperation()
         {
-            BatchServiceClient client = CreateClient();
+            string testJobId = GetId("Job");
+            BatchServiceClient client = CreateServiceClient();
             JobClient jobClient = client.CreateJobClient();
             try
             {
@@ -70,7 +90,6 @@ namespace Azure.Compute.Tests.SessionTests
 
             return;
         }
-        */
 
         // Add live tests here. If you need more information please refer https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#live-testing and
         // here are some examples: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/synapse/Azure.Analytics.Synapse.AccessControl/tests/AccessControlClientLiveTests.cs.

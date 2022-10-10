@@ -1,0 +1,156 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com/jobs?api-version=2022-01-01.15.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "106",
+        "Content-Type": "application/json; odata=minimalmetadata",
+        "traceparent": "00-6f71607a14f3d5a4c518ac79ea00a699-e83716a0b63adca9-00",
+        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20221007.1 (.NET 6.0.9; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "f68c87b85e377816bdd598b69dc5271b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "TaskClientRecordedTestsAsync_Job_4bafe5e2-756a-46e3-9afb-66a731d",
+        "poolInfo": {
+          "poolId": "testPool"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "DataServiceId": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com/jobs/job-1",
+        "DataServiceVersion": "3.0",
+        "Date": "Mon, 10 Oct 2022 17:26:31 GMT",
+        "ETag": "0x8DAAAE492CA6660",
+        "Last-Modified": "Mon, 10 Oct 2022 17:26:31 GMT",
+        "Location": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com/jobs/job-1",
+        "request-id": "0d9764fb-cabe-4ab3-bc45-cf45de50e8b8",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com/jobs/TaskClientRecordedTestsAsync_Job_4bafe5e2-756a-46e3-9afb-66a731d/tasks?api-version=2022-01-01.15.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "331",
+        "Content-Type": "application/json; odata=minimalmetadata",
+        "traceparent": "00-a16e30b1932a9e45ed83b5a3cef11a25-104819198634c5ec-00",
+        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20221007.1 (.NET 6.0.9; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "37088ee710499cabff0fab3a19abcfdf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "TaskClientRecordedTestsAsync_Task_4bafe5e2-756a-46e3-9afb-66a731",
+        "commandLine": "cmd /c (echo \u0027Task TaskClientRecordedTestsAsync_Task_4bafe5e2-756a-46e3-9afb-66a731 starting...) \u0026\u0026 (timeout 5000) \u0026\u0026 (echo \u0027Task TaskClientRecordedTestsAsync_Task_4bafe5e2-756a-46e3-9afb-66a731 complete!\u0027)"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "DataServiceId": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com/jobs/TaskClientRecordedTestsAsync_Job_4bafe5e2-756a-46e3-9afb-66a731d/tasks/TaskClientRecordedTestsAsync_Task_4bafe5e2-756a-46e3-9afb-66a731",
+        "DataServiceVersion": "3.0",
+        "Date": "Mon, 10 Oct 2022 17:26:33 GMT",
+        "ETag": "0x8DAAAE4941D601D",
+        "Last-Modified": "Mon, 10 Oct 2022 17:26:34 GMT",
+        "Location": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com/jobs/TaskClientRecordedTestsAsync_Job_4bafe5e2-756a-46e3-9afb-66a731d/tasks/TaskClientRecordedTestsAsync_Task_4bafe5e2-756a-46e3-9afb-66a731",
+        "request-id": "e70d1c89-877a-410a-a554-097437056b00",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com/jobs/TaskClientRecordedTestsAsync_Job_4bafe5e2-756a-46e3-9afb-66a731d/tasks?api-version=2022-01-01.15.0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-db61f7abb934ced9b368794ef2a7b5a0-2faa9bec13b0d846-00",
+        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20221007.1 (.NET 6.0.9; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "629fbacb6b24b499b5b8dcd2456c2a55",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; odata=minimalmetadata",
+        "DataServiceVersion": "3.0",
+        "Date": "Mon, 10 Oct 2022 17:26:33 GMT",
+        "request-id": "ef278ffe-55eb-40e7-b9c7-958478c061f2",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "odata.metadata": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com/$metadata#tasks",
+        "value": [
+          {
+            "id": "TaskClientRecordedTestsAsync_Task_4bafe5e2-756a-46e3-9afb-66a731",
+            "url": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com/jobs/TaskClientRecordedTestsAsync_Job_4bafe5e2-756a-46e3-9afb-66a731d/tasks/TaskClientRecordedTestsAsync_Task_4bafe5e2-756a-46e3-9afb-66a731",
+            "eTag": "0x8DAAAE4941D601D",
+            "creationTime": "2022-10-10T17:26:34.0565021Z",
+            "lastModified": "2022-10-10T17:26:34.0565021Z",
+            "state": "active",
+            "stateTransitionTime": "2022-10-10T17:26:34.0565021Z",
+            "commandLine": "cmd /c (echo \u0027Task TaskClientRecordedTestsAsync_Task_4bafe5e2-756a-46e3-9afb-66a731 starting...) \u0026\u0026 (timeout 5000) \u0026\u0026 (echo \u0027Task TaskClientRecordedTestsAsync_Task_4bafe5e2-756a-46e3-9afb-66a731 complete!\u0027)",
+            "userIdentity": {
+              "autoUser": {
+                "scope": "pool",
+                "elevationLevel": "nonadmin"
+              }
+            },
+            "constraints": {
+              "maxWallClockTime": "P10675199DT2H48M5.4775807S",
+              "retentionTime": "P7D",
+              "maxTaskRetryCount": 0
+            },
+            "requiredSlots": 1,
+            "executionInfo": {
+              "retryCount": 0,
+              "requeueCount": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com/jobs/TaskClientRecordedTestsAsync_Job_4bafe5e2-756a-46e3-9afb-66a731d?api-version=2022-01-01.15.0",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-3b67d7b5031170ff34e7e6f88cee3f8f-64505808ee6bc232-00",
+        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20221007.1 (.NET 6.0.9; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "394ef25b5572a8f2dbeff627b3db5f11",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "DataServiceVersion": "3.0",
+        "Date": "Mon, 10 Oct 2022 17:26:36 GMT",
+        "request-id": "17333d2f-597d-403a-b035-677c4c525581",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "BATCH_ENDPOINT": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com",
+    "RandomSeed": "702109823"
+  }
+}

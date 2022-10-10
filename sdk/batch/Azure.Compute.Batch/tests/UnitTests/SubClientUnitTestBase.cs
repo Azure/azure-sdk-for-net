@@ -19,7 +19,7 @@ namespace Azure.Compute.Tests.UnitTests
         {
         }
 
-        protected BatchServiceClient CreateInstrumentedClient(MockResponse response) => CreateInstrumentedClient(new MockTransport(response));
+        protected BatchServiceClient CreateServiceClient(MockResponse response) => CreateInstrumentedClient(new MockTransport(response));
 
         protected BatchServiceClient CreateInstrumentedClient(MockTransport transport)
         {
@@ -35,12 +35,69 @@ namespace Azure.Compute.Tests.UnitTests
         public async System.Threading.Tasks.Task SampleMockTest()
         {
             MockResponse mockResponse = new MockResponse(201);
-            BatchServiceClient client = CreateInstrumentedClient(mockResponse);
+            BatchServiceClient client = CreateServiceClient(mockResponse);
             JobClient jobClient = client.CreateJobClient();
             Response response = await jobClient.AddAsync(new Job { Id = "mockid", PoolInfo = new PoolInformation { PoolId = "mockpool" } });
 
             Assert.AreEqual(response.Status, 201);
-            return;
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task HandleGetTest()
+        {
+            string id = "jobId";
+            MockResponse mockResponse = new MockResponse(200);
+            mockResponse.SetContent(CreateJobString(id));
+            BatchServiceClient client = CreateServiceClient(mockResponse);
+            JobClient jobClient = client.CreateJobClient();
+            Job job = await jobClient.GetAsync(id);
+
+            Assert.AreEqual(job.PoolInfo.PoolId, "managerPool");
+        }
+
+        /*
+        [Test]
+        public async System.Threading.Tasks.Task HandleListTest()
+        {
+            string baseId = "jobId";
+            MockResponse mockResponse = new MockResponse(200);
+            mockResponse.SetContent(CreateJobStrings(baseId, 5));
+            BatchServiceClient client = CreateServiceClient(mockResponse);
+            JobClient jobClient = client.CreateJobClient();
+        }
+        */
+
+        private string CreateJobString(string id)
+        {
+            return string.Format(@"
+            {
+              ""id"": ${0},
+              ""poolInfo"":{
+                ""poolId"":""managerPool""
+              },
+              ""executionInfo"":{
+                ""startTime"":""2022-10-04T17:41:42.725855Z"",
+                ""poolId"":""managerPool""
+              },
+              ""onAllTasksComplete"":""noaction"",
+              ""onTaskFailure"":""noaction""
+            }", id);
+        }
+
+        private string CreateJobStrings(string baseId, int count)
+        {
+            StringBuilder stringBuilder = new StringBuilder("[");
+            for (int i = 0; i < count; i++)
+            {
+                if (i > 0)
+                {
+                    stringBuilder.Append(", ");
+                }
+                string jobString = CreateJobString(baseId + i);
+                stringBuilder.Append(jobString);
+            }
+            stringBuilder.Append("]");
+            return stringBuilder.ToString();
         }
     }
 }

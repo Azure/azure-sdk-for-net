@@ -21,11 +21,10 @@ namespace Azure.Compute.Tests.SessionTests
         [RecordedTest]
         public async System.Threading.Tasks.Task GetSupportedImages()
         {
-            BatchServiceClient client = CreateClient();
-            AccountClient accountClient = client.CreateAccountClient();
+            BatchServiceClient serviceClient = CreateServiceClient();
+            AccountClient accountClient = serviceClient.CreateAccountClient();
 
-            AccountListSupportedImagesOptions options = new AccountListSupportedImagesOptions();
-            IEnumerable<ImageInformation> images = await accountClient.GetSupportedImagesAsync(options).ToEnumerableAsync().ConfigureAwait(false);
+            IEnumerable<ImageInformation> images = await accountClient.GetSupportedImagesAsync().ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.IsNotEmpty(images);
         }

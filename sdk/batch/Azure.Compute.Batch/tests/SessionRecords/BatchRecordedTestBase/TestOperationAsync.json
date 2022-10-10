@@ -6,15 +6,15 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "74",
+        "Content-Length": "79",
         "Content-Type": "application/json; odata=minimalmetadata",
-        "traceparent": "00-a729843729cd944c83b19256c73602e1-b718f504c2fa3c46-00",
+        "traceparent": "00-d66f9c6f893ff04280ad596123d62523-27fd5e0049373249-00",
         "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20221004.1 (.NET Core 3.1.29; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "2d4887c934bfe50e939f6adc9bccfc37",
+        "x-ms-client-request-id": "732620907047a20067d9c36542c2289e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "id": "BatchRecordedTestBase_TestJob",
+        "id": "BatchRecordedTestBase_TestJobAsync",
         "poolInfo": {
           "poolId": "managerPool"
         }
@@ -24,10 +24,10 @@
         "DataServiceId": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/jobs/job-1",
         "DataServiceVersion": "3.0",
         "Date": "Tue, 04 Oct 2022 17:51:29 GMT",
-        "ETag": "0x8DAA63110E858FD",
+        "ETag": "0x8DAA631113ABEDE",
         "Last-Modified": "Tue, 04 Oct 2022 17:51:29 GMT",
         "Location": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/jobs/job-1",
-        "request-id": "56307a73-c907-4611-b543-db748f68d9b6",
+        "request-id": "c7f25ab2-f61e-45e7-8679-371ee4cbd07f",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
@@ -36,14 +36,14 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/jobs/BatchRecordedTestBase_TestJob?api-version=2022-01-01.15.0",
+      "RequestUri": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/jobs/BatchRecordedTestBase_TestJobAsync?api-version=2022-01-01.15.0",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-851b171031330143a102195809406dda-c621eaecff537041-00",
+        "traceparent": "00-4b0cb0ffbd34ff41854934a41a23607c-9e1cb59690fc0a4d-00",
         "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20221004.1 (.NET Core 3.1.29; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "98c55027af359301825211cc15376932",
+        "x-ms-client-request-id": "521c9890e83d3cc20a9b37ced36cad0d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -52,9 +52,9 @@
         "Content-Type": "application/json; odata=minimalmetadata",
         "DataServiceVersion": "3.0",
         "Date": "Tue, 04 Oct 2022 17:51:29 GMT",
-        "ETag": "0x8DAA63110E858FD",
+        "ETag": "0x8DAA631113ABEDE",
         "Last-Modified": "Tue, 04 Oct 2022 17:51:29 GMT",
-        "request-id": "b07abb02-9bd0-4377-b196-60d86c0d2c95",
+        "request-id": "55ae9461-478c-47cf-9098-3457fddd39dc",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
@@ -62,13 +62,13 @@
       },
       "ResponseBody": {
         "odata.metadata": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/$metadata#jobs/@Element",
-        "id": "BatchRecordedTestBase_TestJob",
-        "url": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/jobs/BatchRecordedTestBase_TestJob",
-        "eTag": "0x8DAA63110E858FD",
-        "lastModified": "2022-10-04T17:51:29.3617405Z",
-        "creationTime": "2022-10-04T17:51:29.3457438Z",
+        "id": "BatchRecordedTestBase_TestJobAsync",
+        "url": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/jobs/BatchRecordedTestBase_TestJobAsync",
+        "eTag": "0x8DAA631113ABEDE",
+        "lastModified": "2022-10-04T17:51:29.9017438Z",
+        "creationTime": "2022-10-04T17:51:29.859885Z",
         "state": "active",
-        "stateTransitionTime": "2022-10-04T17:51:29.3617405Z",
+        "stateTransitionTime": "2022-10-04T17:51:29.9017438Z",
         "priority": 0,
         "maxParallelTasks": -1,
         "usesTaskDependencies": false,
@@ -81,7 +81,7 @@
           "poolId": "managerPool"
         },
         "executionInfo": {
-          "startTime": "2022-10-04T17:51:29.3617405Z",
+          "startTime": "2022-10-04T17:51:29.9017438Z",
           "poolId": "managerPool"
         },
         "onAllTasksComplete": "noaction",
@@ -89,14 +89,14 @@
       }
     },
     {
-      "RequestUri": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/jobs/BatchRecordedTestBase_TestJob?api-version=2022-01-01.15.0",
+      "RequestUri": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/jobs/BatchRecordedTestBase_TestJobAsync?api-version=2022-01-01.15.0",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a6c67d5507411d4592738a5aafdc741e-fc4268b8ef021b42-00",
+        "traceparent": "00-6e62810dc4b3354f975c1bf248ced6f2-6ea17e5cc443754b-00",
         "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20221004.1 (.NET Core 3.1.29; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "0ea5b7b2615edaae8208d9efd07415cc",
+        "x-ms-client-request-id": "b36591fb815ff7b0af10c1d259c0e48f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -104,7 +104,7 @@
       "ResponseHeaders": {
         "DataServiceVersion": "3.0",
         "Date": "Tue, 04 Oct 2022 17:51:29 GMT",
-        "request-id": "399ebd83-91a0-4460-a953-8fb4929f6471",
+        "request-id": "d45e571e-503f-47cd-9a6e-7413b619e386",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
@@ -116,6 +116,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "BATCH_ENDPOINT": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com",
-    "RandomSeed": "1410641279"
+    "RandomSeed": "1352859139"
   }
 }

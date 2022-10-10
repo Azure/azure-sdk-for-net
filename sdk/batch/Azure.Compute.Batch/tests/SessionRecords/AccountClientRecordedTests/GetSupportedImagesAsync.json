@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/supportedimages?$filter=osType%20eq%20%27windows%27\u0026api-version=2022-01-01.15.0",
+      "RequestUri": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/supportedimages?api-version=2022-01-01.15.0",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-608143ee642c0f9132c481d5e134478d-d3e4a6bc5571968a-00",
-        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20221004.1 (.NET 6.0.9; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "66a89313d818b57614a3dfc10b2e2776",
+        "traceparent": "00-4b08d5665862bf47a74b4a88151f4d44-7ce8ce07c665aa4f-00",
+        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20221004.1 (.NET Core 3.1.29; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "1ba56f0d53e12234f52abb7bf24beeca",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,8 +16,8 @@
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
         "DataServiceVersion": "3.0",
-        "Date": "Tue, 04 Oct 2022 17:20:10 GMT",
-        "request-id": "247dc0aa-0c5c-49aa-8db3-67921ea12f07",
+        "Date": "Tue, 04 Oct 2022 17:51:28 GMT",
+        "request-id": "e1e948ed-7b9e-4a48-86ec-46f39016808d",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
@@ -26,6 +26,98 @@
       "ResponseBody": {
         "odata.metadata": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/$metadata#supportedimages",
         "value": [
+          {
+            "imageReference": {
+              "publisher": "almalinux",
+              "offer": "almalinux",
+              "sku": "8_4",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.el 8",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "almalinux",
+              "offer": "almalinux",
+              "sku": "8_4-gen2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.el 8",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "almalinux",
+              "offer": "almalinux",
+              "sku": "8_5",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.el 8",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "almalinux",
+              "offer": "almalinux",
+              "sku": "8_5-gen2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.el 8",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "almalinux",
+              "offer": "almalinux-hpc",
+              "sku": "8_5-hpc",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.el 8",
+            "capabilities": [
+              "SupportsRDMAOnly",
+              "IntelMPIRuntimeInstalled"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "almalinux",
+              "offer": "almalinux-hpc",
+              "sku": "8_5-hpc-gen2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.el 8",
+            "capabilities": [
+              "SupportsRDMAOnly",
+              "IntelMPIRuntimeInstalled",
+              "Generation2VMImage"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "batch",
+              "offer": "rendering-centos73",
+              "sku": "rendering",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "osType": "linux"
+          },
           {
             "imageReference": {
               "publisher": "batch",
@@ -39,6 +131,161 @@
           },
           {
             "imageReference": {
+              "publisher": "canonical",
+              "offer": "0001-com-ubuntu-server-focal",
+              "sku": "20_04-lts",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.ubuntu 20.04",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "canonical",
+              "offer": "0001-com-ubuntu-server-focal",
+              "sku": "20_04-lts-gen2",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.ubuntu 20.04",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "canonical",
+              "offer": "0001-com-ubuntu-server-jammy",
+              "sku": "22_04-lts",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.ubuntu 22.04",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "canonical",
+              "offer": "0001-com-ubuntu-server-jammy",
+              "sku": "22_04-lts-gen2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.ubuntu 22.04",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "canonical",
+              "offer": "ubuntuserver",
+              "sku": "18.04-lts",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.ubuntu 18.04",
+            "batchSupportEndOfLife": "2023-05-30T00:00:00Z",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "canonical",
+              "offer": "ubuntuserver",
+              "sku": "18_04-lts-gen2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.ubuntu 18.04",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "batchSupportEndOfLife": "2023-05-30T00:00:00Z",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "debian",
+              "offer": "debian-10",
+              "sku": "10",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.debian 10",
+            "batchSupportEndOfLife": "2022-09-30T00:00:00Z",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoft-azure-batch",
+              "offer": "centos-container",
+              "sku": "7-8",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "capabilities": [
+              "DockerCompatible",
+              "NvidiaTeslaDriverInstalled",
+              "NvidiaGridDriverInstalled"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoft-azure-batch",
+              "offer": "centos-container-rdma",
+              "sku": "7-8",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "capabilities": [
+              "DockerCompatible",
+              "NvidiaTeslaDriverInstalled",
+              "SupportsRDMAOnly",
+              "IntelMPIRuntimeInstalled"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoft-azure-batch",
+              "offer": "ubuntu-server-container",
+              "sku": "20-04-lts",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.ubuntu 20.04",
+            "capabilities": [
+              "DockerCompatible",
+              "NvidiaTeslaDriverInstalled",
+              "NvidiaGridDriverInstalled"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoft-azure-batch",
+              "offer": "ubuntu-server-container-rdma",
+              "sku": "20-04-lts",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.ubuntu 20.04",
+            "capabilities": [
+              "DockerCompatible",
+              "NvidiaTeslaDriverInstalled",
+              "SupportsRDMAOnly",
+              "IntelMPIRuntimeInstalled"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
               "publisher": "microsoft-dsvm",
               "offer": "dsvm-win-2019",
               "sku": "winserver-2019",
@@ -47,6 +294,55 @@
             "verificationType": "unverified",
             "nodeAgentSKUId": "batch.node.windows amd64",
             "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoft-dsvm",
+              "offer": "ubuntu-1804",
+              "sku": "1804",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.ubuntu 18.04",
+            "capabilities": [
+              "NvidiaTeslaDriverInstalled"
+            ],
+            "batchSupportEndOfLife": "2023-05-30T00:00:00Z",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoft-dsvm",
+              "offer": "ubuntu-hpc",
+              "sku": "1804",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.ubuntu 18.04",
+            "capabilities": [
+              "SupportsRDMAOnly",
+              "Generation2VMImage",
+              "IntelMPIRuntimeInstalled"
+            ],
+            "batchSupportEndOfLife": "2023-05-30T00:00:00Z",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "microsoft-dsvm",
+              "offer": "ubuntu-hpc",
+              "sku": "2004",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.ubuntu 20.04",
+            "capabilities": [
+              "DockerCompatible",
+              "SupportsRDMAOnly",
+              "Generation2VMImage",
+              "IntelMPIRuntimeInstalled"
+            ],
+            "osType": "linux"
           },
           {
             "imageReference": {
@@ -522,6 +818,129 @@
               "Generation2VMImage"
             ],
             "osType": "windows"
+          },
+          {
+            "imageReference": {
+              "publisher": "openlogic",
+              "offer": "centos",
+              "sku": "7_9",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "openlogic",
+              "offer": "centos",
+              "sku": "7_9-gen2",
+              "version": "latest"
+            },
+            "verificationType": "verified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "capabilities": [
+              "Generation2VMImage"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "openlogic",
+              "offer": "centos-hpc",
+              "sku": "7_9",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "capabilities": [
+              "SupportsRDMAOnly",
+              "IntelMPIRuntimeInstalled"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "openlogic",
+              "offer": "centos-hpc",
+              "sku": "7_9-gen2",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "capabilities": [
+              "SupportsRDMAOnly",
+              "IntelMPIRuntimeInstalled",
+              "Generation2VMImage"
+            ],
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "oracle",
+              "offer": "oracle-linux",
+              "sku": "7.4",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "oracle",
+              "offer": "oracle-linux",
+              "sku": "78",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "oracle",
+              "offer": "oracle-linux",
+              "sku": "81",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.el 8",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "xilinx",
+              "offer": "xilinx_alveo_u250_deployment_vm_centos78_032321",
+              "sku": "xilinx_alveo_u250_deployment_vm_centos78_032321",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.centos 7",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "xilinx",
+              "offer": "xilinx_alveo_u250_deployment_vm_ubuntu1804_032321",
+              "sku": "xilinx_alveo_u250_deployment_vm_ubuntu_1804_032321",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.ubuntu 18.04",
+            "batchSupportEndOfLife": "2023-05-30T00:00:00Z",
+            "osType": "linux"
+          },
+          {
+            "imageReference": {
+              "publisher": "xilinx",
+              "offer": "xilinx_alveo_u250_deployment_vm_ubuntu2004_062421",
+              "sku": "xilinx_alveo_u250_deployment_vm_ubuntu_2004_062421",
+              "version": "latest"
+            },
+            "verificationType": "unverified",
+            "nodeAgentSKUId": "batch.node.ubuntu 20.04",
+            "osType": "linux"
           }
         ]
       }
@@ -530,6 +949,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "BATCH_ENDPOINT": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com",
-    "RandomSeed": "360942085"
+    "RandomSeed": "1479825825"
   }
 }
