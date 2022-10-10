@@ -423,8 +423,6 @@ function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {
     Write-Host "  $excludedPackage - $($PackageExclusions[$excludedPackage])"
   }
 
-  # Also exclude 'spring' packages
-  # https://github.com/Azure/azure-sdk-for-java/issues/23087
   $FilteredMetadata = $DocsMetadata.Where({ !($PackageExclusions.ContainsKey($_.Package)) })
   UpdateDocsMsPackages `
     (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet-preview.csv') `
