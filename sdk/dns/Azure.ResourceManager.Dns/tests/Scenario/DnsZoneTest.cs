@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         [Test]
         [RecordedTest]
         [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
-        public async Task GetRecordSets()
+        public async Task GetAllRecords()
         {
             string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             var dnszone = await CreateADnsZone(dnsZoneName, _resourceGroup);
