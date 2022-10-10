@@ -421,7 +421,7 @@ namespace Azure.Communication.CallAutomation
     public partial class MediaStreamingAudio : Azure.Communication.CallAutomation.MediaStreamingPackageBase
     {
         internal MediaStreamingAudio() { }
-        public byte[] Data { get { throw null; } }
+        public string Data { get { throw null; } }
         public bool IsSilent { get { throw null; } }
         public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
         public System.DateTime Timestamp { get { throw null; } }
@@ -468,20 +468,6 @@ namespace Azure.Communication.CallAutomation
         public static implicit operator Azure.Communication.CallAutomation.MediaStreamingContent (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallAutomation.MediaStreamingContent left, Azure.Communication.CallAutomation.MediaStreamingContent right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class MediaStreamingFormat
-    {
-        internal MediaStreamingFormat() { }
-        public int Channels { get { throw null; } }
-        public string Encoding { get { throw null; } }
-        public double Length { get { throw null; } }
-        public int SampleRate { get { throw null; } }
-    }
-    public partial class MediaStreamingMetadata : Azure.Communication.CallAutomation.MediaStreamingPackageBase
-    {
-        internal MediaStreamingMetadata() { }
-        public Azure.Communication.CallAutomation.MediaStreamingFormat Format { get { throw null; } }
-        public string MediaSubscriptionId { get { throw null; } }
     }
     public partial class MediaStreamingOptions
     {
@@ -758,5 +744,22 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.PhoneNumberIdentifier SourceCallerId { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
         public string UserToUserInformation { get { throw null; } set { } }
+    }
+}
+namespace Azure.Communication.CallAutomation.Models.MediaStreaming
+{
+    public partial class MediaStreamingMetadata : Azure.Communication.CallAutomation.MediaStreamingPackageBase
+    {
+        public MediaStreamingMetadata() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("channels")]
+        public int Channels { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("encoding")]
+        public string Encoding { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("length")]
+        public int Length { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("subscriptionId")]
+        public string MediaSubscriptionId { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("sampleRate")]
+        public int SampleRate { get { throw null; } set { } }
     }
 }
