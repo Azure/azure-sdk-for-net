@@ -28,8 +28,6 @@ namespace Azure.Developer.DevCenter.Tests
                 dnsSuffix,
                 InstrumentClientOptions(new DevCenterClientOptions())));
 
-        /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
-
         [RecordedTest]
         [PlaybackOnly("Dev box creation time takes several hours which is blocking for live integration tests")]
         public async Task DevBoxCreationSucceeds()

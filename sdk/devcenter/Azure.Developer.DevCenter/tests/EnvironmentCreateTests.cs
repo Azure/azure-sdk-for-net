@@ -28,8 +28,6 @@ namespace Azure.Developer.DevCenter.Tests
                 dnsSuffix,
                 InstrumentClientOptions(new DevCenterClientOptions())));
 
-        /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
-
         [RecordedTest]
         [PlaybackOnly("Environment creation is unstable due to service issues currently under investigation")]
         public async Task EnvironmentCreationSucceeds()

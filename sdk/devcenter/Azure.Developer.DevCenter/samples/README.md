@@ -11,4 +11,3 @@ description: Samples for the Azure.DevCenter client library.
 
 # Azure.DevCenter Samples
 
-<!-- please refer to <https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/samples/README.md> to write sample readme. -->

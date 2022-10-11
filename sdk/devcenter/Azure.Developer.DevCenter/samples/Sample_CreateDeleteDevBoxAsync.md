@@ -6,5 +6,3 @@ You can create a clients and fetch available DevCenter Projects and Pools, then 
 
 To see the full example source files, see:
 * [CreateDeleteDevBoxAsync](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/devcenter/Azure.DevCenter/tests/Samples/Sample_CreateDeleteDevBoxAsync.cs)
-
-<!-- please refer to <https://github.com/Azure/azure-sdk-for-net/main/sdk/template/Azure.Template/samples/Sample1_HelloWorldAsync.md> to write sample readme file. -->

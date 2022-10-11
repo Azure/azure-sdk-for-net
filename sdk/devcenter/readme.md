@@ -1,55 +1,23 @@
-# devtestcenter
+# Azure DevCenter client library for .NET
 
-> see https://aka.ms/autorest
+Azure DevCenter is a managed service that helps organizations manage developer environments in Azure.
 
-This is the AutoRest configuration file for Azure.Developer.DevCenter.
+- [Azure.ResourceManager.DevCenter][control_plane] allows organizations to create and manage projects, images, networks, environment templates, and more for developers.
+- [Azure.Developer.DevCenter][data_plane] allows developers to create and manage Dev Box and Environment resources
 
-## Getting Started
+## Contributing
 
-To build the SDKs for My API, simply install AutoRest via `npm` (`npm install -g autorest`) and then run:
+See the [CONTRIBUTING.md][contrib] for details on building, testing, and contributing to these libraries.
 
-> `autorest readme.md`
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
 
-To see additional help and options, run:
+This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
-> `autorest --help`
-
-For other options on installation see [Installing AutoRest](https://aka.ms/autorest/install) on the AutoRest github page.
-
----
-
-## Configuration
-
-### Basic Information
-
-These are the global settings for Azure.Developer.DevCenter.
-
-```yaml
-openapi-type: data-plane
-azure-arm: false
-tag: v2022-03-01-preview
-eol: crlf
-license-header: MICROSOFT_MIT_NO_VERSION
-public-clients: true
-
-input-file:
-  - C:\Users\chrismiller\source\repos\azure-devtest-center\src\sdk\specification\devcenter\data-plane\Microsoft.DevCenter\preview\2022-03-01-preview\devcenter.json
-  - C:\Users\chrismiller\source\repos\azure-devtest-center\src\sdk\specification\devcenter\data-plane\Microsoft.DevCenter\preview\2022-03-01-preview\devbox.json
-  - C:\Users\chrismiller\source\repos\azure-devtest-center\src\sdk\specification\devcenter\data-plane\Microsoft.DevCenter\preview\2022-03-01-preview\environments.json
-
-csharp/simplifier:
-  plugin: csharp-simplifier
-  input: generate
-  output-artifact: source-file-csharp
-  suffixes:
-    - ""
-```
-
-
-## CSharp
-
-See configuration in [readme.csharp.md](./readme.csharp.md)
-
-## TypeScript
-
-See configuration in [readme.typescript.md](./readme.typescript.md)
+<!-- LINKS -->
+[data_plane]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/devcenter/Azure.Developer.DevCenter/README.md
+[control_plane]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/devcenter/Azure.ResourceManager.DevCenter/README.md
+[contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
+[cla]: https://cla.microsoft.com
+[coc]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[coc_contact]: mailto:opencode@microsoft.com
