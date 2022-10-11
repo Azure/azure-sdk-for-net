@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = await PolicyStatesRestClient.SummarizeForResourceGroupLevelPolicyAssignmentAsync(policyStateSummaryType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyStatesRestClient.SummarizeForResourceGroupLevelPolicyAssignmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyStateSummaryType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = await PolicyStatesRestClient.SummarizeForSubscriptionLevelPolicyAssignmentAsync(policyStateSummaryType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyStatesRestClient.SummarizeForSubscriptionLevelPolicyAssignmentAsync(Id.SubscriptionId, Id.Name, policyStateSummaryType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                     }
                     else
@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = PolicyStatesRestClient.SummarizeForResourceGroupLevelPolicyAssignment(policyStateSummaryType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
+                        var response = PolicyStatesRestClient.SummarizeForResourceGroupLevelPolicyAssignment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyStateSummaryType, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = PolicyStatesRestClient.SummarizeForSubscriptionLevelPolicyAssignment(policyStateSummaryType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
+                        var response = PolicyStatesRestClient.SummarizeForSubscriptionLevelPolicyAssignment(Id.SubscriptionId, Id.Name, policyStateSummaryType, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                     }
                     else
@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = await PolicyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(policyStateType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = await PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(policyStateType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(Id.SubscriptionId, Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else
@@ -184,12 +184,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = await PolicyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageAsync(nextLink, policyStateType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = await PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageAsync(nextLink, policyStateType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else
@@ -227,12 +227,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = PolicyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignment(policyStateType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
+                        var response = PolicyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignment(policyStateType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
+                        var response = PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignment(Id.SubscriptionId, Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else
@@ -254,12 +254,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = PolicyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPage(nextLink, policyStateType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
+                        var response = PolicyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPage(nextLink, policyStateType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
+                        var response = PolicyStatesRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPage(nextLink, Id.SubscriptionId, Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else
@@ -297,12 +297,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = await PolicyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(policyEventType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = await PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(policyEventType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(Id.SubscriptionId, Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else
@@ -324,12 +324,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = await PolicyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageAsync(nextLink, policyEventType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = await PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageAsync(nextLink, policyEventType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else
@@ -367,12 +367,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = PolicyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignment(policyEventType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
+                        var response = PolicyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignment(policyEventType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
+                        var response = PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignment(Id.SubscriptionId, Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else
@@ -394,12 +394,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (Id.Parent.ResourceType == _resourceGroup)
                     {
-                        var response = PolicyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPage(nextLink, policyEventType, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
+                        var response = PolicyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else if (Id.Parent.ResourceType == _subscription)
                     {
-                        var response = PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPage(nextLink, policyEventType, Id.SubscriptionId, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
+                        var response = PolicyEventsRestClient.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPage(nextLink, Id.SubscriptionId, Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                     }
                     else
