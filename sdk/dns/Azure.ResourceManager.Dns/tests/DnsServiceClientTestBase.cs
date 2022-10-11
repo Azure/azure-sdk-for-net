@@ -21,7 +21,8 @@ namespace Azure.ResourceManager.Dns.Tests
         protected AzureLocation DefaultLocation = AzureLocation.EastUS;
         protected const string DefaultResourceGroupPrefix = "DnsRG";
 
-        public DnsServiceClientTestBase(bool isAsync) : base(isAsync)
+        public DnsServiceClientTestBase(bool isAsync, RecordedTestMode? mode = null)
+            : base(isAsync, mode)
         {
         }
 

@@ -18,7 +18,8 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
     {
         private DnsZoneResource _dnsZone;
 
-        public RecordSetsBasicE2ETest(bool isAsync) : base(isAsync)
+        public RecordSetsBasicE2ETest(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         public async Task GlobalSetUp()
         {
             var resourceGroup = await CreateResourceGroup();
-            _dnsZone = await CreateADnsZone($"2022{SessionRecording.GenerateAssetName("dnszone")}.com", resourceGroup);
+            _dnsZone = await CreateADnsZone($"2022{Recording.GenerateAssetName("dnszone")}.com", resourceGroup);
         }
 
         [Test]
@@ -143,7 +144,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
         public async Task CnameRecordE2E()
         {
             var collection = _dnsZone.GetCnameRecords();
