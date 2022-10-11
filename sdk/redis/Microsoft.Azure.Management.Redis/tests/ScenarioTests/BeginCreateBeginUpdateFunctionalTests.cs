@@ -11,10 +11,10 @@ using Xunit;
 
 namespace AzureRedisCache.Tests
 {
-    public class BeginCreateFunctionalTests : TestBase
+    public class BeginCreateBeginUpdateFunctionalTests : TestBase
     {
         [Fact]
-        public void BeginCreateFunctionalTest()
+        public void BeginCreateBeginUpdateFunctionalTest()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
@@ -103,7 +103,7 @@ namespace AzureRedisCache.Tests
                     }
                     TestUtilities.Wait(new TimeSpan(0, 0, 30));
                 }
-                Assert.Equal(p2, updateResponse.Sku);
+                Assert.Equal(p2.Capacity, updateResponse.Sku.Capacity);
 
                 _client.Redis.Delete(resourceGroupName: resourceGroupName, name: redisCacheName);
                 _redisCacheManagementHelper.DeleteResourceGroup(resourceGroupName);
