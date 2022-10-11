@@ -1,14 +1,22 @@
 # Release History
 
-## 7.11.0-beta.2 (Unreleased)
+## 7.11.0 (2022-10-11)
 
-### Features Added
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
 
-### Breaking Changes
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
 
 ### Bugs Fixed
 
+- Fixed issue where shared AMQP session was incorrectly closed when `AcceptNextSessionAsync` call timed out and `EnableCrossEntityTransaction` is set to `true`.
+- Dispose semaphores in `ServiceBusProcessor` to avoid memory leak. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
 ### Other Changes
+
+- Optimized message body copying when accessing the `Body` property of a received message. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+- Removed locking from the `ServiceBusRetryPolicy` to improve performance and prevent deadlocks. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+- Added link to [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/TROUBLESHOOTING.md) in exception messages.
 
 ## 7.11.0-beta.1 (2022-09-06)
 
