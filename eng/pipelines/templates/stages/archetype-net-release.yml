@@ -182,13 +182,10 @@ stages:
                               - /metadata/
                         - template: /eng/pipelines/templates/steps/fetch-package-list.yml
                           parameters:
-                            JavaDocJarLocation: "$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.groupId}}/${{artifact.name}}"
-                            ArtifactName: ${{artifact.name}}
-                            TargetBranch: $(TargetBranchName)
+                            DotnetNupkgLocation: "$(Pipeline.Workspace)/${{parameters.ArtifactName}}"
                             DocRepoLocation: $(DocRepoLocation)
                             TargetDocRepoName: ${{parameters.TargetDocRepoName}}
                             TargetDocRepoOwner: "Azure"
-
             - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
               - deployment: PublishDocs
                 displayName: Publish Docs to GitHub pages
