@@ -6,12 +6,6 @@
 
 - Added a `GetSchema` overload that gets a schema version using its group name, schema name, and version number.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.2.0 (2022-05-11)
 
 ### Features Added
