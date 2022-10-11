@@ -3,14 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq.Expressions;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory.Models;
-using static System.Net.WebRequestMethods;
 
 namespace Azure.ResourceManager.DataFactory
 {
@@ -20,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     /// <typeparam name="T"> Can be one of <see cref="string"/>, <see cref="bool"/>, <see cref="int"/>, <see cref="float"/>, <see cref="List{T}"/>. </typeparam>
 #pragma warning disable SA1649 // File name should match first type name
-    public class DataFactoryExpression<T> : DataFactoryExpression, IUtf8JsonSerializable
+    public class DataFactoryExpression<T> : IUtf8JsonSerializable
 #pragma warning restore SA1649 // File name should match first type name
     {
         private string _type;
@@ -31,6 +25,20 @@ namespace Azure.ResourceManager.DataFactory
         /// Gets whether this instance was constructed by a primitive value.
         /// </summary>
         public bool HasValue { get; }
+
+        /// <summary>
+        /// Gets the primitive value unless this instance is an expression.
+        /// </summary>
+        /// <exception cref="InvalidOperationException"> HasValue is false. </exception>
+        public T Value
+        {
+            get
+            {
+                if (HasValue)
+                    return _value;
+                throw new InvalidOperationException("Cannot get value from Expression.");
+            }
+        }
 
         internal DataFactoryExpression(Optional<T> value, string expression)
         {
@@ -55,23 +63,9 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary>
-        /// Gets the primitive value unless this instance is an expression.
-        /// </summary>
-        public bool TryGetValue(out T value)
-        {
-            value = default;
-            if (HasValue)
-            {
-                value = _value;
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>
         /// Converts a primitive value into a expression representing that value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataFactoryExpression<T>(T value) => new DataFactoryExpression<T>(value, null);
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
