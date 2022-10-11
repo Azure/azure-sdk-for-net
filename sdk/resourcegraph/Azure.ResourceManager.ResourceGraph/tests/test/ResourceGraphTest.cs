@@ -1,19 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ResourceGraph;
 using Azure.ResourceManager.ResourceGraph.Models;
 using Azure.ResourceManager.ResourceGraph.Tests;
-using Azure.ResourceManager.Resources;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.Management.ResourceGraph.Tests
@@ -81,10 +77,12 @@ namespace Azure.Management.ResourceGraph.Tests
             Assert.NotNull(response.Facets);
 
             //data columns
-            var table = response.Data.ToObjectFromJson<DataTable>();
+            //StreamReader reader = new StreamReader(response.Data.ToStream());
+            //string content = reader.ReadToEnd();
+            //var table = response.Data.ToObjectFromJson<Table>();
             //errot convert to table
-            Assert.NotNull(table);
         }
+
         [Test]
         public async Task ResourcesQueryOptionsTest()
         {
@@ -118,6 +116,7 @@ namespace Azure.Management.ResourceGraph.Tests
             Assert.AreEqual(1, list[0].Count);
             Assert.AreEqual(((JsonElement)list[0]["id"]).ValueKind, JsonValueKind.String);
         }
+
         [Test]
         public async Task ResourcesFacetQueryAsyncTest()
         {
@@ -160,7 +159,134 @@ namespace Azure.Management.ResourceGraph.Tests
             Assert.NotNull(response.Data);
             Assert.NotNull(response.Facets);
             Assert.AreEqual(2, response.Facets.Count);
+
+            //Valid facet fields
+            var result = (FacetResult)response.Facets[0];
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, result.TotalRecords);
+            Assert.AreEqual(validExpression, result.Expression);
+
+            // Valid facet data
+            var result_data = result.Data.ToObjectFromJson<IList<IDictionary<string, object>>>();
+            Assert.IsNotNull(result_data);
+            Assert.AreEqual(2, result_data.Count);
+            Assert.AreEqual(2, result_data[0].Count);
+            Assert.AreEqual(result_data[0]["location"].GetType().ToString(), "System.String");
+            Assert.AreEqual(result_data[1]["count"].GetType().ToString(), "System.Int64");
+
+            //invalid facet
+            FacetError error = (FacetError)response.Facets[1];
+            Assert.IsNotNull(error);
+            Assert.AreEqual(invalidExpression, error.Expression);
+            Assert.NotNull(error.Errors);
+            Assert.IsTrue(error.Errors.Count >= 1 && error.Errors.Count <= int.MaxValue);
+            Assert.NotNull(error.Errors[0].Code);
+            Assert.NotNull(error.Errors[1].Code);
         }
+
+        [Test]
+        public async Task ResourcesMalformedQueryAsyncTest()
+        {
+            var tenantsCollection = Client.GetTenants();
+            var tenantList = await tenantsCollection.GetAllAsync().ToEnumerableAsync();
+            var item = tenantList.FirstOrDefault();
+            var query = new QueryContent("project id, location | where where")
+            {
+                Subscriptions = { DefaultSubscription.Data.SubscriptionId }
+            };
+            //where to put await
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await item.ResourcesAsync(query); });
+            Assert.IsNotNull(exception);
+        }
+
+        [Test]
+        public async Task ResourcesTenantLevelQueryAsyncTest()
+        {
+            var tenantsCollection = Client.GetTenants();
+            var tenantList = await tenantsCollection.GetAllAsync().ToEnumerableAsync();
+            var item = tenantList.FirstOrDefault();
+            var query = new QueryContent("project id, tags, properties | limit 2");
+
+            var response = (await item.ResourcesAsync(query)).Value;
+            // Top-level response fields
+            Assert.AreEqual(2, response.Count);
+            Assert.AreEqual(2, response.TotalRecords);
+            Assert.NotNull(response.SkipToken);
+            Assert.AreEqual(response.ResultTruncated, ResultTruncated.False);
+            Assert.NotNull(response.Data);
+            Assert.NotNull(response.Facets);
+
+            //Data
+            var list = response.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
+            Assert.IsNotNull(list);
+            Assert.AreEqual(2, list.Count);
+            Assert.AreEqual(3, list[0].Count);
+            Assert.AreEqual(((JsonElement)list[0]["id"]).ValueKind, JsonValueKind.String);
+            Assert.AreEqual(((JsonElement)list[0]["tags"]).ValueKind, JsonValueKind.Object);
+            Assert.AreEqual(((JsonElement)list[0]["properties"]).ValueKind, JsonValueKind.Object);
+        }
+
+        [Test]
+        public async Task ResourcesManagementGroupLevelQueryAsyncTest()
+        {
+            var tenantsCollection = Client.GetTenants();
+            var tenantList = await tenantsCollection.GetAllAsync().ToEnumerableAsync();
+            var item = tenantList.FirstOrDefault();
+            var query = new QueryContent("project id, tags, properties | limit 2")
+            {
+                ManagementGroups = { "91f5d6bc-f464-8343-5e53-3c3e3f99e5c4" }
+            };
+
+            var response = (await item.ResourcesAsync(query)).Value;
+            // Top-level response fields
+            Assert.AreEqual(2, response.Count);
+            Assert.AreEqual(2, response.TotalRecords);
+            Assert.NotNull(response.SkipToken);
+            Assert.AreEqual(response.ResultTruncated, ResultTruncated.False);
+            Assert.NotNull(response.Data);
+            Assert.NotNull(response.Facets);
+
+            //Data
+            var list = response.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
+            Assert.IsNotNull(list);
+            Assert.AreEqual(2, list.Count);
+            Assert.AreEqual(3, list[0].Count);
+            Assert.AreEqual(((JsonElement)list[0]["id"]).ValueKind, JsonValueKind.String);
+            Assert.AreEqual(((JsonElement)list[0]["tags"]).ValueKind, JsonValueKind.Object);
+            Assert.AreEqual(((JsonElement)list[0]["properties"]).ValueKind, JsonValueKind.Object);
+        }
+
+        [Test]
+        public async Task ResourcesMultiManagementGroupsLevelQueryTest()
+        {
+            var tenantsCollection = Client.GetTenants();
+            var tenantList = await tenantsCollection.GetAllAsync().ToEnumerableAsync();
+            var item = tenantList.FirstOrDefault();
+            var query = new QueryContent("project id, tags, properties | limit 2")
+            {
+                ManagementGroups = { "91f5d6bc-f464-8343-5e53-3c3e3f99e5c4", "makharchMg" }
+            };
+
+            var response = (await item.ResourcesAsync(query)).Value;
+            // Top-level response fields
+            Assert.AreEqual(2, response.Count);
+            Assert.AreEqual(2, response.TotalRecords);
+            Assert.NotNull(response.SkipToken);
+            Assert.AreEqual(response.ResultTruncated, ResultTruncated.False);
+            Assert.NotNull(response.Data);
+            Assert.NotNull(response.Facets);
+
+            //Data
+            var list = response.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
+            Assert.IsNotNull(list);
+            Assert.AreEqual(2, list.Count);
+            Assert.AreEqual(3, list[0].Count);
+            Assert.AreEqual(((JsonElement)list[0]["id"]).ValueKind, JsonValueKind.String);
+            Assert.AreEqual(((JsonElement)list[0]["tags"]).ValueKind, JsonValueKind.Object);
+            Assert.AreEqual(((JsonElement)list[0]["properties"]).ValueKind, JsonValueKind.Object);
+        }
+
         [Test]
         public async Task ResourceHistoryAsync()
         {
