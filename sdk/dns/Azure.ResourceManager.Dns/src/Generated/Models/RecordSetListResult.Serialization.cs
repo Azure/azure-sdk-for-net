@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Dns.Models
                     List<RecordSeriesData> array = new List<RecordSeriesData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecordSeriesData.DeserializeRecordData(item));
+                        array.Add(RecordSeriesData.DeserializeRecordSeriesData(item));
                     }
                     value = array;
                     continue;
