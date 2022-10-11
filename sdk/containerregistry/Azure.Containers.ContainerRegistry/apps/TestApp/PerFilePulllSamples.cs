@@ -7,7 +7,7 @@ using Azure.Containers.ContainerRegistry.Specialized;
 
 namespace TestApp
 {
-    public class Helper
+    public class PerFilePulllSamples
     {
         public static async Task PullTestAsync(ContainerRegistryBlobClient client)
         {
@@ -38,7 +38,7 @@ namespace TestApp
             // Write Layers
             foreach (var layerFile in manifest.Layers)
             {
-                string fileName = Path.Combine(path, Helper.TrimSha(layerFile.Digest));
+                string fileName = Path.Combine(path, OciBlobDescriptor.TrimSha(layerFile.Digest));
 
                 using (FileStream fs = File.Create(fileName))
                 {
@@ -79,7 +79,7 @@ namespace TestApp
             // Write Layers
             foreach (var layerFile in manifest.Layers)
             {
-                string fileName = Path.Combine(path, TrimSha(layerFile.Digest));
+                string fileName = Path.Combine(path, OciBlobDescriptor.TrimSha(layerFile.Digest));
 
                 using (FileStream fs = File.Create(fileName))
                 {
@@ -93,16 +93,6 @@ namespace TestApp
                     await response0_14.Content.ToStream().CopyToAsync(fs);
                 }
             }
-        }
-
-        private static string TrimSha(string digest)
-        {
-            int index = digest.IndexOf(':');
-            if (index > -1)
-            {
-                return digest.Substring(index + 1);
-            }
-            return digest;
         }
     }
 }

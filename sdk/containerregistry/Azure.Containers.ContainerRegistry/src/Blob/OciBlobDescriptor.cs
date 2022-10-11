@@ -23,6 +23,23 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <summary> Additional information provided through arbitrary metadata. </summary>
         public OciAnnotations Annotations { get; set; }
 
+        /// <summary>
+        /// Trim the algorithm prefix off the digest string.
+        /// See https://docs.docker.com/registry/spec/api/#content-digests
+        /// for details of the digest grammar.
+        /// </summary>
+        /// <param name="digest">The blob digest.</param>
+        /// <returns>The hex portion of the digest.</returns>
+        public static string TrimSha(string digest)
+        {
+            int index = digest.IndexOf(':');
+            if (index > -1)
+            {
+                return digest.Substring(index + 1);
+            }
+            return digest;
+        }
+
         /// <summary> Specifies a list of URIs from which this object may be downloaded. </summary>
         internal IList<Uri> Urls { get; }
 
