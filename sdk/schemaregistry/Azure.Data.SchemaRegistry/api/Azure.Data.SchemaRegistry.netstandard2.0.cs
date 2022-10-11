@@ -5,6 +5,7 @@ namespace Azure.Data.SchemaRegistry
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
+        public SchemaFormat(Azure.Core.ContentType contentType) { throw null; }
         public SchemaFormat(string value) { throw null; }
         public static Azure.Data.SchemaRegistry.SchemaFormat Avro { get { throw null; } }
         public static Azure.Data.SchemaRegistry.SchemaFormat Custom { get { throw null; } }
