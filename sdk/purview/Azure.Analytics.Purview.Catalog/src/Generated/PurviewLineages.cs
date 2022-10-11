@@ -13,7 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
-    /// <summary> The PurviewLineages service client. </summary>
+    // Data plane generated sub-client. The PurviewLineages sub-client.
+    /// <summary> The PurviewLineages sub-client. </summary>
     public partial class PurviewLineages
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
@@ -82,13 +83,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -97,6 +92,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("isIncomplete").ToString());
@@ -113,6 +111,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("widthCounts").GetProperty("<test>").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("lineageDepth").ToString());
         /// Console.WriteLine(result.GetProperty("lineageWidth").ToString());
@@ -213,13 +214,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -228,6 +223,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("isIncomplete").ToString());
@@ -244,6 +242,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("widthCounts").GetProperty("<test>").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("lineageDepth").ToString());
         /// Console.WriteLine(result.GetProperty("lineageWidth").ToString());
@@ -343,13 +344,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -358,6 +353,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("isIncomplete").ToString());
@@ -374,6 +372,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("widthCounts").GetProperty("<test>").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("lineageDepth").ToString());
         /// Console.WriteLine(result.GetProperty("lineageWidth").ToString());
@@ -473,13 +474,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -488,6 +483,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("isIncomplete").ToString());
@@ -504,6 +502,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("widthCounts").GetProperty("<test>").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("lineageDepth").ToString());
         /// Console.WriteLine(result.GetProperty("lineageWidth").ToString());
@@ -612,13 +613,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -627,6 +622,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("isIncomplete").ToString());
@@ -643,6 +641,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("widthCounts").GetProperty("<test>").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("lineageDepth").ToString());
         /// Console.WriteLine(result.GetProperty("lineageWidth").ToString());
@@ -751,13 +752,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -766,6 +761,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("isIncomplete").ToString());
@@ -782,6 +780,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("widthCounts").GetProperty("<test>").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("lineageDepth").ToString());
         /// Console.WriteLine(result.GetProperty("lineageWidth").ToString());

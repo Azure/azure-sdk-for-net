@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> A valid instance SKU. </param>
-        /// <param name="identity"> The managed identities for the IoT Central application. </param>
+        /// <param name="identity"> The managed identities for the IoT Central application. Current supported identity types: None, SystemAssigned. </param>
         /// <param name="provisioningState"> The provisioning state of the application. </param>
         /// <param name="applicationId"> The ID of the application. </param>
         /// <param name="displayName"> The display name of the application. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="publicNetworkAccess"> Whether requests from the public network are allowed. </param>
         /// <param name="networkRuleSets"> Network Rule Set Properties of this IoT Central application. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections created on this IoT Central application. </param>
-        internal IotCentralAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IotCentralAppSkuInfo sku, SystemAssignedServiceIdentity identity, IotCentralProvisioningState? provisioningState, Guid? applicationId, string displayName, string subdomain, string template, IotCentralAppState? state, IotCentralPublicNetworkAccess? publicNetworkAccess, IotCentralNetworkRuleSets networkRuleSets, IReadOnlyList<IotCentralPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        internal IotCentralAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IotCentralAppSkuInfo sku, ManagedServiceIdentity identity, IotCentralProvisioningState? provisioningState, Guid? applicationId, string displayName, string subdomain, string template, IotCentralAppState? state, IotCentralPublicNetworkAccess? publicNetworkAccess, IotCentralNetworkRuleSets networkRuleSets, IReadOnlyList<IotCentralPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.IotCentral
             }
         }
 
-        /// <summary> The managed identities for the IoT Central application. </summary>
-        public SystemAssignedServiceIdentity Identity { get; set; }
+        /// <summary> The managed identities for the IoT Central application. Current supported identity types: None, SystemAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The provisioning state of the application. </summary>
         public IotCentralProvisioningState? ProvisioningState { get; }
         /// <summary> The ID of the application. </summary>

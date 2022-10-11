@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Share
 {
+    // Data plane generated client. The Assets service client.
     /// <summary> The Assets service client. </summary>
     public partial class AssetsClient
     {
@@ -79,10 +80,10 @@ namespace Azure.Analytics.Purview.Share
         /// Response response = await client.GetAssetAsync("<sentShareName>", "<assetName>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -95,10 +96,6 @@ namespace Azure.Analytics.Purview.Share
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AdlsGen2AccountAsset</summary>Schema for <c>AdlsGen2AccountAsset</c>:
         /// <code>{
-        ///   kind: AdlsGen2Account, # Required. The types of asset.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     location: string, # Optional. Location of the adls gen2 storage account.
         ///     paths: [
@@ -112,15 +109,15 @@ namespace Azure.Analytics.Purview.Share
         ///     receiverAssetName: string, # Required. Name of the asset for the receiver.
         ///     storageAccountResourceId: string, # Required. Resource id of the adls gen2 storage account.
         ///   }, # Required. Adls gen 2 account asset properties
+        ///   kind: AdlsGen2Account, # Required. The types of asset.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAsset</summary>Schema for <c>BlobAccountAsset</c>:
         /// <code>{
-        ///   kind: BlobAccount, # Required. The types of asset.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     location: string, # Optional. Location of the blob storage account.
         ///     paths: [
@@ -134,6 +131,10 @@ namespace Azure.Analytics.Purview.Share
         ///     receiverAssetName: string, # Required. Name of the asset for the receiver.
         ///     storageAccountResourceId: string, # Required. Resource id of the blob storage account.
         ///   }, # Required. Blob storage account asset properties
+        ///   kind: BlobAccount, # Required. The types of asset.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -176,10 +177,10 @@ namespace Azure.Analytics.Purview.Share
         /// Response response = client.GetAsset("<sentShareName>", "<assetName>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -192,10 +193,6 @@ namespace Azure.Analytics.Purview.Share
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AdlsGen2AccountAsset</summary>Schema for <c>AdlsGen2AccountAsset</c>:
         /// <code>{
-        ///   kind: AdlsGen2Account, # Required. The types of asset.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     location: string, # Optional. Location of the adls gen2 storage account.
         ///     paths: [
@@ -209,15 +206,15 @@ namespace Azure.Analytics.Purview.Share
         ///     receiverAssetName: string, # Required. Name of the asset for the receiver.
         ///     storageAccountResourceId: string, # Required. Resource id of the adls gen2 storage account.
         ///   }, # Required. Adls gen 2 account asset properties
+        ///   kind: AdlsGen2Account, # Required. The types of asset.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAsset</summary>Schema for <c>BlobAccountAsset</c>:
         /// <code>{
-        ///   kind: BlobAccount, # Required. The types of asset.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     location: string, # Optional. Location of the blob storage account.
         ///     paths: [
@@ -231,6 +228,10 @@ namespace Azure.Analytics.Purview.Share
         ///     receiverAssetName: string, # Required. Name of the asset for the receiver.
         ///     storageAccountResourceId: string, # Required. Resource id of the blob storage account.
         ///   }, # Required. Blob storage account asset properties
+        ///   kind: BlobAccount, # Required. The types of asset.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -275,6 +276,7 @@ namespace Azure.Analytics.Purview.Share
         /// await foreach (var data in client.GetAssetsAsync("<sentShareName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
@@ -286,10 +288,10 @@ namespace Azure.Analytics.Purview.Share
         /// await foreach (var data in client.GetAssetsAsync("<sentShareName>", "<skipToken>", "<filter>", "<orderby>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -302,10 +304,10 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// Schema for <c>AssetListValue</c>:
         /// <code>{
+        ///   kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
         ///   id: string, # Optional. The resource id of the resource.
         ///   name: string, # Optional. Name of the resource.
         ///   type: string, # Optional. Type of the resource.
-        ///   kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
         /// }
         /// </code>
         /// 
@@ -353,6 +355,7 @@ namespace Azure.Analytics.Purview.Share
         /// foreach (var data in client.GetAssets("<sentShareName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
@@ -364,10 +367,10 @@ namespace Azure.Analytics.Purview.Share
         /// foreach (var data in client.GetAssets("<sentShareName>", "<skipToken>", "<filter>", "<orderby>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -380,10 +383,10 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// Schema for <c>AssetListValue</c>:
         /// <code>{
+        ///   kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
         ///   id: string, # Optional. The resource id of the resource.
         ///   name: string, # Optional. Name of the resource.
         ///   type: string, # Optional. Type of the resource.
-        ///   kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
         /// }
         /// </code>
         /// 
@@ -429,28 +432,28 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new AssetsClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     kind = "AdlsGen2Account",
         ///     properties = new {
         ///         paths = new[] {
         ///             new {
-        ///                 containerName = "<StorageAccountPathContainerName>",
-        ///                 receiverPath = "<StorageAccountPathReceiverPath>",
-        ///                 senderPath = "<StorageAccountPathSenderPath>",
+        ///                 containerName = "<containerName>",
+        ///                 receiverPath = "<receiverPath>",
+        ///                 senderPath = "<senderPath>",
         ///             }
         ///         },
-        ///         receiverAssetName = "<AdlsGen2AccountAssetPropertiesReceiverAssetName>",
-        ///         storageAccountResourceId = "<AdlsGen2AccountAssetPropertiesStorageAccountResourceId>",
+        ///         receiverAssetName = "<receiverAssetName>",
+        ///         storageAccountResourceId = "<storageAccountResourceId>",
         ///     },
+        ///     kind = "AdlsGen2Account",
         /// };
         /// 
         /// var operation = await client.CreateAsync(WaitUntil.Completed, "<sentShareName>", "<assetName>", RequestContent.Create(data));
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -463,10 +466,6 @@ namespace Azure.Analytics.Purview.Share
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AdlsGen2AccountAsset</summary>Schema for <c>AdlsGen2AccountAsset</c>:
         /// <code>{
-        ///   kind: AdlsGen2Account, # Required. The types of asset.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     location: string, # Optional. Location of the adls gen2 storage account.
         ///     paths: [
@@ -480,15 +479,15 @@ namespace Azure.Analytics.Purview.Share
         ///     receiverAssetName: string, # Required. Name of the asset for the receiver.
         ///     storageAccountResourceId: string, # Required. Resource id of the adls gen2 storage account.
         ///   }, # Required. Adls gen 2 account asset properties
+        ///   kind: AdlsGen2Account, # Required. The types of asset.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAsset</summary>Schema for <c>BlobAccountAsset</c>:
         /// <code>{
-        ///   kind: BlobAccount, # Required. The types of asset.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     location: string, # Optional. Location of the blob storage account.
         ///     paths: [
@@ -502,6 +501,10 @@ namespace Azure.Analytics.Purview.Share
         ///     receiverAssetName: string, # Required. Name of the asset for the receiver.
         ///     storageAccountResourceId: string, # Required. Resource id of the blob storage account.
         ///   }, # Required. Blob storage account asset properties
+        ///   kind: BlobAccount, # Required. The types of asset.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -512,10 +515,6 @@ namespace Azure.Analytics.Purview.Share
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AdlsGen2AccountAsset</summary>Schema for <c>AdlsGen2AccountAsset</c>:
         /// <code>{
-        ///   kind: AdlsGen2Account, # Required. The types of asset.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     location: string, # Optional. Location of the adls gen2 storage account.
         ///     paths: [
@@ -529,15 +528,15 @@ namespace Azure.Analytics.Purview.Share
         ///     receiverAssetName: string, # Required. Name of the asset for the receiver.
         ///     storageAccountResourceId: string, # Required. Resource id of the adls gen2 storage account.
         ///   }, # Required. Adls gen 2 account asset properties
+        ///   kind: AdlsGen2Account, # Required. The types of asset.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAsset</summary>Schema for <c>BlobAccountAsset</c>:
         /// <code>{
-        ///   kind: BlobAccount, # Required. The types of asset.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     location: string, # Optional. Location of the blob storage account.
         ///     paths: [
@@ -551,6 +550,10 @@ namespace Azure.Analytics.Purview.Share
         ///     receiverAssetName: string, # Required. Name of the asset for the receiver.
         ///     storageAccountResourceId: string, # Required. Resource id of the blob storage account.
         ///   }, # Required. Blob storage account asset properties
+        ///   kind: BlobAccount, # Required. The types of asset.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -594,28 +597,28 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new AssetsClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     kind = "AdlsGen2Account",
         ///     properties = new {
         ///         paths = new[] {
         ///             new {
-        ///                 containerName = "<StorageAccountPathContainerName>",
-        ///                 receiverPath = "<StorageAccountPathReceiverPath>",
-        ///                 senderPath = "<StorageAccountPathSenderPath>",
+        ///                 containerName = "<containerName>",
+        ///                 receiverPath = "<receiverPath>",
+        ///                 senderPath = "<senderPath>",
         ///             }
         ///         },
-        ///         receiverAssetName = "<AdlsGen2AccountAssetPropertiesReceiverAssetName>",
-        ///         storageAccountResourceId = "<AdlsGen2AccountAssetPropertiesStorageAccountResourceId>",
+        ///         receiverAssetName = "<receiverAssetName>",
+        ///         storageAccountResourceId = "<storageAccountResourceId>",
         ///     },
+        ///     kind = "AdlsGen2Account",
         /// };
         /// 
         /// var operation = client.Create(WaitUntil.Completed, "<sentShareName>", "<assetName>", RequestContent.Create(data));
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -628,10 +631,6 @@ namespace Azure.Analytics.Purview.Share
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AdlsGen2AccountAsset</summary>Schema for <c>AdlsGen2AccountAsset</c>:
         /// <code>{
-        ///   kind: AdlsGen2Account, # Required. The types of asset.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     location: string, # Optional. Location of the adls gen2 storage account.
         ///     paths: [
@@ -645,15 +644,15 @@ namespace Azure.Analytics.Purview.Share
         ///     receiverAssetName: string, # Required. Name of the asset for the receiver.
         ///     storageAccountResourceId: string, # Required. Resource id of the adls gen2 storage account.
         ///   }, # Required. Adls gen 2 account asset properties
+        ///   kind: AdlsGen2Account, # Required. The types of asset.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAsset</summary>Schema for <c>BlobAccountAsset</c>:
         /// <code>{
-        ///   kind: BlobAccount, # Required. The types of asset.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     location: string, # Optional. Location of the blob storage account.
         ///     paths: [
@@ -667,6 +666,10 @@ namespace Azure.Analytics.Purview.Share
         ///     receiverAssetName: string, # Required. Name of the asset for the receiver.
         ///     storageAccountResourceId: string, # Required. Resource id of the blob storage account.
         ///   }, # Required. Blob storage account asset properties
+        ///   kind: BlobAccount, # Required. The types of asset.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -677,10 +680,6 @@ namespace Azure.Analytics.Purview.Share
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AdlsGen2AccountAsset</summary>Schema for <c>AdlsGen2AccountAsset</c>:
         /// <code>{
-        ///   kind: AdlsGen2Account, # Required. The types of asset.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     location: string, # Optional. Location of the adls gen2 storage account.
         ///     paths: [
@@ -694,15 +693,15 @@ namespace Azure.Analytics.Purview.Share
         ///     receiverAssetName: string, # Required. Name of the asset for the receiver.
         ///     storageAccountResourceId: string, # Required. Resource id of the adls gen2 storage account.
         ///   }, # Required. Adls gen 2 account asset properties
+        ///   kind: AdlsGen2Account, # Required. The types of asset.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAsset</summary>Schema for <c>BlobAccountAsset</c>:
         /// <code>{
-        ///   kind: BlobAccount, # Required. The types of asset.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     location: string, # Optional. Location of the blob storage account.
         ///     paths: [
@@ -716,6 +715,10 @@ namespace Azure.Analytics.Purview.Share
         ///     receiverAssetName: string, # Required. Name of the asset for the receiver.
         ///     storageAccountResourceId: string, # Required. Resource id of the blob storage account.
         ///   }, # Required. Blob storage account asset properties
+        ///   kind: BlobAccount, # Required. The types of asset.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>

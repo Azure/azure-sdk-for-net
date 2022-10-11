@@ -13,7 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Account
 {
-    /// <summary> The PurviewResourceSetRule service client. </summary>
+    // Data plane generated sub-client. The PurviewResourceSetRule sub-client.
+    /// <summary> The PurviewResourceSetRule sub-client. </summary>
     public partial class PurviewResourceSetRule
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
@@ -512,46 +513,46 @@ namespace Azure.Analytics.Purview.Account
         /// 
         /// var data = new {
         ///     advancedResourceSet = new {
-        ///         modifiedAt = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///         resourceSetProcessing = "<Default>",
+        ///         modifiedAt = "2022-05-10T18:57:31.2311892Z",
+        ///         resourceSetProcessing = "Default",
         ///     },
         ///     pathPatternConfig = new {
         ///         acceptedPatterns = new[] {
         ///             new {
-        ///                 createdBy = "<AzureDataCatalog>",
-        ///                 filterType = "<Pattern>",
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 modifiedBy = "<AzureDataCatalog>",
-        ///                 name = "<FilterName>",
-        ///                 path = "<FilterPath>",
+        ///                 createdBy = "<createdBy>",
+        ///                 filterType = "Pattern",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 path = "<path>",
         ///             }
         ///         },
         ///         complexReplacers = new[] {
         ///             new {
-        ///                 createdBy = "<ComplexReplacerConfigCreatedBy>",
-        ///                 description = "<ComplexReplacerConfigDescription>",
+        ///                 createdBy = "<createdBy>",
+        ///                 description = "<description>",
         ///                 disabled = true,
         ///                 disableRecursiveReplacerApplication = true,
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 modifiedBy = "<ComplexReplacerConfigModifiedBy>",
-        ///                 name = "<ComplexReplacerConfigName>",
-        ///                 typeName = "<ComplexReplacerConfigTypeName>",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 typeName = "<typeName>",
         ///             }
         ///         },
-        ///         createdBy = "<PathPatternExtractorConfigCreatedBy>",
+        ///         createdBy = "<createdBy>",
         ///         enableDefaultPatterns = true,
-        ///         lastUpdatedTimestamp = 1234,
-        ///         modifiedBy = "<AzureDataCatalog>",
+        ///         lastUpdatedTimestamp = 1234L,
+        ///         modifiedBy = "<modifiedBy>",
         ///         normalizationRules = new[] {
         ///             new {
-        ///                 description = "<NormalizationRuleDescription>",
+        ///                 description = "<description>",
         ///                 disabled = true,
         ///                 dynamicReplacement = true,
         ///                 entityTypes = new[] {
-        ///                     "<NormalizationRuleEntityTypesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 name = "<NormalizationRuleName>",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 name = "<name>",
         ///                 regex = new {
         ///                     maxDigits = 1234,
         ///                     maxLetters = 1234,
@@ -563,17 +564,17 @@ namespace Azure.Analytics.Purview.Account
         ///                     minLetters = 1234,
         ///                     minUnderscores = 1234,
         ///                     options = 1234,
-        ///                     regexStr = "<FastRegexStr>",
+        ///                     regexStr = "<regexStr>",
         ///                 },
-        ///                 replaceWith = "<NormalizationRuleReplaceWith>",
-        ///                 version = 1234,
+        ///                 replaceWith = "<replaceWith>",
+        ///                 version = 123.45d,
         ///             }
         ///         },
         ///         regexReplacers = new[] {
         ///             new {
-        ///                 condition = "<RegexReplacerCondition>",
-        ///                 createdBy = "<AzureDataCatalog>",
-        ///                 description = "<RegexReplacerDescription>",
+        ///                 condition = "<condition>",
+        ///                 createdBy = "<createdBy>",
+        ///                 description = "<description>",
         ///                 disabled = true,
         ///                 disableRecursiveReplacerApplication = true,
         ///                 doNotReplaceRegex = new {
@@ -587,11 +588,11 @@ namespace Azure.Analytics.Purview.Account
         ///                     minLetters = 1234,
         ///                     minUnderscores = 1234,
         ///                     options = 1234,
-        ///                     regexStr = "<FastRegexStr>",
+        ///                     regexStr = "<regexStr>",
         ///                 },
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 modifiedBy = "<AzureDataCatalog>",
-        ///                 name = "<RegexReplacerName>",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
         ///                 regex = new {
         ///                     maxDigits = 1234,
         ///                     maxLetters = 1234,
@@ -603,37 +604,37 @@ namespace Azure.Analytics.Purview.Account
         ///                     minLetters = 1234,
         ///                     minUnderscores = 1234,
         ///                     options = 1234,
-        ///                     regexStr = "<FastRegexStr>",
+        ///                     regexStr = "<regexStr>",
         ///                 },
-        ///                 replaceWith = "<RegexReplacerReplaceWith>",
+        ///                 replaceWith = "<replaceWith>",
         ///             }
         ///         },
         ///         rejectedPatterns = new[] {
         ///             new {
-        ///                 createdBy = "<AzureDataCatalog>",
-        ///                 filterType = "<Pattern>",
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 modifiedBy = "<AzureDataCatalog>",
-        ///                 name = "<FilterName>",
-        ///                 path = "<FilterPath>",
+        ///                 createdBy = "<createdBy>",
+        ///                 filterType = "Pattern",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 path = "<path>",
         ///             }
         ///         },
         ///         scopedRules = new[] {
         ///             new {
-        ///                 bindingUrl = "<ScopedRuleBindingUrl>",
+        ///                 bindingUrl = "<bindingUrl>",
         ///                 rules = new[] {
         ///                     new {
-        ///                         displayName = "<RuleDisplayName>",
+        ///                         displayName = "<displayName>",
         ///                         isResourceSet = true,
-        ///                         lastUpdatedTimestamp = 1234,
-        ///                         name = "<RuleName>",
-        ///                         qualifiedName = "<RuleQualifiedName>",
+        ///                         lastUpdatedTimestamp = 1234L,
+        ///                         name = "<name>",
+        ///                         qualifiedName = "<qualifiedName>",
         ///                     }
         ///                 },
-        ///                 storeType = "<ScopedRuleStoreType>",
+        ///                 storeType = "<storeType>",
         ///             }
         ///         },
-        ///         version = 0,
+        ///         version = 1234,
         ///     },
         /// };
         /// 
@@ -971,46 +972,46 @@ namespace Azure.Analytics.Purview.Account
         /// 
         /// var data = new {
         ///     advancedResourceSet = new {
-        ///         modifiedAt = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///         resourceSetProcessing = "<Default>",
+        ///         modifiedAt = "2022-05-10T18:57:31.2311892Z",
+        ///         resourceSetProcessing = "Default",
         ///     },
         ///     pathPatternConfig = new {
         ///         acceptedPatterns = new[] {
         ///             new {
-        ///                 createdBy = "<AzureDataCatalog>",
-        ///                 filterType = "<Pattern>",
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 modifiedBy = "<AzureDataCatalog>",
-        ///                 name = "<FilterName>",
-        ///                 path = "<FilterPath>",
+        ///                 createdBy = "<createdBy>",
+        ///                 filterType = "Pattern",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 path = "<path>",
         ///             }
         ///         },
         ///         complexReplacers = new[] {
         ///             new {
-        ///                 createdBy = "<ComplexReplacerConfigCreatedBy>",
-        ///                 description = "<ComplexReplacerConfigDescription>",
+        ///                 createdBy = "<createdBy>",
+        ///                 description = "<description>",
         ///                 disabled = true,
         ///                 disableRecursiveReplacerApplication = true,
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 modifiedBy = "<ComplexReplacerConfigModifiedBy>",
-        ///                 name = "<ComplexReplacerConfigName>",
-        ///                 typeName = "<ComplexReplacerConfigTypeName>",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 typeName = "<typeName>",
         ///             }
         ///         },
-        ///         createdBy = "<PathPatternExtractorConfigCreatedBy>",
+        ///         createdBy = "<createdBy>",
         ///         enableDefaultPatterns = true,
-        ///         lastUpdatedTimestamp = 1234,
-        ///         modifiedBy = "<AzureDataCatalog>",
+        ///         lastUpdatedTimestamp = 1234L,
+        ///         modifiedBy = "<modifiedBy>",
         ///         normalizationRules = new[] {
         ///             new {
-        ///                 description = "<NormalizationRuleDescription>",
+        ///                 description = "<description>",
         ///                 disabled = true,
         ///                 dynamicReplacement = true,
         ///                 entityTypes = new[] {
-        ///                     "<NormalizationRuleEntityTypesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 name = "<NormalizationRuleName>",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 name = "<name>",
         ///                 regex = new {
         ///                     maxDigits = 1234,
         ///                     maxLetters = 1234,
@@ -1022,17 +1023,17 @@ namespace Azure.Analytics.Purview.Account
         ///                     minLetters = 1234,
         ///                     minUnderscores = 1234,
         ///                     options = 1234,
-        ///                     regexStr = "<FastRegexStr>",
+        ///                     regexStr = "<regexStr>",
         ///                 },
-        ///                 replaceWith = "<NormalizationRuleReplaceWith>",
-        ///                 version = 1234,
+        ///                 replaceWith = "<replaceWith>",
+        ///                 version = 123.45d,
         ///             }
         ///         },
         ///         regexReplacers = new[] {
         ///             new {
-        ///                 condition = "<RegexReplacerCondition>",
-        ///                 createdBy = "<AzureDataCatalog>",
-        ///                 description = "<RegexReplacerDescription>",
+        ///                 condition = "<condition>",
+        ///                 createdBy = "<createdBy>",
+        ///                 description = "<description>",
         ///                 disabled = true,
         ///                 disableRecursiveReplacerApplication = true,
         ///                 doNotReplaceRegex = new {
@@ -1046,11 +1047,11 @@ namespace Azure.Analytics.Purview.Account
         ///                     minLetters = 1234,
         ///                     minUnderscores = 1234,
         ///                     options = 1234,
-        ///                     regexStr = "<FastRegexStr>",
+        ///                     regexStr = "<regexStr>",
         ///                 },
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 modifiedBy = "<AzureDataCatalog>",
-        ///                 name = "<RegexReplacerName>",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
         ///                 regex = new {
         ///                     maxDigits = 1234,
         ///                     maxLetters = 1234,
@@ -1062,37 +1063,37 @@ namespace Azure.Analytics.Purview.Account
         ///                     minLetters = 1234,
         ///                     minUnderscores = 1234,
         ///                     options = 1234,
-        ///                     regexStr = "<FastRegexStr>",
+        ///                     regexStr = "<regexStr>",
         ///                 },
-        ///                 replaceWith = "<RegexReplacerReplaceWith>",
+        ///                 replaceWith = "<replaceWith>",
         ///             }
         ///         },
         ///         rejectedPatterns = new[] {
         ///             new {
-        ///                 createdBy = "<AzureDataCatalog>",
-        ///                 filterType = "<Pattern>",
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 modifiedBy = "<AzureDataCatalog>",
-        ///                 name = "<FilterName>",
-        ///                 path = "<FilterPath>",
+        ///                 createdBy = "<createdBy>",
+        ///                 filterType = "Pattern",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 path = "<path>",
         ///             }
         ///         },
         ///         scopedRules = new[] {
         ///             new {
-        ///                 bindingUrl = "<ScopedRuleBindingUrl>",
+        ///                 bindingUrl = "<bindingUrl>",
         ///                 rules = new[] {
         ///                     new {
-        ///                         displayName = "<RuleDisplayName>",
+        ///                         displayName = "<displayName>",
         ///                         isResourceSet = true,
-        ///                         lastUpdatedTimestamp = 1234,
-        ///                         name = "<RuleName>",
-        ///                         qualifiedName = "<RuleQualifiedName>",
+        ///                         lastUpdatedTimestamp = 1234L,
+        ///                         name = "<name>",
+        ///                         qualifiedName = "<qualifiedName>",
         ///                     }
         ///                 },
-        ///                 storeType = "<ScopedRuleStoreType>",
+        ///                 storeType = "<storeType>",
         ///             }
         ///         },
-        ///         version = 0,
+        ///         version = 1234,
         ///     },
         /// };
         /// 

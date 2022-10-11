@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Describes the settings to produce a JPEG image from the input video. </summary>
-    public partial class JpgLayer : Layer
+    public partial class JpgLayer : MediaLayerBase
     {
         /// <summary> Initializes a new instance of JpgLayer. </summary>
         public JpgLayer()

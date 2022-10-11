@@ -16,6 +16,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Determines whether direct access is enabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsDirectAccessEnabled { get; set; }
     }
 }

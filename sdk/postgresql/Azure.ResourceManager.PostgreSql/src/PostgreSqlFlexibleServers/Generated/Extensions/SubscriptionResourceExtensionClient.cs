@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _serverClientDiagnostics;
-        private ServersRestOperations _serverRestClient;
+        private ClientDiagnostics _postgreSqlFlexibleServerServersClientDiagnostics;
+        private ServersRestOperations _postgreSqlFlexibleServerServersRestClient;
         private ClientDiagnostics _checkNameAvailabilityClientDiagnostics;
         private CheckNameAvailabilityRestOperations _checkNameAvailabilityRestClient;
         private ClientDiagnostics _locationBasedCapabilitiesClientDiagnostics;
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
         }
 
-        private ClientDiagnostics ServerClientDiagnostics => _serverClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ServerResource.ResourceType.Namespace, Diagnostics);
-        private ServersRestOperations ServerRestClient => _serverRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ServerResource.ResourceType));
+        private ClientDiagnostics PostgreSqlFlexibleServerServersClientDiagnostics => _postgreSqlFlexibleServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
+        private ServersRestOperations PostgreSqlFlexibleServerServersRestClient => _postgreSqlFlexibleServerServersRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PostgreSqlFlexibleServerResource.ResourceType));
         private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private CheckNameAvailabilityRestOperations CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics LocationBasedCapabilitiesClientDiagnostics => _locationBasedCapabilitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Operation Id: Servers_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerResource> GetServersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PostgreSqlFlexibleServerResource> GetPostgreSqlFlexibleServersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PostgreSqlFlexibleServerResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ServerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServers");
+                using var scope = PostgreSqlFlexibleServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPostgreSqlFlexibleServers");
                 scope.Start();
                 try
                 {
-                    var response = await ServerRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await PostgreSqlFlexibleServerServersRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlFlexibleServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     throw;
                 }
             }
-            async Task<Page<ServerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<PostgreSqlFlexibleServerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ServerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServers");
+                using var scope = PostgreSqlFlexibleServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPostgreSqlFlexibleServers");
                 scope.Start();
                 try
                 {
-                    var response = await ServerRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await PostgreSqlFlexibleServerServersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlFlexibleServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -104,17 +104,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Operation Id: Servers_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerResource> GetServers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PostgreSqlFlexibleServerResource> GetPostgreSqlFlexibleServers(CancellationToken cancellationToken = default)
         {
-            Page<ServerResource> FirstPageFunc(int? pageSizeHint)
+            Page<PostgreSqlFlexibleServerResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ServerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServers");
+                using var scope = PostgreSqlFlexibleServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPostgreSqlFlexibleServers");
                 scope.Start();
                 try
                 {
-                    var response = ServerRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = PostgreSqlFlexibleServerServersRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlFlexibleServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -122,14 +122,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     throw;
                 }
             }
-            Page<ServerResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<PostgreSqlFlexibleServerResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ServerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServers");
+                using var scope = PostgreSqlFlexibleServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPostgreSqlFlexibleServers");
                 scope.Start();
                 try
                 {
-                    var response = ServerRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = PostgreSqlFlexibleServerServersRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlFlexibleServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailability>> ExecuteCheckNameAvailabilityAsync(NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckPostgreSqlFlexibleServerNameAvailabilityAsync(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteCheckNameAvailability");
+            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPostgreSqlFlexibleServerNameAvailability");
             scope.Start();
             try
             {
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailability> ExecuteCheckNameAvailability(NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailability(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteCheckNameAvailability");
+            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPostgreSqlFlexibleServerNameAvailability");
             scope.Start();
             try
             {
@@ -193,10 +193,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CapabilityProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CapabilityProperties> ExecuteLocationBasedCapabilitiesAsync(string locationName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PostgreSqlFlexibleServerCapabilityProperties> ExecuteLocationBasedCapabilitiesAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<CapabilityProperties>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PostgreSqlFlexibleServerCapabilityProperties>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LocationBasedCapabilitiesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteLocationBasedCapabilities");
                 scope.Start();
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     throw;
                 }
             }
-            async Task<Page<CapabilityProperties>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<PostgreSqlFlexibleServerCapabilityProperties>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LocationBasedCapabilitiesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteLocationBasedCapabilities");
                 scope.Start();
@@ -236,10 +236,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CapabilityProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CapabilityProperties> ExecuteLocationBasedCapabilities(string locationName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PostgreSqlFlexibleServerCapabilityProperties> ExecuteLocationBasedCapabilities(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            Page<CapabilityProperties> FirstPageFunc(int? pageSizeHint)
+            Page<PostgreSqlFlexibleServerCapabilityProperties> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LocationBasedCapabilitiesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteLocationBasedCapabilities");
                 scope.Start();
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     throw;
                 }
             }
-            Page<CapabilityProperties> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<PostgreSqlFlexibleServerCapabilityProperties> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LocationBasedCapabilitiesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteLocationBasedCapabilities");
                 scope.Start();
@@ -278,15 +278,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Operation Id: VirtualNetworkSubnetUsage_Execute
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
-        /// <param name="virtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>
+        /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualNetworkSubnetUsageResult>> ExecuteVirtualNetworkSubnetUsageAsync(string locationName, VirtualNetworkSubnetUsageParameter virtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteVirtualNetworkSubnetUsageAsync(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualNetworkSubnetUsageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteVirtualNetworkSubnetUsage");
             scope.Start();
             try
             {
-                var response = await VirtualNetworkSubnetUsageRestClient.ExecuteAsync(Id.SubscriptionId, locationName, virtualNetworkSubnetUsageParameter, cancellationToken).ConfigureAwait(false);
+                var response = await VirtualNetworkSubnetUsageRestClient.ExecuteAsync(Id.SubscriptionId, locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -302,15 +302,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Operation Id: VirtualNetworkSubnetUsage_Execute
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
-        /// <param name="virtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>
+        /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualNetworkSubnetUsageResult> ExecuteVirtualNetworkSubnetUsage(string locationName, VirtualNetworkSubnetUsageParameter virtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> ExecuteVirtualNetworkSubnetUsage(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualNetworkSubnetUsageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteVirtualNetworkSubnetUsage");
             scope.Start();
             try
             {
-                var response = VirtualNetworkSubnetUsageRestClient.Execute(Id.SubscriptionId, locationName, virtualNetworkSubnetUsageParameter, cancellationToken);
+                var response = VirtualNetworkSubnetUsageRestClient.Execute(Id.SubscriptionId, locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, cancellationToken);
                 return response;
             }
             catch (Exception e)

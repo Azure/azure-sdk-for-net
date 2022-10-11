@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly ApiRestOperations _apiRestClient;
         private readonly ClientDiagnostics _defaultClientDiagnostics;
         private readonly ApiManagementRestOperations _defaultRestClient;
+        private readonly ClientDiagnostics _contentTypeClientDiagnostics;
+        private readonly ContentTypeRestOperations _contentTypeRestClient;
+        private readonly ClientDiagnostics _contentItemClientDiagnostics;
+        private readonly ContentItemRestOperations _contentItemRestClient;
         private readonly ClientDiagnostics _apiManagementServiceSkusClientDiagnostics;
         private readonly ApiManagementServiceSkusRestOperations _apiManagementServiceSkusRestClient;
         private readonly ClientDiagnostics _networkStatusClientDiagnostics;
@@ -93,6 +97,10 @@ namespace Azure.ResourceManager.ApiManagement
             _apiRestClient = new ApiRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiApiVersion);
             _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _defaultRestClient = new ApiManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _contentTypeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _contentTypeRestClient = new ContentTypeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _contentItemClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _contentItemRestClient = new ContentItemRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _apiManagementServiceSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _apiManagementServiceSkusRestClient = new ApiManagementServiceSkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _networkStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -514,43 +522,6 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Response<ApiManagementCertificateResource> GetApiManagementCertificate(string certificateId, CancellationToken cancellationToken = default)
         {
             return GetApiManagementCertificates().Get(certificateId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ApiManagementContentTypeResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ApiManagementContentTypeResources and their operations over a ApiManagementContentTypeResource. </returns>
-        public virtual ApiManagementContentTypeCollection GetApiManagementContentTypes()
-        {
-            return GetCachedClient(Client => new ApiManagementContentTypeCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}
-        /// Operation Id: ContentType_Get
-        /// </summary>
-        /// <param name="contentTypeId"> Content type identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementContentTypeResource>> GetApiManagementContentTypeAsync(string contentTypeId, CancellationToken cancellationToken = default)
-        {
-            return await GetApiManagementContentTypes().GetAsync(contentTypeId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the details of the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}
-        /// Operation Id: ContentType_Get
-        /// </summary>
-        /// <param name="contentTypeId"> Content type identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ApiManagementContentTypeResource> GetApiManagementContentType(string contentTypeId, CancellationToken cancellationToken = default)
-        {
-            return GetApiManagementContentTypes().Get(contentTypeId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementEmailTemplateResources in the ApiManagementService. </summary>
@@ -1496,6 +1467,586 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// Lists the developer portal&apos;s content types. Content types describe content items&apos; properties, validation rules, and constraints.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes
+        /// Operation Id: ContentType_ListByService
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ApiManagementContentType" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementContentType> GetContentTypesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ApiManagementContentType>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentTypes");
+                scope.Start();
+                try
+                {
+                    var response = await _contentTypeRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ApiManagementContentType>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentTypes");
+                scope.Start();
+                try
+                {
+                    var response = await _contentTypeRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists the developer portal&apos;s content types. Content types describe content items&apos; properties, validation rules, and constraints.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes
+        /// Operation Id: ContentType_ListByService
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApiManagementContentType" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementContentType> GetContentTypes(CancellationToken cancellationToken = default)
+        {
+            Page<ApiManagementContentType> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentTypes");
+                scope.Start();
+                try
+                {
+                    var response = _contentTypeRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ApiManagementContentType> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentTypes");
+                scope.Start();
+                try
+                {
+                    var response = _contentTypeRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets the details of the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}
+        /// Operation Id: ContentType_Get
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
+        public virtual async Task<Response<ApiManagementContentType>> GetContentTypeAsync(string contentTypeId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+
+            using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentType");
+            scope.Start();
+            try
+            {
+                var response = await _contentTypeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the details of the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}
+        /// Operation Id: ContentType_Get
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
+        public virtual Response<ApiManagementContentType> GetContentType(string contentTypeId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+
+            using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentType");
+            scope.Start();
+            try
+            {
+                var response = _contentTypeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints. Custom content types&apos; identifiers need to start with the `c-` prefix. Built-in content types can&apos;t be modified.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}
+        /// Operation Id: ContentType_CreateOrUpdate
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
+        public virtual async Task<Response<ApiManagementContentType>> CreateOrUpdateContentTypeAsync(string contentTypeId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+
+            using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentType");
+            scope.Start();
+            try
+            {
+                var response = await _contentTypeRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, ifMatch, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints. Custom content types&apos; identifiers need to start with the `c-` prefix. Built-in content types can&apos;t be modified.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}
+        /// Operation Id: ContentType_CreateOrUpdate
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
+        public virtual Response<ApiManagementContentType> CreateOrUpdateContentType(string contentTypeId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+
+            using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentType");
+            scope.Start();
+            try
+            {
+                var response = _contentTypeRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, ifMatch, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes the specified developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints. Built-in content types (with identifiers starting with the `c-` prefix) can&apos;t be removed.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}
+        /// Operation Id: ContentType_Delete
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
+        public virtual async Task<Response> DeleteContentTypeAsync(string contentTypeId, ETag ifMatch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+
+            using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.DeleteContentType");
+            scope.Start();
+            try
+            {
+                var response = await _contentTypeRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, ifMatch, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes the specified developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints. Built-in content types (with identifiers starting with the `c-` prefix) can&apos;t be removed.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}
+        /// Operation Id: ContentType_Delete
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
+        public virtual Response DeleteContentType(string contentTypeId, ETag ifMatch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+
+            using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.DeleteContentType");
+            scope.Start();
+            try
+            {
+                var response = _contentTypeRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, ifMatch, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists developer portal&apos;s content items specified by the provided content type.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems
+        /// Operation Id: ContentItem_ListByService
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ApiManagementContentItem" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementContentItem> GetContentItemsAsync(string contentTypeId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+
+            async Task<Page<ApiManagementContentItem>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItems");
+                scope.Start();
+                try
+                {
+                    var response = await _contentItemRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ApiManagementContentItem>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItems");
+                scope.Start();
+                try
+                {
+                    var response = await _contentItemRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists developer portal&apos;s content items specified by the provided content type.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems
+        /// Operation Id: ContentItem_ListByService
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementContentItem" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementContentItem> GetContentItems(string contentTypeId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+
+            Page<ApiManagementContentItem> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItems");
+                scope.Start();
+                try
+                {
+                    var response = _contentItemRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ApiManagementContentItem> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItems");
+                scope.Start();
+                try
+                {
+                    var response = _contentItemRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Returns the entity state (ETag) version of the developer portal&apos;s content item specified by its identifier.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}
+        /// Operation Id: ContentItem_GetEntityTag
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
+        public virtual async Task<Response<bool>> GetContentItemEntityTagAsync(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+
+            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItemEntityTag");
+            scope.Start();
+            try
+            {
+                var response = await _contentItemRestClient.GetEntityTagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the entity state (ETag) version of the developer portal&apos;s content item specified by its identifier.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}
+        /// Operation Id: ContentItem_GetEntityTag
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
+        public virtual Response<bool> GetContentItemEntityTag(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+
+            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItemEntityTag");
+            scope.Start();
+            try
+            {
+                var response = _contentItemRestClient.GetEntityTag(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the developer portal&apos;s content item specified by its identifier.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}
+        /// Operation Id: ContentItem_Get
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
+        public virtual async Task<Response<ApiManagementContentItem>> GetContentItemAsync(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+
+            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItem");
+            scope.Start();
+            try
+            {
+                var response = await _contentItemRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the developer portal&apos;s content item specified by its identifier.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}
+        /// Operation Id: ContentItem_Get
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
+        public virtual Response<ApiManagementContentItem> GetContentItem(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+
+            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItem");
+            scope.Start();
+            try
+            {
+                var response = _contentItemRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a new developer portal&apos;s content item specified by the provided content type.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}
+        /// Operation Id: ContentItem_CreateOrUpdate
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
+        public virtual async Task<Response<ApiManagementContentItem>> CreateOrUpdateContentItemAsync(string contentTypeId, string contentItemId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+
+            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentItem");
+            scope.Start();
+            try
+            {
+                var response = await _contentItemRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, ifMatch, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a new developer portal&apos;s content item specified by the provided content type.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}
+        /// Operation Id: ContentItem_CreateOrUpdate
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
+        public virtual Response<ApiManagementContentItem> CreateOrUpdateContentItem(string contentTypeId, string contentItemId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+
+            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentItem");
+            scope.Start();
+            try
+            {
+                var response = _contentItemRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, ifMatch, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes the specified developer portal&apos;s content item.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}
+        /// Operation Id: ContentItem_Delete
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
+        public virtual async Task<Response> DeleteContentItemAsync(string contentTypeId, string contentItemId, ETag ifMatch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+
+            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.DeleteContentItem");
+            scope.Start();
+            try
+            {
+                var response = await _contentItemRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, ifMatch, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes the specified developer portal&apos;s content item.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}
+        /// Operation Id: ContentItem_Delete
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
+        public virtual Response DeleteContentItem(string contentTypeId, string contentItemId, ETag ifMatch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+
+            using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.DeleteContentItem");
+            scope.Start();
+            try
+            {
+                var response = _contentItemRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, ifMatch, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets all available SKU for a given API Management service
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/skus
         /// Operation Id: ApiManagementServiceSkus_ListAvailableServiceSkus
@@ -1858,12 +2409,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="locationName"> Location in which the API Management service is deployed. This is one of the Azure Regions like West US, East US, South Central US. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public virtual async Task<Response<NetworkStatusContract>> GetNetworkStatusByLocationAsync(string locationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkStatusContract>> GetNetworkStatusByLocationAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             using var scope = _networkStatusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetNetworkStatusByLocation");
             scope.Start();
             try
@@ -1885,12 +2432,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="locationName"> Location in which the API Management service is deployed. This is one of the Azure Regions like West US, East US, South Central US. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public virtual Response<NetworkStatusContract> GetNetworkStatusByLocation(string locationName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkStatusContract> GetNetworkStatusByLocation(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             using var scope = _networkStatusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetNetworkStatusByLocation");
             scope.Start();
             try
@@ -2026,8 +2569,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             async Task<Page<PortalSettingsContractData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _apiManagementServicePortalSettingsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPortalSettings");
-                scope0.Start();
+                using var scope = _apiManagementServicePortalSettingsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPortalSettings");
+                scope.Start();
                 try
                 {
                     var response = await _apiManagementServicePortalSettingsRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -2035,7 +2578,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2053,8 +2596,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Page<PortalSettingsContractData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _apiManagementServicePortalSettingsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPortalSettings");
-                scope0.Start();
+                using var scope = _apiManagementServicePortalSettingsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPortalSettings");
+                scope.Start();
                 try
                 {
                     var response = _apiManagementServicePortalSettingsRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
@@ -2062,7 +2605,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2084,8 +2627,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             async Task<Page<TagResourceContractDetails>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementServiceResource.GetProductsByTags");
-                scope0.Start();
+                using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementServiceResource.GetProductsByTags");
+                scope.Start();
                 try
                 {
                     var response = await _apiManagementProductProductRestClient.ListByTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -2093,14 +2636,14 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             async Task<Page<TagResourceContractDetails>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementServiceResource.GetProductsByTags");
-                scope0.Start();
+                using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementServiceResource.GetProductsByTags");
+                scope.Start();
                 try
                 {
                     var response = await _apiManagementProductProductRestClient.ListByTagsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -2108,7 +2651,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2130,8 +2673,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Page<TagResourceContractDetails> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementServiceResource.GetProductsByTags");
-                scope0.Start();
+                using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementServiceResource.GetProductsByTags");
+                scope.Start();
                 try
                 {
                     var response = _apiManagementProductProductRestClient.ListByTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts, cancellationToken: cancellationToken);
@@ -2139,14 +2682,14 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             Page<TagResourceContractDetails> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementServiceResource.GetProductsByTags");
-                scope0.Start();
+                using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementServiceResource.GetProductsByTags");
+                scope.Start();
                 try
                 {
                     var response = _apiManagementProductProductRestClient.ListByTagsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts, cancellationToken: cancellationToken);
@@ -2154,7 +2697,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2177,8 +2720,8 @@ namespace Azure.ResourceManager.ApiManagement
 
             async Task<Page<QuotaCounterContract>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _quotaByCounterKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.GetQuotaByCounterKeys");
-                scope0.Start();
+                using var scope = _quotaByCounterKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.GetQuotaByCounterKeys");
+                scope.Start();
                 try
                 {
                     var response = await _quotaByCounterKeysRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -2186,7 +2729,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2209,8 +2752,8 @@ namespace Azure.ResourceManager.ApiManagement
 
             Page<QuotaCounterContract> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _quotaByCounterKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.GetQuotaByCounterKeys");
-                scope0.Start();
+                using var scope = _quotaByCounterKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.GetQuotaByCounterKeys");
+                scope.Start();
                 try
                 {
                     var response = _quotaByCounterKeysRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey, cancellationToken: cancellationToken);
@@ -2218,7 +2761,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2243,8 +2786,8 @@ namespace Azure.ResourceManager.ApiManagement
 
             async Task<Page<QuotaCounterContract>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _quotaByCounterKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.UpdateQuotaByCounterKeys");
-                scope0.Start();
+                using var scope = _quotaByCounterKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.UpdateQuotaByCounterKeys");
+                scope.Start();
                 try
                 {
                     var response = await _quotaByCounterKeysRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey, content, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -2252,7 +2795,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2277,8 +2820,8 @@ namespace Azure.ResourceManager.ApiManagement
 
             Page<QuotaCounterContract> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _quotaByCounterKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.UpdateQuotaByCounterKeys");
-                scope0.Start();
+                using var scope = _quotaByCounterKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.UpdateQuotaByCounterKeys");
+                scope.Start();
                 try
                 {
                     var response = _quotaByCounterKeysRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey, content, cancellationToken: cancellationToken);
@@ -2286,7 +2829,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2308,8 +2851,8 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
             Argument.AssertNotNullOrEmpty(quotaPeriodKey, nameof(quotaPeriodKey));
 
-            using var scope0 = _quotaByPeriodKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.GetQuotaByPeriodKey");
-            scope0.Start();
+            using var scope = _quotaByPeriodKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.GetQuotaByPeriodKey");
+            scope.Start();
             try
             {
                 var response = await _quotaByPeriodKeysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey, quotaPeriodKey, cancellationToken).ConfigureAwait(false);
@@ -2317,7 +2860,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -2337,8 +2880,8 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
             Argument.AssertNotNullOrEmpty(quotaPeriodKey, nameof(quotaPeriodKey));
 
-            using var scope0 = _quotaByPeriodKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.GetQuotaByPeriodKey");
-            scope0.Start();
+            using var scope = _quotaByPeriodKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.GetQuotaByPeriodKey");
+            scope.Start();
             try
             {
                 var response = _quotaByPeriodKeysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey, quotaPeriodKey, cancellationToken);
@@ -2346,7 +2889,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -2368,8 +2911,8 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(quotaPeriodKey, nameof(quotaPeriodKey));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = _quotaByPeriodKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.UpdateQuotaByPeriodKey");
-            scope0.Start();
+            using var scope = _quotaByPeriodKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.UpdateQuotaByPeriodKey");
+            scope.Start();
             try
             {
                 var response = await _quotaByPeriodKeysRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey, quotaPeriodKey, content, cancellationToken).ConfigureAwait(false);
@@ -2377,7 +2920,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -2399,8 +2942,8 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(quotaPeriodKey, nameof(quotaPeriodKey));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = _quotaByPeriodKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.UpdateQuotaByPeriodKey");
-            scope0.Start();
+            using var scope = _quotaByPeriodKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.UpdateQuotaByPeriodKey");
+            scope.Start();
             try
             {
                 var response = _quotaByPeriodKeysRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey, quotaPeriodKey, content, cancellationToken);
@@ -2408,7 +2951,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -2424,8 +2967,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             async Task<Page<RegionContract>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegions");
-                scope0.Start();
+                using var scope = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegions");
+                scope.Start();
                 try
                 {
                     var response = await _regionRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -2433,14 +2976,14 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             async Task<Page<RegionContract>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegions");
-                scope0.Start();
+                using var scope = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegions");
+                scope.Start();
                 try
                 {
                     var response = await _regionRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -2448,7 +2991,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2466,8 +3009,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Page<RegionContract> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegions");
-                scope0.Start();
+                using var scope = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegions");
+                scope.Start();
                 try
                 {
                     var response = _regionRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
@@ -2475,14 +3018,14 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             Page<RegionContract> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegions");
-                scope0.Start();
+                using var scope = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegions");
+                scope.Start();
                 try
                 {
                     var response = _regionRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
@@ -2490,7 +3033,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2505,41 +3048,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsByApiAsync(string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsByApiAsync(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
             async Task<Page<ReportRecordContract>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByApi");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByApi");
+                scope.Start();
                 try
                 {
-                    var response = await _reportsRestClient.ListByApiAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _reportsRestClient.ListByApiAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             async Task<Page<ReportRecordContract>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByApi");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByApi");
+                scope.Start();
                 try
                 {
-                    var response = await _reportsRestClient.ListByApiNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _reportsRestClient.ListByApiNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2554,41 +3097,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsByApi(string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsByApi(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
             Page<ReportRecordContract> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByApi");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByApi");
+                scope.Start();
                 try
                 {
-                    var response = _reportsRestClient.ListByApi(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken);
+                    var response = _reportsRestClient.ListByApi(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             Page<ReportRecordContract> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByApi");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByApi");
+                scope.Start();
                 try
                 {
-                    var response = _reportsRestClient.ListByApiNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken);
+                    var response = _reportsRestClient.ListByApiNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2603,41 +3146,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsByUserAsync(string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsByUserAsync(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
             async Task<Page<ReportRecordContract>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByUser");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByUser");
+                scope.Start();
                 try
                 {
-                    var response = await _reportsRestClient.ListByUserAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _reportsRestClient.ListByUserAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             async Task<Page<ReportRecordContract>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByUser");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByUser");
+                scope.Start();
                 try
                 {
-                    var response = await _reportsRestClient.ListByUserNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _reportsRestClient.ListByUserNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2652,41 +3195,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsByUser(string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsByUser(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
             Page<ReportRecordContract> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByUser");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByUser");
+                scope.Start();
                 try
                 {
-                    var response = _reportsRestClient.ListByUser(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken);
+                    var response = _reportsRestClient.ListByUser(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             Page<ReportRecordContract> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByUser");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByUser");
+                scope.Start();
                 try
                 {
-                    var response = _reportsRestClient.ListByUserNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken);
+                    var response = _reportsRestClient.ListByUserNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2701,41 +3244,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | select, filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsByOperationAsync(string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsByOperationAsync(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
             async Task<Page<ReportRecordContract>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByOperation");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByOperation");
+                scope.Start();
                 try
                 {
-                    var response = await _reportsRestClient.ListByOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _reportsRestClient.ListByOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             async Task<Page<ReportRecordContract>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByOperation");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByOperation");
+                scope.Start();
                 try
                 {
-                    var response = await _reportsRestClient.ListByOperationNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _reportsRestClient.ListByOperationNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2750,41 +3293,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | select, filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsByOperation(string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsByOperation(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
             Page<ReportRecordContract> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByOperation");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByOperation");
+                scope.Start();
                 try
                 {
-                    var response = _reportsRestClient.ListByOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken);
+                    var response = _reportsRestClient.ListByOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             Page<ReportRecordContract> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByOperation");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByOperation");
+                scope.Start();
                 try
                 {
-                    var response = _reportsRestClient.ListByOperationNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken);
+                    var response = _reportsRestClient.ListByOperationNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2799,41 +3342,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | select, filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsByProductAsync(string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsByProductAsync(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
             async Task<Page<ReportRecordContract>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByProduct");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByProduct");
+                scope.Start();
                 try
                 {
-                    var response = await _reportsRestClient.ListByProductAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _reportsRestClient.ListByProductAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             async Task<Page<ReportRecordContract>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByProduct");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByProduct");
+                scope.Start();
                 try
                 {
-                    var response = await _reportsRestClient.ListByProductNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _reportsRestClient.ListByProductNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2848,41 +3391,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | select, filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsByProduct(string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsByProduct(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
             Page<ReportRecordContract> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByProduct");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByProduct");
+                scope.Start();
                 try
                 {
-                    var response = _reportsRestClient.ListByProduct(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken);
+                    var response = _reportsRestClient.ListByProduct(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             Page<ReportRecordContract> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByProduct");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByProduct");
+                scope.Start();
                 try
                 {
-                    var response = _reportsRestClient.ListByProductNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken);
+                    var response = _reportsRestClient.ListByProductNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2906,8 +3449,8 @@ namespace Azure.ResourceManager.ApiManagement
 
             async Task<Page<ReportRecordContract>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByGeo");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByGeo");
+                scope.Start();
                 try
                 {
                     var response = await _reportsRestClient.ListByGeoAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -2915,14 +3458,14 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             async Task<Page<ReportRecordContract>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByGeo");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByGeo");
+                scope.Start();
                 try
                 {
                     var response = await _reportsRestClient.ListByGeoNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -2930,7 +3473,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2954,8 +3497,8 @@ namespace Azure.ResourceManager.ApiManagement
 
             Page<ReportRecordContract> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByGeo");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByGeo");
+                scope.Start();
                 try
                 {
                     var response = _reportsRestClient.ListByGeo(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
@@ -2963,14 +3506,14 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             Page<ReportRecordContract> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByGeo");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByGeo");
+                scope.Start();
                 try
                 {
                     var response = _reportsRestClient.ListByGeoNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
@@ -2978,7 +3521,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -2993,41 +3536,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| productId | select, filter | eq |     | &lt;/br&gt;| subscriptionId | select, filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsBySubscriptionAsync(string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsBySubscriptionAsync(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
             async Task<Page<ReportRecordContract>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsBySubscription");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsBySubscription");
+                scope.Start();
                 try
                 {
-                    var response = await _reportsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _reportsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             async Task<Page<ReportRecordContract>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsBySubscription");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsBySubscription");
+                scope.Start();
                 try
                 {
-                    var response = await _reportsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _reportsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -3042,41 +3585,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| productId | select, filter | eq |     | &lt;/br&gt;| subscriptionId | select, filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsBySubscription(string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsBySubscription(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
             Page<ReportRecordContract> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsBySubscription");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsBySubscription");
+                scope.Start();
                 try
                 {
-                    var response = _reportsRestClient.ListBySubscription(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken);
+                    var response = _reportsRestClient.ListBySubscription(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             Page<ReportRecordContract> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsBySubscription");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsBySubscription");
+                scope.Start();
                 try
                 {
-                    var response = _reportsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderby, cancellationToken: cancellationToken);
+                    var response = _reportsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -3092,41 +3635,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="interval"> By time interval. Interval must be multiple of 15 minutes and may not be zero. The value should be in ISO  8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be used to convert TimeSpan to a valid interval string: XmlConvert.ToString(new TimeSpan(hours, minutes, seconds)). </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsByTimeAsync(string filter, TimeSpan interval, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsByTimeAsync(string filter, TimeSpan interval, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
             async Task<Page<ReportRecordContract>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByTime");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByTime");
+                scope.Start();
                 try
                 {
-                    var response = await _reportsRestClient.ListByTimeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _reportsRestClient.ListByTimeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             async Task<Page<ReportRecordContract>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByTime");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByTime");
+                scope.Start();
                 try
                 {
-                    var response = await _reportsRestClient.ListByTimeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _reportsRestClient.ListByTimeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -3142,41 +3685,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="interval"> By time interval. Interval must be multiple of 15 minutes and may not be zero. The value should be in ISO  8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be used to convert TimeSpan to a valid interval string: XmlConvert.ToString(new TimeSpan(hours, minutes, seconds)). </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsByTime(string filter, TimeSpan interval, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsByTime(string filter, TimeSpan interval, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
             Page<ReportRecordContract> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByTime");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByTime");
+                scope.Start();
                 try
                 {
-                    var response = _reportsRestClient.ListByTime(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderby, cancellationToken: cancellationToken);
+                    var response = _reportsRestClient.ListByTime(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             Page<ReportRecordContract> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByTime");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByTime");
+                scope.Start();
                 try
                 {
-                    var response = _reportsRestClient.ListByTimeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderby, cancellationToken: cancellationToken);
+                    var response = _reportsRestClient.ListByTimeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -3200,8 +3743,8 @@ namespace Azure.ResourceManager.ApiManagement
 
             async Task<Page<RequestReportRecordContract>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByRequest");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByRequest");
+                scope.Start();
                 try
                 {
                     var response = await _reportsRestClient.ListByRequestAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -3209,7 +3752,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -3233,8 +3776,8 @@ namespace Azure.ResourceManager.ApiManagement
 
             Page<RequestReportRecordContract> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByRequest");
-                scope0.Start();
+                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByRequest");
+                scope.Start();
                 try
                 {
                     var response = _reportsRestClient.ListByRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
@@ -3242,7 +3785,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -3263,8 +3806,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             async Task<Page<TagResourceContractDetails>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
-                scope0.Start();
+                using var scope = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
+                scope.Start();
                 try
                 {
                     var response = await _tagResourceRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -3272,14 +3815,14 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             async Task<Page<TagResourceContractDetails>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
-                scope0.Start();
+                using var scope = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
+                scope.Start();
                 try
                 {
                     var response = await _tagResourceRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -3287,7 +3830,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -3308,8 +3851,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Page<TagResourceContractDetails> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
-                scope0.Start();
+                using var scope = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
+                scope.Start();
                 try
                 {
                     var response = _tagResourceRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
@@ -3317,14 +3860,14 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
             Page<TagResourceContractDetails> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
-                scope0.Start();
+                using var scope = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
+                scope.Start();
                 try
                 {
                     var response = _tagResourceRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
@@ -3332,7 +3875,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 catch (Exception e)
                 {
-                    scope0.Failed(e);
+                    scope.Failed(e);
                     throw;
                 }
             }
@@ -3353,8 +3896,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.DeployTenantConfiguration");
-            scope0.Start();
+            using var scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.DeployTenantConfiguration");
+            scope.Start();
             try
             {
                 var response = await _tenantConfigurationRestClient.DeployAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content, cancellationToken).ConfigureAwait(false);
@@ -3365,7 +3908,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -3384,8 +3927,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.DeployTenantConfiguration");
-            scope0.Start();
+            using var scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.DeployTenantConfiguration");
+            scope.Start();
             try
             {
                 var response = _tenantConfigurationRestClient.Deploy(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content, cancellationToken);
@@ -3396,7 +3939,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -3415,8 +3958,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.SaveTenantConfiguration");
-            scope0.Start();
+            using var scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.SaveTenantConfiguration");
+            scope.Start();
             try
             {
                 var response = await _tenantConfigurationRestClient.SaveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content, cancellationToken).ConfigureAwait(false);
@@ -3427,7 +3970,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -3446,8 +3989,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.SaveTenantConfiguration");
-            scope0.Start();
+            using var scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.SaveTenantConfiguration");
+            scope.Start();
             try
             {
                 var response = _tenantConfigurationRestClient.Save(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content, cancellationToken);
@@ -3458,7 +4001,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -3477,8 +4020,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.ValidateTenantConfiguration");
-            scope0.Start();
+            using var scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.ValidateTenantConfiguration");
+            scope.Start();
             try
             {
                 var response = await _tenantConfigurationRestClient.ValidateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content, cancellationToken).ConfigureAwait(false);
@@ -3489,7 +4032,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -3508,8 +4051,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.ValidateTenantConfiguration");
-            scope0.Start();
+            using var scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.ValidateTenantConfiguration");
+            scope.Start();
             try
             {
                 var response = _tenantConfigurationRestClient.Validate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content, cancellationToken);
@@ -3520,7 +4063,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -3534,8 +4077,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TenantConfigurationSyncStateContract>> GetTenantConfigurationSyncStateAsync(ConfigurationName configurationName, CancellationToken cancellationToken = default)
         {
-            using var scope0 = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTenantConfigurationSyncState");
-            scope0.Start();
+            using var scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTenantConfigurationSyncState");
+            scope.Start();
             try
             {
                 var response = await _tenantConfigurationRestClient.GetSyncStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken).ConfigureAwait(false);
@@ -3543,7 +4086,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -3557,8 +4100,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TenantConfigurationSyncStateContract> GetTenantConfigurationSyncState(ConfigurationName configurationName, CancellationToken cancellationToken = default)
         {
-            using var scope0 = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTenantConfigurationSyncState");
-            scope0.Start();
+            using var scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTenantConfigurationSyncState");
+            scope.Start();
             try
             {
                 var response = _tenantConfigurationRestClient.GetSyncState(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken);
@@ -3566,7 +4109,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -3585,19 +4128,34 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope0 = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.AddTag");
-            scope0.Start();
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.AddTag");
+            scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues[key] = value;
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _apiManagementServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ApiManagementServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _apiManagementServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ApiManagementServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ApiManagementServicePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -3616,19 +4174,34 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope0 = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.AddTag");
-            scope0.Start();
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.AddTag");
+            scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues[key] = value;
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _apiManagementServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new ApiManagementServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _apiManagementServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new ApiManagementServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ApiManagementServicePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -3645,20 +4218,31 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope0 = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.SetTags");
-            scope0.Start();
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.SetTags");
+            scope.Start();
             try
             {
-                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _apiManagementServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ApiManagementServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _apiManagementServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ApiManagementServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ApiManagementServicePatch();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -3675,20 +4259,31 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope0 = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.SetTags");
-            scope0.Start();
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.SetTags");
+            scope.Start();
             try
             {
-                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _apiManagementServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new ApiManagementServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _apiManagementServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new ApiManagementServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ApiManagementServicePatch();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -3705,19 +4300,34 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope0 = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.RemoveTag");
-            scope0.Start();
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.RemoveTag");
+            scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.Remove(key);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _apiManagementServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ApiManagementServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _apiManagementServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ApiManagementServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ApiManagementServicePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -3734,19 +4344,34 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope0 = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.RemoveTag");
-            scope0.Start();
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.RemoveTag");
+            scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.Remove(key);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _apiManagementServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new ApiManagementServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _apiManagementServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new ApiManagementServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ApiManagementServicePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }

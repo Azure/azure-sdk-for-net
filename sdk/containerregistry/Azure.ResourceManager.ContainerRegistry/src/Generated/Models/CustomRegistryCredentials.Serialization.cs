@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static CustomRegistryCredentials DeserializeCustomRegistryCredentials(JsonElement element)
         {
-            Optional<SecretObject> userName = default;
-            Optional<SecretObject> password = default;
+            Optional<ContainerRegistrySecretObject> userName = default;
+            Optional<ContainerRegistrySecretObject> password = default;
             Optional<string> identity = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    userName = SecretObject.DeserializeSecretObject(property.Value);
+                    userName = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value);
                     continue;
                 }
                 if (property.NameEquals("password"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    password = SecretObject.DeserializeSecretObject(property.Value);
+                    password = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))

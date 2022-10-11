@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="virtualIP"> Virtual IP address. </param>
         /// <param name="internalHttpPort"> Internal HTTP port. </param>
         /// <param name="internalHttpsPort"> Internal HTTPS port. </param>
-        /// <param name="inUse"> Is virtual IP mapping in use. </param>
+        /// <param name="isInUse"> Is virtual IP mapping in use. </param>
         /// <param name="serviceName"> name of the service that virtual IP is assigned to. </param>
-        internal VirtualIPMapping(string virtualIP, int? internalHttpPort, int? internalHttpsPort, bool? inUse, string serviceName)
+        internal VirtualIPMapping(string virtualIP, int? internalHttpPort, int? internalHttpsPort, bool? isInUse, string serviceName)
         {
             VirtualIP = virtualIP;
             InternalHttpPort = internalHttpPort;
             InternalHttpsPort = internalHttpsPort;
-            InUse = inUse;
+            IsInUse = isInUse;
             ServiceName = serviceName;
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Internal HTTPS port. </summary>
         public int? InternalHttpsPort { get; set; }
         /// <summary> Is virtual IP mapping in use. </summary>
-        public bool? InUse { get; set; }
+        public bool? IsInUse { get; set; }
         /// <summary> name of the service that virtual IP is assigned to. </summary>
         public string ServiceName { get; set; }
     }

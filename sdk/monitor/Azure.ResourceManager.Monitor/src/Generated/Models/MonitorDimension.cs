@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Specifies the criteria for converting log to metric. </summary>
+    /// <summary> Dimension splitting and filtering definition. </summary>
     public partial class MonitorDimension
     {
         /// <summary> Initializes a new instance of MonitorDimension. </summary>
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="operator"> Operator for dimension values. </param>
         /// <param name="values"> List of dimension values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="values"/> is null. </exception>
-        public MonitorDimension(string name, MonitorOperator @operator, IEnumerable<string> values)
+        public MonitorDimension(string name, MonitorDimensionOperator @operator, IEnumerable<string> values)
         {
             if (name == null)
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> Name of the dimension. </param>
         /// <param name="operator"> Operator for dimension values. </param>
         /// <param name="values"> List of dimension values. </param>
-        internal MonitorDimension(string name, MonitorOperator @operator, IList<string> values)
+        internal MonitorDimension(string name, MonitorDimensionOperator @operator, IList<string> values)
         {
             Name = name;
             Operator = @operator;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Name of the dimension. </summary>
         public string Name { get; set; }
         /// <summary> Operator for dimension values. </summary>
-        public MonitorOperator Operator { get; set; }
+        public MonitorDimensionOperator Operator { get; set; }
         /// <summary> List of dimension values. </summary>
         public IList<string> Values { get; }
     }

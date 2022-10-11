@@ -4,13 +4,11 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
-using Azure.ResourceManager.DataFactory.Tests;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.IotHub.Tests.Scenario
+namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 {
     internal class DataFactoryTriggerTests : DataFactoryManagementTestBase
     {
@@ -37,14 +35,14 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             _dataFactory = await Client.GetDataFactoryResource(_dataFactoryIdentifier).GetAsync();
         }
 
-        private async Task<DataFactoryTriggerResource> CreateDefaultTrigger(DataFactoryResource dataFactory, string triggerName)
+        private async Task<FactoryTriggerResource> CreateDefaultTrigger(DataFactoryResource dataFactory, string triggerName)
         {
-            DataFactoryTriggerProperties dataFactoryTriggerProperties = new DataFactoryTriggerProperties()
+            FactoryTriggerDefinition dataFactoryTriggerProperties = new FactoryTriggerDefinition()
             {
                 TriggerType = "ScheduleTrigger",
             };
-            DataFactoryTriggerData data = new DataFactoryTriggerData(dataFactoryTriggerProperties);
-            var trigger = await dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
+            FactoryTriggerData data = new FactoryTriggerData(dataFactoryTriggerProperties);
+            var trigger = await dataFactory.GetFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
             return trigger.Value;
         }
 
@@ -64,7 +62,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string triggerName = Recording.GenerateAssetName("trigger-");
             await CreateDefaultTrigger(_dataFactory, triggerName);
-            bool flag = await _dataFactory.GetDataFactoryTriggers().ExistsAsync(triggerName);
+            bool flag = await _dataFactory.GetFactoryTriggers().ExistsAsync(triggerName);
             Assert.IsTrue(flag);
         }
 
@@ -74,7 +72,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string triggerName = Recording.GenerateAssetName("trigger-");
             await CreateDefaultTrigger(_dataFactory, triggerName);
-            var trigger = await _dataFactory.GetDataFactoryTriggers().GetAsync(triggerName);
+            var trigger = await _dataFactory.GetFactoryTriggers().GetAsync(triggerName);
             Assert.IsNotNull(trigger);
             Assert.AreEqual(triggerName, trigger.Value.Data.Name);
         }
@@ -85,7 +83,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string triggerName = Recording.GenerateAssetName("trigger-");
             await CreateDefaultTrigger(_dataFactory, triggerName);
-            var list = await _dataFactory.GetDataFactoryTriggers().GetAllAsync().ToEnumerableAsync();
+            var list = await _dataFactory.GetFactoryTriggers().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
         }
 
@@ -95,11 +93,11 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string triggerName = Recording.GenerateAssetName("trigger-");
             var trigger = await CreateDefaultTrigger(_dataFactory, triggerName);
-            bool flag = await _dataFactory.GetDataFactoryTriggers().ExistsAsync(triggerName);
+            bool flag = await _dataFactory.GetFactoryTriggers().ExistsAsync(triggerName);
             Assert.IsTrue(flag);
 
             await trigger.DeleteAsync(WaitUntil.Completed);
-            flag = await _dataFactory.GetDataFactoryTriggers().ExistsAsync(triggerName);
+            flag = await _dataFactory.GetFactoryTriggers().ExistsAsync(triggerName);
             Assert.IsFalse(flag);
         }
     }

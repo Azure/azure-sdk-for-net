@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
+    // Data plane generated client. The Seasons service client.
     /// <summary> The Seasons service client. </summary>
     public partial class SeasonsClient
     {
@@ -237,12 +238,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     endDateTime = "2022-05-10T18:57:31.2311892Z",
         ///     year = 1234,
-        ///     status = "<SeasonStatus>",
-        ///     name = "<SeasonName>",
-        ///     description = "<SeasonDescription>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -357,12 +358,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     endDateTime = "2022-05-10T18:57:31.2311892Z",
         ///     year = 1234,
-        ///     status = "<SeasonStatus>",
-        ///     name = "<SeasonName>",
-        ///     description = "<SeasonDescription>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },

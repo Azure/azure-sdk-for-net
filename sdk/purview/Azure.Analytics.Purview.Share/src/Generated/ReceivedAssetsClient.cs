@@ -15,6 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Share
 {
+    // Data plane generated client. The ReceivedAssets service client.
     /// <summary> The ReceivedAssets service client. </summary>
     public partial class ReceivedAssetsClient
     {
@@ -78,6 +79,7 @@ namespace Azure.Analytics.Purview.Share
         /// await foreach (var data in client.GetReceivedAssetsAsync("<receivedShareName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
@@ -89,10 +91,10 @@ namespace Azure.Analytics.Purview.Share
         /// await foreach (var data in client.GetReceivedAssetsAsync("<receivedShareName>", "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -105,10 +107,10 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// Schema for <c>ReceivedAssetListValue</c>:
         /// <code>{
+        ///   kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
         ///   id: string, # Optional. The resource id of the resource.
         ///   name: string, # Optional. Name of the resource.
         ///   type: string, # Optional. Type of the resource.
-        ///   kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
         /// }
         /// </code>
         /// 
@@ -154,6 +156,7 @@ namespace Azure.Analytics.Purview.Share
         /// foreach (var data in client.GetReceivedAssets("<receivedShareName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
@@ -165,10 +168,10 @@ namespace Azure.Analytics.Purview.Share
         /// foreach (var data in client.GetReceivedAssets("<receivedShareName>", "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -181,10 +184,10 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// Schema for <c>ReceivedAssetListValue</c>:
         /// <code>{
+        ///   kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
         ///   id: string, # Optional. The resource id of the resource.
         ///   name: string, # Optional. Name of the resource.
         ///   type: string, # Optional. Type of the resource.
-        ///   kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
         /// }
         /// </code>
         /// 

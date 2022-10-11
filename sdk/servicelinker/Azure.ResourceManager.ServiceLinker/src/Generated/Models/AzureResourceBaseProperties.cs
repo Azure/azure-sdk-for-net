@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// Please note <see cref="AzureResourceBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureKeyVaultProperties"/>.
     /// </summary>
-    public partial class AzureResourceBaseProperties
+    public abstract partial class AzureResourceBaseProperties
     {
         /// <summary> Initializes a new instance of AzureResourceBaseProperties. </summary>
-        public AzureResourceBaseProperties()
+        protected AzureResourceBaseProperties()
         {
         }
 

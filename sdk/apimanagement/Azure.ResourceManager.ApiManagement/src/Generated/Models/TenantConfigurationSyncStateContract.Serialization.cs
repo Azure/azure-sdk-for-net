@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("commitId");
                 writer.WriteStringValue(CommitId);
             }
-            if (Optional.IsDefined(IsExport))
+            if (Optional.IsDefined(IsExported))
             {
                 writer.WritePropertyName("isExport");
-                writer.WriteBooleanValue(IsExport.Value);
+                writer.WriteBooleanValue(IsExported.Value);
             }
             if (Optional.IsDefined(IsSynced))
             {

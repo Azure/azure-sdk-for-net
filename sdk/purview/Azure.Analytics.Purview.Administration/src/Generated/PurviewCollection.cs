@@ -16,7 +16,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Administration
 {
-    /// <summary> The PurviewCollection service client. </summary>
+    // Data plane generated sub-client. The PurviewCollection sub-client.
+    /// <summary> The PurviewCollection sub-client. </summary>
     public partial class PurviewCollection
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
@@ -220,10 +221,10 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// var data = new {
-        ///     description = "<CollectionDescription>",
-        ///     friendlyName = "<CollectionFriendlyName>",
+        ///     description = "<description>",
+        ///     friendlyName = "<friendlyName>",
         ///     parentCollection = new {
-        ///         referenceName = "<CollectionReferenceName>",
+        ///         referenceName = "<referenceName>",
         ///     },
         /// };
         /// 
@@ -339,10 +340,10 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// var data = new {
-        ///     description = "<CollectionDescription>",
-        ///     friendlyName = "<CollectionFriendlyName>",
+        ///     description = "<description>",
+        ///     friendlyName = "<friendlyName>",
         ///     parentCollection = new {
-        ///         referenceName = "<CollectionReferenceName>",
+        ///         referenceName = "<referenceName>",
         ///     },
         /// };
         /// 

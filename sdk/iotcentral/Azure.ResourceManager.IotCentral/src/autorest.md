@@ -74,4 +74,10 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+  - from: iotcentral.json
+    where: $.definitions
+    transform: >
+      $.AppTemplate.properties.order['type'] = 'integer';
+
 ```

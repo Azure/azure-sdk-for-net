@@ -136,14 +136,17 @@ namespace Azure.Storage.Blobs
         public Uri GeoRedundantSecondaryUri { get; set; }
 
         /// <summary>
-        /// Transfer validation options to be applied to blob uploads from this client.
+        /// Configures whether to send or receive checksum headers for blob uploads and downloads. Downloads
+        /// can optionally validate that the content matches the checksum.
         /// </summary>
-        public UploadTransferValidationOptions UploadTransferValidationOptions { get; set; }
+        public TransferValidationOptions TransferValidation { get; } = new();
 
         /// <summary>
-        /// Transfer validation options to be applied to blob downloads from this client.
+        /// Whether to trim leading and trailing slashes on a blob name when using
+        /// <see cref="BlobContainerClient.GetBlobClient(string)"/> and similar methods.
+        /// Defaults to true for backwards compatibility.
         /// </summary>
-        public DownloadTransferValidationOptions DownloadTransferValidationOptions { get; set; }
+        public bool TrimBlobNameSlashes { get; set; } = Constants.DefaultTrimBlobNameSlashes;
 
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;

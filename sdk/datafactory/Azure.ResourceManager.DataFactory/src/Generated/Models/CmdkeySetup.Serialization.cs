@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             BinaryData targetName = default;
             BinaryData userName = default;
-            SecretBase password = default;
+            FactorySecretBaseDefinition password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("password"))
                         {
-                            password = SecretBase.DeserializeSecretBase(property0.Value);
+                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                     }

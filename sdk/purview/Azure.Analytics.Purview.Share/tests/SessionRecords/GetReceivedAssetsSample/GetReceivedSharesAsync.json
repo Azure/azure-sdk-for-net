@@ -1,0 +1,353 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/receivedShares/sample-share/receivedAssets?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b4cc4484e18d571e03b79d2dd85f81cd-683d5993fa1f02f3-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "61456e7e314181e555261046f042546a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "336",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 22:57:49 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "f9ab5180-d5ba-41d4-a0fc-251ecb6b5cb7"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "receiverAssetName": "receiver-visible-asset-name",
+              "receiverPaths": [
+                "from-fabrikam"
+              ],
+              "location": "southafricanorth"
+            },
+            "kind": "BlobAccount",
+            "id": "/receivedShares/sample-share/receivedAssets/9c4b5498-3f57-47cb-b97a-96b4f6649119",
+            "name": "9c4b5498-3f57-47cb-b97a-96b4f6649119",
+            "type": "receivedShares/receivedAssets"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/receivedShares/sample-share/assetMappings/receiver-asset-mapping?api-version=2021-09-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "342",
+        "Content-Type": "application/json",
+        "traceparent": "00-2b23e334cd31b3b5115a64d264f054ee-e2ed65bd69b1c213-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "5d9f9f7d7fa857af8a819f1ba976d06c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "kind": "BlobAccount",
+        "properties": {
+          "assetId": "9c4b5498-3f57-47cb-b97a-96b4f6649119",
+          "storageAccountResourceId": "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/yaman-rg/providers/Microsoft.Storage/storageAccounts/yamanstorage",
+          "containerName": "receivedcontainer",
+          "folder": "receivedfolder",
+          "mountPath": "receivedmountpath"
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://ads-dev-eastus-pv.purview.azure.com/share/operationResults/ads-dev-eastus-pvsample-Sharereceiver-asset-mapping?api-version=2021-09-01-preview",
+        "Content-Length": "576",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 22:57:51 GMT",
+        "Location": "/receivedShares/sample-share/assetMappings/receiver-asset-mapping/receiver-asset-mapping",
+        "Operation-Location": "https://ads-dev-eastus-pv.purview.azure.com/share/operationResults/ads-dev-eastus-pvsample-Sharereceiver-asset-mapping?api-version=2021-09-01-preview",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "6ea7def6-8cb2-4403-a8e4-e05b28519292"
+      },
+      "ResponseBody": {
+        "properties": {
+          "storageAccountResourceId": "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/yaman-rg/providers/Microsoft.Storage/storageAccounts/yamanstorage",
+          "containerName": "receivedcontainer",
+          "folder": "receivedfolder",
+          "mountPath": "receivedmountpath",
+          "location": "southafricanorth",
+          "assetId": "9c4b5498-3f57-47cb-b97a-96b4f6649119",
+          "assetMappingStatus": "Broken",
+          "provisioningState": "Creating"
+        },
+        "kind": "BlobAccount",
+        "id": "/receivedShares/sample-share/assetMappings/receiver-asset-mapping",
+        "name": "receiver-asset-mapping",
+        "type": "receivedShares/assetMappings"
+      }
+    },
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/operationResults/ads-dev-eastus-pvsample-Sharereceiver-asset-mapping?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2b23e334cd31b3b5115a64d264f054ee-f9a05f3e670ec674-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "7395322bdf87b02bd1c45a21bc421e87",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "92",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 22:57:52 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "ab5345c1-648c-4461-bd57-c523222e9a40"
+      },
+      "ResponseBody": {
+        "startTime": "2022-08-02T22:57:52.3809023Z",
+        "endTime": null,
+        "status": "Accepted",
+        "error": null
+      }
+    },
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/operationResults/ads-dev-eastus-pvsample-Sharereceiver-asset-mapping?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2b23e334cd31b3b5115a64d264f054ee-3f77a78b2d9a7d65-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f0397e169e71fe97beeed6c092cad8df",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "92",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 22:57:53 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "63a45882-13e4-4ab4-b2ad-5d184cb51ba1"
+      },
+      "ResponseBody": {
+        "startTime": "2022-08-02T22:57:52.3809023Z",
+        "endTime": null,
+        "status": "Accepted",
+        "error": null
+      }
+    },
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/operationResults/ads-dev-eastus-pvsample-Sharereceiver-asset-mapping?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2b23e334cd31b3b5115a64d264f054ee-4c33c7eb36dec3ec-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "bd1aa355e0ac9de374ee8ce4258e9a48",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "92",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 22:57:54 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "584479b1-588c-45aa-9870-25604e1b7f57"
+      },
+      "ResponseBody": {
+        "startTime": "2022-08-02T22:57:52.3809023Z",
+        "endTime": null,
+        "status": "Accepted",
+        "error": null
+      }
+    },
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/operationResults/ads-dev-eastus-pvsample-Sharereceiver-asset-mapping?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2b23e334cd31b3b5115a64d264f054ee-f3cacc8d2e78a63b-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "2b051763e03d8cfa9b96b498096b1e07",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "92",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 22:57:55 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "8fa69c3d-87fe-45bf-9886-df8d57135206"
+      },
+      "ResponseBody": {
+        "startTime": "2022-08-02T22:57:52.3809023Z",
+        "endTime": null,
+        "status": "Accepted",
+        "error": null
+      }
+    },
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/operationResults/ads-dev-eastus-pvsample-Sharereceiver-asset-mapping?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2b23e334cd31b3b5115a64d264f054ee-140444423412efb2-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "19cc7beb602835da9b9b7b8312b3d930",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "92",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 22:57:56 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "d765cd27-0119-4fda-91f2-218a7e5f5966"
+      },
+      "ResponseBody": {
+        "startTime": "2022-08-02T22:57:52.3809023Z",
+        "endTime": null,
+        "status": "Accepted",
+        "error": null
+      }
+    },
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/operationResults/ads-dev-eastus-pvsample-Sharereceiver-asset-mapping?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2b23e334cd31b3b5115a64d264f054ee-942fa5356f12ebf1-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "7e0254db021f6f9dec94270acd1cf56d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "92",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 22:59:33 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "a3daed53-8617-4343-bb23-121e662da129"
+      },
+      "ResponseBody": {
+        "startTime": "2022-08-02T22:57:52.3809023Z",
+        "endTime": null,
+        "status": "Accepted",
+        "error": null
+      }
+    },
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/operationResults/ads-dev-eastus-pvsample-Sharereceiver-asset-mapping?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2b23e334cd31b3b5115a64d264f054ee-35b113774bef1a1d-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b8911fe8668cd43c6d4f61dcfec3d671",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "92",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 22:59:34 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "f4f93903-d307-41a4-b961-eb003beafe02"
+      },
+      "ResponseBody": {
+        "startTime": "2022-08-02T22:57:52.3809023Z",
+        "endTime": null,
+        "status": "Accepted",
+        "error": null
+      }
+    },
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/operationResults/ads-dev-eastus-pvsample-Sharereceiver-asset-mapping?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2b23e334cd31b3b5115a64d264f054ee-25acf143e8ee1978-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "0f638051c2bc078f3b1e7b722217aed0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "93",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 22:59:35 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "11a6b3a7-5c6c-41e2-a441-3865200af62a"
+      },
+      "ResponseBody": {
+        "startTime": "2022-08-02T22:57:52.3809023Z",
+        "endTime": null,
+        "status": "Succeeded",
+        "error": null
+      }
+    },
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/receivedShares/sample-share/assetMappings/receiver-asset-mapping?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2b23e334cd31b3b5115a64d264f054ee-9ad9912896918661-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "9636f96b39c474c3182d11d0a1c07129",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "573",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 22:59:37 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "7b4b2b81-e5b0-4ad5-9c9d-ccb9e929787b"
+      },
+      "ResponseBody": {
+        "properties": {
+          "storageAccountResourceId": "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/yaman-rg/providers/Microsoft.Storage/storageAccounts/yamanstorage",
+          "containerName": "receivedcontainer",
+          "folder": "receivedfolder",
+          "mountPath": "receivedmountpath",
+          "location": "southafricanorth",
+          "assetId": "9c4b5498-3f57-47cb-b97a-96b4f6649119",
+          "assetMappingStatus": "Ok",
+          "provisioningState": "Succeeded"
+        },
+        "kind": "BlobAccount",
+        "id": "/receivedShares/sample-share/assetMappings/receiver-asset-mapping",
+        "name": "receiver-asset-mapping",
+        "type": "receivedShares/assetMappings"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "PURVIEW_SHARE_URL": "https://ads-dev-eastus-pv.purview.azure.com/share",
+    "RandomSeed": "910773199"
+  }
+}

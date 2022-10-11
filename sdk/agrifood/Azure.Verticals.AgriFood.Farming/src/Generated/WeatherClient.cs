@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
+    // Data plane generated client. The Weather service client.
     /// <summary> The Weather service client. </summary>
     public partial class WeatherClient
     {
@@ -775,10 +776,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     boundaryId = "<WeatherDataIngestionJobBoundaryId>",
-        ///     farmerId = "<WeatherDataIngestionJobFarmerId>",
-        ///     extensionId = "<WeatherDataIngestionJobExtensionId>",
-        ///     extensionApiName = "<WeatherDataIngestionJobExtensionApiName>",
+        ///     boundaryId = "<boundaryId>",
+        ///     farmerId = "<farmerId>",
+        ///     extensionId = "<extensionId>",
+        ///     extensionApiName = "<extensionApiName>",
         ///     extensionApiInput = new {
         ///         key = new {},
         ///     },
@@ -801,17 +802,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     boundaryId = "<WeatherDataIngestionJobBoundaryId>",
-        ///     farmerId = "<WeatherDataIngestionJobFarmerId>",
-        ///     extensionId = "<WeatherDataIngestionJobExtensionId>",
-        ///     extensionApiName = "<WeatherDataIngestionJobExtensionApiName>",
+        ///     boundaryId = "<boundaryId>",
+        ///     farmerId = "<farmerId>",
+        ///     extensionId = "<extensionId>",
+        ///     extensionApiName = "<extensionApiName>",
         ///     extensionApiInput = new {
         ///         key = new {},
         ///     },
-        ///     extensionDataProviderAppId = "<WeatherDataIngestionJobExtensionDataProviderAppId>",
-        ///     extensionDataProviderApiKey = "<WeatherDataIngestionJobExtensionDataProviderApiKey>",
-        ///     name = "<WeatherDataIngestionJobName>",
-        ///     description = "<WeatherDataIngestionJobDescription>",
+        ///     extensionDataProviderAppId = "<extensionDataProviderAppId>",
+        ///     extensionDataProviderApiKey = "<extensionDataProviderApiKey>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -938,10 +939,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     boundaryId = "<WeatherDataIngestionJobBoundaryId>",
-        ///     farmerId = "<WeatherDataIngestionJobFarmerId>",
-        ///     extensionId = "<WeatherDataIngestionJobExtensionId>",
-        ///     extensionApiName = "<WeatherDataIngestionJobExtensionApiName>",
+        ///     boundaryId = "<boundaryId>",
+        ///     farmerId = "<farmerId>",
+        ///     extensionId = "<extensionId>",
+        ///     extensionApiName = "<extensionApiName>",
         ///     extensionApiInput = new {
         ///         key = new {},
         ///     },
@@ -964,17 +965,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     boundaryId = "<WeatherDataIngestionJobBoundaryId>",
-        ///     farmerId = "<WeatherDataIngestionJobFarmerId>",
-        ///     extensionId = "<WeatherDataIngestionJobExtensionId>",
-        ///     extensionApiName = "<WeatherDataIngestionJobExtensionApiName>",
+        ///     boundaryId = "<boundaryId>",
+        ///     farmerId = "<farmerId>",
+        ///     extensionId = "<extensionId>",
+        ///     extensionApiName = "<extensionApiName>",
         ///     extensionApiInput = new {
         ///         key = new {},
         ///     },
-        ///     extensionDataProviderAppId = "<WeatherDataIngestionJobExtensionDataProviderAppId>",
-        ///     extensionDataProviderApiKey = "<WeatherDataIngestionJobExtensionDataProviderApiKey>",
-        ///     name = "<WeatherDataIngestionJobName>",
-        ///     description = "<WeatherDataIngestionJobDescription>",
+        ///     extensionDataProviderAppId = "<extensionDataProviderAppId>",
+        ///     extensionDataProviderApiKey = "<extensionDataProviderApiKey>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -1101,9 +1102,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     extensionId = "<WeatherDataDeleteJobExtensionId>",
-        ///     farmerId = "<WeatherDataDeleteJobFarmerId>",
-        ///     boundaryId = "<WeatherDataDeleteJobBoundaryId>",
+        ///     extensionId = "<extensionId>",
+        ///     farmerId = "<farmerId>",
+        ///     boundaryId = "<boundaryId>",
         /// };
         /// 
         /// var operation = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
@@ -1121,15 +1122,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     extensionId = "<WeatherDataDeleteJobExtensionId>",
-        ///     farmerId = "<WeatherDataDeleteJobFarmerId>",
-        ///     boundaryId = "<WeatherDataDeleteJobBoundaryId>",
-        ///     weatherDataType = "<WeatherDataDeleteJobWeatherDataType>",
-        ///     granularity = "<WeatherDataDeleteJobGranularity>",
-        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     name = "<WeatherDataDeleteJobName>",
-        ///     description = "<WeatherDataDeleteJobDescription>",
+        ///     extensionId = "<extensionId>",
+        ///     farmerId = "<farmerId>",
+        ///     boundaryId = "<boundaryId>",
+        ///     weatherDataType = "<weatherDataType>",
+        ///     granularity = "<granularity>",
+        ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     endDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -1256,9 +1257,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     extensionId = "<WeatherDataDeleteJobExtensionId>",
-        ///     farmerId = "<WeatherDataDeleteJobFarmerId>",
-        ///     boundaryId = "<WeatherDataDeleteJobBoundaryId>",
+        ///     extensionId = "<extensionId>",
+        ///     farmerId = "<farmerId>",
+        ///     boundaryId = "<boundaryId>",
         /// };
         /// 
         /// var operation = client.CreateDataDeleteJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
@@ -1276,15 +1277,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     extensionId = "<WeatherDataDeleteJobExtensionId>",
-        ///     farmerId = "<WeatherDataDeleteJobFarmerId>",
-        ///     boundaryId = "<WeatherDataDeleteJobBoundaryId>",
-        ///     weatherDataType = "<WeatherDataDeleteJobWeatherDataType>",
-        ///     granularity = "<WeatherDataDeleteJobGranularity>",
-        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     name = "<WeatherDataDeleteJobName>",
-        ///     description = "<WeatherDataDeleteJobDescription>",
+        ///     extensionId = "<extensionId>",
+        ///     farmerId = "<farmerId>",
+        ///     boundaryId = "<boundaryId>",
+        ///     weatherDataType = "<weatherDataType>",
+        ///     granularity = "<granularity>",
+        ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     endDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },

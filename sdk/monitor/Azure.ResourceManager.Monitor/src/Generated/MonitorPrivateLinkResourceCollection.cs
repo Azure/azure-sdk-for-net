@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A class representing a collection of <see cref="MonitorPrivateLinkResource" /> and their operations.
-    /// Each <see cref="MonitorPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="PrivateLinkScopeResource" />.
-    /// To get a <see cref="MonitorPrivateLinkResourceCollection" /> instance call the GetMonitorPrivateLinkResources method from an instance of <see cref="PrivateLinkScopeResource" />.
+    /// Each <see cref="MonitorPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="MonitorPrivateLinkScopeResource" />.
+    /// To get a <see cref="MonitorPrivateLinkResourceCollection" /> instance call the GetMonitorPrivateLinkResources method from an instance of <see cref="MonitorPrivateLinkScopeResource" />.
     /// </summary>
     public partial class MonitorPrivateLinkResourceCollection : ArmCollection, IEnumerable<MonitorPrivateLinkResource>, IAsyncEnumerable<MonitorPrivateLinkResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Monitor
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != PrivateLinkScopeResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateLinkScopeResource.ResourceType), nameof(id));
+            if (id.ResourceType != MonitorPrivateLinkScopeResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MonitorPrivateLinkScopeResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.ListByPrivateLinkScopeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateLinkResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -135,22 +135,7 @@ namespace Azure.ResourceManager.Monitor
                     throw;
                 }
             }
-            async Task<Page<MonitorPrivateLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.ListByPrivateLinkScopeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -169,7 +154,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.ListByPrivateLinkScope(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateLinkResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -177,22 +162,7 @@ namespace Azure.ResourceManager.Monitor
                     throw;
                 }
             }
-            Page<MonitorPrivateLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.ListByPrivateLinkScopeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>

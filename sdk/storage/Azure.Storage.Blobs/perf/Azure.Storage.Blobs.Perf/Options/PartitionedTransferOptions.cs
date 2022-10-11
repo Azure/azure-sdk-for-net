@@ -50,9 +50,6 @@ namespace Azure.Storage.Blobs.Perf.Options
         [Option("client-encryption")]
         public string EncryptionVersionString { get; set; }
 
-        [Option("transfer-validation")]
-        public ValidationAlgorithm? TransferValidationAlgorithm { get; set; }
-
         public StorageTransferOptions StorageTransferOptions { get; private set; }
 
         BlobClientOptions IBlobClientOptionsProvider.ClientOptions
@@ -78,20 +75,8 @@ namespace Azure.Storage.Blobs.Perf.Options
                             return false;
                     }
                 }
-                return new SpecializedBlobClientOptions
+                var result = new SpecializedBlobClientOptions
                 {
-                    UploadTransferValidationOptions = TransferValidationAlgorithm.HasValue
-                        ? new UploadTransferValidationOptions
-                        {
-                            Algorithm = TransferValidationAlgorithm.Value
-                        }
-                        : default,
-                    DownloadTransferValidationOptions = TransferValidationAlgorithm.HasValue
-                        ? new DownloadTransferValidationOptions
-                        {
-                            Algorithm = TransferValidationAlgorithm.Value
-                        }
-                        : default,
                     ClientSideEncryption = TryParseEncryptionVersion(EncryptionVersionString, out ClientSideEncryptionVersion version)
                         ? new ClientSideEncryptionOptions(version)
                         {
@@ -100,6 +85,7 @@ namespace Azure.Storage.Blobs.Perf.Options
                         }
                         : default
                 };
+                return result;
             }
         }
 

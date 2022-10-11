@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
+    // Data plane generated client. The OAuthTokens service client.
     /// <summary> The OAuthTokens service client. </summary>
     public partial class OAuthTokensClient
     {
@@ -75,9 +76,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new OAuthTokensClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "<OAuthConnectRequestFarmerId>",
-        ///     oAuthProviderId = "<OAuthConnectRequestOAuthProviderId>",
-        ///     userRedirectLink = "<OAuthConnectRequestUserRedirectLink>",
+        ///     farmerId = "<farmerId>",
+        ///     oAuthProviderId = "<oAuthProviderId>",
+        ///     userRedirectLink = "<userRedirectLink>",
         /// };
         /// 
         /// Response response = await client.GetOAuthConnectionLinkAsync(RequestContent.Create(data));
@@ -92,10 +93,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new OAuthTokensClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "<OAuthConnectRequestFarmerId>",
-        ///     oAuthProviderId = "<OAuthConnectRequestOAuthProviderId>",
-        ///     userRedirectLink = "<OAuthConnectRequestUserRedirectLink>",
-        ///     userRedirectState = "<OAuthConnectRequestUserRedirectState>",
+        ///     farmerId = "<farmerId>",
+        ///     oAuthProviderId = "<oAuthProviderId>",
+        ///     userRedirectLink = "<userRedirectLink>",
+        ///     userRedirectState = "<userRedirectState>",
         /// };
         /// 
         /// Response response = await client.GetOAuthConnectionLinkAsync(RequestContent.Create(data));
@@ -148,9 +149,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new OAuthTokensClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "<OAuthConnectRequestFarmerId>",
-        ///     oAuthProviderId = "<OAuthConnectRequestOAuthProviderId>",
-        ///     userRedirectLink = "<OAuthConnectRequestUserRedirectLink>",
+        ///     farmerId = "<farmerId>",
+        ///     oAuthProviderId = "<oAuthProviderId>",
+        ///     userRedirectLink = "<userRedirectLink>",
         /// };
         /// 
         /// Response response = client.GetOAuthConnectionLink(RequestContent.Create(data));
@@ -165,10 +166,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new OAuthTokensClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "<OAuthConnectRequestFarmerId>",
-        ///     oAuthProviderId = "<OAuthConnectRequestOAuthProviderId>",
-        ///     userRedirectLink = "<OAuthConnectRequestUserRedirectLink>",
-        ///     userRedirectState = "<OAuthConnectRequestUserRedirectState>",
+        ///     farmerId = "<farmerId>",
+        ///     oAuthProviderId = "<oAuthProviderId>",
+        ///     userRedirectLink = "<userRedirectLink>",
+        ///     userRedirectState = "<userRedirectState>",
         /// };
         /// 
         /// Response response = client.GetOAuthConnectionLink(RequestContent.Create(data));

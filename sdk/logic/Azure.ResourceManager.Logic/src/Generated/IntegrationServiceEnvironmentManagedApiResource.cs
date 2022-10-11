@@ -258,10 +258,10 @@ namespace Azure.ResourceManager.Logic
         /// Operation Id: IntegrationServiceEnvironmentManagedApiOperations_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiOperation> GetIntegrationServiceEnvironmentManagedApiOperationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="LogicApiOperationInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LogicApiOperationInfo> GetIntegrationServiceEnvironmentManagedApiOperationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApiOperation>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<LogicApiOperationInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _integrationServiceEnvironmentManagedApiOperationsClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiResource.GetIntegrationServiceEnvironmentManagedApiOperations");
                 scope.Start();
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Logic
                     throw;
                 }
             }
-            async Task<Page<ApiOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<LogicApiOperationInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _integrationServiceEnvironmentManagedApiOperationsClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiResource.GetIntegrationServiceEnvironmentManagedApiOperations");
                 scope.Start();
@@ -300,10 +300,10 @@ namespace Azure.ResourceManager.Logic
         /// Operation Id: IntegrationServiceEnvironmentManagedApiOperations_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiOperation> GetIntegrationServiceEnvironmentManagedApiOperations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LogicApiOperationInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LogicApiOperationInfo> GetIntegrationServiceEnvironmentManagedApiOperations(CancellationToken cancellationToken = default)
         {
-            Page<ApiOperation> FirstPageFunc(int? pageSizeHint)
+            Page<LogicApiOperationInfo> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _integrationServiceEnvironmentManagedApiOperationsClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiResource.GetIntegrationServiceEnvironmentManagedApiOperations");
                 scope.Start();
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Logic
                     throw;
                 }
             }
-            Page<ApiOperation> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<LogicApiOperationInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _integrationServiceEnvironmentManagedApiOperationsClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiResource.GetIntegrationServiceEnvironmentManagedApiOperations");
                 scope.Start();
@@ -354,11 +354,21 @@ namespace Azure.ResourceManager.Logic
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues[key] = value;
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _integrationServiceEnvironmentManagedApiRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new IntegrationServiceEnvironmentManagedApiResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _integrationServiceEnvironmentManagedApiRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new IntegrationServiceEnvironmentManagedApiResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags[key] = value;
+                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -385,11 +395,21 @@ namespace Azure.ResourceManager.Logic
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues[key] = value;
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _integrationServiceEnvironmentManagedApiRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new IntegrationServiceEnvironmentManagedApiResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _integrationServiceEnvironmentManagedApiRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new IntegrationServiceEnvironmentManagedApiResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags[key] = value;
+                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -414,12 +434,22 @@ namespace Azure.ResourceManager.Logic
             scope.Start();
             try
             {
-                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _integrationServiceEnvironmentManagedApiRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new IntegrationServiceEnvironmentManagedApiResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _integrationServiceEnvironmentManagedApiRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new IntegrationServiceEnvironmentManagedApiResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags.ReplaceWith(tags);
+                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -444,12 +474,22 @@ namespace Azure.ResourceManager.Logic
             scope.Start();
             try
             {
-                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _integrationServiceEnvironmentManagedApiRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new IntegrationServiceEnvironmentManagedApiResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _integrationServiceEnvironmentManagedApiRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new IntegrationServiceEnvironmentManagedApiResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags.ReplaceWith(tags);
+                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -474,11 +514,21 @@ namespace Azure.ResourceManager.Logic
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.Remove(key);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _integrationServiceEnvironmentManagedApiRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new IntegrationServiceEnvironmentManagedApiResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _integrationServiceEnvironmentManagedApiRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new IntegrationServiceEnvironmentManagedApiResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags.Remove(key);
+                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -503,11 +553,21 @@ namespace Azure.ResourceManager.Logic
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.Remove(key);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _integrationServiceEnvironmentManagedApiRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new IntegrationServiceEnvironmentManagedApiResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _integrationServiceEnvironmentManagedApiRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new IntegrationServiceEnvironmentManagedApiResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags.Remove(key);
+                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {

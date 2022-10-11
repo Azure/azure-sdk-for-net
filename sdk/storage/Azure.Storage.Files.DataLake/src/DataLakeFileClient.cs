@@ -2101,7 +2101,7 @@ namespace Azure.Storage.Files.DataLake
                 contentHash != default
                     ? new UploadTransferValidationOptions()
                     {
-                        Algorithm = ValidationAlgorithm.MD5,
+                        ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
                         PrecalculatedChecksum = contentHash
                     }
                     : default,
@@ -2174,7 +2174,7 @@ namespace Azure.Storage.Files.DataLake
                 contentHash != default
                     ? new UploadTransferValidationOptions()
                     {
-                        Algorithm = ValidationAlgorithm.MD5,
+                        ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
                         PrecalculatedChecksum = contentHash
                     }
                     : default,
@@ -2241,7 +2241,7 @@ namespace Azure.Storage.Files.DataLake
             bool async,
             CancellationToken cancellationToken)
         {
-            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.UploadTransferValidationOptions;
+            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.TransferValidation.Upload;
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(DataLakeFileClient)))
             {
@@ -2270,8 +2270,8 @@ namespace Azure.Storage.Files.DataLake
                             body: content,
                             position: offset,
                             contentLength: content?.Length - content?.Position ?? 0,
-                            transactionalContentHash: hashResult?.MD5,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentHash: hashResult?.MD5AsArray,
+                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
@@ -2286,8 +2286,8 @@ namespace Azure.Storage.Files.DataLake
                             body: content,
                             position: offset,
                             contentLength: content?.Length - content?.Position ?? 0,
-                            transactionalContentHash: hashResult?.MD5,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentHash: hashResult?.MD5AsArray,
+                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,

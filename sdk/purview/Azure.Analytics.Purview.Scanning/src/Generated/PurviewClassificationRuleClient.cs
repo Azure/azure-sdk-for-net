@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Scanning
 {
+    // Data plane generated client. The PurviewClassificationRule service client.
     /// <summary> The PurviewClassificationRule service client. </summary>
     public partial class PurviewClassificationRuleClient
     {
@@ -83,9 +84,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = await client.GetPropertiesAsync();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -96,9 +97,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
-        ///   kind: System, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     description: string, # Optional.
         ///     version: number, # Optional.
@@ -107,14 +105,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
-        ///   kind: Custom, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     minimumPercentageMatch: number, # Optional.
         ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
@@ -131,6 +129,9 @@ namespace Azure.Analytics.Purview.Scanning
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -167,9 +168,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = client.GetProperties();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -180,9 +181,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
-        ///   kind: System, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     description: string, # Optional.
         ///     version: number, # Optional.
@@ -191,14 +189,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
-        ///   kind: Custom, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     minimumPercentageMatch: number, # Optional.
         ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
@@ -215,6 +213,9 @@ namespace Azure.Analytics.Purview.Scanning
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -256,6 +257,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateAsync with all request content, and how to parse the result.
@@ -265,20 +267,20 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
         /// 
         /// var data = new {
-        ///     kind = "System",
         ///     properties = new {
-        ///         description = "<SystemClassificationRulePropertiesDescription>",
-        ///         classificationName = "<SystemClassificationRulePropertiesClassificationName>",
-        ///         ruleStatus = "<Enabled>",
+        ///         description = "<description>",
+        ///         classificationName = "<classificationName>",
+        ///         ruleStatus = "Enabled",
         ///     },
+        ///     kind = "System",
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -289,9 +291,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
-        ///   kind: System, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     description: string, # Optional.
         ///     version: number, # Optional.
@@ -300,14 +299,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
-        ///   kind: Custom, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     minimumPercentageMatch: number, # Optional.
         ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
@@ -324,6 +323,9 @@ namespace Azure.Analytics.Purview.Scanning
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -334,9 +336,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
-        ///   kind: System, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     description: string, # Optional.
         ///     version: number, # Optional.
@@ -345,14 +344,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
-        ///   kind: Custom, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     minimumPercentageMatch: number, # Optional.
         ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
@@ -369,6 +368,9 @@ namespace Azure.Analytics.Purview.Scanning
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -410,6 +412,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdate with all request content, and how to parse the result.
@@ -419,20 +422,20 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
         /// 
         /// var data = new {
-        ///     kind = "System",
         ///     properties = new {
-        ///         description = "<SystemClassificationRulePropertiesDescription>",
-        ///         classificationName = "<SystemClassificationRulePropertiesClassificationName>",
-        ///         ruleStatus = "<Enabled>",
+        ///         description = "<description>",
+        ///         classificationName = "<classificationName>",
+        ///         ruleStatus = "Enabled",
         ///     },
+        ///     kind = "System",
         /// };
         /// 
         /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -443,9 +446,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
-        ///   kind: System, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     description: string, # Optional.
         ///     version: number, # Optional.
@@ -454,14 +454,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
-        ///   kind: Custom, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     minimumPercentageMatch: number, # Optional.
         ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
@@ -478,6 +478,9 @@ namespace Azure.Analytics.Purview.Scanning
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -488,9 +491,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
-        ///   kind: System, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     description: string, # Optional.
         ///     version: number, # Optional.
@@ -499,14 +499,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
-        ///   kind: Custom, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     minimumPercentageMatch: number, # Optional.
         ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
@@ -523,6 +523,9 @@ namespace Azure.Analytics.Purview.Scanning
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -559,9 +562,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = await client.DeleteAsync();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -572,9 +575,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
-        ///   kind: System, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     description: string, # Optional.
         ///     version: number, # Optional.
@@ -583,14 +583,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
-        ///   kind: Custom, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     minimumPercentageMatch: number, # Optional.
         ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
@@ -607,6 +607,9 @@ namespace Azure.Analytics.Purview.Scanning
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -643,9 +646,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = client.Delete();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -656,9 +659,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
-        ///   kind: System, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     description: string, # Optional.
         ///     version: number, # Optional.
@@ -667,14 +667,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
-        ///   kind: Custom, # Required.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     minimumPercentageMatch: number, # Optional.
         ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
@@ -691,6 +691,9 @@ namespace Azure.Analytics.Purview.Scanning
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -714,7 +717,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Sets Classification Action on a specific classification rule version. </summary>
-        /// <param name="classificationRuleVersion"> The Integer to use. </param>
+        /// <param name="classificationRuleVersion"> The Int32 to use. </param>
         /// <param name="action"> The ClassificationAction to use. Allowed values: &quot;Keep&quot; | &quot;Delete&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
@@ -749,7 +752,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>OperationResponse</c>:
         /// <code>{
-        ///   scanResultId: OperationResponseScanResultId, # Optional.
+        ///   scanResultId: Guid, # Optional.
         ///   startTime: string (ISO 8601 Format), # Optional.
         ///   endTime: string (ISO 8601 Format), # Optional.
         ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Optional.
@@ -789,7 +792,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Sets Classification Action on a specific classification rule version. </summary>
-        /// <param name="classificationRuleVersion"> The Integer to use. </param>
+        /// <param name="classificationRuleVersion"> The Int32 to use. </param>
         /// <param name="action"> The ClassificationAction to use. Allowed values: &quot;Keep&quot; | &quot;Delete&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
@@ -824,7 +827,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>OperationResponse</c>:
         /// <code>{
-        ///   scanResultId: OperationResponseScanResultId, # Optional.
+        ///   scanResultId: Guid, # Optional.
         ///   startTime: string (ISO 8601 Format), # Optional.
         ///   endTime: string (ISO 8601 Format), # Optional.
         ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Optional.
@@ -877,9 +880,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// await foreach (var data in client.GetVersionsAsync())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -890,9 +893,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>ClassificationRuleListValue</c>:
         /// <code>{
+        ///   kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
         /// }
         /// </code>
         /// 
@@ -933,9 +936,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// foreach (var data in client.GetVersions())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -946,9 +949,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>ClassificationRuleListValue</c>:
         /// <code>{
+        ///   kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
         /// }
         /// </code>
         /// 

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Describes an available API Management service SKU. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="sku"> Specifies API Management SKU. </param>
         /// <param name="capacity"> Specifies the number of API Management units. </param>
-        internal AvailableApiManagementServiceSkuResult(string resourceType, ResourceSku sku, ApiManagementResourceSkuCapacity capacity)
+        internal AvailableApiManagementServiceSkuResult(ResourceType? resourceType, ResourceSku sku, ApiManagementResourceSkuCapacity capacity)
         {
             ResourceType = resourceType;
             Sku = sku;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The type of resource the SKU applies to. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> Specifies API Management SKU. </summary>
         internal ResourceSku Sku { get; }
         /// <summary> Name of the Sku. </summary>

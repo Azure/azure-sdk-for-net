@@ -13,7 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
-    /// <summary> The PurviewTypes service client. </summary>
+    // Data plane generated sub-client. The PurviewTypes sub-client.
+    /// <summary> The PurviewTypes sub-client. </summary>
     public partial class PurviewTypes
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
@@ -705,6 +706,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = await client.GetClassificationDefByGuidAsync("<guid>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -749,9 +753,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -761,6 +762,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasClassificationDef</c>:
         /// <code>{
+        ///   entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;
+        ///   subTypes: [string], # Optional. An array of sub types.
+        ///   superTypes: [string], # Optional. An array of super types.
         ///   attributeDefs: [
         ///     {
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
@@ -829,18 +842,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
-        /// only be applied to those entityTypes.
-        /// &lt;ul&gt;
-        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
-        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;
-        ///   subTypes: [string], # Optional. An array of sub types.
-        ///   superTypes: [string], # Optional. An array of super types.
         /// }
         /// </code>
         /// 
@@ -880,6 +881,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = client.GetClassificationDefByGuid("<guid>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -924,9 +928,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -936,6 +937,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasClassificationDef</c>:
         /// <code>{
+        ///   entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;
+        ///   subTypes: [string], # Optional. An array of sub types.
+        ///   superTypes: [string], # Optional. An array of super types.
         ///   attributeDefs: [
         ///     {
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
@@ -1004,18 +1017,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
-        /// only be applied to those entityTypes.
-        /// &lt;ul&gt;
-        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
-        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;
-        ///   subTypes: [string], # Optional. An array of sub types.
-        ///   superTypes: [string], # Optional. An array of super types.
         /// }
         /// </code>
         /// 
@@ -1055,6 +1056,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = await client.GetClassificationDefByNameAsync("<name>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -1099,9 +1103,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1111,6 +1112,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasClassificationDef</c>:
         /// <code>{
+        ///   entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;
+        ///   subTypes: [string], # Optional. An array of sub types.
+        ///   superTypes: [string], # Optional. An array of super types.
         ///   attributeDefs: [
         ///     {
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
@@ -1179,18 +1192,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
-        /// only be applied to those entityTypes.
-        /// &lt;ul&gt;
-        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
-        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;
-        ///   subTypes: [string], # Optional. An array of sub types.
-        ///   superTypes: [string], # Optional. An array of super types.
         /// }
         /// </code>
         /// 
@@ -1230,6 +1231,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = client.GetClassificationDefByName("<name>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -1274,9 +1278,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1286,6 +1287,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasClassificationDef</c>:
         /// <code>{
+        ///   entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;
+        ///   subTypes: [string], # Optional. An array of sub types.
+        ///   superTypes: [string], # Optional. An array of super types.
         ///   attributeDefs: [
         ///     {
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
@@ -1354,18 +1367,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
-        /// only be applied to those entityTypes.
-        /// &lt;ul&gt;
-        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
-        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;
-        ///   subTypes: [string], # Optional. An array of sub types.
-        ///   superTypes: [string], # Optional. An array of super types.
         /// }
         /// </code>
         /// 
@@ -1405,6 +1406,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = await client.GetEntityDefinitionByGuidAsync("<guid>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -1449,24 +1468,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1476,8 +1477,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntityDef</c>:
         /// <code>{
-        ///   attributeDefs: [
+        ///   subTypes: [string], # Optional. An array of sub types.
+        ///   superTypes: [string], # Optional. An array of super types.
+        ///   relationshipAttributeDefs: [
         ///     {
+        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///       constraints: [
         ///         {
@@ -1485,6 +1490,23 @@ namespace Azure.Analytics.Purview.Catalog
         ///           type: string, # Optional. The type of the constraint.
         ///         }
         ///       ], # Optional. An array of constraints.
+        ///       defaultValue: string, # Optional. The default value of the attribute.
+        ///       description: string, # Optional. The description of the attribute.
+        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
+        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
+        ///       isOptional: boolean, # Optional. Determines if it is optional.
+        ///       isUnique: boolean, # Optional. Determines if it unique.
+        ///       name: string, # Optional. The name of the attribute.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
+        ///       valuesMinCount: number, # Optional. The minimum count of the values.
+        ///     }
+        ///   ], # Optional. An array of relationship attributes.
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
+        ///       constraints: [AtlasConstraintDef], # Optional. An array of constraints.
         ///       defaultValue: string, # Optional. The default value of the attribute.
         ///       description: string, # Optional. The description of the attribute.
         ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
@@ -1544,27 +1566,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   subTypes: [string], # Optional. An array of sub types.
-        ///   superTypes: [string], # Optional. An array of super types.
-        ///   relationshipAttributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [AtlasConstraintDef], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
-        ///     }
-        ///   ], # Optional. An array of relationship attributes.
         /// }
         /// </code>
         /// 
@@ -1604,6 +1605,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = client.GetEntityDefinitionByGuid("<guid>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -1648,24 +1667,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1675,8 +1676,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntityDef</c>:
         /// <code>{
-        ///   attributeDefs: [
+        ///   subTypes: [string], # Optional. An array of sub types.
+        ///   superTypes: [string], # Optional. An array of super types.
+        ///   relationshipAttributeDefs: [
         ///     {
+        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///       constraints: [
         ///         {
@@ -1684,6 +1689,23 @@ namespace Azure.Analytics.Purview.Catalog
         ///           type: string, # Optional. The type of the constraint.
         ///         }
         ///       ], # Optional. An array of constraints.
+        ///       defaultValue: string, # Optional. The default value of the attribute.
+        ///       description: string, # Optional. The description of the attribute.
+        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
+        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
+        ///       isOptional: boolean, # Optional. Determines if it is optional.
+        ///       isUnique: boolean, # Optional. Determines if it unique.
+        ///       name: string, # Optional. The name of the attribute.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
+        ///       valuesMinCount: number, # Optional. The minimum count of the values.
+        ///     }
+        ///   ], # Optional. An array of relationship attributes.
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
+        ///       constraints: [AtlasConstraintDef], # Optional. An array of constraints.
         ///       defaultValue: string, # Optional. The default value of the attribute.
         ///       description: string, # Optional. The description of the attribute.
         ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
@@ -1743,27 +1765,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   subTypes: [string], # Optional. An array of sub types.
-        ///   superTypes: [string], # Optional. An array of super types.
-        ///   relationshipAttributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [AtlasConstraintDef], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
-        ///     }
-        ///   ], # Optional. An array of relationship attributes.
         /// }
         /// </code>
         /// 
@@ -1803,6 +1804,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = await client.GetEntityDefinitionByNameAsync("<name>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -1847,24 +1866,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1874,8 +1875,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntityDef</c>:
         /// <code>{
-        ///   attributeDefs: [
+        ///   subTypes: [string], # Optional. An array of sub types.
+        ///   superTypes: [string], # Optional. An array of super types.
+        ///   relationshipAttributeDefs: [
         ///     {
+        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///       constraints: [
         ///         {
@@ -1883,6 +1888,23 @@ namespace Azure.Analytics.Purview.Catalog
         ///           type: string, # Optional. The type of the constraint.
         ///         }
         ///       ], # Optional. An array of constraints.
+        ///       defaultValue: string, # Optional. The default value of the attribute.
+        ///       description: string, # Optional. The description of the attribute.
+        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
+        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
+        ///       isOptional: boolean, # Optional. Determines if it is optional.
+        ///       isUnique: boolean, # Optional. Determines if it unique.
+        ///       name: string, # Optional. The name of the attribute.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
+        ///       valuesMinCount: number, # Optional. The minimum count of the values.
+        ///     }
+        ///   ], # Optional. An array of relationship attributes.
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
+        ///       constraints: [AtlasConstraintDef], # Optional. An array of constraints.
         ///       defaultValue: string, # Optional. The default value of the attribute.
         ///       description: string, # Optional. The description of the attribute.
         ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
@@ -1942,27 +1964,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   subTypes: [string], # Optional. An array of sub types.
-        ///   superTypes: [string], # Optional. An array of super types.
-        ///   relationshipAttributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [AtlasConstraintDef], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
-        ///     }
-        ///   ], # Optional. An array of relationship attributes.
         /// }
         /// </code>
         /// 
@@ -2002,6 +2003,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = client.GetEntityDefinitionByName("<name>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -2046,24 +2065,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2073,8 +2074,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntityDef</c>:
         /// <code>{
-        ///   attributeDefs: [
+        ///   subTypes: [string], # Optional. An array of sub types.
+        ///   superTypes: [string], # Optional. An array of super types.
+        ///   relationshipAttributeDefs: [
         ///     {
+        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///       constraints: [
         ///         {
@@ -2082,6 +2087,23 @@ namespace Azure.Analytics.Purview.Catalog
         ///           type: string, # Optional. The type of the constraint.
         ///         }
         ///       ], # Optional. An array of constraints.
+        ///       defaultValue: string, # Optional. The default value of the attribute.
+        ///       description: string, # Optional. The description of the attribute.
+        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
+        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
+        ///       isOptional: boolean, # Optional. Determines if it is optional.
+        ///       isUnique: boolean, # Optional. Determines if it unique.
+        ///       name: string, # Optional. The name of the attribute.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
+        ///       valuesMinCount: number, # Optional. The minimum count of the values.
+        ///     }
+        ///   ], # Optional. An array of relationship attributes.
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
+        ///       constraints: [AtlasConstraintDef], # Optional. An array of constraints.
         ///       defaultValue: string, # Optional. The default value of the attribute.
         ///       description: string, # Optional. The description of the attribute.
         ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
@@ -2141,27 +2163,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   subTypes: [string], # Optional. An array of sub types.
-        ///   superTypes: [string], # Optional. An array of super types.
-        ///   relationshipAttributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [AtlasConstraintDef], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
-        ///     }
-        ///   ], # Optional. An array of relationship attributes.
         /// }
         /// </code>
         /// 
@@ -2201,6 +2202,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = await client.GetEnumDefByGuidAsync("<guid>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdBy").ToString());
@@ -2231,10 +2236,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2244,6 +2245,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEnumDef</c>:
         /// <code>{
+        ///   defaultValue: string, # Optional. The default value.
+        ///   elementDefs: [
+        ///     {
+        ///       description: string, # Optional. The description of the enum element definition.
+        ///       ordinal: number, # Optional. The ordinal of the enum element definition.
+        ///       value: string, # Optional. The value of the enum element definition.
+        ///     }
+        ///   ], # Optional. An array of enum element definitions.
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///   createTime: number, # Optional. The created time of the record.
         ///   createdBy: string, # Optional. The user who created the record.
@@ -2290,14 +2299,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   defaultValue: string, # Optional. The default value.
-        ///   elementDefs: [
-        ///     {
-        ///       description: string, # Optional. The description of the enum element definition.
-        ///       ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///       value: string, # Optional. The value of the enum element definition.
-        ///     }
-        ///   ], # Optional. An array of enum element definitions.
         /// }
         /// </code>
         /// 
@@ -2337,6 +2338,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = client.GetEnumDefByGuid("<guid>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdBy").ToString());
@@ -2367,10 +2372,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2380,6 +2381,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEnumDef</c>:
         /// <code>{
+        ///   defaultValue: string, # Optional. The default value.
+        ///   elementDefs: [
+        ///     {
+        ///       description: string, # Optional. The description of the enum element definition.
+        ///       ordinal: number, # Optional. The ordinal of the enum element definition.
+        ///       value: string, # Optional. The value of the enum element definition.
+        ///     }
+        ///   ], # Optional. An array of enum element definitions.
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///   createTime: number, # Optional. The created time of the record.
         ///   createdBy: string, # Optional. The user who created the record.
@@ -2426,14 +2435,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   defaultValue: string, # Optional. The default value.
-        ///   elementDefs: [
-        ///     {
-        ///       description: string, # Optional. The description of the enum element definition.
-        ///       ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///       value: string, # Optional. The value of the enum element definition.
-        ///     }
-        ///   ], # Optional. An array of enum element definitions.
         /// }
         /// </code>
         /// 
@@ -2473,6 +2474,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = await client.GetEnumDefByNameAsync("<name>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdBy").ToString());
@@ -2503,10 +2508,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2516,6 +2517,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEnumDef</c>:
         /// <code>{
+        ///   defaultValue: string, # Optional. The default value.
+        ///   elementDefs: [
+        ///     {
+        ///       description: string, # Optional. The description of the enum element definition.
+        ///       ordinal: number, # Optional. The ordinal of the enum element definition.
+        ///       value: string, # Optional. The value of the enum element definition.
+        ///     }
+        ///   ], # Optional. An array of enum element definitions.
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///   createTime: number, # Optional. The created time of the record.
         ///   createdBy: string, # Optional. The user who created the record.
@@ -2562,14 +2571,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   defaultValue: string, # Optional. The default value.
-        ///   elementDefs: [
-        ///     {
-        ///       description: string, # Optional. The description of the enum element definition.
-        ///       ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///       value: string, # Optional. The value of the enum element definition.
-        ///     }
-        ///   ], # Optional. An array of enum element definitions.
         /// }
         /// </code>
         /// 
@@ -2609,6 +2610,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = client.GetEnumDefByName("<name>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdBy").ToString());
@@ -2639,10 +2644,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2652,6 +2653,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEnumDef</c>:
         /// <code>{
+        ///   defaultValue: string, # Optional. The default value.
+        ///   elementDefs: [
+        ///     {
+        ///       description: string, # Optional. The description of the enum element definition.
+        ///       ordinal: number, # Optional. The ordinal of the enum element definition.
+        ///       value: string, # Optional. The value of the enum element definition.
+        ///     }
+        ///   ], # Optional. An array of enum element definitions.
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///   createTime: number, # Optional. The created time of the record.
         ///   createdBy: string, # Optional. The user who created the record.
@@ -2698,14 +2707,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   defaultValue: string, # Optional. The default value.
-        ///   elementDefs: [
-        ///     {
-        ///       description: string, # Optional. The description of the enum element definition.
-        ///       ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///       value: string, # Optional. The value of the enum element definition.
-        ///     }
-        ///   ], # Optional. An array of enum element definitions.
         /// }
         /// </code>
         /// 
@@ -2745,6 +2746,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = await client.GetRelationshipDefByGuidAsync("<guid>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -2789,20 +2804,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2812,6 +2813,27 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasRelationshipDef</c>:
         /// <code>{
+        ///   endDef1: {
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
+        ///     description: string, # Optional. The description of the relationship end definition.
+        ///     isContainer: boolean, # Optional. Determines if it is container.
+        ///     isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///     name: string, # Optional. The name of the relationship end definition.
+        ///     type: string, # Optional. The type of the relationship end.
+        ///   }, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.
+        ///   endDef2: AtlasRelationshipEndDef, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.
+        ///   relationshipLabel: string, # Optional. The label of the relationship.
         ///   attributeDefs: [
         ///     {
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
@@ -2880,27 +2902,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///     description: string, # Optional. The description of the relationship end definition.
-        ///     isContainer: boolean, # Optional. Determines if it is container.
-        ///     isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///     name: string, # Optional. The name of the relationship end definition.
-        ///     type: string, # Optional. The type of the relationship end.
-        ///   }, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        ///   endDef2: AtlasRelationshipEndDef, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. The Relationship category determines the style of relationship around containment and lifecycle.
-        /// UML terminology is used for the values.
-        /// &lt;p&gt;
-        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
-        /// COMPOSITION and AGGREGATION are containment relationships.
-        /// &lt;p&gt;
-        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
-        /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.
-        ///   relationshipLabel: string, # Optional. The label of the relationship.
         /// }
         /// </code>
         /// 
@@ -2940,6 +2941,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = client.GetRelationshipDefByGuid("<guid>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -2984,20 +2999,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3007,6 +3008,27 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasRelationshipDef</c>:
         /// <code>{
+        ///   endDef1: {
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
+        ///     description: string, # Optional. The description of the relationship end definition.
+        ///     isContainer: boolean, # Optional. Determines if it is container.
+        ///     isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///     name: string, # Optional. The name of the relationship end definition.
+        ///     type: string, # Optional. The type of the relationship end.
+        ///   }, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.
+        ///   endDef2: AtlasRelationshipEndDef, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.
+        ///   relationshipLabel: string, # Optional. The label of the relationship.
         ///   attributeDefs: [
         ///     {
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
@@ -3075,27 +3097,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///     description: string, # Optional. The description of the relationship end definition.
-        ///     isContainer: boolean, # Optional. Determines if it is container.
-        ///     isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///     name: string, # Optional. The name of the relationship end definition.
-        ///     type: string, # Optional. The type of the relationship end.
-        ///   }, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        ///   endDef2: AtlasRelationshipEndDef, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. The Relationship category determines the style of relationship around containment and lifecycle.
-        /// UML terminology is used for the values.
-        /// &lt;p&gt;
-        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
-        /// COMPOSITION and AGGREGATION are containment relationships.
-        /// &lt;p&gt;
-        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
-        /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.
-        ///   relationshipLabel: string, # Optional. The label of the relationship.
         /// }
         /// </code>
         /// 
@@ -3135,6 +3136,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = await client.GetRelationshipDefByNameAsync("<name>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -3179,20 +3194,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3202,6 +3203,27 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasRelationshipDef</c>:
         /// <code>{
+        ///   endDef1: {
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
+        ///     description: string, # Optional. The description of the relationship end definition.
+        ///     isContainer: boolean, # Optional. Determines if it is container.
+        ///     isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///     name: string, # Optional. The name of the relationship end definition.
+        ///     type: string, # Optional. The type of the relationship end.
+        ///   }, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.
+        ///   endDef2: AtlasRelationshipEndDef, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.
+        ///   relationshipLabel: string, # Optional. The label of the relationship.
         ///   attributeDefs: [
         ///     {
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
@@ -3270,27 +3292,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///     description: string, # Optional. The description of the relationship end definition.
-        ///     isContainer: boolean, # Optional. Determines if it is container.
-        ///     isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///     name: string, # Optional. The name of the relationship end definition.
-        ///     type: string, # Optional. The type of the relationship end.
-        ///   }, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        ///   endDef2: AtlasRelationshipEndDef, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. The Relationship category determines the style of relationship around containment and lifecycle.
-        /// UML terminology is used for the values.
-        /// &lt;p&gt;
-        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
-        /// COMPOSITION and AGGREGATION are containment relationships.
-        /// &lt;p&gt;
-        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
-        /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.
-        ///   relationshipLabel: string, # Optional. The label of the relationship.
         /// }
         /// </code>
         /// 
@@ -3330,6 +3331,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = client.GetRelationshipDefByName("<name>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -3374,20 +3389,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3397,6 +3398,27 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasRelationshipDef</c>:
         /// <code>{
+        ///   endDef1: {
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
+        ///     description: string, # Optional. The description of the relationship end definition.
+        ///     isContainer: boolean, # Optional. Determines if it is container.
+        ///     isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///     name: string, # Optional. The name of the relationship end definition.
+        ///     type: string, # Optional. The type of the relationship end.
+        ///   }, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.
+        ///   endDef2: AtlasRelationshipEndDef, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.
+        ///   relationshipLabel: string, # Optional. The label of the relationship.
         ///   attributeDefs: [
         ///     {
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
@@ -3465,27 +3487,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///     description: string, # Optional. The description of the relationship end definition.
-        ///     isContainer: boolean, # Optional. Determines if it is container.
-        ///     isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///     name: string, # Optional. The name of the relationship end definition.
-        ///     type: string, # Optional. The type of the relationship end.
-        ///   }, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        ///   endDef2: AtlasRelationshipEndDef, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. The Relationship category determines the style of relationship around containment and lifecycle.
-        /// UML terminology is used for the values.
-        /// &lt;p&gt;
-        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
-        /// COMPOSITION and AGGREGATION are containment relationships.
-        /// &lt;p&gt;
-        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
-        /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.
-        ///   relationshipLabel: string, # Optional. The label of the relationship.
         /// }
         /// </code>
         /// 
@@ -3525,6 +3526,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = await client.GetStructDefByGuidAsync("<guid>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdBy").ToString());
@@ -3555,20 +3570,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3652,74 +3653,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// </details>
         /// <details><summary>~+ 4 more JSON objects</summary><details><summary>AtlasClassificationDef</summary>Schema for <c>AtlasClassificationDef</c>:
         /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
-        ///           type: string, # Optional. The type of the constraint.
-        ///         }
-        ///       ], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///     }
-        ///   ], # Optional. An array of attribute definitions.
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///   createTime: number, # Optional. The created time of the record.
-        ///   createdBy: string, # Optional. The user who created the record.
-        ///   dateFormatter: {
-        ///     availableLocales: [string], # Optional. An array of available locales.
-        ///     calendar: number, # Optional.
-        ///     dateInstance: DateFormat, # Optional. The date format.
-        ///     dateTimeInstance: DateFormat, # Optional. The date format.
-        ///     instance: DateFormat, # Optional. The date format.
-        ///     lenient: boolean, # Optional. Determines the leniency of the date format.
-        ///     numberFormat: {
-        ///       availableLocales: [string], # Optional. The number format.
-        ///       currency: string, # Optional. The currency.
-        ///       currencyInstance: NumberFormat, # Optional. The number format.
-        ///       groupingUsed: boolean, # Optional. Determines if grouping is used.
-        ///       instance: NumberFormat, # Optional. The number format.
-        ///       integerInstance: NumberFormat, # Optional. The number format.
-        ///       maximumFractionDigits: number, # Optional. The maximum of fraction digits.
-        ///       maximumIntegerDigits: number, # Optional. The maximum of integer digits.
-        ///       minimumFractionDigits: number, # Optional. The minimum of fraction digits.
-        ///       minimumIntegerDigits: number, # Optional. The minimum of integer digits.
-        ///       numberInstance: NumberFormat, # Optional. The number format.
-        ///       parseIntegerOnly: boolean, # Optional. Determines if only integer is parsed.
-        ///       percentInstance: NumberFormat, # Optional. The number format.
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. The enum of rounding mode.
-        ///     }, # Optional. The number format.
-        ///     timeInstance: DateFormat, # Optional. The date format.
-        ///     timeZone: {
-        ///       dstSavings: number, # Optional. The value of the daylight saving time.
-        ///       id: string, # Optional. The ID of the timezone.
-        ///       availableIds: [string], # Optional. An array of available IDs.
-        ///       default: TimeZone, # Optional. The timezone information.
-        ///       displayName: string, # Optional. The display name of the timezone.
-        ///       rawOffset: number, # Optional. The raw offset of the timezone.
-        ///     }, # Optional. The timezone information.
-        ///   }, # Optional. The date format.
-        ///   description: string, # Optional. The description of the type definition.
-        ///   guid: string, # Optional. The GUID of the type definition.
-        ///   name: string, # Optional. The name of the type definition.
-        ///   options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///   serviceType: string, # Optional. The service type.
-        ///   typeVersion: string, # Optional. The version of the type.
-        ///   updateTime: number, # Optional. The update time of the record.
-        ///   updatedBy: string, # Optional. The user who updated the record.
-        ///   version: number, # Optional. The version of the record.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
@@ -3732,11 +3665,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;/ul&gt;
         ///   subTypes: [string], # Optional. An array of sub types.
         ///   superTypes: [string], # Optional. An array of super types.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AtlasEntityDef</summary>Schema for <c>AtlasEntityDef</c>:
-        /// <code>{
         ///   attributeDefs: [
         ///     {
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
@@ -3805,9 +3733,38 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AtlasEntityDef</summary>Schema for <c>AtlasEntityDef</c>:
+        /// <code>{
         ///   subTypes: [string], # Optional. An array of sub types.
         ///   superTypes: [string], # Optional. An array of super types.
         ///   relationshipAttributeDefs: [
+        ///     {
+        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
+        ///           type: string, # Optional. The type of the constraint.
+        ///         }
+        ///       ], # Optional. An array of constraints.
+        ///       defaultValue: string, # Optional. The default value of the attribute.
+        ///       description: string, # Optional. The description of the attribute.
+        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
+        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
+        ///       isOptional: boolean, # Optional. Determines if it is optional.
+        ///       isUnique: boolean, # Optional. Determines if it unique.
+        ///       name: string, # Optional. The name of the attribute.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
+        ///       valuesMinCount: number, # Optional. The minimum count of the values.
+        ///     }
+        ///   ], # Optional. An array of relationship attributes.
+        ///   attributeDefs: [
         ///     {
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///       constraints: [AtlasConstraintDef], # Optional. An array of constraints.
@@ -3822,35 +3779,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///       typeName: string, # Optional. The name of the type.
         ///       valuesMaxCount: number, # Optional. The maximum count of the values.
         ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
-        ///     }
-        ///   ], # Optional. An array of relationship attributes.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AtlasRelationshipDef</summary>Schema for <c>AtlasRelationshipDef</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
-        ///           type: string, # Optional. The type of the constraint.
-        ///         }
-        ///       ], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
         ///     }
         ///   ], # Optional. An array of attribute definitions.
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
@@ -3899,6 +3827,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AtlasRelationshipDef</summary>Schema for <c>AtlasRelationshipDef</c>:
+        /// <code>{
         ///   endDef1: {
         ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///     description: string, # Optional. The description of the relationship end definition.
@@ -3920,6 +3853,74 @@ namespace Azure.Analytics.Purview.Catalog
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
         /// of the container and children are totally independent.
         ///   relationshipLabel: string, # Optional. The label of the relationship.
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
+        ///           type: string, # Optional. The type of the constraint.
+        ///         }
+        ///       ], # Optional. An array of constraints.
+        ///       defaultValue: string, # Optional. The default value of the attribute.
+        ///       description: string, # Optional. The description of the attribute.
+        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
+        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
+        ///       isOptional: boolean, # Optional. Determines if it is optional.
+        ///       isUnique: boolean, # Optional. Determines if it unique.
+        ///       name: string, # Optional. The name of the attribute.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
+        ///       valuesMinCount: number, # Optional. The minimum count of the values.
+        ///     }
+        ///   ], # Optional. An array of attribute definitions.
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///   createTime: number, # Optional. The created time of the record.
+        ///   createdBy: string, # Optional. The user who created the record.
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. An array of available locales.
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. The date format.
+        ///     dateTimeInstance: DateFormat, # Optional. The date format.
+        ///     instance: DateFormat, # Optional. The date format.
+        ///     lenient: boolean, # Optional. Determines the leniency of the date format.
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. The number format.
+        ///       currency: string, # Optional. The currency.
+        ///       currencyInstance: NumberFormat, # Optional. The number format.
+        ///       groupingUsed: boolean, # Optional. Determines if grouping is used.
+        ///       instance: NumberFormat, # Optional. The number format.
+        ///       integerInstance: NumberFormat, # Optional. The number format.
+        ///       maximumFractionDigits: number, # Optional. The maximum of fraction digits.
+        ///       maximumIntegerDigits: number, # Optional. The maximum of integer digits.
+        ///       minimumFractionDigits: number, # Optional. The minimum of fraction digits.
+        ///       minimumIntegerDigits: number, # Optional. The minimum of integer digits.
+        ///       numberInstance: NumberFormat, # Optional. The number format.
+        ///       parseIntegerOnly: boolean, # Optional. Determines if only integer is parsed.
+        ///       percentInstance: NumberFormat, # Optional. The number format.
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. The enum of rounding mode.
+        ///     }, # Optional. The number format.
+        ///     timeInstance: DateFormat, # Optional. The date format.
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. The value of the daylight saving time.
+        ///       id: string, # Optional. The ID of the timezone.
+        ///       availableIds: [string], # Optional. An array of available IDs.
+        ///       default: TimeZone, # Optional. The timezone information.
+        ///       displayName: string, # Optional. The display name of the timezone.
+        ///       rawOffset: number, # Optional. The raw offset of the timezone.
+        ///     }, # Optional. The timezone information.
+        ///   }, # Optional. The date format.
+        ///   description: string, # Optional. The description of the type definition.
+        ///   guid: string, # Optional. The GUID of the type definition.
+        ///   name: string, # Optional. The name of the type definition.
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///   serviceType: string, # Optional. The service type.
+        ///   typeVersion: string, # Optional. The version of the type.
+        ///   updateTime: number, # Optional. The update time of the record.
+        ///   updatedBy: string, # Optional. The user who updated the record.
+        ///   version: number, # Optional. The version of the record.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// </details>
@@ -4034,6 +4035,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = client.GetStructDefByGuid("<guid>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdBy").ToString());
@@ -4064,20 +4079,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4161,74 +4162,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// </details>
         /// <details><summary>~+ 4 more JSON objects</summary><details><summary>AtlasClassificationDef</summary>Schema for <c>AtlasClassificationDef</c>:
         /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
-        ///           type: string, # Optional. The type of the constraint.
-        ///         }
-        ///       ], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///     }
-        ///   ], # Optional. An array of attribute definitions.
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///   createTime: number, # Optional. The created time of the record.
-        ///   createdBy: string, # Optional. The user who created the record.
-        ///   dateFormatter: {
-        ///     availableLocales: [string], # Optional. An array of available locales.
-        ///     calendar: number, # Optional.
-        ///     dateInstance: DateFormat, # Optional. The date format.
-        ///     dateTimeInstance: DateFormat, # Optional. The date format.
-        ///     instance: DateFormat, # Optional. The date format.
-        ///     lenient: boolean, # Optional. Determines the leniency of the date format.
-        ///     numberFormat: {
-        ///       availableLocales: [string], # Optional. The number format.
-        ///       currency: string, # Optional. The currency.
-        ///       currencyInstance: NumberFormat, # Optional. The number format.
-        ///       groupingUsed: boolean, # Optional. Determines if grouping is used.
-        ///       instance: NumberFormat, # Optional. The number format.
-        ///       integerInstance: NumberFormat, # Optional. The number format.
-        ///       maximumFractionDigits: number, # Optional. The maximum of fraction digits.
-        ///       maximumIntegerDigits: number, # Optional. The maximum of integer digits.
-        ///       minimumFractionDigits: number, # Optional. The minimum of fraction digits.
-        ///       minimumIntegerDigits: number, # Optional. The minimum of integer digits.
-        ///       numberInstance: NumberFormat, # Optional. The number format.
-        ///       parseIntegerOnly: boolean, # Optional. Determines if only integer is parsed.
-        ///       percentInstance: NumberFormat, # Optional. The number format.
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. The enum of rounding mode.
-        ///     }, # Optional. The number format.
-        ///     timeInstance: DateFormat, # Optional. The date format.
-        ///     timeZone: {
-        ///       dstSavings: number, # Optional. The value of the daylight saving time.
-        ///       id: string, # Optional. The ID of the timezone.
-        ///       availableIds: [string], # Optional. An array of available IDs.
-        ///       default: TimeZone, # Optional. The timezone information.
-        ///       displayName: string, # Optional. The display name of the timezone.
-        ///       rawOffset: number, # Optional. The raw offset of the timezone.
-        ///     }, # Optional. The timezone information.
-        ///   }, # Optional. The date format.
-        ///   description: string, # Optional. The description of the type definition.
-        ///   guid: string, # Optional. The GUID of the type definition.
-        ///   name: string, # Optional. The name of the type definition.
-        ///   options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///   serviceType: string, # Optional. The service type.
-        ///   typeVersion: string, # Optional. The version of the type.
-        ///   updateTime: number, # Optional. The update time of the record.
-        ///   updatedBy: string, # Optional. The user who updated the record.
-        ///   version: number, # Optional. The version of the record.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
@@ -4241,11 +4174,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;/ul&gt;
         ///   subTypes: [string], # Optional. An array of sub types.
         ///   superTypes: [string], # Optional. An array of super types.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AtlasEntityDef</summary>Schema for <c>AtlasEntityDef</c>:
-        /// <code>{
         ///   attributeDefs: [
         ///     {
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
@@ -4314,9 +4242,38 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AtlasEntityDef</summary>Schema for <c>AtlasEntityDef</c>:
+        /// <code>{
         ///   subTypes: [string], # Optional. An array of sub types.
         ///   superTypes: [string], # Optional. An array of super types.
         ///   relationshipAttributeDefs: [
+        ///     {
+        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
+        ///           type: string, # Optional. The type of the constraint.
+        ///         }
+        ///       ], # Optional. An array of constraints.
+        ///       defaultValue: string, # Optional. The default value of the attribute.
+        ///       description: string, # Optional. The description of the attribute.
+        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
+        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
+        ///       isOptional: boolean, # Optional. Determines if it is optional.
+        ///       isUnique: boolean, # Optional. Determines if it unique.
+        ///       name: string, # Optional. The name of the attribute.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
+        ///       valuesMinCount: number, # Optional. The minimum count of the values.
+        ///     }
+        ///   ], # Optional. An array of relationship attributes.
+        ///   attributeDefs: [
         ///     {
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///       constraints: [AtlasConstraintDef], # Optional. An array of constraints.
@@ -4331,35 +4288,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///       typeName: string, # Optional. The name of the type.
         ///       valuesMaxCount: number, # Optional. The maximum count of the values.
         ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
-        ///     }
-        ///   ], # Optional. An array of relationship attributes.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AtlasRelationshipDef</summary>Schema for <c>AtlasRelationshipDef</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
-        ///           type: string, # Optional. The type of the constraint.
-        ///         }
-        ///       ], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
         ///     }
         ///   ], # Optional. An array of attribute definitions.
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
@@ -4408,6 +4336,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AtlasRelationshipDef</summary>Schema for <c>AtlasRelationshipDef</c>:
+        /// <code>{
         ///   endDef1: {
         ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///     description: string, # Optional. The description of the relationship end definition.
@@ -4429,6 +4362,74 @@ namespace Azure.Analytics.Purview.Catalog
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
         /// of the container and children are totally independent.
         ///   relationshipLabel: string, # Optional. The label of the relationship.
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
+        ///           type: string, # Optional. The type of the constraint.
+        ///         }
+        ///       ], # Optional. An array of constraints.
+        ///       defaultValue: string, # Optional. The default value of the attribute.
+        ///       description: string, # Optional. The description of the attribute.
+        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
+        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
+        ///       isOptional: boolean, # Optional. Determines if it is optional.
+        ///       isUnique: boolean, # Optional. Determines if it unique.
+        ///       name: string, # Optional. The name of the attribute.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
+        ///       valuesMinCount: number, # Optional. The minimum count of the values.
+        ///     }
+        ///   ], # Optional. An array of attribute definitions.
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///   createTime: number, # Optional. The created time of the record.
+        ///   createdBy: string, # Optional. The user who created the record.
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. An array of available locales.
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. The date format.
+        ///     dateTimeInstance: DateFormat, # Optional. The date format.
+        ///     instance: DateFormat, # Optional. The date format.
+        ///     lenient: boolean, # Optional. Determines the leniency of the date format.
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. The number format.
+        ///       currency: string, # Optional. The currency.
+        ///       currencyInstance: NumberFormat, # Optional. The number format.
+        ///       groupingUsed: boolean, # Optional. Determines if grouping is used.
+        ///       instance: NumberFormat, # Optional. The number format.
+        ///       integerInstance: NumberFormat, # Optional. The number format.
+        ///       maximumFractionDigits: number, # Optional. The maximum of fraction digits.
+        ///       maximumIntegerDigits: number, # Optional. The maximum of integer digits.
+        ///       minimumFractionDigits: number, # Optional. The minimum of fraction digits.
+        ///       minimumIntegerDigits: number, # Optional. The minimum of integer digits.
+        ///       numberInstance: NumberFormat, # Optional. The number format.
+        ///       parseIntegerOnly: boolean, # Optional. Determines if only integer is parsed.
+        ///       percentInstance: NumberFormat, # Optional. The number format.
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. The enum of rounding mode.
+        ///     }, # Optional. The number format.
+        ///     timeInstance: DateFormat, # Optional. The date format.
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. The value of the daylight saving time.
+        ///       id: string, # Optional. The ID of the timezone.
+        ///       availableIds: [string], # Optional. An array of available IDs.
+        ///       default: TimeZone, # Optional. The timezone information.
+        ///       displayName: string, # Optional. The display name of the timezone.
+        ///       rawOffset: number, # Optional. The raw offset of the timezone.
+        ///     }, # Optional. The timezone information.
+        ///   }, # Optional. The date format.
+        ///   description: string, # Optional. The description of the type definition.
+        ///   guid: string, # Optional. The GUID of the type definition.
+        ///   name: string, # Optional. The name of the type definition.
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///   serviceType: string, # Optional. The service type.
+        ///   typeVersion: string, # Optional. The version of the type.
+        ///   updateTime: number, # Optional. The update time of the record.
+        ///   updatedBy: string, # Optional. The user who updated the record.
+        ///   version: number, # Optional. The version of the record.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// </details>
@@ -4543,6 +4544,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = await client.GetStructDefByNameAsync("<name>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdBy").ToString());
@@ -4573,20 +4588,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4670,74 +4671,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// </details>
         /// <details><summary>~+ 4 more JSON objects</summary><details><summary>AtlasClassificationDef</summary>Schema for <c>AtlasClassificationDef</c>:
         /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
-        ///           type: string, # Optional. The type of the constraint.
-        ///         }
-        ///       ], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///     }
-        ///   ], # Optional. An array of attribute definitions.
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///   createTime: number, # Optional. The created time of the record.
-        ///   createdBy: string, # Optional. The user who created the record.
-        ///   dateFormatter: {
-        ///     availableLocales: [string], # Optional. An array of available locales.
-        ///     calendar: number, # Optional.
-        ///     dateInstance: DateFormat, # Optional. The date format.
-        ///     dateTimeInstance: DateFormat, # Optional. The date format.
-        ///     instance: DateFormat, # Optional. The date format.
-        ///     lenient: boolean, # Optional. Determines the leniency of the date format.
-        ///     numberFormat: {
-        ///       availableLocales: [string], # Optional. The number format.
-        ///       currency: string, # Optional. The currency.
-        ///       currencyInstance: NumberFormat, # Optional. The number format.
-        ///       groupingUsed: boolean, # Optional. Determines if grouping is used.
-        ///       instance: NumberFormat, # Optional. The number format.
-        ///       integerInstance: NumberFormat, # Optional. The number format.
-        ///       maximumFractionDigits: number, # Optional. The maximum of fraction digits.
-        ///       maximumIntegerDigits: number, # Optional. The maximum of integer digits.
-        ///       minimumFractionDigits: number, # Optional. The minimum of fraction digits.
-        ///       minimumIntegerDigits: number, # Optional. The minimum of integer digits.
-        ///       numberInstance: NumberFormat, # Optional. The number format.
-        ///       parseIntegerOnly: boolean, # Optional. Determines if only integer is parsed.
-        ///       percentInstance: NumberFormat, # Optional. The number format.
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. The enum of rounding mode.
-        ///     }, # Optional. The number format.
-        ///     timeInstance: DateFormat, # Optional. The date format.
-        ///     timeZone: {
-        ///       dstSavings: number, # Optional. The value of the daylight saving time.
-        ///       id: string, # Optional. The ID of the timezone.
-        ///       availableIds: [string], # Optional. An array of available IDs.
-        ///       default: TimeZone, # Optional. The timezone information.
-        ///       displayName: string, # Optional. The display name of the timezone.
-        ///       rawOffset: number, # Optional. The raw offset of the timezone.
-        ///     }, # Optional. The timezone information.
-        ///   }, # Optional. The date format.
-        ///   description: string, # Optional. The description of the type definition.
-        ///   guid: string, # Optional. The GUID of the type definition.
-        ///   name: string, # Optional. The name of the type definition.
-        ///   options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///   serviceType: string, # Optional. The service type.
-        ///   typeVersion: string, # Optional. The version of the type.
-        ///   updateTime: number, # Optional. The update time of the record.
-        ///   updatedBy: string, # Optional. The user who updated the record.
-        ///   version: number, # Optional. The version of the record.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
@@ -4750,11 +4683,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;/ul&gt;
         ///   subTypes: [string], # Optional. An array of sub types.
         ///   superTypes: [string], # Optional. An array of super types.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AtlasEntityDef</summary>Schema for <c>AtlasEntityDef</c>:
-        /// <code>{
         ///   attributeDefs: [
         ///     {
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
@@ -4823,9 +4751,38 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AtlasEntityDef</summary>Schema for <c>AtlasEntityDef</c>:
+        /// <code>{
         ///   subTypes: [string], # Optional. An array of sub types.
         ///   superTypes: [string], # Optional. An array of super types.
         ///   relationshipAttributeDefs: [
+        ///     {
+        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
+        ///           type: string, # Optional. The type of the constraint.
+        ///         }
+        ///       ], # Optional. An array of constraints.
+        ///       defaultValue: string, # Optional. The default value of the attribute.
+        ///       description: string, # Optional. The description of the attribute.
+        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
+        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
+        ///       isOptional: boolean, # Optional. Determines if it is optional.
+        ///       isUnique: boolean, # Optional. Determines if it unique.
+        ///       name: string, # Optional. The name of the attribute.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
+        ///       valuesMinCount: number, # Optional. The minimum count of the values.
+        ///     }
+        ///   ], # Optional. An array of relationship attributes.
+        ///   attributeDefs: [
         ///     {
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///       constraints: [AtlasConstraintDef], # Optional. An array of constraints.
@@ -4840,35 +4797,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///       typeName: string, # Optional. The name of the type.
         ///       valuesMaxCount: number, # Optional. The maximum count of the values.
         ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
-        ///     }
-        ///   ], # Optional. An array of relationship attributes.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AtlasRelationshipDef</summary>Schema for <c>AtlasRelationshipDef</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
-        ///           type: string, # Optional. The type of the constraint.
-        ///         }
-        ///       ], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
         ///     }
         ///   ], # Optional. An array of attribute definitions.
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
@@ -4917,6 +4845,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AtlasRelationshipDef</summary>Schema for <c>AtlasRelationshipDef</c>:
+        /// <code>{
         ///   endDef1: {
         ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///     description: string, # Optional. The description of the relationship end definition.
@@ -4938,6 +4871,74 @@ namespace Azure.Analytics.Purview.Catalog
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
         /// of the container and children are totally independent.
         ///   relationshipLabel: string, # Optional. The label of the relationship.
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
+        ///           type: string, # Optional. The type of the constraint.
+        ///         }
+        ///       ], # Optional. An array of constraints.
+        ///       defaultValue: string, # Optional. The default value of the attribute.
+        ///       description: string, # Optional. The description of the attribute.
+        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
+        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
+        ///       isOptional: boolean, # Optional. Determines if it is optional.
+        ///       isUnique: boolean, # Optional. Determines if it unique.
+        ///       name: string, # Optional. The name of the attribute.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
+        ///       valuesMinCount: number, # Optional. The minimum count of the values.
+        ///     }
+        ///   ], # Optional. An array of attribute definitions.
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///   createTime: number, # Optional. The created time of the record.
+        ///   createdBy: string, # Optional. The user who created the record.
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. An array of available locales.
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. The date format.
+        ///     dateTimeInstance: DateFormat, # Optional. The date format.
+        ///     instance: DateFormat, # Optional. The date format.
+        ///     lenient: boolean, # Optional. Determines the leniency of the date format.
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. The number format.
+        ///       currency: string, # Optional. The currency.
+        ///       currencyInstance: NumberFormat, # Optional. The number format.
+        ///       groupingUsed: boolean, # Optional. Determines if grouping is used.
+        ///       instance: NumberFormat, # Optional. The number format.
+        ///       integerInstance: NumberFormat, # Optional. The number format.
+        ///       maximumFractionDigits: number, # Optional. The maximum of fraction digits.
+        ///       maximumIntegerDigits: number, # Optional. The maximum of integer digits.
+        ///       minimumFractionDigits: number, # Optional. The minimum of fraction digits.
+        ///       minimumIntegerDigits: number, # Optional. The minimum of integer digits.
+        ///       numberInstance: NumberFormat, # Optional. The number format.
+        ///       parseIntegerOnly: boolean, # Optional. Determines if only integer is parsed.
+        ///       percentInstance: NumberFormat, # Optional. The number format.
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. The enum of rounding mode.
+        ///     }, # Optional. The number format.
+        ///     timeInstance: DateFormat, # Optional. The date format.
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. The value of the daylight saving time.
+        ///       id: string, # Optional. The ID of the timezone.
+        ///       availableIds: [string], # Optional. An array of available IDs.
+        ///       default: TimeZone, # Optional. The timezone information.
+        ///       displayName: string, # Optional. The display name of the timezone.
+        ///       rawOffset: number, # Optional. The raw offset of the timezone.
+        ///     }, # Optional. The timezone information.
+        ///   }, # Optional. The date format.
+        ///   description: string, # Optional. The description of the type definition.
+        ///   guid: string, # Optional. The GUID of the type definition.
+        ///   name: string, # Optional. The name of the type definition.
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///   serviceType: string, # Optional. The service type.
+        ///   typeVersion: string, # Optional. The version of the type.
+        ///   updateTime: number, # Optional. The update time of the record.
+        ///   updatedBy: string, # Optional. The user who updated the record.
+        ///   version: number, # Optional. The version of the record.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// </details>
@@ -5052,6 +5053,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = client.GetStructDefByName("<name>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdBy").ToString());
@@ -5082,20 +5097,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -5179,74 +5180,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// </details>
         /// <details><summary>~+ 4 more JSON objects</summary><details><summary>AtlasClassificationDef</summary>Schema for <c>AtlasClassificationDef</c>:
         /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
-        ///           type: string, # Optional. The type of the constraint.
-        ///         }
-        ///       ], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///     }
-        ///   ], # Optional. An array of attribute definitions.
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///   createTime: number, # Optional. The created time of the record.
-        ///   createdBy: string, # Optional. The user who created the record.
-        ///   dateFormatter: {
-        ///     availableLocales: [string], # Optional. An array of available locales.
-        ///     calendar: number, # Optional.
-        ///     dateInstance: DateFormat, # Optional. The date format.
-        ///     dateTimeInstance: DateFormat, # Optional. The date format.
-        ///     instance: DateFormat, # Optional. The date format.
-        ///     lenient: boolean, # Optional. Determines the leniency of the date format.
-        ///     numberFormat: {
-        ///       availableLocales: [string], # Optional. The number format.
-        ///       currency: string, # Optional. The currency.
-        ///       currencyInstance: NumberFormat, # Optional. The number format.
-        ///       groupingUsed: boolean, # Optional. Determines if grouping is used.
-        ///       instance: NumberFormat, # Optional. The number format.
-        ///       integerInstance: NumberFormat, # Optional. The number format.
-        ///       maximumFractionDigits: number, # Optional. The maximum of fraction digits.
-        ///       maximumIntegerDigits: number, # Optional. The maximum of integer digits.
-        ///       minimumFractionDigits: number, # Optional. The minimum of fraction digits.
-        ///       minimumIntegerDigits: number, # Optional. The minimum of integer digits.
-        ///       numberInstance: NumberFormat, # Optional. The number format.
-        ///       parseIntegerOnly: boolean, # Optional. Determines if only integer is parsed.
-        ///       percentInstance: NumberFormat, # Optional. The number format.
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. The enum of rounding mode.
-        ///     }, # Optional. The number format.
-        ///     timeInstance: DateFormat, # Optional. The date format.
-        ///     timeZone: {
-        ///       dstSavings: number, # Optional. The value of the daylight saving time.
-        ///       id: string, # Optional. The ID of the timezone.
-        ///       availableIds: [string], # Optional. An array of available IDs.
-        ///       default: TimeZone, # Optional. The timezone information.
-        ///       displayName: string, # Optional. The display name of the timezone.
-        ///       rawOffset: number, # Optional. The raw offset of the timezone.
-        ///     }, # Optional. The timezone information.
-        ///   }, # Optional. The date format.
-        ///   description: string, # Optional. The description of the type definition.
-        ///   guid: string, # Optional. The GUID of the type definition.
-        ///   name: string, # Optional. The name of the type definition.
-        ///   options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///   serviceType: string, # Optional. The service type.
-        ///   typeVersion: string, # Optional. The version of the type.
-        ///   updateTime: number, # Optional. The update time of the record.
-        ///   updatedBy: string, # Optional. The user who updated the record.
-        ///   version: number, # Optional. The version of the record.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
@@ -5259,11 +5192,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;/ul&gt;
         ///   subTypes: [string], # Optional. An array of sub types.
         ///   superTypes: [string], # Optional. An array of super types.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AtlasEntityDef</summary>Schema for <c>AtlasEntityDef</c>:
-        /// <code>{
         ///   attributeDefs: [
         ///     {
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
@@ -5332,9 +5260,38 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AtlasEntityDef</summary>Schema for <c>AtlasEntityDef</c>:
+        /// <code>{
         ///   subTypes: [string], # Optional. An array of sub types.
         ///   superTypes: [string], # Optional. An array of super types.
         ///   relationshipAttributeDefs: [
+        ///     {
+        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
+        ///           type: string, # Optional. The type of the constraint.
+        ///         }
+        ///       ], # Optional. An array of constraints.
+        ///       defaultValue: string, # Optional. The default value of the attribute.
+        ///       description: string, # Optional. The description of the attribute.
+        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
+        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
+        ///       isOptional: boolean, # Optional. Determines if it is optional.
+        ///       isUnique: boolean, # Optional. Determines if it unique.
+        ///       name: string, # Optional. The name of the attribute.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
+        ///       valuesMinCount: number, # Optional. The minimum count of the values.
+        ///     }
+        ///   ], # Optional. An array of relationship attributes.
+        ///   attributeDefs: [
         ///     {
         ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///       constraints: [AtlasConstraintDef], # Optional. An array of constraints.
@@ -5349,35 +5306,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///       typeName: string, # Optional. The name of the type.
         ///       valuesMaxCount: number, # Optional. The maximum count of the values.
         ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
-        ///     }
-        ///   ], # Optional. An array of relationship attributes.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AtlasRelationshipDef</summary>Schema for <c>AtlasRelationshipDef</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
-        ///           type: string, # Optional. The type of the constraint.
-        ///         }
-        ///       ], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
         ///     }
         ///   ], # Optional. An array of attribute definitions.
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
@@ -5426,6 +5354,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AtlasRelationshipDef</summary>Schema for <c>AtlasRelationshipDef</c>:
+        /// <code>{
         ///   endDef1: {
         ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///     description: string, # Optional. The description of the relationship end definition.
@@ -5447,6 +5380,74 @@ namespace Azure.Analytics.Purview.Catalog
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
         /// of the container and children are totally independent.
         ///   relationshipLabel: string, # Optional. The label of the relationship.
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
+        ///           type: string, # Optional. The type of the constraint.
+        ///         }
+        ///       ], # Optional. An array of constraints.
+        ///       defaultValue: string, # Optional. The default value of the attribute.
+        ///       description: string, # Optional. The description of the attribute.
+        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
+        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
+        ///       isOptional: boolean, # Optional. Determines if it is optional.
+        ///       isUnique: boolean, # Optional. Determines if it unique.
+        ///       name: string, # Optional. The name of the attribute.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
+        ///       valuesMinCount: number, # Optional. The minimum count of the values.
+        ///     }
+        ///   ], # Optional. An array of attribute definitions.
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///   createTime: number, # Optional. The created time of the record.
+        ///   createdBy: string, # Optional. The user who created the record.
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. An array of available locales.
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. The date format.
+        ///     dateTimeInstance: DateFormat, # Optional. The date format.
+        ///     instance: DateFormat, # Optional. The date format.
+        ///     lenient: boolean, # Optional. Determines the leniency of the date format.
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. The number format.
+        ///       currency: string, # Optional. The currency.
+        ///       currencyInstance: NumberFormat, # Optional. The number format.
+        ///       groupingUsed: boolean, # Optional. Determines if grouping is used.
+        ///       instance: NumberFormat, # Optional. The number format.
+        ///       integerInstance: NumberFormat, # Optional. The number format.
+        ///       maximumFractionDigits: number, # Optional. The maximum of fraction digits.
+        ///       maximumIntegerDigits: number, # Optional. The maximum of integer digits.
+        ///       minimumFractionDigits: number, # Optional. The minimum of fraction digits.
+        ///       minimumIntegerDigits: number, # Optional. The minimum of integer digits.
+        ///       numberInstance: NumberFormat, # Optional. The number format.
+        ///       parseIntegerOnly: boolean, # Optional. Determines if only integer is parsed.
+        ///       percentInstance: NumberFormat, # Optional. The number format.
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. The enum of rounding mode.
+        ///     }, # Optional. The number format.
+        ///     timeInstance: DateFormat, # Optional. The date format.
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. The value of the daylight saving time.
+        ///       id: string, # Optional. The ID of the timezone.
+        ///       availableIds: [string], # Optional. An array of available IDs.
+        ///       default: TimeZone, # Optional. The timezone information.
+        ///       displayName: string, # Optional. The display name of the timezone.
+        ///       rawOffset: number, # Optional. The raw offset of the timezone.
+        ///     }, # Optional. The timezone information.
+        ///   }, # Optional. The date format.
+        ///   description: string, # Optional. The description of the type definition.
+        ///   guid: string, # Optional. The GUID of the type definition.
+        ///   name: string, # Optional. The name of the type definition.
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///   serviceType: string, # Optional. The service type.
+        ///   typeVersion: string, # Optional. The version of the type.
+        ///   updateTime: number, # Optional. The update time of the record.
+        ///   updatedBy: string, # Optional. The user who updated the record.
+        ///   version: number, # Optional. The version of the record.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// </details>
@@ -5591,57 +5592,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
-        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -5697,88 +5647,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
-        /// only be applied to those entityTypes.
-        /// &lt;ul&gt;
-        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
-        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;
-        ///   subTypes: [string], # Optional. An array of sub types.
-        ///   superTypes: [string], # Optional. An array of super types.
-        ///   relationshipAttributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
-        ///           type: string, # Optional. The type of the constraint.
-        ///         }
-        ///       ], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
-        ///     }
-        ///   ], # Optional. An array of relationship attributes.
-        ///   defaultValue: string, # Optional. The default value.
-        ///   elementDefs: [
-        ///     {
-        ///       description: string, # Optional. The description of the enum element definition.
-        ///       ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///       value: string, # Optional. The value of the enum element definition.
-        ///     }
-        ///   ], # Optional. An array of enum element definitions.
-        ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///     description: string, # Optional. The description of the relationship end definition.
-        ///     isContainer: boolean, # Optional. Determines if it is container.
-        ///     isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///     name: string, # Optional. The name of the relationship end definition.
-        ///     type: string, # Optional. The type of the relationship end.
-        ///   }, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        ///   endDef2: AtlasRelationshipEndDef, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. The Relationship category determines the style of relationship around containment and lifecycle.
-        /// UML terminology is used for the values.
-        /// &lt;p&gt;
-        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
-        /// COMPOSITION and AGGREGATION are containment relationships.
-        /// &lt;p&gt;
-        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
-        /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.
-        ///   relationshipLabel: string, # Optional. The label of the relationship.
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [AtlasConstraintDef], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///     }
-        ///   ], # Optional. An array of attribute definitions.
         /// }
         /// </code>
         /// 
@@ -5848,57 +5716,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
-        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -5954,88 +5771,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
-        /// only be applied to those entityTypes.
-        /// &lt;ul&gt;
-        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
-        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;
-        ///   subTypes: [string], # Optional. An array of sub types.
-        ///   superTypes: [string], # Optional. An array of super types.
-        ///   relationshipAttributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
-        ///           type: string, # Optional. The type of the constraint.
-        ///         }
-        ///       ], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
-        ///     }
-        ///   ], # Optional. An array of relationship attributes.
-        ///   defaultValue: string, # Optional. The default value.
-        ///   elementDefs: [
-        ///     {
-        ///       description: string, # Optional. The description of the enum element definition.
-        ///       ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///       value: string, # Optional. The value of the enum element definition.
-        ///     }
-        ///   ], # Optional. An array of enum element definitions.
-        ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///     description: string, # Optional. The description of the relationship end definition.
-        ///     isContainer: boolean, # Optional. Determines if it is container.
-        ///     isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///     name: string, # Optional. The name of the relationship end definition.
-        ///     type: string, # Optional. The type of the relationship end.
-        ///   }, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        ///   endDef2: AtlasRelationshipEndDef, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. The Relationship category determines the style of relationship around containment and lifecycle.
-        /// UML terminology is used for the values.
-        /// &lt;p&gt;
-        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
-        /// COMPOSITION and AGGREGATION are containment relationships.
-        /// &lt;p&gt;
-        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
-        /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.
-        ///   relationshipLabel: string, # Optional. The label of the relationship.
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [AtlasConstraintDef], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///     }
-        ///   ], # Optional. An array of attribute definitions.
         /// }
         /// </code>
         /// 
@@ -6105,57 +5840,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
-        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -6211,88 +5895,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
-        /// only be applied to those entityTypes.
-        /// &lt;ul&gt;
-        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
-        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;
-        ///   subTypes: [string], # Optional. An array of sub types.
-        ///   superTypes: [string], # Optional. An array of super types.
-        ///   relationshipAttributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
-        ///           type: string, # Optional. The type of the constraint.
-        ///         }
-        ///       ], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
-        ///     }
-        ///   ], # Optional. An array of relationship attributes.
-        ///   defaultValue: string, # Optional. The default value.
-        ///   elementDefs: [
-        ///     {
-        ///       description: string, # Optional. The description of the enum element definition.
-        ///       ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///       value: string, # Optional. The value of the enum element definition.
-        ///     }
-        ///   ], # Optional. An array of enum element definitions.
-        ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///     description: string, # Optional. The description of the relationship end definition.
-        ///     isContainer: boolean, # Optional. Determines if it is container.
-        ///     isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///     name: string, # Optional. The name of the relationship end definition.
-        ///     type: string, # Optional. The type of the relationship end.
-        ///   }, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        ///   endDef2: AtlasRelationshipEndDef, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. The Relationship category determines the style of relationship around containment and lifecycle.
-        /// UML terminology is used for the values.
-        /// &lt;p&gt;
-        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
-        /// COMPOSITION and AGGREGATION are containment relationships.
-        /// &lt;p&gt;
-        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
-        /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.
-        ///   relationshipLabel: string, # Optional. The label of the relationship.
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [AtlasConstraintDef], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///     }
-        ///   ], # Optional. An array of attribute definitions.
         /// }
         /// </code>
         /// 
@@ -6362,57 +5964,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
-        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -6468,88 +6019,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the record.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
-        /// only be applied to those entityTypes.
-        /// &lt;ul&gt;
-        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
-        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
-        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
-        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;
-        ///   subTypes: [string], # Optional. An array of sub types.
-        ///   superTypes: [string], # Optional. An array of super types.
-        ///   relationshipAttributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. The parameters of the constraint definition.
-        ///           type: string, # Optional. The type of the constraint.
-        ///         }
-        ///       ], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///       isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///       relationshipTypeName: string, # Optional. The name of the relationship type.
-        ///     }
-        ///   ], # Optional. An array of relationship attributes.
-        ///   defaultValue: string, # Optional. The default value.
-        ///   elementDefs: [
-        ///     {
-        ///       description: string, # Optional. The description of the enum element definition.
-        ///       ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///       value: string, # Optional. The value of the enum element definition.
-        ///     }
-        ///   ], # Optional. An array of enum element definitions.
-        ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///     description: string, # Optional. The description of the relationship end definition.
-        ///     isContainer: boolean, # Optional. Determines if it is container.
-        ///     isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///     name: string, # Optional. The name of the relationship end definition.
-        ///     type: string, # Optional. The type of the relationship end.
-        ///   }, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        ///   endDef2: AtlasRelationshipEndDef, # Optional. The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. The Relationship category determines the style of relationship around containment and lifecycle.
-        /// UML terminology is used for the values.
-        /// &lt;p&gt;
-        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
-        /// COMPOSITION and AGGREGATION are containment relationships.
-        /// &lt;p&gt;
-        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
-        /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.
-        ///   relationshipLabel: string, # Optional. The label of the relationship.
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
-        ///       constraints: [AtlasConstraintDef], # Optional. An array of constraints.
-        ///       defaultValue: string, # Optional. The default value of the attribute.
-        ///       description: string, # Optional. The description of the attribute.
-        ///       includeInNotification: boolean, # Optional. Determines if it is included in notification.
-        ///       isIndexable: boolean, # Optional. Determines if it is indexable.
-        ///       isOptional: boolean, # Optional. Determines if it is optional.
-        ///       isUnique: boolean, # Optional. Determines if it unique.
-        ///       name: string, # Optional. The name of the attribute.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the attribute.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       valuesMaxCount: number, # Optional. The maximum count of the values.
-        ///       valuesMinCount: number, # Optional. The minimum count of the values.
-        ///     }
-        ///   ], # Optional. An array of attribute definitions.
         /// }
         /// </code>
         /// 
@@ -6718,6 +6187,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -6762,9 +6234,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -6809,24 +6296,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createdBy").ToString());
@@ -6857,10 +6330,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -6905,20 +6388,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createdBy").ToString());
@@ -6949,20 +6432,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -7090,21 +6559,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. businessMetadataDefs
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
@@ -7117,10 +6571,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;/ul&gt;
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
-        ///     }
-        ///   ], # Optional. An array of classification definitions.
-        ///   entityDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -7136,10 +6586,16 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classification definitions.
+        ///   entityDefs: [
+        ///     {
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
         ///       relationshipAttributeDefs: [
         ///         {
+        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///           constraints: [AtlasConstraintDef], # Optional. An array of constraints.
         ///           defaultValue: string, # Optional. The default value of the attribute.
@@ -7153,40 +6609,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///           typeName: string, # Optional. The name of the type.
         ///           valuesMaxCount: number, # Optional. The maximum count of the values.
         ///           valuesMinCount: number, # Optional. The minimum count of the values.
-        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///         }
         ///       ], # Optional. An array of relationship attributes.
-        ///     }
-        ///   ], # Optional. An array of entity definitions.
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       defaultValue: string, # Optional. The default value.
-        ///       elementDefs: [
-        ///         {
-        ///           description: string, # Optional. The description of the enum element definition.
-        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///           value: string, # Optional. The value of the enum element definition.
-        ///         }
-        ///       ], # Optional. An array of enum element definitions.
-        ///     }
-        ///   ], # Optional. An array of enum definitions.
-        ///   relationshipDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -7202,6 +6626,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of entity definitions.
+        ///   enumDefs: [
+        ///     {
+        ///       defaultValue: string, # Optional. The default value.
+        ///       elementDefs: [
+        ///         {
+        ///           description: string, # Optional. The description of the enum element definition.
+        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
+        ///           value: string, # Optional. The value of the enum element definition.
+        ///         }
+        ///       ], # Optional. An array of enum element definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of enum definitions.
+        ///   relationshipDefs: [
+        ///     {
         ///       endDef1: {
         ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///         description: string, # Optional. The description of the relationship end definition.
@@ -7223,10 +6677,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
         /// of the container and children are totally independent.
         ///       relationshipLabel: string, # Optional. The label of the relationship.
-        ///     }
-        ///   ], # Optional. An array of relationship definitions.
-        ///   structDefs: [
-        ///     {
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
         ///       createdBy: string, # Optional. The user who created the record.
@@ -7241,7 +6692,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of relationship definitions.
+        ///   structDefs: [
+        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of struct definitions.
         ///   termTemplateDefs: [
@@ -7357,6 +6826,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -7401,9 +6873,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -7448,24 +6935,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createdBy").ToString());
@@ -7496,10 +6969,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -7544,20 +7027,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createdBy").ToString());
@@ -7588,20 +7071,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -7729,21 +7198,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. businessMetadataDefs
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
@@ -7756,10 +7210,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;/ul&gt;
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
-        ///     }
-        ///   ], # Optional. An array of classification definitions.
-        ///   entityDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -7775,10 +7225,16 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classification definitions.
+        ///   entityDefs: [
+        ///     {
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
         ///       relationshipAttributeDefs: [
         ///         {
+        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///           constraints: [AtlasConstraintDef], # Optional. An array of constraints.
         ///           defaultValue: string, # Optional. The default value of the attribute.
@@ -7792,40 +7248,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///           typeName: string, # Optional. The name of the type.
         ///           valuesMaxCount: number, # Optional. The maximum count of the values.
         ///           valuesMinCount: number, # Optional. The minimum count of the values.
-        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///         }
         ///       ], # Optional. An array of relationship attributes.
-        ///     }
-        ///   ], # Optional. An array of entity definitions.
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       defaultValue: string, # Optional. The default value.
-        ///       elementDefs: [
-        ///         {
-        ///           description: string, # Optional. The description of the enum element definition.
-        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///           value: string, # Optional. The value of the enum element definition.
-        ///         }
-        ///       ], # Optional. An array of enum element definitions.
-        ///     }
-        ///   ], # Optional. An array of enum definitions.
-        ///   relationshipDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -7841,6 +7265,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of entity definitions.
+        ///   enumDefs: [
+        ///     {
+        ///       defaultValue: string, # Optional. The default value.
+        ///       elementDefs: [
+        ///         {
+        ///           description: string, # Optional. The description of the enum element definition.
+        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
+        ///           value: string, # Optional. The value of the enum element definition.
+        ///         }
+        ///       ], # Optional. An array of enum element definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of enum definitions.
+        ///   relationshipDefs: [
+        ///     {
         ///       endDef1: {
         ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///         description: string, # Optional. The description of the relationship end definition.
@@ -7862,10 +7316,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
         /// of the container and children are totally independent.
         ///       relationshipLabel: string, # Optional. The label of the relationship.
-        ///     }
-        ///   ], # Optional. An array of relationship definitions.
-        ///   structDefs: [
-        ///     {
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
         ///       createdBy: string, # Optional. The user who created the record.
@@ -7880,7 +7331,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of relationship definitions.
+        ///   structDefs: [
+        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of struct definitions.
         ///   termTemplateDefs: [
@@ -7956,573 +7425,573 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     classificationDefs = new[] {
         ///         new {
+        ///             entityTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             subTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<String>"
+        ///             },
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             entityTypes = new[] {
-        ///                 "<AtlasClassificationDefEntityTypesItem>"
-        ///             },
-        ///             subTypes = new[] {
-        ///                 "<AtlasClassificationDefSubTypesItem>"
-        ///             },
-        ///             superTypes = new[] {
-        ///                 "<AtlasClassificationDefSuperTypesItem>"
-        ///             },
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     entityDefs = new[] {
         ///         new {
-        ///             attributeDefs = new[] {
+        ///             subTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             relationshipAttributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<type>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<name>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                 }
+        ///             },
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             subTypes = new[] {
-        ///                 "<AtlasEntityDefSubTypesItem>"
-        ///             },
-        ///             superTypes = new[] {
-        ///                 "<AtlasEntityDefSuperTypesItem>"
-        ///             },
-        ///             relationshipAttributeDefs = new[] {
-        ///                 new {
-        ///                     cardinality = "<SINGLE>",
-        ///                     constraints = new[] {
-        ///                         new {
-        ///                             params = new {
-        ///                                 key = new {},
-        ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
-        ///                         }
-        ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
-        ///                     includeInNotification = true,
-        ///                     isIndexable = true,
-        ///                     isOptional = true,
-        ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
-        ///                     options = new {
-        ///                         key = "<String>",
-        ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
-        ///                     valuesMaxCount = 1234,
-        ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
-        ///                 }
-        ///             },
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     enumDefs = new[] {
         ///         new {
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             defaultValue = "<defaultValue>",
+        ///             elementDefs = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     ordinal = 123.45f,
+        ///                     value = "<value>",
+        ///                 }
+        ///             },
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             defaultValue = "<AtlasEnumDefDefaultValue>",
-        ///             elementDefs = new[] {
-        ///                 new {
-        ///                     description = "<AtlasEnumElementDefDescription>",
-        ///                     ordinal = 1234,
-        ///                     value = "<AtlasEnumElementDefValue>",
-        ///                 }
-        ///             },
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     relationshipDefs = new[] {
         ///         new {
+        ///             endDef1 = new {
+        ///                 cardinality = "SINGLE",
+        ///                 description = "<description>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<name>",
+        ///                 type = "<type>",
+        ///             },
+        ///             endDef2 = new {
+        ///                 cardinality = "SINGLE",
+        ///                 description = "<description>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<name>",
+        ///                 type = "<type>",
+        ///             },
+        ///             relationshipCategory = "ASSOCIATION",
+        ///             relationshipLabel = "<relationshipLabel>",
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             endDef1 = new {
-        ///                 cardinality = "<SINGLE>",
-        ///                 description = "<AtlasRelationshipEndDefDescription>",
-        ///                 isContainer = true,
-        ///                 isLegacyAttribute = true,
-        ///                 name = "<AtlasRelationshipEndDefName>",
-        ///                 type = "<AtlasRelationshipEndDefType>",
-        ///             },
-        ///             endDef2 = new {
-        ///                 cardinality = "<SINGLE>",
-        ///                 description = "<AtlasRelationshipEndDefDescription>",
-        ///                 isContainer = true,
-        ///                 isLegacyAttribute = true,
-        ///                 name = "<AtlasRelationshipEndDefName>",
-        ///                 type = "<AtlasRelationshipEndDefType>",
-        ///             },
-        ///             relationshipCategory = "<ASSOCIATION>",
-        ///             relationshipLabel = "<AtlasRelationshipDefRelationshipLabel>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     structDefs = new[] {
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     termTemplateDefs = new[] {
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         /// };
@@ -8574,6 +8043,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -8618,9 +8090,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -8665,24 +8152,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createdBy").ToString());
@@ -8713,10 +8186,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -8761,20 +8244,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createdBy").ToString());
@@ -8805,20 +8288,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -8946,21 +8415,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. businessMetadataDefs
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
@@ -8973,10 +8427,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;/ul&gt;
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
-        ///     }
-        ///   ], # Optional. An array of classification definitions.
-        ///   entityDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -8992,10 +8442,16 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classification definitions.
+        ///   entityDefs: [
+        ///     {
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
         ///       relationshipAttributeDefs: [
         ///         {
+        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///           constraints: [AtlasConstraintDef], # Optional. An array of constraints.
         ///           defaultValue: string, # Optional. The default value of the attribute.
@@ -9009,40 +8465,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///           typeName: string, # Optional. The name of the type.
         ///           valuesMaxCount: number, # Optional. The maximum count of the values.
         ///           valuesMinCount: number, # Optional. The minimum count of the values.
-        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///         }
         ///       ], # Optional. An array of relationship attributes.
-        ///     }
-        ///   ], # Optional. An array of entity definitions.
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       defaultValue: string, # Optional. The default value.
-        ///       elementDefs: [
-        ///         {
-        ///           description: string, # Optional. The description of the enum element definition.
-        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///           value: string, # Optional. The value of the enum element definition.
-        ///         }
-        ///       ], # Optional. An array of enum element definitions.
-        ///     }
-        ///   ], # Optional. An array of enum definitions.
-        ///   relationshipDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -9058,6 +8482,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of entity definitions.
+        ///   enumDefs: [
+        ///     {
+        ///       defaultValue: string, # Optional. The default value.
+        ///       elementDefs: [
+        ///         {
+        ///           description: string, # Optional. The description of the enum element definition.
+        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
+        ///           value: string, # Optional. The value of the enum element definition.
+        ///         }
+        ///       ], # Optional. An array of enum element definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of enum definitions.
+        ///   relationshipDefs: [
+        ///     {
         ///       endDef1: {
         ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///         description: string, # Optional. The description of the relationship end definition.
@@ -9079,10 +8533,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
         /// of the container and children are totally independent.
         ///       relationshipLabel: string, # Optional. The label of the relationship.
-        ///     }
-        ///   ], # Optional. An array of relationship definitions.
-        ///   structDefs: [
-        ///     {
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
         ///       createdBy: string, # Optional. The user who created the record.
@@ -9097,7 +8548,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of relationship definitions.
+        ///   structDefs: [
+        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of struct definitions.
         ///   termTemplateDefs: [
@@ -9200,21 +8669,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. businessMetadataDefs
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
@@ -9227,10 +8681,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;/ul&gt;
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
-        ///     }
-        ///   ], # Optional. An array of classification definitions.
-        ///   entityDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -9246,10 +8696,16 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classification definitions.
+        ///   entityDefs: [
+        ///     {
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
         ///       relationshipAttributeDefs: [
         ///         {
+        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///           constraints: [AtlasConstraintDef], # Optional. An array of constraints.
         ///           defaultValue: string, # Optional. The default value of the attribute.
@@ -9263,40 +8719,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///           typeName: string, # Optional. The name of the type.
         ///           valuesMaxCount: number, # Optional. The maximum count of the values.
         ///           valuesMinCount: number, # Optional. The minimum count of the values.
-        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///         }
         ///       ], # Optional. An array of relationship attributes.
-        ///     }
-        ///   ], # Optional. An array of entity definitions.
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       defaultValue: string, # Optional. The default value.
-        ///       elementDefs: [
-        ///         {
-        ///           description: string, # Optional. The description of the enum element definition.
-        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///           value: string, # Optional. The value of the enum element definition.
-        ///         }
-        ///       ], # Optional. An array of enum element definitions.
-        ///     }
-        ///   ], # Optional. An array of enum definitions.
-        ///   relationshipDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -9312,6 +8736,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of entity definitions.
+        ///   enumDefs: [
+        ///     {
+        ///       defaultValue: string, # Optional. The default value.
+        ///       elementDefs: [
+        ///         {
+        ///           description: string, # Optional. The description of the enum element definition.
+        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
+        ///           value: string, # Optional. The value of the enum element definition.
+        ///         }
+        ///       ], # Optional. An array of enum element definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of enum definitions.
+        ///   relationshipDefs: [
+        ///     {
         ///       endDef1: {
         ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///         description: string, # Optional. The description of the relationship end definition.
@@ -9333,10 +8787,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
         /// of the container and children are totally independent.
         ///       relationshipLabel: string, # Optional. The label of the relationship.
-        ///     }
-        ///   ], # Optional. An array of relationship definitions.
-        ///   structDefs: [
-        ///     {
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
         ///       createdBy: string, # Optional. The user who created the record.
@@ -9351,7 +8802,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of relationship definitions.
+        ///   structDefs: [
+        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of struct definitions.
         ///   termTemplateDefs: [
@@ -9429,573 +8898,573 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     classificationDefs = new[] {
         ///         new {
+        ///             entityTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             subTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<String>"
+        ///             },
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             entityTypes = new[] {
-        ///                 "<AtlasClassificationDefEntityTypesItem>"
-        ///             },
-        ///             subTypes = new[] {
-        ///                 "<AtlasClassificationDefSubTypesItem>"
-        ///             },
-        ///             superTypes = new[] {
-        ///                 "<AtlasClassificationDefSuperTypesItem>"
-        ///             },
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     entityDefs = new[] {
         ///         new {
-        ///             attributeDefs = new[] {
+        ///             subTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             relationshipAttributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<type>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<name>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                 }
+        ///             },
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             subTypes = new[] {
-        ///                 "<AtlasEntityDefSubTypesItem>"
-        ///             },
-        ///             superTypes = new[] {
-        ///                 "<AtlasEntityDefSuperTypesItem>"
-        ///             },
-        ///             relationshipAttributeDefs = new[] {
-        ///                 new {
-        ///                     cardinality = "<SINGLE>",
-        ///                     constraints = new[] {
-        ///                         new {
-        ///                             params = new {
-        ///                                 key = new {},
-        ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
-        ///                         }
-        ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
-        ///                     includeInNotification = true,
-        ///                     isIndexable = true,
-        ///                     isOptional = true,
-        ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
-        ///                     options = new {
-        ///                         key = "<String>",
-        ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
-        ///                     valuesMaxCount = 1234,
-        ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
-        ///                 }
-        ///             },
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     enumDefs = new[] {
         ///         new {
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             defaultValue = "<defaultValue>",
+        ///             elementDefs = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     ordinal = 123.45f,
+        ///                     value = "<value>",
+        ///                 }
+        ///             },
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             defaultValue = "<AtlasEnumDefDefaultValue>",
-        ///             elementDefs = new[] {
-        ///                 new {
-        ///                     description = "<AtlasEnumElementDefDescription>",
-        ///                     ordinal = 1234,
-        ///                     value = "<AtlasEnumElementDefValue>",
-        ///                 }
-        ///             },
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     relationshipDefs = new[] {
         ///         new {
+        ///             endDef1 = new {
+        ///                 cardinality = "SINGLE",
+        ///                 description = "<description>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<name>",
+        ///                 type = "<type>",
+        ///             },
+        ///             endDef2 = new {
+        ///                 cardinality = "SINGLE",
+        ///                 description = "<description>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<name>",
+        ///                 type = "<type>",
+        ///             },
+        ///             relationshipCategory = "ASSOCIATION",
+        ///             relationshipLabel = "<relationshipLabel>",
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             endDef1 = new {
-        ///                 cardinality = "<SINGLE>",
-        ///                 description = "<AtlasRelationshipEndDefDescription>",
-        ///                 isContainer = true,
-        ///                 isLegacyAttribute = true,
-        ///                 name = "<AtlasRelationshipEndDefName>",
-        ///                 type = "<AtlasRelationshipEndDefType>",
-        ///             },
-        ///             endDef2 = new {
-        ///                 cardinality = "<SINGLE>",
-        ///                 description = "<AtlasRelationshipEndDefDescription>",
-        ///                 isContainer = true,
-        ///                 isLegacyAttribute = true,
-        ///                 name = "<AtlasRelationshipEndDefName>",
-        ///                 type = "<AtlasRelationshipEndDefType>",
-        ///             },
-        ///             relationshipCategory = "<ASSOCIATION>",
-        ///             relationshipLabel = "<AtlasRelationshipDefRelationshipLabel>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     structDefs = new[] {
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     termTemplateDefs = new[] {
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         /// };
@@ -10047,6 +9516,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -10091,9 +9563,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -10138,24 +9625,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createdBy").ToString());
@@ -10186,10 +9659,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -10234,20 +9717,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createdBy").ToString());
@@ -10278,20 +9761,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -10419,21 +9888,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. businessMetadataDefs
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
@@ -10446,10 +9900,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;/ul&gt;
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
-        ///     }
-        ///   ], # Optional. An array of classification definitions.
-        ///   entityDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -10465,10 +9915,16 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classification definitions.
+        ///   entityDefs: [
+        ///     {
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
         ///       relationshipAttributeDefs: [
         ///         {
+        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///           constraints: [AtlasConstraintDef], # Optional. An array of constraints.
         ///           defaultValue: string, # Optional. The default value of the attribute.
@@ -10482,40 +9938,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///           typeName: string, # Optional. The name of the type.
         ///           valuesMaxCount: number, # Optional. The maximum count of the values.
         ///           valuesMinCount: number, # Optional. The minimum count of the values.
-        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///         }
         ///       ], # Optional. An array of relationship attributes.
-        ///     }
-        ///   ], # Optional. An array of entity definitions.
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       defaultValue: string, # Optional. The default value.
-        ///       elementDefs: [
-        ///         {
-        ///           description: string, # Optional. The description of the enum element definition.
-        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///           value: string, # Optional. The value of the enum element definition.
-        ///         }
-        ///       ], # Optional. An array of enum element definitions.
-        ///     }
-        ///   ], # Optional. An array of enum definitions.
-        ///   relationshipDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -10531,6 +9955,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of entity definitions.
+        ///   enumDefs: [
+        ///     {
+        ///       defaultValue: string, # Optional. The default value.
+        ///       elementDefs: [
+        ///         {
+        ///           description: string, # Optional. The description of the enum element definition.
+        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
+        ///           value: string, # Optional. The value of the enum element definition.
+        ///         }
+        ///       ], # Optional. An array of enum element definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of enum definitions.
+        ///   relationshipDefs: [
+        ///     {
         ///       endDef1: {
         ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///         description: string, # Optional. The description of the relationship end definition.
@@ -10552,10 +10006,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
         /// of the container and children are totally independent.
         ///       relationshipLabel: string, # Optional. The label of the relationship.
-        ///     }
-        ///   ], # Optional. An array of relationship definitions.
-        ///   structDefs: [
-        ///     {
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
         ///       createdBy: string, # Optional. The user who created the record.
@@ -10570,7 +10021,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of relationship definitions.
+        ///   structDefs: [
+        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of struct definitions.
         ///   termTemplateDefs: [
@@ -10673,21 +10142,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. businessMetadataDefs
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
@@ -10700,10 +10154,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;/ul&gt;
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
-        ///     }
-        ///   ], # Optional. An array of classification definitions.
-        ///   entityDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -10719,10 +10169,16 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classification definitions.
+        ///   entityDefs: [
+        ///     {
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
         ///       relationshipAttributeDefs: [
         ///         {
+        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///           constraints: [AtlasConstraintDef], # Optional. An array of constraints.
         ///           defaultValue: string, # Optional. The default value of the attribute.
@@ -10736,40 +10192,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///           typeName: string, # Optional. The name of the type.
         ///           valuesMaxCount: number, # Optional. The maximum count of the values.
         ///           valuesMinCount: number, # Optional. The minimum count of the values.
-        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///         }
         ///       ], # Optional. An array of relationship attributes.
-        ///     }
-        ///   ], # Optional. An array of entity definitions.
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       defaultValue: string, # Optional. The default value.
-        ///       elementDefs: [
-        ///         {
-        ///           description: string, # Optional. The description of the enum element definition.
-        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///           value: string, # Optional. The value of the enum element definition.
-        ///         }
-        ///       ], # Optional. An array of enum element definitions.
-        ///     }
-        ///   ], # Optional. An array of enum definitions.
-        ///   relationshipDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -10785,6 +10209,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of entity definitions.
+        ///   enumDefs: [
+        ///     {
+        ///       defaultValue: string, # Optional. The default value.
+        ///       elementDefs: [
+        ///         {
+        ///           description: string, # Optional. The description of the enum element definition.
+        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
+        ///           value: string, # Optional. The value of the enum element definition.
+        ///         }
+        ///       ], # Optional. An array of enum element definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of enum definitions.
+        ///   relationshipDefs: [
+        ///     {
         ///       endDef1: {
         ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///         description: string, # Optional. The description of the relationship end definition.
@@ -10806,10 +10260,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
         /// of the container and children are totally independent.
         ///       relationshipLabel: string, # Optional. The label of the relationship.
-        ///     }
-        ///   ], # Optional. An array of relationship definitions.
-        ///   structDefs: [
-        ///     {
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
         ///       createdBy: string, # Optional. The user who created the record.
@@ -10824,7 +10275,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of relationship definitions.
+        ///   structDefs: [
+        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of struct definitions.
         ///   termTemplateDefs: [
@@ -10899,573 +10368,573 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     classificationDefs = new[] {
         ///         new {
+        ///             entityTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             subTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<String>"
+        ///             },
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             entityTypes = new[] {
-        ///                 "<AtlasClassificationDefEntityTypesItem>"
-        ///             },
-        ///             subTypes = new[] {
-        ///                 "<AtlasClassificationDefSubTypesItem>"
-        ///             },
-        ///             superTypes = new[] {
-        ///                 "<AtlasClassificationDefSuperTypesItem>"
-        ///             },
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     entityDefs = new[] {
         ///         new {
-        ///             attributeDefs = new[] {
+        ///             subTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             relationshipAttributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<type>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<name>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                 }
+        ///             },
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             subTypes = new[] {
-        ///                 "<AtlasEntityDefSubTypesItem>"
-        ///             },
-        ///             superTypes = new[] {
-        ///                 "<AtlasEntityDefSuperTypesItem>"
-        ///             },
-        ///             relationshipAttributeDefs = new[] {
-        ///                 new {
-        ///                     cardinality = "<SINGLE>",
-        ///                     constraints = new[] {
-        ///                         new {
-        ///                             params = new {
-        ///                                 key = new {},
-        ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
-        ///                         }
-        ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
-        ///                     includeInNotification = true,
-        ///                     isIndexable = true,
-        ///                     isOptional = true,
-        ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
-        ///                     options = new {
-        ///                         key = "<String>",
-        ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
-        ///                     valuesMaxCount = 1234,
-        ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
-        ///                 }
-        ///             },
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     enumDefs = new[] {
         ///         new {
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             defaultValue = "<defaultValue>",
+        ///             elementDefs = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     ordinal = 123.45f,
+        ///                     value = "<value>",
+        ///                 }
+        ///             },
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             defaultValue = "<AtlasEnumDefDefaultValue>",
-        ///             elementDefs = new[] {
-        ///                 new {
-        ///                     description = "<AtlasEnumElementDefDescription>",
-        ///                     ordinal = 1234,
-        ///                     value = "<AtlasEnumElementDefValue>",
-        ///                 }
-        ///             },
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     relationshipDefs = new[] {
         ///         new {
+        ///             endDef1 = new {
+        ///                 cardinality = "SINGLE",
+        ///                 description = "<description>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<name>",
+        ///                 type = "<type>",
+        ///             },
+        ///             endDef2 = new {
+        ///                 cardinality = "SINGLE",
+        ///                 description = "<description>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<name>",
+        ///                 type = "<type>",
+        ///             },
+        ///             relationshipCategory = "ASSOCIATION",
+        ///             relationshipLabel = "<relationshipLabel>",
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             endDef1 = new {
-        ///                 cardinality = "<SINGLE>",
-        ///                 description = "<AtlasRelationshipEndDefDescription>",
-        ///                 isContainer = true,
-        ///                 isLegacyAttribute = true,
-        ///                 name = "<AtlasRelationshipEndDefName>",
-        ///                 type = "<AtlasRelationshipEndDefType>",
-        ///             },
-        ///             endDef2 = new {
-        ///                 cardinality = "<SINGLE>",
-        ///                 description = "<AtlasRelationshipEndDefDescription>",
-        ///                 isContainer = true,
-        ///                 isLegacyAttribute = true,
-        ///                 name = "<AtlasRelationshipEndDefName>",
-        ///                 type = "<AtlasRelationshipEndDefType>",
-        ///             },
-        ///             relationshipCategory = "<ASSOCIATION>",
-        ///             relationshipLabel = "<AtlasRelationshipDefRelationshipLabel>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     structDefs = new[] {
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     termTemplateDefs = new[] {
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         /// };
@@ -11517,6 +10986,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -11561,9 +11033,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -11608,24 +11095,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createdBy").ToString());
@@ -11656,10 +11129,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -11704,20 +11187,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createdBy").ToString());
@@ -11748,20 +11231,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -11889,21 +11358,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. businessMetadataDefs
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
@@ -11916,10 +11370,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;/ul&gt;
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
-        ///     }
-        ///   ], # Optional. An array of classification definitions.
-        ///   entityDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -11935,10 +11385,16 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classification definitions.
+        ///   entityDefs: [
+        ///     {
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
         ///       relationshipAttributeDefs: [
         ///         {
+        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///           constraints: [AtlasConstraintDef], # Optional. An array of constraints.
         ///           defaultValue: string, # Optional. The default value of the attribute.
@@ -11952,40 +11408,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///           typeName: string, # Optional. The name of the type.
         ///           valuesMaxCount: number, # Optional. The maximum count of the values.
         ///           valuesMinCount: number, # Optional. The minimum count of the values.
-        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///         }
         ///       ], # Optional. An array of relationship attributes.
-        ///     }
-        ///   ], # Optional. An array of entity definitions.
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       defaultValue: string, # Optional. The default value.
-        ///       elementDefs: [
-        ///         {
-        ///           description: string, # Optional. The description of the enum element definition.
-        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///           value: string, # Optional. The value of the enum element definition.
-        ///         }
-        ///       ], # Optional. An array of enum element definitions.
-        ///     }
-        ///   ], # Optional. An array of enum definitions.
-        ///   relationshipDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -12001,6 +11425,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of entity definitions.
+        ///   enumDefs: [
+        ///     {
+        ///       defaultValue: string, # Optional. The default value.
+        ///       elementDefs: [
+        ///         {
+        ///           description: string, # Optional. The description of the enum element definition.
+        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
+        ///           value: string, # Optional. The value of the enum element definition.
+        ///         }
+        ///       ], # Optional. An array of enum element definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of enum definitions.
+        ///   relationshipDefs: [
+        ///     {
         ///       endDef1: {
         ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///         description: string, # Optional. The description of the relationship end definition.
@@ -12022,10 +11476,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
         /// of the container and children are totally independent.
         ///       relationshipLabel: string, # Optional. The label of the relationship.
-        ///     }
-        ///   ], # Optional. An array of relationship definitions.
-        ///   structDefs: [
-        ///     {
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
         ///       createdBy: string, # Optional. The user who created the record.
@@ -12040,7 +11491,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of relationship definitions.
+        ///   structDefs: [
+        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of struct definitions.
         ///   termTemplateDefs: [
@@ -12143,21 +11612,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. businessMetadataDefs
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
@@ -12170,10 +11624,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;/ul&gt;
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
-        ///     }
-        ///   ], # Optional. An array of classification definitions.
-        ///   entityDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -12189,10 +11639,16 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classification definitions.
+        ///   entityDefs: [
+        ///     {
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
         ///       relationshipAttributeDefs: [
         ///         {
+        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///           constraints: [AtlasConstraintDef], # Optional. An array of constraints.
         ///           defaultValue: string, # Optional. The default value of the attribute.
@@ -12206,40 +11662,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///           typeName: string, # Optional. The name of the type.
         ///           valuesMaxCount: number, # Optional. The maximum count of the values.
         ///           valuesMinCount: number, # Optional. The minimum count of the values.
-        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///         }
         ///       ], # Optional. An array of relationship attributes.
-        ///     }
-        ///   ], # Optional. An array of entity definitions.
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       defaultValue: string, # Optional. The default value.
-        ///       elementDefs: [
-        ///         {
-        ///           description: string, # Optional. The description of the enum element definition.
-        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///           value: string, # Optional. The value of the enum element definition.
-        ///         }
-        ///       ], # Optional. An array of enum element definitions.
-        ///     }
-        ///   ], # Optional. An array of enum definitions.
-        ///   relationshipDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -12255,6 +11679,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of entity definitions.
+        ///   enumDefs: [
+        ///     {
+        ///       defaultValue: string, # Optional. The default value.
+        ///       elementDefs: [
+        ///         {
+        ///           description: string, # Optional. The description of the enum element definition.
+        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
+        ///           value: string, # Optional. The value of the enum element definition.
+        ///         }
+        ///       ], # Optional. An array of enum element definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of enum definitions.
+        ///   relationshipDefs: [
+        ///     {
         ///       endDef1: {
         ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///         description: string, # Optional. The description of the relationship end definition.
@@ -12276,10 +11730,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
         /// of the container and children are totally independent.
         ///       relationshipLabel: string, # Optional. The label of the relationship.
-        ///     }
-        ///   ], # Optional. An array of relationship definitions.
-        ///   structDefs: [
-        ///     {
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
         ///       createdBy: string, # Optional. The user who created the record.
@@ -12294,7 +11745,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of relationship definitions.
+        ///   structDefs: [
+        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of struct definitions.
         ///   termTemplateDefs: [
@@ -12369,573 +11838,573 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     classificationDefs = new[] {
         ///         new {
+        ///             entityTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             subTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<String>"
+        ///             },
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             entityTypes = new[] {
-        ///                 "<AtlasClassificationDefEntityTypesItem>"
-        ///             },
-        ///             subTypes = new[] {
-        ///                 "<AtlasClassificationDefSubTypesItem>"
-        ///             },
-        ///             superTypes = new[] {
-        ///                 "<AtlasClassificationDefSuperTypesItem>"
-        ///             },
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     entityDefs = new[] {
         ///         new {
-        ///             attributeDefs = new[] {
+        ///             subTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             relationshipAttributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<type>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<name>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                 }
+        ///             },
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             subTypes = new[] {
-        ///                 "<AtlasEntityDefSubTypesItem>"
-        ///             },
-        ///             superTypes = new[] {
-        ///                 "<AtlasEntityDefSuperTypesItem>"
-        ///             },
-        ///             relationshipAttributeDefs = new[] {
-        ///                 new {
-        ///                     cardinality = "<SINGLE>",
-        ///                     constraints = new[] {
-        ///                         new {
-        ///                             params = new {
-        ///                                 key = new {},
-        ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
-        ///                         }
-        ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
-        ///                     includeInNotification = true,
-        ///                     isIndexable = true,
-        ///                     isOptional = true,
-        ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
-        ///                     options = new {
-        ///                         key = "<String>",
-        ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
-        ///                     valuesMaxCount = 1234,
-        ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
-        ///                 }
-        ///             },
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     enumDefs = new[] {
         ///         new {
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             defaultValue = "<defaultValue>",
+        ///             elementDefs = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     ordinal = 123.45f,
+        ///                     value = "<value>",
+        ///                 }
+        ///             },
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             defaultValue = "<AtlasEnumDefDefaultValue>",
-        ///             elementDefs = new[] {
-        ///                 new {
-        ///                     description = "<AtlasEnumElementDefDescription>",
-        ///                     ordinal = 1234,
-        ///                     value = "<AtlasEnumElementDefValue>",
-        ///                 }
-        ///             },
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     relationshipDefs = new[] {
         ///         new {
+        ///             endDef1 = new {
+        ///                 cardinality = "SINGLE",
+        ///                 description = "<description>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<name>",
+        ///                 type = "<type>",
+        ///             },
+        ///             endDef2 = new {
+        ///                 cardinality = "SINGLE",
+        ///                 description = "<description>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<name>",
+        ///                 type = "<type>",
+        ///             },
+        ///             relationshipCategory = "ASSOCIATION",
+        ///             relationshipLabel = "<relationshipLabel>",
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             endDef1 = new {
-        ///                 cardinality = "<SINGLE>",
-        ///                 description = "<AtlasRelationshipEndDefDescription>",
-        ///                 isContainer = true,
-        ///                 isLegacyAttribute = true,
-        ///                 name = "<AtlasRelationshipEndDefName>",
-        ///                 type = "<AtlasRelationshipEndDefType>",
-        ///             },
-        ///             endDef2 = new {
-        ///                 cardinality = "<SINGLE>",
-        ///                 description = "<AtlasRelationshipEndDefDescription>",
-        ///                 isContainer = true,
-        ///                 isLegacyAttribute = true,
-        ///                 name = "<AtlasRelationshipEndDefName>",
-        ///                 type = "<AtlasRelationshipEndDefType>",
-        ///             },
-        ///             relationshipCategory = "<ASSOCIATION>",
-        ///             relationshipLabel = "<AtlasRelationshipDefRelationshipLabel>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     structDefs = new[] {
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     termTemplateDefs = new[] {
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         /// };
@@ -12987,6 +12456,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -13031,9 +12503,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -13078,24 +12565,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createdBy").ToString());
@@ -13126,10 +12599,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -13174,20 +12657,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createdBy").ToString());
@@ -13218,20 +12701,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
@@ -13359,21 +12828,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. businessMetadataDefs
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
@@ -13386,10 +12840,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;/ul&gt;
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
-        ///     }
-        ///   ], # Optional. An array of classification definitions.
-        ///   entityDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -13405,10 +12855,16 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classification definitions.
+        ///   entityDefs: [
+        ///     {
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
         ///       relationshipAttributeDefs: [
         ///         {
+        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///           constraints: [AtlasConstraintDef], # Optional. An array of constraints.
         ///           defaultValue: string, # Optional. The default value of the attribute.
@@ -13422,40 +12878,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///           typeName: string, # Optional. The name of the type.
         ///           valuesMaxCount: number, # Optional. The maximum count of the values.
         ///           valuesMinCount: number, # Optional. The minimum count of the values.
-        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///         }
         ///       ], # Optional. An array of relationship attributes.
-        ///     }
-        ///   ], # Optional. An array of entity definitions.
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       defaultValue: string, # Optional. The default value.
-        ///       elementDefs: [
-        ///         {
-        ///           description: string, # Optional. The description of the enum element definition.
-        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///           value: string, # Optional. The value of the enum element definition.
-        ///         }
-        ///       ], # Optional. An array of enum element definitions.
-        ///     }
-        ///   ], # Optional. An array of enum definitions.
-        ///   relationshipDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -13471,6 +12895,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of entity definitions.
+        ///   enumDefs: [
+        ///     {
+        ///       defaultValue: string, # Optional. The default value.
+        ///       elementDefs: [
+        ///         {
+        ///           description: string, # Optional. The description of the enum element definition.
+        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
+        ///           value: string, # Optional. The value of the enum element definition.
+        ///         }
+        ///       ], # Optional. An array of enum element definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of enum definitions.
+        ///   relationshipDefs: [
+        ///     {
         ///       endDef1: {
         ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///         description: string, # Optional. The description of the relationship end definition.
@@ -13492,10 +12946,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
         /// of the container and children are totally independent.
         ///       relationshipLabel: string, # Optional. The label of the relationship.
-        ///     }
-        ///   ], # Optional. An array of relationship definitions.
-        ///   structDefs: [
-        ///     {
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
         ///       createdBy: string, # Optional. The user who created the record.
@@ -13510,7 +12961,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of relationship definitions.
+        ///   structDefs: [
+        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of struct definitions.
         ///   termTemplateDefs: [
@@ -13613,21 +13082,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. businessMetadataDefs
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
@@ -13640,10 +13094,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;/ul&gt;
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
-        ///     }
-        ///   ], # Optional. An array of classification definitions.
-        ///   entityDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -13659,10 +13109,16 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classification definitions.
+        ///   entityDefs: [
+        ///     {
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
         ///       relationshipAttributeDefs: [
         ///         {
+        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///           constraints: [AtlasConstraintDef], # Optional. An array of constraints.
         ///           defaultValue: string, # Optional. The default value of the attribute.
@@ -13676,40 +13132,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///           typeName: string, # Optional. The name of the type.
         ///           valuesMaxCount: number, # Optional. The maximum count of the values.
         ///           valuesMinCount: number, # Optional. The minimum count of the values.
-        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///         }
         ///       ], # Optional. An array of relationship attributes.
-        ///     }
-        ///   ], # Optional. An array of entity definitions.
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       defaultValue: string, # Optional. The default value.
-        ///       elementDefs: [
-        ///         {
-        ///           description: string, # Optional. The description of the enum element definition.
-        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///           value: string, # Optional. The value of the enum element definition.
-        ///         }
-        ///       ], # Optional. An array of enum element definitions.
-        ///     }
-        ///   ], # Optional. An array of enum definitions.
-        ///   relationshipDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -13725,6 +13149,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of entity definitions.
+        ///   enumDefs: [
+        ///     {
+        ///       defaultValue: string, # Optional. The default value.
+        ///       elementDefs: [
+        ///         {
+        ///           description: string, # Optional. The description of the enum element definition.
+        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
+        ///           value: string, # Optional. The value of the enum element definition.
+        ///         }
+        ///       ], # Optional. An array of enum element definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of enum definitions.
+        ///   relationshipDefs: [
+        ///     {
         ///       endDef1: {
         ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///         description: string, # Optional. The description of the relationship end definition.
@@ -13746,10 +13200,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
         /// of the container and children are totally independent.
         ///       relationshipLabel: string, # Optional. The label of the relationship.
-        ///     }
-        ///   ], # Optional. An array of relationship definitions.
-        ///   structDefs: [
-        ///     {
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
         ///       createdBy: string, # Optional. The user who created the record.
@@ -13764,7 +13215,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of relationship definitions.
+        ///   structDefs: [
+        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of struct definitions.
         ///   termTemplateDefs: [
@@ -13837,573 +13306,573 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     classificationDefs = new[] {
         ///         new {
+        ///             entityTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             subTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<String>"
+        ///             },
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             entityTypes = new[] {
-        ///                 "<AtlasClassificationDefEntityTypesItem>"
-        ///             },
-        ///             subTypes = new[] {
-        ///                 "<AtlasClassificationDefSubTypesItem>"
-        ///             },
-        ///             superTypes = new[] {
-        ///                 "<AtlasClassificationDefSuperTypesItem>"
-        ///             },
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     entityDefs = new[] {
         ///         new {
-        ///             attributeDefs = new[] {
+        ///             subTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             relationshipAttributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<type>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<name>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                 }
+        ///             },
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             subTypes = new[] {
-        ///                 "<AtlasEntityDefSubTypesItem>"
-        ///             },
-        ///             superTypes = new[] {
-        ///                 "<AtlasEntityDefSuperTypesItem>"
-        ///             },
-        ///             relationshipAttributeDefs = new[] {
-        ///                 new {
-        ///                     cardinality = "<SINGLE>",
-        ///                     constraints = new[] {
-        ///                         new {
-        ///                             params = new {
-        ///                                 key = new {},
-        ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
-        ///                         }
-        ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
-        ///                     includeInNotification = true,
-        ///                     isIndexable = true,
-        ///                     isOptional = true,
-        ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
-        ///                     options = new {
-        ///                         key = "<String>",
-        ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
-        ///                     valuesMaxCount = 1234,
-        ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
-        ///                 }
-        ///             },
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     enumDefs = new[] {
         ///         new {
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             defaultValue = "<defaultValue>",
+        ///             elementDefs = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     ordinal = 123.45f,
+        ///                     value = "<value>",
+        ///                 }
+        ///             },
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             defaultValue = "<AtlasEnumDefDefaultValue>",
-        ///             elementDefs = new[] {
-        ///                 new {
-        ///                     description = "<AtlasEnumElementDefDescription>",
-        ///                     ordinal = 1234,
-        ///                     value = "<AtlasEnumElementDefValue>",
-        ///                 }
-        ///             },
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     relationshipDefs = new[] {
         ///         new {
+        ///             endDef1 = new {
+        ///                 cardinality = "SINGLE",
+        ///                 description = "<description>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<name>",
+        ///                 type = "<type>",
+        ///             },
+        ///             endDef2 = new {
+        ///                 cardinality = "SINGLE",
+        ///                 description = "<description>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<name>",
+        ///                 type = "<type>",
+        ///             },
+        ///             relationshipCategory = "ASSOCIATION",
+        ///             relationshipLabel = "<relationshipLabel>",
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             endDef1 = new {
-        ///                 cardinality = "<SINGLE>",
-        ///                 description = "<AtlasRelationshipEndDefDescription>",
-        ///                 isContainer = true,
-        ///                 isLegacyAttribute = true,
-        ///                 name = "<AtlasRelationshipEndDefName>",
-        ///                 type = "<AtlasRelationshipEndDefType>",
-        ///             },
-        ///             endDef2 = new {
-        ///                 cardinality = "<SINGLE>",
-        ///                 description = "<AtlasRelationshipEndDefDescription>",
-        ///                 isContainer = true,
-        ///                 isLegacyAttribute = true,
-        ///                 name = "<AtlasRelationshipEndDefName>",
-        ///                 type = "<AtlasRelationshipEndDefType>",
-        ///             },
-        ///             relationshipCategory = "<ASSOCIATION>",
-        ///             relationshipLabel = "<AtlasRelationshipDefRelationshipLabel>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     structDefs = new[] {
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     termTemplateDefs = new[] {
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         /// };
@@ -14493,21 +13962,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. businessMetadataDefs
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
@@ -14520,10 +13974,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;/ul&gt;
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
-        ///     }
-        ///   ], # Optional. An array of classification definitions.
-        ///   entityDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -14539,10 +13989,16 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classification definitions.
+        ///   entityDefs: [
+        ///     {
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
         ///       relationshipAttributeDefs: [
         ///         {
+        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///           constraints: [AtlasConstraintDef], # Optional. An array of constraints.
         ///           defaultValue: string, # Optional. The default value of the attribute.
@@ -14556,40 +14012,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///           typeName: string, # Optional. The name of the type.
         ///           valuesMaxCount: number, # Optional. The maximum count of the values.
         ///           valuesMinCount: number, # Optional. The minimum count of the values.
-        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///         }
         ///       ], # Optional. An array of relationship attributes.
-        ///     }
-        ///   ], # Optional. An array of entity definitions.
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       defaultValue: string, # Optional. The default value.
-        ///       elementDefs: [
-        ///         {
-        ///           description: string, # Optional. The description of the enum element definition.
-        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///           value: string, # Optional. The value of the enum element definition.
-        ///         }
-        ///       ], # Optional. An array of enum element definitions.
-        ///     }
-        ///   ], # Optional. An array of enum definitions.
-        ///   relationshipDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -14605,6 +14029,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of entity definitions.
+        ///   enumDefs: [
+        ///     {
+        ///       defaultValue: string, # Optional. The default value.
+        ///       elementDefs: [
+        ///         {
+        ///           description: string, # Optional. The description of the enum element definition.
+        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
+        ///           value: string, # Optional. The value of the enum element definition.
+        ///         }
+        ///       ], # Optional. An array of enum element definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of enum definitions.
+        ///   relationshipDefs: [
+        ///     {
         ///       endDef1: {
         ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///         description: string, # Optional. The description of the relationship end definition.
@@ -14626,10 +14080,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
         /// of the container and children are totally independent.
         ///       relationshipLabel: string, # Optional. The label of the relationship.
-        ///     }
-        ///   ], # Optional. An array of relationship definitions.
-        ///   structDefs: [
-        ///     {
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
         ///       createdBy: string, # Optional. The user who created the record.
@@ -14644,7 +14095,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of relationship definitions.
+        ///   structDefs: [
+        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of struct definitions.
         ///   termTemplateDefs: [
@@ -14717,573 +14186,573 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     classificationDefs = new[] {
         ///         new {
+        ///             entityTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             subTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<String>"
+        ///             },
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             entityTypes = new[] {
-        ///                 "<AtlasClassificationDefEntityTypesItem>"
-        ///             },
-        ///             subTypes = new[] {
-        ///                 "<AtlasClassificationDefSubTypesItem>"
-        ///             },
-        ///             superTypes = new[] {
-        ///                 "<AtlasClassificationDefSuperTypesItem>"
-        ///             },
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     entityDefs = new[] {
         ///         new {
-        ///             attributeDefs = new[] {
+        ///             subTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             relationshipAttributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<type>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<name>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                 }
+        ///             },
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             subTypes = new[] {
-        ///                 "<AtlasEntityDefSubTypesItem>"
-        ///             },
-        ///             superTypes = new[] {
-        ///                 "<AtlasEntityDefSuperTypesItem>"
-        ///             },
-        ///             relationshipAttributeDefs = new[] {
-        ///                 new {
-        ///                     cardinality = "<SINGLE>",
-        ///                     constraints = new[] {
-        ///                         new {
-        ///                             params = new {
-        ///                                 key = new {},
-        ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
-        ///                         }
-        ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
-        ///                     includeInNotification = true,
-        ///                     isIndexable = true,
-        ///                     isOptional = true,
-        ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
-        ///                     options = new {
-        ///                         key = "<String>",
-        ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
-        ///                     valuesMaxCount = 1234,
-        ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
-        ///                 }
-        ///             },
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     enumDefs = new[] {
         ///         new {
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             defaultValue = "<defaultValue>",
+        ///             elementDefs = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     ordinal = 123.45f,
+        ///                     value = "<value>",
+        ///                 }
+        ///             },
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             defaultValue = "<AtlasEnumDefDefaultValue>",
-        ///             elementDefs = new[] {
-        ///                 new {
-        ///                     description = "<AtlasEnumElementDefDescription>",
-        ///                     ordinal = 1234,
-        ///                     value = "<AtlasEnumElementDefValue>",
-        ///                 }
-        ///             },
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     relationshipDefs = new[] {
         ///         new {
+        ///             endDef1 = new {
+        ///                 cardinality = "SINGLE",
+        ///                 description = "<description>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<name>",
+        ///                 type = "<type>",
+        ///             },
+        ///             endDef2 = new {
+        ///                 cardinality = "SINGLE",
+        ///                 description = "<description>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<name>",
+        ///                 type = "<type>",
+        ///             },
+        ///             relationshipCategory = "ASSOCIATION",
+        ///             relationshipLabel = "<relationshipLabel>",
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             endDef1 = new {
-        ///                 cardinality = "<SINGLE>",
-        ///                 description = "<AtlasRelationshipEndDefDescription>",
-        ///                 isContainer = true,
-        ///                 isLegacyAttribute = true,
-        ///                 name = "<AtlasRelationshipEndDefName>",
-        ///                 type = "<AtlasRelationshipEndDefType>",
-        ///             },
-        ///             endDef2 = new {
-        ///                 cardinality = "<SINGLE>",
-        ///                 description = "<AtlasRelationshipEndDefDescription>",
-        ///                 isContainer = true,
-        ///                 isLegacyAttribute = true,
-        ///                 name = "<AtlasRelationshipEndDefName>",
-        ///                 type = "<AtlasRelationshipEndDefType>",
-        ///             },
-        ///             relationshipCategory = "<ASSOCIATION>",
-        ///             relationshipLabel = "<AtlasRelationshipDefRelationshipLabel>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     structDefs = new[] {
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         ///     termTemplateDefs = new[] {
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "<SINGLE>",
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<relationshipTypeName>",
+        ///                     cardinality = "SINGLE",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "<AtlasConstraintDefType>",
+        ///                             type = "<type>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
-        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     defaultValue = "<defaultValue>",
+        ///                     description = "<description>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "<AtlasAttributeDefName>",
+        ///                     name = "<name>",
         ///                     options = new {
         ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     typeName = "<typeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
-        ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
-        ///             category = "<PRIMITIVE>",
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             category = "PRIMITIVE",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 calendar = 1234,
+        ///                 calendar = 123.45f,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     currency = "<NumberFormatCurrency>",
+        ///                     currency = "<currency>",
         ///                     groupingUsed = true,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
         ///                     parseIntegerOnly = true,
-        ///                     roundingMode = "<UP>",
+        ///                     roundingMode = "UP",
         ///                 },
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "<TimeZoneId>",
+        ///                     id = "<id>",
         ///                     availableIds = new[] {
-        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                         "<String>"
         ///                     },
-        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     displayName = "<displayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "<AtlasBaseTypeDefDescription>",
-        ///             guid = "<AtlasBaseTypeDefGuid>",
-        ///             name = "<AtlasBaseTypeDefName>",
+        ///             description = "<description>",
+        ///             guid = "<guid>",
+        ///             name = "<name>",
         ///             options = new {
         ///                 key = "<String>",
         ///             },
-        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
-        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
-        ///             version = 1234,
-        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             serviceType = "<serviceType>",
+        ///             typeVersion = "<typeVersion>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
         ///     },
         /// };
@@ -15373,21 +14842,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. businessMetadataDefs
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityTypes: [string], # Optional. Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
@@ -15400,10 +14854,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;/ul&gt;
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
-        ///     }
-        ///   ], # Optional. An array of classification definitions.
-        ///   entityDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -15419,10 +14869,16 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classification definitions.
+        ///   entityDefs: [
+        ///     {
         ///       subTypes: [string], # Optional. An array of sub types.
         ///       superTypes: [string], # Optional. An array of super types.
         ///       relationshipAttributeDefs: [
         ///         {
+        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
+        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///           constraints: [AtlasConstraintDef], # Optional. An array of constraints.
         ///           defaultValue: string, # Optional. The default value of the attribute.
@@ -15436,40 +14892,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///           typeName: string, # Optional. The name of the type.
         ///           valuesMaxCount: number, # Optional. The maximum count of the values.
         ///           valuesMinCount: number, # Optional. The minimum count of the values.
-        ///           isLegacyAttribute: boolean, # Optional. Determines if it is a legacy attribute.
-        ///           relationshipTypeName: string, # Optional. The name of the relationship type.
         ///         }
         ///       ], # Optional. An array of relationship attributes.
-        ///     }
-        ///   ], # Optional. An array of entity definitions.
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
-        ///       createTime: number, # Optional. The created time of the record.
-        ///       createdBy: string, # Optional. The user who created the record.
-        ///       dateFormatter: DateFormat, # Optional. The date format.
-        ///       description: string, # Optional. The description of the type definition.
-        ///       guid: string, # Optional. The GUID of the type definition.
-        ///       name: string, # Optional. The name of the type definition.
-        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
-        ///       serviceType: string, # Optional. The service type.
-        ///       typeVersion: string, # Optional. The version of the type.
-        ///       updateTime: number, # Optional. The update time of the record.
-        ///       updatedBy: string, # Optional. The user who updated the record.
-        ///       version: number, # Optional. The version of the record.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       defaultValue: string, # Optional. The default value.
-        ///       elementDefs: [
-        ///         {
-        ///           description: string, # Optional. The description of the enum element definition.
-        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
-        ///           value: string, # Optional. The value of the enum element definition.
-        ///         }
-        ///       ], # Optional. An array of enum element definitions.
-        ///     }
-        ///   ], # Optional. An array of enum definitions.
-        ///   relationshipDefs: [
-        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
@@ -15485,6 +14909,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of entity definitions.
+        ///   enumDefs: [
+        ///     {
+        ///       defaultValue: string, # Optional. The default value.
+        ///       elementDefs: [
+        ///         {
+        ///           description: string, # Optional. The description of the enum element definition.
+        ///           ordinal: number, # Optional. The ordinal of the enum element definition.
+        ///           value: string, # Optional. The value of the enum element definition.
+        ///         }
+        ///       ], # Optional. An array of enum element definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of enum definitions.
+        ///   relationshipDefs: [
+        ///     {
         ///       endDef1: {
         ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. single-valued attribute or multi-valued attribute.
         ///         description: string, # Optional. The description of the relationship end definition.
@@ -15506,10 +14960,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
         /// of the container and children are totally independent.
         ///       relationshipLabel: string, # Optional. The label of the relationship.
-        ///     }
-        ///   ], # Optional. An array of relationship definitions.
-        ///   structDefs: [
-        ///     {
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
         ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///       createTime: number, # Optional. The created time of the record.
         ///       createdBy: string, # Optional. The user who created the record.
@@ -15524,7 +14975,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///       updatedBy: string, # Optional. The user who updated the record.
         ///       version: number, # Optional. The version of the record.
         ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of relationship definitions.
+        ///   structDefs: [
+        ///     {
         ///       attributeDefs: [AtlasAttributeDef], # Optional. An array of attribute definitions.
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       dateFormatter: DateFormat, # Optional. The date format.
+        ///       description: string, # Optional. The description of the type definition.
+        ///       guid: string, # Optional. The GUID of the type definition.
+        ///       name: string, # Optional. The name of the type definition.
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. The options for the type definition.
+        ///       serviceType: string, # Optional. The service type.
+        ///       typeVersion: string, # Optional. The version of the type.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the record.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of struct definitions.
         ///   termTemplateDefs: [
@@ -15608,7 +15077,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasTypeDefHeader</c>:
+        /// Schema for <c>AtlasTypeDefHeader</c>:
         /// <code>{
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///   guid: string, # Optional. The GUID of the type definition.
@@ -15673,7 +15142,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasTypeDefHeader</c>:
+        /// Schema for <c>AtlasTypeDefHeader</c>:
         /// <code>{
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///   guid: string, # Optional. The GUID of the type definition.

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Reservations
             Optional<QuotaRequestState> provisioningState = default;
             Optional<string> message = default;
             Optional<DateTimeOffset> requestSubmitTime = default;
-            Optional<IReadOnlyList<SubRequest>> value = default;
+            Optional<IReadOnlyList<SubContent>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Reservations
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubRequest> array = new List<SubRequest>();
+                            List<SubContent> array = new List<SubContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubRequest.DeserializeSubRequest(item));
+                                array.Add(SubContent.DeserializeSubContent(item));
                             }
                             value = array;
                             continue;

@@ -7,7 +7,6 @@
                 "%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D",
                 "fake",
                 "Test12345",
-                "default",
                 "randompasswdcd",
                 "__CLIENT_SECRET__",
                 "userPassword7294",
@@ -93,9 +92,39 @@
         },
         {
             "file":[
-                "sdk/datafactory/Azure.ResourceManager.DataFactory/src/Generated/Models/RestServiceAuthenticationType.cs"
+                "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/TestCreateGetDeleteSqlVirtualMachineGroup().json",
+                "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/TestCreateGetDeleteSqlVirtualMachineGroup()Async.json",
+                "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/TestCreateUpdateGetSqlVirtualMachineGroup().json",
+                "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/TestCreateUpdateGetSqlVirtualMachineGroup()Async.json",
+                "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/SetTags().json",
+                "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/SetTags()Async.json"
+            ],
+            "_justification": "Files contain ephemeral keys or certificates used by test code during playback."
+        },
+        {
+            "file":[
+                "sdk/datafactory/Azure.ResourceManager.DataFactory/src/Generated/Models/RestServiceAuthenticationType.cs",
+                "sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/Models/RestServiceAuthenticationType.cs"
             ],
             "_justification": "File contains a string value that ends with credential, not a true credential."
+        },
+        {
+            "file":[
+                "sdk/containerregistry/Azure.ResourceManager.ContainerRegistry/tests/SessionRecords/ContainerRegistryTests/ContainerRegistryScopeMap().json",
+                "sdk/containerregistry/Azure.ResourceManager.ContainerRegistry/tests/SessionRecords/ContainerRegistryTests/ContainerRegistryScopeMap()Async.json",
+                "sdk/containerregistry/Azure.ResourceManager.ContainerRegistry/tests/SessionRecords/ContainerRegistryTests/ContainerRegistryConnectedRegistry().json",
+                "sdk/containerregistry/Azure.ResourceManager.ContainerRegistry/tests/SessionRecords/ContainerRegistryTests/ContainerRegistryConnectedRegistry()Async.json",
+                "sdk/containerregistry/Azure.ResourceManager.ContainerRegistry/tests/SessionRecords/ContainerRegistryTests/ContainerRegistryToken().json",
+                "sdk/containerregistry/Azure.ResourceManager.ContainerRegistry/tests/SessionRecords/ContainerRegistryTests/ContainerRegistryToken()Async.json"
+            ],
+            "_justification": "The async operation id starts with token, not a true token value."
+        },
+        {
+            "file":[
+                "sdk/containerservice/Azure.ResourceManager.ContainerService/tests/SessionRecords/ContainerServiceCollectionTests/GetCredentials().json",
+                "sdk/containerservice/Azure.ResourceManager.ContainerService/tests/SessionRecords/ContainerServiceCollectionTests/GetCredentials()Async.json"
+            ],
+            "_justification": "Files contain ephemeral keys or certificates used by test code during playback."
         }
     ]
 }

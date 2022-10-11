@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightPrivateLinkServiceConnectionState DeserializeHDInsightPrivateLinkServiceConnectionState(JsonElement element)
         {
-            PrivateLinkServiceConnectionStatus status = default;
+            HDInsightPrivateLinkServiceConnectionStatus status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
-                    status = new PrivateLinkServiceConnectionStatus(property.Value.GetString());
+                    status = new HDInsightPrivateLinkServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))

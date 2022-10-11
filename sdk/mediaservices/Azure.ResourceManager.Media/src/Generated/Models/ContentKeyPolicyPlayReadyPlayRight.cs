@@ -13,15 +13,15 @@ namespace Azure.ResourceManager.Media.Models
     public partial class ContentKeyPolicyPlayReadyPlayRight
     {
         /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyPlayRight. </summary>
-        /// <param name="digitalVideoOnlyContentRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
-        /// <param name="imageConstraintForAnalogComponentVideoRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
-        /// <param name="imageConstraintForAnalogComputerMonitorRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
+        /// <param name="hasDigitalVideoOnlyContentRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
+        /// <param name="hasImageConstraintForAnalogComponentVideoRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
+        /// <param name="hasImageConstraintForAnalogComputerMonitorRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
         /// <param name="allowPassingVideoContentToUnknownOutput"> Configures Unknown output handling settings of the license. </param>
-        public ContentKeyPolicyPlayReadyPlayRight(bool digitalVideoOnlyContentRestriction, bool imageConstraintForAnalogComponentVideoRestriction, bool imageConstraintForAnalogComputerMonitorRestriction, ContentKeyPolicyPlayReadyUnknownOutputPassingOption allowPassingVideoContentToUnknownOutput)
+        public ContentKeyPolicyPlayReadyPlayRight(bool hasDigitalVideoOnlyContentRestriction, bool hasImageConstraintForAnalogComponentVideoRestriction, bool hasImageConstraintForAnalogComputerMonitorRestriction, ContentKeyPolicyPlayReadyUnknownOutputPassingOption allowPassingVideoContentToUnknownOutput)
         {
-            DigitalVideoOnlyContentRestriction = digitalVideoOnlyContentRestriction;
-            ImageConstraintForAnalogComponentVideoRestriction = imageConstraintForAnalogComponentVideoRestriction;
-            ImageConstraintForAnalogComputerMonitorRestriction = imageConstraintForAnalogComputerMonitorRestriction;
+            HasDigitalVideoOnlyContentRestriction = hasDigitalVideoOnlyContentRestriction;
+            HasImageConstraintForAnalogComponentVideoRestriction = hasImageConstraintForAnalogComponentVideoRestriction;
+            HasImageConstraintForAnalogComputerMonitorRestriction = hasImageConstraintForAnalogComputerMonitorRestriction;
             AllowPassingVideoContentToUnknownOutput = allowPassingVideoContentToUnknownOutput;
         }
 
@@ -30,30 +30,30 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="scmsRestriction"> Configures the Serial Copy Management System (SCMS) in the license. Must be between 0 and 3 inclusive. </param>
         /// <param name="agcAndColorStripeRestriction"> Configures Automatic Gain Control (AGC) and Color Stripe in the license. Must be between 0 and 3 inclusive. </param>
         /// <param name="explicitAnalogTelevisionOutputRestriction"> Configures the Explicit Analog Television Output Restriction in the license. Configuration data must be between 0 and 3 inclusive. </param>
-        /// <param name="digitalVideoOnlyContentRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
-        /// <param name="imageConstraintForAnalogComponentVideoRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
-        /// <param name="imageConstraintForAnalogComputerMonitorRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
+        /// <param name="hasDigitalVideoOnlyContentRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
+        /// <param name="hasImageConstraintForAnalogComponentVideoRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
+        /// <param name="hasImageConstraintForAnalogComputerMonitorRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
         /// <param name="allowPassingVideoContentToUnknownOutput"> Configures Unknown output handling settings of the license. </param>
-        /// <param name="uncompressedDigitalVideoOpl"> Specifies the output protection level for uncompressed digital video. </param>
-        /// <param name="compressedDigitalVideoOpl"> Specifies the output protection level for compressed digital video. </param>
-        /// <param name="analogVideoOpl"> Specifies the output protection level for compressed digital audio. </param>
-        /// <param name="compressedDigitalAudioOpl"> Specifies the output protection level for compressed digital audio. </param>
-        /// <param name="uncompressedDigitalAudioOpl"> Specifies the output protection level for uncompressed digital audio. </param>
-        internal ContentKeyPolicyPlayReadyPlayRight(TimeSpan? firstPlayExpiration, int? scmsRestriction, int? agcAndColorStripeRestriction, ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction explicitAnalogTelevisionOutputRestriction, bool digitalVideoOnlyContentRestriction, bool imageConstraintForAnalogComponentVideoRestriction, bool imageConstraintForAnalogComputerMonitorRestriction, ContentKeyPolicyPlayReadyUnknownOutputPassingOption allowPassingVideoContentToUnknownOutput, int? uncompressedDigitalVideoOpl, int? compressedDigitalVideoOpl, int? analogVideoOpl, int? compressedDigitalAudioOpl, int? uncompressedDigitalAudioOpl)
+        /// <param name="uncompressedDigitalVideoOutputProtectionLevel"> Specifies the output protection level for uncompressed digital video. </param>
+        /// <param name="compressedDigitalVideoOutputProtectionLevel"> Specifies the output protection level for compressed digital video. </param>
+        /// <param name="analogVideoOutputProtectionLevel"> Specifies the output protection level for compressed digital audio. </param>
+        /// <param name="compressedDigitalAudioOutputProtectionLevel"> Specifies the output protection level for compressed digital audio. </param>
+        /// <param name="uncompressedDigitalAudioOutputProtectionLevel"> Specifies the output protection level for uncompressed digital audio. </param>
+        internal ContentKeyPolicyPlayReadyPlayRight(TimeSpan? firstPlayExpiration, int? scmsRestriction, int? agcAndColorStripeRestriction, ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction explicitAnalogTelevisionOutputRestriction, bool hasDigitalVideoOnlyContentRestriction, bool hasImageConstraintForAnalogComponentVideoRestriction, bool hasImageConstraintForAnalogComputerMonitorRestriction, ContentKeyPolicyPlayReadyUnknownOutputPassingOption allowPassingVideoContentToUnknownOutput, int? uncompressedDigitalVideoOutputProtectionLevel, int? compressedDigitalVideoOutputProtectionLevel, int? analogVideoOutputProtectionLevel, int? compressedDigitalAudioOutputProtectionLevel, int? uncompressedDigitalAudioOutputProtectionLevel)
         {
             FirstPlayExpiration = firstPlayExpiration;
             ScmsRestriction = scmsRestriction;
             AgcAndColorStripeRestriction = agcAndColorStripeRestriction;
             ExplicitAnalogTelevisionOutputRestriction = explicitAnalogTelevisionOutputRestriction;
-            DigitalVideoOnlyContentRestriction = digitalVideoOnlyContentRestriction;
-            ImageConstraintForAnalogComponentVideoRestriction = imageConstraintForAnalogComponentVideoRestriction;
-            ImageConstraintForAnalogComputerMonitorRestriction = imageConstraintForAnalogComputerMonitorRestriction;
+            HasDigitalVideoOnlyContentRestriction = hasDigitalVideoOnlyContentRestriction;
+            HasImageConstraintForAnalogComponentVideoRestriction = hasImageConstraintForAnalogComponentVideoRestriction;
+            HasImageConstraintForAnalogComputerMonitorRestriction = hasImageConstraintForAnalogComputerMonitorRestriction;
             AllowPassingVideoContentToUnknownOutput = allowPassingVideoContentToUnknownOutput;
-            UncompressedDigitalVideoOpl = uncompressedDigitalVideoOpl;
-            CompressedDigitalVideoOpl = compressedDigitalVideoOpl;
-            AnalogVideoOpl = analogVideoOpl;
-            CompressedDigitalAudioOpl = compressedDigitalAudioOpl;
-            UncompressedDigitalAudioOpl = uncompressedDigitalAudioOpl;
+            UncompressedDigitalVideoOutputProtectionLevel = uncompressedDigitalVideoOutputProtectionLevel;
+            CompressedDigitalVideoOutputProtectionLevel = compressedDigitalVideoOutputProtectionLevel;
+            AnalogVideoOutputProtectionLevel = analogVideoOutputProtectionLevel;
+            CompressedDigitalAudioOutputProtectionLevel = compressedDigitalAudioOutputProtectionLevel;
+            UncompressedDigitalAudioOutputProtectionLevel = uncompressedDigitalAudioOutputProtectionLevel;
         }
 
         /// <summary> The amount of time that the license is valid after the license is first used to play content. </summary>
@@ -65,22 +65,22 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Configures the Explicit Analog Television Output Restriction in the license. Configuration data must be between 0 and 3 inclusive. </summary>
         public ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction ExplicitAnalogTelevisionOutputRestriction { get; set; }
         /// <summary> Enables the Image Constraint For Analog Component Video Restriction in the license. </summary>
-        public bool DigitalVideoOnlyContentRestriction { get; set; }
+        public bool HasDigitalVideoOnlyContentRestriction { get; set; }
         /// <summary> Enables the Image Constraint For Analog Component Video Restriction in the license. </summary>
-        public bool ImageConstraintForAnalogComponentVideoRestriction { get; set; }
+        public bool HasImageConstraintForAnalogComponentVideoRestriction { get; set; }
         /// <summary> Enables the Image Constraint For Analog Component Video Restriction in the license. </summary>
-        public bool ImageConstraintForAnalogComputerMonitorRestriction { get; set; }
+        public bool HasImageConstraintForAnalogComputerMonitorRestriction { get; set; }
         /// <summary> Configures Unknown output handling settings of the license. </summary>
         public ContentKeyPolicyPlayReadyUnknownOutputPassingOption AllowPassingVideoContentToUnknownOutput { get; set; }
         /// <summary> Specifies the output protection level for uncompressed digital video. </summary>
-        public int? UncompressedDigitalVideoOpl { get; set; }
+        public int? UncompressedDigitalVideoOutputProtectionLevel { get; set; }
         /// <summary> Specifies the output protection level for compressed digital video. </summary>
-        public int? CompressedDigitalVideoOpl { get; set; }
+        public int? CompressedDigitalVideoOutputProtectionLevel { get; set; }
         /// <summary> Specifies the output protection level for compressed digital audio. </summary>
-        public int? AnalogVideoOpl { get; set; }
+        public int? AnalogVideoOutputProtectionLevel { get; set; }
         /// <summary> Specifies the output protection level for compressed digital audio. </summary>
-        public int? CompressedDigitalAudioOpl { get; set; }
+        public int? CompressedDigitalAudioOutputProtectionLevel { get; set; }
         /// <summary> Specifies the output protection level for uncompressed digital audio. </summary>
-        public int? UncompressedDigitalAudioOpl { get; set; }
+        public int? UncompressedDigitalAudioOutputProtectionLevel { get; set; }
     }
 }

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string name = default;
             string metricName = default;
             Optional<string> metricNamespace = default;
-            AggregationTypeEnum timeAggregation = default;
+            MetricCriteriaTimeAggregationType timeAggregation = default;
             Optional<IList<MetricDimension>> dimensions = default;
             Optional<bool> skipMetricValidation = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("timeAggregation"))
                 {
-                    timeAggregation = new AggregationTypeEnum(property.Value.GetString());
+                    timeAggregation = new MetricCriteriaTimeAggregationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dimensions"))

@@ -112,6 +112,42 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             }
         }
 
+        /// <summary>
+        ///   Verifies that the <see cref="ServiceBusClient" /> is able to
+        ///   connect to the Service Bus service.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ClientCanConnectWithConnectionStringAndCustomIdentifier()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: false))
+            {
+                var options = new ServiceBusClientOptions
+                {
+                    Identifier = "MyServiceBusClient<3"
+                };
+                var audience = ServiceBusConnection.BuildConnectionResource(options.TransportType, TestEnvironment.FullyQualifiedNamespace, scope.QueueName);
+                var connectionString = TestEnvironment.BuildConnectionStringWithSharedAccessSignature(scope.QueueName, audience);
+
+                await using (var client = new ServiceBusClient(connectionString, options))
+                {
+                    Assert.That(async () =>
+                    {
+                        ServiceBusReceiver receiver = null;
+
+                        try
+                        {
+                            receiver = client.CreateReceiver(scope.QueueName);
+                        }
+                        finally
+                        {
+                            await (receiver?.DisposeAsync() ?? new ValueTask());
+                        }
+                    }, Throws.Nothing);
+                }
+            }
+        }
+
         [Test]
         [TestCase(true)]
         [TestCase(false)]

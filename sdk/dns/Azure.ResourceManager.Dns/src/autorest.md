@@ -14,6 +14,17 @@ modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
 
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'ETag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+  '*Guid': 'uuid'
+  'ifMatch': 'etag'
+  'IPv6Address': 'ip-address'
+  'IPv4Address': 'ip-address'
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -36,40 +47,83 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-  ACL: Acl
-  ACLs: Acls
+  SAS: Sas
+  SKU: Sku
+  SMB: Smb
+  NFS: Nfs
+  LRS: Lrs
+  ZRS: Zrs
+  GRS: Grs
+  TLS: Tls
+  AAD: Aad
+  GET: Get
+  PUT: Put
+  RecordType: DnsRecordType
+  ARecord: ARecordInfo
+  AaaaRecord: AaaaRecordInfo
+  MxRecord: MXRecordInfo
+  NsRecord: NSRecordInfo
+  PtrRecord: PtrRecordInfo
+  SrvRecord: SrvRecordInfo
+  TxtRecord: TxtRecordInfo
+  CnameRecord: CnameRecordInfo
+  SoaRecord: SoaRecordInfo
+  CaaRecord: CaaRecordInfo
 
 override-operation-name:
-  RecordSets_ListByDnsZone: GetRecordSets
-  RecordSets_ListAllByDnsZone: GetAllRecordSets
+  RecordSets_ListByDnsZone: GetAllRecordData # Change back to GetRecords once the polymorphic resource change is merged.
+  DnsResourceReference_GetByTargetResources: GetDnsResourceReferencesByTargetResources
+  Zones_List: GetDnsZones
 
 request-path-to-resource-name:
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/A: RecordSetA
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/AAAA: RecordSetAaaa
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/CAA: RecordSetCaa
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/CNAME: RecordSetCname
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/MX: RecordSetMx
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/NS: RecordSetNs
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/PTR: RecordSetPtr
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/SOA: RecordSetSoa
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/SRV: RecordSetSrv
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/TXT: RecordSetTxt
-# Add nullable annotations
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/A: ARecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/AAAA: AaaaRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/CAA: CaaRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/CNAME: CnameRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/MX: MXRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/NS: NSRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/PTR: PtrRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/SOA: SoaRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/SRV: SrvRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/TXT: TxtRecord
+
 directive:
+  - remove-operation: RecordSets_ListAllByDnsZone
   - from: swagger-document
-    where: $.definitions.ZoneProperties
+    where: $.definitions
     transform: >
-      $.properties.maxNumberOfRecordsPerRecordSet["x-nullable"] = true;
-# Rename models
+      $.ZoneUpdate["x-ms-client-name"] = "ZoneUpdateOptions";
+      $.NsRecord.properties.nsdname["x-ms-client-name"] = "DnsNSDomainName";
+      $.PtrRecord.properties.ptrdname["x-ms-client-name"] = "DnsPtrDomainName";
+      $.RecordSetProperties.properties.TTL["x-ms-client-name"] = "TtlInSeconds";
+      $.TxtRecord.properties.value["x-ms-client-name"] = "values";
+      $.ZoneProperties.properties.maxNumberOfRecordsPerRecordSet["x-nullable"] = true;
+      $.ZoneProperties.properties.maxNumberOfRecordSets["x-ms-client-name"] = "maxNumberOfRecords";
+      $.ZoneProperties.properties.maxNumberOfRecordsPerRecordSet["x-ms-client-name"] = "maxNumberOfRecordsPerRecord";
+      $.ZoneProperties.properties.numberOfRecordSets["x-ms-client-name"] = "numberOfRecords";
+      $.RecordSet["x-ms-client-name"] = "Record";
+
+# FooTime => FooTimeInSeconds
   - from: swagger-document
-    where: $.definitions.Zone
+    where: $.definitions
     transform: >
-      $["x-ms-client-name"] = "DnsZone";
+      $.SoaRecord.properties.expireTime["x-ms-client-name"] = "expireTimeInSeconds";
+      $.SoaRecord.properties.retryTime["x-ms-client-name"] = "retryTimeInSeconds";
+      $.SoaRecord.properties.minimumTTL["x-ms-client-name"] = "minimumTtlInSeconds";
+      $.SoaRecord.properties.refreshTime["x-ms-client-name"] = "refreshTimeInSeconds";
+
+# Add Prepend Name
   - from: swagger-document
-    where: $.definitions.ZoneUpdate
+    where: $.definitions
     transform: >
-      $["x-ms-client-name"] = "ZoneUpdateOptions";
-  # - from: swagger-document
-  #   where: $['paths']['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}']
-  #   transform: delete $['get']
+      $.Zone["x-ms-client-name"] = "DnsZone";
+      $.ZoneProperties.properties.zoneType["x-ms-enum"].name = "DnsZoneType";
+      $.ZoneListResult["x-ms-client-name"] = "DnsZoneListResult";
+
+# Mx Ns => MX NS
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+      $.RecordSetProperties.properties.MXRecords["x-ms-client-name"] = "MXRecords";
+      $.RecordSetProperties.properties.NSRecords["x-ms-client-name"] = "NSRecords";
 ```

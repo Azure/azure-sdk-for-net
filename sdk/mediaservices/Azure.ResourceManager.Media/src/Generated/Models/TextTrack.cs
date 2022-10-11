@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Represents a text track in an asset. A text track is usually used for sparse data related to the audio or video tracks. </summary>
-    public partial class TextTrack : TrackBase
+    public partial class TextTrack : MediaAssetTrackBase
     {
         /// <summary> Initializes a new instance of TextTrack. </summary>
         public TextTrack()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="languageCode"> The RFC5646 language code for the text track. </param>
         /// <param name="playerVisibility"> When PlayerVisibility is set to &quot;Visible&quot;, the text track will be present in the DASH manifest or HLS playlist when requested by a client. When the PlayerVisibility is set to &quot;Hidden&quot;, the text will not be available to the client. The default value is &quot;Visible&quot;. </param>
         /// <param name="hlsSettings"> The HLS specific setting for the text track. </param>
-        internal TextTrack(string odataType, string fileName, string displayName, string languageCode, Visibility? playerVisibility, HlsSettings hlsSettings) : base(odataType)
+        internal TextTrack(string odataType, string fileName, string displayName, string languageCode, PlayerVisibility? playerVisibility, HlsSettings hlsSettings) : base(odataType)
         {
             FileName = fileName;
             DisplayName = displayName;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> The RFC5646 language code for the text track. </summary>
         public string LanguageCode { get; }
         /// <summary> When PlayerVisibility is set to &quot;Visible&quot;, the text track will be present in the DASH manifest or HLS playlist when requested by a client. When the PlayerVisibility is set to &quot;Hidden&quot;, the text will not be available to the client. The default value is &quot;Visible&quot;. </summary>
-        public Visibility? PlayerVisibility { get; set; }
+        public PlayerVisibility? PlayerVisibility { get; set; }
         /// <summary> The HLS specific setting for the text track. </summary>
         public HlsSettings HlsSettings { get; set; }
     }

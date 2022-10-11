@@ -13,6 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Share
 {
+    // Data plane generated client. The EmailRegistration service client.
     /// <summary> The EmailRegistration service client. </summary>
     public partial class EmailRegistrationClient
     {
@@ -86,21 +87,21 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// var data = new {
         ///     properties = new {
-        ///         activationCode = "<TenantEmailRegistrationPropertiesActivationCode>",
+        ///         activationCode = "<activationCode>",
         ///     },
         /// };
         /// 
         /// Response response = await client.ActivateAsync(RequestContent.Create(data), "<repeatabilityRequestId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationExpiration").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("email").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("registrationStatus").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("tenantId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -112,9 +113,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// Schema for <c>TenantEmailRegistration</c>:
         /// <code>{
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     activationCode: string, # Required. Activation code for the registration.
         ///     activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration.
@@ -122,6 +120,9 @@ namespace Azure.Analytics.Purview.Share
         ///     registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
         ///     tenantId: string, # Optional. The tenant id to register.
         ///   }, # Optional. Tenant email registration property bag.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// 
@@ -129,9 +130,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// Schema for <c>TenantEmailRegistration</c>:
         /// <code>{
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     activationCode: string, # Required. Activation code for the registration.
         ///     activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration.
@@ -139,6 +137,9 @@ namespace Azure.Analytics.Purview.Share
         ///     registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
         ///     tenantId: string, # Optional. The tenant id to register.
         ///   }, # Optional. Tenant email registration property bag.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// 
@@ -188,21 +189,21 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// var data = new {
         ///     properties = new {
-        ///         activationCode = "<TenantEmailRegistrationPropertiesActivationCode>",
+        ///         activationCode = "<activationCode>",
         ///     },
         /// };
         /// 
         /// Response response = client.Activate(RequestContent.Create(data), "<repeatabilityRequestId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationExpiration").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("email").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("registrationStatus").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("tenantId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -214,9 +215,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// Schema for <c>TenantEmailRegistration</c>:
         /// <code>{
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     activationCode: string, # Required. Activation code for the registration.
         ///     activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration.
@@ -224,6 +222,9 @@ namespace Azure.Analytics.Purview.Share
         ///     registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
         ///     tenantId: string, # Optional. The tenant id to register.
         ///   }, # Optional. Tenant email registration property bag.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// 
@@ -231,9 +232,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// Schema for <c>TenantEmailRegistration</c>:
         /// <code>{
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     activationCode: string, # Required. Activation code for the registration.
         ///     activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration.
@@ -241,6 +239,9 @@ namespace Azure.Analytics.Purview.Share
         ///     registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
         ///     tenantId: string, # Optional. The tenant id to register.
         ///   }, # Optional. Tenant email registration property bag.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// 
@@ -287,14 +288,14 @@ namespace Azure.Analytics.Purview.Share
         /// Response response = await client.RegisterAsync("<repeatabilityRequestId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationExpiration").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("email").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("registrationStatus").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("tenantId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -306,9 +307,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// Schema for <c>TenantEmailRegistration</c>:
         /// <code>{
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     activationCode: string, # Required. Activation code for the registration.
         ///     activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration.
@@ -316,6 +314,9 @@ namespace Azure.Analytics.Purview.Share
         ///     registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
         ///     tenantId: string, # Optional. The tenant id to register.
         ///   }, # Optional. Tenant email registration property bag.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// 
@@ -360,14 +361,14 @@ namespace Azure.Analytics.Purview.Share
         /// Response response = client.Register("<repeatabilityRequestId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationExpiration").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("email").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("registrationStatus").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("tenantId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -379,9 +380,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// Schema for <c>TenantEmailRegistration</c>:
         /// <code>{
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     activationCode: string, # Required. Activation code for the registration.
         ///     activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration.
@@ -389,6 +387,9 @@ namespace Azure.Analytics.Purview.Share
         ///     registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
         ///     tenantId: string, # Optional. The tenant id to register.
         ///   }, # Optional. Tenant email registration property bag.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// 

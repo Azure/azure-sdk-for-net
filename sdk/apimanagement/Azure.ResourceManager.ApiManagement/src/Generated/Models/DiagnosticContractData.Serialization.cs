@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("backend");
                 writer.WriteObjectValue(Backend);
             }
-            if (Optional.IsDefined(LogClientIP))
+            if (Optional.IsDefined(IsLogClientIPEnabled))
             {
                 writer.WritePropertyName("logClientIp");
-                writer.WriteBooleanValue(LogClientIP.Value);
+                writer.WriteBooleanValue(IsLogClientIPEnabled.Value);
             }
             if (Optional.IsDefined(HttpCorrelationProtocol))
             {
@@ -63,6 +63,11 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 writer.WritePropertyName("operationNameFormat");
                 writer.WriteStringValue(OperationNameFormat.Value.ToString());
+            }
+            if (Optional.IsDefined(Metrics))
+            {
+                writer.WritePropertyName("metrics");
+                writer.WriteBooleanValue(Metrics.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -83,6 +88,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<HttpCorrelationProtocol> httpCorrelationProtocol = default;
             Optional<TraceVerbosityLevel> verbosity = default;
             Optional<OperationNameFormat> operationNameFormat = default;
+            Optional<bool> metrics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -204,11 +210,21 @@ namespace Azure.ResourceManager.ApiManagement
                             operationNameFormat = new OperationNameFormat(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("metrics"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            metrics = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DiagnosticContractData(id, name, type, systemData.Value, Optional.ToNullable(alwaysLog), loggerId.Value, sampling.Value, frontend.Value, backend.Value, Optional.ToNullable(logClientIP), Optional.ToNullable(httpCorrelationProtocol), Optional.ToNullable(verbosity), Optional.ToNullable(operationNameFormat));
+            return new DiagnosticContractData(id, name, type, systemData.Value, Optional.ToNullable(alwaysLog), loggerId.Value, sampling.Value, frontend.Value, backend.Value, Optional.ToNullable(logClientIP), Optional.ToNullable(httpCorrelationProtocol), Optional.ToNullable(verbosity), Optional.ToNullable(operationNameFormat), Optional.ToNullable(metrics));
         }
     }
 }

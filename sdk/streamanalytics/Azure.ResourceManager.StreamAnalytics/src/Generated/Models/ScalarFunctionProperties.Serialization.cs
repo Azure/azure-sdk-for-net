@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             string type = default;
             Optional<ETag> etag = default;
-            Optional<IList<FunctionInput>> inputs = default;
-            Optional<FunctionOutput> output = default;
-            Optional<FunctionBinding> binding = default;
+            Optional<IList<StreamingJobFunctionInput>> inputs = default;
+            Optional<StreamingJobFunctionOutput> output = default;
+            Optional<StreamingJobFunctionBinding> binding = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<FunctionInput> array = new List<FunctionInput>();
+                            List<StreamingJobFunctionInput> array = new List<StreamingJobFunctionInput>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FunctionInput.DeserializeFunctionInput(item));
+                                array.Add(StreamingJobFunctionInput.DeserializeStreamingJobFunctionInput(item));
                             }
                             inputs = array;
                             continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            output = FunctionOutput.DeserializeFunctionOutput(property0.Value);
+                            output = StreamingJobFunctionOutput.DeserializeStreamingJobFunctionOutput(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("binding"))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            binding = FunctionBinding.DeserializeFunctionBinding(property0.Value);
+                            binding = StreamingJobFunctionBinding.DeserializeStreamingJobFunctionBinding(property0.Value);
                             continue;
                         }
                     }

@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
+    // Data plane generated client. The CropVarieties service client.
     /// <summary> The CropVarieties service client. </summary>
     public partial class CropVarietiesClient
     {
@@ -242,11 +243,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new CropVarietiesClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     brand = "<CropVarietyBrand>",
-        ///     product = "<CropVarietyProduct>",
-        ///     status = "<CropVarietyStatus>",
-        ///     name = "<CropVarietyName>",
-        ///     description = "<CropVarietyDescription>",
+        ///     brand = "<brand>",
+        ///     product = "<product>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -363,11 +364,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new CropVarietiesClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     brand = "<CropVarietyBrand>",
-        ///     product = "<CropVarietyProduct>",
-        ///     status = "<CropVarietyStatus>",
-        ///     name = "<CropVarietyName>",
-        ///     description = "<CropVarietyDescription>",
+        ///     brand = "<brand>",
+        ///     product = "<product>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },

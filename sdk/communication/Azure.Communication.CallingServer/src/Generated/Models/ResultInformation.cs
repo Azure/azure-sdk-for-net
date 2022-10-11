@@ -8,11 +8,22 @@
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The ResultInformation. </summary>
-    internal partial class ResultInformation
+    public partial class ResultInformation
     {
         /// <summary> Initializes a new instance of ResultInformation. </summary>
         internal ResultInformation()
         {
+        }
+
+        /// <summary> Initializes a new instance of ResultInformation. </summary>
+        /// <param name="code"></param>
+        /// <param name="subCode"></param>
+        /// <param name="message"></param>
+        internal ResultInformation(int? code, int? subCode, string message)
+        {
+            Code = code;
+            SubCode = subCode;
+            Message = message;
         }
 
         /// <summary> Gets the code. </summary>

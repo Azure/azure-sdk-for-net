@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of WindowsEventLogDataSource. </summary>
         public WindowsEventLogDataSource()
         {
-            Streams = new ChangeTrackingList<KnownWindowsEventLogDataSourceStream>();
+            Streams = new ChangeTrackingList<WindowsEventLogDataSourceStream>();
             XPathQueries = new ChangeTrackingList<string>();
         }
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
-        internal WindowsEventLogDataSource(IList<KnownWindowsEventLogDataSourceStream> streams, IList<string> xPathQueries, string name)
+        internal WindowsEventLogDataSource(IList<WindowsEventLogDataSourceStream> streams, IList<string> xPathQueries, string name)
         {
             Streams = streams;
             XPathQueries = xPathQueries;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
         /// </summary>
-        public IList<KnownWindowsEventLogDataSourceStream> Streams { get; }
+        public IList<WindowsEventLogDataSourceStream> Streams { get; }
         /// <summary> A list of Windows Event Log queries in XPATH format. </summary>
         public IList<string> XPathQueries { get; }
         /// <summary>

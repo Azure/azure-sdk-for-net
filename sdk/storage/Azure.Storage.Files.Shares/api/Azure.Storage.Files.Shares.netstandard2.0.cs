@@ -97,8 +97,7 @@ namespace Azure.Storage.Files.Shares
     public partial class ShareClientOptions : Azure.Core.ClientOptions
     {
         public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2021_10_04) { }
-        public Azure.Storage.DownloadTransferValidationOptions DownloadTransferValidationOptions { get { throw null; } set { } }
-        public Azure.Storage.UploadTransferValidationOptions UploadTransferValidationOptions { get { throw null; } set { } }
+        public Azure.Storage.TransferValidationOptions TransferValidation { get { throw null; } }
         public Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
@@ -876,6 +875,7 @@ namespace Azure.Storage.Files.Shares.Models
         public ShareFileUploadOptions() { }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions Conditions { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
+        public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
         public Azure.Storage.UploadTransferValidationOptions TransferValidationOptions { get { throw null; } set { } }
     }
     public partial class ShareFileUploadRangeFromUriOptions

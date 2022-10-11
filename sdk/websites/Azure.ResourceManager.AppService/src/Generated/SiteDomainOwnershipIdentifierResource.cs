@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _siteDomainOwnershipIdentifierWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteDomainOwnershipIdentifierWebAppsRestClient;
-        private readonly IdentifierData _data;
+        private readonly AppServiceIdentifierData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteDomainOwnershipIdentifierResource"/> class for mocking. </summary>
         protected SiteDomainOwnershipIdentifierResource()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "SiteDomainOwnershipIdentifierResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteDomainOwnershipIdentifierResource(ArmClient client, IdentifierData data) : this(client, data.Id)
+        internal SiteDomainOwnershipIdentifierResource(ArmClient client, AppServiceIdentifierData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual IdentifierData Data
+        public virtual AppServiceIdentifierData Data
         {
             get
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<SiteDomainOwnershipIdentifierResource>> UpdateAsync(IdentifierData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteDomainOwnershipIdentifierResource>> UpdateAsync(AppServiceIdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<SiteDomainOwnershipIdentifierResource> Update(IdentifierData data, CancellationToken cancellationToken = default)
+        public virtual Response<SiteDomainOwnershipIdentifierResource> Update(AppServiceIdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

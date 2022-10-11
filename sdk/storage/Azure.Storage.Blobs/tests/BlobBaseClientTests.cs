@@ -1218,8 +1218,8 @@ namespace Azure.Storage.Blobs.Test
                 Range = new HttpRange(offset, count),
                 TransferValidationOptions = new DownloadTransferValidationOptions
                 {
-                    Algorithm = ValidationAlgorithm.MD5,
-                    Validate = false
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
+                    AutoValidateChecksum = false
                 }
             });
 
@@ -1539,6 +1539,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [RetryOnException(5, typeof(AssertionException))]
         public async Task DownloadTo_Initial304()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1562,6 +1563,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [RetryOnException(5, typeof(AssertionException))]
         public async Task DownloadContent_Initial304()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1586,6 +1588,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [RetryOnException(5, typeof(AssertionException))]
         public async Task DownloadStreaming_Initial304()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Describes the settings to produce a PNG image from the input video. </summary>
-    public partial class PngLayer : Layer
+    public partial class PngLayer : MediaLayerBase
     {
         /// <summary> Initializes a new instance of PngLayer. </summary>
         public PngLayer()

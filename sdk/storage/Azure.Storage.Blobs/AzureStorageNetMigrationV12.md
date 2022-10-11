@@ -685,7 +685,7 @@ await blockBlobClient.StageBlockAsync(
     {
         TransferValidationOptions = new UploadTransferValidationOptions
         {
-            Algorithm = ValidationAlgorithm.MD5,
+            ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
             // a precalculated hash can be provided as follows,
             // the sdk will calculate one for you otherwise
             PrecalculatedChecksum = precalculatedBlockHash
@@ -705,7 +705,7 @@ Response<BlobDownloadStreamingResult> response = await blockBlobClient.DownloadS
         Range = new HttpRange(length: 4 * Constants.MB),
         TransferValidationOptions = new DownloadTransferValidationOptions
         {
-            Algorithm = ValidationAlgorithm.MD5,
+            ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
             // SDK will validate against checksum for you
             // to disable this and check in your own workflow, uncomment the below
             //Validate = false,

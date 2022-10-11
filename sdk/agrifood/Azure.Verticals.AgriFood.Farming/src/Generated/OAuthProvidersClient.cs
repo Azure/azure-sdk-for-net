@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
+    // Data plane generated client. The OAuthProviders service client.
     /// <summary> The OAuthProviders service client. </summary>
     public partial class OAuthProvidersClient
     {
@@ -243,12 +244,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     appId = "<OAuthProviderAppId>",
-        ///     appSecret = "<OAuthProviderAppSecret>",
-        ///     apiKey = "<OAuthProviderApiKey>",
-        ///     isProductionApp = false,
-        ///     name = "<OAuthProviderName>",
-        ///     description = "<OAuthProviderDescription>",
+        ///     appId = "<appId>",
+        ///     appSecret = "<appSecret>",
+        ///     apiKey = "<apiKey>",
+        ///     isProductionApp = true,
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -369,12 +370,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     appId = "<OAuthProviderAppId>",
-        ///     appSecret = "<OAuthProviderAppSecret>",
-        ///     apiKey = "<OAuthProviderApiKey>",
-        ///     isProductionApp = false,
-        ///     name = "<OAuthProviderName>",
-        ///     description = "<OAuthProviderDescription>",
+        ///     appId = "<appId>",
+        ///     appSecret = "<appSecret>",
+        ///     apiKey = "<apiKey>",
+        ///     isProductionApp = true,
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },

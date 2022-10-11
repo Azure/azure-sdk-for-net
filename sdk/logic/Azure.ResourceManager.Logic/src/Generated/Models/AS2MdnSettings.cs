@@ -13,62 +13,62 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class AS2MdnSettings
     {
         /// <summary> Initializes a new instance of AS2MdnSettings. </summary>
-        /// <param name="needMDN"> The value indicating whether to send or request a MDN. </param>
-        /// <param name="signMDN"> The value indicating whether the MDN needs to be signed or not. </param>
-        /// <param name="sendMDNAsynchronously"> The value indicating whether to send the asynchronous MDN. </param>
-        /// <param name="signOutboundMDNIfOptional"> The value indicating whether to sign the outbound MDN if optional. </param>
-        /// <param name="sendInboundMDNToMessageBox"> The value indicating whether to send inbound MDN to message box. </param>
+        /// <param name="needMdn"> The value indicating whether to send or request a MDN. </param>
+        /// <param name="signMdn"> The value indicating whether the MDN needs to be signed or not. </param>
+        /// <param name="sendMdnAsynchronously"> The value indicating whether to send the asynchronous MDN. </param>
+        /// <param name="signOutboundMdnIfOptional"> The value indicating whether to sign the outbound MDN if optional. </param>
+        /// <param name="sendInboundMdnToMessageBox"> The value indicating whether to send inbound MDN to message box. </param>
         /// <param name="micHashingAlgorithm"> The signing or hashing algorithm. </param>
-        public AS2MdnSettings(bool needMDN, bool signMDN, bool sendMDNAsynchronously, bool signOutboundMDNIfOptional, bool sendInboundMDNToMessageBox, HashingAlgorithm micHashingAlgorithm)
+        public AS2MdnSettings(bool needMdn, bool signMdn, bool sendMdnAsynchronously, bool signOutboundMdnIfOptional, bool sendInboundMdnToMessageBox, AS2HashingAlgorithm micHashingAlgorithm)
         {
-            NeedMDN = needMDN;
-            SignMDN = signMDN;
-            SendMDNAsynchronously = sendMDNAsynchronously;
-            SignOutboundMDNIfOptional = signOutboundMDNIfOptional;
-            SendInboundMDNToMessageBox = sendInboundMDNToMessageBox;
+            NeedMdn = needMdn;
+            SignMdn = signMdn;
+            SendMdnAsynchronously = sendMdnAsynchronously;
+            SignOutboundMdnIfOptional = signOutboundMdnIfOptional;
+            SendInboundMdnToMessageBox = sendInboundMdnToMessageBox;
             MicHashingAlgorithm = micHashingAlgorithm;
         }
 
         /// <summary> Initializes a new instance of AS2MdnSettings. </summary>
-        /// <param name="needMDN"> The value indicating whether to send or request a MDN. </param>
-        /// <param name="signMDN"> The value indicating whether the MDN needs to be signed or not. </param>
-        /// <param name="sendMDNAsynchronously"> The value indicating whether to send the asynchronous MDN. </param>
+        /// <param name="needMdn"> The value indicating whether to send or request a MDN. </param>
+        /// <param name="signMdn"> The value indicating whether the MDN needs to be signed or not. </param>
+        /// <param name="sendMdnAsynchronously"> The value indicating whether to send the asynchronous MDN. </param>
         /// <param name="receiptDeliveryUri"> The receipt delivery URL. </param>
         /// <param name="dispositionNotificationTo"> The disposition notification to header value. </param>
-        /// <param name="signOutboundMDNIfOptional"> The value indicating whether to sign the outbound MDN if optional. </param>
+        /// <param name="signOutboundMdnIfOptional"> The value indicating whether to sign the outbound MDN if optional. </param>
         /// <param name="mdnText"> The MDN text. </param>
-        /// <param name="sendInboundMDNToMessageBox"> The value indicating whether to send inbound MDN to message box. </param>
+        /// <param name="sendInboundMdnToMessageBox"> The value indicating whether to send inbound MDN to message box. </param>
         /// <param name="micHashingAlgorithm"> The signing or hashing algorithm. </param>
-        internal AS2MdnSettings(bool needMDN, bool signMDN, bool sendMDNAsynchronously, Uri receiptDeliveryUri, string dispositionNotificationTo, bool signOutboundMDNIfOptional, string mdnText, bool sendInboundMDNToMessageBox, HashingAlgorithm micHashingAlgorithm)
+        internal AS2MdnSettings(bool needMdn, bool signMdn, bool sendMdnAsynchronously, Uri receiptDeliveryUri, string dispositionNotificationTo, bool signOutboundMdnIfOptional, string mdnText, bool sendInboundMdnToMessageBox, AS2HashingAlgorithm micHashingAlgorithm)
         {
-            NeedMDN = needMDN;
-            SignMDN = signMDN;
-            SendMDNAsynchronously = sendMDNAsynchronously;
+            NeedMdn = needMdn;
+            SignMdn = signMdn;
+            SendMdnAsynchronously = sendMdnAsynchronously;
             ReceiptDeliveryUri = receiptDeliveryUri;
             DispositionNotificationTo = dispositionNotificationTo;
-            SignOutboundMDNIfOptional = signOutboundMDNIfOptional;
+            SignOutboundMdnIfOptional = signOutboundMdnIfOptional;
             MdnText = mdnText;
-            SendInboundMDNToMessageBox = sendInboundMDNToMessageBox;
+            SendInboundMdnToMessageBox = sendInboundMdnToMessageBox;
             MicHashingAlgorithm = micHashingAlgorithm;
         }
 
         /// <summary> The value indicating whether to send or request a MDN. </summary>
-        public bool NeedMDN { get; set; }
+        public bool NeedMdn { get; set; }
         /// <summary> The value indicating whether the MDN needs to be signed or not. </summary>
-        public bool SignMDN { get; set; }
+        public bool SignMdn { get; set; }
         /// <summary> The value indicating whether to send the asynchronous MDN. </summary>
-        public bool SendMDNAsynchronously { get; set; }
+        public bool SendMdnAsynchronously { get; set; }
         /// <summary> The receipt delivery URL. </summary>
         public Uri ReceiptDeliveryUri { get; set; }
         /// <summary> The disposition notification to header value. </summary>
         public string DispositionNotificationTo { get; set; }
         /// <summary> The value indicating whether to sign the outbound MDN if optional. </summary>
-        public bool SignOutboundMDNIfOptional { get; set; }
+        public bool SignOutboundMdnIfOptional { get; set; }
         /// <summary> The MDN text. </summary>
         public string MdnText { get; set; }
         /// <summary> The value indicating whether to send inbound MDN to message box. </summary>
-        public bool SendInboundMDNToMessageBox { get; set; }
+        public bool SendInboundMdnToMessageBox { get; set; }
         /// <summary> The signing or hashing algorithm. </summary>
-        public HashingAlgorithm MicHashingAlgorithm { get; set; }
+        public AS2HashingAlgorithm MicHashingAlgorithm { get; set; }
     }
 }

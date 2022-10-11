@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ManagedVirtualNetwork DeserializeManagedVirtualNetwork(JsonElement element)
         {
-            Optional<string> vNetId = default;
+            Optional<Guid> vNetId = default;
             Optional<string> @alias = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -39,7 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("vNetId"))
                 {
-                    vNetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    vNetId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("alias"))
@@ -50,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ManagedVirtualNetwork(vNetId.Value, @alias.Value, additionalProperties);
+            return new ManagedVirtualNetwork(Optional.ToNullable(vNetId), @alias.Value, additionalProperties);
         }
     }
 }

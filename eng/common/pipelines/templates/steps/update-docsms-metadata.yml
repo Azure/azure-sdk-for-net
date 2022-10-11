@@ -34,7 +34,6 @@ parameters:
     default: ''
 steps:
   - ${{ if eq(length(parameters.PackageInfoLocations), 0) }}:
-    - checkout: none
     - pwsh: |
         Write-Host "Skipping DocsMS Update because package list was empty."
       displayName: Skip DocsMS Update
@@ -47,7 +46,7 @@ steps:
 
     - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
       parameters:
-        SkipDefaultCheckout: true
+        SkipCheckoutNone: true
         Repositories:
           - Name: ${{ parameters.TargetDocRepoOwner }}/${{ parameters.TargetDocRepoName }}
             WorkingDirectory: $(DocRepoLocation)
@@ -77,7 +76,7 @@ steps:
         displayName: Checkout daily docs branch if it exists
         workingDirectory: $(DocRepoLocation)
 
-    # If NOT performing a daily docs build, set the $(TargetBranchName) to the 
+    # If NOT performing a daily docs build, set the $(TargetBranchName) to the
     # default branch of the documentation repository.
     - ${{ if ne(parameters.DailyDocsBuild, 'true') }}:
       - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
@@ -104,7 +103,7 @@ steps:
           -PackageSourceOverride '${{ parameters.PackageSourceOverride }}' `
           -TenantId '$(opensource-aad-tenant-id)' `
           -ClientId '$(opensource-aad-app-id)' `
-          -ClientSecret '$(opensource-aad-secret)' 
+          -ClientSecret '$(opensource-aad-secret)'
       displayName: Apply Documentation Updates
 
     - template: /eng/common/pipelines/templates/steps/git-push-changes.yml

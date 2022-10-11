@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="integrationAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.BatchConfigurationCollection>> ListAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, CancellationToken cancellationToken = default)
+        public async Task<Response<BatchConfigurationCollection>> ListAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        Models.BatchConfigurationCollection value = default;
+                        BatchConfigurationCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.BatchConfigurationCollection.DeserializeBatchConfigurationCollection(document.RootElement);
+                        value = BatchConfigurationCollection.DeserializeBatchConfigurationCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="integrationAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.BatchConfigurationCollection> List(string subscriptionId, string resourceGroupName, string integrationAccountName, CancellationToken cancellationToken = default)
+        public Response<BatchConfigurationCollection> List(string subscriptionId, string resourceGroupName, string integrationAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        Models.BatchConfigurationCollection value = default;
+                        BatchConfigurationCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.BatchConfigurationCollection.DeserializeBatchConfigurationCollection(document.RootElement);
+                        value = BatchConfigurationCollection.DeserializeBatchConfigurationCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="batchConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="batchConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BatchConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName, CancellationToken cancellationToken = default)
+        public async Task<Response<IntegrationAccountBatchConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        BatchConfigurationData value = default;
+                        IntegrationAccountBatchConfigurationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BatchConfigurationData.DeserializeBatchConfigurationData(document.RootElement);
+                        value = IntegrationAccountBatchConfigurationData.DeserializeIntegrationAccountBatchConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BatchConfigurationData)null, message.Response);
+                    return Response.FromValue((IntegrationAccountBatchConfigurationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="batchConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="batchConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BatchConfigurationData> Get(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName, CancellationToken cancellationToken = default)
+        public Response<IntegrationAccountBatchConfigurationData> Get(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        BatchConfigurationData value = default;
+                        IntegrationAccountBatchConfigurationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BatchConfigurationData.DeserializeBatchConfigurationData(document.RootElement);
+                        value = IntegrationAccountBatchConfigurationData.DeserializeIntegrationAccountBatchConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BatchConfigurationData)null, message.Response);
+                    return Response.FromValue((IntegrationAccountBatchConfigurationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName, BatchConfigurationData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName, IntegrationAccountBatchConfigurationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/>, <paramref name="batchConfigurationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="batchConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BatchConfigurationData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName, BatchConfigurationData data, CancellationToken cancellationToken = default)
+        public async Task<Response<IntegrationAccountBatchConfigurationData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName, IntegrationAccountBatchConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -254,9 +254,9 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                 case 201:
                     {
-                        BatchConfigurationData value = default;
+                        IntegrationAccountBatchConfigurationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BatchConfigurationData.DeserializeBatchConfigurationData(document.RootElement);
+                        value = IntegrationAccountBatchConfigurationData.DeserializeIntegrationAccountBatchConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/>, <paramref name="batchConfigurationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="batchConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BatchConfigurationData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName, BatchConfigurationData data, CancellationToken cancellationToken = default)
+        public Response<IntegrationAccountBatchConfigurationData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName, IntegrationAccountBatchConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -288,9 +288,9 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                 case 201:
                     {
-                        BatchConfigurationData value = default;
+                        IntegrationAccountBatchConfigurationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BatchConfigurationData.DeserializeBatchConfigurationData(document.RootElement);
+                        value = IntegrationAccountBatchConfigurationData.DeserializeIntegrationAccountBatchConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
