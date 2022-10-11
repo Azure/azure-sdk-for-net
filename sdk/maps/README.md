@@ -217,7 +217,7 @@ additional questions or comments.
 [common]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Common
 [render]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Rendering
 [route]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Routing
-[geolocation]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.GeoLocation
+[geolocation]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Geolocation
 [search]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
