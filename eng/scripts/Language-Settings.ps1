@@ -456,7 +456,7 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
     }
 
     if ($updatedVersion -ne $package.Versions[0]) {
-      Write-Host "Update tracked package: $($package.Name) to version $($updatedVersions)"
+      Write-Host "Update tracked package: $($package.Name) to version $updatedVersions"
       $package.Versions = @($updatedVersion)
       $package = EnsureCustomSource $package
     } else {
