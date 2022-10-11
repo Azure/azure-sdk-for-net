@@ -1,8 +1,10 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (2022-10-11)
 
 ### Features Added
+
+- Added a `GetSchema` overload that gets a schema version using its group name, schema name, and version number
 
 ### Breaking Changes
 
