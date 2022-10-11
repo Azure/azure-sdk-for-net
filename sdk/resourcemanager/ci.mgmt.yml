@@ -130,6 +130,7 @@ trigger:
     - sdk/resources/Azure.ResourceManager.Resources
     - sdk/search/Azure.ResourceManager.Search
     - sdk/securitycenter/Azure.ResourceManager.SecurityCenter
+    - sdk/securitydevops/Azure.ResourceManager.SecurityDevOps
     - sdk/securityinsights/Azure.ResourceManager.SecurityInsights
     - sdk/servicebus/Azure.ResourceManager.ServiceBus
     - sdk/servicefabric/Azure.ResourceManager.ServiceFabric
@@ -283,6 +284,7 @@ pr:
     - sdk/resources/Azure.ResourceManager.Resources
     - sdk/search/Azure.ResourceManager.Search
     - sdk/securitycenter/Azure.ResourceManager.SecurityCenter
+    - sdk/securitydevops/Azure.ResourceManager.SecurityDevOps
     - sdk/securityinsights/Azure.ResourceManager.SecurityInsights
     - sdk/servicebus/Azure.ResourceManager.ServiceBus
     - sdk/servicefabric/Azure.ResourceManager.ServiceFabric
