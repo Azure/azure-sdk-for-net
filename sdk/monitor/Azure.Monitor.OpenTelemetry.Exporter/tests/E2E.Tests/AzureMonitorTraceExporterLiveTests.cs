@@ -64,19 +64,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
 
             LogsTable table = await CheckForRecord(client, query);
 
+            var rowCount = table.Rows.Count();
+
             // Assert
-            Assert.True(table.Rows.Count() > 0);
+
+            // InConclusive due to ingestion delay.
+            if (rowCount == 0)
+            {
+                Assert.Inconclusive("No telemetry records were found");
+            }
+            else
+            {
+                Assert.True(table.Rows.Count() == 1);
+            }
         }
 
         private async Task<LogsTable> CheckForRecord(LogsQueryClient client, string query)
         {
             LogsTable table = null;
             int count = 0;
+
+            // Try every 30 secs for total of 5 minutes.
             int maxTries = 10;
             while (count == 0 && maxTries > 0)
             {
-                await Task.Delay(TimeSpan.FromMinutes(5));
-
                 Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
                 TestEnvironment.WorkspaceId,
                 query,
@@ -85,7 +96,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
                 table = response.Value.Table;
 
                 count = table.Rows.Count();
+
+                if (count > 0)
+                {
+                    break;
+                }
+
                 maxTries--;
+
+                await Task.Delay(TimeSpan.FromSeconds(30));
             }
 
             return table;
