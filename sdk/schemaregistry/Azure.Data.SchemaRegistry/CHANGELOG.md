@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added a `GetSchema` overload that gets a schema version using its group name, schema name, and version number
+- Added a `GetSchema` overload that gets a schema version using its group name, schema name, and version number.
 
 ### Breaking Changes
 
