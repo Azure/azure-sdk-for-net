@@ -4,6 +4,7 @@
 
 ## Features Added
 - Added Upload method that takes in RequestContent and has GZip capability for efficiency
+- Added ClientBuilderExtensions methods that allow for dependency injection
 
 ## 1.0.0-beta.3 (2022-09-23)
 
