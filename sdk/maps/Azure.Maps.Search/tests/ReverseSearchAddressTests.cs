@@ -1,12 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using System.Linq;
-using Azure.Maps.Search.Models;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core.GeoJson;
+using Azure.Core.TestFramework;
+using Azure.Maps.Search.Models;
+using NUnit.Framework;
 
 namespace Azure.Maps.Search.Tests
 {
@@ -21,8 +22,8 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             var reverseResult = await client.ReverseSearchAddressAsync(new ReverseSearchOptions {
-                coordinates = new GeoPosition(121.0, 24.0),
-                Language = "en"
+                Coordinates = new GeoPosition(121.0, 24.0),
+                Language = SearchLanguage.EnglishUSA
             });
             Assert.AreEqual("Nantou County", reverseResult.Value.Addresses.First().Address.Municipality);
         }
@@ -32,7 +33,7 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
-                   async () => await client.ReverseSearchAddressAsync(new ReverseSearchOptions { coordinates = new GeoPosition(121.0, -1000.0) }));
+                   async () => await client.ReverseSearchAddressAsync(new ReverseSearchOptions { Coordinates = new GeoPosition(121.0, -1000.0) }));
             Assert.AreEqual(400, ex.Status);
         }
 
@@ -42,8 +43,8 @@ namespace Azure.Maps.Search.Tests
             var client = CreateClient();
             #region Snippet:ReverseSearchCrossStreetAddress
             var reverseResult = await client.ReverseSearchCrossStreetAddressAsync(new ReverseSearchCrossStreetOptions {
-                coordinates = new GeoPosition(121.0, 24.0),
-                Language = "en"
+                Coordinates = new GeoPosition(121.0, 24.0),
+                Language = SearchLanguage.EnglishUSA
             });
             #endregion
             Assert.AreEqual("Niuwei Road Lane 1 \u0026 Niuwei Road", reverseResult.Value.Addresses.First().Address.StreetName);
@@ -54,7 +55,7 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
-                   async () => await client.ReverseSearchCrossStreetAddressAsync(new ReverseSearchCrossStreetOptions { coordinates = new GeoPosition(121.0, -1000.0) }));
+                   async () => await client.ReverseSearchCrossStreetAddressAsync(new ReverseSearchCrossStreetOptions { Coordinates = new GeoPosition(121.0, -1000.0) }));
             Assert.AreEqual(400, ex.Status);
         }
 
@@ -62,9 +63,9 @@ namespace Azure.Maps.Search.Tests
         public async Task CanBatchResolveCoordinatesToAddress()
         {
             var client = CreateClient();
-            var reverseResult = await client.ReverseSearchAddressBatchAsync(new[] {
-                new ReverseSearchAddressQuery(new ReverseSearchOptions { coordinates = new GeoPosition(121.0, 24.0), Language = "en" }),
-                new ReverseSearchAddressQuery(new ReverseSearchOptions { coordinates = new GeoPosition(-122.333345, 47.606038) }),
+            var reverseResult = await client.GetImmediateReverseSearchAddressBatchAsync(new[] {
+                new ReverseSearchAddressQuery(new ReverseSearchOptions { Coordinates = new GeoPosition(121.0, 24.0), Language = "en" }),
+                new ReverseSearchAddressQuery(new ReverseSearchOptions { Coordinates = new GeoPosition(-122.333345, 47.606038) }),
             });
             Assert.AreEqual("Nantou County", reverseResult.Value.Results[0].Addresses[0].Address.Municipality);
             Assert.AreEqual("Seattle", reverseResult.Value.Results[1].Addresses[0].Address.Municipality);
@@ -74,9 +75,9 @@ namespace Azure.Maps.Search.Tests
         public async Task CanPoolReverseSearchAddressBatch()
         {
             var client = CreateClient();
-            var operation = await client.StartReverseSearchAddressBatchAsync(new[] {
-                new ReverseSearchAddressQuery(new ReverseSearchOptions { coordinates = new GeoPosition(121.0, 24.0), Language = "en" }),
-                new ReverseSearchAddressQuery(new ReverseSearchOptions { coordinates = new GeoPosition(-122.333345, 47.606038) }),
+            var operation = await client.ReverseSearchAddressBatchAsync(WaitUntil.Started, new[] {
+                new ReverseSearchAddressQuery(new ReverseSearchOptions { Coordinates = new GeoPosition(121.0, 24.0), Language = "en" }),
+                new ReverseSearchAddressQuery(new ReverseSearchOptions { Coordinates = new GeoPosition(-122.333345, 47.606038) }),
             });
             // delay 400 ms for the task to complete
             await Task.Delay(400);

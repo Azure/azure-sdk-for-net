@@ -87,14 +87,14 @@ You can familiarize yourself with different APIs using our [samples](https://git
 
 ```C# Snippet:GetPolygons
 // Get Addresses
-var searchResult = await client.SearchAddressAsync("Seattle");
+Response<SearchAddressResult> searchResult = await client.SearchAddressAsync("Seattle");
 
 // Extract geometry ids from addresses
-var geometry0Id = searchResult.Value.Results.First().DataSources.Geometry.Id;
-var geometry1Id = searchResult.Value.Results[1].DataSources.Geometry.Id;
+string geometry0Id = searchResult.Value.Results.First().DataSources.Geometry.Id;
+string geometry1Id = searchResult.Value.Results[1].DataSources.Geometry.Id;
 
 // Extract position coordinates
-var positionCoordinates = searchResult.Value.Results.First().Position;
+GeoPosition positionCoordinates = searchResult.Value.Results.First().Position;
 
 // Get polygons from geometry ids
 PolygonResult polygonResponse = await client.GetPolygonsAsync(new[] { geometry0Id, geometry1Id });
@@ -102,17 +102,17 @@ PolygonResult polygonResponse = await client.GetPolygonsAsync(new[] { geometry0I
 
 ### Example Fuzzy Search
 ```C# Snippet:FuzzySearch
-var fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearchOptions {
+Response<SearchAddressResult> fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearchOptions {
     Coordinates = new GeoPosition(121.56, 25.04),
-    Language = "en"
+    Language = SearchLanguage.EnglishUSA
 });
 ```
 
 ### Example Reverse Search Cross Street Address
 ```C# Snippet:ReverseSearchCrossStreetAddress
 var reverseResult = await client.ReverseSearchCrossStreetAddressAsync(new ReverseSearchCrossStreetOptions {
-    coordinates = new GeoPosition(121.0, 24.0),
-    Language = "en"
+    Coordinates = new GeoPosition(121.0, 24.0),
+    Language = SearchLanguage.EnglishUSA
 });
 ```
 
@@ -126,12 +126,12 @@ var address = new StructuredAddress {
     CountrySubdivision = "WA",
     PostalCode = "98052"
 };
-var searchResult = await client.SearchStructuredAddressAsync(address);
+Response<SearchAddressResult> searchResult = await client.SearchStructuredAddressAsync(address);
 ```
 
 ### Example Search Inside Geometry
 ```C# Snippet:SearchInsideGeometry
-var sfPolygon = new GeoPolygon(new[]
+GeoPolygon sfPolygon = new GeoPolygon(new[]
 {
     new GeoPosition(-122.43576049804686, 37.752415234354402),
     new GeoPosition(-122.4330139160, 37.706604725423119),
@@ -139,7 +139,7 @@ var sfPolygon = new GeoPolygon(new[]
     new GeoPosition(-122.43576049804686, 37.7524152343544)
 });
 
-var taipeiPolygon = new GeoPolygon(new[]
+GeoPolygon taipeiPolygon = new GeoPolygon(new[]
 {
     new GeoPosition(121.56, 25.04),
     new GeoPosition(121.565, 25.04),
@@ -148,14 +148,14 @@ var taipeiPolygon = new GeoPolygon(new[]
     new GeoPosition(121.56, 25.04)
 });
 
-var searchResponse = await client.SearchInsideGeometryAsync("coffee", new GeoCollection(new[] { sfPolygon, taipeiPolygon }), new SearchInsideGeometryOptions {
-    Language = "en"
+Response<SearchAddressResult> searchResponse = await client.SearchInsideGeometryAsync("coffee", new GeoCollection(new[] { sfPolygon, taipeiPolygon }), new SearchInsideGeometryOptions {
+    Language = SearchLanguage.EnglishUSA
 });
 ```
 
 ### Example Search Address
 ```C# Snippet:SearchAddress
-var searchResult = await client.SearchAddressAsync("Seattle");
+Response<SearchAddressResult> searchResult = await client.SearchAddressAsync("Seattle");
 ```
 
 ## Troubleshooting

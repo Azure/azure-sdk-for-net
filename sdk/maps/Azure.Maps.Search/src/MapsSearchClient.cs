@@ -585,7 +585,8 @@ namespace Azure.Maps.Search
                         Convert.ToDouble(options?.Coordinates?.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                         Convert.ToDouble(options?.Coordinates?.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                     },
-                    ResponseFormat.Json, options?.Language.ToString(), options?.IncludeSpeedLimit, options?.Heading, options?.RadiusInMeters, options?.Number, options?.IncludeRoadUse, options?.RoadUse, options?.AllowFreeformNewline, options?.IncludeMatchType, options?.EntityType, localizedMapView, cancellationToken).ConfigureAwait(false);            }
+                    ResponseFormat.Json, options?.Language.ToString(), options?.IncludeSpeedLimit, options?.Heading, options?.RadiusInMeters, options?.Number, options?.IncludeRoadUse, options?.RoadUse, options?.AllowFreeformNewline, options?.IncludeMatchType, options?.EntityType, localizedMapView, cancellationToken).ConfigureAwait(false);
+            }
             catch (Exception e)
             {
                 scope.Failed(e);
@@ -945,9 +946,9 @@ namespace Azure.Maps.Search
         /// </summary>
         /// <param name="queries"> The list of search fuzzy queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressBatchResult>> FuzzyBatchSearchAsync(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressBatchResult>> GetImmediateFuzzyBatchSearchAsync(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.FuzzyBatchSearch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetImmediateFuzzyBatchSearch");
             scope.Start();
             try
             {
@@ -969,9 +970,9 @@ namespace Azure.Maps.Search
         /// </summary>
         /// <param name="queries"> The list of search fuzzy queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressBatchResult> FuzzyBatchSearch(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressBatchResult> GetImmediateFuzzyBatchSearch(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.FuzzyBatchSearch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetImmediateFuzzyBatchSearch");
             scope.Start();
             try
             {
@@ -989,13 +990,14 @@ namespace Azure.Maps.Search
         /// **Search Address Batch API**
         /// </remarks>
         /// <summary>
-        /// The Search Address Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/search/getsearchaddress">Search Address API</see> using just a single API call. You can call Search Address Batch API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **10,000** queries and sync API up to **100** queries.
+        /// The Search Address Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/search/getsearchaddress">Search Address API</see> using just a single API call. This Search Address Batch API can handle up to **100** queries.
+        /// To send more queries in a batch request, please refer to <see cref="MapsSearchClient.SearchAddressBatch(WaitUntil, IEnumerable&lt;SearchAddressQuery&gt;, CancellationToken)"/> long-running operation.
         /// </summary>
         /// <param name="queries"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressBatchResult>> SearchAddressBatchAsync(IEnumerable<SearchAddressQuery> queries, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressBatchResult>> GetImmediateSearchAddressBatchAsync(IEnumerable<SearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchAddressBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetImmediateSearchAddressBatch");
             scope.Start();
             try
             {
@@ -1014,12 +1016,13 @@ namespace Azure.Maps.Search
         /// </remarks>
         /// <summary>
         /// The Search Address Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/search/getsearchaddress">Search Address API</see> using just a single API call. You can call Search Address Batch API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **10,000** queries and sync API up to **100** queries.
+        /// To send more queries in a batch request, please refer to <see cref="MapsSearchClient.SearchAddressBatch(WaitUntil, IEnumerable&lt;SearchAddressQuery&gt;, CancellationToken)"/> long-running operation.
         /// </summary>
         /// <param name="queries"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressBatchResult> SearchAddressBatch(IEnumerable<SearchAddressQuery> queries, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressBatchResult> GetImmediateSearchAddressBatch(IEnumerable<SearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchAddressBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetImmediateSearchAddressBatch");
             scope.Start();
             try
             {
@@ -1037,13 +1040,14 @@ namespace Azure.Maps.Search
         /// **Search Address Reverse Batch API**
         /// </remarks>
         /// <summary>
-        /// The Search Address Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/search/getsearchaddressreverse">Search Address Reverse API</see> using just a single API call. You can call Search Address Reverse Batch API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **10,000** queries and sync API up to **100** queries.
+        /// The Search Address Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/search/getsearchaddressreverse">Search Address Reverse API</see> using just a single API call. This Search Address Reverse Batch API can handle up to **100** queries.
+        /// To send more queries in a batch request, please refer to <see cref="MapsSearchClient.ReverseSearchAddressBatch(WaitUntil, IEnumerable&lt;ReverseSearchAddressQuery&gt;, CancellationToken)"/> long-running operation.
         /// </summary>
         /// <param name="queries"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReverseSearchAddressBatchResult>> ReverseSearchAddressBatchAsync(IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReverseSearchAddressBatchResult>> GetImmediateReverseSearchAddressBatchAsync(IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.ReverseSearchAddressBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetImmediateReverseSearchAddressBatch");
             scope.Start();
             try
             {
@@ -1061,13 +1065,14 @@ namespace Azure.Maps.Search
         /// **Search Address Reverse Batch API**
         /// </remarks>
         /// <summary>
-        /// The Search Address Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/search/getsearchaddressreverse">Search Address Reverse API</see> using just a single API call. You can call Search Address Reverse Batch API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **10,000** queries and sync API up to **100** queries.
+        /// The Search Address Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/search/getsearchaddressreverse">Search Address Reverse API</see> using just a single API call. This Search Address Reverse Batch API can handle up to **100** queries.
+        /// To send more queries in a batch request, please refer to <see cref="MapsSearchClient.ReverseSearchAddressBatch(WaitUntil, IEnumerable&lt;ReverseSearchAddressQuery&gt;, CancellationToken)"/> long-running operation.
         /// </summary>
         /// <param name="queries"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReverseSearchAddressBatchResult> ReverseSearchAddressBatch(IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
+        public virtual Response<ReverseSearchAddressBatchResult> GetImmediateReverseSearchAddressBatch(IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.ReverseSearchAddressBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetImmediateReverseSearchAddressBatch");
             scope.Start();
             try
             {
@@ -1087,23 +1092,29 @@ namespace Azure.Maps.Search
         /// <summary>
         /// The Search Address Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/search/getsearchfuzzy">Search Fuzzy API</see> using just a single API call. You can call Search Address Fuzzy Batch API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **10,000** queries and sync API up to **100** queries.
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return immediately after starting the operation. </param>
         /// <param name="queries"> The list of search fuzzy queries/requests to process. The list can contain a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is null. </exception>
-        public virtual async Task<FuzzySearchBatchOperation> StartFuzzyBatchSearchAsync(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
+        public virtual async Task<FuzzySearchBatchOperation> FuzzyBatchSearchAsync(WaitUntil waitUntil, IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
         {
             if (queries == null)
             {
                 throw new ArgumentNullException(nameof(queries));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.StartFuzzyBatchSearch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.FuzzyBatchSearch");
             scope.Start();
             try
             {
                 var batchRequests = MapsSearchClient.fuzzySearchQueriesToBatchRequestInternal(queries);
                 var originalResponse = await RestClient.FuzzySearchBatchAsync(batchRequests, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
-                return new FuzzySearchBatchOperation(this, new Uri(originalResponse.Headers.Location));
+                var operation = new FuzzySearchBatchOperation(this, new Uri(originalResponse.Headers.Location));
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1118,23 +1129,29 @@ namespace Azure.Maps.Search
         /// <summary>
         /// The Search Address Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/search/getsearchfuzzy">Search Fuzzy API</see> using just a single API call. You can call Search Address Fuzzy Batch API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **10,000** queries and sync API up to **100** queries.
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return immediately after starting the operation. </param>
         /// <param name="queries"> The list of search fuzzy queries/requests to process. The list can contain a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is null. </exception>
-        public virtual FuzzySearchBatchOperation StartFuzzyBatchSearch(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
+        public virtual FuzzySearchBatchOperation FuzzyBatchSearch(WaitUntil waitUntil, IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
         {
             if (queries == null)
             {
                 throw new ArgumentNullException(nameof(queries));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.StartFuzzyBatchSearch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.FuzzyBatchSearch");
             scope.Start();
             try
             {
                 var batchRequest = fuzzySearchQueriesToBatchRequestInternal(queries);
                 var originalResponse = RestClient.FuzzySearchBatch(batchRequest, JsonFormat.Json, cancellationToken);
-                return new FuzzySearchBatchOperation(this, new Uri(originalResponse.Headers.Location));
+                var operation = new FuzzySearchBatchOperation(this, new Uri(originalResponse.Headers.Location));
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1149,23 +1166,29 @@ namespace Azure.Maps.Search
         /// <summary>
         /// The Search Address Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/search/getsearchfuzzy">Search Fuzzy API</see> using just a single API call. You can call Search Address Batch API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **10,000** queries and sync API up to **100** queries.
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return immediately after starting the operation. </param>
         /// <param name="queries"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is null. </exception>
-        public virtual async Task<SearchAddressBatchOperation> StartSearchAddressBatchAsync(IEnumerable<SearchAddressQuery> queries, CancellationToken cancellationToken = default)
+        public virtual async Task<SearchAddressBatchOperation> SearchAddressBatchAsync(WaitUntil waitUntil, IEnumerable<SearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
             if (queries == null)
             {
                 throw new ArgumentNullException(nameof(queries));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.StartSearchAddressBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchAddressBatch");
             scope.Start();
             try
             {
                 var batchRequest = MapsSearchClient.searchAddressQueriesToBatchRequestInternal(queries);
                 var originalResponse = await RestClient.SearchAddressBatchAsync(batchRequest, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
-                return new SearchAddressBatchOperation(this, new Uri(originalResponse.Headers.Location));
+                var operation = new SearchAddressBatchOperation(this, new Uri(originalResponse.Headers.Location));
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1180,23 +1203,29 @@ namespace Azure.Maps.Search
         /// <summary>
         /// The Search Address Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/search/getsearchaddress">Search Address API</see> using just a single API call. You can call Search Address Batch API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **10,000** queries and sync API up to **100** queries.
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return immediately after starting the operation. </param>
         /// <param name="queries"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is null. </exception>
-        public virtual SearchAddressBatchOperation StartSearchAddressBatch(IEnumerable<SearchAddressQuery> queries, CancellationToken cancellationToken = default)
+        public virtual SearchAddressBatchOperation SearchAddressBatch(WaitUntil waitUntil, IEnumerable<SearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
             if (queries == null)
             {
                 throw new ArgumentNullException(nameof(queries));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.StartSearchAddressBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchAddressBatch");
             scope.Start();
             try
             {
                 var batchRequest = searchAddressQueriesToBatchRequestInternal(queries);
                 var originalResponse = RestClient.SearchAddressBatch(batchRequest, JsonFormat.Json, cancellationToken);
-                return new SearchAddressBatchOperation(this, new Uri(originalResponse.Headers.Location));
+                var operation = new SearchAddressBatchOperation(this, new Uri(originalResponse.Headers.Location));
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1209,25 +1238,31 @@ namespace Azure.Maps.Search
         /// **Search Address Reverse Batch API**
         /// </remarks>
         /// <summary>
-        /// The Search Address Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/search/getsearchaddressreverse">Search Address Reverse API</see> using just a single API call. You can call Search Address Reverse Batch API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **10,000** queries and sync API up to **100** queries.
+        /// The Search Address Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/search/getsearchaddressreverse">Search Address Reverse API</see> using just a single API call. This Search Address Reverse Batch API can handle up to **10000** queries.
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return immediately after starting the operation. </param>
         /// <param name="queries"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is null. </exception>
-        public virtual async Task<ReverseSearchAddressBatchOperation> StartReverseSearchAddressBatchAsync(IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
+        public virtual async Task<ReverseSearchAddressBatchOperation> ReverseSearchAddressBatchAsync(WaitUntil waitUntil, IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
             if (queries == null)
             {
                 throw new ArgumentNullException(nameof(queries));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.StartReverseSearchAddressBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.ReverseSearchAddressBatch");
             scope.Start();
             try
             {
                 var batchQuery = MapsSearchClient.reverseSearchAddressQueriesToBatchRequestInternal(queries);
                 var originalResponse = await RestClient.ReverseSearchAddressBatchAsync(batchQuery, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
-                return new ReverseSearchAddressBatchOperation(this, new Uri(originalResponse.Headers.Location));
+                var operation = new ReverseSearchAddressBatchOperation(this, new Uri(originalResponse.Headers.Location));
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1242,23 +1277,29 @@ namespace Azure.Maps.Search
         /// <summary>
         /// The Search Address Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/search/getsearchaddressreverse">Search Address Reverse API</see> using just a single API call. You can call Search Address Reverse Batch API to run either asynchronously (async) or synchronously (sync). The async API allows caller to batch up to **10,000** queries and sync API up to **100** queries.
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return immediately after starting the operation. </param>
         /// <param name="queries"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is null. </exception>
-        public virtual ReverseSearchAddressBatchOperation StartReverseSearchAddressBatch(IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
+        public virtual ReverseSearchAddressBatchOperation ReverseSearchAddressBatch(WaitUntil waitUntil, IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
             if (queries == null)
             {
                 throw new ArgumentNullException(nameof(queries));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.StartReverseSearchAddressBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.ReverseSearchAddressBatch");
             scope.Start();
             try
             {
                 var batchRequest = MapsSearchClient.reverseSearchAddressQueriesToBatchRequestInternal(queries);
                 var originalResponse = RestClient.ReverseSearchAddressBatch(batchRequest, JsonFormat.Json, cancellationToken);
-                return new ReverseSearchAddressBatchOperation(this, new Uri(originalResponse.Headers.Location));
+                var operation = new ReverseSearchAddressBatchOperation(this, new Uri(originalResponse.Headers.Location));
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1320,9 +1361,9 @@ namespace Azure.Maps.Search
                     uri.AppendQuery("topLeft", options.BoundingBox.North + "," + options.BoundingBox.West, true);
                     uri.AppendQuery("btmRight", options.BoundingBox.South + "," + options.BoundingBox.East, true);
                 }
-                if (options?.Language != null)
+                if (options?.Language.ToString() != null)
                 {
-                    uri.AppendQuery("language", options.Language.ToString(), true);
+                    uri.AppendQuery("language", options?.Language.ToString(), true);
                 }
                 if (options?.ExtendedPostalCodesFor != null)
                 {
@@ -1411,9 +1452,9 @@ namespace Azure.Maps.Search
                     uri.AppendQuery("topLeft", options.BoundingBox.North + "," + options.BoundingBox.West, true);
                     uri.AppendQuery("btmRight", options.BoundingBox.South + "," + options.BoundingBox.East, true);
                 }
-                if (options?.Language != null)
+                if (options?.Language.ToString() != null)
                 {
-                    uri.AppendQuery("language", options.Language.ToString(), true);
+                    uri.AppendQuery("language", options?.Language.ToString(), true);
                 }
                 if (options?.ExtendedPostalCodesFor != null)
                 {
@@ -1455,9 +1496,9 @@ namespace Azure.Maps.Search
                 }
 
                 uri.AppendQueryDelimited("query", queryCoordinate, ",", true);
-                if (options?.Language != null)
+                if (options?.Language.ToString() != null)
                 {
-                    uri.AppendQuery("language", options.Language.ToString(), true);
+                    uri.AppendQuery("language", options?.Language.ToString(), true);
                 }
                 if (options?.IncludeSpeedLimit != null)
                 {

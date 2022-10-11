@@ -1,13 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using System.Linq;
-using Azure.Maps.Search.Models;
+using System.Threading.Tasks;
 using Azure.Core.GeoJson;
-using System;
+using Azure.Core.TestFramework;
+using Azure.Maps.Search.Models;
+using NUnit.Framework;
 
 namespace Azure.Maps.Search.Tests
 {
@@ -31,9 +30,9 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             #region Snippet:FuzzySearch
-            var fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearchOptions {
+            Response<SearchAddressResult> fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearchOptions {
                 Coordinates = new GeoPosition(121.56, 25.04),
-                Language = "en"
+                Language = SearchLanguage.EnglishUSA
             });
             #endregion
             Assert.AreEqual("CAFE_PUB", fuzzySearchResponse.Value.Results[0].PointOfInterest.Classifications.First().Code);
@@ -53,7 +52,7 @@ namespace Azure.Maps.Search.Tests
         public async Task CanBatchSearchFuzzy()
         {
             var client = CreateClient();
-            var fuzzySearchBatchResp = await client.FuzzyBatchSearchAsync(new[] {
+            var fuzzySearchBatchResp = await client.GetImmediateFuzzyBatchSearchAsync(new[] {
                 new FuzzySearchQuery("coffee", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04), Language = "en" }),
                 new FuzzySearchQuery("pizza", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04) })
             });
@@ -67,7 +66,7 @@ namespace Azure.Maps.Search.Tests
         public async Task CanPollFuzzySearchBatch()
         {
             var client = CreateClient();
-            var operation = await client.StartFuzzyBatchSearchAsync(new[] {
+            var operation = await client.FuzzyBatchSearchAsync(WaitUntil.Started, new[] {
                 new FuzzySearchQuery("coffee", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04), Language = "en" }),
                 new FuzzySearchQuery("pizza", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04) }),
             });

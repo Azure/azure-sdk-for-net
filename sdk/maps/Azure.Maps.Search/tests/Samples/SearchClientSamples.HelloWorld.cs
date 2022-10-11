@@ -2,12 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.GeoJson;
 using Azure.Core.TestFramework;
-using Azure.Maps.Search;
 using Azure.Maps.Search.Models;
 using NUnit.Framework;
 
@@ -53,9 +51,10 @@ namespace Azure.Maps.Search.Tests
             var endpoint = TestEnvironment.Endpoint;
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsSearchClient(endpoint, TestEnvironment.Credential, clientId);
-            var fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearchOptions {
+            var fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearchOptions
+            {
                 Coordinates = new GeoPosition(121.56, 25.04),
-                Language = "en"
+                Language = SearchLanguage.EnglishUSA
             });
         }
 
@@ -65,9 +64,10 @@ namespace Azure.Maps.Search.Tests
             var endpoint = TestEnvironment.Endpoint;
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsSearchClient(endpoint, TestEnvironment.Credential, clientId);
-            var reverseResult = await client.ReverseSearchCrossStreetAddressAsync(new ReverseSearchCrossStreetOptions {
-                coordinates = new GeoPosition(121.0, 24.0),
-                Language = "en"
+            var reverseResult = await client.ReverseSearchCrossStreetAddressAsync(new ReverseSearchCrossStreetOptions
+            {
+                Coordinates = new GeoPosition(121.0, 24.0),
+                Language = SearchLanguage.EnglishUSA
             });
         }
 
@@ -77,7 +77,8 @@ namespace Azure.Maps.Search.Tests
             var endpoint = TestEnvironment.Endpoint;
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsSearchClient(endpoint, TestEnvironment.Credential, clientId);
-            var address = new StructuredAddress {
+            var address = new StructuredAddress
+            {
                 CountryCode = "US",
                 StreetNumber = "15127",
                 StreetName = "NE 24th Street",
@@ -94,7 +95,7 @@ namespace Azure.Maps.Search.Tests
             var endpoint = TestEnvironment.Endpoint;
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsSearchClient(endpoint, TestEnvironment.Credential, clientId);
-           var sfPolygon = new GeoPolygon(new[]
+            var sfPolygon = new GeoPolygon(new[]
             {
                 new GeoPosition(-122.43576049804686, 37.752415234354402),
                 new GeoPosition(-122.4330139160, 37.706604725423119),
@@ -112,7 +113,7 @@ namespace Azure.Maps.Search.Tests
             });
 
             var searchResponse = await client.SearchInsideGeometryAsync("coffee", new GeoCollection(new[] { sfPolygon, taipeiPolygon }), new SearchInsideGeometryOptions {
-                Language = "en"
+                Language = SearchLanguage.EnglishUSA
             });
         }
 

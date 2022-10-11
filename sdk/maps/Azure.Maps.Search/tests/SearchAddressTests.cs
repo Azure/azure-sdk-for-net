@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
-using System.Linq;
-using Azure.Maps.Search.Models;
 using Azure.Core.GeoJson;
+using Azure.Core.TestFramework;
+using Azure.Maps.Search.Models;
+using NUnit.Framework;
 
 namespace Azure.Maps.Search.Tests
 {
@@ -21,7 +20,7 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             #region Snippet:SearchAddress
-            var searchResult = await client.SearchAddressAsync("Seattle");
+            Response<SearchAddressResult> searchResult = await client.SearchAddressAsync("Seattle");
             #endregion
             Assert.AreEqual("Washington", searchResult.Value.Results[0].Address.CountrySubdivisionName);
         }
@@ -42,7 +41,7 @@ namespace Azure.Maps.Search.Tests
             var client = CreateClient();
             var searchResult = await client.SearchAddressAsync("Road", new SearchAddressOptions {
                 Coordinates = new GeoPosition(121.56, 25.04),
-                Language = "en"
+                Language = SearchLanguage.EnglishUSA
             });
             Assert.AreEqual("Xinyi District", searchResult.Value.Results[0].Address.MunicipalitySubdivision);
 
@@ -91,7 +90,7 @@ namespace Azure.Maps.Search.Tests
                 CountrySubdivision = "WA",
                 PostalCode = "98052"
             };
-            var searchResult = await client.SearchStructuredAddressAsync(address);
+            Response<SearchAddressResult> searchResult = await client.SearchStructuredAddressAsync(address);
             #endregion
             Assert.AreEqual("15127 Northeast 24th Street, Redmond, WA 98052", searchResult.Value.Results[0].Address.FreeformAddress);
         }
@@ -122,7 +121,7 @@ namespace Azure.Maps.Search.Tests
         public async Task CanSearchAddressBatch()
         {
             var client = CreateClient();
-            var searchResult = await client.SearchAddressBatchAsync(new[] {
+            var searchResult = await client.GetImmediateSearchAddressBatchAsync(new[] {
                 new SearchAddressQuery("Microsoft Campus"),
                 new SearchAddressQuery("Millenium", new SearchAddressOptions { CountryFilter = new[] { "US" }}),
             });
@@ -135,7 +134,7 @@ namespace Azure.Maps.Search.Tests
         public async Task CanPollSearchAddressBatch()
         {
             var client = CreateClient();
-            var operation = await client.StartSearchAddressBatchAsync(new[]{
+            var operation = await client.SearchAddressBatchAsync(WaitUntil.Started, new[] {
                 new SearchAddressQuery("Microsoft Campus"),
                 new SearchAddressQuery("Millenium", new SearchAddressOptions { CountryFilter = new[] { "US" }}),
             });
