@@ -31,7 +31,7 @@ namespace Azure.Identity.Tests.Mock
             => new SharedTokenCacheCredential(Options.SharedTokenCacheTenantId, Options.SharedTokenCacheUsername, Options, Pipeline);
 
         public override TokenCredential CreateInteractiveBrowserCredential()
-            => new InteractiveBrowserCredential(Options.InteractiveBrowserTenantId, Options.InteractiveBrowserCredentialClientId ?? Constants.DeveloperSignOnClientId, new InteractiveBrowserCredentialOptions() { AdditionallyAllowedTenantsCore = Options.AdditionallyAllowedTenantsCore, AuthorityHost = Options.AuthorityHost }, Pipeline);
+            => new InteractiveBrowserCredential(Options.InteractiveBrowserTenantId, Options.InteractiveBrowserCredentialClientId ?? Constants.DeveloperSignOnClientId, new InteractiveBrowserCredentialOptions() { AdditionallyAllowedTenantsCore = Options.AdditionallyAllowedTenantsCore, AuthorityHost = Options.AuthorityHost, LoginHint = Options.InteractiveBrowserCredentialLoginHint }, Pipeline);
 
         public override TokenCredential CreateAzureCliCredential()
         {

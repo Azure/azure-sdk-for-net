@@ -181,6 +181,11 @@ namespace Azure.Identity
         public string SharedTokenCacheUsername { get; set; } = GetNonEmptyStringOrNull(EnvironmentVariables.Username);
 
         /// <summary>
+        /// Avoids the account prompt and pre-populates the username of the account to login for InteractiveBrowserCredential.
+        /// </summary>
+        public string InteractiveBrowserCredentialLoginHint { get; set; }
+
+        /// <summary>
         /// Specifies the client id of the selected credential
         /// </summary>
         public string InteractiveBrowserCredentialClientId { get; set; }
@@ -256,6 +261,7 @@ namespace Azure.Identity
                 _visualStudioTenantId = _visualStudioTenantId,
                 _visualStudioCodeTenantId = _visualStudioCodeTenantId,
                 SharedTokenCacheUsername = SharedTokenCacheUsername,
+                InteractiveBrowserCredentialLoginHint = InteractiveBrowserCredentialLoginHint,
                 InteractiveBrowserCredentialClientId = InteractiveBrowserCredentialClientId,
                 ManagedIdentityClientId = ManagedIdentityClientId,
                 ManagedIdentityResourceId = ManagedIdentityResourceId,

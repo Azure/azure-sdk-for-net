@@ -264,7 +264,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ValidateInteractiveBrowserOptionsHonored([Values] bool setTenantId, [Values] bool setClientId, [Values] bool setInteractiveBrowserTenantId, [Values] bool setAdditionallyAllowedTenants)
+        public void ValidateInteractiveBrowserOptionsHonored([Values] bool setTenantId, [Values] bool setClientId, [Values] bool setInteractiveBrowserLoginHint, [Values] bool setInteractiveBrowserTenantId, [Values] bool setAdditionallyAllowedTenants)
         {
             // ignore when both setTenantId and setInteractiveBrowserTenantId are true since we cannot set both
             if (setTenantId && setInteractiveBrowserTenantId)
@@ -282,6 +282,7 @@ namespace Azure.Identity.Tests
             {
                 string expClientId = setClientId ? Guid.NewGuid().ToString() : Constants.DeveloperSignOnClientId;
                 string expTenantId = setTenantId ? Guid.NewGuid().ToString() : null;
+                string expInteractiveBrowserLoginHint = setInteractiveBrowserLoginHint ? Guid.NewGuid().ToString() : null;
                 string expInteractiveBrowserTenantId = setInteractiveBrowserTenantId ? Guid.NewGuid().ToString() : null;
                 string[] expAdditionallyAllowedTenants = setAdditionallyAllowedTenants ? new string[] { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() } : Array.Empty<string>();
 
@@ -295,6 +296,11 @@ namespace Azure.Identity.Tests
                 if (setClientId)
                 {
                     options.InteractiveBrowserCredentialClientId = expClientId;
+                }
+
+                if (setInteractiveBrowserLoginHint)
+                {
+                    options.InteractiveBrowserCredentialLoginHint = expInteractiveBrowserLoginHint;
                 }
 
                 if (setInteractiveBrowserTenantId)
@@ -311,6 +317,7 @@ namespace Azure.Identity.Tests
 
                 InteractiveBrowserCredential cred = (InteractiveBrowserCredential)factory.CreateInteractiveBrowserCredential();
 
+                Assert.AreEqual(expInteractiveBrowserLoginHint ?? expInteractiveBrowserLoginHint, cred.LoginHint);
                 Assert.AreEqual(expInteractiveBrowserTenantId ?? expTenantId, cred.TenantId);
                 Assert.AreEqual(expClientId, cred.ClientId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);

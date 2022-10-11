@@ -118,7 +118,8 @@ namespace Azure.Identity
             {
                 TokenCachePersistenceOptions = new TokenCachePersistenceOptions(),
                 AuthorityHost = Options.AuthorityHost,
-                TenantId = Options.InteractiveBrowserTenantId
+                TenantId = Options.InteractiveBrowserTenantId,
+                LoginHint = Options.InteractiveBrowserCredentialLoginHint,
             };
 
             foreach (var addlTenant in Options.AdditionallyAllowedTenants)

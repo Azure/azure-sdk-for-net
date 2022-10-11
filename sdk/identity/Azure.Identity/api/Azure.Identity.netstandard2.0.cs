@@ -159,6 +159,7 @@ namespace Azure.Identity
         public bool ExcludeVisualStudioCodeCredential { get { throw null; } set { } }
         public bool ExcludeVisualStudioCredential { get { throw null; } set { } }
         public string InteractiveBrowserCredentialClientId { get { throw null; } set { } }
+        public string InteractiveBrowserCredentialLoginHint { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string InteractiveBrowserTenantId { get { throw null; } set { } }
         public string ManagedIdentityClientId { get { throw null; } set { } }
