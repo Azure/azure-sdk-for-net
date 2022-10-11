@@ -14,6 +14,7 @@ using Azure.Identity;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using Azure.Core.TestFramework.Models;
+using System.Reflection;
 
 namespace Azure.Developer.LoadTesting.Tests
 {
@@ -81,7 +82,9 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             LoadTestAdministrationClient loadTestAdministration = CreateAdministrationClient();
 
-            Response response = await loadTestAdministration.UploadTestFileAsync(testId, fileId, File.OpenRead(Path.Combine("tests", "sample.jmx")));
+            Response response = await loadTestAdministration.UploadTestFileAsync(testId, fileId, File.OpenRead(Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "sample.jmx"
+                )));
 
             Assert.NotNull(response);
         }
