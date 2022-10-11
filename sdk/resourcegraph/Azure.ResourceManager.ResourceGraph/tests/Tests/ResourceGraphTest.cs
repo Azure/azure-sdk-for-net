@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ResourceGraph;
@@ -27,7 +28,8 @@ namespace Azure.Management.ResourceGraph.Tests
             var tenantsCollection = Client.GetTenants();
             var tenantList = await tenantsCollection.GetAllAsync().ToEnumerableAsync();
             var item = tenantList.FirstOrDefault();
-            var query = new QueryContent("project id, tags, properties | limit 2") {
+            var query = new QueryContent("project id, tags, properties | limit 2")
+            {
                 Subscriptions = { DefaultSubscription.Data.SubscriptionId }
             };
 
@@ -76,11 +78,16 @@ namespace Azure.Management.ResourceGraph.Tests
             Assert.NotNull(response.Data);
             Assert.NotNull(response.Facets);
 
-            //data columns
-            //StreamReader reader = new StreamReader(response.Data.ToStream());
-            //string content = reader.ReadToEnd();
-            //var table = response.Data.ToObjectFromJson<Table>();
-            //errot convert to table
+            StreamReader reader = new StreamReader(response.Data.ToStream());
+            string content = reader.ReadToEnd();
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                Converters ={
+                    new JsonStringEnumConverter( JsonNamingPolicy.CamelCase)
+                },
+            };
+            var result = JsonSerializer.Deserialize<Table>(content, options);
+            Assert.AreEqual(result.Columns.Count, 3);
         }
 
         [Test]
@@ -305,7 +312,7 @@ namespace Azure.Management.ResourceGraph.Tests
             var result = (await item.ResourcesHistoryAsync(content)).Value;
             var dict = result.ToObjectFromJson<Dictionary<string, object>>();
             Assert.AreEqual(dict.Count, 2);
-            Assert.AreEqual(((JsonElement)dict["count"]).ValueKind,JsonValueKind.Number);
+            Assert.AreEqual(((JsonElement)dict["count"]).ValueKind, JsonValueKind.Number);
             Assert.AreEqual(((JsonElement)dict["snapshots"]).ValueKind, JsonValueKind.Array);
         }
     }
