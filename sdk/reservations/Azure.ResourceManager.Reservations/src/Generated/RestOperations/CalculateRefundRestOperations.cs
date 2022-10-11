@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for calculating refund of a reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public async Task<Response<CalculateRefundResponse>> PostAsync(Guid reservationOrderId, CalculateRefundContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<CalculateRefundResult>> PostAsync(Guid reservationOrderId, CalculateRefundContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.Reservations
             {
                 case 200:
                     {
-                        CalculateRefundResponse value = default;
+                        CalculateRefundResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CalculateRefundResponse.DeserializeCalculateRefundResponse(document.RootElement);
+                        value = CalculateRefundResult.DeserializeCalculateRefundResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for calculating refund of a reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public Response<CalculateRefundResponse> Post(Guid reservationOrderId, CalculateRefundContent content, CancellationToken cancellationToken = default)
+        public Response<CalculateRefundResult> Post(Guid reservationOrderId, CalculateRefundContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.Reservations
             {
                 case 200:
                     {
-                        CalculateRefundResponse value = default;
+                        CalculateRefundResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CalculateRefundResponse.DeserializeCalculateRefundResponse(document.RootElement);
+                        value = CalculateRefundResult.DeserializeCalculateRefundResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

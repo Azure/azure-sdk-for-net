@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static RefundPolicyError DeserializeRefundPolicyError(JsonElement element)
         {
-            Optional<ErrorResponseCode> code = default;
+            Optional<ReservationErrorResponseCode> code = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    code = new ErrorResponseCode(property.Value.GetString());
+                    code = new ReservationErrorResponseCode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"))

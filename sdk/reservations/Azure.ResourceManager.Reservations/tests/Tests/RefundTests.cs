@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Reservations.Tests
                 }
             };
 
-            var calculateRefundResponse = await orderDetail.Value.PostCalculateRefundAsync(calculateRefundRequest);
+            var calculateRefundResponse = await orderDetail.Value.CalculateRefundAsync(calculateRefundRequest);
 
             Assert.IsNotNull(calculateRefundResponse.Value);
             Assert.AreEqual(200, calculateRefundResponse.GetRawResponse().Status);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Reservations.Tests
                 }
             };
 
-            var refundResponse = await orderDetail.Value.PostReturnAsync(refundRequest);
+            var refundResponse = await orderDetail.Value.ReturnAsync(refundRequest);
 
             Assert.IsNotNull(refundResponse.Value);
             Assert.AreEqual(202, refundResponse.GetRawResponse().Status);

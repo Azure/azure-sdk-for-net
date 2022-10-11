@@ -428,11 +428,11 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for calculating refund of a reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CalculateRefundResponse>> PostCalculateRefundAsync(CalculateRefundContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CalculateRefundResult>> CalculateRefundAsync(CalculateRefundContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _calculateRefundClientDiagnostics.CreateScope("ReservationOrderResource.PostCalculateRefund");
+            using var scope = _calculateRefundClientDiagnostics.CreateScope("ReservationOrderResource.CalculateRefund");
             scope.Start();
             try
             {
@@ -455,11 +455,11 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for calculating refund of a reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CalculateRefundResponse> PostCalculateRefund(CalculateRefundContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CalculateRefundResult> CalculateRefund(CalculateRefundContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _calculateRefundClientDiagnostics.CreateScope("ReservationOrderResource.PostCalculateRefund");
+            using var scope = _calculateRefundClientDiagnostics.CreateScope("ReservationOrderResource.CalculateRefund");
             scope.Start();
             try
             {
@@ -481,11 +481,11 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for returning reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<RefundResponse>> PostReturnAsync(RefundContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RefundResult>> ReturnAsync(RefundContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _returnClientDiagnostics.CreateScope("ReservationOrderResource.PostReturn");
+            using var scope = _returnClientDiagnostics.CreateScope("ReservationOrderResource.Return");
             scope.Start();
             try
             {
@@ -507,11 +507,11 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for returning reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<RefundResponse> PostReturn(RefundContent content, CancellationToken cancellationToken = default)
+        public virtual Response<RefundResult> Return(RefundContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _returnClientDiagnostics.CreateScope("ReservationOrderResource.PostReturn");
+            using var scope = _returnClientDiagnostics.CreateScope("ReservationOrderResource.Return");
             scope.Start();
             try
             {

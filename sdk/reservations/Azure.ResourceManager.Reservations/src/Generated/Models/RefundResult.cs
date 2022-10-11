@@ -7,18 +7,18 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The CalculateRefundResponse. </summary>
-    public partial class CalculateRefundResponse
+    /// <summary> The RefundResult. </summary>
+    public partial class RefundResult
     {
-        /// <summary> Initializes a new instance of CalculateRefundResponse. </summary>
-        internal CalculateRefundResponse()
+        /// <summary> Initializes a new instance of RefundResult. </summary>
+        internal RefundResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CalculateRefundResponse. </summary>
+        /// <summary> Initializes a new instance of RefundResult. </summary>
         /// <param name="id"> Fully qualified identifier of the reservation being returned. </param>
         /// <param name="properties"></param>
-        internal CalculateRefundResponse(string id, RefundResponseProperties properties)
+        internal RefundResult(string id, RefundResponseProperties properties)
         {
             Id = id;
             Properties = properties;

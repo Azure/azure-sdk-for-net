@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class CalculateRefundResponse
+    public partial class CalculateRefundResult
     {
-        internal static CalculateRefundResponse DeserializeCalculateRefundResponse(JsonElement element)
+        internal static CalculateRefundResult DeserializeCalculateRefundResult(JsonElement element)
         {
             Optional<string> id = default;
             Optional<RefundResponseProperties> properties = default;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new CalculateRefundResponse(id.Value, properties.Value);
+            return new CalculateRefundResult(id.Value, properties.Value);
         }
     }
 }

@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of RefundPolicyError. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
-        internal RefundPolicyError(ErrorResponseCode? code, string message)
+        internal RefundPolicyError(ReservationErrorResponseCode? code, string message)
         {
             Code = code;
             Message = message;
         }
 
         /// <summary> Gets the code. </summary>
-        public ErrorResponseCode? Code { get; }
+        public ReservationErrorResponseCode? Code { get; }
         /// <summary> Gets the message. </summary>
         public string Message { get; }
     }
