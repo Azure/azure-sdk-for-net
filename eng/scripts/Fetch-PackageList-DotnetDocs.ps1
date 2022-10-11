@@ -27,7 +27,7 @@ Write-Host "DotnetNupkgLocation: $DotnetNupkgLocation"
 Write-Host "DocRepoLocation: $DocRepoLocation"
 Write-Host "ArtifactName: $ArtifactName"
 
-$nupkgFile = Get-dotnet-Package-Artifacts -Location $DotnetNupkgLocation
+$nupkgFile = Get-dotnet-Package-Artifacts -Location "$DotnetNupkgLocation/$ArtifactName"
 $version = $nupkgFile.Name -replace "$ArtifactName.(.*\d).nupkg", '$1'
 Write-Host "The full version: $version"
 $originalVersion = [AzureEngSemanticVersion]::ParseVersionString($version)
