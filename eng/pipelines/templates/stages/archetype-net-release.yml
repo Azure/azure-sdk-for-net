@@ -183,6 +183,7 @@ stages:
                         - template: /eng/pipelines/templates/steps/fetch-package-list.yml
                           parameters:
                             DotnetNupkgLocation: "$(Pipeline.Workspace)/${{parameters.ArtifactName}}"
+                            ArtifactName: ${{artifact.name}}
                             DocRepoLocation: $(DocRepoLocation)
                             TargetDocRepoName: ${{parameters.TargetDocRepoName}}
                             TargetDocRepoOwner: "Azure"
