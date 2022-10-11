@@ -79,10 +79,11 @@ namespace TestApp
             // Write Layers
             foreach (var layerFile in manifest.Layers)
             {
-                string fileName = Path.Combine(path, Helper.TrimSha(layerFile.Digest));
+                string fileName = Path.Combine(path, TrimSha(layerFile.Digest));
 
                 using (FileStream fs = File.Create(fileName))
                 {
+                    // Works if you pull them out of order:
                     var response15_28 = await client.GetChunkAsync(name, layerFile.Digest, "bytes=15-28");
                     fs.Position = 15;
                     await response15_28.Content.ToStream().CopyToAsync(fs);
@@ -94,7 +95,7 @@ namespace TestApp
             }
         }
 
-        public static string TrimSha(string digest)
+        private static string TrimSha(string digest)
         {
             int index = digest.IndexOf(':');
             if (index > -1)
