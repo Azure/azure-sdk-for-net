@@ -194,6 +194,31 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 Assert.AreEqual(keys2.PrimaryKey, keys3.PrimaryKey);
                 Assert.AreNotEqual(keys2.SecondaryKey, keys3.SecondaryKey);
             }
+
+            var updatePrimaryKey = GenerateRandomKey();
+            ServiceBusAccessKeys currentKeys = keys3;
+
+            ServiceBusAccessKeys keys4 = await authorizationRule.RegenerateKeysAsync(new ServiceBusRegenerateAccessKeyContent(ServiceBusAccessKeyType.PrimaryKey)
+            {
+                Key = updatePrimaryKey
+            });
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.AreEqual(updatePrimaryKey, keys4.PrimaryKey);
+                Assert.AreEqual(currentKeys.SecondaryKey, keys4.SecondaryKey);
+            }
+
+            currentKeys = keys4;
+            var updateSecondaryKey = GenerateRandomKey();
+            ServiceBusAccessKeys keys5 = await authorizationRule.RegenerateKeysAsync(new ServiceBusRegenerateAccessKeyContent(ServiceBusAccessKeyType.SecondaryKey)
+            {
+                Key = updateSecondaryKey
+            });
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.AreEqual(updateSecondaryKey, keys5.SecondaryKey);
+                Assert.AreEqual(currentKeys.PrimaryKey, keys5.PrimaryKey);
+            }
         }
 
         [Test]

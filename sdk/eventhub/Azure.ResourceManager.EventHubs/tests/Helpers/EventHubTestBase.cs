@@ -10,6 +10,7 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.Core;
+using System.Security.Cryptography;
 
 namespace Azure.ResourceManager.EventHubs.Tests.Helpers
 {
@@ -31,6 +32,11 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
             JsonPathSanitizers.Add("$..aliasPrimaryConnectionString");
             JsonPathSanitizers.Add("$..aliasSecondaryConnectionString");
             JsonPathSanitizers.Add("$..keyName");
+            JsonPathSanitizers.Add("$..primaryKey");
+            JsonPathSanitizers.Add("$..secondaryKey");
+            JsonPathSanitizers.Add("$..primaryConnectionString");
+            JsonPathSanitizers.Add("$..secondaryConnectionString");
+            JsonPathSanitizers.Add("$..key");
         }
 
         [SetUp]
@@ -53,6 +59,17 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
                     }
                 });
             return operation.Value;
+        }
+
+        public static string GenerateRandomKey()
+        {
+            byte[] key256 = new byte[32];
+            using (var rngCryptoServiceProvider = RandomNumberGenerator.Create())
+            {
+                rngCryptoServiceProvider.GetBytes(key256);
+            }
+
+            return Convert.ToBase64String(key256);
         }
 
         public async Task<ResourceGroupResource> GetResourceGroupAsync(string resourceGroupName)
