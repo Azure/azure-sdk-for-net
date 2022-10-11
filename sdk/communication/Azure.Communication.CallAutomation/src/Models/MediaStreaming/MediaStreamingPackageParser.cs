@@ -5,7 +5,6 @@ using System;
 using System.Text;
 using System.Text.Json;
 using Azure.Communication.CallAutomation.Models.MediaStreaming;
-using Newtonsoft.Json.Linq;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -43,14 +42,14 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="NotImplementedException"></exception>
         public static MediaStreamingPackageBase Parse(string stringJson)
         {
-            JObject package = JObject.Parse(stringJson);
-            if (package["kind"].ToString() == "AudioMetadata")
+            JsonElement package = JsonDocument.Parse(stringJson).RootElement;
+            if (package.GetProperty("kind").ToString() == "AudioMetadata")
             {
-                return JsonSerializer.Deserialize<MediaStreamingMetadata>(package["audioMetadata"].ToString());
+                return JsonSerializer.Deserialize<MediaStreamingMetadata>(package.GetProperty("audioMetadata").ToString());
             }
-            else if (package["kind"].ToString() == "AudioData")
+            else if (package.GetProperty("kind").ToString() == "AudioData")
             {
-                MediaStreamingAudioDataInternal audioInternal = JsonSerializer.Deserialize<MediaStreamingAudioDataInternal>(package["audioData"].ToString());
+                MediaStreamingAudioDataInternal audioInternal = JsonSerializer.Deserialize<MediaStreamingAudioDataInternal>(package.GetProperty("audioData").ToString());
                 return new MediaStreamingAudioData(
                     audioInternal.Data, audioInternal.Timestamp, audioInternal.ParticipantRawId, audioInternal.Silent);
             }

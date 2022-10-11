@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>
       This client library enables working with the Microsoft Azure Communication CallAutomation service.
@@ -29,7 +29,6 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Communication.Common" />
-    <PackageReference Include="NewtonSoft.Json" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
   <ItemGroup>
