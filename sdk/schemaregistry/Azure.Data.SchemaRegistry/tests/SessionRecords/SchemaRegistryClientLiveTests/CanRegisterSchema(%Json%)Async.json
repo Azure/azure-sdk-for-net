@@ -1,0 +1,108 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://hmlam-cbn04-503.servicebus.windows.net/$schemaGroups/hmlam-json1/schemas/test-39917?api-version=2021-10",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "460",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.3.0-alpha.20221011.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "5cd7f1a1a76aa3b1fd77993f93de3be8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "$id": "1",
+        "$schema": "Json",
+        "title": "Person",
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "The person\u0027s first name."
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The person\u0027s last name."
+          },
+          "age": {
+            "description": "Age in years which must be equal to or greater than zero.",
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Tue, 11 Oct 2022 15:15:48 GMT",
+        "Location": "https://hmlam-cbn04-503.servicebus.windows.net/$schemagroups/hmlam-json1/schemas/test-39917/versions/1?api-version=2021-10",
+        "Schema-Group-Name": "hmlam-json1",
+        "Schema-Id": "db7386d5b74c4b828802d9e6d0e63e9a",
+        "Schema-Id-Location": "https://hmlam-cbn04-503.servicebus.windows.net:443/$schemagroups/$schemas/db7386d5b74c4b828802d9e6d0e63e9a?api-version=2021-10",
+        "Schema-Name": "test-39917",
+        "Schema-Version": "1",
+        "Schema-Versions-Location": "https://hmlam-cbn04-503.servicebus.windows.net:443/$schemagroups/hmlam-json1/schemas/test-39917/versions?api-version=2021-10",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://hmlam-cbn04-503.servicebus.windows.net/$schemaGroups/hmlam-json1/schemas/test-39917:get-id?api-version=2021-10",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "460",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.3.0-alpha.20221011.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "13c417219f9984852bb03fae6375e9f0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "$id": "1",
+        "$schema": "Json",
+        "title": "Person",
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "The person\u0027s first name."
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The person\u0027s last name."
+          },
+          "age": {
+            "description": "Age in years which must be equal to or greater than zero.",
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Tue, 11 Oct 2022 15:15:48 GMT",
+        "Location": "https://hmlam-cbn04-503.servicebus.windows.net/$schemagroups/hmlam-json1/schemas/test-39917/versions/1?api-version=2021-10",
+        "Schema-Group-Name": "hmlam-json1",
+        "Schema-Id": "db7386d5b74c4b828802d9e6d0e63e9a",
+        "Schema-Id-Location": "https://hmlam-cbn04-503.servicebus.windows.net:443/$schemagroups/$schemas/db7386d5b74c4b828802d9e6d0e63e9a?api-version=2021-10",
+        "Schema-Name": "test-39917",
+        "Schema-Version": "1",
+        "Schema-Versions-Location": "https://hmlam-cbn04-503.servicebus.windows.net:443/$schemagroups/hmlam-json1/schemas/test-39917/versions?api-version=2021-10",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "1632554115",
+    "SCHEMAREGISTRY_ENDPOINT": "hmlam-cbn04-503.servicebus.windows.net",
+    "SCHEMAREGISTRY_GROUP": "hmlam-json1"
+  }
+}

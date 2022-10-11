@@ -4,6 +4,7 @@
 using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -11,7 +12,7 @@ namespace Azure.Data.SchemaRegistry.Tests
 {
     public class SchemaRegistryClientLiveTests : RecordedTestBase<SchemaRegistryClientTestEnvironment>
     {
-        public SchemaRegistryClientLiveTests(bool isAsync) : base(isAsync)
+        public SchemaRegistryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             TestDiagnostics = false;
         }
@@ -29,190 +30,128 @@ namespace Azure.Data.SchemaRegistry.Tests
         private const string SchemaContent_V2 = "{\"type\" : \"record\",\"namespace\" : \"TestSchema\",\"name\" : \"Employee_V2\",\"fields\" : [{ \"name\" : \"Name\" , \"type\" : \"string\" },{ \"name\" : \"Age\", \"type\" : \"int\" }]}";
         private const string Json_SchemaContent = "{\r\n  \"$id\": \"1\",\r\n  \"$schema\": \"Json\",\r\n  \"title\": \"Person\",\r\n  \"type\": \"object\",\r\n  \"properties\": {\r\n    \"firstName\": {\r\n      \"type\": \"string\",\r\n      \"description\": \"The person's first name.\"\r\n    },\r\n    \"lastName\": {\r\n      \"type\": \"string\",\r\n      \"description\": \"The person's last name.\"\r\n    },\r\n    \"age\": {\r\n      \"description\": \"Age in years which must be equal to or greater than zero.\",\r\n      \"type\": \"integer\",\r\n      \"minimum\": 0\r\n    }\r\n  }\r\n}";
         private const string Json_SchemaContent_V2 = "{\r\n  \"$id\": \"2\",\r\n  \"$schema\": \"Json\",\r\n  \"title\": \"Person_V2\",\r\n  \"type\": \"object\",\r\n  \"properties\": {\r\n    \"firstName\": {\r\n      \"type\": \"string\",\r\n      \"description\": \"The person's first name.\"\r\n    },\r\n    \"lastName\": {\r\n      \"type\": \"string\",\r\n      \"description\": \"The person's last name.\"\r\n    },\r\n    \"age\": {\r\n      \"description\": \"Age in years which must be equal to or greater than zero.\",\r\n      \"type\": \"integer\",\r\n      \"minimum\": 0\r\n    }\r\n  }\r\n}";
+        // private BinaryData Custom_SchemaContent = BinaryData.FromString("Hello"); TODO: update after new swagger
+        // private BinaryData Custom_SchemaContent_V2 = BinaryData.FromString("Hello_V2"); TODO: update after new swagger
+
+        private const string Avro = "Avro";
+        private const string Json = "Json";
+        private const string Custom = "Custom";
 
         [RecordedTest]
-        public async Task CanRegisterSchema()
+        [TestCase(Avro)]
+        [TestCase(Json)]
+        // [TestCase(Custom)] TODO update tests based on swagger
+        public async Task CanRegisterSchema(string formatName)
         {
             var client = CreateClient();
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
-            var format = SchemaFormat.Avro;
+            var format = StringToSchemaFormat(formatName);
+            var content = StringToSchemaContent(formatName, 1);
 
-            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, format);
+            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, content, format);
             AssertSchemaProperties(registerProperties, schemaName, format);
 
-            SchemaProperties schemaProperties = await client.GetSchemaPropertiesAsync(groupName, schemaName, SchemaContent, format);
+            SchemaProperties schemaProperties = await client.GetSchemaPropertiesAsync(groupName, schemaName, content, format);
             AssertSchemaProperties(schemaProperties, schemaName, format);
             AssertPropertiesAreEqual(registerProperties, schemaProperties);
         }
 
         [RecordedTest]
-        public async Task CanRegisterSchemaJson()
+        [TestCase(Avro)]
+        [TestCase(Json)]
+        // [TestCase(Custom)]
+        public async Task CanRegisterNewVersionOfSchema(string formatName)
         {
             var client = CreateClient();
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
-            var format = SchemaFormat.Json;
+            var format = StringToSchemaFormat(formatName);
+            var content_V1 = StringToSchemaContent(formatName, 1);
+            var content_V2 = StringToSchemaContent(formatName, 2);
 
-            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, Json_SchemaContent, format);
+            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, content_V1, format);
             AssertSchemaProperties(registerProperties, schemaName, format);
 
-            SchemaProperties schemaProperties = await client.GetSchemaPropertiesAsync(groupName, schemaName, Json_SchemaContent, format);
-            AssertSchemaProperties(schemaProperties, schemaName, format);
-            AssertPropertiesAreEqual(registerProperties, schemaProperties);
-        }
-
-        [RecordedTest]
-        public async Task CanRegisterNewVersionOfSchema()
-        {
-            var client = CreateClient();
-            var schemaName = GenerateSchemaName();
-            var groupName = TestEnvironment.SchemaRegistryGroup;
-            var format = SchemaFormat.Avro;
-
-            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, format);
-            AssertSchemaProperties(registerProperties, schemaName, format);
-
-            SchemaProperties schemaProperties = await client.GetSchemaPropertiesAsync(groupName, schemaName, SchemaContent, format);
+            SchemaProperties schemaProperties = await client.GetSchemaPropertiesAsync(groupName, schemaName, content_V1, format);
             AssertSchemaProperties(schemaProperties, schemaName, format);
             AssertPropertiesAreEqual(registerProperties, schemaProperties);
 
-            SchemaProperties newVersion = await client.RegisterSchemaAsync(schemaProperties.GroupName, schemaProperties.Name, SchemaContent_V2, schemaProperties.Format);
+            SchemaProperties newVersion = await client.RegisterSchemaAsync(schemaProperties.GroupName, schemaProperties.Name, content_V2, schemaProperties.Format);
             AssertSchemaProperties(newVersion, schemaName, format);
             Assert.AreNotEqual(registerProperties.Id, newVersion.Id);
         }
 
         [RecordedTest]
-        public async Task CanRegisterNewVersionOfSchemaJson()
+        [TestCase(Avro)]
+        [TestCase(Json)]
+        // [TestCase(Custom)]
+        public async Task CanGetSchemaId(string formatName)
         {
             var client = CreateClient();
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
-            var format = SchemaFormat.Json;
+            var format = StringToSchemaFormat(formatName);
+            var content = StringToSchemaContent(formatName, 1);
 
-            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, Json_SchemaContent, format);
+            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, content, format);
             AssertSchemaProperties(registerProperties, schemaName, format);
 
-            SchemaProperties schemaProperties = await client.GetSchemaPropertiesAsync(groupName, schemaName, Json_SchemaContent, format);
-            AssertSchemaProperties(schemaProperties, schemaName, format);
-            AssertPropertiesAreEqual(registerProperties, schemaProperties);
-
-            SchemaProperties newVersion = await client.RegisterSchemaAsync(schemaProperties.GroupName, schemaProperties.Name, Json_SchemaContent_V2, schemaProperties.Format);
-            AssertSchemaProperties(newVersion, schemaName, format);
-            Assert.AreNotEqual(registerProperties.Id, newVersion.Id);
-        }
-
-        [RecordedTest]
-        public async Task CanGetSchemaId()
-        {
-            var client = CreateClient();
-            var schemaName = GenerateSchemaName();
-            var groupName = TestEnvironment.SchemaRegistryGroup;
-            var format = SchemaFormat.Avro;
-
-            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, format);
-            AssertSchemaProperties(registerProperties, schemaName, format);
-
-            SchemaProperties schemaProperties = await client.GetSchemaPropertiesAsync(groupName, schemaName, SchemaContent, format);
+            SchemaProperties schemaProperties = await client.GetSchemaPropertiesAsync(groupName, schemaName, content, format);
             AssertSchemaProperties(schemaProperties, schemaName, format);
             AssertPropertiesAreEqual(registerProperties, schemaProperties);
         }
 
         [RecordedTest]
-        public async Task CanGetSchemaIdJson()
+        [TestCase(Avro)]
+        [TestCase(Json)]
+        // [TestCase(Custom)]
+        public async Task CanGetSchema(string formatName)
         {
             var client = CreateClient();
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
-            var format = SchemaFormat.Json;
+            var format = StringToSchemaFormat(formatName);
+            var content = StringToSchemaContent(formatName, 1);
 
-            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, Json_SchemaContent, format);
-            AssertSchemaProperties(registerProperties, schemaName, format);
-
-            SchemaProperties schemaProperties = await client.GetSchemaPropertiesAsync(groupName, schemaName, Json_SchemaContent, format);
-            AssertSchemaProperties(schemaProperties, schemaName, format);
-            AssertPropertiesAreEqual(registerProperties, schemaProperties);
-        }
-
-        [RecordedTest]
-        public async Task CanGetSchema()
-        {
-            var client = CreateClient();
-            var schemaName = GenerateSchemaName();
-            var groupName = TestEnvironment.SchemaRegistryGroup;
-            var format = SchemaFormat.Avro;
-
-            var registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, format);
+            var registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, content, format);
             AssertSchemaProperties(registerProperties, schemaName, format);
 
             SchemaRegistrySchema schema = await client.GetSchemaAsync(registerProperties.Value.Id);
-            AssertSchema(schema, schemaName, SchemaContent, format);
+            AssertSchema(schema, schemaName, content, format);
             AssertPropertiesAreEqual(registerProperties, schema.Properties);
         }
 
         [RecordedTest]
-        public async Task CanGetSchemaJson()
+        [TestCase(Avro)]
+        [TestCase(Json)]
+        // [TestCase(Custom)]
+        public async Task CanGetSchemaByVersion(string formatName)
         {
             var client = CreateClient();
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
-            var format = SchemaFormat.Json;
+            var format = StringToSchemaFormat(formatName);
+            var content_V1 = StringToSchemaContent(formatName, 1);
+            var content_V2 = StringToSchemaContent(formatName, 2);
 
-            var registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, Json_SchemaContent, format);
-            AssertSchemaProperties(registerProperties, schemaName, format);
-
-            SchemaRegistrySchema schema = await client.GetSchemaAsync(registerProperties.Value.Id);
-            AssertSchema(schema, schemaName, Json_SchemaContent, format);
-            AssertPropertiesAreEqual(registerProperties, schema.Properties);
-        }
-
-        [RecordedTest]
-        public async Task CanGetSchemaByVersion()
-        {
-            var client = CreateClient();
-            var schemaName = GenerateSchemaName();
-            var groupName = TestEnvironment.SchemaRegistryGroup;
-            var format = SchemaFormat.Avro;
-
-            var registerPropertiesv1 = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, format);
+            var registerPropertiesv1 = await client.RegisterSchemaAsync(groupName, schemaName, content_V1, format);
             AssertSchemaProperties(registerPropertiesv1, schemaName, format);
 
-            var registerPropertiesv2 = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent_V2, format);
+            var registerPropertiesv2 = await client.RegisterSchemaAsync(groupName, schemaName, content_V2, format);
             AssertSchemaProperties(registerPropertiesv2, schemaName, format);
 
             SchemaRegistrySchema schemav1 = await client.GetSchemaAsync(groupName, schemaName, 1);
-            AssertSchema(schemav1, schemaName, SchemaContent, format);
+            AssertSchema(schemav1, schemaName, content_V1, format);
             AssertPropertiesAreEqual(registerPropertiesv1, schemav1.Properties);
 
             SchemaRegistrySchema schemav2 = await client.GetSchemaAsync(groupName, schemaName, 2);
-            AssertSchema(schemav2, schemaName, SchemaContent_V2, format);
+            AssertSchema(schemav2, schemaName, content_V2, format);
             AssertPropertiesAreEqual(registerPropertiesv2, schemav2.Properties);
         }
 
         [RecordedTest]
-        public async Task CanGetSchemaByVersionJson()
-        {
-            var client = CreateClient();
-            var schemaName = GenerateSchemaName();
-            var groupName = TestEnvironment.SchemaRegistryGroup;
-            var format = SchemaFormat.Json;
 
-            var registerPropertiesv1 = await client.RegisterSchemaAsync(groupName, schemaName, Json_SchemaContent, format);
-            AssertSchemaProperties(registerPropertiesv1, schemaName, format);
-
-            var registerPropertiesv2 = await client.RegisterSchemaAsync(groupName, schemaName, Json_SchemaContent_V2, format);
-            AssertSchemaProperties(registerPropertiesv2, schemaName, format);
-
-            SchemaRegistrySchema schemav1 = await client.GetSchemaAsync(groupName, schemaName, 1);
-            AssertSchema(schemav1, schemaName, Json_SchemaContent, format);
-            AssertPropertiesAreEqual(registerPropertiesv1, schemav1.Properties);
-
-            SchemaRegistrySchema schemav2 = await client.GetSchemaAsync(groupName, schemaName, 2);
-            AssertSchema(schemav2, schemaName, Json_SchemaContent_V2, format);
-            AssertPropertiesAreEqual(registerPropertiesv2, schemav2.Properties);
-        }
-
-        [RecordedTest]
         public void CanCreateRegisterRequestForUnknownFormatType()
         {
             var client = CreateClient();
@@ -231,7 +170,7 @@ namespace Azure.Data.SchemaRegistry.Tests
             var client = CreateClient();
             var schemaName = GenerateSchemaName();
             var groupName = TestEnvironment.SchemaRegistryGroup;
-            var format = new SchemaFormat("JSON");
+            var format = new SchemaFormat("NOTJSON");
             Assert.That(
                 async () => await client.GetSchemaPropertiesAsync(groupName, schemaName, SchemaContent, format),
                 Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(415)
@@ -284,6 +223,44 @@ namespace Azure.Data.SchemaRegistry.Tests
             Assert.AreEqual(registeredSchema.Format, schema.Format);
             Assert.AreEqual(registeredSchema.GroupName, schema.GroupName);
             Assert.AreEqual(registeredSchema.Name, schema.Name);
+        }
+
+        private SchemaFormat StringToSchemaFormat(string formatName)
+        {
+            switch (formatName)
+            {
+                case Avro:
+                    return SchemaFormat.Avro;
+                case Json:
+                    return SchemaFormat.Json;
+                case Custom:
+                    return SchemaFormat.Custom;
+                default:
+                    throw new ArgumentException("Format name was invalid.");
+            }
+        }
+
+        private string StringToSchemaContent(string formatName, int version)
+        {
+            switch (formatName)
+            {
+                case Avro:
+                    if (version == 1)
+                    {
+                        return SchemaContent;
+                    }
+                    return SchemaContent_V2;
+                case Json:
+                    if (version == 1)
+                    {
+                        return Json_SchemaContent;
+                    }
+                    return Json_SchemaContent_V2;
+                case Custom:
+                    return "TODO";
+                default:
+                    throw new ArgumentException("Format name was invalid.");
+            }
         }
     }
 }

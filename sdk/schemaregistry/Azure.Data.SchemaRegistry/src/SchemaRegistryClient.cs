@@ -323,14 +323,26 @@ namespace Azure.Data.SchemaRegistry
 
         private static SchemaFormat ConstructFormat(string contentType)
         {
-            SchemaFormat format;
+            string content;
             if (contentType.Contains("="))
             {
-                format = new SchemaFormat(contentType.Split('=')[1]);
+                content = contentType.Split('=')[1];
             }
             else
             {
-                format = new SchemaFormat(contentType.Split('+')[1]);
+                content = contentType.Split('+')[1];
+            }
+
+            SchemaFormat format;
+            switch (content)
+            {
+                case "json":
+                    format = SchemaFormat.Json;
+                    break;
+
+                default:
+                    format = new SchemaFormat(content);
+                    break;
             }
 
             return format;
