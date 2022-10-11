@@ -3,7 +3,7 @@
 ## 1.1.0 (2022-10-11)
 
 ### Features Added
-- Add new APIs for calculateRefund, return and archive/unarchive reservation
+- Added new APIs for calculateRefund, return and archive/unarchive reservation
 
 ### Bugs Fixed
 - Set the following properties to be `nullable` in CalculateExchange\Exchange flow:

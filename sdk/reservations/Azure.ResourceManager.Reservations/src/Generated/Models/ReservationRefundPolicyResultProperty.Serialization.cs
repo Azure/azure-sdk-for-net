@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class RefundPolicyResultProperty
+    public partial class ReservationRefundPolicyResultProperty
     {
-        internal static RefundPolicyResultProperty DeserializeRefundPolicyResultProperty(JsonElement element)
+        internal static ReservationRefundPolicyResultProperty DeserializeReservationRefundPolicyResultProperty(JsonElement element)
         {
             Optional<PurchasePrice> consumedRefundsTotal = default;
             Optional<PurchasePrice> maxRefundLimit = default;
-            Optional<IReadOnlyList<RefundPolicyError>> policyErrors = default;
+            Optional<IReadOnlyList<ReservationRefundPolicyError>> policyErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("consumedRefundsTotal"))
@@ -47,16 +47,16 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RefundPolicyError> array = new List<RefundPolicyError>();
+                    List<ReservationRefundPolicyError> array = new List<ReservationRefundPolicyError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RefundPolicyError.DeserializeRefundPolicyError(item));
+                        array.Add(ReservationRefundPolicyError.DeserializeReservationRefundPolicyError(item));
                     }
                     policyErrors = array;
                     continue;
                 }
             }
-            return new RefundPolicyResultProperty(consumedRefundsTotal.Value, maxRefundLimit.Value, Optional.ToList(policyErrors));
+            return new ReservationRefundPolicyResultProperty(consumedRefundsTotal.Value, maxRefundLimit.Value, Optional.ToList(policyErrors));
         }
     }
 }

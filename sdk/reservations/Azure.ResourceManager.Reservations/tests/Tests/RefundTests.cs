@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.Reservations.Tests
                 Quantity = 1
             };
 
-            var calculateRefundRequest = new CalculateRefundContent
+            var calculateRefundRequest = new ReservationCalculateRefundContent
             {
                 Id = fullyQualifiedOrderId,
-                Properties = new CalculateRefundRequestProperties
+                Properties = new ReservationCalculateRefundRequestProperties
                 {
                     Scope = "Reservation",
                     ReservationToReturn = riToReturn
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.AreEqual(50000, calculateRefundResponse.Value.Properties.PolicyResultProperties.MaxRefundLimit.Amount);
             Assert.AreEqual("USD", calculateRefundResponse.Value.Properties.PolicyResultProperties.MaxRefundLimit.CurrencyCode);
 
-            var refundRequest = new RefundContent
+            var refundRequest = new ReservationRefundContent
             {
-                Properties = new RefundRequestProperties
+                Properties = new ReservationRefundRequestProperties
                 {
                     SessionId = calculateRefundResponse.Value.Properties.SessionId,
                     Scope = "Reservation",

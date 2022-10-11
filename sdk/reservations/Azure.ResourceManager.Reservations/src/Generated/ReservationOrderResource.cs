@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for calculating refund of a reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CalculateRefundResult>> CalculateRefundAsync(CalculateRefundContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReservationCalculateRefundResult>> CalculateRefundAsync(ReservationCalculateRefundContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for calculating refund of a reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CalculateRefundResult> CalculateRefund(CalculateRefundContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ReservationCalculateRefundResult> CalculateRefund(ReservationCalculateRefundContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for returning reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<RefundResult>> ReturnAsync(RefundContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReservationRefundResult>> ReturnAsync(ReservationRefundContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for returning reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<RefundResult> Return(RefundContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ReservationRefundResult> Return(ReservationRefundContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

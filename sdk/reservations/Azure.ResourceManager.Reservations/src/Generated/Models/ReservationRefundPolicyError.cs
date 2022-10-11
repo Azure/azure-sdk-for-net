@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> error details. </summary>
-    public partial class RefundPolicyError
+    public partial class ReservationRefundPolicyError
     {
-        /// <summary> Initializes a new instance of RefundPolicyError. </summary>
-        internal RefundPolicyError()
+        /// <summary> Initializes a new instance of ReservationRefundPolicyError. </summary>
+        internal ReservationRefundPolicyError()
         {
         }
 
-        /// <summary> Initializes a new instance of RefundPolicyError. </summary>
+        /// <summary> Initializes a new instance of ReservationRefundPolicyError. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
-        internal RefundPolicyError(ReservationErrorResponseCode? code, string message)
+        internal ReservationRefundPolicyError(ReservationErrorResponseCode? code, string message)
         {
             Code = code;
             Message = message;

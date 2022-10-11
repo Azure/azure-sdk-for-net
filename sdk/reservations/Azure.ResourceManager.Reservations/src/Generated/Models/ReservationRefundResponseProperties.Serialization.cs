@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class RefundResponseProperties
+    public partial class ReservationRefundResponseProperties
     {
-        internal static RefundResponseProperties DeserializeRefundResponseProperties(JsonElement element)
+        internal static ReservationRefundResponseProperties DeserializeReservationRefundResponseProperties(JsonElement element)
         {
             Optional<Guid> sessionId = default;
             Optional<int> quantity = default;
             Optional<PurchasePrice> billingRefundAmount = default;
             Optional<PurchasePrice> pricingRefundAmount = default;
             Optional<RefundPolicyResult> policyResult = default;
-            Optional<RefundBillingInformation> billingInformation = default;
+            Optional<ReservationRefundBillingInformation> billingInformation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessionId"))
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    billingInformation = RefundBillingInformation.DeserializeRefundBillingInformation(property.Value);
+                    billingInformation = ReservationRefundBillingInformation.DeserializeReservationRefundBillingInformation(property.Value);
                     continue;
                 }
             }
-            return new RefundResponseProperties(Optional.ToNullable(sessionId), Optional.ToNullable(quantity), billingRefundAmount.Value, pricingRefundAmount.Value, policyResult.Value, billingInformation.Value);
+            return new ReservationRefundResponseProperties(Optional.ToNullable(sessionId), Optional.ToNullable(quantity), billingRefundAmount.Value, pricingRefundAmount.Value, policyResult.Value, billingInformation.Value);
         }
     }
 }

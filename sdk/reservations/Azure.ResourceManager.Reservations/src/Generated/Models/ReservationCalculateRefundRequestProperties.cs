@@ -7,11 +7,11 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The CalculateRefundRequestProperties. </summary>
-    public partial class CalculateRefundRequestProperties
+    /// <summary> The ReservationCalculateRefundRequestProperties. </summary>
+    public partial class ReservationCalculateRefundRequestProperties
     {
-        /// <summary> Initializes a new instance of CalculateRefundRequestProperties. </summary>
-        public CalculateRefundRequestProperties()
+        /// <summary> Initializes a new instance of ReservationCalculateRefundRequestProperties. </summary>
+        public ReservationCalculateRefundRequestProperties()
         {
         }
 

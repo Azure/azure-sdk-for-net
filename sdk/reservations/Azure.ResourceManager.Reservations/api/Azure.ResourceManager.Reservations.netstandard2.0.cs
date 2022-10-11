@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.Reservations
         protected ReservationOrderResource() { }
         public virtual Azure.ResourceManager.Reservations.ReservationOrderData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Reservations.Models.CalculateRefundResult> CalculateRefund(Azure.ResourceManager.Reservations.Models.CalculateRefundContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Reservations.Models.CalculateRefundResult>> CalculateRefundAsync(Azure.ResourceManager.Reservations.Models.CalculateRefundContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundResult> CalculateRefund(Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundResult>> CalculateRefundAsync(Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Reservations.Models.ChangeDirectoryDetail> ChangeDirectory(Azure.ResourceManager.Reservations.Models.ChangeDirectoryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Reservations.Models.ChangeDirectoryDetail>> ChangeDirectoryAsync(Azure.ResourceManager.Reservations.Models.ChangeDirectoryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(System.Guid reservationOrderId) { throw null; }
@@ -122,8 +122,8 @@ namespace Azure.ResourceManager.Reservations
         public virtual Azure.ResourceManager.Reservations.ReservationDetailCollection GetReservationDetails() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.Reservations.ReservationDetailData>> MergeReservation(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.MergeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.Reservations.ReservationDetailData>>> MergeReservationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.MergeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Reservations.Models.RefundResult> Return(Azure.ResourceManager.Reservations.Models.RefundContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Reservations.Models.RefundResult>> ReturnAsync(Azure.ResourceManager.Reservations.Models.RefundContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Reservations.Models.ReservationRefundResult> Return(Azure.ResourceManager.Reservations.Models.ReservationRefundContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Reservations.Models.ReservationRefundResult>> ReturnAsync(Azure.ResourceManager.Reservations.Models.ReservationRefundContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.Reservations.ReservationDetailData>> SplitReservation(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.SplitContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.Reservations.ReservationDetailData>>> SplitReservationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.SplitContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.ReservationOrderResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -321,24 +321,6 @@ namespace Azure.ResourceManager.Reservations.Models
         public float? Amount { get { throw null; } }
         public string CurrencyCode { get { throw null; } }
     }
-    public partial class CalculateRefundContent
-    {
-        public CalculateRefundContent() { }
-        public string Id { get { throw null; } set { } }
-        public Azure.ResourceManager.Reservations.Models.CalculateRefundRequestProperties Properties { get { throw null; } set { } }
-    }
-    public partial class CalculateRefundRequestProperties
-    {
-        public CalculateRefundRequestProperties() { }
-        public Azure.ResourceManager.Reservations.Models.ReservationToReturn ReservationToReturn { get { throw null; } set { } }
-        public string Scope { get { throw null; } set { } }
-    }
-    public partial class CalculateRefundResult
-    {
-        internal CalculateRefundResult() { }
-        public string Id { get { throw null; } }
-        public Azure.ResourceManager.Reservations.Models.RefundResponseProperties Properties { get { throw null; } }
-    }
     public partial class ChangeDirectoryContent
     {
         public ChangeDirectoryContent() { }
@@ -514,58 +496,6 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator !=(Azure.ResourceManager.Reservations.Models.QuotaRequestState left, Azure.ResourceManager.Reservations.Models.QuotaRequestState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RefundBillingInformation
-    {
-        internal RefundBillingInformation() { }
-        public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingCurrencyProratedAmount { get { throw null; } }
-        public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingCurrencyRemainingCommitmentAmount { get { throw null; } }
-        public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingCurrencyTotalPaidAmount { get { throw null; } }
-        public Azure.ResourceManager.Reservations.Models.ReservationBillingPlan? BillingPlan { get { throw null; } }
-        public int? CompletedTransactions { get { throw null; } }
-        public int? TotalTransactions { get { throw null; } }
-    }
-    public partial class RefundContent
-    {
-        public RefundContent() { }
-        public Azure.ResourceManager.Reservations.Models.RefundRequestProperties Properties { get { throw null; } set { } }
-    }
-    public partial class RefundPolicyError
-    {
-        internal RefundPolicyError() { }
-        public Azure.ResourceManager.Reservations.Models.ReservationErrorResponseCode? Code { get { throw null; } }
-        public string Message { get { throw null; } }
-    }
-    public partial class RefundPolicyResultProperty
-    {
-        internal RefundPolicyResultProperty() { }
-        public Azure.ResourceManager.Reservations.Models.PurchasePrice ConsumedRefundsTotal { get { throw null; } }
-        public Azure.ResourceManager.Reservations.Models.PurchasePrice MaxRefundLimit { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.RefundPolicyError> PolicyErrors { get { throw null; } }
-    }
-    public partial class RefundRequestProperties
-    {
-        public RefundRequestProperties() { }
-        public Azure.ResourceManager.Reservations.Models.ReservationToReturn ReservationToReturn { get { throw null; } set { } }
-        public string ReturnReason { get { throw null; } set { } }
-        public string Scope { get { throw null; } set { } }
-        public System.Guid? SessionId { get { throw null; } set { } }
-    }
-    public partial class RefundResponseProperties
-    {
-        internal RefundResponseProperties() { }
-        public Azure.ResourceManager.Reservations.Models.RefundBillingInformation BillingInformation { get { throw null; } }
-        public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingRefundAmount { get { throw null; } }
-        public Azure.ResourceManager.Reservations.Models.RefundPolicyResultProperty PolicyResultProperties { get { throw null; } }
-        public Azure.ResourceManager.Reservations.Models.PurchasePrice PricingRefundAmount { get { throw null; } }
-        public int? Quantity { get { throw null; } }
-        public System.Guid? SessionId { get { throw null; } }
-    }
-    public partial class RefundResult
-    {
-        internal RefundResult() { }
-        public string Id { get { throw null; } }
-        public Azure.ResourceManager.Reservations.Models.RefundResponseProperties Properties { get { throw null; } }
-    }
     public partial class RenewProperties
     {
         internal RenewProperties() { }
@@ -602,6 +532,24 @@ namespace Azure.ResourceManager.Reservations.Models
         public static implicit operator Azure.ResourceManager.Reservations.Models.ReservationBillingPlan (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Reservations.Models.ReservationBillingPlan left, Azure.ResourceManager.Reservations.Models.ReservationBillingPlan right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ReservationCalculateRefundContent
+    {
+        public ReservationCalculateRefundContent() { }
+        public string Id { get { throw null; } set { } }
+        public Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundRequestProperties Properties { get { throw null; } set { } }
+    }
+    public partial class ReservationCalculateRefundRequestProperties
+    {
+        public ReservationCalculateRefundRequestProperties() { }
+        public Azure.ResourceManager.Reservations.Models.ReservationToReturn ReservationToReturn { get { throw null; } set { } }
+        public string Scope { get { throw null; } set { } }
+    }
+    public partial class ReservationCalculateRefundResult
+    {
+        internal ReservationCalculateRefundResult() { }
+        public string Id { get { throw null; } }
+        public Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties Properties { get { throw null; } }
     }
     public partial class ReservationCatalog
     {
@@ -837,6 +785,58 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.ResourceManager.Reservations.Models.ReservedResourceType? ReservedResourceType { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.ReservationTerm? Term { get { throw null; } set { } }
+    }
+    public partial class ReservationRefundBillingInformation
+    {
+        internal ReservationRefundBillingInformation() { }
+        public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingCurrencyProratedAmount { get { throw null; } }
+        public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingCurrencyRemainingCommitmentAmount { get { throw null; } }
+        public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingCurrencyTotalPaidAmount { get { throw null; } }
+        public Azure.ResourceManager.Reservations.Models.ReservationBillingPlan? BillingPlan { get { throw null; } }
+        public int? CompletedTransactions { get { throw null; } }
+        public int? TotalTransactions { get { throw null; } }
+    }
+    public partial class ReservationRefundContent
+    {
+        public ReservationRefundContent() { }
+        public Azure.ResourceManager.Reservations.Models.ReservationRefundRequestProperties Properties { get { throw null; } set { } }
+    }
+    public partial class ReservationRefundPolicyError
+    {
+        internal ReservationRefundPolicyError() { }
+        public Azure.ResourceManager.Reservations.Models.ReservationErrorResponseCode? Code { get { throw null; } }
+        public string Message { get { throw null; } }
+    }
+    public partial class ReservationRefundPolicyResultProperty
+    {
+        internal ReservationRefundPolicyResultProperty() { }
+        public Azure.ResourceManager.Reservations.Models.PurchasePrice ConsumedRefundsTotal { get { throw null; } }
+        public Azure.ResourceManager.Reservations.Models.PurchasePrice MaxRefundLimit { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyError> PolicyErrors { get { throw null; } }
+    }
+    public partial class ReservationRefundRequestProperties
+    {
+        public ReservationRefundRequestProperties() { }
+        public Azure.ResourceManager.Reservations.Models.ReservationToReturn ReservationToReturn { get { throw null; } set { } }
+        public string ReturnReason { get { throw null; } set { } }
+        public string Scope { get { throw null; } set { } }
+        public System.Guid? SessionId { get { throw null; } set { } }
+    }
+    public partial class ReservationRefundResponseProperties
+    {
+        internal ReservationRefundResponseProperties() { }
+        public Azure.ResourceManager.Reservations.Models.ReservationRefundBillingInformation BillingInformation { get { throw null; } }
+        public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingRefundAmount { get { throw null; } }
+        public Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyResultProperty PolicyResultProperties { get { throw null; } }
+        public Azure.ResourceManager.Reservations.Models.PurchasePrice PricingRefundAmount { get { throw null; } }
+        public int? Quantity { get { throw null; } }
+        public System.Guid? SessionId { get { throw null; } }
+    }
+    public partial class ReservationRefundResult
+    {
+        internal ReservationRefundResult() { }
+        public string Id { get { throw null; } }
+        public Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties Properties { get { throw null; } }
     }
     public partial class ReservationResourceName
     {

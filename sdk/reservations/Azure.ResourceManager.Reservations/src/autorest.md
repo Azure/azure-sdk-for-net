@@ -94,8 +94,16 @@ rename-mapping:
   OperationStatus: ReservationOperationStatus
   ResourceName: ReservationResourceName
   Patch.properties.renew: IsRenewEnabled
-  CalculateRefundResponse: CalculateRefundResult
-  RefundResponse: RefundResult
+  CalculateRefundRequest: ReservationCalculateRefundContent
+  CalculateRefundResponse: ReservationCalculateRefundResult
+  CalculateRefundRequestProperties: ReservationCalculateRefundRequestProperties
+  RefundResponse: ReservationRefundResult
+  RefundBillingInformation: ReservationRefundBillingInformation
+  RefundRequest: ReservationRefundContent
+  RefundPolicyError: ReservationRefundPolicyError
+  RefundPolicyResultProperty: ReservationRefundPolicyResultProperty
+  RefundRequestProperties: ReservationRefundRequestProperties
+  RefundResponseProperties: ReservationRefundResponseProperties
   ErrorResponseCode: ReservationErrorResponseCode
 
 directive:

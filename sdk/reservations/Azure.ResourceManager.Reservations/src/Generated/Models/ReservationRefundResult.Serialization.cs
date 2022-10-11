@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class CalculateRefundResult
+    public partial class ReservationRefundResult
     {
-        internal static CalculateRefundResult DeserializeCalculateRefundResult(JsonElement element)
+        internal static ReservationRefundResult DeserializeReservationRefundResult(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<RefundResponseProperties> properties = default;
+            Optional<ReservationRefundResponseProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = RefundResponseProperties.DeserializeRefundResponseProperties(property.Value);
+                    properties = ReservationRefundResponseProperties.DeserializeReservationRefundResponseProperties(property.Value);
                     continue;
                 }
             }
-            return new CalculateRefundResult(id.Value, properties.Value);
+            return new ReservationRefundResult(id.Value, properties.Value);
         }
     }
 }

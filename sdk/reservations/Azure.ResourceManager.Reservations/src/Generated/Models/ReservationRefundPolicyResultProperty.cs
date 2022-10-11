@@ -11,19 +11,19 @@ using Azure.Core;
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Refund policy result property. </summary>
-    public partial class RefundPolicyResultProperty
+    public partial class ReservationRefundPolicyResultProperty
     {
-        /// <summary> Initializes a new instance of RefundPolicyResultProperty. </summary>
-        internal RefundPolicyResultProperty()
+        /// <summary> Initializes a new instance of ReservationRefundPolicyResultProperty. </summary>
+        internal ReservationRefundPolicyResultProperty()
         {
-            PolicyErrors = new ChangeTrackingList<RefundPolicyError>();
+            PolicyErrors = new ChangeTrackingList<ReservationRefundPolicyError>();
         }
 
-        /// <summary> Initializes a new instance of RefundPolicyResultProperty. </summary>
+        /// <summary> Initializes a new instance of ReservationRefundPolicyResultProperty. </summary>
         /// <param name="consumedRefundsTotal"></param>
         /// <param name="maxRefundLimit"></param>
         /// <param name="policyErrors"> Refund Policy errors. </param>
-        internal RefundPolicyResultProperty(PurchasePrice consumedRefundsTotal, PurchasePrice maxRefundLimit, IReadOnlyList<RefundPolicyError> policyErrors)
+        internal ReservationRefundPolicyResultProperty(PurchasePrice consumedRefundsTotal, PurchasePrice maxRefundLimit, IReadOnlyList<ReservationRefundPolicyError> policyErrors)
         {
             ConsumedRefundsTotal = consumedRefundsTotal;
             MaxRefundLimit = maxRefundLimit;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Gets the max refund limit. </summary>
         public PurchasePrice MaxRefundLimit { get; }
         /// <summary> Refund Policy errors. </summary>
-        public IReadOnlyList<RefundPolicyError> PolicyErrors { get; }
+        public IReadOnlyList<ReservationRefundPolicyError> PolicyErrors { get; }
     }
 }
