@@ -27,15 +27,7 @@ Write-Host "DotnetNupkgLocation: $DotnetNupkgLocation"
 Write-Host "DocRepoLocation: $DocRepoLocation"
 Write-Host "ArtifactName: $ArtifactName"
 
-$nupkgFiles = Get-ChildItem $DotnetNupkgLocation -Filter "*.nupkg" -Recurse
-if (!$nupkgFiles -or !(Test-Path $nupkgFiles[0].FullName)) {
-  LogWarning "$ArtifactName not found."
-  return
-}
-# .net has two nupkg packages, one with symbol, and the other without. 
-# We will use the nupkg without symbol for the namespaces. 
-$nupkgFile = $nupkgFiles | Where-Object {$_ -match "$ArtifactName.(.*\d).nupkg"}
-Write-Host "Nupkg file name: $($nupkgFile.Name)"
+$nupkgFile = Get-dotnet-Package-Artifacts -Location $DotnetNupkgLocation
 $version = $nupkgFile.Name -replace "$ArtifactName.(.*\d).nupkg", '$1'
 Write-Host "The full version: $version"
 $originalVersion = [AzureEngSemanticVersion]::ParseVersionString($version)
