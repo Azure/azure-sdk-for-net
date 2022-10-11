@@ -46,8 +46,13 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="redactedText"> Returns redacted text. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
-        internal PiiResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, string redactedText, IList<Entity> entities) : base(id, warnings, statistics, redactedText, entities)
+        /// <param name="detectedLanguage"> If &apos;language&apos; is set to &apos;auto&apos; for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
+        internal PiiResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, string redactedText, IList<Entity> entities, DetectedLanguageInternal? detectedLanguage) : base(id, warnings, statistics, redactedText, entities)
         {
+            DetectedLanguage = detectedLanguage;
         }
+
+        /// <summary> If &apos;language&apos; is set to &apos;auto&apos; for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </summary>
+        public DetectedLanguageInternal? DetectedLanguage { get; set; }
     }
 }
