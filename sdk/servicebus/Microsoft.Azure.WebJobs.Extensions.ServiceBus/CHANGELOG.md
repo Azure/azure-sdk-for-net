@@ -1,14 +1,20 @@
 # Release History
 
-## 5.8.0-beta.1 (Unreleased)
+## 5.8.0 (2022-10-11)
 
 ### Features Added
 
-### Breaking Changes
+- Support binding to `PartitionKey` and `TransactionPartitionKey`.
+- Add `PeekMessagesAsync` method to `ServiceBusReceiveActions`.
+- Add `DeadletterMessageAsync` overload to `ServiceBusMessageActions` that allows passing the properties dictionary in addition to the deadletter error reason and description.
 
 ### Bugs Fixed
 
+- Fixed resource string usage to prevent `MissingManifestResourceException` when throwing exceptions from the extension.
+
 ### Other Changes
+
+- Update exception messages to link to the [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/TROUBLESHOOTING.md).
 
 ## 5.7.0 (2022-08-11)
 
