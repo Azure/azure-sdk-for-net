@@ -3,7 +3,7 @@
 ## 11.5.0-beta.2 (2022-10-11)
 
 ### Features Added
-- Added new languages for `OcrSkill` and `ImageAnalysisSkill` as we have upgraded them to use Cognitive Services Computer Vision v3.2 which supports a lot more languages for both APIs. Language lists can be found [here](https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/language-support).
+- Added new languages for `OcrSkill` and `ImageAnalysisSkill` as we have upgraded them to use Cognitive Services Computer Vision v3.2 which supports a lot more languages for both APIs. Language lists can be found [here](https://docs.microsoft.com/azure/cognitive-services/computer-vision/language-support).
 
 ### Bugs Fixed
 - Fixed user-assigned identity type names ([#29813](https://github.com/Azure/azure-sdk-for-net/issues/29813)).
