@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <Description>Microsoft Azure WebJobs SDK ServiceBus Extension</Description>
-    <Version>5.8.0-beta.1</Version>
+    <Version>5.8.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>5.7.0</ApiCompatVersion>
     <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636</NoWarn>
@@ -16,14 +16,8 @@
     <PackageReference Include="Microsoft.Azure.WebJobs.Sources" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
-    <!--<PackageReference Include="Azure.Messaging.ServiceBus" /> TEMP -->
+    <PackageReference Include="Azure.Messaging.ServiceBus" />
   </ItemGroup>
-
-  <!--TEMP-->
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj" />
-  </ItemGroup>
-  <!--TEMP-->
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
