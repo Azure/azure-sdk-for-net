@@ -174,6 +174,15 @@ input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2016-09-01/locks.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-01-01/subscriptions.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/features.json
+
+generate-virtual-operations:
+- PolicyDefinitions_GetAtManagementGroup
+- PolicySetDefinitions_GetAtManagementGroup
+- PolicyDefinitions_Get
+- PolicySetDefinitions_Get
+- PolicyDefinitions_GetBuiltIn
+- PolicySetDefinitions_GetBuiltIn
+
 list-exception:
   - /{resourceId}
 request-path-to-resource-data:
@@ -529,12 +538,12 @@ directive:
 
   - from: resources.json
     where: $.definitions.Identity.properties.type["x-ms-enum"]
-    transform: > 
+    transform: >
       $["name"] = "GenericResourceIdentityType";
       $["modelAsString"] = true;
   - from: resources.json
     where: $.definitions.Identity
-    transform: > 
+    transform: >
       $["required"] = ["type"]
   - from: resources.json
     where: $.definitions.Identity
