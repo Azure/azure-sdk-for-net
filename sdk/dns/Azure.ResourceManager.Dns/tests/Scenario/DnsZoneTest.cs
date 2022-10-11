@@ -42,21 +42,19 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
         public async Task CreateOrUpdate()
         {
-            string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
+            string dnsZoneName = $"{Recording.GenerateAssetName("sample")}.com";
             var dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
             Assert.NotNull(dnsZone);
-            Assert.Equals(dnsZoneName, dnsZone.Data.Name);
+            Assert.AreEqual(dnsZoneName, dnsZone.Data.Name);
         }
 
         [Test]
         [RecordedTest]
-        [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
         public async Task Delete()
         {
-            string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
+            string dnsZoneName = $"{Recording.GenerateAssetName("sample")}.com";
             var dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
             bool flag = await _dnsZoneCollection.ExistsAsync(dnsZoneName);
             Assert.IsTrue(flag);
@@ -68,10 +66,9 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
         public async Task Exist()
         {
-            string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
+            string dnsZoneName = $"{Recording.GenerateAssetName("sample")}.com";
             await CreateADnsZone(dnsZoneName, _resourceGroup);
             bool flag = await _dnsZoneCollection.ExistsAsync(dnsZoneName);
             Assert.IsTrue(flag);
@@ -79,22 +76,20 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
         public async Task Get()
         {
-            string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
+            string dnsZoneName = $"{Recording.GenerateAssetName("sample")}.com";
             await CreateADnsZone(dnsZoneName, _resourceGroup);
             var dnsZone = await _dnsZoneCollection.GetAsync(dnsZoneName);
             Assert.IsNotNull(dnsZone);
-            Assert.Equals(dnsZoneName, dnsZone.Value.Data.Name);
+            Assert.AreEqual(dnsZoneName, dnsZone.Value.Data.Name);
         }
 
         [Test]
         [RecordedTest]
-        [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
         public async Task GetAll()
         {
-            string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
+            string dnsZoneName = $"{Recording.GenerateAssetName("sample")}.com";
             await CreateADnsZone(dnsZoneName, _resourceGroup);
             var list = await _dnsZoneCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(list);
@@ -104,10 +99,9 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
         public async Task GetAllRecords()
         {
-            string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
+            string dnsZoneName = $"{Recording.GenerateAssetName("sample")}.com";
             var dnszone = await CreateADnsZone(dnsZoneName, _resourceGroup);
             var recordSets = await dnszone.GetAllRecordDataAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(recordSets);

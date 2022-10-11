@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> Initializes a new instance of RecordSetListResult. </summary>
         internal RecordSetListResult()
         {
-            Value = new ChangeTrackingList<RecordData>();
+            Value = new ChangeTrackingList<RecordSeriesData>();
         }
 
         /// <summary> Initializes a new instance of RecordSetListResult. </summary>
         /// <param name="value"> Information about the record sets in the response. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
-        internal RecordSetListResult(IReadOnlyList<RecordData> value, string nextLink)
+        internal RecordSetListResult(IReadOnlyList<RecordSeriesData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Information about the record sets in the response. </summary>
-        public IReadOnlyList<RecordData> Value { get; }
+        public IReadOnlyList<RecordSeriesData> Value { get; }
         /// <summary> The continuation token for the next page of results. </summary>
         public string NextLink { get; }
     }

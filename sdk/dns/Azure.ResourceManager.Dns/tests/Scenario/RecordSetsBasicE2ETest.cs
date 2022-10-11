@@ -18,7 +18,8 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
     {
         private DnsZoneResource _dnsZone;
 
-        public RecordSetsBasicE2ETest(bool isAsync) : base(isAsync)
+        public RecordSetsBasicE2ETest(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -26,12 +27,11 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         public async Task TestSetUp()
         {
             var resourceGroup = await CreateResourceGroup();
-            _dnsZone = await CreateADnsZone($"2022{SessionRecording.GenerateAssetName("dnszone")}.com", resourceGroup);
+            _dnsZone = await CreateADnsZone($"2022{Recording.GenerateAssetName("dnszone")}.com", resourceGroup);
         }
 
         [Test]
         [RecordedTest]
-        [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
         public async Task AaaaRecordE2E()
         {
             var collection = _dnsZone.GetAaaaRecords();
@@ -69,7 +69,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
         public async Task ARecordE2E()
         {
             var collection = _dnsZone.GetARecords();
@@ -109,7 +108,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
         public async Task CaaRecordE2E()
         {
             var collection = _dnsZone.GetCaaRecords();
@@ -146,7 +144,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
         public async Task CnameRecordE2E()
         {
             var collection = _dnsZone.GetCnameRecords();
@@ -182,7 +179,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
         public async Task MXRecordE2E()
         {
             var collection = _dnsZone.GetMXRecords();
@@ -219,7 +215,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
         public async Task NSRecordE2E()
         {
             string _recordSetName = "ns";
@@ -256,7 +251,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
         public async Task PtrRecordE2E()
         {
             var collection = _dnsZone.GetPtrRecords();
@@ -293,7 +287,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
         public async Task SoaRecordE2E()
         {
             var collection = _dnsZone.GetSoaRecords();
@@ -318,7 +311,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
         public async Task SrvRecordE2E()
         {
             var collection = _dnsZone.GetSrvRecords();
@@ -355,7 +347,6 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
         public async Task TxtRecordE2E()
         {
             var collection = _dnsZone.GetTxtRecords();

@@ -574,21 +574,21 @@ namespace Azure.ResourceManager.Dns
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="aaaaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="aaaaRecordName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AaaaRecordData>> UpdateAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, AaaaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AaaaRecordData>> UpdateAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string aaaaRecordName, AaaaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, data, ifMatch);
+            using var message = CreateUpdateRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, aaaaRecordName, data, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -609,21 +609,21 @@ namespace Azure.ResourceManager.Dns
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="aaaaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="aaaaRecordName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AaaaRecordData> Update(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, AaaaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<AaaaRecordData> Update(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string aaaaRecordName, AaaaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, data, ifMatch);
+            using var message = CreateUpdateRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, aaaaRecordName, data, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -644,22 +644,22 @@ namespace Azure.ResourceManager.Dns
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="aaaaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="aaaaRecordName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AaaaRecordData>> CreateOrUpdateAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, AaaaRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AaaaRecordData>> CreateOrUpdateAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string aaaaRecordName, AaaaRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, data, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, aaaaRecordName, data, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -681,22 +681,22 @@ namespace Azure.ResourceManager.Dns
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="aaaaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="aaaaRecordName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AaaaRecordData> CreateOrUpdate(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, AaaaRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<AaaaRecordData> CreateOrUpdate(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string aaaaRecordName, AaaaRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, data, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, aaaaRecordName, data, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -713,81 +713,23 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAaaaRecordAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteAaaaRecord(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         /// <summary> Gets a record set. </summary>
         /// <param name="dnsRecordType"> The type of DNS record in this record set. </param>
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="aaaaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="aaaaRecordName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AaaaRecordData>> GetAaaaRecordAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, CancellationToken cancellationToken = default)
+        public async Task<Response<AaaaRecordData>> GetAaaaRecordAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string aaaaRecordName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
 
-            using var message = CreateGetRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName);
+            using var message = CreateGetRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, aaaaRecordName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -810,18 +752,18 @@ namespace Azure.ResourceManager.Dns
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="aaaaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="aaaaRecordName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AaaaRecordData> GetAaaaRecord(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, CancellationToken cancellationToken = default)
+        public Response<AaaaRecordData> GetAaaaRecord(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string aaaaRecordName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
 
-            using var message = CreateGetRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName);
+            using var message = CreateGetRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, aaaaRecordName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -976,21 +918,21 @@ namespace Azure.ResourceManager.Dns
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="aRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="aRecordName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ARecordData>> UpdateAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ARecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ARecordData>> UpdateAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string aRecordName, ARecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(aRecordName, nameof(aRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, data, ifMatch);
+            using var message = CreateUpdateRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, aRecordName, data, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1011,21 +953,21 @@ namespace Azure.ResourceManager.Dns
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="aRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="aRecordName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ARecordData> Update(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ARecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<ARecordData> Update(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string aRecordName, ARecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(aRecordName, nameof(aRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, data, ifMatch);
+            using var message = CreateUpdateRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, aRecordName, data, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1046,22 +988,22 @@ namespace Azure.ResourceManager.Dns
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="aRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="aRecordName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ARecordData>> CreateOrUpdateAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ARecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ARecordData>> CreateOrUpdateAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string aRecordName, ARecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(aRecordName, nameof(aRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, data, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, aRecordName, data, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1083,22 +1025,22 @@ namespace Azure.ResourceManager.Dns
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="aRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/>, <paramref name="aRecordName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ARecordData> CreateOrUpdate(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ARecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<ARecordData> CreateOrUpdate(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string aRecordName, ARecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(aRecordName, nameof(aRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, data, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, aRecordName, data, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1115,81 +1057,23 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteARecordAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteARecord(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         /// <summary> Gets a record set. </summary>
         /// <param name="dnsRecordType"> The type of DNS record in this record set. </param>
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="aRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="aRecordName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ARecordData>> GetARecordAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, CancellationToken cancellationToken = default)
+        public async Task<Response<ARecordData>> GetARecordAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string aRecordName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(aRecordName, nameof(aRecordName));
 
-            using var message = CreateGetRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName);
+            using var message = CreateGetRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, aRecordName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1212,18 +1096,18 @@ namespace Azure.ResourceManager.Dns
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="aRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="aRecordName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ARecordData> GetARecord(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, CancellationToken cancellationToken = default)
+        public Response<ARecordData> GetARecord(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string aRecordName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(aRecordName, nameof(aRecordName));
 
-            using var message = CreateGetRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName);
+            using var message = CreateGetRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, aRecordName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1512,64 +1396,6 @@ namespace Azure.ResourceManager.Dns
                         value = CaaRecordData.DeserializeCaaRecordData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteCaaRecordAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteCaaRecord(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1919,64 +1745,6 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteCnameRecordAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteCnameRecord(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         /// <summary> Gets a record set. </summary>
         /// <param name="dnsRecordType"> The type of DNS record in this record set. </param>
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
@@ -2316,64 +2084,6 @@ namespace Azure.ResourceManager.Dns
                         value = MXRecordData.DeserializeMXRecordData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteMXRecordAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteMXRecord(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -2723,64 +2433,6 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteNSRecordAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteNSRecord(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         /// <summary> Gets a record set. </summary>
         /// <param name="dnsRecordType"> The type of DNS record in this record set. </param>
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
@@ -3120,64 +2772,6 @@ namespace Azure.ResourceManager.Dns
                         value = PtrRecordData.DeserializePtrRecordData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeletePtrRecordAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeletePtrRecord(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -3527,64 +3121,6 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteSoaRecordAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteSoaRecord(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         /// <summary> Gets a record set. </summary>
         /// <param name="dnsRecordType"> The type of DNS record in this record set. </param>
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
@@ -3929,81 +3465,23 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteSrvRecordAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteSrvRecord(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         /// <summary> Gets a record set. </summary>
         /// <param name="dnsRecordType"> The type of DNS record in this record set. </param>
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="srvRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="srvRecordName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SrvRecordData>> GetSrvRecordAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, CancellationToken cancellationToken = default)
+        public async Task<Response<SrvRecordData>> GetSrvRecordAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string srvRecordName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(srvRecordName, nameof(srvRecordName));
 
-            using var message = CreateGetRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName);
+            using var message = CreateGetRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, srvRecordName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -4326,64 +3804,6 @@ namespace Azure.ResourceManager.Dns
                         value = TxtRecordData.DeserializeTxtRecordData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteTxtRecordAsync(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-        /// <param name="dnsRecordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted). </param>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="zoneName"/> or <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteTxtRecord(DnsRecordType dnsRecordType, string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-
-            using var message = CreateDeleteRequest(dnsRecordType, subscriptionId, resourceGroupName, zoneName, relativeRecordSetName, ifMatch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
