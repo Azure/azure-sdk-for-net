@@ -37,7 +37,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                 + "\"silent\": false"
                 + "}";
 
-            MediaStreamingAudio streamingAudio = (MediaStreamingAudio) MediaStreamingPackageParser.Parse(audioJson);
+            MediaStreamingAudioData streamingAudio = (MediaStreamingAudioData) MediaStreamingPackageParser.Parse(audioJson);
             ValidateAudioData(streamingAudio);
         }
 
@@ -53,7 +53,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
 
             var binaryData = BinaryData.FromString(jsonData.ToString());
 
-            MediaStreamingAudio streamingAudio = (MediaStreamingAudio)MediaStreamingPackageParser.Parse(binaryData);
+            MediaStreamingAudioData streamingAudio = (MediaStreamingAudioData)MediaStreamingPackageParser.Parse(binaryData);
             ValidateAudioData(streamingAudio);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             jsonAudio["silent"] = false;
 
             byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(jsonAudio.ToString());
-            MediaStreamingAudio parsedPackage = (MediaStreamingAudio) MediaStreamingPackageParser.Parse(receivedBytes);
+            MediaStreamingAudioData parsedPackage = (MediaStreamingAudioData) MediaStreamingPackageParser.Parse(receivedBytes);
 
             Assert.NotNull(parsedPackage);
             ValidateAudioData(parsedPackage);
@@ -84,7 +84,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual(640, streamingMetadata.Length);
         }
 
-        private static void ValidateAudioData(MediaStreamingAudio streamingAudio)
+        private static void ValidateAudioData(MediaStreamingAudioData streamingAudio)
         {
             Assert.IsNotNull(streamingAudio);
             Assert.AreEqual("AQIDBAU=", streamingAudio.Data);
