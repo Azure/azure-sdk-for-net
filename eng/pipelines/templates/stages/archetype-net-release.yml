@@ -306,7 +306,7 @@ stages:
               - ${{ each artifact in parameters.Artifacts }}:
                 - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
             WorkingDirectory: $(System.DefaultWorkingDirectory)
-            TargetDocRepoOwner: "azure-sdk"
+            TargetDocRepoOwner: "Azure"
             TargetDocRepoName: ${{parameters.TargetDocRepoName}}
             Language: 'dotnet'
             DailyDocsBuild: true
@@ -322,4 +322,4 @@ stages:
                 TargetBranch: $(TargetBranchName)
                 DocRepoLocation: $(DocRepoLocation)
                 TargetDocRepoName: ${{parameters.TargetDocRepoName}}
-                TargetDocRepoOwner: "azure-sdk"
+                TargetDocRepoOwner: "Azure"
