@@ -154,9 +154,9 @@ Parameter name: modelId
 ```
 
 ### Unexpected time to build a custom model
-It is common to have a long completion time when building a custom model using the `Neural` build mode with `DocumentBuildMode.Neural`. Depending on the service load you can usually expect it to take around 10 minutes.
+It is common to have a long completion time when building a custom model using the `Neural` build mode with `DocumentBuildMode.Neural`.
 
-For simpler use-cases, you can use `DocumentBuildMode.Template` which uses a different model building algorithm that takes less time, typically a few seconds. See more about `Template` custom models [here](https://aka.ms/custom-template-models). To see more information about `Neural` custom models, see the documentation [here](https://aka.ms/custom-neural-models).
+For simpler use-cases, you can use `DocumentBuildMode.Template` which uses a different model building algorithm that takes less time. See more about `Template` custom models [here](https://aka.ms/custom-template-models). To see more information about `Neural` custom models, see the documentation [here](https://aka.ms/custom-neural-models).
 
 ### Enable HTTP request/response logging
 Reviewing the HTTP request sent or response received over the wire to/from the Azure Form Recognizer service can be useful when troubleshooting issues.
