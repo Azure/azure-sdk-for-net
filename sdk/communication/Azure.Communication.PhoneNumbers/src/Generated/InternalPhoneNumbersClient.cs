@@ -32,7 +32,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="endpoint"> The communication resource, for example https://resourcename.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        internal InternalPhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-11-30")
+        internal InternalPhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-12-01")
         {
             RestClient = new InternalPhoneNumbersRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
@@ -199,7 +199,7 @@ namespace Azure.Communication.PhoneNumbers
                 try
                 {
                     var response = await RestClient.ListAvailableCountriesAsync(acceptLanguage, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.PhoneNumberCountriesValue, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Countries, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -214,7 +214,7 @@ namespace Azure.Communication.PhoneNumbers
                 try
                 {
                     var response = await RestClient.ListAvailableCountriesNextPageAsync(nextLink, acceptLanguage, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.PhoneNumberCountriesValue, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Countries, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -239,7 +239,7 @@ namespace Azure.Communication.PhoneNumbers
                 try
                 {
                     var response = RestClient.ListAvailableCountries(acceptLanguage, skip, maxPageSize, cancellationToken);
-                    return Page.FromValues(response.Value.PhoneNumberCountriesValue, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Countries, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -254,7 +254,7 @@ namespace Azure.Communication.PhoneNumbers
                 try
                 {
                     var response = RestClient.ListAvailableCountriesNextPage(nextLink, acceptLanguage, skip, maxPageSize, cancellationToken);
-                    return Page.FromValues(response.Value.PhoneNumberCountriesValue, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Countries, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

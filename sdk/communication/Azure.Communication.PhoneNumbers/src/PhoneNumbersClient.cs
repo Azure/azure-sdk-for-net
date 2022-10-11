@@ -420,7 +420,7 @@ namespace Azure.Communication.PhoneNumbers
                 try
                 {
                     var response = await RestClient.ListAvailableCountriesAsync(acceptLanguage: _acceptedLanguage, skip: null, maxPageSize: null, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.PhoneNumberCountriesValue, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Countries, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -435,7 +435,7 @@ namespace Azure.Communication.PhoneNumbers
                 try
                 {
                     var response = await RestClient.ListAvailableCountriesNextPageAsync(nextLink, acceptLanguage: _acceptedLanguage, skip: null, maxPageSize: null, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.PhoneNumberCountriesValue, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Countries, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -457,7 +457,7 @@ namespace Azure.Communication.PhoneNumbers
                 try
                 {
                     var response = RestClient.ListAvailableCountries(acceptLanguage: _acceptedLanguage, skip: null, maxPageSize: null, cancellationToken);
-                    return Page.FromValues(response.Value.PhoneNumberCountriesValue, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Countries, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -472,7 +472,7 @@ namespace Azure.Communication.PhoneNumbers
                 try
                 {
                     var response = RestClient.ListAvailableCountriesNextPage(nextLink, acceptLanguage: _acceptedLanguage, skip: null, maxPageSize: null, cancellationToken);
-                    return Page.FromValues(response.Value.PhoneNumberCountriesValue, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Countries, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

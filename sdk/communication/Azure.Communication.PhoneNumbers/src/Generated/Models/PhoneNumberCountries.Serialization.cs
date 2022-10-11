@@ -15,11 +15,11 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static PhoneNumberCountries DeserializePhoneNumberCountries(JsonElement element)
         {
-            Optional<IReadOnlyList<PhoneNumberCountry>> phoneNumberCountries = default;
+            Optional<IReadOnlyList<PhoneNumberCountry>> countries = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("phoneNumberCountries"))
+                if (property.NameEquals("countries"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.Communication.PhoneNumbers
                     {
                         array.Add(PhoneNumberCountry.DeserializePhoneNumberCountry(item));
                     }
-                    phoneNumberCountries = array;
+                    countries = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
@@ -40,7 +40,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new PhoneNumberCountries(Optional.ToList(phoneNumberCountries), nextLink.Value);
+            return new PhoneNumberCountries(Optional.ToList(countries), nextLink.Value);
         }
     }
 }
