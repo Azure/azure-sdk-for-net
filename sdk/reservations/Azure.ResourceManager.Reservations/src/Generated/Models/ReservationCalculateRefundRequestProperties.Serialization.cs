@@ -10,20 +10,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class CalculateRefundContent : IUtf8JsonSerializable
+    public partial class ReservationCalculateRefundRequestProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Optional.IsDefined(Scope))
             {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
+                writer.WritePropertyName("scope");
+                writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(Properties))
+            if (Optional.IsDefined(ReservationToReturn))
             {
-                writer.WritePropertyName("properties");
-                writer.WriteObjectValue(Properties);
+                writer.WritePropertyName("reservationToReturn");
+                writer.WriteObjectValue(ReservationToReturn);
             }
             writer.WriteEndObject();
         }

@@ -9,11 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The RefundRequestProperties. </summary>
-    public partial class RefundRequestProperties
+    /// <summary> The ReservationRefundRequestProperties. </summary>
+    public partial class ReservationRefundRequestProperties
     {
-        /// <summary> Initializes a new instance of RefundRequestProperties. </summary>
-        public RefundRequestProperties()
+        /// <summary> Initializes a new instance of ReservationRefundRequestProperties. </summary>
+        public ReservationRefundRequestProperties()
         {
         }
 

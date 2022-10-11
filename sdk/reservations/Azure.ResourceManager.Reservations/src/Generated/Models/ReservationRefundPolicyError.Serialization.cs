@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class RefundPolicyError
+    public partial class ReservationRefundPolicyError
     {
-        internal static RefundPolicyError DeserializeRefundPolicyError(JsonElement element)
+        internal static ReservationRefundPolicyError DeserializeReservationRefundPolicyError(JsonElement element)
         {
-            Optional<ErrorResponseCode> code = default;
+            Optional<ReservationErrorResponseCode> code = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    code = new ErrorResponseCode(property.Value.GetString());
+                    code = new ReservationErrorResponseCode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"))
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new RefundPolicyError(Optional.ToNullable(code), message.Value);
+            return new ReservationRefundPolicyError(Optional.ToNullable(code), message.Value);
         }
     }
 }

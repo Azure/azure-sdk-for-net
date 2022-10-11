@@ -9,22 +9,22 @@ using System;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The RefundResponseProperties. </summary>
-    public partial class RefundResponseProperties
+    /// <summary> The ReservationRefundResponseProperties. </summary>
+    public partial class ReservationRefundResponseProperties
     {
-        /// <summary> Initializes a new instance of RefundResponseProperties. </summary>
-        internal RefundResponseProperties()
+        /// <summary> Initializes a new instance of ReservationRefundResponseProperties. </summary>
+        internal ReservationRefundResponseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of RefundResponseProperties. </summary>
+        /// <summary> Initializes a new instance of ReservationRefundResponseProperties. </summary>
         /// <param name="sessionId"> Refund session identifier. </param>
         /// <param name="quantity"> Quantity to be returned. </param>
         /// <param name="billingRefundAmount"></param>
         /// <param name="pricingRefundAmount"></param>
         /// <param name="policyResult"> Refund policy result. </param>
         /// <param name="billingInformation"> billing information. </param>
-        internal RefundResponseProperties(Guid? sessionId, int? quantity, PurchasePrice billingRefundAmount, PurchasePrice pricingRefundAmount, RefundPolicyResult policyResult, RefundBillingInformation billingInformation)
+        internal ReservationRefundResponseProperties(Guid? sessionId, int? quantity, PurchasePrice billingRefundAmount, PurchasePrice pricingRefundAmount, RefundPolicyResult policyResult, ReservationRefundBillingInformation billingInformation)
         {
             SessionId = sessionId;
             Quantity = quantity;
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Refund policy result. </summary>
         internal RefundPolicyResult PolicyResult { get; }
         /// <summary> Refund policy result property. </summary>
-        public RefundPolicyResultProperty PolicyResultProperties
+        public ReservationRefundPolicyResultProperty PolicyResultProperties
         {
             get => PolicyResult?.Properties;
         }
 
         /// <summary> billing information. </summary>
-        public RefundBillingInformation BillingInformation { get; }
+        public ReservationRefundBillingInformation BillingInformation { get; }
     }
 }

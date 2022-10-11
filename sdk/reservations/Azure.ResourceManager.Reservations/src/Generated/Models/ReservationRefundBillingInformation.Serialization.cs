@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class RefundBillingInformation
+    public partial class ReservationRefundBillingInformation
     {
-        internal static RefundBillingInformation DeserializeRefundBillingInformation(JsonElement element)
+        internal static ReservationRefundBillingInformation DeserializeReservationRefundBillingInformation(JsonElement element)
         {
             Optional<ReservationBillingPlan> billingPlan = default;
             Optional<int> completedTransactions = default;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new RefundBillingInformation(Optional.ToNullable(billingPlan), Optional.ToNullable(completedTransactions), Optional.ToNullable(totalTransactions), billingCurrencyTotalPaidAmount.Value, billingCurrencyProratedAmount.Value, billingCurrencyRemainingCommitmentAmount.Value);
+            return new ReservationRefundBillingInformation(Optional.ToNullable(billingPlan), Optional.ToNullable(completedTransactions), Optional.ToNullable(totalTransactions), billingCurrencyTotalPaidAmount.Value, billingCurrencyProratedAmount.Value, billingCurrencyRemainingCommitmentAmount.Value);
         }
     }
 }

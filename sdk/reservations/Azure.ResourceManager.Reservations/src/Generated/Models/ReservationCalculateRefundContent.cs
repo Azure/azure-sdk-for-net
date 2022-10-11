@@ -7,17 +7,17 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The CalculateRefundContent. </summary>
-    public partial class CalculateRefundContent
+    /// <summary> The ReservationCalculateRefundContent. </summary>
+    public partial class ReservationCalculateRefundContent
     {
-        /// <summary> Initializes a new instance of CalculateRefundContent. </summary>
-        public CalculateRefundContent()
+        /// <summary> Initializes a new instance of ReservationCalculateRefundContent. </summary>
+        public ReservationCalculateRefundContent()
         {
         }
 
         /// <summary> Fully qualified identifier of the reservation order being returned. </summary>
         public string Id { get; set; }
         /// <summary> Gets or sets the properties. </summary>
-        public CalculateRefundRequestProperties Properties { get; set; }
+        public ReservationCalculateRefundRequestProperties Properties { get; set; }
     }
 }

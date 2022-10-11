@@ -32,6 +32,8 @@ override-operation-name:
   CalculateExchange_Post: CalculateReservationExchange
   Exchange_Post: Exchange
   GetAppliedReservationList: GetAppliedReservations
+  CalculateRefund_Post: CalculateRefund
+  Return_Post: Return
 
 rename-rules:
   CPU: Cpu
@@ -92,6 +94,17 @@ rename-mapping:
   OperationStatus: ReservationOperationStatus
   ResourceName: ReservationResourceName
   Patch.properties.renew: IsRenewEnabled
+  CalculateRefundRequest: ReservationCalculateRefundContent
+  CalculateRefundResponse: ReservationCalculateRefundResult
+  CalculateRefundRequestProperties: ReservationCalculateRefundRequestProperties
+  RefundResponse: ReservationRefundResult
+  RefundBillingInformation: ReservationRefundBillingInformation
+  RefundRequest: ReservationRefundContent
+  RefundPolicyError: ReservationRefundPolicyError
+  RefundPolicyResultProperty: ReservationRefundPolicyResultProperty
+  RefundRequestProperties: ReservationRefundRequestProperties
+  RefundResponseProperties: ReservationRefundResponseProperties
+  ErrorResponseCode: ReservationErrorResponseCode
 
 directive:
   - from: quota.json

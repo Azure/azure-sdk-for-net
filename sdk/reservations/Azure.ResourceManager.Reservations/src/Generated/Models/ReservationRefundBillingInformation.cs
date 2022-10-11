@@ -8,21 +8,21 @@
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> billing information. </summary>
-    public partial class RefundBillingInformation
+    public partial class ReservationRefundBillingInformation
     {
-        /// <summary> Initializes a new instance of RefundBillingInformation. </summary>
-        internal RefundBillingInformation()
+        /// <summary> Initializes a new instance of ReservationRefundBillingInformation. </summary>
+        internal ReservationRefundBillingInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of RefundBillingInformation. </summary>
+        /// <summary> Initializes a new instance of ReservationRefundBillingInformation. </summary>
         /// <param name="billingPlan"> Represent the billing plans. </param>
         /// <param name="completedTransactions"> The number of completed transactions in this reservation&apos;s payment. </param>
         /// <param name="totalTransactions"> The number of total transactions in this reservation&apos;s payment. </param>
         /// <param name="billingCurrencyTotalPaidAmount"></param>
         /// <param name="billingCurrencyProratedAmount"></param>
         /// <param name="billingCurrencyRemainingCommitmentAmount"></param>
-        internal RefundBillingInformation(ReservationBillingPlan? billingPlan, int? completedTransactions, int? totalTransactions, PurchasePrice billingCurrencyTotalPaidAmount, PurchasePrice billingCurrencyProratedAmount, PurchasePrice billingCurrencyRemainingCommitmentAmount)
+        internal ReservationRefundBillingInformation(ReservationBillingPlan? billingPlan, int? completedTransactions, int? totalTransactions, PurchasePrice billingCurrencyTotalPaidAmount, PurchasePrice billingCurrencyProratedAmount, PurchasePrice billingCurrencyRemainingCommitmentAmount)
         {
             BillingPlan = billingPlan;
             CompletedTransactions = completedTransactions;
