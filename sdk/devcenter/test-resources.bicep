@@ -3,6 +3,7 @@ param catalogSecretIdentifier string
 param devCenterPresetMsi string
 param projectEnvironmentTypePresetMsi string
 param testUserOid string
+param testUserName string
 param projectAdminRoleDefinitionId string
 param deploymentEnvironmentsRoleDefinitionId string
 
@@ -225,3 +226,4 @@ output DEFAULT_ENVIRONMENT_TYPE_NAME string = defaultEnvironmentTypeName
 output DEFAULT_CATALOG_NAME string = defaultCatalogName
 output DEVCENTER_TENANT_ID string = subscription().tenantId
 output STATIC_TEST_USER_ID string = testUserOid
+output DEFAULT_TEST_USER_NAME string = testUserName

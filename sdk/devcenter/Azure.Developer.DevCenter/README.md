@@ -3,8 +3,8 @@
 The DevCenter client library provides access to manage resources for Microsoft Dev Box and Azure Deployment Environments. This SDK enables managing developer machines and environments in Azure.
 
 Use the client library for Azure DevCenter to:
-> Create, access, manage, and delete [Dev Box](https://azure.microsoft.com/services/dev-box/#overview) resources
-> Create, deploy, manage, and delete [Environment](https://techcommunity.microsoft.com/t5/azure-developer-community-blog/introducing-azure-deployment-environments/ba-p/3412095) resources
+> Create, access, manage, and delete [Dev Box](https://learn.microsoft.com/azure/dev-box) resources
+> Create, deploy, manage, and delete [Environment](https://learn.microsoft.com/azure/deployment-environments) resources
 
   [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/devcenter/Azure.Developer.DevCenter/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Developer.DevCenter) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
 
@@ -217,3 +217,7 @@ Ensure that your Project Environment Type's identity has the correct permissions
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/devcenter/Azure.Developer.DevCenter/README.png)
+
+## Next steps
+
+For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/)

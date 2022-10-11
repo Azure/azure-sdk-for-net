@@ -895,6 +895,7 @@
     "DEFAULT_POOL_NAME": "sdk-default-pool",
     "DEFAULT_PROJECT_NAME": "sdk-default-project",
     "DEFAULT_TEST_USER_SECRET": "Sanitized",
+    "DEFAULT_TEST_USER_NAME": "sdk_integration_test_1@fidalgoppe010.onmicrosoft.com",
     "RandomSeed": "1078026214",
     "STATIC_TEST_USER_ID": "df428e89-1bc2-4e72-b736-032c31a6cd97",
     "TENANT_ID": "8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd"
