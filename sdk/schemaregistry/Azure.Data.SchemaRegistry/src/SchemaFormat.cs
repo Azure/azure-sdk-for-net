@@ -3,6 +3,8 @@
 
 using System;
 using System.ComponentModel;
+using System.Text.Json.Serialization;
+using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry
 {
@@ -19,16 +21,24 @@ namespace Azure.Data.SchemaRegistry
             ContentType = $"application/json; serialization={_value}";
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SchemaFormat"/> struct.
+        /// </summary>
+        /// <param name="contentType"></param>
+        public SchemaFormat(ContentType contentType)
+        {
+            _value = contentType.ToString() ?? throw new ArgumentNullException(nameof(contentType));
+            ContentType = contentType.ToString();
+        }
+
         private const string AvroValue = "Avro";
-        private const string JsonValue = "JSON";
-        private const string CustomValue = "Custom";
 
         /// <summary> Avro Serialization schema type. </summary>
         public static SchemaFormat Avro { get; } = new SchemaFormat(AvroValue);
         /// <summary> Json Serialization schema type. </summary>
-        public static SchemaFormat Json { get; } = new SchemaFormat(JsonValue);
+        public static SchemaFormat Json { get; } = new SchemaFormat(Core.ContentType.ApplicationJson);
         /// <summary> Custom Serialization schema type. </summary>
-        public static SchemaFormat Custom { get; } = new SchemaFormat(CustomValue);
+        public static SchemaFormat Custom { get; } = new SchemaFormat(Core.ContentType.ApplicationOctetStream);
         /// <summary> Determines if two <see cref="SchemaFormat"/> values are the same. </summary>
         public static bool operator ==(SchemaFormat left, SchemaFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SchemaFormat"/> values are not the same. </summary>
