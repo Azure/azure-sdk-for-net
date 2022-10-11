@@ -49,12 +49,6 @@ namespace Azure.ResourceManager.Kusto.Tests
             }
         }
 
-        [TearDown]
-        public async Task BaseTearDown()
-        {
-            await ResourceGroup.DeleteAsync(WaitUntil.Completed);
-        }
-
         // Resource Creation Methods
         private async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription)
         {

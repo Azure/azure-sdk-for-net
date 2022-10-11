@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Kusto.Tests.Scenarios.Collections
+namespace Azure.ResourceManager.Kusto.Tests.Scenario.Collections
 {
     public class KustoPrivateLinkResourceCollectionTests : KustoManagementTestBase
     {
