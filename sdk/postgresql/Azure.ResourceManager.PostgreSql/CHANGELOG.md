@@ -1,14 +1,11 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2022-10-11)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Use tag flexibleserver-2022-03-privatepreview for PostgreSqlFlexibleServers.
+- Added FastCreate custom function for fast provisioning feature.
 
 ## 1.0.0 (2022-09-05)
 
