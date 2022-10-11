@@ -2,18 +2,22 @@
 
 ## 5.8.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.7.3 (2022-10-11)
+
 ### Acknowledgments
 
 Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
 
 - Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
 - Anshul Mathur _([GitHub](https://github.com/anshmathur))_
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 

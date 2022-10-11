@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Routing.Models
+namespace Azure.Maps.Routing
 {
     /// <summary> The rendered langauge showing on the map images or map tiles. </summary>
     public readonly partial struct RoutingLanguage : IEquatable<RoutingLanguage>
