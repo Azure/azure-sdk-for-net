@@ -187,6 +187,7 @@ stages:
                             DocRepoLocation: $(DocRepoLocation)
                             TargetDocRepoName: ${{parameters.TargetDocRepoName}}
                             TargetDocRepoOwner: 'Azure'
+                            TargetBranch: $(TargetBranchName)
             - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
               - deployment: PublishDocs
                 displayName: Publish Docs to GitHub pages
