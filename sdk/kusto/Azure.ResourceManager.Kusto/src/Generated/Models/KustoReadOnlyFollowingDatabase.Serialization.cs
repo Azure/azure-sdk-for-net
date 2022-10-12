@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<KustoDatabasePrincipalsModificationKind> principalsModificationKind = default;
             Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
             Optional<string> originalDatabaseName = default;
-            Optional<DatabaseShareOrigin> databaseShareOrigin = default;
+            Optional<KustoDatabaseShareOrigin> databaseShareOrigin = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Kusto.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            databaseShareOrigin = new DatabaseShareOrigin(property0.Value.GetString());
+                            databaseShareOrigin = new KustoDatabaseShareOrigin(property0.Value.GetString());
                             continue;
                         }
                     }
