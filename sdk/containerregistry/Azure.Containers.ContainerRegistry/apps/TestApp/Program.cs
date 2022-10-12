@@ -20,7 +20,7 @@ var options = new ContainerRegistryClientOptions() { Audience = ContainerRegistr
 ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, credential, "oci-artifact", options);
 
 //await Helper.PullTestAsync(client);
-await PerFilePulllSamples.PullInChunksTestAsync(client);
+await PerFilePullSamples.PullInChunksTestAsync(client);
 
 Console.WriteLine("Done.");
 Console.ReadLine();

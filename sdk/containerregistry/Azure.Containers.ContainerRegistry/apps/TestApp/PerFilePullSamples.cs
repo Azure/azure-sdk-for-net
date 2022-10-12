@@ -7,7 +7,7 @@ using Azure.Containers.ContainerRegistry.Specialized;
 
 namespace TestApp
 {
-    public class PerFilePulllSamples
+    public class PerFilePullSamples
     {
         public static async Task PullTestAsync(ContainerRegistryBlobClient client)
         {

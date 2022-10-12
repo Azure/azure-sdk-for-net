@@ -18,6 +18,58 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         /// <exception cref="RequestFailedException"></exception>
+        public virtual Response<ArtifactUploadInfo> Upload(string path, ArtifactUploadOptions options = default, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="RequestFailedException"></exception>
+        public virtual Response<ArtifactUploadInfo> Upload(ArtifactStreams content, ArtifactUploadOptions options = default, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="RequestFailedException"></exception>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        public virtual async Task<Response<ArtifactUploadInfo>> UploadAsync(string path, ArtifactUploadOptions options = default, CancellationToken cancellationToken = default)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="RequestFailedException"></exception>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        public virtual async Task<Response<ArtifactUploadInfo>> UploadAsync(ArtifactStreams content, ArtifactUploadOptions options = default, CancellationToken cancellationToken = default)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="RequestFailedException"></exception>
         public virtual Response DownloadTo(string path, ArtifactDownloadToOptions options = default, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();

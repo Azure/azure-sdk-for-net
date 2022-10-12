@@ -15,7 +15,7 @@ namespace TestApp
     {
         public static long DefaultChunkSize = 128 * 1024;
 
-        public static async Task TransferInChunks(
+        public static async Task TransferInChunksAsync(
             ContainerRegistryBlobClient acrClient,
             BlobContainerClient blobContainerClient)
         {
