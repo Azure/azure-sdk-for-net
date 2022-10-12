@@ -36,19 +36,22 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                                 {
                                     text = "Hello, how can I help you?",
                                     id = "1",
-                                    participantId = "Agent",
+                                    role = "Agent",
+                                    participantId = "Agent_1",
                                 },
                                 new
                                 {
                                     text = "How to upgrade Office? I am getting error messages the whole day.",
                                     id = "2",
-                                    participantId = "Customer",
+                                    role = "Customer",
+                                    participantId = "Customer_1",
                                 },
                                 new
                                 {
                                     text = "Press the upgrade button please. Then sign in and follow the instructions.",
                                     id = "3",
-                                    participantId = "Agent",
+                                    role = "Agent",
+                                    participantId = "Agent_1",
                                 },
                             },
                             id = "1",
@@ -123,19 +126,22 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                                 {
                                     text = "Hello, how can I help you?",
                                     id = "1",
-                                    participantId = "Agent",
+                                    role = "Agent",
+                                    participantId = "Agent_1",
                                 },
                                 new
                                 {
                                     text = "How to upgrade Office? I am getting error messages the whole day.",
                                     id = "2",
-                                    participantId = "Customer",
+                                    role = "Customer",
+                                    participantId = "Customer_1",
                                 },
                                 new
                                 {
                                     text = "Press the upgrade button please. Then sign in and follow the instructions.",
                                     id = "3",
-                                    participantId = "Agent",
+                                    role = "Agent",
+                                    participantId = "Agent_1",
                                 },
                             },
                             id = "1",
