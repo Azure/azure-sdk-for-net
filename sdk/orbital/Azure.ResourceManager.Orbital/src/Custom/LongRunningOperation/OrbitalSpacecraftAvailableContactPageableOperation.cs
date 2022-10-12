@@ -13,7 +13,7 @@ using Azure.ResourceManager.Orbital.Models;
 
 namespace Azure.ResourceManager.Orbital
 {
-    internal sealed class OrbitalSpacecraftAvailableContactPageableOperation : PageableOperation<OrbitalSpacecraftAvailableContact>, IOperation<AsyncPageable<OrbitalSpacecraftAvailableContact>>
+    internal class OrbitalSpacecraftAvailableContactPageableOperation : PageableOperation<OrbitalSpacecraftAvailableContact>, IOperation<AsyncPageable<OrbitalSpacecraftAvailableContact>>
     {
         private readonly IOperationSource<AvailableContactsListResult> _operationSource;
         private readonly IOperation _operation;
@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Orbital
         public override string Id => throw new NotImplementedException();
 
         public override bool HasCompleted => _operationInternal.HasCompleted;
+
+        protected OrbitalSpacecraftAvailableContactPageableOperation()
+        {
+        }
 
         public OrbitalSpacecraftAvailableContactPageableOperation(IOperationSource<AvailableContactsListResult> operationSource, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, SpacecraftsRestOperations spacecraftsRestClient)
         {
