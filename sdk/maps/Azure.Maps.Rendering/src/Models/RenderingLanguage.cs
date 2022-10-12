@@ -29,7 +29,7 @@ namespace Azure.Maps.Rendering
         private const string EnglishAustraliaValue = "en-AU";
         private const string EnglishGreatBritainValue = "en-GB";
         private const string EnglishNewZealandValue = "en-NZ";
-        private const string EnglishUSAValue = "en-US";
+        private const string EnglishUsaValue = "en-US";
         private const string SpanishSpainValue = "es-ES";
         private const string SpanishMexicoValue = "es-MX";
         private const string FinnishValue = "fi-FI";
@@ -75,7 +75,7 @@ namespace Azure.Maps.Rendering
         /// <summary> Return English (New Zealand) ("en-NZ"). </summary>
         public static RenderingLanguage EnglishNewZealand { get; } = new RenderingLanguage(EnglishNewZealandValue);
         /// <summary> Return English (USA) ("en-US"). </summary>
-        public static RenderingLanguage EnglishUSA { get; } = new RenderingLanguage(EnglishUSAValue);
+        public static RenderingLanguage EnglishUsa { get; } = new RenderingLanguage(EnglishUsaValue);
         /// <summary> Return Spanish (Spain) ("es-ES"). </summary>
         public static RenderingLanguage SpanishSpain { get; } = new RenderingLanguage(SpanishSpainValue);
         /// <summary> Return Spanish (Mexico) ("es-MX"). </summary>

@@ -35,7 +35,7 @@ namespace Azure.Maps.Rendering.Tests
             {
                 MapImageLayer = MapImageLayer.Basic,
                 MapImageStyle = MapImageStyle.Dark,
-                Language = RenderingLanguage.EnglishUSA,
+                Language = RenderingLanguage.EnglishUsa,
             };
             using var imageStream = new MemoryStream();
             var image = await client.GetMapStaticImageAsync(options);
