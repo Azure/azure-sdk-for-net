@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Azure.ResourceManager.ResourceGraph.Tests.test
+namespace Azure.ResourceManager.ResourceGraph.Tests
 {
     public class Table
     {

@@ -3,7 +3,7 @@
 
 using System.Runtime.Serialization;
 
-namespace Azure.ResourceManager.ResourceGraph.Tests.test
+namespace Azure.ResourceManager.ResourceGraph.Tests
 {
     public enum ColumnDataType
     {

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -12,8 +11,6 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.ResourceGraph;
 using Azure.ResourceManager.ResourceGraph.Models;
 using Azure.ResourceManager.ResourceGraph.Tests;
-using Azure.ResourceManager.ResourceGraph.Tests.test;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.Management.ResourceGraph.Tests
