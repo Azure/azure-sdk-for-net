@@ -3,13 +3,17 @@
 
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ResourceGraph;
 using Azure.ResourceManager.ResourceGraph.Models;
 using Azure.ResourceManager.ResourceGraph.Tests;
+using Azure.ResourceManager.ResourceGraph.Tests.test;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.Management.ResourceGraph.Tests
@@ -17,7 +21,7 @@ namespace Azure.Management.ResourceGraph.Tests
     public class ResourceGraphTest : ResourceGraphManagementTestBase
     {
         public ResourceGraphTest(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -77,10 +81,29 @@ namespace Azure.Management.ResourceGraph.Tests
             Assert.NotNull(response.Facets);
 
             //data columns
-            //StreamReader reader = new StreamReader(response.Data.ToStream());
-            //string content = reader.ReadToEnd();
-            //var table = response.Data.ToObjectFromJson<Table>();
-            //errot convert to table
+            StreamReader reader = new StreamReader(response.Data.ToStream());
+            string content = reader.ReadToEnd();
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+            };
+            var table = JsonSerializer.Deserialize<Table>(content, options);
+            //Data columns
+            Assert.NotNull(table.Columns);
+            Assert.AreEqual(3, table.Columns.Count);
+            Assert.NotNull(table.Columns[0].Name);
+            Assert.NotNull(table.Columns[1].Name);
+            Assert.NotNull(table.Columns[2].Name);
+            Assert.AreEqual(ColumnDataType.String, table.Columns[0].Type);
+            Assert.AreEqual(ColumnDataType.Object, table.Columns[1].Type);
+            Assert.AreEqual(ColumnDataType.Object, table.Columns[2].Type);
+            //Data rows
+            Assert.NotNull(table.Rows);
+            Assert.AreEqual(2, table.Rows.Count);
+            Assert.AreEqual(3, table.Rows[0].Count);
+            Assert.AreEqual(((JsonElement)table.Rows[0][0]).ValueKind, JsonValueKind.String);
+            Assert.AreEqual(((JsonElement)table.Rows[0][1]).ValueKind, JsonValueKind.Object);
+            Assert.AreEqual(((JsonElement)table.Rows[0][2]).ValueKind, JsonValueKind.Object);
         }
 
         [Test]
@@ -104,7 +127,7 @@ namespace Azure.Management.ResourceGraph.Tests
             Assert.IsNotNull(response);
             //top response
             Assert.AreEqual(6, response.Count);
-            Assert.AreEqual(160, response.TotalRecords);
+            Assert.AreEqual(161, response.TotalRecords);
             Assert.NotNull(response.SkipToken);
             Assert.AreEqual(response.ResultTruncated, ResultTruncated.False);
             Assert.NotNull(response.Data);
@@ -164,7 +187,7 @@ namespace Azure.Management.ResourceGraph.Tests
             var result = (FacetResult)response.Facets[0];
             Assert.IsNotNull(result);
             Assert.AreEqual(2, result.Count);
-            Assert.AreEqual(2, result.TotalRecords);
+            Assert.AreEqual(4, result.TotalRecords);
             Assert.AreEqual(validExpression, result.Expression);
 
             // Valid facet data
@@ -172,8 +195,8 @@ namespace Azure.Management.ResourceGraph.Tests
             Assert.IsNotNull(result_data);
             Assert.AreEqual(2, result_data.Count);
             Assert.AreEqual(2, result_data[0].Count);
-            Assert.AreEqual(result_data[0]["location"].GetType().ToString(), "System.String");
-            Assert.AreEqual(result_data[1]["count"].GetType().ToString(), "System.Int64");
+            Assert.AreEqual(((JsonElement)result_data[0]["location"]).ValueKind, JsonValueKind.String);
+            Assert.AreEqual(((JsonElement)result_data[0]["count"]).ValueKind, JsonValueKind.Number);
 
             //invalid facet
             FacetError error = (FacetError)response.Facets[1];
@@ -212,7 +235,7 @@ namespace Azure.Management.ResourceGraph.Tests
             // Top-level response fields
             Assert.AreEqual(2, response.Count);
             Assert.AreEqual(2, response.TotalRecords);
-            Assert.NotNull(response.SkipToken);
+            Assert.IsNull(response.SkipToken);
             Assert.AreEqual(response.ResultTruncated, ResultTruncated.False);
             Assert.NotNull(response.Data);
             Assert.NotNull(response.Facets);
@@ -242,7 +265,7 @@ namespace Azure.Management.ResourceGraph.Tests
             // Top-level response fields
             Assert.AreEqual(2, response.Count);
             Assert.AreEqual(2, response.TotalRecords);
-            Assert.NotNull(response.SkipToken);
+            Assert.IsNull(response.SkipToken);
             Assert.AreEqual(response.ResultTruncated, ResultTruncated.False);
             Assert.NotNull(response.Data);
             Assert.NotNull(response.Facets);
@@ -272,7 +295,7 @@ namespace Azure.Management.ResourceGraph.Tests
             // Top-level response fields
             Assert.AreEqual(2, response.Count);
             Assert.AreEqual(2, response.TotalRecords);
-            Assert.NotNull(response.SkipToken);
+            Assert.IsNull(response.SkipToken);
             Assert.AreEqual(response.ResultTruncated, ResultTruncated.False);
             Assert.NotNull(response.Data);
             Assert.NotNull(response.Facets);
