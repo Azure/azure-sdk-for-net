@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Details of the reseller. </summary>
-    public partial class Reseller
+    public partial class CreatedSubscriptionReseller
     {
-        /// <summary> Initializes a new instance of Reseller. </summary>
-        internal Reseller()
+        /// <summary> Initializes a new instance of CreatedSubscriptionReseller. </summary>
+        internal CreatedSubscriptionReseller()
         {
         }
 
-        /// <summary> Initializes a new instance of Reseller. </summary>
+        /// <summary> Initializes a new instance of CreatedSubscriptionReseller. </summary>
         /// <param name="resellerId"> The MPN ID of the reseller. </param>
         /// <param name="description"> The name of the reseller. </param>
-        internal Reseller(string resellerId, string description)
+        internal CreatedSubscriptionReseller(string resellerId, string description)
         {
             ResellerId = resellerId;
             Description = description;

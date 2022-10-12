@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Error details of the transfer eligibility validation. </summary>
-    public partial class ValidateMoveBillingSubscriptionEligibilityError
+    public partial class BillingSubscriptionValidateMoveEligibilityError
     {
-        /// <summary> Initializes a new instance of ValidateMoveBillingSubscriptionEligibilityError. </summary>
-        internal ValidateMoveBillingSubscriptionEligibilityError()
+        /// <summary> Initializes a new instance of BillingSubscriptionValidateMoveEligibilityError. </summary>
+        internal BillingSubscriptionValidateMoveEligibilityError()
         {
         }
 
-        /// <summary> Initializes a new instance of ValidateMoveBillingSubscriptionEligibilityError. </summary>
+        /// <summary> Initializes a new instance of BillingSubscriptionValidateMoveEligibilityError. </summary>
         /// <param name="code"> Error code for the billing subscription move validation. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> Detailed error message explaining the error. </param>
-        internal ValidateMoveBillingSubscriptionEligibilityError(SubscriptionTransferValidationErrorCode? code, string message, string details)
+        internal BillingSubscriptionValidateMoveEligibilityError(SubscriptionTransferValidationErrorCode? code, string message, string details)
         {
             Code = code;
             Message = message;

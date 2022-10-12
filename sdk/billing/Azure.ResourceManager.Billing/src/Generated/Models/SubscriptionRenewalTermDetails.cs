@@ -10,20 +10,20 @@ using System;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The term details of the subscription at renewal. </summary>
-    public partial class RenewalTermDetails
+    public partial class SubscriptionRenewalTermDetails
     {
-        /// <summary> Initializes a new instance of RenewalTermDetails. </summary>
-        internal RenewalTermDetails()
+        /// <summary> Initializes a new instance of SubscriptionRenewalTermDetails. </summary>
+        internal SubscriptionRenewalTermDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of RenewalTermDetails. </summary>
+        /// <summary> Initializes a new instance of SubscriptionRenewalTermDetails. </summary>
         /// <param name="billingFrequency"> The billing frequency of the subscription. </param>
         /// <param name="productTypeId"> The ID of the product. </param>
         /// <param name="quantity"> The number of licenses. </param>
         /// <param name="skuId"> The SKU ID of the product. </param>
         /// <param name="termDuration"> The term duration of the subscription. Example P1M and P1Y. </param>
-        internal RenewalTermDetails(string billingFrequency, string productTypeId, long? quantity, string skuId, TimeSpan? termDuration)
+        internal SubscriptionRenewalTermDetails(string billingFrequency, string productTypeId, long? quantity, string skuId, TimeSpan? termDuration)
         {
             BillingFrequency = billingFrequency;
             ProductTypeId = productTypeId;

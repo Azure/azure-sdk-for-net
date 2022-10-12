@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    public partial class PaymentMethodData : IUtf8JsonSerializable
+    public partial class BillingPaymentMethodData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Billing
             writer.WriteEndObject();
         }
 
-        internal static PaymentMethodData DeserializePaymentMethodData(JsonElement element)
+        internal static BillingPaymentMethodData DeserializeBillingPaymentMethodData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Billing
                     continue;
                 }
             }
-            return new PaymentMethodData(id, name, type, systemData.Value, Optional.ToNullable(family), type0.Value, accountHolderName.Value, expiration.Value, lastFourDigits.Value, displayName.Value, Optional.ToList(logos), Optional.ToNullable(status));
+            return new BillingPaymentMethodData(id, name, type, systemData.Value, Optional.ToNullable(family), type0.Value, accountHolderName.Value, expiration.Value, lastFourDigits.Value, displayName.Value, Optional.ToList(logos), Optional.ToNullable(status));
         }
     }
 }

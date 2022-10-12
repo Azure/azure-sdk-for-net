@@ -208,19 +208,19 @@ namespace Azure.ResourceManager.Billing
             return tenantResource.GetBillingAccountPaymentMethods(billingAccountName).Get(paymentMethodName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PaymentMethodLinkResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of BillingPaymentMethodLinkResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        /// <returns> An object representing collection of PaymentMethodLinkResources and their operations over a PaymentMethodLinkResource. </returns>
-        public static PaymentMethodLinkCollection GetPaymentMethodLinks(this TenantResource tenantResource, string billingAccountName, string billingProfileName)
+        /// <returns> An object representing collection of BillingPaymentMethodLinkResources and their operations over a BillingPaymentMethodLinkResource. </returns>
+        public static BillingPaymentMethodLinkCollection GetBillingPaymentMethodLinks(this TenantResource tenantResource, string billingAccountName, string billingProfileName)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
 
-            return GetExtensionClient(tenantResource).GetPaymentMethodLinks(billingAccountName, billingProfileName);
+            return GetExtensionClient(tenantResource).GetBillingPaymentMethodLinks(billingAccountName, billingProfileName);
         }
 
         /// <summary>
@@ -236,9 +236,9 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<PaymentMethodLinkResource>> GetPaymentMethodLinkAsync(this TenantResource tenantResource, string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
+        public static async Task<Response<BillingPaymentMethodLinkResource>> GetBillingPaymentMethodLinkAsync(this TenantResource tenantResource, string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetPaymentMethodLinks(billingAccountName, billingProfileName).GetAsync(paymentMethodName, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetBillingPaymentMethodLinks(billingAccountName, billingProfileName).GetAsync(paymentMethodName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -254,9 +254,9 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<PaymentMethodLinkResource> GetPaymentMethodLink(this TenantResource tenantResource, string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
+        public static Response<BillingPaymentMethodLinkResource> GetBillingPaymentMethodLink(this TenantResource tenantResource, string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetPaymentMethodLinks(billingAccountName, billingProfileName).Get(paymentMethodName, cancellationToken);
+            return tenantResource.GetBillingPaymentMethodLinks(billingAccountName, billingProfileName).Get(paymentMethodName, cancellationToken);
         }
 
         #region BillingSubscriptionResource
@@ -335,20 +335,20 @@ namespace Azure.ResourceManager.Billing
         }
         #endregion
 
-        #region PaymentMethodLinkResource
+        #region BillingPaymentMethodLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="PaymentMethodLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PaymentMethodLinkResource.CreateResourceIdentifier" /> to create a <see cref="PaymentMethodLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BillingPaymentMethodLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingPaymentMethodLinkResource.CreateResourceIdentifier" /> to create a <see cref="BillingPaymentMethodLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PaymentMethodLinkResource" /> object. </returns>
-        public static PaymentMethodLinkResource GetPaymentMethodLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingPaymentMethodLinkResource" /> object. </returns>
+        public static BillingPaymentMethodLinkResource GetBillingPaymentMethodLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PaymentMethodLinkResource.ValidateResourceId(id);
-                return new PaymentMethodLinkResource(client, id);
+                BillingPaymentMethodLinkResource.ValidateResourceId(id);
+                return new BillingPaymentMethodLinkResource(client, id);
             }
             );
         }

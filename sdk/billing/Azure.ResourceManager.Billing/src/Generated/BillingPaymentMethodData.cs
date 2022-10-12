@@ -12,32 +12,32 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    /// <summary> A class representing the PaymentMethod data model. </summary>
-    public partial class PaymentMethodData : ResourceData
+    /// <summary> A class representing the BillingPaymentMethod data model. </summary>
+    public partial class BillingPaymentMethodData : ResourceData
     {
-        /// <summary> Initializes a new instance of PaymentMethodData. </summary>
-        public PaymentMethodData()
+        /// <summary> Initializes a new instance of BillingPaymentMethodData. </summary>
+        public BillingPaymentMethodData()
         {
             Logos = new ChangeTrackingList<PaymentMethodLogo>();
         }
 
-        /// <summary> Initializes a new instance of PaymentMethodData. </summary>
+        /// <summary> Initializes a new instance of BillingPaymentMethodData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="family"> The family of payment method. </param>
-        /// <param name="typePropertiesType"> The type of payment method. </param>
+        /// <param name="paymentMethodType"> The type of payment method. </param>
         /// <param name="accountHolderName"> The account holder name for the payment method. This is only supported for payment methods with family CreditCard. </param>
         /// <param name="expiration"> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </param>
         /// <param name="lastFourDigits"> Last four digits of payment method. </param>
         /// <param name="displayName"> The display name of the payment method. </param>
         /// <param name="logos"> The list of logos for the payment method. </param>
         /// <param name="status"> Status of the payment method. </param>
-        internal PaymentMethodData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PaymentMethodFamily? family, string typePropertiesType, string accountHolderName, string expiration, string lastFourDigits, string displayName, IList<PaymentMethodLogo> logos, PaymentMethodStatus? status) : base(id, name, resourceType, systemData)
+        internal BillingPaymentMethodData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PaymentMethodFamily? family, string paymentMethodType, string accountHolderName, string expiration, string lastFourDigits, string displayName, IList<PaymentMethodLogo> logos, PaymentMethodStatus? status) : base(id, name, resourceType, systemData)
         {
             Family = family;
-            TypePropertiesType = typePropertiesType;
+            PaymentMethodType = paymentMethodType;
             AccountHolderName = accountHolderName;
             Expiration = expiration;
             LastFourDigits = lastFourDigits;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Billing
         /// <summary> The family of payment method. </summary>
         public PaymentMethodFamily? Family { get; set; }
         /// <summary> The type of payment method. </summary>
-        public string TypePropertiesType { get; }
+        public string PaymentMethodType { get; }
         /// <summary> The account holder name for the payment method. This is only supported for payment methods with family CreditCard. </summary>
         public string AccountHolderName { get; }
         /// <summary> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </summary>

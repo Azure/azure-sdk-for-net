@@ -16,9 +16,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-rename-mapping:
-  NextBillingCycleDetails.billingFrequency: NextBillingCycleBillingFrequency
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -48,11 +45,28 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-  
+
+rename-mapping:
+  NextBillingCycleDetails.billingFrequency: NextBillingCycleBillingFrequency
+  BillingSubscriptionAlias.properties.billingSubscriptionId: -|arm-id
+  AutoRenew: BillingSubscriptionAutoRenewState
+  Amount: BillingAmount
+  RenewalTermDetails: SubscriptionRenewalTermDetails
+  Reseller: CreatedSubscriptionReseller
+  MoveBillingSubscriptionRequest: BillingSubscriptionMoveContent
+  MoveBillingSubscriptionRequest.destinationInvoiceSectionId: -|arm-id
+  ValidateMoveBillingSubscriptionEligibilityResult: BillingSubscriptionValidateMoveEligibilityResult
+  ValidateMoveBillingSubscriptionEligibilityError: BillingSubscriptionValidateMoveEligibilityError
+  PaymentMethod: BillingPaymentMethod
+  PaymentMethod.properties.type: PaymentMethodType
+  PaymentMethodLink: BillingPaymentMethodLink
+  PaymentMethodProjectionProperties.id: PaymentMethodId|arm-id
+
 directive:
   - from: billingSubscription.json
     where: $.definitions
     transform: >
+      $.BillingSubscriptionProperties.properties.billingProfileId['x-ms-format'] = 'arm-id';
       $.BillingSubscriptionProperties.properties.termDuration['format'] = 'duration';
       $.BillingSubscriptionSplitRequest.properties.termDuration['format'] = 'duration';
       $.RenewalTermDetails.properties.termDuration['format'] = 'duration';

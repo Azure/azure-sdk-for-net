@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Billing
 
         private readonly ClientDiagnostics _paymentMethodClientDiagnostics;
         private readonly PaymentMethodsRestOperations _paymentMethodRestClient;
-        private readonly PaymentMethodData _data;
+        private readonly BillingPaymentMethodData _data;
 
         /// <summary> Initializes a new instance of the <see cref="PaymentMethodResource"/> class for mocking. </summary>
         protected PaymentMethodResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Initializes a new instance of the <see cref = "PaymentMethodResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PaymentMethodResource(ArmClient client, PaymentMethodData data) : this(client, data.Id)
+        internal PaymentMethodResource(ArmClient client, BillingPaymentMethodData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual PaymentMethodData Data
+        public virtual BillingPaymentMethodData Data
         {
             get
             {

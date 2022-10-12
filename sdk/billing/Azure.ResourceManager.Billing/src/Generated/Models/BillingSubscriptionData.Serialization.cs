@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Billing
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<AutoRenew> autoRenew = default;
+            Optional<BillingSubscriptionAutoRenewState> autoRenew = default;
             Optional<string> beneficiaryTenantId = default;
             Optional<string> billingFrequency = default;
-            Optional<string> billingProfileId = default;
+            Optional<ResourceIdentifier> billingProfileId = default;
             Optional<IReadOnlyDictionary<string, string>> billingPolicies = default;
             Optional<string> billingProfileDisplayName = default;
             Optional<string> billingProfileName = default;
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.Billing
             Optional<string> invoiceSectionId = default;
             Optional<string> invoiceSectionDisplayName = default;
             Optional<string> invoiceSectionName = default;
-            Optional<Amount> lastMonthCharges = default;
-            Optional<Amount> monthToDateCharges = default;
+            Optional<BillingAmount> lastMonthCharges = default;
+            Optional<BillingAmount> monthToDateCharges = default;
             Optional<NextBillingCycleDetails> nextBillingCycleDetails = default;
             Optional<string> offerId = default;
             Optional<string> productCategory = default;
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.Billing
             Optional<string> productTypeId = default;
             Optional<DateTimeOffset> purchaseDate = default;
             Optional<long> quantity = default;
-            Optional<Reseller> reseller = default;
-            Optional<RenewalTermDetails> renewalTermDetails = default;
+            Optional<CreatedSubscriptionReseller> reseller = default;
+            Optional<SubscriptionRenewalTermDetails> renewalTermDetails = default;
             Optional<string> skuDescription = default;
             Optional<string> skuId = default;
             Optional<BillingSubscriptionStatus> status = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Billing
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            autoRenew = new AutoRenew(property0.Value.GetString());
+                            autoRenew = new BillingSubscriptionAutoRenewState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("beneficiaryTenantId"))
@@ -189,7 +189,12 @@ namespace Azure.ResourceManager.Billing
                         }
                         if (property0.NameEquals("billingProfileId"))
                         {
-                            billingProfileId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            billingProfileId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("billingPolicies"))
@@ -269,7 +274,7 @@ namespace Azure.ResourceManager.Billing
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            lastMonthCharges = Amount.DeserializeAmount(property0.Value);
+                            lastMonthCharges = BillingAmount.DeserializeBillingAmount(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("monthToDateCharges"))
@@ -279,7 +284,7 @@ namespace Azure.ResourceManager.Billing
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            monthToDateCharges = Amount.DeserializeAmount(property0.Value);
+                            monthToDateCharges = BillingAmount.DeserializeBillingAmount(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("nextBillingCycleDetails"))
@@ -339,7 +344,7 @@ namespace Azure.ResourceManager.Billing
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            reseller = Reseller.DeserializeReseller(property0.Value);
+                            reseller = CreatedSubscriptionReseller.DeserializeCreatedSubscriptionReseller(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("renewalTermDetails"))
@@ -349,7 +354,7 @@ namespace Azure.ResourceManager.Billing
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            renewalTermDetails = RenewalTermDetails.DeserializeRenewalTermDetails(property0.Value);
+                            renewalTermDetails = SubscriptionRenewalTermDetails.DeserializeSubscriptionRenewalTermDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("skuDescription"))
