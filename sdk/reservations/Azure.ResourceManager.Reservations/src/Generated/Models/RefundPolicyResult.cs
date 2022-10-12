@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Initializes a new instance of RefundPolicyResult. </summary>
         /// <param name="properties"> Refund policy result property. </param>
-        internal RefundPolicyResult(RefundPolicyResultProperty properties)
+        internal RefundPolicyResult(ReservationRefundPolicyResultProperty properties)
         {
             Properties = properties;
         }
 
         /// <summary> Refund policy result property. </summary>
-        public RefundPolicyResultProperty Properties { get; }
+        public ReservationRefundPolicyResultProperty Properties { get; }
     }
 }

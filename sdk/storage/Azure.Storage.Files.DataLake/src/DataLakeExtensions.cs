@@ -507,7 +507,7 @@ namespace Azure.Storage.Files.DataLake
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 Position = options.Position,
-                TransferValidationOptions = options.TransferValidationOptions
+                TransferValidation = options.TransferValidation
             };
         }
 
@@ -522,7 +522,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 Range = options.Range,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
-                TransferValidationOptions = options.TransferValidationOptions
+                TransferValidation = options.TransferValidation
             };
         }
 
@@ -536,7 +536,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 TransferOptions = options.TransferOptions,
-                TransferValidationOptions = options.TransferValidationOptions
+                TransferValidation = options.TransferValidation
             };
         }
 

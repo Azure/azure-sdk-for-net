@@ -35,6 +35,11 @@ namespace Azure.AI.TextAnalytics.Models
             }
             writer.WritePropertyName("confidenceScore");
             writer.WriteNumberValue(ConfidenceScore);
+            if (Optional.IsDefined(Script))
+            {
+                writer.WritePropertyName("script");
+                writer.WriteStringValue(Script.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -43,6 +48,7 @@ namespace Azure.AI.TextAnalytics.Models
             string name = default;
             string iso6391Name = default;
             double confidenceScore = default;
+            Optional<ScriptKind> script = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -70,8 +76,18 @@ namespace Azure.AI.TextAnalytics.Models
                     confidenceScore = property.Value.GetDouble();
                     continue;
                 }
+                if (property.NameEquals("script"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    script = new ScriptKind(property.Value.GetString());
+                    continue;
+                }
             }
-            return new DetectedLanguageInternal(name, iso6391Name, confidenceScore);
+            return new DetectedLanguageInternal(name, iso6391Name, confidenceScore, Optional.ToNullable(script));
         }
     }
 }

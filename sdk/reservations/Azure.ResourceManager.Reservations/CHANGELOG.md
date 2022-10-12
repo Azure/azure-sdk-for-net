@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,10 +10,12 @@
 
 ### Other Changes
 
-## 2.0.0 (2022-09-23)
+## 1.1.0 (2022-10-11)
 
-### Breaking Changes
-- Add new APIs for calculateRefund, return and archive/Unarchive reservation
+### Features Added
+- Added new APIs for calculateRefund, return and archive/unarchive reservation
+
+### Bugs Fixed
 - Set the following properties to be `nullable` in CalculateExchange\Exchange flow:
     - `ExchangePolicyErrors.PolicyErrors`
     - `ReservationPurchaseContent.AppliedScopes`
