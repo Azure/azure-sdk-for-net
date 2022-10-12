@@ -6,7 +6,7 @@ Use the client library for Azure DevCenter to:
 > Create, access, manage, and delete [Dev Box](https://learn.microsoft.com/azure/dev-box) resources
 > Create, deploy, manage, and delete [Environment](https://learn.microsoft.com/azure/deployment-environments) resources
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/devcenter/Azure.Developer.DevCenter/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Developer.DevCenter) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/devcenter/Azure.Developer.DevCenter/src) | [Package (NuGet)](https://www.nuget.org/packages/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
 
 ## Getting started
 

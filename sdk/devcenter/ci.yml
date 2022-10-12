@@ -19,11 +19,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/devcenter/
+    - sdk/devcenter/ci.yml
+    - sdk/devcenter/Azure.Developer.DevCenter/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SDKType: client 
     ServiceDirectory: devcenter
     ArtifactName: packages
     Artifacts:

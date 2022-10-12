@@ -4,6 +4,7 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: devcenter
+    SDKType: client
     CloudConfig:
         Public:
             SubscriptionConfiguration: $(sub-config-devcenter-test-resources)
