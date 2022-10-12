@@ -25,7 +25,6 @@ namespace Azure.Analytics.Purview.Scanning
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _classificationRuleName;
-        private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -39,7 +38,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Initializes a new instance of PurviewClassificationRuleClient. </summary>
-        /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
+        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
         /// <param name="classificationRuleName"> The String to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="classificationRuleName"/> or <paramref name="credential"/> is null. </exception>
@@ -49,7 +48,7 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Initializes a new instance of PurviewClassificationRuleClient. </summary>
-        /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
+        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
         /// <param name="classificationRuleName"> The String to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
@@ -67,7 +66,6 @@ namespace Azure.Analytics.Purview.Scanning
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _classificationRuleName = classificationRuleName;
-            _apiVersion = options.Version;
         }
 
         /// <summary> Get a classification rule. </summary>
@@ -987,7 +985,7 @@ namespace Azure.Analytics.Purview.Scanning
             uri.Reset(_endpoint);
             uri.AppendPath("/classificationrules/", false);
             uri.AppendPath(_classificationRuleName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2018-12-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1002,7 +1000,7 @@ namespace Azure.Analytics.Purview.Scanning
             uri.Reset(_endpoint);
             uri.AppendPath("/classificationrules/", false);
             uri.AppendPath(_classificationRuleName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2018-12-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1019,7 +1017,7 @@ namespace Azure.Analytics.Purview.Scanning
             uri.Reset(_endpoint);
             uri.AppendPath("/classificationrules/", false);
             uri.AppendPath(_classificationRuleName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2018-12-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1035,7 +1033,7 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendPath("/classificationrules/", false);
             uri.AppendPath(_classificationRuleName, true);
             uri.AppendPath("/versions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2018-12-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1054,7 +1052,7 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendPath(classificationRuleVersion, true);
             uri.AppendPath("/:tag", false);
             uri.AppendQuery("action", action, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2018-12-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

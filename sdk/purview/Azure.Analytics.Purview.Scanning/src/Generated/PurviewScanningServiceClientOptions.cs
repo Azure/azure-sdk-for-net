@@ -13,13 +13,19 @@ namespace Azure.Analytics.Purview.Scanning
     /// <summary> Client options for PurviewScanningServiceClient. </summary>
     public partial class PurviewScanningServiceClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2018_12_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2022_03_01_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> Service version "2018-12-01-preview". </summary>
             V2018_12_01_Preview = 1,
+            /// <summary> Service version "2021-07-01-preview". </summary>
+            V2021_07_01_Preview = 2,
+            /// <summary> Service version "2021-09-01-preview". </summary>
+            V2021_09_01_Preview = 3,
+            /// <summary> Service version "2022-03-01-preview". </summary>
+            V2022_03_01_Preview = 4,
         }
 
         internal string Version { get; }
@@ -30,6 +36,9 @@ namespace Azure.Analytics.Purview.Scanning
             Version = version switch
             {
                 ServiceVersion.V2018_12_01_Preview => "2018-12-01-preview",
+                ServiceVersion.V2021_07_01_Preview => "2021-07-01-preview",
+                ServiceVersion.V2021_09_01_Preview => "2021-09-01-preview",
+                ServiceVersion.V2022_03_01_Preview => "2022-03-01-preview",
                 _ => throw new NotSupportedException()
             };
         }
