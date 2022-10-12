@@ -10,16 +10,22 @@ using Azure.Core;
 
 namespace Azure.Analytics.Purview.Account
 {
-    /// <summary> Client options for PurviewAccountClient. </summary>
+    /// <summary> Client options for PurviewAccount library clients. </summary>
     public partial class PurviewAccountClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2019_11_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2022_03_01_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2019-11-01-preview". </summary>
-            V2019_11_01_Preview = 1,
+            /// <summary> Service version "2018-12-01-preview". </summary>
+            V2018_12_01_Preview = 1,
+            /// <summary> Service version "2021-07-01-preview". </summary>
+            V2021_07_01_Preview = 2,
+            /// <summary> Service version "2021-09-01-preview". </summary>
+            V2021_09_01_Preview = 3,
+            /// <summary> Service version "2022-03-01-preview". </summary>
+            V2022_03_01_Preview = 4,
         }
 
         internal string Version { get; }
@@ -29,7 +35,10 @@ namespace Azure.Analytics.Purview.Account
         {
             Version = version switch
             {
-                ServiceVersion.V2019_11_01_Preview => "2019-11-01-preview",
+                ServiceVersion.V2018_12_01_Preview => "2018-12-01-preview",
+                ServiceVersion.V2021_07_01_Preview => "2021-07-01-preview",
+                ServiceVersion.V2021_09_01_Preview => "2021-09-01-preview",
+                ServiceVersion.V2022_03_01_Preview => "2022-03-01-preview",
                 _ => throw new NotSupportedException()
             };
         }
