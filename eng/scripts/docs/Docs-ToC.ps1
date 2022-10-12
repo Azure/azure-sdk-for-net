@@ -1,4 +1,4 @@
-function Get-Namespaces-From-DLL($dllPath) {
+function Get-NamepspacesFromDll($dllPath) {
     $file = [System.IO.File]::OpenRead($dllPath)
     try {
         # Use to parse the namespaces out from the dll file.
@@ -23,7 +23,7 @@ function Get-Namespaces-From-DLL($dllPath) {
     }
 }
 
-function Fetch-Namespaces-From-Dotnet-Nupkg ($nupkgFilePath, $destination) {
+function Fetch-NamespacesFromNupkg ($nupkgFilePath, $destination) {
     $tempLocation = (Join-Path ([System.IO.Path]::GetTempPath()) "dotnetNupkg")
     if (Test-Path $tempLocation) {
         Remove-Item $tempLocation/* -Recurse -Force 
@@ -45,12 +45,12 @@ function Fetch-Namespaces-From-Dotnet-Nupkg ($nupkgFilePath, $destination) {
         return
     }
     Write-Host "Dll file found: $($firstDllFiles[0].FullName)"
-    $namespaces = Get-Namespaces-From-DLL $firstDllFiles[0].FullName
+    $namespaces = Get-NamepspacesFromDll $firstDllFiles[0].FullName
     if (!$namespaces) {
         Write-Error "Can't find namespaces from dotnet $nupkgFilePath."
         return
     }
-    $namespaces = $namespaces.Namespace | Sort-Object | Get-Unique
+    $namespaces = $namespaces.Namespace | Sort-Object -Unique
     # Rename and move to location
     Write-Host "Copying the package namespaces to $destination..."
     Set-Content -Path $destination -Value $namespaces

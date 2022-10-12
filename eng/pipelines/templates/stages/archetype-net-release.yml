@@ -174,7 +174,7 @@ stages:
                             PackageInfoLocations:
                               - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
                             WorkingDirectory: $(System.DefaultWorkingDirectory)
-                            TargetDocRepoOwner: 'Azure'
+                            TargetDocRepoOwner: Azure
                             TargetDocRepoName: ${{parameters.TargetDocRepoName}}
                             Language: 'dotnet'
                             SparseCheckoutPaths:
@@ -185,8 +185,6 @@ stages:
                             DotnetNupkgLocation: "$(Pipeline.Workspace)/${{parameters.ArtifactName}}"
                             ArtifactName: ${{artifact.name}}
                             DocRepoLocation: $(DocRepoLocation)
-                            TargetDocRepoName: ${{parameters.TargetDocRepoName}}
-                            TargetDocRepoOwner: 'Azure'
                             TargetBranch: $(TargetBranchName)
             - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
               - deployment: PublishDocs
@@ -308,7 +306,7 @@ stages:
               - ${{ each artifact in parameters.Artifacts }}:
                 - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
             WorkingDirectory: $(System.DefaultWorkingDirectory)
-            TargetDocRepoOwner: "Azure"
+            TargetDocRepoOwner: Azure
             TargetDocRepoName: ${{parameters.TargetDocRepoName}}
             Language: 'dotnet'
             DailyDocsBuild: true
@@ -323,5 +321,3 @@ stages:
                 ArtifactName: ${{artifact.name}}
                 TargetBranch: $(TargetBranchName)
                 DocRepoLocation: $(DocRepoLocation)
-                TargetDocRepoName: ${{parameters.TargetDocRepoName}}
-                TargetDocRepoOwner: "Azure"

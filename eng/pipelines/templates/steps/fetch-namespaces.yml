@@ -3,8 +3,8 @@ parameters:
   ArtifactName: ''
   TargetBranch: ''
   DocRepoLocation: ''
-  TargetDocRepoName: ''
-  TargetDocRepoOwner: ''
+  TargetDocRepoName: azure-docs-sdk-dotnet
+  TargetDocRepoOwner: Azure
   WorkingDirectory: $(System.DefaultWorkingDirectory)
 steps:
   - template: /eng/common/pipelines/templates/steps/set-default-branch.yml

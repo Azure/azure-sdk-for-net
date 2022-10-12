@@ -16,9 +16,9 @@
 #>
 [CmdletBinding()]
 param (
-  [string] $DotnetNupkgLocation = "",
-  [string] $DocRepoLocation = "",
-  [string] $ArtifactName = ""
+  [string] $DotnetNupkgLocation,
+  [string] $DocRepoLocation,
+  [string] $ArtifactName
 )
 Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot ../common/scripts/common.ps1)
@@ -39,4 +39,4 @@ $packageNameLocation = "$DocRepoLocation/metadata/$metadataMoniker"
 New-Item -ItemType Directory -Path $packageNameLocation -Force
 Write-Host "The moniker $packageNameLocation"
 
-Fetch-Namespaces-From-Dotnet-Nupkg $nupkgFile.FullName "$packageNameLocation/$ArtifactName.txt"
+Fetch-NamespacesFromNupkg $nupkgFile.FullName "$packageNameLocation/$ArtifactName.txt"
