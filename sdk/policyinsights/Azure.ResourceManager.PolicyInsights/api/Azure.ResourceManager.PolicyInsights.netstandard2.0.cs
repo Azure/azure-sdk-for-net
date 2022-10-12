@@ -18,11 +18,13 @@ namespace Azure.ResourceManager.PolicyInsights
     public partial class PolicyAttestationData : Azure.ResourceManager.Models.ResourceData
     {
         public PolicyAttestationData(Azure.Core.ResourceIdentifier policyAssignmentId) { }
+        public System.DateTimeOffset? AssessmentOn { get { throw null; } set { } }
         public string Comments { get { throw null; } set { } }
         public Azure.ResourceManager.PolicyInsights.Models.PolicyComplianceState? ComplianceState { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.PolicyInsights.Models.AttestationEvidence> Evidence { get { throw null; } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public System.DateTimeOffset? LastComplianceStateChangeOn { get { throw null; } }
+        public System.BinaryData Metadata { get { throw null; } set { } }
         public string Owner { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PolicyAssignmentId { get { throw null; } set { } }
         public string PolicyDefinitionReferenceId { get { throw null; } set { } }
