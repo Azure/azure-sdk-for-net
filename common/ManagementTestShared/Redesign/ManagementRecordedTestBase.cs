@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.TestFramework
 
         protected ResponseNullFilterPolicy NullFilterPolicy = new ResponseNullFilterPolicy();
 
+        protected AddDeleteAfterTagPolicy DeleteAfterTagPolicy = new AddDeleteAfterTagPolicy();
+
         protected ArmClient GlobalClient { get; private set; }
 
         public TestEnvironment SessionEnvironment { get; private set; }
@@ -80,13 +82,15 @@ namespace Azure.ResourceManager.TestFramework
 
         protected TClient InstrumentClientExtension<TClient>(TClient client) => (TClient)InstrumentClient(typeof(TClient), client, new IInterceptor[] { new ManagementInterceptor(this) });
 
-        protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default)
+        protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default, bool enableDeleteAfter = false)
         {
             var options = InstrumentClientOptions(clientOptions ?? new ArmClientOptions());
             options.Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl);
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(NullFilterPolicy, HttpPipelinePosition.PerRetry);
+            if (enableDeleteAfter)
+                options.AddPolicy(DeleteAfterTagPolicy, HttpPipelinePosition.PerCall);
             if (ApiVersion is not null)
                 options.SetApiVersion(_resourceType, ApiVersion);
 
