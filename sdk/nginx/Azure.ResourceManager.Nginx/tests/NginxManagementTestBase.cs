@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Nginx.Tests
                 throw new ArgumentNullException(nameof(subscription));
             }
 
-            if (subscription == null)
+            if (rgNamePrefix == null)
             {
-                throw new ArgumentNullException(nameof(subscription));
+                throw new ArgumentNullException(nameof(rgNamePrefix));
             }
 
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
@@ -245,13 +245,8 @@ namespace Azure.ResourceManager.Nginx.Tests
             return lro.Value;
         }
 
-        protected async Task<NginxConfigurationResource> CreateNginxConfiguration(ResourceGroupResource resourceGroup, AzureLocation location, NginxDeploymentResource nginxDeployment, string nginxConfigurationName, string virtualPath)
+        protected async Task<NginxConfigurationResource> CreateNginxConfiguration(AzureLocation location, NginxDeploymentResource nginxDeployment, string nginxConfigurationName, string virtualPath)
         {
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-
             if (nginxDeployment == null)
             {
                 throw new ArgumentNullException(nameof(nginxDeployment));
@@ -276,13 +271,8 @@ namespace Azure.ResourceManager.Nginx.Tests
             return lro.Value;
         }
 
-        protected async Task<NginxCertificateResource> CreateNginxCertificate(ResourceGroupResource resourceGroup, AzureLocation location, NginxDeploymentResource nginxDeployment, string nginxCertificateName, string certificateVirtualPath, string keyVirtualPath)
+        protected async Task<NginxCertificateResource> CreateNginxCertificate(AzureLocation location, NginxDeploymentResource nginxDeployment, string nginxCertificateName, string certificateVirtualPath, string keyVirtualPath)
         {
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-
             if (nginxDeployment == null)
             {
                 throw new ArgumentNullException(nameof(nginxDeployment));

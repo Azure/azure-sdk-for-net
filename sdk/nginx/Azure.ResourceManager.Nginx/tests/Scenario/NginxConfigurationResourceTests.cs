@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
             string nginxConfigurationName = "default";
             string virtualPath = "/etc/nginx/nginx.conf";
-            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(ResGroup, Location, nginxDeployment, nginxConfigurationName, virtualPath);
+            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(Location, nginxDeployment, nginxConfigurationName, virtualPath);
 
             Assert.IsTrue(nginxConfiguration.HasData);
             Assert.NotNull(nginxConfiguration.Data);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
             string nginxConfigurationName = "default";
             string virtualPath = "/etc/nginx/nginx.conf";
-            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(ResGroup, Location, nginxDeployment, nginxConfigurationName, virtualPath);
+            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(Location, nginxDeployment, nginxConfigurationName, virtualPath);
             NginxConfigurationResource response = await nginxConfiguration.GetAsync();
 
             ResourceDataHelper.AssertTrackedResource(nginxConfiguration.Data, response.Data);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
             string nginxConfigurationName = "default";
             string virtualPath = "/etc/nginx/nginx.conf";
-            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(ResGroup, Location, nginxDeployment, nginxConfigurationName, virtualPath);
+            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(Location, nginxDeployment, nginxConfigurationName, virtualPath);
             Assert.IsTrue(await collection.ExistsAsync(nginxConfigurationName));
 
             await nginxConfiguration.DeleteAsync(WaitUntil.Completed);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
             string nginxConfigurationName = "default";
             string virtualPath = "/etc/nginx/nginx.conf";
-            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(ResGroup, Location, nginxDeployment, nginxConfigurationName, virtualPath);
+            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(Location, nginxDeployment, nginxConfigurationName, virtualPath);
 
             NginxConfigurationFile rootConfigFile = new NginxConfigurationFile();
             rootConfigFile.Content = TestEnvironment.NginxConfigurationContent;

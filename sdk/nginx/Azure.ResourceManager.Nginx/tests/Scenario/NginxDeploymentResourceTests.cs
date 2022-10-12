@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             string nginxCertificateName = Recording.GenerateAssetName("testCertificate-");
             string certificateVirtualPath = "/etc/cert/nginx.cert";
             string keyVirtualPath = "/etc/cert/nginx.key";
-            _ = await CreateNginxCertificate(ResGroup, Location, nginxDeployment, nginxCertificateName, certificateVirtualPath, keyVirtualPath);
+            _ = await CreateNginxCertificate(Location, nginxDeployment, nginxCertificateName, certificateVirtualPath, keyVirtualPath);
             NginxCertificateResource nginxCertificate = await nginxDeployment.GetNginxCertificateAsync(nginxCertificateName);
 
             Assert.NotNull(nginxCertificate);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
             string nginxConfigurationName = "default";
             string virtualPath = "/etc/nginx/nginx.conf";
-            _ = await CreateNginxConfiguration(ResGroup, Location, nginxDeployment, nginxConfigurationName, virtualPath);
+            _ = await CreateNginxConfiguration(Location, nginxDeployment, nginxConfigurationName, virtualPath);
             NginxConfigurationResource nginxConfiguration = await nginxDeployment.GetNginxConfigurationAsync(nginxConfigurationName);
 
             Assert.NotNull(nginxConfiguration);
