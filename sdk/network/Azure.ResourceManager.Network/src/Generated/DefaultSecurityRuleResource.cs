@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<DefaultSecurityRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<DefaultSecurityRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((DefaultSecurityRuleResource)result.Value, result.GetRawResponse());
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<DefaultSecurityRuleResource> Get(CancellationToken cancellationToken = default)
+        public virtual new Response<DefaultSecurityRuleResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
             return Response.FromValue((DefaultSecurityRuleResource)result.Value, result.GetRawResponse());

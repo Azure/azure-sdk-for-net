@@ -18,6 +18,10 @@ public-clients: false
 head-as-boolean: false
 resource-model-requires-type: false
 
+generate-virtual-operations:
+- DefaultSecurityRules_Get
+- SecurityRules_Get
+
 rename-mapping:
   ConnectionMonitor: ConnectionMonitorInput
   ConnectionMonitorResult: ConnectionMonitor
