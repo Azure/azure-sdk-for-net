@@ -14,9 +14,9 @@ namespace Azure.Extensions.WebJobs.Sample
         [FunctionName("EventGridEventBatchTriggerFunction")]
         public static void Run(
             ILogger logger,
-            [EventGridTrigger] EventGridEvent[] eventGridEvents)
+            [EventGridTrigger] EventGridEvent[] events)
         {
-            foreach (EventGridEvent eventGridEvent in eventGridEvents)
+            foreach (EventGridEvent eventGridEvent in events)
             {
                 logger.LogInformation("Event received {type} {subject}", eventGridEvent.EventType, eventGridEvent.Subject);
             }
