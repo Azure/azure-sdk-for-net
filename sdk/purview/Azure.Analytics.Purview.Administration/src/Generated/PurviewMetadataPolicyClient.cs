@@ -113,6 +113,7 @@ namespace Azure.Analytics.Purview.Administration
         ///             }
         ///         },
         ///         collection = new {
+        ///             type = "<type>",
         ///             referenceName = "<referenceName>",
         ///         },
         ///         parentCollectionName = "<parentCollectionName>",
@@ -310,6 +311,7 @@ namespace Azure.Analytics.Purview.Administration
         ///             }
         ///         },
         ///         collection = new {
+        ///             type = "<type>",
         ///             referenceName = "<referenceName>",
         ///         },
         ///         parentCollectionName = "<parentCollectionName>",
@@ -636,9 +638,69 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// await foreach (var data in client.GetMetadataPoliciesAsync())
         /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("effect").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
         /// }
         /// ]]></code>
         /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>MetadataPolicyListValues</c>:
+        /// <code>{
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
+        ///   properties: {
+        ///     description: string, # Optional. The description of policy
+        ///     decisionRules: [
+        ///       {
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
+        ///       }
+        ///     ], # Optional. The DecisionRules of policy
+        ///     attributeRules: [
+        ///       {
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
+        ///       }
+        ///     ], # Optional. The AttributeRules of policy
+        ///     collection: {
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
+        ///   }, # Optional.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         public virtual AsyncPageable<BinaryData> GetMetadataPoliciesAsync(RequestContext context = null)
         {
             return GetMetadataPoliciesImplementationAsync("PurviewMetadataPolicyClient.GetMetadataPolicies", context);
@@ -654,7 +716,7 @@ namespace Azure.Analytics.Purview.Administration
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetMetadataPoliciesRequest(context)
                         : CreateGetMetadataPoliciesNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "values", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -674,9 +736,69 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// foreach (var data in client.GetMetadataPolicies())
         /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("effect").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
         /// }
         /// ]]></code>
         /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>MetadataPolicyListValues</c>:
+        /// <code>{
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
+        ///   properties: {
+        ///     description: string, # Optional. The description of policy
+        ///     decisionRules: [
+        ///       {
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
+        ///       }
+        ///     ], # Optional. The DecisionRules of policy
+        ///     attributeRules: [
+        ///       {
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
+        ///       }
+        ///     ], # Optional. The AttributeRules of policy
+        ///     collection: {
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
+        ///   }, # Optional.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         public virtual Pageable<BinaryData> GetMetadataPolicies(RequestContext context = null)
         {
             return GetMetadataPoliciesImplementation("PurviewMetadataPolicyClient.GetMetadataPolicies", context);
@@ -692,7 +814,7 @@ namespace Azure.Analytics.Purview.Administration
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetMetadataPoliciesRequest(context)
                         : CreateGetMetadataPoliciesNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "values", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -708,7 +830,7 @@ namespace Azure.Analytics.Purview.Administration
             uri.Reset(_endpoint);
             uri.AppendRaw("/policyStore", false);
             uri.AppendPath("/metadataPolicies", false);
-            uri.AppendQuery("api-version", "2021-07-01", true);
+            uri.AppendQuery("api-version", "2021-07-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -724,7 +846,7 @@ namespace Azure.Analytics.Purview.Administration
             uri.AppendRaw("/policyStore", false);
             uri.AppendPath("/metadataPolicies/", false);
             uri.AppendPath(policyId, true);
-            uri.AppendQuery("api-version", "2021-07-01", true);
+            uri.AppendQuery("api-version", "2021-07-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -742,7 +864,7 @@ namespace Azure.Analytics.Purview.Administration
             uri.AppendRaw("/policyStore", false);
             uri.AppendPath("/metadataPolicies/", false);
             uri.AppendPath(policyId, true);
-            uri.AppendQuery("api-version", "2021-07-01", true);
+            uri.AppendQuery("api-version", "2021-07-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

@@ -48,9 +48,51 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// await foreach (var data in client.GetMetadataRolesAsync())
         /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("roleType").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("friendlyName").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeName").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("version").ToString());
         /// }
         /// ]]></code>
         /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>MetadataRoleListValues</c>:
+        /// <code>{
+        ///   id: string, # Optional. The Id of role
+        ///   name: string, # Optional. The name of role
+        ///   type: string, # Optional. The type of role
+        ///   properties: {
+        ///     provisioningState: string, # Optional. The provisioningState of role
+        ///     roleType: string, # Optional. The type of role
+        ///     friendlyName: string, # Optional. The friendly name of role
+        ///     description: string, # Optional. The description of role
+        ///     cnfCondition: [AttributeMatcher[]], # Optional. The cnf Condition for a rule
+        ///     dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
+        ///     version: number, # Optional. The version of role
+        ///   }, # Optional.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         public virtual AsyncPageable<BinaryData> GetMetadataRolesAsync(RequestContext context = null)
         {
             return GetMetadataRolesImplementationAsync("PurviewMetadataRolesClient.GetMetadataRoles", context);
@@ -66,7 +108,7 @@ namespace Azure.Analytics.Purview.Administration
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetMetadataRolesRequest(context)
                         : CreateGetMetadataRolesNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "values", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -86,9 +128,51 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// foreach (var data in client.GetMetadataRoles())
         /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("roleType").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("friendlyName").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeName").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("version").ToString());
         /// }
         /// ]]></code>
         /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>MetadataRoleListValues</c>:
+        /// <code>{
+        ///   id: string, # Optional. The Id of role
+        ///   name: string, # Optional. The name of role
+        ///   type: string, # Optional. The type of role
+        ///   properties: {
+        ///     provisioningState: string, # Optional. The provisioningState of role
+        ///     roleType: string, # Optional. The type of role
+        ///     friendlyName: string, # Optional. The friendly name of role
+        ///     description: string, # Optional. The description of role
+        ///     cnfCondition: [AttributeMatcher[]], # Optional. The cnf Condition for a rule
+        ///     dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
+        ///     version: number, # Optional. The version of role
+        ///   }, # Optional.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
         public virtual Pageable<BinaryData> GetMetadataRoles(RequestContext context = null)
         {
             return GetMetadataRolesImplementation("PurviewMetadataRolesClient.GetMetadataRoles", context);
@@ -104,7 +188,7 @@ namespace Azure.Analytics.Purview.Administration
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetMetadataRolesRequest(context)
                         : CreateGetMetadataRolesNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "values", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -120,7 +204,7 @@ namespace Azure.Analytics.Purview.Administration
             uri.Reset(_endpoint);
             uri.AppendRaw("/policyStore", false);
             uri.AppendPath("/metadataRoles", false);
-            uri.AppendQuery("api-version", "2021-07-01", true);
+            uri.AppendQuery("api-version", "2021-07-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
