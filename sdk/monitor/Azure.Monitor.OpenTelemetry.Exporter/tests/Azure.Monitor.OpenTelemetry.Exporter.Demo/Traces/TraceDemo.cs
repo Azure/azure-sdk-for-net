@@ -65,6 +65,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                     nestedActivity?.SetStatus(ActivityStatusCode.Ok);
                 }
             }
+
+            using (var activity = activitySource.StartActivity("ExceptionExample"))
+            {
+                try
+                {
+                    throw new Exception("Test exception");
+                }
+                catch (Exception ex)
+                {
+                    activity?.SetStatus(ActivityStatusCode.Error);
+                    activity?.RecordException(ex);
+                }
+            }
         }
 
         public void Dispose()
