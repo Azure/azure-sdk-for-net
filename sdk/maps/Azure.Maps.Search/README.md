@@ -35,7 +35,7 @@ There are 2 ways to authenticate the client: Shared key authentication and Azure
 
 ```C# Snippet:InstantiateSearchClientViaSubscriptionKey
 // Create a SearchClient that will authenticate through Subscription Key (Shared key)
-var credential = new AzureKeyCredential("<My Subscription Key>");
+AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
 MapsSearchClient client = new MapsSearchClient(credential);
 ```
 
@@ -49,8 +49,8 @@ We also need **Azure Maps Client ID** which can get from Azure Maps page > Authe
 
 ```C# Snippet:InstantiateSearchClientViaAAD
 // Create a MapsSearchClient that will authenticate through AAD
-var credential = new DefaultAzureCredential();
-var clientId = "<My Map Account Client Id>";
+DefaultAzureCredential credential = new DefaultAzureCredential();
+string clientId = "<My Map Account Client Id>";
 MapsSearchClient client = new MapsSearchClient(credential, clientId);
 ```
 
@@ -90,35 +90,52 @@ You can familiarize yourself with different APIs using our [samples](https://git
 Response<SearchAddressResult> searchResult = await client.SearchAddressAsync("Seattle");
 
 // Extract geometry ids from addresses
-string geometry0Id = searchResult.Value.Results.First().DataSources.Geometry.Id;
+string geometry0Id = searchResult.Value.Results[0].DataSources.Geometry.Id;
 string geometry1Id = searchResult.Value.Results[1].DataSources.Geometry.Id;
 
 // Extract position coordinates
-GeoPosition positionCoordinates = searchResult.Value.Results.First().Position;
+GeoPosition positionCoordinates = searchResult.Value.Results[0].Position;
 
 // Get polygons from geometry ids
 PolygonResult polygonResponse = await client.GetPolygonsAsync(new[] { geometry0Id, geometry1Id });
+
+// Get polygons objects
+IReadOnlyList<PolygonObject> polygonList = polygonResponse.Polygons;
 ```
 
 ### Example Fuzzy Search
+
 ```C# Snippet:FuzzySearch
-Response<SearchAddressResult> fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearchOptions {
+Response<SearchAddressResult> fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearchOptions
+{
     Coordinates = new GeoPosition(121.56, 25.04),
-    Language = SearchLanguage.EnglishUSA
+    Language = SearchLanguage.EnglishUsa
 });
+
+// Print out the possible results
+Console.WriteLine("The possible results for coffee shop:");
+foreach (SearchAddressResultItem result in fuzzySearchResponse.Value.Results)
+{
+    Console.WriteLine("Coordinate: {0}, Address: {1}",
+        result.Position, result.Address.FreeformAddress);
+}
 ```
 
 ### Example Reverse Search Cross Street Address
+
 ```C# Snippet:ReverseSearchCrossStreetAddress
-var reverseResult = await client.ReverseSearchCrossStreetAddressAsync(new ReverseSearchCrossStreetOptions {
+var reverseResult = await client.ReverseSearchCrossStreetAddressAsync(new ReverseSearchCrossStreetOptions
+{
     Coordinates = new GeoPosition(121.0, 24.0),
-    Language = SearchLanguage.EnglishUSA
+    Language = SearchLanguage.EnglishUsa
 });
 ```
 
 ### Example Search Structured Address
+
 ```C# Snippet:SearchStructuredAddress
-var address = new StructuredAddress {
+var address = new StructuredAddress
+{
     CountryCode = "US",
     StreetNumber = "15127",
     StreetName = "NE 24th Street",
@@ -127,9 +144,14 @@ var address = new StructuredAddress {
     PostalCode = "98052"
 };
 Response<SearchAddressResult> searchResult = await client.SearchStructuredAddressAsync(address);
+
+SearchAddressResultItem resultItem = searchResult.Value.Results[0];
+Console.WriteLine("First result - Coordinate: {0}, Address: {1}",
+    resultItem.Position, resultItem.Address.FreeformAddress);
 ```
 
 ### Example Search Inside Geometry
+
 ```C# Snippet:SearchInsideGeometry
 GeoPolygon sfPolygon = new GeoPolygon(new[]
 {
@@ -148,14 +170,29 @@ GeoPolygon taipeiPolygon = new GeoPolygon(new[]
     new GeoPosition(121.56, 25.04)
 });
 
-Response<SearchAddressResult> searchResponse = await client.SearchInsideGeometryAsync("coffee", new GeoCollection(new[] { sfPolygon, taipeiPolygon }), new SearchInsideGeometryOptions {
-    Language = SearchLanguage.EnglishUSA
+// Search coffee shop in Both polygons, return results in en-US
+Response<SearchAddressResult> searchResponse = await client.SearchInsideGeometryAsync("coffee", new GeoCollection(new[] { sfPolygon, taipeiPolygon }), new SearchInsideGeometryOptions
+{
+    Language = SearchLanguage.EnglishUsa
 });
+
+// Get Taipei Cafe and San Francisco cafe and print first place
+SearchAddressResultItem taipeiCafe = searchResponse.Value.Results.Where(addressItem => addressItem.SearchAddressResultType == "POI" && addressItem.Address.Municipality == "Taipei City").First();
+SearchAddressResultItem sfCafe = searchResponse.Value.Results.Where(addressItem => addressItem.SearchAddressResultType == "POI" && addressItem.Address.Municipality == "San Francisco").First();
+
+Console.WriteLine("Possible Coffee shop in the Polygons:");
+Console.WriteLine("Coffee shop address in Taipei: {0}", taipeiCafe.Address.FreeformAddress);
+Console.WriteLine("Coffee shop address in San Francisco: {0}", sfCafe.Address.FreeformAddress);
 ```
 
 ### Example Search Address
+
 ```C# Snippet:SearchAddress
 Response<SearchAddressResult> searchResult = await client.SearchAddressAsync("Seattle");
+
+SearchAddressResultItem resultItem = searchResult.Value.Results[0];
+Console.WriteLine("First result - Coordinate: {0}, Address: {1}",
+    resultItem.Position, resultItem.Address.FreeformAddress);
 ```
 
 ## Troubleshooting

@@ -30,6 +30,7 @@ namespace Azure.Maps.Search
     public partial class FuzzySearchBatchOperation : Azure.Operation<Azure.Maps.Search.Models.SearchAddressBatchResult>
     {
         protected FuzzySearchBatchOperation() { }
+        public FuzzySearchBatchOperation(Azure.Maps.Search.MapsSearchClient client, string id) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -78,54 +79,6 @@ namespace Azure.Maps.Search
         public static bool operator !=(Azure.Maps.Search.GeographicEntity left, Azure.Maps.Search.GeographicEntity right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class GetFuzzySearchBatchOperation : Azure.Operation<Azure.Maps.Search.Models.SearchAddressBatchResult>
-    {
-        protected GetFuzzySearchBatchOperation() { }
-        public GetFuzzySearchBatchOperation(Azure.Maps.Search.MapsSearchClient client, string id) { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Maps.Search.Models.SearchAddressBatchResult Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override Azure.Response<Azure.Maps.Search.Models.SearchAddressBatchResult> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override Azure.Response<Azure.Maps.Search.Models.SearchAddressBatchResult> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Search.Models.SearchAddressBatchResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Search.Models.SearchAddressBatchResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class GetReverseSearchAddressBatchOperation : Azure.Operation<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult>
-    {
-        protected GetReverseSearchAddressBatchOperation() { }
-        public GetReverseSearchAddressBatchOperation(Azure.Maps.Search.MapsSearchClient client, string id) { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Maps.Search.Models.ReverseSearchAddressBatchResult Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class GetSearchAddressBatchOperation : Azure.Operation<Azure.Maps.Search.Models.SearchAddressBatchResult>
-    {
-        protected GetSearchAddressBatchOperation() { }
-        public GetSearchAddressBatchOperation(Azure.Maps.Search.MapsSearchClient client, string id) { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Maps.Search.Models.SearchAddressBatchResult Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override Azure.Response<Azure.Maps.Search.Models.SearchAddressBatchResult> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override Azure.Response<Azure.Maps.Search.Models.SearchAddressBatchResult> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Search.Models.SearchAddressBatchResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Search.Models.SearchAddressBatchResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class MapsSearchClient
     {
         protected MapsSearchClient() { }
@@ -133,10 +86,6 @@ namespace Azure.Maps.Search
         public MapsSearchClient(Azure.AzureKeyCredential credential, Azure.Maps.Search.MapsSearchClientOptions options) { }
         public MapsSearchClient(Azure.Core.TokenCredential credential, string clientId) { }
         public MapsSearchClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Search.MapsSearchClientOptions options) { }
-        public MapsSearchClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public MapsSearchClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Maps.Search.MapsSearchClientOptions options) { }
-        public MapsSearchClient(System.Uri endpoint, Azure.Core.TokenCredential credential, string clientId) { }
-        public MapsSearchClient(System.Uri endpoint, Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Search.MapsSearchClientOptions options) { }
         public virtual Azure.Maps.Search.FuzzySearchBatchOperation FuzzyBatchSearch(Azure.WaitUntil waitUntil, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.FuzzySearchQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Maps.Search.FuzzySearchBatchOperation> FuzzyBatchSearchAsync(Azure.WaitUntil waitUntil, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.FuzzySearchQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> FuzzySearch(string query, Azure.Maps.Search.FuzzySearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -147,8 +96,8 @@ namespace Azure.Maps.Search
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult>> GetImmediateReverseSearchAddressBatchAsync(System.Collections.Generic.IEnumerable<Azure.Maps.Search.ReverseSearchAddressQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressBatchResult> GetImmediateSearchAddressBatch(System.Collections.Generic.IEnumerable<Azure.Maps.Search.SearchAddressQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressBatchResult>> GetImmediateSearchAddressBatchAsync(System.Collections.Generic.IEnumerable<Azure.Maps.Search.SearchAddressQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.PointOfInterestCategoryTreeResult> GetPointOfInterestCategoryTree(string language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.PointOfInterestCategoryTreeResult>> GetPointOfInterestCategoryTreeAsync(string language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.PointOfInterestCategoryTreeResult> GetPointOfInterestCategoryTree(Azure.Maps.Search.SearchLanguage? language = default(Azure.Maps.Search.SearchLanguage?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.PointOfInterestCategoryTreeResult>> GetPointOfInterestCategoryTreeAsync(Azure.Maps.Search.SearchLanguage? language = default(Azure.Maps.Search.SearchLanguage?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Search.Models.PolygonResult> GetPolygons(System.Collections.Generic.IEnumerable<string> geometryIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.PolygonResult>> GetPolygonsAsync(System.Collections.Generic.IEnumerable<string> geometryIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressResult> ReverseSearchAddress(Azure.Maps.Search.ReverseSearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -167,10 +116,10 @@ namespace Azure.Maps.Search
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchInsideGeometryAsync(string query, Azure.Core.GeoJson.GeoObject geometry, Azure.Maps.Search.SearchInsideGeometryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchNearbyPointOfInterest(Azure.Maps.Search.SearchNearbyPointOfInterestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchNearbyPointOfInterestAsync(Azure.Maps.Search.SearchNearbyPointOfInterestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchPointOfInterest(string query, bool IsTypeAhead, Azure.Maps.Search.OperatingHoursRange OperatingHours, Azure.Core.GeoJson.GeoBoundingBox BoundingBox, Azure.Maps.Search.SearchPointOfInterestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchPointOfInterest(string query, bool? IsTypeAhead = default(bool?), Azure.Maps.Search.OperatingHoursRange? OperatingHours = default(Azure.Maps.Search.OperatingHoursRange?), Azure.Core.GeoJson.GeoBoundingBox BoundingBox = null, Azure.Maps.Search.SearchPointOfInterestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchPointOfInterestAlongRoute(string query, int maxDetourTime, Azure.Core.GeoJson.GeoLineString route, Azure.Maps.Search.SearchAlongRouteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchPointOfInterestAlongRouteAsync(string query, int maxDetourTime, Azure.Core.GeoJson.GeoLineString route, Azure.Maps.Search.SearchAlongRouteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchPointOfInterestAsync(string query, bool IsTypeAhead, Azure.Maps.Search.OperatingHoursRange OperatingHours, Azure.Core.GeoJson.GeoBoundingBox BoundingBox, Azure.Maps.Search.SearchPointOfInterestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchPointOfInterestAsync(string query, bool? IsTypeAhead = default(bool?), Azure.Maps.Search.OperatingHoursRange? OperatingHours = default(Azure.Maps.Search.OperatingHoursRange?), Azure.Core.GeoJson.GeoBoundingBox BoundingBox = null, Azure.Maps.Search.SearchPointOfInterestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchPointOfInterestCategory(Azure.Maps.Search.SearchPointOfInterestCategoryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchPointOfInterestCategoryAsync(Azure.Maps.Search.SearchPointOfInterestCategoryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchStructuredAddress(Azure.Maps.Search.StructuredAddress address, Azure.Maps.Search.Models.SearchStructuredAddressOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -178,7 +127,8 @@ namespace Azure.Maps.Search
     }
     public partial class MapsSearchClientOptions : Azure.Core.ClientOptions
     {
-        public MapsSearchClientOptions(Azure.Maps.Search.MapsSearchClientOptions.ServiceVersion version = Azure.Maps.Search.MapsSearchClientOptions.ServiceVersion.V1_0) { }
+        public MapsSearchClientOptions(Azure.Maps.Search.MapsSearchClientOptions.ServiceVersion version = Azure.Maps.Search.MapsSearchClientOptions.ServiceVersion.V1_0, System.Uri endpoint = null) { }
+        public System.Uri Endpoint { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V1_0 = 1,
@@ -222,6 +172,7 @@ namespace Azure.Maps.Search
     public partial class ReverseSearchAddressBatchOperation : Azure.Operation<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult>
     {
         protected ReverseSearchAddressBatchOperation() { }
+        public ReverseSearchAddressBatchOperation(Azure.Maps.Search.MapsSearchClient client, string id) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -261,8 +212,8 @@ namespace Azure.Maps.Search
         public bool? IncludeMatchType { get { throw null; } set { } }
         public bool? IncludeRoadUse { get { throw null; } set { } }
         public bool? IncludeSpeedLimit { get { throw null; } set { } }
-        public string Number { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<Azure.Maps.Search.RoadKind> RoadUse { get { throw null; } set { } }
+        public int? StreetNumber { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RoadKind : System.IEquatable<Azure.Maps.Search.RoadKind>
@@ -296,6 +247,7 @@ namespace Azure.Maps.Search
     public partial class SearchAddressBatchOperation : Azure.Operation<Azure.Maps.Search.Models.SearchAddressBatchResult>
     {
         protected SearchAddressBatchOperation() { }
+        public SearchAddressBatchOperation(Azure.Maps.Search.MapsSearchClient client, string id) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -391,7 +343,7 @@ namespace Azure.Maps.Search
         public static Azure.Maps.Search.SearchLanguage EnglishAustralia { get { throw null; } }
         public static Azure.Maps.Search.SearchLanguage EnglishGreatBritain { get { throw null; } }
         public static Azure.Maps.Search.SearchLanguage EnglishNewZealand { get { throw null; } }
-        public static Azure.Maps.Search.SearchLanguage EnglishUSA { get { throw null; } }
+        public static Azure.Maps.Search.SearchLanguage EnglishUsa { get { throw null; } }
         public static Azure.Maps.Search.SearchLanguage Estonian { get { throw null; } }
         public static Azure.Maps.Search.SearchLanguage Finnish { get { throw null; } }
         public static Azure.Maps.Search.SearchLanguage FrenchCanada { get { throw null; } }

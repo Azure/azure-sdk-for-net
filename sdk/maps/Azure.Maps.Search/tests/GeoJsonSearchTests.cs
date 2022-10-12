@@ -31,16 +31,18 @@ namespace Azure.Maps.Search.Tests
             Response<SearchAddressResult> searchResult = await client.SearchAddressAsync("Seattle");
 
             // Extract geometry ids from addresses
-            string geometry0Id = searchResult.Value.Results.First().DataSources.Geometry.Id;
+            string geometry0Id = searchResult.Value.Results[0].DataSources.Geometry.Id;
             string geometry1Id = searchResult.Value.Results[1].DataSources.Geometry.Id;
 
             // Extract position coordinates
-            GeoPosition positionCoordinates = searchResult.Value.Results.First().Position;
+            GeoPosition positionCoordinates = searchResult.Value.Results[0].Position;
 
             // Get polygons from geometry ids
             PolygonResult polygonResponse = await client.GetPolygonsAsync(new[] { geometry0Id, geometry1Id });
-            #endregion
+
+            // Get polygons objects
             IReadOnlyList<PolygonObject> polygonList = polygonResponse.Polygons;
+            #endregion
             List<String> providerIds = new List<string>();
             foreach (PolygonObject polygon in polygonList) {
                 providerIds.Add(polygon.ProviderId);
@@ -191,14 +193,22 @@ namespace Azure.Maps.Search.Tests
                 new GeoPosition(121.56, 25.04)
             });
 
-            Response<SearchAddressResult> searchResponse = await client.SearchInsideGeometryAsync("coffee", new GeoCollection(new[] { sfPolygon, taipeiPolygon }), new SearchInsideGeometryOptions {
-                Language = SearchLanguage.EnglishUSA
+            // Search coffee shop in Both polygons, return results in en-US
+            Response<SearchAddressResult> searchResponse = await client.SearchInsideGeometryAsync("coffee", new GeoCollection(new[] { sfPolygon, taipeiPolygon }), new SearchInsideGeometryOptions
+            {
+                Language = SearchLanguage.EnglishUsa
             });
+
+            // Get Taipei Cafe and San Francisco cafe and print first place
+            SearchAddressResultItem taipeiCafe = searchResponse.Value.Results.Where(addressItem => addressItem.SearchAddressResultType == "POI" && addressItem.Address.Municipality == "Taipei City").First();
+            SearchAddressResultItem sfCafe = searchResponse.Value.Results.Where(addressItem => addressItem.SearchAddressResultType == "POI" && addressItem.Address.Municipality == "San Francisco").First();
+
+            Console.WriteLine("Possible Coffee shop in the Polygons:");
+            Console.WriteLine("Coffee shop address in Taipei: {0}", taipeiCafe.Address.FreeformAddress);
+            Console.WriteLine("Coffee shop address in San Francisco: {0}", sfCafe.Address.FreeformAddress);
             #endregion
-            var taipeiCaffe = searchResponse.Value.Results.Where(addressItem => addressItem.SearchAddressResultType == "POI" && addressItem.Address.Municipality == "Taipei City").First();
-            var sfCaffe = searchResponse.Value.Results.Where(addressItem => addressItem.SearchAddressResultType == "POI" && addressItem.Address.Municipality == "San Francisco").First();
-            Assert.AreEqual("CAFE_PUB", sfCaffe.PointOfInterest.Classifications.First().Code);
-            Assert.AreEqual("CAFE_PUB", taipeiCaffe.PointOfInterest.Classifications.First().Code);
+            Assert.AreEqual("CAFE_PUB", sfCafe.PointOfInterest.Classifications.First().Code);
+            Assert.AreEqual("CAFE_PUB", taipeiCafe.PointOfInterest.Classifications.First().Code);
         }
 
         [RecordedTest]
@@ -236,13 +246,14 @@ namespace Azure.Maps.Search.Tests
             }";
             var json = JsonSerializer.Deserialize<JsonElement>(geometricCollectionString, new JsonSerializerOptions {});
             GeoCollection geoCollection = JsonSerializer.Deserialize<GeoCollection>(geometricCollectionString, new JsonSerializerOptions {});
-            var searchResponse = await client.SearchInsideGeometryAsync("coffee", geoCollection, new SearchInsideGeometryOptions {
-                Language = SearchLanguage.EnglishUSA
+            var searchResponse = await client.SearchInsideGeometryAsync("coffee", geoCollection, new SearchInsideGeometryOptions
+            {
+                Language = SearchLanguage.EnglishUsa
             });
-            var taipeiCaffe = searchResponse.Value.Results.Where(addressItem => addressItem.SearchAddressResultType == "POI" && addressItem.Address.Municipality == "Taipei City").First();
-            var sfCaffe = searchResponse.Value.Results.Where(addressItem => addressItem.SearchAddressResultType == "POI" && addressItem.Address.Municipality == "San Francisco").First();
-            Assert.AreEqual("CAFE_PUB", sfCaffe.PointOfInterest.Classifications.First().Code);
-            Assert.AreEqual("CAFE_PUB", taipeiCaffe.PointOfInterest.Classifications.First().Code);
+            var taipeiCafe = searchResponse.Value.Results.Where(addressItem => addressItem.SearchAddressResultType == "POI" && addressItem.Address.Municipality == "Taipei City").First();
+            var sfCafe = searchResponse.Value.Results.Where(addressItem => addressItem.SearchAddressResultType == "POI" && addressItem.Address.Municipality == "San Francisco").First();
+            Assert.AreEqual("CAFE_PUB", sfCafe.PointOfInterest.Classifications.First().Code);
+            Assert.AreEqual("CAFE_PUB", taipeiCafe.PointOfInterest.Classifications.First().Code);
         }
     }
 }

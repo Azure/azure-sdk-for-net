@@ -19,8 +19,8 @@ namespace Azure.Maps.Search
         /// <summary> Include information on the type of match the geocoder achieved in the response. </summary>
         public bool? IncludeMatchType { get; set; }
 
-        /// <summary> If a number is sent in along with the request, the response may include the side of the street (Left/Right) and also an offset position for that number. </summary>
-        public string Number { get; set; }
+        /// <summary> Street number. If a number is sent in along with the request, the response may include the side of the street (Left/Right) and also an offset position for that number. </summary>
+        public int? StreetNumber { get; set; }
 
         /// <summary> To restrict reverse geocodes to a certain type of road use. The road use array for reverse geocodes can be one or more of LimitedAccess, Arterial, Terminal, Ramp, Rotary, LocalStreet. </summary>
         public IEnumerable<RoadKind> RoadUse { get; set; }

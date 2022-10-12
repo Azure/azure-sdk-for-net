@@ -31,7 +31,7 @@ namespace Azure.Maps.Search
         private const string EnglishAustraliaValue = "en-AU";
         private const string EnglishGreatBritainValue = "en-GB";
         private const string EnglishNewZealandValue = "en-NZ";
-        private const string EnglishUSAValue = "en-US";
+        private const string EnglishUsaValue = "en-US";
         private const string SpanishLatinAmericaValue = "es-419";
         private const string SpanishSpainValue = "es-ES";
         private const string EstonianValue = "et-EE";
@@ -92,7 +92,7 @@ namespace Azure.Maps.Search
         /// <summary> Return English (New Zealand) ("en-NZ"). </summary>
         public static SearchLanguage EnglishNewZealand { get; } = new SearchLanguage(EnglishNewZealandValue);
         /// <summary> Return English (USA) ("en-US"). </summary>
-        public static SearchLanguage EnglishUSA { get; } = new SearchLanguage(EnglishUSAValue);
+        public static SearchLanguage EnglishUsa { get; } = new SearchLanguage(EnglishUsaValue);
         /// <summary> Return Spanish (Latin America) ("es-419"). </summary>
         public static SearchLanguage SpanishLatinAmerica { get; } = new SearchLanguage(SpanishLatinAmericaValue);
         /// <summary> Return Spanish (Spain) ("es-ES"). </summary>

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.GeoJson;
@@ -30,10 +31,19 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             #region Snippet:FuzzySearch
-            Response<SearchAddressResult> fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearchOptions {
+            Response<SearchAddressResult> fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearchOptions
+            {
                 Coordinates = new GeoPosition(121.56, 25.04),
-                Language = SearchLanguage.EnglishUSA
+                Language = SearchLanguage.EnglishUsa
             });
+
+            // Print out the possible results
+            Console.WriteLine("The possible results for coffee shop:");
+            foreach (SearchAddressResultItem result in fuzzySearchResponse.Value.Results)
+            {
+                Console.WriteLine("Coordinate: {0}, Address: {1}",
+                    result.Position, result.Address.FreeformAddress);
+            }
             #endregion
             Assert.AreEqual("CAFE_PUB", fuzzySearchResponse.Value.Results[0].PointOfInterest.Classifications.First().Code);
             Assert.AreEqual("Taipei City", fuzzySearchResponse.Value.Results[0].Address.Municipality);
@@ -53,7 +63,7 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             var fuzzySearchBatchResp = await client.GetImmediateFuzzyBatchSearchAsync(new[] {
-                new FuzzySearchQuery("coffee", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04), Language = "en" }),
+                new FuzzySearchQuery("coffee", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04), Language = SearchLanguage.EnglishUsa }),
                 new FuzzySearchQuery("pizza", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04) })
             });
             Assert.AreEqual("CAFE_PUB", fuzzySearchBatchResp.Value.Results[0].Results[0].PointOfInterest.Classifications[0].Code);
@@ -67,7 +77,7 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             var operation = await client.FuzzyBatchSearchAsync(WaitUntil.Started, new[] {
-                new FuzzySearchQuery("coffee", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04), Language = "en" }),
+                new FuzzySearchQuery("coffee", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04), Language = SearchLanguage.EnglishUsa }),
                 new FuzzySearchQuery("pizza", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04) }),
             });
 

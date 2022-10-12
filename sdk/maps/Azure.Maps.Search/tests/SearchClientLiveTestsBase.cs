@@ -14,7 +14,6 @@ namespace Azure.Maps.Search.Tests
         protected MapsSearchClient CreateClient()
         {
             return InstrumentClient(new MapsSearchClient(
-                endpoint: TestEnvironment.Endpoint,
                 credential: TestEnvironment.Credential,
                 clientId: TestEnvironment.MapAccountClientId,
                 options: InstrumentClientOptions(new MapsSearchClientOptions())
