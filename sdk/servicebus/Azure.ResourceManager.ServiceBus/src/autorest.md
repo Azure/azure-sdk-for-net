@@ -14,6 +14,12 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+generate-virtual-operations:
+- DisasterRecoveryAuthorizationRules_Get
+- NamespaceAuthorizationRules_Get
+- QueueAuthorizationRules_Get
+- TopicAuthorizationRules_Get
+
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}: ServiceBusNamespaceAuthorizationRule
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}: ServiceBusDisasterRecoveryAuthorizationRule

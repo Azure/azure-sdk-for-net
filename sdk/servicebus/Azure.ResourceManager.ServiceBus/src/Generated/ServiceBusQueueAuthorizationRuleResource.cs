@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<ServiceBusQueueAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<ServiceBusQueueAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((ServiceBusQueueAuthorizationRuleResource)result.Value, result.GetRawResponse());
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<ServiceBusQueueAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
+        public virtual new Response<ServiceBusQueueAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
             return Response.FromValue((ServiceBusQueueAuthorizationRuleResource)result.Value, result.GetRawResponse());
