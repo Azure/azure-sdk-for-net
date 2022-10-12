@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using Azure.Communication.CallAutomation.Models.MediaStreaming;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -15,11 +16,13 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         {
             string metadataJson = "{"
                 + "\"kind\": \"AudioMetadata\","
+                + "\"audioMetadata\": {"
                 + "\"subscriptionId\": \"subscriptionId\","
                 + "\"encoding\": \"encodingType\","
                 + "\"sampleRate\": 8,"
                 + "\"channels\": 2,"
                 + "\"length\": 640"
+                + "}"
                 + "}";
 
             MediaStreamingMetadata streamingMetadata = (MediaStreamingMetadata)MediaStreamingPackageParser.Parse(metadataJson);
@@ -31,10 +34,12 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         {
             string audioJson = "{"
                 + "\"kind\": \"AudioData\","
+                + "\"audioData\": {"
                 + "\"data\": \"AQIDBAU=\","      // [1, 2, 3, 4, 5]
                 + "\"timestamp\": \"2022-08-23T11:48:05Z\","
                 + "\"participantRawId\": \"participantId\","
                 + "\"silent\": false"
+                + "}"
                 + "}";
 
             MediaStreamingAudioData streamingAudio = (MediaStreamingAudioData) MediaStreamingPackageParser.Parse(audioJson);
@@ -46,10 +51,11 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         {
             JObject jsonData = new JObject();
             jsonData["kind"] = "AudioData";
-            jsonData["data"] = "AQIDBAU=";
-            jsonData["timestamp"] = "2022-08-23T11:48:05Z";
-            jsonData["participantRawId"] = "participantId";
-            jsonData["silent"] = false;
+            jsonData["audioData"] = new JObject();
+            jsonData["audioData"]["data"] = "AQIDBAU=";
+            jsonData["audioData"]["timestamp"] = "2022-08-23T11:48:05Z";
+            jsonData["audioData"]["participantRawId"] = "participantId";
+            jsonData["audioData"]["silent"] = false;
 
             var binaryData = BinaryData.FromString(jsonData.ToString());
 
@@ -60,14 +66,15 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         [Test]
         public void ParseAudioEventsWithBynaryArray()
         {
-            JObject jsonAudio = new JObject();
-            jsonAudio["kind"] = "AudioData";
-            jsonAudio["data"] = "AQIDBAU=";
-            jsonAudio["timestamp"] = "2022-08-23T11:48:05Z";
-            jsonAudio["participantRawId"] = "participantId";
-            jsonAudio["silent"] = false;
+            JObject jsonData = new JObject();
+            jsonData["kind"] = "AudioData";
+            jsonData["audioData"] = new JObject();
+            jsonData["audioData"]["data"] = "AQIDBAU=";
+            jsonData["audioData"]["timestamp"] = "2022-08-23T11:48:05Z";
+            jsonData["audioData"]["participantRawId"] = "participantId";
+            jsonData["audioData"]["silent"] = false;
 
-            byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(jsonAudio.ToString());
+            byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(jsonData.ToString());
             MediaStreamingAudioData parsedPackage = (MediaStreamingAudioData) MediaStreamingPackageParser.Parse(receivedBytes);
 
             Assert.NotNull(parsedPackage);
