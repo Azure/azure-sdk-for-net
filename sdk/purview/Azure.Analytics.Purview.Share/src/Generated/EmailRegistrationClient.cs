@@ -21,7 +21,6 @@ namespace Azure.Analytics.Purview.Share
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly string _endpoint;
-        private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -57,7 +56,6 @@ namespace Azure.Analytics.Purview.Share
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
-            _apiVersion = options.Version;
         }
 
         /// <summary> Activates the tenant and email combination using the activation code received. </summary>
@@ -418,7 +416,7 @@ namespace Azure.Analytics.Purview.Share
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/activateEmail", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2021-09-01-preview", true);
             request.Uri = uri;
             if (repeatabilityRequestId != null)
             {
@@ -438,7 +436,7 @@ namespace Azure.Analytics.Purview.Share
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/registerEmail", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2021-09-01-preview", true);
             request.Uri = uri;
             if (repeatabilityRequestId != null)
             {
