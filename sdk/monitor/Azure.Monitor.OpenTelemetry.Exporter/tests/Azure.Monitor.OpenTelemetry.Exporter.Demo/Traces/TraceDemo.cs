@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using Azure.Monitor.OpenTelemetry.Exporter.Tracing.Customization;
 using OpenTelemetry;
 using OpenTelemetry.Extensions.AzureMonitor;
@@ -63,6 +64,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                 {
                     nestedActivity?.SetTag("bar", "Hello, World!");
                     nestedActivity?.SetStatus(ActivityStatusCode.Ok);
+                }
+            }
+
+            using (var activity = activitySource.StartActivity("ExceptionExample"))
+            {
+                try
+                {
+                    throw new Exception("Test exception");
+                }
+                catch (Exception ex)
+                {
+                    activity?.SetStatus(ActivityStatusCode.Error);
+                    activity?.RecordException(ex);
                 }
             }
         }

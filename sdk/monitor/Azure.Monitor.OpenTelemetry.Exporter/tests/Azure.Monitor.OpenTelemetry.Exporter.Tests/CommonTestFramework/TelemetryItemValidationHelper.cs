@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -132,6 +133,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             Assert.Equal(expectedMessage, telemetryExceptionDetails.Message);
             Assert.Equal(expectedTypeName, telemetryExceptionDetails.TypeName);
             Assert.True(telemetryExceptionDetails.ParsedStack.Any());
+            Assert.Null(telemetryExceptionDetails.Stack);
         }
 
         public static void AssertActivity_As_DependencyTelemetry(
@@ -139,7 +141,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             string expectedName,
             string expectedTraceId,
             string expectedSpanId,
-            IDictionary<string, string> expectedProperties)
+            IDictionary<string, string> expectedProperties,
+            bool expectedSuccess = true)
         {
             Assert.Equal("RemoteDependency", telemetryItem.Name); // telemetry type
             Assert.Equal("RemoteDependencyData", telemetryItem.Data.BaseType); // telemetry data type
@@ -155,6 +158,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             var remoteDependencyData = (RemoteDependencyData)telemetryItem.Data.BaseData;
             Assert.Equal(expectedSpanId, remoteDependencyData.Id);
             Assert.Equal(expectedName, remoteDependencyData.Name);
+            Assert.Equal(expectedSuccess, remoteDependencyData.Success);
 
             if (expectedProperties == null)
             {
@@ -175,7 +179,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             string expectedName,
             string expectedTraceId,
             IDictionary<string, string> expectedProperties,
-            string expectedSpanId)
+            string expectedSpanId,
+            bool expectedSuccess = true)
         {
             Assert.Equal("Request", telemetryItem.Name); // telemetry type
             Assert.Equal("RequestData", telemetryItem.Data.BaseType); // telemetry data type
@@ -201,6 +206,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             var requestData = (RequestData)telemetryItem.Data.BaseData;
             Assert.Equal(expectedName, requestData.Name);
             Assert.Equal(expectedSpanId, requestData.Id);
+            Assert.Equal(expectedSuccess, requestData.Success);
 
             if (expectedProperties == null)
             {
@@ -213,6 +219,39 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
                     Assert.Equal(prop.Value, requestData.Properties[prop.Key]);
                 }
             }
+        }
+
+        internal static void AssertActivity_RecordedException(
+            TelemetryItem telemetryItem,
+            string expectedExceptionMessage,
+            string expectedExceptionTypeName,
+            string expectedTraceId,
+            string expectedSpanId)
+        {
+            Assert.Equal("Exception", telemetryItem.Name); // telemetry type
+            Assert.Equal("ExceptionData", telemetryItem.Data.BaseType); // telemetry data type
+            Assert.Equal(2, telemetryItem.Data.BaseData.Version); // telemetry api version
+            Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItem.InstrumentationKey);
+
+            Assert.Equal(5, telemetryItem.Tags.Count);
+            Assert.Equal(expectedSpanId, telemetryItem.Tags["ai.operation.parentId"]);
+            Assert.Equal(expectedTraceId, telemetryItem.Tags["ai.operation.id"]);
+            Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);
+            Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
+            Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
+
+            var telemetryExceptionData = (TelemetryExceptionData)telemetryItem.Data.BaseData;
+            Assert.Null(telemetryExceptionData.SeverityLevel);
+            Assert.Empty(telemetryExceptionData.Properties);
+
+            Assert.Equal(1, telemetryExceptionData.Exceptions.Count);
+
+            var telemetryExceptionDetails = (TelemetryExceptionDetails)telemetryExceptionData.Exceptions[0];
+            Assert.Equal(expectedExceptionMessage, telemetryExceptionDetails.Message);
+            Assert.Equal(expectedExceptionTypeName, telemetryExceptionDetails.TypeName);
+            Assert.True(telemetryExceptionDetails.HasFullStack);
+            Assert.Empty(telemetryExceptionDetails.ParsedStack);
+            Assert.False(string.IsNullOrEmpty(telemetryExceptionDetails.Stack));
         }
     }
 }
