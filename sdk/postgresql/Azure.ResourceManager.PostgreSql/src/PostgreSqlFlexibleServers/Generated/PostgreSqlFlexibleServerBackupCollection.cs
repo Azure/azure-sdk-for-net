@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PostgreSqlFlexibleServerServerBackupResource" /> and their operations.
-    /// Each <see cref="PostgreSqlFlexibleServerServerBackupResource" /> in the collection will belong to the same instance of <see cref="PostgreSqlFlexibleServerResource" />.
-    /// To get a <see cref="PostgreSqlFlexibleServerServerBackupCollection" /> instance call the GetPostgreSqlFlexibleServerServerBackups method from an instance of <see cref="PostgreSqlFlexibleServerResource" />.
+    /// A class representing a collection of <see cref="PostgreSqlFlexibleServerBackupResource" /> and their operations.
+    /// Each <see cref="PostgreSqlFlexibleServerBackupResource" /> in the collection will belong to the same instance of <see cref="PostgreSqlFlexibleServerResource" />.
+    /// To get a <see cref="PostgreSqlFlexibleServerBackupCollection" /> instance call the GetPostgreSqlFlexibleServerBackups method from an instance of <see cref="PostgreSqlFlexibleServerResource" />.
     /// </summary>
-    public partial class PostgreSqlFlexibleServerServerBackupCollection : ArmCollection, IEnumerable<PostgreSqlFlexibleServerServerBackupResource>, IAsyncEnumerable<PostgreSqlFlexibleServerServerBackupResource>
+    public partial class PostgreSqlFlexibleServerBackupCollection : ArmCollection, IEnumerable<PostgreSqlFlexibleServerBackupResource>, IAsyncEnumerable<PostgreSqlFlexibleServerBackupResource>
     {
-        private readonly ClientDiagnostics _postgreSqlFlexibleServerServerBackupBackupsClientDiagnostics;
-        private readonly BackupsRestOperations _postgreSqlFlexibleServerServerBackupBackupsRestClient;
+        private readonly ClientDiagnostics _postgreSqlFlexibleServerBackupBackupsClientDiagnostics;
+        private readonly BackupsRestOperations _postgreSqlFlexibleServerBackupBackupsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerServerBackupCollection"/> class for mocking. </summary>
-        protected PostgreSqlFlexibleServerServerBackupCollection()
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerBackupCollection"/> class for mocking. </summary>
+        protected PostgreSqlFlexibleServerBackupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerServerBackupCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerBackupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal PostgreSqlFlexibleServerServerBackupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PostgreSqlFlexibleServerBackupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _postgreSqlFlexibleServerServerBackupBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerServerBackupResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(PostgreSqlFlexibleServerServerBackupResource.ResourceType, out string postgreSqlFlexibleServerServerBackupBackupsApiVersion);
-            _postgreSqlFlexibleServerServerBackupBackupsRestClient = new BackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerServerBackupBackupsApiVersion);
+            _postgreSqlFlexibleServerBackupBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerBackupResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(PostgreSqlFlexibleServerBackupResource.ResourceType, out string postgreSqlFlexibleServerBackupBackupsApiVersion);
+            _postgreSqlFlexibleServerBackupBackupsRestClient = new BackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerBackupBackupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,18 +62,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
-        public virtual async Task<Response<PostgreSqlFlexibleServerServerBackupResource>> GetAsync(string backupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerBackupResource>> GetAsync(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _postgreSqlFlexibleServerServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerServerBackupCollection.Get");
+            using var scope = _postgreSqlFlexibleServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _postgreSqlFlexibleServerServerBackupBackupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken).ConfigureAwait(false);
+                var response = await _postgreSqlFlexibleServerBackupBackupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PostgreSqlFlexibleServerServerBackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlFlexibleServerBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,18 +91,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
-        public virtual Response<PostgreSqlFlexibleServerServerBackupResource> Get(string backupName, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerBackupResource> Get(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _postgreSqlFlexibleServerServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerServerBackupCollection.Get");
+            using var scope = _postgreSqlFlexibleServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupCollection.Get");
             scope.Start();
             try
             {
-                var response = _postgreSqlFlexibleServerServerBackupBackupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken);
+                var response = _postgreSqlFlexibleServerBackupBackupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PostgreSqlFlexibleServerServerBackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlFlexibleServerBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,17 +117,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Operation Id: Backups_ListByServer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerServerBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PostgreSqlFlexibleServerServerBackupResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PostgreSqlFlexibleServerBackupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PostgreSqlFlexibleServerServerBackupResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PostgreSqlFlexibleServerBackupResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _postgreSqlFlexibleServerServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerServerBackupCollection.GetAll");
+                using var scope = _postgreSqlFlexibleServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _postgreSqlFlexibleServerServerBackupBackupsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlFlexibleServerServerBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _postgreSqlFlexibleServerBackupBackupsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlFlexibleServerBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     throw;
                 }
             }
-            async Task<Page<PostgreSqlFlexibleServerServerBackupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<PostgreSqlFlexibleServerBackupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _postgreSqlFlexibleServerServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerServerBackupCollection.GetAll");
+                using var scope = _postgreSqlFlexibleServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _postgreSqlFlexibleServerServerBackupBackupsRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlFlexibleServerServerBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _postgreSqlFlexibleServerBackupBackupsRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlFlexibleServerBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -159,17 +159,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Operation Id: Backups_ListByServer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerServerBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PostgreSqlFlexibleServerServerBackupResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PostgreSqlFlexibleServerBackupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PostgreSqlFlexibleServerServerBackupResource> FirstPageFunc(int? pageSizeHint)
+            Page<PostgreSqlFlexibleServerBackupResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _postgreSqlFlexibleServerServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerServerBackupCollection.GetAll");
+                using var scope = _postgreSqlFlexibleServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _postgreSqlFlexibleServerServerBackupBackupsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlFlexibleServerServerBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _postgreSqlFlexibleServerBackupBackupsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlFlexibleServerBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -177,14 +177,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     throw;
                 }
             }
-            Page<PostgreSqlFlexibleServerServerBackupResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<PostgreSqlFlexibleServerBackupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _postgreSqlFlexibleServerServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerServerBackupCollection.GetAll");
+                using var scope = _postgreSqlFlexibleServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _postgreSqlFlexibleServerServerBackupBackupsRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlFlexibleServerServerBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _postgreSqlFlexibleServerBackupBackupsRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlFlexibleServerBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -208,11 +208,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _postgreSqlFlexibleServerServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerServerBackupCollection.Exists");
+            using var scope = _postgreSqlFlexibleServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _postgreSqlFlexibleServerServerBackupBackupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _postgreSqlFlexibleServerBackupBackupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _postgreSqlFlexibleServerServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerServerBackupCollection.Exists");
+            using var scope = _postgreSqlFlexibleServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupCollection.Exists");
             scope.Start();
             try
             {
-                var response = _postgreSqlFlexibleServerServerBackupBackupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken: cancellationToken);
+                var response = _postgreSqlFlexibleServerBackupBackupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
-        IEnumerator<PostgreSqlFlexibleServerServerBackupResource> IEnumerable<PostgreSqlFlexibleServerServerBackupResource>.GetEnumerator()
+        IEnumerator<PostgreSqlFlexibleServerBackupResource> IEnumerable<PostgreSqlFlexibleServerBackupResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<PostgreSqlFlexibleServerServerBackupResource> IAsyncEnumerable<PostgreSqlFlexibleServerServerBackupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<PostgreSqlFlexibleServerBackupResource> IAsyncEnumerable<PostgreSqlFlexibleServerBackupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

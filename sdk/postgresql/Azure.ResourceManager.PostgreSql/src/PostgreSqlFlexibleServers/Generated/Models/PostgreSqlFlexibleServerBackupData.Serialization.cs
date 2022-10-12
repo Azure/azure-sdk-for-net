@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    public partial class PostgreSqlFlexibleServerServerBackupData : IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerBackupData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             writer.WriteEndObject();
         }
 
-        internal static PostgreSqlFlexibleServerServerBackupData DeserializePostgreSqlFlexibleServerServerBackupData(JsonElement element)
+        internal static PostgreSqlFlexibleServerBackupData DeserializePostgreSqlFlexibleServerBackupData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerServerBackupData(id, name, type, systemData.Value, backupType.Value, Optional.ToNullable(completedTime), source.Value);
+            return new PostgreSqlFlexibleServerBackupData(id, name, type, systemData.Value, backupType.Value, Optional.ToNullable(completedTime), source.Value);
         }
     }
 }

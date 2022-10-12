@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 string serverName = null;
 
-                using var cachedServerNameScope = _postgreSqlFlexibleServerServersClientDiagnostics.CreateScope("PostgreSqlFlexibleServerCollection.ExecuteGetCachedServerName");
+                using var cachedServerNameScope = _postgreSqlFlexibleServerServersClientDiagnostics.CreateScope("PostgreSqlFlexibleServerCollection.GetPostgreSqlFlexibleServerCachedServerName");
                 cachedServerNameScope.Start();
                 try
                 {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 string serverName = null;
 
-                using var cachedServerNameScope = _postgreSqlFlexibleServerServersClientDiagnostics.CreateScope("PostgreSqlFlexibleServerCollection.ExecuteGetCachedServerName");
+                using var cachedServerNameScope = _postgreSqlFlexibleServerServersClientDiagnostics.CreateScope("PostgreSqlFlexibleServerCollection.GetPostgreSqlFlexibleServerCachedServerName");
                 cachedServerNameScope.Start();
                 try
                 {

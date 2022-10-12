@@ -11,15 +11,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    /// <summary> A class representing the PostgreSqlFlexibleServerServerBackup data model. </summary>
-    public partial class PostgreSqlFlexibleServerServerBackupData : ResourceData
+    /// <summary> A class representing the PostgreSqlFlexibleServerBackup data model. </summary>
+    public partial class PostgreSqlFlexibleServerBackupData : ResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerServerBackupData. </summary>
-        public PostgreSqlFlexibleServerServerBackupData()
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerBackupData. </summary>
+        public PostgreSqlFlexibleServerBackupData()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerServerBackupData. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerBackupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="backupType"> Backup type. </param>
         /// <param name="completedOn"> Backup completed time (ISO8601 format). </param>
         /// <param name="source"> Backup source. </param>
-        internal PostgreSqlFlexibleServerServerBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupType, DateTimeOffset? completedOn, string source) : base(id, name, resourceType, systemData)
+        internal PostgreSqlFlexibleServerBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupType, DateTimeOffset? completedOn, string source) : base(id, name, resourceType, systemData)
         {
             BackupType = backupType;
             CompletedOn = completedOn;

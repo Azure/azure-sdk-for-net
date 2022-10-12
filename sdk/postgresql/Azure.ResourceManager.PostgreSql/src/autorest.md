@@ -241,9 +241,10 @@ rename-mapping:
   Server.properties.pointInTimeUTC: PointInTimeUtc
   CachedServerName: PostgreSqlFlexibleServerCachedServerName
   CachedServerNameRequest: PostgreSqlFlexibleServerCachedServerNameRequest
-  ServerBackup: PostgreSqlFlexibleServerServerBackup
-  ServerBackupProperties: PostgreSqlFlexibleServerServerBackupProperties
-  ServerBackupListResult: PostgreSqlFlexibleServerServerBackupListResult
+  ServerBackup: PostgreSqlFlexibleServerBackup
+  ServerBackupProperties: PostgreSqlFlexibleServerBackupProperties
+  ServerBackupListResult: PostgreSqlFlexibleServerBackupListResult
 override-operation-name:
   CheckNameAvailability_Execute: CheckPostgreSqlFlexibleServerNameAvailability
+  GetCachedServerName_Execute: GetPostgreSqlFlexibleServerCachedServerName
 ```

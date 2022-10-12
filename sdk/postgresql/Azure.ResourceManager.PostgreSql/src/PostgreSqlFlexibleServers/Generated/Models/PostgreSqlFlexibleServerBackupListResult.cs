@@ -12,25 +12,25 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> A list of server backups. </summary>
-    internal partial class PostgreSqlFlexibleServerServerBackupListResult
+    internal partial class PostgreSqlFlexibleServerBackupListResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerServerBackupListResult. </summary>
-        internal PostgreSqlFlexibleServerServerBackupListResult()
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerBackupListResult. </summary>
+        internal PostgreSqlFlexibleServerBackupListResult()
         {
-            Value = new ChangeTrackingList<PostgreSqlFlexibleServerServerBackupData>();
+            Value = new ChangeTrackingList<PostgreSqlFlexibleServerBackupData>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerServerBackupListResult. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerBackupListResult. </summary>
         /// <param name="value"> The list of backups of a server. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
-        internal PostgreSqlFlexibleServerServerBackupListResult(IReadOnlyList<PostgreSqlFlexibleServerServerBackupData> value, string nextLink)
+        internal PostgreSqlFlexibleServerBackupListResult(IReadOnlyList<PostgreSqlFlexibleServerBackupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of backups of a server. </summary>
-        public IReadOnlyList<PostgreSqlFlexibleServerServerBackupData> Value { get; }
+        public IReadOnlyList<PostgreSqlFlexibleServerBackupData> Value { get; }
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
     }

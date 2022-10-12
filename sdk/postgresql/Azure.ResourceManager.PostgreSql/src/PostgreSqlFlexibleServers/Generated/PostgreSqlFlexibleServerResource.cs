@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return GetPostgreSqlFlexibleServerDatabases().Get(databaseName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PostgreSqlFlexibleServerServerBackupResources in the PostgreSqlFlexibleServer. </summary>
-        /// <returns> An object representing collection of PostgreSqlFlexibleServerServerBackupResources and their operations over a PostgreSqlFlexibleServerServerBackupResource. </returns>
-        public virtual PostgreSqlFlexibleServerServerBackupCollection GetPostgreSqlFlexibleServerServerBackups()
+        /// <summary> Gets a collection of PostgreSqlFlexibleServerBackupResources in the PostgreSqlFlexibleServer. </summary>
+        /// <returns> An object representing collection of PostgreSqlFlexibleServerBackupResources and their operations over a PostgreSqlFlexibleServerBackupResource. </returns>
+        public virtual PostgreSqlFlexibleServerBackupCollection GetPostgreSqlFlexibleServerBackups()
         {
-            return GetCachedClient(Client => new PostgreSqlFlexibleServerServerBackupCollection(Client, Id));
+            return GetCachedClient(Client => new PostgreSqlFlexibleServerBackupCollection(Client, Id));
         }
 
         /// <summary>
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PostgreSqlFlexibleServerServerBackupResource>> GetPostgreSqlFlexibleServerServerBackupAsync(string backupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerBackupResource>> GetPostgreSqlFlexibleServerBackupAsync(string backupName, CancellationToken cancellationToken = default)
         {
-            return await GetPostgreSqlFlexibleServerServerBackups().GetAsync(backupName, cancellationToken).ConfigureAwait(false);
+            return await GetPostgreSqlFlexibleServerBackups().GetAsync(backupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PostgreSqlFlexibleServerServerBackupResource> GetPostgreSqlFlexibleServerServerBackup(string backupName, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerBackupResource> GetPostgreSqlFlexibleServerBackup(string backupName, CancellationToken cancellationToken = default)
         {
-            return GetPostgreSqlFlexibleServerServerBackups().Get(backupName, cancellationToken);
+            return GetPostgreSqlFlexibleServerBackups().Get(backupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PostgreSqlFlexibleServerFirewallRuleResources in the PostgreSqlFlexibleServer. </summary>

@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="content"> The required parameters for get cached name available for fast provisioning. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PostgreSqlFlexibleServerCachedServerName>> ExecuteGetCachedServerNameAsync(AzureLocation locationName, PostgreSqlFlexibleServerCachedServerNameContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerCachedServerName>> GetPostgreSqlFlexibleServerCachedServerNameAsync(AzureLocation locationName, PostgreSqlFlexibleServerCachedServerNameContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = GetCachedServerNameClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ExecuteGetCachedServerName");
+            using var scope = GetCachedServerNameClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetPostgreSqlFlexibleServerCachedServerName");
             scope.Start();
             try
             {
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="content"> The required parameters for get cached name available for fast provisioning. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PostgreSqlFlexibleServerCachedServerName> ExecuteGetCachedServerName(AzureLocation locationName, PostgreSqlFlexibleServerCachedServerNameContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerCachedServerName> GetPostgreSqlFlexibleServerCachedServerName(AzureLocation locationName, PostgreSqlFlexibleServerCachedServerNameContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = GetCachedServerNameClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ExecuteGetCachedServerName");
+            using var scope = GetCachedServerNameClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetPostgreSqlFlexibleServerCachedServerName");
             scope.Start();
             try
             {

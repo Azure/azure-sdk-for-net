@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> The required parameters for get cached name available for fast provisioning. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<PostgreSqlFlexibleServerCachedServerName>> ExecuteGetCachedServerNameAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, PostgreSqlFlexibleServerCachedServerNameContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<PostgreSqlFlexibleServerCachedServerName>> GetPostgreSqlFlexibleServerCachedServerNameAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, PostgreSqlFlexibleServerCachedServerNameContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(resourceGroupResource).ExecuteGetCachedServerNameAsync(locationName, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroupResource).GetPostgreSqlFlexibleServerCachedServerNameAsync(locationName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -257,11 +257,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> The required parameters for get cached name available for fast provisioning. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<PostgreSqlFlexibleServerCachedServerName> ExecuteGetCachedServerName(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, PostgreSqlFlexibleServerCachedServerNameContent content, CancellationToken cancellationToken = default)
+        public static Response<PostgreSqlFlexibleServerCachedServerName> GetPostgreSqlFlexibleServerCachedServerName(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, PostgreSqlFlexibleServerCachedServerNameContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(resourceGroupResource).ExecuteGetCachedServerName(locationName, content, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetPostgreSqlFlexibleServerCachedServerName(locationName, content, cancellationToken);
         }
 
         #region PostgreSqlFlexibleServerDatabaseResource
@@ -302,20 +302,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
         #endregion
 
-        #region PostgreSqlFlexibleServerServerBackupResource
+        #region PostgreSqlFlexibleServerBackupResource
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlFlexibleServerServerBackupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlFlexibleServerServerBackupResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerServerBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlFlexibleServerBackupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlFlexibleServerBackupResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlFlexibleServerServerBackupResource" /> object. </returns>
-        public static PostgreSqlFlexibleServerServerBackupResource GetPostgreSqlFlexibleServerServerBackupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlFlexibleServerBackupResource" /> object. </returns>
+        public static PostgreSqlFlexibleServerBackupResource GetPostgreSqlFlexibleServerBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PostgreSqlFlexibleServerServerBackupResource.ValidateResourceId(id);
-                return new PostgreSqlFlexibleServerServerBackupResource(client, id);
+                PostgreSqlFlexibleServerBackupResource.ValidateResourceId(id);
+                return new PostgreSqlFlexibleServerBackupResource(client, id);
             }
             );
         }

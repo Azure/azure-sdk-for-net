@@ -12,11 +12,11 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    internal partial class PostgreSqlFlexibleServerServerBackupListResult
+    internal partial class PostgreSqlFlexibleServerBackupListResult
     {
-        internal static PostgreSqlFlexibleServerServerBackupListResult DeserializePostgreSqlFlexibleServerServerBackupListResult(JsonElement element)
+        internal static PostgreSqlFlexibleServerBackupListResult DeserializePostgreSqlFlexibleServerBackupListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerServerBackupData>> value = default;
+            Optional<IReadOnlyList<PostgreSqlFlexibleServerBackupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PostgreSqlFlexibleServerServerBackupData> array = new List<PostgreSqlFlexibleServerServerBackupData>();
+                    List<PostgreSqlFlexibleServerBackupData> array = new List<PostgreSqlFlexibleServerBackupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFlexibleServerServerBackupData.DeserializePostgreSqlFlexibleServerServerBackupData(item));
+                        array.Add(PostgreSqlFlexibleServerBackupData.DeserializePostgreSqlFlexibleServerBackupData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerServerBackupListResult(Optional.ToList(value), nextLink.Value);
+            return new PostgreSqlFlexibleServerBackupListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }
