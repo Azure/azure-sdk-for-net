@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using Azure.Monitor.OpenTelemetry.Exporter.Tracing.Customization;
 using OpenTelemetry;
 using OpenTelemetry.Extensions.AzureMonitor;
