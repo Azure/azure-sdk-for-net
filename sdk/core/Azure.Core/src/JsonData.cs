@@ -16,7 +16,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Core
+namespace Azure
 {
     /// <summary>
     /// A mutable representation of a JSON value.
