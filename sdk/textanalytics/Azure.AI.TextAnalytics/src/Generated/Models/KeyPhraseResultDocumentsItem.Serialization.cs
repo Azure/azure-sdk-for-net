@@ -17,6 +17,11 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(DetectedLanguage))
+            {
+                writer.WritePropertyName("detectedLanguage");
+                writer.WriteObjectValue(DetectedLanguage.Value);
+            }
             writer.WritePropertyName("keyPhrases");
             writer.WriteStartArray();
             foreach (var item in KeyPhrases)
@@ -43,12 +48,23 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static KeyPhraseResultDocumentsItem DeserializeKeyPhraseResultDocumentsItem(JsonElement element)
         {
+            Optional<DetectedLanguageInternal> detectedLanguage = default;
             IList<string> keyPhrases = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("detectedLanguage"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    detectedLanguage = DetectedLanguageInternal.DeserializeDetectedLanguageInternal(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("keyPhrases"))
                 {
                     List<string> array = new List<string>();
@@ -85,7 +101,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new KeyPhraseResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), keyPhrases);
+            return new KeyPhraseResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), keyPhrases, Optional.ToNullable(detectedLanguage));
         }
     }
 }

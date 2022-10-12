@@ -75,7 +75,7 @@ rename-mapping:
   DatabasePrincipalAssignment: KustoDatabasePrincipalAssignment
   DatabasePrincipalAssignmentType: KustoDatabasePrincipalAssignmentType
   DatabasePrincipalAssignment.properties.aadObjectId: -|uuid
-  DatabasePrincipalAssignment.properties.principalId: -|uuid
+  DatabasePrincipalAssignment.properties.principalId: DatabasePrincipalId
   DatabasePrincipalRole: KustoDatabasePrincipalRole
   DatabasePrincipalType: KustoDatabasePrincipalType
   DatabasePrincipal: KustoDatabasePrincipal

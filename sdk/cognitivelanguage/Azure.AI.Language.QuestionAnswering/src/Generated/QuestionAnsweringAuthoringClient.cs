@@ -1485,9 +1485,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         }
 
         /// <summary> Gets all projects for a user. </summary>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -1501,18 +1498,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// await foreach (var data in client.GetProjectsAsync())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetProjectsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetProjectsAsync(1234, 1234, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("projectName").ToString());
         ///     Console.WriteLine(result.GetProperty("description").ToString());
         ///     Console.WriteLine(result.GetProperty("language").ToString());
@@ -1547,12 +1532,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetProjectsAsync(RequestContext context = null)
         {
-            return GetProjectsImplementationAsync("QuestionAnsweringAuthoringClient.GetProjects", maxCount, skip, maxpagesize, context);
+            return GetProjectsImplementationAsync("QuestionAnsweringAuthoringClient.GetProjects", context);
         }
 
-        private AsyncPageable<BinaryData> GetProjectsImplementationAsync(string diagnosticsScopeName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetProjectsImplementationAsync(string diagnosticsScopeName, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1560,8 +1545,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProjectsRequest(maxCount, skip, maxpagesize, context)
-                        : CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
+                        ? CreateGetProjectsRequest(context)
+                        : CreateGetProjectsNextPageRequest(nextLink, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1570,9 +1555,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         }
 
         /// <summary> Gets all projects for a user. </summary>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -1586,18 +1568,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// foreach (var data in client.GetProjects())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetProjects with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetProjects(1234, 1234, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("projectName").ToString());
         ///     Console.WriteLine(result.GetProperty("description").ToString());
         ///     Console.WriteLine(result.GetProperty("language").ToString());
@@ -1632,12 +1602,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetProjects(int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetProjects(RequestContext context = null)
         {
-            return GetProjectsImplementation("QuestionAnsweringAuthoringClient.GetProjects", maxCount, skip, maxpagesize, context);
+            return GetProjectsImplementation("QuestionAnsweringAuthoringClient.GetProjects", context);
         }
 
-        private Pageable<BinaryData> GetProjectsImplementation(string diagnosticsScopeName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetProjectsImplementation(string diagnosticsScopeName, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1645,8 +1615,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProjectsRequest(maxCount, skip, maxpagesize, context)
-                        : CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
+                        ? CreateGetProjectsRequest(context)
+                        : CreateGetProjectsNextPageRequest(nextLink, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1656,9 +1626,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> List all deployments of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1674,18 +1641,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// await foreach (var data in client.GetDeploymentsAsync("<projectName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetDeploymentsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetDeploymentsAsync("<projectName>", 1234, 1234, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("deploymentName").ToString());
         ///     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
         /// }
@@ -1706,14 +1661,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetDeploymentsImplementationAsync("QuestionAnsweringAuthoringClient.GetDeployments", projectName, maxCount, skip, maxpagesize, context);
+            return GetDeploymentsImplementationAsync("QuestionAnsweringAuthoringClient.GetDeployments", projectName, context);
         }
 
-        private AsyncPageable<BinaryData> GetDeploymentsImplementationAsync(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetDeploymentsImplementationAsync(string diagnosticsScopeName, string projectName, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1721,8 +1676,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeploymentsRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+                        ? CreateGetDeploymentsRequest(projectName, context)
+                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1732,9 +1687,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> List all deployments of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1750,18 +1702,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// foreach (var data in client.GetDeployments("<projectName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetDeployments with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetDeployments("<projectName>", 1234, 1234, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("deploymentName").ToString());
         ///     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
         /// }
@@ -1782,14 +1722,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetDeployments(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetDeployments(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetDeploymentsImplementation("QuestionAnsweringAuthoringClient.GetDeployments", projectName, maxCount, skip, maxpagesize, context);
+            return GetDeploymentsImplementation("QuestionAnsweringAuthoringClient.GetDeployments", projectName, context);
         }
 
-        private Pageable<BinaryData> GetDeploymentsImplementation(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetDeploymentsImplementation(string diagnosticsScopeName, string projectName, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1797,8 +1737,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeploymentsRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+                        ? CreateGetDeploymentsRequest(projectName, context)
+                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1808,9 +1748,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Gets all the synonyms of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1829,18 +1766,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         ///     Console.WriteLine(result.GetProperty("alterations")[0].ToString());
         /// }
         /// ]]></code>
-        /// This sample shows how to call GetSynonymsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetSynonymsAsync("<projectName>", 1234, 1234, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("alterations")[0].ToString());
-        /// }
-        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
@@ -1856,14 +1781,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetSynonymsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSynonymsAsync(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetSynonymsImplementationAsync("QuestionAnsweringAuthoringClient.GetSynonyms", projectName, maxCount, skip, maxpagesize, context);
+            return GetSynonymsImplementationAsync("QuestionAnsweringAuthoringClient.GetSynonyms", projectName, context);
         }
 
-        private AsyncPageable<BinaryData> GetSynonymsImplementationAsync(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetSynonymsImplementationAsync(string diagnosticsScopeName, string projectName, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1871,8 +1796,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSynonymsRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetSynonymsNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+                        ? CreateGetSynonymsRequest(projectName, context)
+                        : CreateGetSynonymsNextPageRequest(nextLink, projectName, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1882,9 +1807,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Gets all the synonyms of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1903,18 +1825,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         ///     Console.WriteLine(result.GetProperty("alterations")[0].ToString());
         /// }
         /// ]]></code>
-        /// This sample shows how to call GetSynonyms with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetSynonyms("<projectName>", 1234, 1234, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("alterations")[0].ToString());
-        /// }
-        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
@@ -1930,14 +1840,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetSynonyms(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSynonyms(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetSynonymsImplementation("QuestionAnsweringAuthoringClient.GetSynonyms", projectName, maxCount, skip, maxpagesize, context);
+            return GetSynonymsImplementation("QuestionAnsweringAuthoringClient.GetSynonyms", projectName, context);
         }
 
-        private Pageable<BinaryData> GetSynonymsImplementation(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetSynonymsImplementation(string diagnosticsScopeName, string projectName, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1945,8 +1855,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSynonymsRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetSynonymsNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+                        ? CreateGetSynonymsRequest(projectName, context)
+                        : CreateGetSynonymsNextPageRequest(nextLink, projectName, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1956,9 +1866,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Gets all the sources of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1974,19 +1881,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// await foreach (var data in client.GetSourcesAsync("<projectName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
-        ///     Console.WriteLine(result.GetProperty("sourceKind").ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetSourcesAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetSourcesAsync("<projectName>", 1234, 1234, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("displayName").ToString());
         ///     Console.WriteLine(result.GetProperty("source").ToString());
         ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
@@ -2013,14 +1907,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetSourcesAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSourcesAsync(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetSourcesImplementationAsync("QuestionAnsweringAuthoringClient.GetSources", projectName, maxCount, skip, maxpagesize, context);
+            return GetSourcesImplementationAsync("QuestionAnsweringAuthoringClient.GetSources", projectName, context);
         }
 
-        private AsyncPageable<BinaryData> GetSourcesImplementationAsync(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetSourcesImplementationAsync(string diagnosticsScopeName, string projectName, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -2028,8 +1922,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSourcesRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetSourcesNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+                        ? CreateGetSourcesRequest(projectName, context)
+                        : CreateGetSourcesNextPageRequest(nextLink, projectName, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2039,9 +1933,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Gets all the sources of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2057,19 +1948,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// foreach (var data in client.GetSources("<projectName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
-        ///     Console.WriteLine(result.GetProperty("sourceKind").ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetSources with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetSources("<projectName>", 1234, 1234, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("displayName").ToString());
         ///     Console.WriteLine(result.GetProperty("source").ToString());
         ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
@@ -2096,14 +1974,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetSources(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSources(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetSourcesImplementation("QuestionAnsweringAuthoringClient.GetSources", projectName, maxCount, skip, maxpagesize, context);
+            return GetSourcesImplementation("QuestionAnsweringAuthoringClient.GetSources", projectName, context);
         }
 
-        private Pageable<BinaryData> GetSourcesImplementation(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetSourcesImplementation(string diagnosticsScopeName, string projectName, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -2111,8 +1989,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSourcesRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetSourcesNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+                        ? CreateGetSourcesRequest(projectName, context)
+                        : CreateGetSourcesNextPageRequest(nextLink, projectName, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2123,9 +2001,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Gets all the QnAs of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="source"> Source of the QnA. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2150,7 +2025,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
-        /// await foreach (var data in client.GetQnasAsync("<projectName>", "<source>", 1234, 1234, 1234))
+        /// await foreach (var data in client.GetQnasAsync("<projectName>", "<source>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("id").ToString());
@@ -2227,14 +2102,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetQnasAsync(string projectName, string source = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetQnasAsync(string projectName, string source = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetQnasImplementationAsync("QuestionAnsweringAuthoringClient.GetQnas", projectName, source, maxCount, skip, maxpagesize, context);
+            return GetQnasImplementationAsync("QuestionAnsweringAuthoringClient.GetQnas", projectName, source, context);
         }
 
-        private AsyncPageable<BinaryData> GetQnasImplementationAsync(string diagnosticsScopeName, string projectName, string source, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetQnasImplementationAsync(string diagnosticsScopeName, string projectName, string source, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -2242,8 +2117,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetQnasRequest(projectName, source, maxCount, skip, maxpagesize, context)
-                        : CreateGetQnasNextPageRequest(nextLink, projectName, source, maxCount, skip, maxpagesize, context);
+                        ? CreateGetQnasRequest(projectName, source, context)
+                        : CreateGetQnasNextPageRequest(nextLink, projectName, source, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2254,9 +2129,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Gets all the QnAs of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="source"> Source of the QnA. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2281,7 +2153,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
-        /// foreach (var data in client.GetQnas("<projectName>", "<source>", 1234, 1234, 1234))
+        /// foreach (var data in client.GetQnas("<projectName>", "<source>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("id").ToString());
@@ -2358,14 +2230,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetQnas(string projectName, string source = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetQnas(string projectName, string source = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetQnasImplementation("QuestionAnsweringAuthoringClient.GetQnas", projectName, source, maxCount, skip, maxpagesize, context);
+            return GetQnasImplementation("QuestionAnsweringAuthoringClient.GetQnas", projectName, source, context);
         }
 
-        private Pageable<BinaryData> GetQnasImplementation(string diagnosticsScopeName, string projectName, string source, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetQnasImplementation(string diagnosticsScopeName, string projectName, string source, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -2373,8 +2245,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetQnasRequest(projectName, source, maxCount, skip, maxpagesize, context)
-                        : CreateGetQnasNextPageRequest(nextLink, projectName, source, maxCount, skip, maxpagesize, context);
+                        ? CreateGetQnasRequest(projectName, source, context)
+                        : CreateGetQnasNextPageRequest(nextLink, projectName, source, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2389,9 +2261,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <example>
-        /// This sample shows how to call DeleteProjectAsync with required parameters and parse the result.
+        /// This sample shows how to call DeleteProjectAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
@@ -2399,35 +2271,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// 
         /// var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
         /// 
-        /// BinaryData data = await operation.WaitForCompletionAsync();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/delete-project
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
-        public virtual async Task<Operation<BinaryData>> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
+        public virtual async Task<Operation> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2436,7 +2284,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2452,9 +2300,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <example>
-        /// This sample shows how to call DeleteProject with required parameters and parse the result.
+        /// This sample shows how to call DeleteProject with required parameters.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
@@ -2462,35 +2310,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// 
         /// var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
         /// 
-        /// BinaryData data = operation.WaitForCompletion();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/delete-project
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
-        public virtual Operation<BinaryData> DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
+        public virtual Operation DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2499,7 +2323,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -3878,7 +3702,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        internal HttpMessage CreateGetProjectsRequest(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetProjectsRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3888,18 +3712,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -3941,7 +3753,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         internal HttpMessage CreateDeleteProjectRequest(string projectName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -4097,7 +3909,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsRequest(string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4109,24 +3921,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetSynonymsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSynonymsRequest(string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4138,18 +3938,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/synonyms", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -4174,7 +3962,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetSourcesRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSourcesRequest(string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4186,18 +3974,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/sources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -4240,7 +4016,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetQnasRequest(string projectName, string source, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetQnasRequest(string projectName, string source, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4255,18 +4031,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             if (source != null)
             {
                 uri.AppendQuery("source", source, true);
-            }
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -4329,7 +4093,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetProjectsNextPageRequest(string nextLink, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetProjectsNextPageRequest(string nextLink, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4343,7 +4107,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsNextPageRequest(string nextLink, string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4357,7 +4121,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetSynonymsNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSynonymsNextPageRequest(string nextLink, string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4371,7 +4135,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetSourcesNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSourcesNextPageRequest(string nextLink, string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4385,7 +4149,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetQnasNextPageRequest(string nextLink, string projectName, string source, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetQnasNextPageRequest(string nextLink, string projectName, string source, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4431,6 +4195,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
         private static ResponseClassifier _responseClassifier200201;
         private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
         private static ResponseClassifier _responseClassifier200202;
         private static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
         private static ResponseClassifier _responseClassifier204;

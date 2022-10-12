@@ -13,6 +13,7 @@ resource baseName_resource 'Microsoft.Insights/components@2020-02-02-preview' = 
   location: location
   properties: {
     Application_Type: 'other'
+    WorkspaceResourceId: primaryWorkspace.id
   }
 }
 

@@ -413,7 +413,6 @@ rename-mapping:
   AnalysisData: AnalysisDetectorEvidences
   Apple: AppServiceAppleProvider
   AppleRegistration: AppServiceAppleRegistration
-  ApiKVReferenceCollection: AppServiceApiKeyVaultReferenceList
   AzureActiveDirectory: AppServiceAadProvider
   AzureActiveDirectoryLogin: AppServiceAadLoginFlow
   AzureActiveDirectoryRegistration: AppServiceAadRegistration
@@ -429,21 +428,16 @@ rename-mapping:
   AzureStorageType: AppServiceStorageType
   AzureTableStorageApplicationLogsConfig: AppServiceTableStorageApplicationLogsConfig
   BackupItem: WebAppBackup
-  BackupItemCollection: WebAppBackupItemListResult
   BackupItemStatus: WebAppBackupStatus
   BackupRequest: WebAppBackupInfo
   BackupSchedule: WebAppBackupSchedule
-  BillingMeterCollection: AppServiceBillingMeterListResult
   BuildStatus: StaticSiteBuildStatus
   Capability: AppServiceSkuCapability
   Channels: RecommendationChannel
   ResponseMetaData: DetectorMetadata
   DataSource: DetectorDataSource
-  DeletedWebAppCollection: DeletedWebAppListResult
-  DeploymentCollection: WebAppDeploymentListResult
   Deployment: WebAppDeployment
   Dimension: MetricDimension
-  DomainCollection: AppServiceDomainListResult
   EnabledConfig: WebAppEnabledConfig
   Experiments: RoutingRuleExperiments
   Facebook: AppServiceFacebookProvider
@@ -452,7 +446,6 @@ rename-mapping:
   Google: AppServiceGoogleProvider
   HandlerMapping: HttpRequestHandlerMapping
   HostKeys: FunctionAppHostKeys
-  IdentifierCollection: AppServiceIdentifierListResult
   Twitter: AppServiceTwitterProvider
   InsightStatus: DetectorInsightStatus
   LogLevel: WebAppLogLevel
@@ -460,18 +453,99 @@ rename-mapping:
   MSDeployLog: WebAppMSDeployLog
   MSDeployLogEntry: WebAppMSDeployLogEntry
   MSDeployLogEntryType: WebAppMSDeployLogEntryType
-  NameIdentifierCollection: AppServiceDomainNameIdentifierListResult
   NetworkTrace: WebAppNetworkTrace
   Nonce: LoginFlowNonceSettings
   PushSettings: WebAppPushSettings
   Rendering: DiagnosticDataRendering
   RenderingType: DiagnosticDataRenderingType
-  ResourceCollection: AppServicePlanResourceListResult
-  RouteType: AppServiceVnetRouteType
+  RouteType: AppServiceVirtualNetworkRouteType
   Solution: DiagnosticSolution
+  SolutionType: DiagnosticSolutionType
   SslState: HostNameBindingSslState
   StorageType: ArtifactStorageType
   StringList: StaticSiteStringList
+  StatusOptions: AppServicePlanStatus
+  TriggerTypes: FunctionTriggerType
+  CookieExpiration: WebAppCookieExpiration
+  KeyInfo: WebAppKeyInfo
+  KeyValuePairStringObject: DataProviderKeyValuePair
+  IssueType: DetectorIssueType
+  VnetInfo: AppServiceVirtualNetworkProperties
+  VnetInfoResource: AppServiceVirtualNetwork
+  VnetParameters: AppServiceVirtualNetworkValidationContent
+  VnetRoute: AppServiceVirtualNetworkRoute
+  VnetGateway: AppServiceVirtualNetworkGateway
+  SupportTopic: DetectorSupportTopic
+  SupportedTlsVersions: AppServiceSupportedTlsVersion
+  VnetValidationFailureDetails: VirtualNetworkValidationFailureDetails
+  VnetValidationTestFailure: VirtualNetworkValidationTestFailure
+  # All `Collection` models for pageable operation should be renamed to `ListResult`, https://github.com/Azure/autorest.csharp/issues/2756
+  DomainCollection: AppServiceDomainListResult
+  IdentifierCollection: AppServiceIdentifierListResult
+  DeletedWebAppCollection: DeletedWebAppListResult
+  DeploymentCollection: WebAppDeploymentListResult
+  BackupItemCollection: WebAppBackupItemListResult
+  BillingMeterCollection: AppServiceBillingMeterListResult
+  NameIdentifierCollection: AppServiceDomainNameIdentifierListResult
+  UsageCollection: AppServiceUsageListResult
+  ResourceCollection: AppServicePlanResourceListResult
+  SourceControlCollection: AppServiceSourceControlListResult
+  ApiKVReferenceCollection: AppServiceApiKeyVaultReferenceList
+  AppServicePlanCollection: AppServicePlanListResult
+  ApplicationStackCollection: ApplicationStackListResult
+  AppServiceCertificateCollection: AppServiceCertificateListResult
+  AppServiceCertificateOrderCollection: AppServiceCertificateOrderListResult
+  AppServiceEnvironmentCollection: AppServiceEnvironmentListResult
+  CertificateCollection: AppCertificateListResult
+  ContinuousWebJobCollection: ContinuousWebJobListResult
+  CsmOperationCollection: CsmOperationListResult
+  CsmUsageQuotaCollection: CsmUsageQuotaListResult
+  DetectorResponseCollection: AppServiceDetectorListResult
+  DiagnosticAnalysisCollection: WebSiteAnalysisDefinitionListResult
+  DiagnosticCategoryCollection: DiagnosticCategoryListResult
+  DiagnosticDetectorCollection: DiagnosticDetectorListResult
+  DomainOwnershipIdentifierCollection: DomainOwnershipIdentifierListResult
+  FunctionAppStackCollection: FunctionAppStackListResult
+  FunctionEnvelopeCollection: FunctionEnvelopeListResult
+  GeoRegionCollection: AppServiceGeoRegionListResult
+  HostNameBindingCollection: HostNameBindingListResult
+  HybridConnectionCollection: HybridConnectionListResult
+  InboundEnvironmentEndpointCollection: InboundEnvironmentEndpointListResult
+  KubeEnvironmentCollection: KubeEnvironmentListResult
+  OutboundEnvironmentEndpointCollection: OutboundEnvironmentEndpointListResult
+  PerfMonCounterCollection: PerfMonCounterListResult
+  PremierAddOnOfferCollection: PremierAddOnOfferListResult
+  PrivateEndpointConnectionCollection: RemotePrivateEndpointConnectionListResult
+  ProcessInfoCollection: ProcessInfoListResult
+  ProcessModuleInfoCollection: ProcessModuleInfoListResult
+  ProcessThreadInfoCollection: ProcessThreadInfoListResult
+  PublicCertificateCollection: PublicCertificateListResult
+  PublishingCredentialsPoliciesCollection: PublishingCredentialsPoliciesListResult
+  RecommendationCollection: AppServiceRecommendationListResult
+  ResourceHealthMetadataCollection: ResourceHealthMetadataListResult
+  ResourceMetricDefinitionCollection: ResourceMetricDefinitionListResult
+  SiteConfigResourceCollection: SiteConfigListResult
+  SiteConfigurationSnapshotInfoCollection: SiteConfigurationSnapshotInfoListResult
+  SiteExtensionInfoCollection: SiteExtensionInfoListResult
+  SkuInfoCollection: AppServicePoolSkuInfoListResult
+  SlotDifferenceCollection: SlotDifferenceListResult
+  SnapshotCollection: AppSnapshotListResult
+  StampCapacityCollection: StampCapacityListResult
+  StaticSiteBuildCollection: StaticSiteBuildListResult
+  StaticSiteCollection: StaticSiteListResult
+  StaticSiteCustomDomainOverviewCollection: StaticSiteCustomDomainOverviewListResult
+  StaticSiteFunctionOverviewCollection: StaticSiteFunctionOverviewListResult
+  StaticSiteUserCollection: StaticSiteUserListResult
+  StaticSiteUserProvidedFunctionAppsCollection: StaticSiteUserProvidedFunctionAppsListResult
+  TldLegalAgreementCollection: TldLegalAgreementListResult
+  TopLevelDomainCollection: TopLevelDomainListResult
+  TriggeredJobHistoryCollection: TriggeredJobHistoryListResult
+  TriggeredWebJobCollection: TriggeredWebJobListResult
+  WebAppCollection: WebAppListResult
+  WebAppInstanceStatusCollection: WebAppInstanceStatusListResult
+  WebAppStackCollection: WebAppStackListResult
+  WebJobCollection: WebJobCListResult
+  WorkerPoolCollection: AppServiceWorkerPoolListResult
 
 prepend-rp-prefix:
   - ApiDefinitionInfo
@@ -500,11 +574,17 @@ prepend-rp-prefix:
   - HttpSettingsRoutes
   - Identifier
   - IdentityProviders
-  - VnetRoute
-  - VnetInfo
   - NameValuePair
   - OperationStatus
   - Operation
+  - UsageState
+  - CorsSettings
+  - SourceControl
+  - WorkerPool
+  - ForwardProxy
+  - IPSecurityRestriction
+  - IPFilterTag
+  - VirtualNetworkProfile
 
 directive:
 # operation removal - should be temporary

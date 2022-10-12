@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> source = default;
             Optional<double> priority = default;
             Optional<IList<IList<AppServiceNameValuePair>>> metaData = default;
-            Optional<IssueType> type = default;
+            Optional<DetectorIssueType> type = default;
             Optional<IList<DiagnosticSolution>> solutions = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = property.Value.GetString().ToIssueType();
+                    type = property.Value.GetString().ToDetectorIssueType();
                     continue;
                 }
                 if (property.NameEquals("solutions"))

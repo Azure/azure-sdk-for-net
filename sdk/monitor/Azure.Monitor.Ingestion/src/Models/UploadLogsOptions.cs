@@ -18,7 +18,7 @@ namespace Azure.Monitor.Ingestion
 
         /// <summary>
         /// The max concurrent requests to send to the Azure Monitor service when uploading logs.
-        /// <remarks> In the Upload method, this parameter is not used as the batches are uploaded in sequence. </remarks>
+        /// <remarks> In the Upload method, this parameter is not used as the batches are uploaded in sequence. For parallel uploads, if this value is not set the default concurrency will be 5. </remarks>
         /// </summary>
         public int MaxConcurrency { get; set; }
     }

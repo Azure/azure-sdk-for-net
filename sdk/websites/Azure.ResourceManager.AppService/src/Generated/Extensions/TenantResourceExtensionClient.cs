@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.AppService
             return new PublishingUserResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Web/publishingUsers/web"));
         }
 
-        /// <summary> Gets a collection of SourceControlResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of SourceControlResources and their operations over a SourceControlResource. </returns>
-        public virtual SourceControlCollection GetSourceControls()
+        /// <summary> Gets a collection of AppServiceSourceControlResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of AppServiceSourceControlResources and their operations over a AppServiceSourceControlResource. </returns>
+        public virtual AppServiceSourceControlCollection GetAppServiceSourceControls()
         {
-            return GetCachedClient(Client => new SourceControlCollection(Client, Id));
+            return GetCachedClient(Client => new AppServiceSourceControlCollection(Client, Id));
         }
 
         /// <summary>

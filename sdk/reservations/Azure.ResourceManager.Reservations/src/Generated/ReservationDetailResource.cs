@@ -258,5 +258,95 @@ namespace Azure.ResourceManager.Reservations
                 throw;
             }
         }
+
+        /// <summary>
+        /// Archiving a `Reservation` moves it to `Archived` state.
+        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/archive
+        /// Operation Id: Reservation_Archive
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> ArchiveAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _reservationDetailReservationClientDiagnostics.CreateScope("ReservationDetailResource.Archive");
+            scope.Start();
+            try
+            {
+                var response = await _reservationDetailReservationRestClient.ArchiveAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Archiving a `Reservation` moves it to `Archived` state.
+        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/archive
+        /// Operation Id: Reservation_Archive
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Archive(CancellationToken cancellationToken = default)
+        {
+            using var scope = _reservationDetailReservationClientDiagnostics.CreateScope("ReservationDetailResource.Archive");
+            scope.Start();
+            try
+            {
+                var response = _reservationDetailReservationRestClient.Archive(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Unarchiving a `Reservation` moves it to the state it was before archiving.
+        /// 
+        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/unarchive
+        /// Operation Id: Reservation_Unarchive
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> UnarchiveAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _reservationDetailReservationClientDiagnostics.CreateScope("ReservationDetailResource.Unarchive");
+            scope.Start();
+            try
+            {
+                var response = await _reservationDetailReservationRestClient.UnarchiveAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Unarchiving a `Reservation` moves it to the state it was before archiving.
+        /// 
+        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/unarchive
+        /// Operation Id: Reservation_Unarchive
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Unarchive(CancellationToken cancellationToken = default)
+        {
+            using var scope = _reservationDetailReservationClientDiagnostics.CreateScope("ReservationDetailResource.Unarchive");
+            scope.Start();
+            try
+            {
+                var response = _reservationDetailReservationRestClient.Unarchive(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests.Snippets
@@ -71,7 +72,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             ProcessEventArgs processEventArgs = new(
                 partition: partitionContext,
                 data: eventData,
-                updateCheckpointImplementation: async (CancellationToken ct) => await Task.CompletedTask); // arbitrary value
+                updateCheckpointImplementation: _ => Task.CompletedTask); // arbitrary value
 
             // Here is where the application defined handler code can be tested and validated.
 
@@ -87,6 +88,97 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             // Here is where the application defined handler code can be tested and validated.
 
             Assert.DoesNotThrowAsync(async () => await processErrorHandler(processErrorEventArgs));
+
+            #endregion
+        }
+
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CallingHandlersOnAnInterval()
+        {
+            #region Snippet:EventHubs_Sample08_CallingHandlersOnAnInterval
+
+            // This handler is for illustrative purposes only.
+
+            Task processEventHandler(ProcessEventArgs args)
+            {
+                // Application-defined code here
+
+                return Task.CompletedTask;
+            }
+
+            // This function simulates a random event being emitted for processing.
+
+            Random rng = new();
+            string[] partitions = new[] { "0", "1", "2", "3" };
+
+            TimerCallback dispatchEvent = async _ =>
+            {
+                string partition = partitions[rng.Next(0, partitions.Length - 1)];
+
+                PartitionContext partitionContext = EventHubsModelFactory.PartitionContext(
+                    fullyQualifiedNamespace: "sample-hub.servicebus.windows.net",
+                    eventHubName: "sample-hub",
+                    consumerGroup: "$Default",
+                    partitionId: partition);
+
+                EventData eventData = EventHubsModelFactory.EventData(
+                    eventBody: new BinaryData("Sample-Event"),
+                    systemProperties: new Dictionary<string, object>(), //arbitrary value
+                    partitionKey: "sample-key",
+                    sequenceNumber: 1000,
+                    offset: 1500,
+                    enqueuedTime: DateTimeOffset.Parse("11:36 PM"));
+
+                ProcessEventArgs eventArgs = new(
+                    partition: partitionContext,
+                    data: eventData,
+                    updateCheckpointImplementation: _ => Task.CompletedTask);
+
+                await processEventHandler(eventArgs);
+            };
+
+            // Create a timer that runs once-a-second when started and, otherwise, sits idle.
+
+            Timer eventDispatchTimer = new(
+                dispatchEvent,
+                null,
+                Timeout.Infinite,
+                Timeout.Infinite);
+
+            void startTimer() =>
+                eventDispatchTimer.Change(0, (int)TimeSpan.FromSeconds(1).TotalMilliseconds);
+
+            void stopTimer() =>
+                eventDispatchTimer.Change(Timeout.Infinite, Timeout.Infinite);
+
+            // Create a mock of the processor that dispatches events on when StartProcessingAsync
+            // is called and does so until StopProcessingAsync is called.
+
+            Mock<EventProcessorClient> mockProcessor = new Mock<EventProcessorClient>();
+
+            mockProcessor
+                .Setup(processor => processor.StartProcessingAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask)
+                .Callback(startTimer);
+
+            mockProcessor
+                .Setup(processor => processor.StopProcessingAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask)
+                .Callback(stopTimer);
+
+            // Start the processor.
+
+            await mockProcessor.Object.StartProcessingAsync();
+
+            // << ... Application Testing Here ... >>
+
+            // Stop the processor.
+
+            await mockProcessor.Object.StopProcessingAsync();
 
             #endregion
         }
