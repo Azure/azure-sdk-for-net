@@ -16,6 +16,10 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+generate-virtual-operations:
+- AccountBackups_Get
+- Backups_Get
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
