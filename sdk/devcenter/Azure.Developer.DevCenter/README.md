@@ -28,7 +28,7 @@ You must have configured a DevCenter, Project, Catalog, and Environment Type bef
 
 ### Authenticate the client
 
-You can use standard Azure Active Directory [Token Credential authentication](https://learn.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet) to access the client. The identity interacting with all resources must have a minimum of Read access on the Project resources it is interacting with. The identity managing Dev Boxes must have the [DevCenter Project Admin](https://learn.microsoft.com/azure/dev-box/how-to-project-admin) or [DevCenter Dev Box User](https://learn.microsoft.com/azure/dev-box/how-to-dev-box-user) roles for Dev Box scenarios. These roles can be assigned directly to the project, or inherited from a broader scope (such as the resource group or subscription).
+You can use standard Azure Active Directory [Token Credential authentication](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential) to access the client. The identity interacting with all resources must have a minimum of Read access on the Project resources it is interacting with. The identity managing Dev Boxes must have the [DevCenter Project Admin](https://learn.microsoft.com/azure/dev-box/how-to-project-admin) or [DevCenter Dev Box User](https://learn.microsoft.com/azure/dev-box/how-to-dev-box-user) roles for Dev Box scenarios. These roles can be assigned directly to the project, or inherited from a broader scope (such as the resource group or subscription).
 To use Azure Active Directory authentication, add the Azure Identity package:
 
 `dotnet add package Azure.Identity`
