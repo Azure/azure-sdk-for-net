@@ -1,0 +1,29 @@
+parameters: 
+  DotnetNupkgLocation: ''
+  ArtifactName: ''
+  TargetBranch: ''
+  DocRepoLocation: ''
+  TargetDocRepoName: ''
+  TargetDocRepoOwner: ''
+  WorkingDirectory: $(System.DefaultWorkingDirectory)
+steps:
+  - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
+  - task: PowerShell@2
+    displayName: Fetch package namespaces from dotnet nupkg
+    inputs:
+      pwsh: true
+      filePath: ${{ parameters.WorkingDirectory }}/eng/scripts/Fetch-Namespaces-DotnetNupkg.ps1
+      arguments: >
+        -DotnetNupkgLocation ${{ parameters.DotnetNupkgLocation }}
+        -ArtifactName ${{ parameters.ArtifactName }}
+        -DocRepoLocation ${{ parameters.DocRepoLocation }}
+    continueOnError: true
+
+  - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
+    parameters:
+      BaseRepoBranch: ${{ parameters.TargetBranch }}
+      BaseRepoOwner: ${{ parameters.TargetDocRepoOwner }}
+      CommitMsg: "Update docs metadata for dotnet package namespaces"
+      TargetRepoName: ${{ parameters.TargetDocRepoName }}
+      TargetRepoOwner: ${{ parameters.TargetDocRepoOwner }}
+      WorkingDirectory: ${{ parameters.DocRepoLocation }}
