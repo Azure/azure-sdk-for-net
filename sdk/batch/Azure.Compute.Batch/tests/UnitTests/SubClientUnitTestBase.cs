@@ -69,19 +69,21 @@ namespace Azure.Compute.Tests.UnitTests
 
         private string CreateJobString(string id)
         {
-            return string.Format(@"
-            {
-              ""id"": ${0},
-              ""poolInfo"":{
+            string jobString = @"
+            {{
+              ""id"": ""{0}"",
+              ""poolInfo"":{{
                 ""poolId"":""managerPool""
-              },
-              ""executionInfo"":{
-                ""startTime"":""2022-10-04T17:41:42.725855Z"",
+              }},
+              ""executionInfo"":{{
+                ""startTime"":""2022-10-16T17:41:42.725855Z"",
                 ""poolId"":""managerPool""
-              },
+              }},
               ""onAllTasksComplete"":""noaction"",
               ""onTaskFailure"":""noaction""
-            }", id);
+            }}";
+            jobString = string.Format(jobString, id);
+            return jobString;
         }
 
         private string CreateJobStrings(string baseId, int count)

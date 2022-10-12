@@ -27,10 +27,11 @@ namespace Azure.Compute.Batch
         protected internal delegate System.Threading.Tasks.Task<Response> UpdateOperationAsync(string id, RequestContent content, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
         protected internal delegate Response ParentedUpdateOperation(string parentId, string id, RequestContent content, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
         protected internal delegate System.Threading.Tasks.Task<Response> ParentedUpdateOperationAsync(string parentId, string id, RequestContent content, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
-        protected internal delegate Response DeleteOperation(string id, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
-        protected internal delegate System.Threading.Tasks.Task<Response> DeleteOperationAsync(string id, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
-        protected internal delegate Response ParentedDeleteOperation(string parentid, string id, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
-        protected internal delegate System.Threading.Tasks.Task<Response> ParentedDeleteOperationAsync(string parentId, string id, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
+
+        protected internal delegate Response SimpleOperation(string id, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
+        protected internal delegate System.Threading.Tasks.Task<Response> SimpleOperationAsync(string id, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
+        protected internal delegate Response ParentedSimpleOperation(string parentid, string id, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
+        protected internal delegate System.Threading.Tasks.Task<Response> ParentedSimpleOperationAsync(string parentId, string id, int? timeout, Guid? clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context);
 
         public Func<Response, BinaryData> ContentHandler { get; set; }
 
@@ -189,24 +190,42 @@ namespace Azure.Compute.Batch
             return await patch(id, content, null, null, null, null, null, null).ConfigureAwait(false);
         }
 
-        protected Response HandleDelete(string id, DeleteOperation delete)
+        protected Response HandleDelete(string id, BaseOptions options, SimpleOperation delete)
         {
-            return delete(id, null, null, null, null, null, null);
+            return delete(id, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.RequestConditions, options?.Context);
         }
 
-        protected async System.Threading.Tasks.Task<Response> HandleDeleteAsync(string id, DeleteOperationAsync delete)
+        protected async System.Threading.Tasks.Task<Response> HandleDeleteAsync(string id, BaseOptions options, SimpleOperationAsync delete)
         {
-            return await delete(id, null, null, null, null, null, null).ConfigureAwait(false);
+            return await delete(id, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.RequestConditions, options?.Context).ConfigureAwait(false);
         }
 
-        protected Response HandleDelete(string parentId, string id, ParentedDeleteOperation delete)
+        protected Response HandleDelete(string parentId, string id, BaseOptions options, ParentedSimpleOperation delete)
         {
-            return delete(parentId, id, null, null, null, null, null, null);
+            return delete(parentId, id, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.RequestConditions, options?.Context);
         }
 
-        protected async System.Threading.Tasks.Task<Response> HandleDeleteAsync(string parentId, string id, ParentedDeleteOperationAsync delete)
+        protected async System.Threading.Tasks.Task<Response> HandleDeleteAsync(string parentId, string id, BaseOptions options, ParentedSimpleOperationAsync delete)
         {
-            return await delete(parentId, id, null, null, null, null, null, null).ConfigureAwait(false);
+            return await delete(parentId, id, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.RequestConditions, options?.Context).ConfigureAwait(false);
+        }
+
+        protected Response<bool> HandleExists(string id, BaseOptions options, SimpleOperation exists)
+        {
+            Response response = exists(id, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.RequestConditions, options?.Context);
+            return CheckExists(response);
+        }
+
+        protected async System.Threading.Tasks.Task<Response<bool>> HandleExistsAsync(string id, BaseOptions options, SimpleOperationAsync exists)
+        {
+            Response response = await exists(id, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.RequestConditions, options?.Context).ConfigureAwait(false);
+            return CheckExists(response);
+        }
+
+        private Response<bool> CheckExists(Response response)
+        {
+            bool exists = response.Status == 200;
+            return Response.FromValue(exists, response);
         }
     }
 }

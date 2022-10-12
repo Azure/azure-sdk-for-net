@@ -21,54 +21,64 @@ namespace Azure.Compute.Batch
             jobScheduleRest = serviceClient.batchRest.GetJobScheduleRestClient(serviceClient.BatchUrl.AbsoluteUri);
         }
 
+        [ForwardsClientCalls(true)]
         public virtual Response<JobSchedule> Get(string jobScheduleId, GetOptions options = null)
         {
             return HandleGet(jobScheduleId, options, jobScheduleRest.GetJobSchedule, JobSchedule.DeserializeJobSchedule);
         }
 
+        [ForwardsClientCalls(true)]
         public virtual async System.Threading.Tasks.Task<Response<JobSchedule>> GetAsync(string jobScheduleId, GetOptions options = null)
         {
             return await HandleGetAsync(jobScheduleId, options, jobScheduleRest.GetJobScheduleAsync, JobSchedule.DeserializeJobSchedule).ConfigureAwait(false);
         }
 
+        [ForwardsClientCalls(true)]
         public virtual Response Add(JobSchedule jobSchedule)
         {
             return HandleAdd(jobSchedule, jobScheduleRest.Add);
         }
 
+        [ForwardsClientCalls(true)]
         public virtual async System.Threading.Tasks.Task<Response> AddAsync(JobSchedule jobSchedule)
         {
             return await HandleAddAsync(jobSchedule, jobScheduleRest.AddAsync).ConfigureAwait(false);
         }
 
+        [ForwardsClientCalls(true)]
         public virtual Response Update(JobSchedule jobSchedule)
         {
             return HandleUpdate(jobSchedule.Id, jobSchedule, jobScheduleRest.Update);
         }
 
+        [ForwardsClientCalls(true)]
         public virtual async System.Threading.Tasks.Task<Response> UpdateAsync(JobSchedule jobSchedule)
         {
             return await HandleUpdateAsync(jobSchedule.Id, jobSchedule, jobScheduleRest.UpdateAsync).ConfigureAwait(false);
         }
 
+        [ForwardsClientCalls(true)]
         public virtual Response Patch(string jobScheduleId, JobScheduleUpdate updateContents)
         {
             return HandlePatch(jobScheduleId, updateContents, jobScheduleRest.Patch);
         }
 
+        [ForwardsClientCalls(true)]
         public virtual async System.Threading.Tasks.Task<Response> PatchAsync(string jobScheduleId, JobScheduleUpdate updateContents)
         {
             return await HandlePatchAsync(jobScheduleId, updateContents, jobScheduleRest.PatchAsync).ConfigureAwait(false);
         }
 
-        public virtual Response Delete(string jobScheduleId)
+        [ForwardsClientCalls(true)]
+        public virtual Response Delete(string jobScheduleId, BaseOptions options = null)
         {
-            return HandleDelete(jobScheduleId, jobScheduleRest.Delete);
+            return HandleDelete(jobScheduleId, options, jobScheduleRest.Delete);
         }
 
-        public virtual async System.Threading.Tasks.Task<Response> DeleteAsync(string jobScheduleId)
+        [ForwardsClientCalls(true)]
+        public virtual async System.Threading.Tasks.Task<Response> DeleteAsync(string jobScheduleId, BaseOptions options = null)
         {
-            return await HandleDeleteAsync(jobScheduleId, jobScheduleRest.DeleteAsync).ConfigureAwait(false);
+            return await HandleDeleteAsync(jobScheduleId, options, jobScheduleRest.DeleteAsync).ConfigureAwait(false);
         }
     }
 }

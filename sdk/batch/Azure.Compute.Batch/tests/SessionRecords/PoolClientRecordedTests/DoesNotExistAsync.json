@@ -1,0 +1,33 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com/pools/PoolClientRecordedTestsAsync_NoPool_3d7a9f26-0d46-4523-8c6a-5022?api-version=2022-01-01.15.0",
+      "RequestMethod": "HEAD",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9c58c0ff4239ed76b57ba56122afa817-5ccf54f1aca63c20-00",
+        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20221012.1 (.NET 6.0.10; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "55b28e93d09e3b9380a582ac57a97661",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "DataServiceVersion": "3.0",
+        "Date": "Wed, 12 Oct 2022 16:12:02 GMT",
+        "request-id": "801f6783-07f8-41f7-b770-9a410fc0e53d",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "BATCH_ENDPOINT": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com",
+    "RandomSeed": "106988064"
+  }
+}

@@ -21,14 +21,14 @@ namespace Azure.Compute.Batch
             accountRest = serviceClient.batchRest.GetAccountRestClient(serviceClient.BatchUrl.AbsoluteUri);
         }
 
-        [ForwardsClientCalls]
+        [ForwardsClientCalls(true)]
         public virtual Pageable<ImageInformation> GetSupportedImages(AccountListSupportedImagesOptions options = null)
         {
             Pageable<BinaryData> binaryResult = accountRest.GetSupportedImages(options?.Filter, options?.MaxResults, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate);
             return HandleList(binaryResult, ImageInformation.DeserializeImageInformation);
         }
 
-        [ForwardsClientCalls]
+        [ForwardsClientCalls(true)]
         public virtual AsyncPageable<ImageInformation> GetSupportedImagesAsync(AccountListSupportedImagesOptions options = null)
         {
             AsyncPageable<BinaryData> binaryResult = accountRest.GetSupportedImagesAsync(options?.Filter, options?.MaxResults, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate);

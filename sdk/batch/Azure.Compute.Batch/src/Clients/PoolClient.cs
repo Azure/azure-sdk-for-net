@@ -21,44 +21,64 @@ namespace Azure.Compute.Batch
             poolRest = serviceClient.batchRest.GetPoolRestClient(serviceClient.BatchUrl.AbsoluteUri);
         }
 
+        [ForwardsClientCalls(true)]
         public virtual Response<Pool> Get(string poolId, GetOptions options = null)
         {
             return HandleGet(poolId, options, poolRest.GetPool, Pool.DeserializePool);
         }
 
+        [ForwardsClientCalls(true)]
         public virtual async System.Threading.Tasks.Task<Response<Pool>> GetAsync(string poolId, GetOptions options = null)
         {
             return await HandleGetAsync(poolId, options, poolRest.GetPoolAsync, Pool.DeserializePool).ConfigureAwait(false);
         }
 
+        [ForwardsClientCalls(true)]
         public virtual Response Add(Pool pool)
         {
             return HandleAdd(pool, poolRest.Add);
         }
 
+        [ForwardsClientCalls(true)]
         public virtual async System.Threading.Tasks.Task<Response> AddAsync(Pool pool)
         {
             return await HandleAddAsync(pool, poolRest.AddAsync).ConfigureAwait(false);
         }
 
+        [ForwardsClientCalls(true)]
         public virtual Response Patch(string poolId, PoolUpdate updateContents)
         {
             return HandlePatch(poolId, updateContents, poolRest.Patch);
         }
 
+        [ForwardsClientCalls(true)]
         public virtual async System.Threading.Tasks.Task<Response> PatchAsync(string poolId, PoolUpdate updateContents)
         {
             return await HandlePatchAsync(poolId, updateContents, poolRest.PatchAsync).ConfigureAwait(false);
         }
 
-        public virtual Response Delete(string poolId)
+        [ForwardsClientCalls(true)]
+        public virtual Response Delete(string poolId, BaseOptions options = null)
         {
-            return HandleDelete(poolId, poolRest.Delete);
+            return HandleDelete(poolId, options, poolRest.Delete);
         }
 
-        public virtual async System.Threading.Tasks.Task<Response> DeleteAsync(string poolId)
+        [ForwardsClientCalls(true)]
+        public virtual async System.Threading.Tasks.Task<Response> DeleteAsync(string poolId, BaseOptions options = null)
         {
-            return await HandleDeleteAsync(poolId, poolRest.DeleteAsync).ConfigureAwait(false);
+            return await HandleDeleteAsync(poolId, options, poolRest.DeleteAsync).ConfigureAwait(false);
+        }
+
+        [ForwardsClientCalls(true)]
+        public virtual Response<bool> Exists(string poolId, BaseOptions options = null)
+        {
+            return HandleExists(poolId, options, poolRest.Exists);
+        }
+
+        [ForwardsClientCalls(true)]
+        public virtual async System.Threading.Tasks.Task<Response<bool>> ExistsAsync(string poolId, BaseOptions options = null)
+        {
+            return await HandleExistsAsync(poolId, options, poolRest.ExistsAsync).ConfigureAwait(false);
         }
     }
 }

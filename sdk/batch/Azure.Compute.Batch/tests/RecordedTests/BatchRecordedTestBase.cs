@@ -71,26 +71,6 @@ namespace Azure.Compute.Tests.SessionTests
             return batchClient;
         }
 
-        [RecordedTest]
-        public async System.Threading.Tasks.Task TestOperation()
-        {
-            string testJobId = GetId("Job");
-            BatchServiceClient client = CreateServiceClient();
-            JobClient jobClient = client.CreateJobClient();
-            try
-            {
-                await jobClient.AddAsync(new Job { Id = testJobId, PoolInfo = new PoolInformation { PoolId = "managerPool" } });
-                Job job = await jobClient.GetAsync(testJobId);
-                Assert.AreEqual(job.Id, testJobId);
-            }
-            finally
-            {
-                await jobClient.DeleteAsync(testJobId);
-            }
-
-            return;
-        }
-
         // Add live tests here. If you need more information please refer https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#live-testing and
         // here are some examples: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/synapse/Azure.Analytics.Synapse.AccessControl/tests/AccessControlClientLiveTests.cs.
 

@@ -1,0 +1,102 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com/pools?api-version=2022-01-01.15.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "420",
+        "Content-Type": "application/json; odata=minimalmetadata",
+        "traceparent": "00-e6a35aacc07dd309253fc17242241752-91ebc4aae1a6e315-00",
+        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20221012.1 (.NET 6.0.10; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "95fba8f4e0d6cf2f16b7c3d461d9dbed",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "PoolClientRecordedTests_Pool_84e09ea8-f8fa-43b3-8518-f3100765f5f",
+        "displayName": "PoolClientRecordedTests_Pool_84e09ea8-f8fa-43b3-8518-f3100765f5f",
+        "vmSize": "standard_ds1_v2",
+        "virtualMachineConfiguration": {
+          "imageReference": {
+            "publisher": "microsoftwindowsserver",
+            "offer": "windowsserver",
+            "sku": "datacenter-core-20h2-with-containers-smalldisk-gs"
+          },
+          "nodeAgentSKUId": "batch.node.windows amd64"
+        },
+        "targetDedicatedNodes": 2
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "DataServiceId": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com/pools/PoolClientRecordedTests_Pool_84e09ea8-f8fa-43b3-8518-f3100765f5f",
+        "DataServiceVersion": "3.0",
+        "Date": "Wed, 12 Oct 2022 16:12:00 GMT",
+        "ETag": "0x8DAAC6C7F27B2B4",
+        "Last-Modified": "Wed, 12 Oct 2022 16:12:01 GMT",
+        "Location": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com/pools/PoolClientRecordedTests_Pool_84e09ea8-f8fa-43b3-8518-f3100765f5f",
+        "request-id": "c898c10f-1b97-40ae-9b78-ee24a5ea3b7b",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com/pools/PoolClientRecordedTests_Pool_84e09ea8-f8fa-43b3-8518-f3100765f5f?api-version=2022-01-01.15.0",
+      "RequestMethod": "HEAD",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7dd1751e34fccf8d2c2671d087f4f4b5-f64f4d7c8dc178f5-00",
+        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20221012.1 (.NET 6.0.10; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "a5d59721714e46c30612a1b0a782ca21",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "DataServiceVersion": "3.0",
+        "Date": "Wed, 12 Oct 2022 16:12:00 GMT",
+        "ETag": "0x8DAAC6C7F27B2B4",
+        "Last-Modified": "Wed, 12 Oct 2022 16:12:01 GMT",
+        "request-id": "76e20405-867b-451b-93b6-2d32b5201eed",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com/pools/PoolClientRecordedTests_Pool_84e09ea8-f8fa-43b3-8518-f3100765f5f?api-version=2022-01-01.15.0",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4c50c6d53b46202bcdf253ed75e9e3f7-385a3777f63c2c7f-00",
+        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20221012.1 (.NET 6.0.10; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "057ea69a1d23f3ed926f23ea85695150",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "DataServiceVersion": "3.0",
+        "Date": "Wed, 12 Oct 2022 16:12:02 GMT",
+        "request-id": "52b895af-80ee-401a-a017-037e2724a096",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "BATCH_ENDPOINT": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com",
+    "RandomSeed": "865454092"
+  }
+}

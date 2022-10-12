@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/supportedimages?api-version=2022-01-01.15.0",
+      "RequestUri": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com/supportedimages?api-version=2022-01-01.15.0",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-2a5a8cd4329c664b82486d24b4906146-383df8f72c3efe40-00",
-        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20221004.1 (.NET Core 3.1.29; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "c74a4b2f264e50ee0eb9b6ec40e702dc",
+        "traceparent": "00-00ecab053eece8dabf31577390202e2d-6ea55e21945aad3d-00",
+        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20221012.1 (.NET 6.0.10; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "fc684fb68e1badbd0b9b0d368da1c80c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,15 +16,15 @@
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
         "DataServiceVersion": "3.0",
-        "Date": "Tue, 04 Oct 2022 17:51:27 GMT",
-        "request-id": "12848b7a-bd82-4ec2-a9fc-6a86dd76763d",
+        "Date": "Wed, 12 Oct 2022 16:11:59 GMT",
+        "request-id": "300c3987-05b1-4283-b748-1a382d32e555",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
-        "odata.metadata": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/$metadata#supportedimages",
+        "odata.metadata": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com/$metadata#supportedimages",
         "value": [
           {
             "imageReference": {
@@ -948,7 +948,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "BATCH_ENDPOINT": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com",
-    "RandomSeed": "1475928043"
+    "BATCH_ENDPOINT": "https://batchbatchacctoqbvmvoayk.eastus.batch.azure.com",
+    "RandomSeed": "743739303"
   }
 }
