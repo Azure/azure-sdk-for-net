@@ -16,6 +16,10 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+generate-virtual-operations:
+- MarketplaceAgreements_GetAgreement
+- MarketplaceAgreements_Get
+
 rename-mapping:
   AgreementTerms: MarketplaceAgreementTerm
   AgreementTerms.properties.accepted: IsAccepted

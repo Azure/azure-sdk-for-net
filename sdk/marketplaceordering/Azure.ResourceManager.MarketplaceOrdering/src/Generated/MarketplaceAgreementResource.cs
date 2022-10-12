@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<MarketplaceAgreementResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<MarketplaceAgreementResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((MarketplaceAgreementResource)result.Value, result.GetRawResponse());
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<MarketplaceAgreementResource> Get(CancellationToken cancellationToken = default)
+        public virtual new Response<MarketplaceAgreementResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
             return Response.FromValue((MarketplaceAgreementResource)result.Value, result.GetRawResponse());
