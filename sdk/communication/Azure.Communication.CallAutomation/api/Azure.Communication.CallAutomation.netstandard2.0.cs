@@ -418,14 +418,6 @@ namespace Azure.Communication.CallAutomation
         public bool ForEveryone { get { throw null; } }
         public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
     }
-    public partial class MediaStreamingAudio : Azure.Communication.CallAutomation.MediaStreamingPackageBase
-    {
-        internal MediaStreamingAudio() { }
-        public string Data { get { throw null; } }
-        public bool IsSilent { get { throw null; } }
-        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
-        public System.DateTime Timestamp { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaStreamingAudioChannel : System.IEquatable<Azure.Communication.CallAutomation.MediaStreamingAudioChannel>
     {
@@ -443,6 +435,14 @@ namespace Azure.Communication.CallAutomation
         public static implicit operator Azure.Communication.CallAutomation.MediaStreamingAudioChannel (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallAutomation.MediaStreamingAudioChannel left, Azure.Communication.CallAutomation.MediaStreamingAudioChannel right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class MediaStreamingAudioData : Azure.Communication.CallAutomation.MediaStreamingPackageBase
+    {
+        internal MediaStreamingAudioData() { }
+        public string Data { get { throw null; } }
+        public bool IsSilent { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
+        public System.DateTime Timestamp { get { throw null; } }
     }
     public partial class MediaStreamingConfiguration
     {
