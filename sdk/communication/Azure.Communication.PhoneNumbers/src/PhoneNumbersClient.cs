@@ -564,7 +564,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Lists the available area codes within a given country and locality. </summary>
         /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<AreaCodeResult> GetAvailableTollFreeAreaCodesAsync(string twoLetterIsoCountryName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AreaCodeItem> GetAvailableTollFreeAreaCodesAsync(string twoLetterIsoCountryName, CancellationToken cancellationToken = default)
         {
             return GetAvailableAreaCodesAsync(twoLetterIsoCountryName, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, null, null, cancellationToken);
         }
@@ -572,7 +572,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Lists the available area codes within a given country and locality. </summary>
         /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<AreaCodeResult> GetAvailableTollFreeAreaCodes(string twoLetterIsoCountryName, CancellationToken cancellationToken = default)
+        public virtual Pageable<AreaCodeItem> GetAvailableTollFreeAreaCodes(string twoLetterIsoCountryName, CancellationToken cancellationToken = default)
         {
             return GetAvailableAreaCodes(twoLetterIsoCountryName, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, null, null, cancellationToken);
         }
@@ -583,7 +583,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="locality"> The locality in which to list area codes. This is also known as the state or province. </param>
         /// <param name="administrativeDivision"> Optionally, the administrative division of the locality. This is also known as the state or province. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<AreaCodeResult> GetAvailableGeographicAreaCodesAsync(string twoLetterIsoCountryName, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AreaCodeItem> GetAvailableGeographicAreaCodesAsync(string twoLetterIsoCountryName, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, CancellationToken cancellationToken = default)
         {
             return GetAvailableAreaCodesAsync(twoLetterIsoCountryName, PhoneNumberType.Geographic, phoneNumberAssignmentType, locality, administrativeDivision, cancellationToken);
         }
@@ -594,7 +594,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="locality"> The locality in which to list area codes. This is also known as the state or province. </param>
         /// <param name="administrativeDivision"> Optionally, the administrative division of the locality. This is also known as the state or province. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<AreaCodeResult> GetAvailableGeographicAreaCodes(string twoLetterIsoCountryName, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<AreaCodeItem> GetAvailableGeographicAreaCodes(string twoLetterIsoCountryName, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, CancellationToken cancellationToken = default)
         {
             return GetAvailableAreaCodes(twoLetterIsoCountryName, PhoneNumberType.Geographic, phoneNumberAssignmentType, locality, administrativeDivision, cancellationToken);
         }
@@ -686,9 +686,9 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="locality"> The locality in which to list area codes. This is also known as the state or province. </param>
         /// <param name="administrativeDivision"> Optionally, the administrative division of the locality. This is also known as the state or province. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private AsyncPageable<AreaCodeResult> GetAvailableAreaCodesAsync(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, CancellationToken cancellationToken = default)
+        private AsyncPageable<AreaCodeItem> GetAvailableAreaCodesAsync(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AreaCodeResult>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AreaCodeItem>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableCountries)}");
                 scope.Start();
@@ -703,7 +703,7 @@ namespace Azure.Communication.PhoneNumbers
                     throw;
                 }
             }
-            async Task<Page<AreaCodeResult>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AreaCodeItem>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
                 scope.Start();
@@ -728,9 +728,9 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="locality"> The locality in which to list area codes. This is also known as the state or province. </param>
         /// <param name="administrativeDivision"> Optionally, the administrative division of the locality. This is also known as the state or province. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private Pageable<AreaCodeResult> GetAvailableAreaCodes(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, CancellationToken cancellationToken = default)
+        private Pageable<AreaCodeItem> GetAvailableAreaCodes(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, CancellationToken cancellationToken = default)
         {
-            Page<AreaCodeResult> FirstPageFunc(int? pageSizeHint)
+            Page<AreaCodeItem> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableCountries)}");
                 scope.Start();
@@ -745,7 +745,7 @@ namespace Azure.Communication.PhoneNumbers
                     throw;
                 }
             }
-            Page<AreaCodeResult> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AreaCodeItem> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
                 scope.Start();

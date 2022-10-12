@@ -15,3 +15,10 @@ title: Phone numbers
 payload-flattening-threshold: 3
 generation1-convenience-client: true
 ```
+``` yaml
+directive:
+  from: swagger-document
+  where: "$.definitions.AreaCodeResult"
+  transform: >
+    $["x-ms-client-name"] = "AreaCodeItem";
+```

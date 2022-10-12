@@ -371,14 +371,14 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="administrativeDivision"> The name of the state or province in which to search for the area code. e.g. California. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> is null. </exception>
-        public virtual AsyncPageable<AreaCodeResult> ListAreaCodesAsync(string countryCode, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AreaCodeItem> ListAreaCodesAsync(string countryCode, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
             {
                 throw new ArgumentNullException(nameof(countryCode));
             }
 
-            async Task<Page<AreaCodeResult>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AreaCodeItem>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListAreaCodes");
                 scope.Start();
@@ -393,7 +393,7 @@ namespace Azure.Communication.PhoneNumbers
                     throw;
                 }
             }
-            async Task<Page<AreaCodeResult>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AreaCodeItem>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListAreaCodes");
                 scope.Start();
@@ -421,14 +421,14 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="administrativeDivision"> The name of the state or province in which to search for the area code. e.g. California. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> is null. </exception>
-        public virtual Pageable<AreaCodeResult> ListAreaCodes(string countryCode, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<AreaCodeItem> ListAreaCodes(string countryCode, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
             {
                 throw new ArgumentNullException(nameof(countryCode));
             }
 
-            Page<AreaCodeResult> FirstPageFunc(int? pageSizeHint)
+            Page<AreaCodeItem> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListAreaCodes");
                 scope.Start();
@@ -443,7 +443,7 @@ namespace Azure.Communication.PhoneNumbers
                     throw;
                 }
             }
-            Page<AreaCodeResult> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AreaCodeItem> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListAreaCodes");
                 scope.Start();

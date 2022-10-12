@@ -41,12 +41,12 @@ namespace Azure.Communication.PhoneNumbers
             return new PhoneNumberAdministrativeDivision(localizedName, abbreviatedName);
         }
 
-        /// <summary> Initializes a new instance of AreaCodeResult. </summary>
+        /// <summary> Initializes a new instance of AreaCodeItem. </summary>
         /// <param name="areaCode"> An area code as a string. </param>
-        /// <returns> A new <see cref="PhoneNumbers.AreaCodeResult"/> instance for mocking. </returns>
-        public static AreaCodeResult AreaCodeResult(string areaCode = null)
+        /// <returns> A new <see cref="PhoneNumbers.AreaCodeItem"/> instance for mocking. </returns>
+        public static AreaCodeItem AreaCodeItem(string areaCode = null)
         {
-            return new AreaCodeResult(areaCode);
+            return new AreaCodeItem(areaCode);
         }
 
         /// <summary> Initializes a new instance of PhoneNumberOffering. </summary>

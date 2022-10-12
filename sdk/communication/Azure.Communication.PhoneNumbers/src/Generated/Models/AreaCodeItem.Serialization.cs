@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    public partial class AreaCodeResult
+    public partial class AreaCodeItem
     {
-        internal static AreaCodeResult DeserializeAreaCodeResult(JsonElement element)
+        internal static AreaCodeItem DeserializeAreaCodeItem(JsonElement element)
         {
             Optional<string> areaCode = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new AreaCodeResult(areaCode.Value);
+            return new AreaCodeItem(areaCode.Value);
         }
     }
 }

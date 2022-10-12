@@ -8,16 +8,16 @@
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> An area code. </summary>
-    public partial class AreaCodeResult
+    public partial class AreaCodeItem
     {
-        /// <summary> Initializes a new instance of AreaCodeResult. </summary>
-        internal AreaCodeResult()
+        /// <summary> Initializes a new instance of AreaCodeItem. </summary>
+        internal AreaCodeItem()
         {
         }
 
-        /// <summary> Initializes a new instance of AreaCodeResult. </summary>
+        /// <summary> Initializes a new instance of AreaCodeItem. </summary>
         /// <param name="areaCode"> An area code as a string. </param>
-        internal AreaCodeResult(string areaCode)
+        internal AreaCodeItem(string areaCode)
         {
             AreaCode = areaCode;
         }
