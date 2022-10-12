@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfigData> GetConfigurationsBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ConfigData> GetConfigurationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetConfigurationsBySubscriptionAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetConfigurationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfigData> GetConfigurationsBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<ConfigData> GetConfigurations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetConfigurationsBySubscription(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetConfigurations(cancellationToken);
         }
 
         /// <summary>
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public static async Task<Response<ConfigData>> CreateInSubscriptionConfigurationAsync(this SubscriptionResource subscriptionResource, ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConfigData>> CreateConfigurationAsync(this SubscriptionResource subscriptionResource, ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            return await GetExtensionClient(subscriptionResource).CreateInSubscriptionConfigurationAsync(configurationName, data, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CreateConfigurationAsync(configurationName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public static Response<ConfigData> CreateInSubscriptionConfiguration(this SubscriptionResource subscriptionResource, ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        public static Response<ConfigData> CreateConfiguration(this SubscriptionResource subscriptionResource, ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            return GetExtensionClient(subscriptionResource).CreateInSubscriptionConfiguration(configurationName, data, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CreateConfiguration(configurationName, data, cancellationToken);
         }
 
         /// <summary>
@@ -234,9 +234,9 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfigData> GetConfigurationsByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ConfigData> GetConfigurationsAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetConfigurationsByResourceGroupAsync(cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetConfigurationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -247,9 +247,9 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfigData> GetConfigurationsByResourceGroup(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        public static Pageable<ConfigData> GetConfigurations(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetConfigurationsByResourceGroup(cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetConfigurations(cancellationToken);
         }
 
         /// <summary>
@@ -262,11 +262,11 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public static async Task<Response<ConfigData>> CreateInResourceGroupConfigurationAsync(this ResourceGroupResource resourceGroupResource, ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConfigData>> CreateConfigurationAsync(this ResourceGroupResource resourceGroupResource, ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            return await GetExtensionClient(resourceGroupResource).CreateInResourceGroupConfigurationAsync(configurationName, data, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroupResource).CreateConfigurationAsync(configurationName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -279,11 +279,11 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public static Response<ConfigData> CreateInResourceGroupConfiguration(this ResourceGroupResource resourceGroupResource, ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        public static Response<ConfigData> CreateConfiguration(this ResourceGroupResource resourceGroupResource, ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            return GetExtensionClient(resourceGroupResource).CreateInResourceGroupConfiguration(configurationName, data, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).CreateConfiguration(configurationName, data, cancellationToken);
         }
 
         private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)

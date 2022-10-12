@@ -11,6 +11,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Invalid RepeatabilityHeaders message.
         /// </summary>
-        public const string InvalidRepeatabilityHeadersMessage = "Invalid RepeatabilityHeaders set. Either set both RepeatabilityRequestId and RepeatabilityFirstSent or neither.";
+        public const string InvalidRepeatabilityHeadersMessage = "Invalid RepeatabilityHeaders. RepeatabilityHeaders is only valid when RepeatabilityRequestId and RepeatabilityFirstSent are set to non-default value.";
     }
 }

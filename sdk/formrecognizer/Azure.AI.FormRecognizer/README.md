@@ -734,6 +734,8 @@ Headers:
 
 Error codes and messages raised by the Form Recognizer service can be found in the [service documentation][formreco_errors].
 
+For more details about common issues, see our [troubleshooting guide][troubleshooting].
+
 ### Setting up console logging
 The simplest way to see the logs is to enable the console logging.
 To create an Azure SDK log listener that outputs messages to console use the AzureEventSourceListener.CreateConsoleLogger method.
@@ -806,6 +808,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [labeling_tool]: https://aka.ms/azsdk/formrecognizer/labelingtool
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
 
+[troubleshooting]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/TROUBLESHOOTING.md
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/samples/Diagnostics.md
 
 [extract_layout]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_ExtractLayout.md

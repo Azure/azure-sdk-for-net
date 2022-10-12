@@ -9,7 +9,6 @@ csharp: true
 library-name: EventGrid
 namespace: Azure.ResourceManager.EventGrid
 require: https://github.com/Azure/azure-rest-api-specs/blob/df70965d3a207eb2a628c96aa6ed935edc6b7911/specification/eventgrid/resource-manager/readme.md
-tag: package-2022-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -129,7 +128,7 @@ directive:
     where: $.paths..parameters[?(@.name=='scope')]
     transform: >
       $['x-ms-skip-url-encoding'] = true;
-  # PrivateEndpointConnection defines enum type but PrivateLinkResources not, should fix it in swagger 
+  # PrivateEndpointConnection defines enum type but PrivateLinkResources not, should fix it in swagger
   - from: EventGrid.json
     where: $.paths..parameters[?(@.name=='parentType')]
     transform: >
@@ -148,5 +147,5 @@ directive:
       $.properties.principalId.readOnly = true;
       $.properties.tenantId.readOnly = true;
     reason: Remove the setter to ensure this type can be replaced by the common type.
-  
+
 ```

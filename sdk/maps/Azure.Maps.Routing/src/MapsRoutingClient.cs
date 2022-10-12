@@ -113,9 +113,9 @@ namespace Azure.Maps.Routing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeMatrixQuery"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<RouteMatrixResult>> SyncRequestRouteMatrixAsync(RouteMatrixQuery routeMatrixQuery, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RouteMatrixResult>> GetImmediateRouteMatrixAsync(RouteMatrixQuery routeMatrixQuery, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.SyncRequestRouteMatrix");
+            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.GetImmediateRouteMatrix");
             scope.Start();
             try
             {
@@ -132,7 +132,7 @@ namespace Azure.Maps.Routing
                     options?.VehicleLengthInMeters,
                     options?.VehicleHeightInMeters,
                     options?.VehicleWidthInMeters,
-                    options?.VehicleMaxSpeedInKmPerHour,
+                    options?.VehicleMaxSpeedInKilometersPerHour,
                     options?.VehicleWeightInKilograms,
                     options?.Windingness,
                     options?.InclineLevel,
@@ -161,11 +161,11 @@ namespace Azure.Maps.Routing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<RouteMatrixResult>> SyncRequestRouteMatrixAsync(RouteMatrixOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RouteMatrixResult>> GetImmediateRouteMatrixAsync(RouteMatrixOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.SyncRequestRouteMatrix");
+            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.GetImmediateRouteMatrix");
             scope.Start();
             try
             {
@@ -181,7 +181,7 @@ namespace Azure.Maps.Routing
                     options?.VehicleLengthInMeters,
                     options?.VehicleHeightInMeters,
                     options?.VehicleWidthInMeters,
-                    options?.VehicleMaxSpeedInKmPerHour,
+                    options?.VehicleMaxSpeedInKilometersPerHour,
                     options?.VehicleWeightInKilograms,
                     options?.Windingness,
                     options?.InclineLevel,
@@ -208,9 +208,9 @@ namespace Azure.Maps.Routing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeMatrixQuery"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<RouteMatrixResult> SyncRequestRouteMatrix(RouteMatrixQuery routeMatrixQuery, CancellationToken cancellationToken = default)
+        public virtual Response<RouteMatrixResult> GetImmediateRouteMatrix(RouteMatrixQuery routeMatrixQuery, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.SyncRequestRouteMatrix");
+            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.GetImmediateRouteMatrix");
             scope.Start();
             try
             {
@@ -227,7 +227,7 @@ namespace Azure.Maps.Routing
                     options?.VehicleLengthInMeters,
                     options?.VehicleHeightInMeters,
                     options?.VehicleWidthInMeters,
-                    options?.VehicleMaxSpeedInKmPerHour,
+                    options?.VehicleMaxSpeedInKilometersPerHour,
                     options?.VehicleWeightInKilograms,
                     options?.Windingness,
                     options?.InclineLevel,
@@ -254,11 +254,11 @@ namespace Azure.Maps.Routing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<RouteMatrixResult> SyncRequestRouteMatrix(RouteMatrixOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<RouteMatrixResult> GetImmediateRouteMatrix(RouteMatrixOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.SyncRequestRouteMatrix");
+            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.GetImmediateRouteMatrix");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.Maps.Routing
                     options?.VehicleLengthInMeters,
                     options?.VehicleHeightInMeters,
                     options?.VehicleWidthInMeters,
-                    options?.VehicleMaxSpeedInKmPerHour,
+                    options?.VehicleMaxSpeedInKilometersPerHour,
                     options?.VehicleWeightInKilograms,
                     options?.Windingness,
                     options?.InclineLevel,
@@ -297,20 +297,20 @@ namespace Azure.Maps.Routing
         /// Information returned includes the distance, estimated travel time, and a representation of the route geometry. Additional routing information such as optimized waypoint order or turn by turn instructions is also available, depending on the options selected.
         /// Routing service provides a set of parameters for a detailed description of vehicle-specific Consumption Model. Please check <see href="https://docs.microsoft.com/azure/azure-maps/consumption-model">Consumption Model</see> for detailed explanation of the concepts and parameters involved.
         /// </summary>
-        /// <param name="routeDirectionQuery"> The route direction query, including a list of route points and route direction options. </param>
+        /// <param name="query"> The route direction query, including a list of route points and route direction options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeDirectionQuery"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<RouteDirections>> GetDirectionsAsync(RouteDirectionQuery routeDirectionQuery, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RouteDirections>> GetDirectionsAsync(RouteDirectionQuery query, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(routeDirectionQuery, nameof(routeDirectionQuery));
+            Argument.AssertNotNull(query, nameof(query));
 
             using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.GetDirections");
             scope.Start();
             try
             {
-                var stringRoutePoints = MapsRoutingClient.GeoPointsToString(routeDirectionQuery.RoutePoints);
-                var options = routeDirectionQuery.RouteDirectionOptions;
+                var stringRoutePoints = MapsRoutingClient.GeoPointsToString(query.RoutePoints);
+                var options = query.RouteDirectionOptions;
                 Report? report = null;
                 if (options?.ShouldReportEffectiveSettings == true)
                 {
@@ -340,7 +340,7 @@ namespace Azure.Maps.Routing
                         options?.VehicleWidthInMeters,
                         options?.VehicleHeightInMeters,
                         options?.VehicleLengthInMeters,
-                        options?.VehicleMaxSpeedInKmPerHour,
+                        options?.VehicleMaxSpeedInKilometersPerHour,
                         options?.VehicleWeightInKilograms,
                         options?.IsCommercialVehicle,
                         options?.Windingness,
@@ -351,7 +351,7 @@ namespace Azure.Maps.Routing
                         options?.RouteType,
                         options?.VehicleLoadType,
                         options?.VehicleEngineType,
-                        options?.ConstantSpeedConsumptionInLitersPerHundredKm,
+                        options?.ConstantSpeedConsumptionInLitersPerHundredKilometer,
                         options?.CurrentFuelInLiters,
                         options?.AuxiliaryPowerInLitersPerHour,
                         options?.FuelEnergyDensityInMegajoulesPerLiter,
@@ -359,10 +359,10 @@ namespace Azure.Maps.Routing
                         options?.DecelerationEfficiency,
                         options?.UphillEfficiency,
                         options?.DownhillEfficiency,
-                        options?.ConstantSpeedConsumptionInKwHPerHundredKm,
-                        options?.CurrentChargeInKwH,
-                        options?.MaxChargeInKwH,
-                        options?.AuxiliaryPowerInKw,
+                        options?.ConstantSpeedConsumptionInKilowattHoursPerHundredKilometer,
+                        options?.CurrentChargeInKilowattHours,
+                        options?.MaxChargeInKilowattHours,
+                        options?.AuxiliaryPowerInKilowatts,
                         cancellationToken
                     ).ConfigureAwait(false);
                 }
@@ -390,7 +390,7 @@ namespace Azure.Maps.Routing
                         options?.VehicleLengthInMeters,
                         options?.VehicleHeightInMeters,
                         options?.VehicleWidthInMeters,
-                        options?.VehicleMaxSpeedInKmPerHour,
+                        options?.VehicleMaxSpeedInKilometersPerHour,
                         options?.VehicleWeightInKilograms,
                         options?.IsCommercialVehicle,
                         options?.Windingness,
@@ -401,7 +401,7 @@ namespace Azure.Maps.Routing
                         options?.RouteType,
                         options?.VehicleLoadType,
                         options?.VehicleEngineType,
-                        options?.ConstantSpeedConsumptionInLitersPerHundredKm,
+                        options?.ConstantSpeedConsumptionInLitersPerHundredKilometer,
                         options?.CurrentFuelInLiters,
                         options?.AuxiliaryPowerInLitersPerHour,
                         options?.FuelEnergyDensityInMegajoulesPerLiter,
@@ -409,10 +409,10 @@ namespace Azure.Maps.Routing
                         options?.DecelerationEfficiency,
                         options?.UphillEfficiency,
                         options?.DownhillEfficiency,
-                        options?.ConstantSpeedConsumptionInKwHPerHundredKm,
-                        options?.CurrentChargeInKwH,
-                        options?.MaxChargeInKwH,
-                        options?.AuxiliaryPowerInKw,
+                        options?.ConstantSpeedConsumptionInKilowattHoursPerHundredKilometer,
+                        options?.CurrentChargeInKilowattHours,
+                        options?.MaxChargeInKilowattHours,
+                        options?.AuxiliaryPowerInKilowatts,
                         cancellationToken
                     ).ConfigureAwait(false);
                 }
@@ -429,20 +429,20 @@ namespace Azure.Maps.Routing
         /// Information returned includes the distance, estimated travel time, and a representation of the route geometry. Additional routing information such as optimized waypoint order or turn by turn instructions is also available, depending on the options selected.
         /// Routing service provides a set of parameters for a detailed description of vehicle-specific Consumption Model. Please check <see href="https://docs.microsoft.com/azure/azure-maps/consumption-model">Consumption Model</see> for detailed explanation of the concepts and parameters involved.
         /// </summary>
-        /// <param name="routeDirectionQuery"> The route direction query, including a list of route points and route direction options. </param>
+        /// <param name="query"> The route direction query, including a list of route points and route direction options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeDirectionQuery"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<RouteDirections> GetDirections(RouteDirectionQuery routeDirectionQuery, CancellationToken cancellationToken = default)
+        public virtual Response<RouteDirections> GetDirections(RouteDirectionQuery query, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(routeDirectionQuery, nameof(routeDirectionQuery));
+            Argument.AssertNotNull(query, nameof(query));
 
             using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.GetDirections");
             scope.Start();
             try
             {
-                var stringRoutePoints = MapsRoutingClient.GeoPointsToString(routeDirectionQuery.RoutePoints);
-                var options = routeDirectionQuery.RouteDirectionOptions;
+                var stringRoutePoints = MapsRoutingClient.GeoPointsToString(query.RoutePoints);
+                var options = query.RouteDirectionOptions;
                 Report? report = null;
                 if (options?.ShouldReportEffectiveSettings == true)
                 {
@@ -472,7 +472,7 @@ namespace Azure.Maps.Routing
                         options?.VehicleWidthInMeters,
                         options?.VehicleHeightInMeters,
                         options?.VehicleLengthInMeters,
-                        options?.VehicleMaxSpeedInKmPerHour,
+                        options?.VehicleMaxSpeedInKilometersPerHour,
                         options?.VehicleWeightInKilograms,
                         options?.IsCommercialVehicle,
                         options?.Windingness,
@@ -483,7 +483,7 @@ namespace Azure.Maps.Routing
                         options?.RouteType,
                         options?.VehicleLoadType,
                         options?.VehicleEngineType,
-                        options?.ConstantSpeedConsumptionInLitersPerHundredKm,
+                        options?.ConstantSpeedConsumptionInLitersPerHundredKilometer,
                         options?.CurrentFuelInLiters,
                         options?.AuxiliaryPowerInLitersPerHour,
                         options?.FuelEnergyDensityInMegajoulesPerLiter,
@@ -491,10 +491,10 @@ namespace Azure.Maps.Routing
                         options?.DecelerationEfficiency,
                         options?.UphillEfficiency,
                         options?.DownhillEfficiency,
-                        options?.ConstantSpeedConsumptionInKwHPerHundredKm,
-                        options?.CurrentChargeInKwH,
-                        options?.MaxChargeInKwH,
-                        options?.AuxiliaryPowerInKw,
+                        options?.ConstantSpeedConsumptionInKilowattHoursPerHundredKilometer,
+                        options?.CurrentChargeInKilowattHours,
+                        options?.MaxChargeInKilowattHours,
+                        options?.AuxiliaryPowerInKilowatts,
                         cancellationToken
                     );
                 }
@@ -522,7 +522,7 @@ namespace Azure.Maps.Routing
                         options?.VehicleLengthInMeters,
                         options?.VehicleHeightInMeters,
                         options?.VehicleWidthInMeters,
-                        options?.VehicleMaxSpeedInKmPerHour,
+                        options?.VehicleMaxSpeedInKilometersPerHour,
                         options?.VehicleWeightInKilograms,
                         options?.IsCommercialVehicle,
                         options?.Windingness,
@@ -533,7 +533,7 @@ namespace Azure.Maps.Routing
                         options?.RouteType,
                         options?.VehicleLoadType,
                         options?.VehicleEngineType,
-                        options?.ConstantSpeedConsumptionInLitersPerHundredKm,
+                        options?.ConstantSpeedConsumptionInLitersPerHundredKilometer,
                         options?.CurrentFuelInLiters,
                         options?.AuxiliaryPowerInLitersPerHour,
                         options?.FuelEnergyDensityInMegajoulesPerLiter,
@@ -541,10 +541,10 @@ namespace Azure.Maps.Routing
                         options?.DecelerationEfficiency,
                         options?.UphillEfficiency,
                         options?.DownhillEfficiency,
-                        options?.ConstantSpeedConsumptionInKwHPerHundredKm,
-                        options?.CurrentChargeInKwH,
-                        options?.MaxChargeInKwH,
-                        options?.AuxiliaryPowerInKw,
+                        options?.ConstantSpeedConsumptionInKilowattHoursPerHundredKilometer,
+                        options?.CurrentChargeInKilowattHours,
+                        options?.MaxChargeInKilowattHours,
+                        options?.AuxiliaryPowerInKilowatts,
                         cancellationToken
                     );
                 }
@@ -576,7 +576,7 @@ namespace Azure.Maps.Routing
                     options.Query,
                     ResponseFormat.Json,
                     options.FuelBudgetInLiters,
-                    options.EnergyBudgetInKwH,
+                    options.EnergyBudgetInKilowattHours,
                     options.TimeBudget?.TotalSeconds,
                     options.DistanceBudgetInMeters,
                     options.DepartAt,
@@ -590,12 +590,12 @@ namespace Azure.Maps.Routing
                     options.VehicleWidthInMeters,
                     options.VehicleHeightInMeters,
                     options.VehicleLengthInMeters,
-                    options.VehicleMaxSpeedInKmPerHour,
+                    options.VehicleMaxSpeedInKilometersPerHour,
                     options.VehicleWeightInKilograms,
                     options.IsCommercialVehicle,
                     options.VehicleLoadType,
                     options.VehicleEngineType,
-                    options.ConstantSpeedConsumptionInLitersPerHundredKm,
+                    options.ConstantSpeedConsumptionInLitersPerHundredKilometer,
                     options.CurrentFuelInLiters,
                     options.AuxiliaryPowerInLitersPerHour,
                     options.FuelEnergyDensityInMegajoulesPerLiter,
@@ -603,10 +603,10 @@ namespace Azure.Maps.Routing
                     options.DecelerationEfficiency,
                     options.UphillEfficiency,
                     options.DownhillEfficiency,
-                    options.ConstantSpeedConsumptionInKwHPerHundredKm,
-                    options.CurrentChargeInKwH,
-                    options.MaxChargeInKwH,
-                    options.AuxiliaryPowerInKw,
+                    options.ConstantSpeedConsumptionInKilowattHoursPerHundredKilometer,
+                    options.CurrentChargeInKilowattHours,
+                    options.MaxChargeInKilowattHours,
+                    options.AuxiliaryPowerInKilowatts,
                     cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -636,7 +636,7 @@ namespace Azure.Maps.Routing
                     options.Query,
                     ResponseFormat.Json,
                     options.FuelBudgetInLiters,
-                    options.EnergyBudgetInKwH,
+                    options.EnergyBudgetInKilowattHours,
                     options.TimeBudget?.TotalSeconds,
                     options.DistanceBudgetInMeters,
                     options.DepartAt,
@@ -650,12 +650,12 @@ namespace Azure.Maps.Routing
                     options.VehicleWidthInMeters,
                     options.VehicleHeightInMeters,
                     options.VehicleLengthInMeters,
-                    options.VehicleMaxSpeedInKmPerHour,
+                    options.VehicleMaxSpeedInKilometersPerHour,
                     options.VehicleWeightInKilograms,
                     options.IsCommercialVehicle,
                     options.VehicleLoadType,
                     options.VehicleEngineType,
-                    options.ConstantSpeedConsumptionInLitersPerHundredKm,
+                    options.ConstantSpeedConsumptionInLitersPerHundredKilometer,
                     options.CurrentFuelInLiters,
                     options.AuxiliaryPowerInLitersPerHour,
                     options.FuelEnergyDensityInMegajoulesPerLiter,
@@ -663,10 +663,10 @@ namespace Azure.Maps.Routing
                     options.DecelerationEfficiency,
                     options.UphillEfficiency,
                     options.DownhillEfficiency,
-                    options.ConstantSpeedConsumptionInKwHPerHundredKm,
-                    options.CurrentChargeInKwH,
-                    options.MaxChargeInKwH,
-                    options.AuxiliaryPowerInKw,
+                    options.ConstantSpeedConsumptionInKilowattHoursPerHundredKilometer,
+                    options.CurrentChargeInKilowattHours,
+                    options.MaxChargeInKilowattHours,
+                    options.AuxiliaryPowerInKilowatts,
                     cancellationToken);
             }
             catch (Exception e)
@@ -680,18 +680,18 @@ namespace Azure.Maps.Routing
         /// The Route Directions Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/route/getroutedirections">Route Directions API</see> using just a single API call.
         /// You can call Route Directions Batch API to run either asynchronously (async) or synchronously (sync). The sync API up to <c>100</c> queries.
         /// </summary>
-        /// <param name="routeDirectionQueries"> The list of route directions queries/requests to process. The list can contain 100 queries for sync version and must contain at least 1 query. </param>
+        /// <param name="queries"> The list of route directions queries/requests to process. The list can contain 100 queries for sync version and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeDirectionQueries"/> is null. </exception>
-        public virtual async Task<Response<RouteDirectionsBatchResult>> SyncRequestRouteDirectionsBatchAsync(IList<RouteDirectionQuery> routeDirectionQueries, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is null. </exception>
+        public virtual async Task<Response<RouteDirectionsBatchResult>> GetDirectionsImmediateBatchAsync(IEnumerable<RouteDirectionQuery> queries, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(routeDirectionQueries, nameof(routeDirectionQueries));
+            Argument.AssertNotNull(queries, nameof(queries));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.SyncRequestRouteDirectionsBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.GetDirectionsImmediateBatch");
             scope.Start();
             try
             {
-                var batchItems = MapsRoutingClient.RouteDirectionsQueriesToBatchItems(routeDirectionQueries);
+                var batchItems = MapsRoutingClient.RouteDirectionsQueriesToBatchItems(queries);
                 return await RestClient.RequestRouteDirectionsBatchSyncAsync(batchItems, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -705,18 +705,18 @@ namespace Azure.Maps.Routing
         /// The Route Directions Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/route/getroutedirections">Route Directions API</see> using just a single API call.
         /// You can call Route Directions Batch API to run either asynchronously (async) or synchronously (sync). The sync API up to <c>100</c> queries.
         /// </summary>
-        /// <param name="routeDirectionQueries"> The list of route directions queries/requests to process. The list can contain 100 queries for sync version and must contain at least 1 query. </param>
+        /// <param name="queries"> The list of route directions queries/requests to process. The list can contain 100 queries for sync version and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeDirectionQueries"/> is null. </exception>
-        public virtual Response<RouteDirectionsBatchResult> SyncRequestRouteDirectionsBatch(IList<RouteDirectionQuery> routeDirectionQueries, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is null. </exception>
+        public virtual Response<RouteDirectionsBatchResult> GetDirectionsImmediateBatch(IEnumerable<RouteDirectionQuery> queries, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(routeDirectionQueries, nameof(routeDirectionQueries));
+            Argument.AssertNotNull(queries, nameof(queries));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.SyncRequestRouteDirectionsBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.GetDirectionsImmediateBatch");
             scope.Start();
             try
             {
-                var batchItems = MapsRoutingClient.RouteDirectionsQueriesToBatchItems(routeDirectionQueries);
+                var batchItems = MapsRoutingClient.RouteDirectionsQueriesToBatchItems(queries);
                 return RestClient.RequestRouteDirectionsBatchSync(batchItems, null, cancellationToken);
             }
             catch (Exception e)
@@ -732,16 +732,16 @@ namespace Azure.Maps.Routing
         /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
         /// The maximum size of a matrix for async request is <c>700</c> (the number of origins multiplied by the number of destinations).
         /// </summary>
-        /// <param name="waitUntil"> If the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> If the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="options"> The route direction options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<RequestRouteMatrixOperation> RequestRouteMatrixAsync(WaitUntil waitUntil, RouteMatrixOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<GetRouteMatrixOperation> GetRouteMatrixAsync(WaitUntil waitUntil, RouteMatrixOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.RequestRouteMatrix");
+            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.GetRouteMatrix");
             scope.Start();
             try
             {
@@ -757,7 +757,7 @@ namespace Azure.Maps.Routing
                     options?.VehicleLengthInMeters,
                     options?.VehicleHeightInMeters,
                     options?.VehicleWidthInMeters,
-                    options?.VehicleMaxSpeedInKmPerHour,
+                    options?.VehicleMaxSpeedInKilometersPerHour,
                     options?.VehicleWeightInKilograms,
                     options?.Windingness,
                     options?.InclineLevel,
@@ -770,7 +770,7 @@ namespace Azure.Maps.Routing
                 ).ConfigureAwait(false);
 
                 // Create operation for route direction
-                var operation = new RequestRouteMatrixOperation(this, new Uri(response.Headers.Location));
+                var operation = new GetRouteMatrixOperation(this, new Uri(response.Headers.Location));
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -791,16 +791,16 @@ namespace Azure.Maps.Routing
         /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
         /// The maximum size of a matrix for async request is <c>700</c> (the number of origins multiplied by the number of destinations).
         /// </summary>
-        /// <param name="waitUntil"> If the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> If the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="options"> The route direction options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual RequestRouteMatrixOperation RequestRouteMatrix(WaitUntil waitUntil, RouteMatrixOptions options, CancellationToken cancellationToken = default)
+        public virtual GetRouteMatrixOperation GetRouteMatrix(WaitUntil waitUntil, RouteMatrixOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.RequestRouteMatrix");
+            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.GetRouteMatrix");
             scope.Start();
             try
             {
@@ -816,7 +816,7 @@ namespace Azure.Maps.Routing
                     options?.VehicleLengthInMeters,
                     options?.VehicleHeightInMeters,
                     options?.VehicleWidthInMeters,
-                    options?.VehicleMaxSpeedInKmPerHour,
+                    options?.VehicleMaxSpeedInKilometersPerHour,
                     options?.VehicleWeightInKilograms,
                     options?.Windingness,
                     options?.InclineLevel,
@@ -829,7 +829,7 @@ namespace Azure.Maps.Routing
                 );
 
                 // Create operation for route direction
-                var operation = new RequestRouteMatrixOperation(this, new Uri(response.Headers.Location));
+                var operation = new GetRouteMatrixOperation(this, new Uri(response.Headers.Location));
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -849,23 +849,23 @@ namespace Azure.Maps.Routing
         /// TThis Route Directions Batch API will run asynchronously (async) and it allows caller to batch up to <c>700</c> queries.
         /// </summary>
         /// <param name="waitUntil"> If the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="routeDirectionsQueries"> The list of route directions queries/requests to process. The list can contain a max of 700 queries for async and must contain at least 1 query. </param>
+        /// <param name="queries"> The list of route directions queries/requests to process. The list can contain a max of 700 queries for async and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeDirectionsQueries"/> is null. </exception>
-        public virtual async Task<RequestRouteDirectionsOperation> RequestRouteDirectionsBatchAsync(WaitUntil waitUntil, IList<RouteDirectionQuery> routeDirectionsQueries, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is null. </exception>
+        public virtual async Task<GetDirectionsOperation> GetDirectionsBatchAsync(WaitUntil waitUntil, IEnumerable<RouteDirectionQuery> queries, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(routeDirectionsQueries, nameof(routeDirectionsQueries));
+            Argument.AssertNotNull(queries, nameof(queries));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.RequestRouteDirectionsBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.GetDirectionsBatch");
             scope.Start();
             try
             {
-                var batchItems = MapsRoutingClient.RouteDirectionsQueriesToBatchItems(routeDirectionsQueries);
+                var batchItems = MapsRoutingClient.RouteDirectionsQueriesToBatchItems(queries);
                 var response = await RestClient.RequestRouteDirectionsBatchAsync(
                     batchItems, null, cancellationToken).ConfigureAwait(false);
 
                 // Create operation for route direction
-                var operation = new RequestRouteDirectionsOperation(this, new Uri(response.Headers.Location));
+                var operation = new GetDirectionsOperation(this, new Uri(response.Headers.Location));
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -885,23 +885,23 @@ namespace Azure.Maps.Routing
         /// TThis Route Directions Batch API will run asynchronously (async) and it allows caller to batch up to <c>700</c> queries.
         /// </summary>
         /// <param name="waitUntil"> Whether to return once method is invoked or wait for the server operation to fully complete before returning. Possible value: <c>WaitUntil.Completed</c> and <c>WaitUntil.Started</c> </param>
-        /// <param name="routeDirectionsQueries"> The list of route directions queries/requests to process. The list can contain a max of 700 queries for async and must contain at least 1 query. </param>
+        /// <param name="queries"> The list of route directions queries/requests to process. The list can contain a max of 700 queries for async and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeDirectionsQueries"/> is null. </exception>
-        public virtual RequestRouteDirectionsOperation RequestRouteDirectionsBatch(WaitUntil waitUntil, IList<RouteDirectionQuery> routeDirectionsQueries, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is null. </exception>
+        public virtual GetDirectionsOperation GetDirectionsBatch(WaitUntil waitUntil, IEnumerable<RouteDirectionQuery> queries, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(routeDirectionsQueries, nameof(routeDirectionsQueries));
+            Argument.AssertNotNull(queries, nameof(queries));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.RequestRouteDirectionsBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsRoutingClient.GetDirectionsBatch");
             scope.Start();
             try
             {
-                var batchItems = MapsRoutingClient.RouteDirectionsQueriesToBatchItems(routeDirectionsQueries);
+                var batchItems = MapsRoutingClient.RouteDirectionsQueriesToBatchItems(queries);
                 var response = RestClient.RequestRouteDirectionsBatch(
                     batchItems, null, cancellationToken);
 
                 // Create operation for route direction
-                var operation = new RequestRouteDirectionsOperation(this, new Uri(response.Headers.Location));
+                var operation = new GetDirectionsOperation(this, new Uri(response.Headers.Location));
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -919,10 +919,10 @@ namespace Azure.Maps.Routing
         /// <summary>
         /// Convert a list of queries in string format to BatchItems for route directions queries
         /// </summary>
-        private static BatchRequest RouteDirectionsQueriesToBatchItems(IList<RouteDirectionQuery> routeDirectionsQueries)
+        private static BatchRequest RouteDirectionsQueriesToBatchItems(IEnumerable<RouteDirectionQuery> queries)
         {
             BatchRequest batchItems = new BatchRequest();
-            foreach (var query in routeDirectionsQueries)
+            foreach (var query in queries)
             {
                 var stringRoutePoints = MapsRoutingClient.GeoPointsToString(query.RoutePoints);
                 var options = query.RouteDirectionOptions;
@@ -960,9 +960,9 @@ namespace Azure.Maps.Routing
                 {
                     uri.AppendQuery("vehicleWidth", options.VehicleWidthInMeters.Value, true);
                 }
-                if (options?.VehicleMaxSpeedInKmPerHour != null)
+                if (options?.VehicleMaxSpeedInKilometersPerHour != null)
                 {
-                    uri.AppendQuery("vehicleMaxSpeed", options.VehicleMaxSpeedInKmPerHour.Value, true);
+                    uri.AppendQuery("vehicleMaxSpeed", options.VehicleMaxSpeedInKilometersPerHour.Value, true);
                 }
                 if (options?.VehicleWeightInKilograms != null)
                 {
