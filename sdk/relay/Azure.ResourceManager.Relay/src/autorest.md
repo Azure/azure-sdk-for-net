@@ -15,10 +15,18 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+generate-virtual-operations:
+- HybridConnections_GetAuthorizationRule
+- HybridConnections_CreateOrUpdateAuthorizationRule
+- Namespaces_GetAuthorizationRule
+- Namespaces_CreateOrUpdateAuthorizationRule
+- WCFRelays_GetAuthorizationRule
+- WCFRelays_CreateOrUpdateAuthorizationRule
+
 request-path-to-resource-name:
-    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}: RelayNamespaceAuthorizationRule
-    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}: RelayHybridConnectionAuthorizationRule
-    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}: WcfRelayAuthorizationRule
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}: RelayNamespaceAuthorizationRule
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}: RelayHybridConnectionAuthorizationRule
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules/{authorizationRuleName}: WcfRelayAuthorizationRule
 
 override-operation-name:
   Namespaces_CheckNameAvailability: CheckRelayNamespaceNameAvailability
@@ -29,7 +37,6 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
- 
 
 rename-rules:
   CPU: Cpu

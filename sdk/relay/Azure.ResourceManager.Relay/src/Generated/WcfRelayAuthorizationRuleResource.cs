@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Relay
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<WcfRelayAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<WcfRelayAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((WcfRelayAuthorizationRuleResource)result.Value, result.GetRawResponse());
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Relay
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<WcfRelayAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
+        public virtual new Response<WcfRelayAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
             return Response.FromValue((WcfRelayAuthorizationRuleResource)result.Value, result.GetRawResponse());
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new async Task<ArmOperation<WcfRelayAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual new async Task<ArmOperation<WcfRelayAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new ArmOperation<WcfRelayAuthorizationRuleResource> Update(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual new ArmOperation<WcfRelayAuthorizationRuleResource> Update(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
