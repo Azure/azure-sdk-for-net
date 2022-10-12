@@ -16,6 +16,45 @@ model-namespace: false
 public-clients: false
 head-as-boolean: false
 
+generate-virtual-operations:
+- ManagedBackupShortTermRetentionPolicies_Get
+- ManagedBackupShortTermRetentionPolicies_Update
+- ManagedDatabaseColumns_Get
+- ManagedDatabaseSchemas_Get
+- ManagedDatabaseSensitivityLabels_Get
+- ManagedDatabaseSensitivityLabels_CreateOrUpdate
+- ManagedDatabaseTables_Get
+- SensitivityLabels_CreateOrUpdate
+- ManagedDatabaseVulnerabilityAssessments_Get
+- ManagedDatabaseVulnerabilityAssessments_CreateOrUpdate
+- ManagedDatabaseVulnerabilityAssessmentRuleBaselines_Get
+- ManagedDatabaseVulnerabilityAssessmentRuleBaselines_CreateOrUpdate
+- ManagedDatabaseVulnerabilityAssessmentScans_Get
+- ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies_Get
+- ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies_Update
+- LongTermRetentionBackups_GetByResourceGroup
+- LongTermRetentionManagedInstanceBackups_GetByResourceGroup
+- DatabaseAdvisors_Get
+- DatabaseAdvisors_Update
+- SensitivityLabels_Get
+- DatabaseSchemas_Get
+- DatabaseTables_Get
+- DatabaseVulnerabilityAssessments_Get
+- DatabaseVulnerabilityAssessments_CreateOrUpdate
+- DatabaseVulnerabilityAssessmentRuleBaselines_Get
+- DatabaseVulnerabilityAssessmentRuleBaselines_CreateOrUpdate
+- DatabaseVulnerabilityAssessmentScans_Get
+- ServerAdvisors_Get
+- ServerAdvisors_Update
+- JobExecutions_Get
+- JobStepExecutions_Get
+- JobTargetExecutions_Get
+- JobSteps_Get
+- JobSteps_GetByVersion
+- LongTermRetentionBackups_Get
+- LongTermRetentionManagedInstanceBackups_Get
+- DatabaseColumns_Get
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'
@@ -127,6 +166,7 @@ prepend-rp-prefix:
   - ServerUsage
   - AdvisorStatus
   - Advisor
+
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/restoreDetails/{restoreDetailsName}
@@ -155,6 +195,15 @@ override-operation-name:
   LongTermRetentionBackups_ListByServer: GetLongTermRetentionBackupsWithServer
   LongTermRetentionManagedInstanceBackups_ListByInstance: GetLongTermRetentionManagedInstanceBackupsWithInstance
   LongTermRetentionManagedInstanceBackups_ListByLocation: GetLongTermRetentionManagedInstanceBackupsWithLocation
+  ManagedDatabaseSensitivityLabels_ListCurrent: GetCurrentSensitivityLabels
+  SensitivityLabels_ListCurrentByDatabase: GetDatabaseCurrentSensitivityLabels # we cannot use the name GetCurrentSensitivityLabels because it is already taken by a method with incorrect return type
+  SensitivityLabels_ListRecommendedByDatabase: GetDatabaseRecommendedSensitivityLabels # we cannot use the name GetCurrentSensitivityLabels because it is already taken by a method with incorrect return type
+  ManagedDatabaseColumns_ListByDatabase: GetManagedDatabaseColumns
+  ManagedDatabaseSensitivityLabels_ListRecommended: GetRecommendedSensitivityLabels
+  DatabaseColumns_ListByDatabase: GetColumns
+  JobExecutions_ListByAgent: GetJobExecutions
+  JobTargetExecutions_ListByJobExecution: GetJobExecutionTargets
+  JobExecutions_Create: Execute
 
 request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}

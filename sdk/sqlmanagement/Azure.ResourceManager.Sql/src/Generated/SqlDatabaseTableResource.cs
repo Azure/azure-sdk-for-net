@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new async Task<Response<SqlDatabaseTableResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<SqlDatabaseTableResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((SqlDatabaseTableResource)result.Value, result.GetRawResponse());
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new Response<SqlDatabaseTableResource> Get(CancellationToken cancellationToken = default)
+        public virtual new Response<SqlDatabaseTableResource> Get(CancellationToken cancellationToken = default)
         {
             var result = GetCore(cancellationToken);
             return Response.FromValue((SqlDatabaseTableResource)result.Value, result.GetRawResponse());
