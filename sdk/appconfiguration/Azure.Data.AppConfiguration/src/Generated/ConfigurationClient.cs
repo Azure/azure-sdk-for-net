@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
+    // Data plane generated client. The Configuration service client.
     /// <summary> The Configuration service client. </summary>
     public partial class ConfigurationClient
     {
@@ -198,160 +199,6 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Gets a single key-value. </summary>
-        /// <param name="key"> The key of the key-value to retrieve. </param>
-        /// <param name="label"> The label of the key-value to retrieve. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetKeyValueAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = await client.GetKeyValueAsync("<key>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call GetKeyValueAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = await client.GetKeyValueAsync("<key>", "<label>", "<acceptDatetime>", new String[]{"<select>"}, new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("key").ToString());
-        /// Console.WriteLine(result.GetProperty("label").ToString());
-        /// Console.WriteLine(result.GetProperty("content_type").ToString());
-        /// Console.WriteLine(result.GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("last_modified").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("locked").ToString());
-        /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>KeyValue</c>:
-        /// <code>{
-        ///   key: string, # Optional.
-        ///   label: string, # Optional.
-        ///   content_type: string, # Optional.
-        ///   value: string, # Optional.
-        ///   last_modified: string (ISO 8601 Format), # Optional.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-        ///   locked: boolean, # Optional.
-        ///   etag: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetKeyValueAsync(string key, string label = null, string acceptDatetime = null, IEnumerable<string> select = null, MatchConditions matchConditions = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetKeyValue");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetKeyValueRequest(key, label, acceptDatetime, select, matchConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a single key-value. </summary>
-        /// <param name="key"> The key of the key-value to retrieve. </param>
-        /// <param name="label"> The label of the key-value to retrieve. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetKeyValue with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = client.GetKeyValue("<key>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call GetKeyValue with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = client.GetKeyValue("<key>", "<label>", "<acceptDatetime>", new String[]{"<select>"}, new MatchConditions { IfMatch = "<YOUR_ETAG>" });
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("key").ToString());
-        /// Console.WriteLine(result.GetProperty("label").ToString());
-        /// Console.WriteLine(result.GetProperty("content_type").ToString());
-        /// Console.WriteLine(result.GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("last_modified").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("locked").ToString());
-        /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>KeyValue</c>:
-        /// <code>{
-        ///   key: string, # Optional.
-        ///   label: string, # Optional.
-        ///   content_type: string, # Optional.
-        ///   value: string, # Optional.
-        ///   last_modified: string (ISO 8601 Format), # Optional.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-        ///   locked: boolean, # Optional.
-        ///   etag: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetKeyValue(string key, string label = null, string acceptDatetime = null, IEnumerable<string> select = null, MatchConditions matchConditions = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetKeyValue");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetKeyValueRequest(key, label, acceptDatetime, select, matchConditions, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Creates a key-value. </summary>
         /// <param name="key"> The key of the key-value to create. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -364,19 +211,19 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call PutKeyValueAsync with required parameters and parse the result.
+        /// This sample shows how to call SetConfigurationSettingAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfigurationClient(endpoint);
         /// 
         /// var data = new {};
         /// 
-        /// Response response = await client.PutKeyValueAsync("<key>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
+        /// Response response = await client.SetConfigurationSettingAsync("<key>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
-        /// This sample shows how to call PutKeyValueAsync with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call SetConfigurationSettingAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfigurationClient(endpoint);
@@ -394,7 +241,7 @@ namespace Azure.Data.AppConfiguration
         ///     etag = "<etag>",
         /// };
         /// 
-        /// Response response = await client.PutKeyValueAsync("<key>", RequestContent.Create(data), ContentType.ApplicationOctetStream, "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
+        /// Response response = await client.SetConfigurationSettingAsync("<key>", RequestContent.Create(data), ContentType.ApplicationOctetStream, "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("key").ToString());
@@ -441,15 +288,15 @@ namespace Azure.Data.AppConfiguration
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> PutKeyValueAsync(string key, RequestContent content, ContentType contentType, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
+        public virtual async Task<Response> SetConfigurationSettingAsync(string key, RequestContent content, ContentType contentType, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.PutKeyValue");
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.SetConfigurationSetting");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePutKeyValueRequest(key, content, contentType, label, matchConditions, context);
+                using HttpMessage message = CreateSetConfigurationSettingRequest(key, content, contentType, label, matchConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -471,19 +318,19 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call PutKeyValue with required parameters and parse the result.
+        /// This sample shows how to call SetConfigurationSetting with required parameters and parse the result.
         /// <code><![CDATA[
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfigurationClient(endpoint);
         /// 
         /// var data = new {};
         /// 
-        /// Response response = client.PutKeyValue("<key>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
+        /// Response response = client.SetConfigurationSetting("<key>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
-        /// This sample shows how to call PutKeyValue with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call SetConfigurationSetting with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfigurationClient(endpoint);
@@ -501,7 +348,7 @@ namespace Azure.Data.AppConfiguration
         ///     etag = "<etag>",
         /// };
         /// 
-        /// Response response = client.PutKeyValue("<key>", RequestContent.Create(data), ContentType.ApplicationOctetStream, "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
+        /// Response response = client.SetConfigurationSetting("<key>", RequestContent.Create(data), ContentType.ApplicationOctetStream, "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("key").ToString());
@@ -548,165 +395,15 @@ namespace Azure.Data.AppConfiguration
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response PutKeyValue(string key, RequestContent content, ContentType contentType, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
+        public virtual Response SetConfigurationSetting(string key, RequestContent content, ContentType contentType, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.PutKeyValue");
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.SetConfigurationSetting");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePutKeyValueRequest(key, content, contentType, label, matchConditions, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a key-value. </summary>
-        /// <param name="key"> The key of the key-value to delete. </param>
-        /// <param name="label"> The label of the key-value to delete. </param>
-        /// <param name="ifMatch"> Used to perform an operation only if the targeted resource&apos;s etag matches the value provided. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteKeyValueAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = await client.DeleteKeyValueAsync("<key>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call DeleteKeyValueAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = await client.DeleteKeyValueAsync("<key>", "<label>", null);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("key").ToString());
-        /// Console.WriteLine(result.GetProperty("label").ToString());
-        /// Console.WriteLine(result.GetProperty("content_type").ToString());
-        /// Console.WriteLine(result.GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("last_modified").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("locked").ToString());
-        /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>KeyValue</c>:
-        /// <code>{
-        ///   key: string, # Optional.
-        ///   label: string, # Optional.
-        ///   content_type: string, # Optional.
-        ///   value: string, # Optional.
-        ///   last_modified: string (ISO 8601 Format), # Optional.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-        ///   locked: boolean, # Optional.
-        ///   etag: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> DeleteKeyValueAsync(string key, string label = null, ETag? ifMatch = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteKeyValue");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteKeyValueRequest(key, label, ifMatch, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a key-value. </summary>
-        /// <param name="key"> The key of the key-value to delete. </param>
-        /// <param name="label"> The label of the key-value to delete. </param>
-        /// <param name="ifMatch"> Used to perform an operation only if the targeted resource&apos;s etag matches the value provided. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteKeyValue with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = client.DeleteKeyValue("<key>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call DeleteKeyValue with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfigurationClient(endpoint);
-        /// 
-        /// Response response = client.DeleteKeyValue("<key>", "<label>", null);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("key").ToString());
-        /// Console.WriteLine(result.GetProperty("label").ToString());
-        /// Console.WriteLine(result.GetProperty("content_type").ToString());
-        /// Console.WriteLine(result.GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("last_modified").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("locked").ToString());
-        /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>KeyValue</c>:
-        /// <code>{
-        ///   key: string, # Optional.
-        ///   label: string, # Optional.
-        ///   content_type: string, # Optional.
-        ///   value: string, # Optional.
-        ///   last_modified: string (ISO 8601 Format), # Optional.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Dictionary of &lt;string&gt;
-        ///   locked: boolean, # Optional.
-        ///   etag: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response DeleteKeyValue(string key, string label = null, ETag? ifMatch = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteKeyValue");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteKeyValueRequest(key, label, ifMatch, context);
+                using HttpMessage message = CreateSetConfigurationSettingRequest(key, content, contentType, label, matchConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -904,22 +601,22 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call PutLockAsync with required parameters and parse the result.
+        /// This sample shows how to call CreateReadOnlyLockAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfigurationClient(endpoint);
         /// 
-        /// Response response = await client.PutLockAsync("<key>");
+        /// Response response = await client.CreateReadOnlyLockAsync("<key>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
-        /// This sample shows how to call PutLockAsync with all parameters, and how to parse the result.
+        /// This sample shows how to call CreateReadOnlyLockAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfigurationClient(endpoint);
         /// 
-        /// Response response = await client.PutLockAsync("<key>", "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
+        /// Response response = await client.CreateReadOnlyLockAsync("<key>", "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("key").ToString());
@@ -951,15 +648,15 @@ namespace Azure.Data.AppConfiguration
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> PutLockAsync(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
+        public virtual async Task<Response> CreateReadOnlyLockAsync(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.PutLock");
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateReadOnlyLock");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePutLockRequest(key, label, matchConditions, context);
+                using HttpMessage message = CreateCreateReadOnlyLockRequest(key, label, matchConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -979,22 +676,22 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call PutLock with required parameters and parse the result.
+        /// This sample shows how to call CreateReadOnlyLock with required parameters and parse the result.
         /// <code><![CDATA[
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfigurationClient(endpoint);
         /// 
-        /// Response response = client.PutLock("<key>");
+        /// Response response = client.CreateReadOnlyLock("<key>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
-        /// This sample shows how to call PutLock with all parameters, and how to parse the result.
+        /// This sample shows how to call CreateReadOnlyLock with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfigurationClient(endpoint);
         /// 
-        /// Response response = client.PutLock("<key>", "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
+        /// Response response = client.CreateReadOnlyLock("<key>", "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("key").ToString());
@@ -1026,15 +723,15 @@ namespace Azure.Data.AppConfiguration
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response PutLock(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
+        public virtual Response CreateReadOnlyLock(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.PutLock");
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateReadOnlyLock");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePutLockRequest(key, label, matchConditions, context);
+                using HttpMessage message = CreateCreateReadOnlyLockRequest(key, label, matchConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1054,22 +751,22 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call DeleteLockAsync with required parameters and parse the result.
+        /// This sample shows how to call DeleteReadOnlyLockAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfigurationClient(endpoint);
         /// 
-        /// Response response = await client.DeleteLockAsync("<key>");
+        /// Response response = await client.DeleteReadOnlyLockAsync("<key>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
-        /// This sample shows how to call DeleteLockAsync with all parameters, and how to parse the result.
+        /// This sample shows how to call DeleteReadOnlyLockAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfigurationClient(endpoint);
         /// 
-        /// Response response = await client.DeleteLockAsync("<key>", "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
+        /// Response response = await client.DeleteReadOnlyLockAsync("<key>", "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("key").ToString());
@@ -1101,15 +798,15 @@ namespace Azure.Data.AppConfiguration
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> DeleteLockAsync(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
+        public virtual async Task<Response> DeleteReadOnlyLockAsync(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteLock");
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteReadOnlyLock");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteLockRequest(key, label, matchConditions, context);
+                using HttpMessage message = CreateDeleteReadOnlyLockRequest(key, label, matchConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1129,22 +826,22 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call DeleteLock with required parameters and parse the result.
+        /// This sample shows how to call DeleteReadOnlyLock with required parameters and parse the result.
         /// <code><![CDATA[
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfigurationClient(endpoint);
         /// 
-        /// Response response = client.DeleteLock("<key>");
+        /// Response response = client.DeleteReadOnlyLock("<key>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
-        /// This sample shows how to call DeleteLock with all parameters, and how to parse the result.
+        /// This sample shows how to call DeleteReadOnlyLock with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfigurationClient(endpoint);
         /// 
-        /// Response response = client.DeleteLock("<key>", "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
+        /// Response response = client.DeleteReadOnlyLock("<key>", "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("key").ToString());
@@ -1176,15 +873,15 @@ namespace Azure.Data.AppConfiguration
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response DeleteLock(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
+        public virtual Response DeleteReadOnlyLock(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteLock");
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteReadOnlyLock");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteLockRequest(key, label, matchConditions, context);
+                using HttpMessage message = CreateDeleteReadOnlyLockRequest(key, label, matchConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1420,23 +1117,23 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetKeyValuesAsync and parse the result.
+        /// This sample shows how to call GetConfigurationSettingsAsync and parse the result.
         /// <code><![CDATA[
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfigurationClient(endpoint);
         /// 
-        /// await foreach (var data in client.GetKeyValuesAsync())
+        /// await foreach (var data in client.GetConfigurationSettingsAsync())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
-        /// This sample shows how to call GetKeyValuesAsync with all parameters, and how to parse the result.
+        /// This sample shows how to call GetConfigurationSettingsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfigurationClient(endpoint);
         /// 
-        /// await foreach (var data in client.GetKeyValuesAsync("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}))
+        /// await foreach (var data in client.GetConfigurationSettingsAsync("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("key").ToString());
@@ -1469,12 +1166,12 @@ namespace Azure.Data.AppConfiguration
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetKeyValuesAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetConfigurationSettingsAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
-            return GetKeyValuesImplementationAsync("ConfigurationClient.GetKeyValues", key, label, after, acceptDatetime, select, context);
+            return GetConfigurationSettingsImplementationAsync("ConfigurationClient.GetConfigurationSettings", key, label, after, acceptDatetime, select, context);
         }
 
-        private AsyncPageable<BinaryData> GetKeyValuesImplementationAsync(string diagnosticsScopeName, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        private AsyncPageable<BinaryData> GetConfigurationSettingsImplementationAsync(string diagnosticsScopeName, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1482,8 +1179,8 @@ namespace Azure.Data.AppConfiguration
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetKeyValuesRequest(key, label, after, acceptDatetime, select, context)
-                        : CreateGetKeyValuesNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
+                        ? CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, context)
+                        : CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "items", "@nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1501,23 +1198,23 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetKeyValues and parse the result.
+        /// This sample shows how to call GetConfigurationSettings and parse the result.
         /// <code><![CDATA[
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfigurationClient(endpoint);
         /// 
-        /// foreach (var data in client.GetKeyValues())
+        /// foreach (var data in client.GetConfigurationSettings())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
-        /// This sample shows how to call GetKeyValues with all parameters, and how to parse the result.
+        /// This sample shows how to call GetConfigurationSettings with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfigurationClient(endpoint);
         /// 
-        /// foreach (var data in client.GetKeyValues("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}))
+        /// foreach (var data in client.GetConfigurationSettings("<key>", "<label>", "<after>", "<acceptDatetime>", new String[]{"<select>"}))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("key").ToString());
@@ -1550,12 +1247,12 @@ namespace Azure.Data.AppConfiguration
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetKeyValues(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetConfigurationSettings(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
-            return GetKeyValuesImplementation("ConfigurationClient.GetKeyValues", key, label, after, acceptDatetime, select, context);
+            return GetConfigurationSettingsImplementation("ConfigurationClient.GetConfigurationSettings", key, label, after, acceptDatetime, select, context);
         }
 
-        private Pageable<BinaryData> GetKeyValuesImplementation(string diagnosticsScopeName, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        private Pageable<BinaryData> GetConfigurationSettingsImplementation(string diagnosticsScopeName, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1563,8 +1260,8 @@ namespace Azure.Data.AppConfiguration
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetKeyValuesRequest(key, label, after, acceptDatetime, select, context)
-                        : CreateGetKeyValuesNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
+                        ? CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, context)
+                        : CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "items", "@nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1925,7 +1622,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetKeyValuesRequest(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateGetConfigurationSettingsRequest(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2000,7 +1697,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetKeyValueRequest(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateGetConfigurationSettingRequest(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2035,7 +1732,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreatePutKeyValueRequest(string key, RequestContent content, ContentType contentType, string label, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateSetConfigurationSettingRequest(string key, RequestContent content, ContentType contentType, string label, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2064,7 +1761,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateDeleteKeyValueRequest(string key, string label, ETag? ifMatch, RequestContext context)
+        internal HttpMessage CreateDeleteConfigurationSettingRequest(string key, string label, ETag? ifMatch, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
             var request = message.Request;
@@ -2192,7 +1889,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreatePutLockRequest(string key, string label, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateCreateReadOnlyLockRequest(string key, string label, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2219,7 +1916,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateDeleteLockRequest(string key, string label, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateDeleteReadOnlyLockRequest(string key, string label, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2342,7 +2039,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetKeyValuesNextPageRequest(string nextLink, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        internal HttpMessage CreateGetConfigurationSettingsNextPageRequest(string nextLink, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

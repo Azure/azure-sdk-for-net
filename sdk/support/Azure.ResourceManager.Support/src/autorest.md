@@ -46,4 +46,29 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+prepend-rp-prefix:
+  - ContactProfile
+  - ServiceLevelAgreement
+  - SeverityLevel
+
+rename-mapping:
+  CommunicationDetails: SupportTicketCommunication
+  CommunicationDirection: SupportTicketCommunicationDirection
+  CommunicationType: SupportTicketCommunicationType
+  SupportTicketDetails: SupportTicket
+  CheckNameAvailabilityInput: SupportNameAvailabilityContent
+  CheckNameAvailabilityOutput: SupportNameAvailabilityResult
+  CheckNameAvailabilityOutput.nameAvailable: IsNameAvailable
+  QuotaChangeRequest: SupportQuotaChangeContent
+  ServiceLevelAgreement.slaMinutes: SlaInMinutes
+  Status: SupportTicketStatus
+  UpdateContactProfile: SupportContactProfileContent
+  Type: SupportResourceType
+  Service: SupportAzureService
+  TechnicalTicketDetails.resourceId: -|arm-id
+
+override-operation-name:
+  Communications_CheckNameAvailability: CheckCommunicationNameAvailability
+  SupportTickets_CheckNameAvailability: CheckSupportTicketNameAvailability
+
 ```

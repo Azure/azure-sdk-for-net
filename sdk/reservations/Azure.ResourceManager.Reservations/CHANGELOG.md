@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,24 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2022-10-11)
+
+### Features Added
+- Added new APIs for calculateRefund, return and archive/unarchive reservation
+
+### Bugs Fixed
+- Set the following properties to be `nullable` in CalculateExchange\Exchange flow:
+    - `ExchangePolicyErrors.PolicyErrors`
+    - `ReservationPurchaseContent.AppliedScopes`
+
+### Other Changes
+- Added unit tests for CalculateExchange/Exchange operations
+- Updated unit tests with new test data
+
+## 1.0.0 (2022-09-05)
+
+This is the first stable release of the Reservations Management client library.
 
 ## 1.0.0-beta.2 (2022-08-29)
 

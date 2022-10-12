@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
     {
         public HostPoolData(Azure.Core.AzureLocation location, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType hostPoolType, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolLoadBalancerType loadBalancerType, Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType preferredAppGroupType) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IReadOnlyList<string> ApplicationGroupReferences { get { throw null; } }
-        public bool? CloudPCResource { get { throw null; } }
         public string CustomRdpProperty { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public string FriendlyName { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType HostPoolType { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public bool? IsCloudPCResource { get { throw null; } }
         public bool? IsValidationEnvironment { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.HostPoolLoadBalancerType LoadBalancerType { get { throw null; } set { } }
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public string Description { get { throw null; } set { } }
         public string FilePath { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
-        public byte[] IconContent { get { throw null; } }
+        public System.BinaryData IconContent { get { throw null; } }
         public string IconHash { get { throw null; } }
         public int? IconIndex { get { throw null; } set { } }
         public string IconPath { get { throw null; } set { } }
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public VirtualDesktopData() { }
         public string Description { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
-        public byte[] IconContent { get { throw null; } }
+        public System.BinaryData IconContent { get { throw null; } }
         public string IconHash { get { throw null; } }
         public string ObjectId { get { throw null; } }
     }
@@ -584,6 +584,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string CustomRdpProperty { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
+        public bool? IsValidationEnvironment { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.HostPoolLoadBalancerType? LoadBalancerType { get { throw null; } set { } }
         public int? MaxSessionLimit { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.PersonalDesktopAssignmentType? PersonalDesktopAssignmentType { get { throw null; } set { } }
@@ -596,7 +597,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public Azure.ResourceManager.DesktopVirtualization.Models.HostPoolSsoSecretType? SsoSecretType { get { throw null; } set { } }
         public bool? StartVmOnConnect { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public bool? ValidationEnvironment { get { throw null; } set { } }
         public string VmTemplate { get { throw null; } set { } }
     }
     public partial class HostPoolRegistrationInfo
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public HostPoolType(string value) { throw null; }
-        public static Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType BYODesktop { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType BringYourOwnDesktop { get { throw null; } }
         public static Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType Personal { get { throw null; } }
         public static Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType Pooled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType other) { throw null; }
@@ -704,8 +704,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string Description { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
         public string IconImageName { get { throw null; } set { } }
-        public byte[] RawIcon { get { throw null; } set { } }
-        public byte[] RawPng { get { throw null; } set { } }
+        public System.BinaryData RawIcon { get { throw null; } set { } }
+        public System.BinaryData RawPng { get { throw null; } set { } }
     }
     public partial class MsixPackageDependencies
     {

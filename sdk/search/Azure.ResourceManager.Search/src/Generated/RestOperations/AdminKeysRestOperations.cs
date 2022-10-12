@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdminKeyResult>> GetAsync(string subscriptionId, string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchServiceAdminKeyResult>> GetAsync(string subscriptionId, string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.Search
             {
                 case 200:
                     {
-                        AdminKeyResult value = default;
+                        SearchServiceAdminKeyResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AdminKeyResult.DeserializeAdminKeyResult(document.RootElement);
+                        value = SearchServiceAdminKeyResult.DeserializeSearchServiceAdminKeyResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdminKeyResult> Get(string subscriptionId, string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public Response<SearchServiceAdminKeyResult> Get(string subscriptionId, string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -108,9 +108,9 @@ namespace Azure.ResourceManager.Search
             {
                 case 200:
                     {
-                        AdminKeyResult value = default;
+                        SearchServiceAdminKeyResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AdminKeyResult.DeserializeAdminKeyResult(document.RootElement);
+                        value = SearchServiceAdminKeyResult.DeserializeSearchServiceAdminKeyResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        internal HttpMessage CreateRegenerateRequest(string subscriptionId, string resourceGroupName, string searchServiceName, AdminKeyKind keyKind, SearchManagementRequestOptions searchManagementRequestOptions)
+        internal HttpMessage CreateRegenerateRequest(string subscriptionId, string resourceGroupName, string searchServiceName, SearchServiceAdminKeyKind keyKind, SearchManagementRequestOptions searchManagementRequestOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdminKeyResult>> RegenerateAsync(string subscriptionId, string resourceGroupName, string searchServiceName, AdminKeyKind keyKind, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchServiceAdminKeyResult>> RegenerateAsync(string subscriptionId, string resourceGroupName, string searchServiceName, SearchServiceAdminKeyKind keyKind, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -161,9 +161,9 @@ namespace Azure.ResourceManager.Search
             {
                 case 200:
                     {
-                        AdminKeyResult value = default;
+                        SearchServiceAdminKeyResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AdminKeyResult.DeserializeAdminKeyResult(document.RootElement);
+                        value = SearchServiceAdminKeyResult.DeserializeSearchServiceAdminKeyResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdminKeyResult> Regenerate(string subscriptionId, string resourceGroupName, string searchServiceName, AdminKeyKind keyKind, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public Response<SearchServiceAdminKeyResult> Regenerate(string subscriptionId, string resourceGroupName, string searchServiceName, SearchServiceAdminKeyKind keyKind, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.Search
             {
                 case 200:
                     {
-                        AdminKeyResult value = default;
+                        SearchServiceAdminKeyResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AdminKeyResult.DeserializeAdminKeyResult(document.RootElement);
+                        value = SearchServiceAdminKeyResult.DeserializeSearchServiceAdminKeyResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

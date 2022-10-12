@@ -41,7 +41,9 @@
         }
       },
       "OverrideFiles": {
-        "OverrideFiles": "2.txt"
+        "DependencyGroup2.txt": {
+          "OverrideFiles": "2.txt"
+        }
       }
     }
   ]

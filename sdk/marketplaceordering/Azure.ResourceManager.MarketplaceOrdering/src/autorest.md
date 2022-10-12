@@ -16,7 +16,21 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+rename-mapping:
+  AgreementTerms: MarketplaceAgreementTerm
+  AgreementTerms.properties.accepted: IsAccepted
+  AgreementTerms.properties.licenseTextLink: -|uri
+  AgreementTerms.properties.privacyPolicyLink: -|uri
+  AgreementTerms.properties.marketplaceTermsLink: -|uri
+  AgreementTerms.properties.retrieveDatetime: RetrievedOn
+  OfferType: AgreementOfferType
+
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/providers/Microsoft.MarketplaceOrdering/offerTypes/{offerType}/publishers/{publisherId}/offers/{offerId}/plans/{planId}/agreements/current: MarketplaceAgreementTerm
+  /subscriptions/{subscriptionId}/providers/Microsoft.MarketplaceOrdering/agreements/{publisherId}/offers/{offerId}/plans/{planId}: MarketplaceAgreement
+
 list-exception:
+  - /subscriptions/{subscriptionId}/providers/Microsoft.MarketplaceOrdering/agreements/{publisherId}/offers/{offerId}/plans/{planId}
   - /subscriptions/{subscriptionId}/providers/Microsoft.MarketplaceOrdering/offerTypes/{offerType}/publishers/{publisherId}/offers/{offerId}/plans/{planId}/agreements/current
 
 format-by-name-rules:

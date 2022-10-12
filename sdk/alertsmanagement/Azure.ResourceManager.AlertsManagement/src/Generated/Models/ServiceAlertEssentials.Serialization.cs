@@ -53,16 +53,16 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             Optional<ServiceAlertSeverity> severity = default;
             Optional<ServiceAlertSignalType> signalType = default;
-            Optional<AlertState> alertState = default;
+            Optional<ServiceAlertState> alertState = default;
             Optional<MonitorCondition> monitorCondition = default;
             Optional<string> targetResource = default;
             Optional<string> targetResourceName = default;
             Optional<string> targetResourceGroup = default;
             Optional<string> targetResourceType = default;
-            Optional<MonitorService> monitorService = default;
+            Optional<MonitorServiceSourceForAlert> monitorService = default;
             Optional<string> alertRule = default;
             Optional<string> sourceCreatedId = default;
-            Optional<string> smartGroupId = default;
+            Optional<Guid> smartGroupId = default;
             Optional<string> smartGroupingReason = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> lastModifiedDateTime = default;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    alertState = new AlertState(property.Value.GetString());
+                    alertState = new ServiceAlertState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("monitorCondition"))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    monitorService = new MonitorService(property.Value.GetString());
+                    monitorService = new MonitorServiceSourceForAlert(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("alertRule"))
@@ -154,7 +154,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 if (property.NameEquals("smartGroupId"))
                 {
-                    smartGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    smartGroupId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("smartGroupingReason"))
@@ -213,7 +218,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new ServiceAlertEssentials(Optional.ToNullable(severity), Optional.ToNullable(signalType), Optional.ToNullable(alertState), Optional.ToNullable(monitorCondition), targetResource.Value, targetResourceName.Value, targetResourceGroup.Value, targetResourceType.Value, Optional.ToNullable(monitorService), alertRule.Value, sourceCreatedId.Value, smartGroupId.Value, smartGroupingReason.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), Optional.ToNullable(monitorConditionResolvedDateTime), lastModifiedUserName.Value, actionStatus.Value, description.Value);
+            return new ServiceAlertEssentials(Optional.ToNullable(severity), Optional.ToNullable(signalType), Optional.ToNullable(alertState), Optional.ToNullable(monitorCondition), targetResource.Value, targetResourceName.Value, targetResourceGroup.Value, targetResourceType.Value, Optional.ToNullable(monitorService), alertRule.Value, sourceCreatedId.Value, Optional.ToNullable(smartGroupId), smartGroupingReason.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), Optional.ToNullable(monitorConditionResolvedDateTime), lastModifiedUserName.Value, actionStatus.Value, description.Value);
         }
     }
 }

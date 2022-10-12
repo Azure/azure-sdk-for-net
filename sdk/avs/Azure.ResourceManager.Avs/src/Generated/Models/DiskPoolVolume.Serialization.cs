@@ -29,15 +29,15 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static DiskPoolVolume DeserializeDiskPoolVolume(JsonElement element)
         {
-            string targetId = default;
+            ResourceIdentifier targetId = default;
             string lunName = default;
-            Optional<MountOptionEnum> mountOption = default;
+            Optional<LunMountMode> mountOption = default;
             Optional<string> path = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetId"))
                 {
-                    targetId = property.Value.GetString();
+                    targetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lunName"))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    mountOption = new MountOptionEnum(property.Value.GetString());
+                    mountOption = new LunMountMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("path"))

@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Monitor.Ingestion
 {
     /// <summary>
-    /// test
+    /// The model class containing the result of a logs upload operation.
     /// </summary>
     public class UploadLogsResult
     {
@@ -19,12 +19,13 @@ namespace Azure.Monitor.Ingestion
         }
 
         /// <summary>
-        /// test
+        /// The list of errors that occurred when uploading logs, if any.
+        /// <remarks> List will be empty when no logs failed to upload. </remarks>
         /// </summary>
         public IReadOnlyList<UploadLogsError> Errors { get; }
 
         /// <summary>
-        /// test
+        /// The status of the logs upload operation.
         /// </summary>
         public UploadLogsStatus Status { get; }
     }

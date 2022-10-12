@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     {
         internal static GroupIdInformationResponse DeserializeGroupIdInformationResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<GroupIdInformationData>> value = default;
+            Optional<IReadOnlyList<DigitalTwinsPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<GroupIdInformationData> array = new List<GroupIdInformationData>();
+                    List<DigitalTwinsPrivateLinkResourceData> array = new List<DigitalTwinsPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GroupIdInformationData.DeserializeGroupIdInformationData(item));
+                        array.Add(DigitalTwinsPrivateLinkResourceData.DeserializeDigitalTwinsPrivateLinkResourceData(item));
                     }
                     value = array;
                     continue;

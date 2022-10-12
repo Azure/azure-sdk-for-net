@@ -10,6 +10,14 @@
 
 ### Other Changes
 
+## 5.7.3 (2022-10-11)
+
+### Other Changes
+
+- Added additional heuristics for the `EventProcessorClient` configuration to help discover issues that can impact processor performance and stability; these validations will produce warnings at processor start-up should potential concerns be found.
+
+- Exception messages have been updated to include a link to the Event Hubs troubleshooting guide.
+
 ## 5.7.2 (2022-08-09)
 
 ### Acknowledgments

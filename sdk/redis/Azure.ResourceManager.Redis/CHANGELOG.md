@@ -10,6 +10,18 @@
 
 ### Other Changes
 
+## 1.0.2 (2022-10-01)
+
+### Bugs Fixed
+
+- Fixed the serialization issue of `RedisCommonConfiguration.IsAofBackupEnabled` and `RedisCommonConfiguration.IsRdbBackupEnabled`.
+
+## 1.0.1 (2022-09-27)
+
+### Bugs Fixed
+
+- Fixed the serialization issue of `RedisCommonConfiguration.RdbBackupMaxSnapshotCount`.
+
 ## 1.0.0 (2022-08-29)
 
 This is the first stable release of the Redis Management client library.

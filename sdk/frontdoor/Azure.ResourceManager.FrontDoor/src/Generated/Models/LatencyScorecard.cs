@@ -29,42 +29,42 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="idPropertiesId"> The unique identifier of the Latency Scorecard. </param>
-        /// <param name="namePropertiesName"> The name of the Latency Scorecard. </param>
+        /// <param name="latencyScorecardId"> The unique identifier of the Latency Scorecard. </param>
+        /// <param name="latencyScorecardName"> The name of the Latency Scorecard. </param>
         /// <param name="description"> The description of the Latency Scorecard. </param>
-        /// <param name="endpointA"> The A endpoint in the scorecard. </param>
-        /// <param name="endpointB"> The B endpoint in the scorecard. </param>
-        /// <param name="startDateTimeUTC"> The start time of the Latency Scorecard in UTC. </param>
-        /// <param name="endDateTimeUTC"> The end time of the Latency Scorecard in UTC. </param>
+        /// <param name="scorecardEndpointA"> The A endpoint in the scorecard. </param>
+        /// <param name="scorecardEndpointB"> The B endpoint in the scorecard. </param>
+        /// <param name="startOn"> The start time of the Latency Scorecard in UTC. </param>
+        /// <param name="endOn"> The end time of the Latency Scorecard in UTC. </param>
         /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="latencyMetrics"> The latency metrics of the Latency Scorecard. </param>
-        internal LatencyScorecard(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string idPropertiesId, string namePropertiesName, string description, string endpointA, string endpointB, DateTimeOffset? startDateTimeUTC, DateTimeOffset? endDateTimeUTC, string country, IList<LatencyMetric> latencyMetrics) : base(id, name, resourceType, systemData, tags, location)
+        internal LatencyScorecard(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string latencyScorecardId, string latencyScorecardName, string description, Uri scorecardEndpointA, Uri scorecardEndpointB, DateTimeOffset? startOn, DateTimeOffset? endOn, string country, IList<LatencyMetric> latencyMetrics) : base(id, name, resourceType, systemData, tags, location)
         {
-            IdPropertiesId = idPropertiesId;
-            NamePropertiesName = namePropertiesName;
+            LatencyScorecardId = latencyScorecardId;
+            LatencyScorecardName = latencyScorecardName;
             Description = description;
-            EndpointA = endpointA;
-            EndpointB = endpointB;
-            StartDateTimeUTC = startDateTimeUTC;
-            EndDateTimeUTC = endDateTimeUTC;
+            ScorecardEndpointA = scorecardEndpointA;
+            ScorecardEndpointB = scorecardEndpointB;
+            StartOn = startOn;
+            EndOn = endOn;
             Country = country;
             LatencyMetrics = latencyMetrics;
         }
 
         /// <summary> The unique identifier of the Latency Scorecard. </summary>
-        public string IdPropertiesId { get; }
+        public string LatencyScorecardId { get; }
         /// <summary> The name of the Latency Scorecard. </summary>
-        public string NamePropertiesName { get; }
+        public string LatencyScorecardName { get; }
         /// <summary> The description of the Latency Scorecard. </summary>
         public string Description { get; }
         /// <summary> The A endpoint in the scorecard. </summary>
-        public string EndpointA { get; }
+        public Uri ScorecardEndpointA { get; }
         /// <summary> The B endpoint in the scorecard. </summary>
-        public string EndpointB { get; }
+        public Uri ScorecardEndpointB { get; }
         /// <summary> The start time of the Latency Scorecard in UTC. </summary>
-        public DateTimeOffset? StartDateTimeUTC { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> The end time of the Latency Scorecard in UTC. </summary>
-        public DateTimeOffset? EndDateTimeUTC { get; }
+        public DateTimeOffset? EndOn { get; }
         /// <summary> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </summary>
         public string Country { get; }
         /// <summary> The latency metrics of the Latency Scorecard. </summary>

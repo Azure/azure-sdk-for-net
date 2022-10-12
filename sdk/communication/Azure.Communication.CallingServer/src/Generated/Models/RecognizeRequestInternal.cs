@@ -14,17 +14,17 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of RecognizeRequestInternal. </summary>
         /// <param name="recognizeInputType"> Determines the type of the recognition. </param>
-        /// <param name="recognizeConfiguration"> Defines options for recognition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recognizeConfiguration"/> is null. </exception>
-        public RecognizeRequestInternal(RecognizeInputType recognizeInputType, RecognizeConfigurationsInternal recognizeConfiguration)
+        /// <param name="recognizeOptions"> Defines options for recognition. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recognizeOptions"/> is null. </exception>
+        public RecognizeRequestInternal(RecognizeInputType recognizeInputType, RecognizeOptionsInternal recognizeOptions)
         {
-            if (recognizeConfiguration == null)
+            if (recognizeOptions == null)
             {
-                throw new ArgumentNullException(nameof(recognizeConfiguration));
+                throw new ArgumentNullException(nameof(recognizeOptions));
             }
 
             RecognizeInputType = recognizeInputType;
-            RecognizeConfiguration = recognizeConfiguration;
+            RecognizeOptions = recognizeOptions;
         }
 
         /// <summary> Determines the type of the recognition. </summary>
@@ -32,9 +32,9 @@ namespace Azure.Communication.CallingServer
         /// <summary> The source of the audio to be played for recognition. </summary>
         public PlaySourceInternal PlayPrompt { get; set; }
         /// <summary> If set recognize can barge into other existing queued-up/currently-processing requests. </summary>
-        public bool? StopCurrentOperations { get; set; }
+        public bool? InterruptCallMediaOperation { get; set; }
         /// <summary> Defines options for recognition. </summary>
-        public RecognizeConfigurationsInternal RecognizeConfiguration { get; }
+        public RecognizeOptionsInternal RecognizeOptions { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
     }

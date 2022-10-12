@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <summary> Initializes a new instance of MonitoringMetricConfigurationData. </summary>
         /// <param name="metricConfigurations"> The metrics configuration details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricConfigurations"/> is null. </exception>
-        public MonitoringMetricConfigurationData(IEnumerable<MetricConfiguration> metricConfigurations)
+        public MonitoringMetricConfigurationData(IEnumerable<DataBoxEdgeMetricConfiguration> metricConfigurations)
         {
             if (metricConfigurations == null)
             {
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="metricConfigurations"> The metrics configuration details. </param>
-        internal MonitoringMetricConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<MetricConfiguration> metricConfigurations) : base(id, name, resourceType, systemData)
+        internal MonitoringMetricConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<DataBoxEdgeMetricConfiguration> metricConfigurations) : base(id, name, resourceType, systemData)
         {
             MetricConfigurations = metricConfigurations;
         }
 
         /// <summary> The metrics configuration details. </summary>
-        public IList<MetricConfiguration> MetricConfigurations { get; }
+        public IList<DataBoxEdgeMetricConfiguration> MetricConfigurations { get; }
     }
 }

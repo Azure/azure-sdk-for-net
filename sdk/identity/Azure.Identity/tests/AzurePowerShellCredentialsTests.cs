@@ -42,8 +42,8 @@ namespace Azure.Identity.Tests
             [Values(null, TenantId)] string explicitTenantId)
         {
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            var options = new AzurePowerShellCredentialOptions { TenantId = explicitTenantId };
-            string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context);
+            var options = new AzurePowerShellCredentialOptions { TenantId = explicitTenantId, AdditionallyAllowedTenants = { TenantIdHint } };
+            string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, TenantIdResolver.AllTenants);
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
 
             var testProcess = new TestProcess { Output = processOutput };
@@ -70,6 +70,25 @@ namespace Azure.Identity.Tests
             {
                 Assert.That(commandString, Does.Not.Contain("-TenantId"));
             }
+        }
+
+        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        {
+            Console.WriteLine(parameters.ToDebugString());
+
+            var options = new AzurePowerShellCredentialOptions { TenantId = parameters.TenantId };
+
+            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
+
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
+            var testProcess = new TestProcess { Output = processOutput };
+            AzurePowerShellCredential credential = InstrumentClient(
+                new AzurePowerShellCredential(options, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+
+            await AssertAllowedTenantIdsEnforcedAsync(parameters, credential);
         }
 
         private static IEnumerable<object[]> ErrorScenarios()
@@ -165,6 +184,19 @@ namespace Azure.Identity.Tests
                     new TestProcessService(testProcess, true)));
             await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
             Assert.IsTrue(fellBackToPowerShell);
+        }
+
+        [Test]
+        public void ConfigurePowershellProcessTimeout_ProcessTimeout()
+        {
+            var testProcess = new TestProcess { Timeout = 10000 };
+            AzurePowerShellCredential credential = InstrumentClient(
+                new AzurePowerShellCredential(
+                    new AzurePowerShellCredentialOptions() { PowerShellProcessTimeout = TimeSpan.Zero },
+                    CredentialPipeline.GetInstance(null),
+                    new TestProcessService(testProcess)));
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.AreEqual(AzurePowerShellCredential.AzurePowerShellTimeoutError, ex.Message);
         }
 
         [Test]

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     {
         internal static GuestConfigurationAssignmentReportProperties DeserializeGuestConfigurationAssignmentReportProperties(JsonElement element)
         {
-            Optional<ComplianceStatus> complianceStatus = default;
-            Optional<string> reportId = default;
-            Optional<AssignmentInfo> assignment = default;
-            Optional<VmInfo> vm = default;
+            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
+            Optional<Guid> reportId = default;
+            Optional<GuestConfigurationAssignmentInfo> assignment = default;
+            Optional<GuestConfigurationVmInfo> vm = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<AssignmentReportDetails> details = default;
+            Optional<GuestConfigurationAssignmentReportDetails> details = default;
             Optional<string> vmssResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,12 +32,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    complianceStatus = new ComplianceStatus(property.Value.GetString());
+                    complianceStatus = new AssignedGuestConfigurationMachineComplianceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("reportId"))
                 {
-                    reportId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    reportId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("assignment"))
@@ -47,7 +52,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    assignment = AssignmentInfo.DeserializeAssignmentInfo(property.Value);
+                    assignment = GuestConfigurationAssignmentInfo.DeserializeGuestConfigurationAssignmentInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vm"))
@@ -57,7 +62,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vm = VmInfo.DeserializeVmInfo(property.Value);
+                    vm = GuestConfigurationVmInfo.DeserializeGuestConfigurationVmInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("startTime"))
@@ -87,7 +92,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         details = null;
                         continue;
                     }
-                    details = AssignmentReportDetails.DeserializeAssignmentReportDetails(property.Value);
+                    details = GuestConfigurationAssignmentReportDetails.DeserializeGuestConfigurationAssignmentReportDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vmssResourceId"))
@@ -96,7 +101,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     continue;
                 }
             }
-            return new GuestConfigurationAssignmentReportProperties(Optional.ToNullable(complianceStatus), reportId.Value, assignment.Value, vm.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), details.Value, vmssResourceId.Value);
+            return new GuestConfigurationAssignmentReportProperties(Optional.ToNullable(complianceStatus), Optional.ToNullable(reportId), assignment.Value, vm.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), details.Value, vmssResourceId.Value);
         }
     }
 }

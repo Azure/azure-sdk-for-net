@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
     [TestFixture]
     public class ListAddressTests : EdgeOrderManagementClientBase
     {
-        private AddressResourceCollection _addressResourceCollection;
+        private EdgeOrderAddressCollection _addressResourceCollection;
 
         public ListAddressTests() : base(true)
         {
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             await EdgeOrderManagementTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations,
                 EdgeOrderManagementTestUtilities.DefaultResourceLocation, resourceGroupName);
             var addressName = Recording.GenerateAssetName("SdkAddress");
-            ContactDetails contactDetails = GetDefaultContactDetails();
-            ShippingAddress shippingAddress = GetDefaultShippingAddress();
+            EdgeOrderAddressContactDetails contactDetails = GetDefaultContactDetails();
+            EdgeOrderShippingAddress shippingAddress = GetDefaultShippingAddress();
             _addressResourceCollection = await GetAddressResourceCollectionAsync(resourceGroupName);
 
-            AddressResourceData addressResourceData = new(EdgeOrderManagementTestUtilities.DefaultResourceLocation,
+            EdgeOrderAddressData addressResourceData = new(EdgeOrderManagementTestUtilities.DefaultResourceLocation,
                 contactDetails)
             {
                 ShippingAddress = shippingAddress
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
         [TestCase, Order(1)]
         public async Task TestListAddressesAtSubscriptionLevel()
         {
-            AsyncPageable<AddressResource> addresses = EdgeOrderExtensions.GetAddressResourcesAsync(Subscription);
-            List<AddressResource> addressesResult = await addresses.ToEnumerableAsync();
+            AsyncPageable<EdgeOrderAddressResource> addresses = EdgeOrderExtensions.GetEdgeOrderAddressesAsync(Subscription);
+            List<EdgeOrderAddressResource> addressesResult = await addresses.ToEnumerableAsync();
 
             Assert.NotNull(addressesResult);
             Assert.IsTrue(addressesResult.Count >= 1);
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
         [TestCase, Order(2)]
         public async Task TestListAddressesAtResourceGroupLevel()
         {
-            AsyncPageable<AddressResource> addresses = _addressResourceCollection.GetAllAsync();
-            List<AddressResource> addressesResult = await addresses.ToEnumerableAsync();
+            AsyncPageable<EdgeOrderAddressResource> addresses = _addressResourceCollection.GetAllAsync();
+            List<EdgeOrderAddressResource> addressesResult = await addresses.ToEnumerableAsync();
 
             Assert.NotNull(addressesResult);
             Assert.IsTrue(addressesResult.Count >= 1);

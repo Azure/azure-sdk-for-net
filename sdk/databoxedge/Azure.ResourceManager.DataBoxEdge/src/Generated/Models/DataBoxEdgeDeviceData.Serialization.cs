@@ -70,12 +70,11 @@ namespace Azure.ResourceManager.DataBoxEdge
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<SystemData> systemData0 = default;
             Optional<DataBoxEdgeDeviceStatus> dataBoxEdgeDeviceStatus = default;
             Optional<string> serialNumber = default;
             Optional<string> description = default;
             Optional<string> modelDescription = default;
-            Optional<DeviceType> deviceType = default;
+            Optional<DataBoxEdgeDeviceType> deviceType = default;
             Optional<string> friendlyName = default;
             Optional<string> culture = default;
             Optional<string> deviceModel = default;
@@ -83,9 +82,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             Optional<long> deviceLocalCapacity = default;
             Optional<string> timeZone = default;
             Optional<string> deviceHcsVersion = default;
-            Optional<IReadOnlyList<RoleType>> configuredRoleTypes = default;
+            Optional<IReadOnlyList<DataBoxEdgeRoleType>> configuredRoleTypes = default;
             Optional<int> nodeCount = default;
-            Optional<ResourceMoveDetails> resourceMoveDetails = default;
+            Optional<DataBoxEdgeResourceMoveDetails> resourceMoveDetails = default;
             Optional<EdgeProfile> edgeProfile = default;
             Optional<DataResidency> dataResidency = default;
             foreach (var property in element.EnumerateObject())
@@ -184,16 +183,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("systemData"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            systemData0 = JsonSerializer.Deserialize<SystemData>(property0.Value.ToString());
-                            continue;
-                        }
                         if (property0.NameEquals("dataBoxEdgeDeviceStatus"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -226,7 +215,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            deviceType = new DeviceType(property0.Value.GetString());
+                            deviceType = new DataBoxEdgeDeviceType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("friendlyName"))
@@ -276,10 +265,10 @@ namespace Azure.ResourceManager.DataBoxEdge
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<RoleType> array = new List<RoleType>();
+                            List<DataBoxEdgeRoleType> array = new List<DataBoxEdgeRoleType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new RoleType(item.GetString()));
+                                array.Add(new DataBoxEdgeRoleType(item.GetString()));
                             }
                             configuredRoleTypes = array;
                             continue;
@@ -301,7 +290,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resourceMoveDetails = ResourceMoveDetails.DeserializeResourceMoveDetails(property0.Value);
+                            resourceMoveDetails = DataBoxEdgeResourceMoveDetails.DeserializeDataBoxEdgeResourceMoveDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("edgeProfile"))
@@ -328,7 +317,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     continue;
                 }
             }
-            return new DataBoxEdgeDeviceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(etag), identity, Optional.ToNullable(kind), systemData0, Optional.ToNullable(dataBoxEdgeDeviceStatus), serialNumber.Value, description.Value, modelDescription.Value, Optional.ToNullable(deviceType), friendlyName.Value, culture.Value, deviceModel.Value, deviceSoftwareVersion.Value, Optional.ToNullable(deviceLocalCapacity), timeZone.Value, deviceHcsVersion.Value, Optional.ToList(configuredRoleTypes), Optional.ToNullable(nodeCount), resourceMoveDetails.Value, edgeProfile.Value, dataResidency.Value);
+            return new DataBoxEdgeDeviceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(etag), identity, Optional.ToNullable(kind), Optional.ToNullable(dataBoxEdgeDeviceStatus), serialNumber.Value, description.Value, modelDescription.Value, Optional.ToNullable(deviceType), friendlyName.Value, culture.Value, deviceModel.Value, deviceSoftwareVersion.Value, Optional.ToNullable(deviceLocalCapacity), timeZone.Value, deviceHcsVersion.Value, Optional.ToList(configuredRoleTypes), Optional.ToNullable(nodeCount), resourceMoveDetails.Value, edgeProfile.Value, dataResidency.Value);
         }
     }
 }
