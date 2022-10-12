@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.2 (2022-10-11)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Update `LocalizedMapView` enum variable naming
 
 ## 1.0.0-beta.1 (2022-09-06)
 

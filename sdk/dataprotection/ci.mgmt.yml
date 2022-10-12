@@ -11,7 +11,7 @@ pr:
   paths:
     include:
     - sdk/dataprotection/ci.mgmt.yml
-    - sdk/dataprotection/Azure.ResourceManager.DataProtection/
+    - sdk/dataprotection/Azure.ResourceManager.DataProtectionBackup/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -19,5 +19,5 @@ extends:
     ServiceDirectory: dataprotection
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.ResourceManager.DataProtection
-      safeName: AzureResourceManagerDataProtection
+    - name: Azure.ResourceManager.DataProtectionBackup
+      safeName: AzureResourceManagerDataProtectionBackup

@@ -27,8 +27,8 @@ namespace Azure.Monitor.Ingestion
         // request or stage as multiple blocks.
         internal static int SingleUploadThreshold = 1000000; // 1 Mb in byte format
 
-        // If no concurrency count is provided, default to serial upload (one block at a time).
-        private int DefaultWorkerCount = 1;
+        // If no concurrency count is provided for a parallel upload, default to 5 workers.
+        private const int DefaultParallelWorkerCount = 5;
 
         internal readonly struct BatchedLogs <T>
         {
@@ -262,8 +262,8 @@ namespace Azure.Monitor.Ingestion
             Argument.AssertNotNullOrEmpty(logs, nameof(logs));
 
             // Calculate the number of threads to use.
-            // If there are 0 workers or an UploadLogsOptions object was not provided, method will run serially. Otherwise will run in parallel with number of workers given.
-            int _maxWorkerCount = (options == null || options.MaxConcurrency <= 0) ? DefaultWorkerCount : options.MaxConcurrency;
+            // If there are 0 workers or an UploadLogsOptions object was not provided, method will run with 5 workers. Otherwise will run in parallel with number of workers given.
+            int _maxWorkerCount = (options == null || options.MaxConcurrency <= 0) ? DefaultParallelWorkerCount : options.MaxConcurrency;
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
 
             RequestContext requestContext = GenerateRequestContext(cancellationToken);

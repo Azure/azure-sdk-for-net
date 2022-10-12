@@ -18,6 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "DynamicClassificationResults": return DynamicClassificationTaskResult.DeserializeDynamicClassificationTaskResult(element);
                     case "EntityLinkingResults": return EntityLinkingTaskResult.DeserializeEntityLinkingTaskResult(element);
                     case "EntityRecognitionResults": return EntitiesTaskResult.DeserializeEntitiesTaskResult(element);
                     case "KeyPhraseExtractionResults": return KeyPhraseTaskResult.DeserializeKeyPhraseTaskResult(element);

@@ -28,6 +28,7 @@ namespace Azure.AI.TextAnalytics.Models
         private const string KeyPhraseExtractionValue = "KeyPhraseExtraction";
         private const string LanguageDetectionValue = "LanguageDetection";
         private const string EntityLinkingValue = "EntityLinking";
+        private const string DynamicClassificationValue = "DynamicClassification";
 
         /// <summary> SentimentAnalysis. </summary>
         public static AnalyzeTextTaskKind SentimentAnalysis { get; } = new AnalyzeTextTaskKind(SentimentAnalysisValue);
@@ -41,6 +42,8 @@ namespace Azure.AI.TextAnalytics.Models
         public static AnalyzeTextTaskKind LanguageDetection { get; } = new AnalyzeTextTaskKind(LanguageDetectionValue);
         /// <summary> EntityLinking. </summary>
         public static AnalyzeTextTaskKind EntityLinking { get; } = new AnalyzeTextTaskKind(EntityLinkingValue);
+        /// <summary> DynamicClassification. </summary>
+        public static AnalyzeTextTaskKind DynamicClassification { get; } = new AnalyzeTextTaskKind(DynamicClassificationValue);
         /// <summary> Determines if two <see cref="AnalyzeTextTaskKind"/> values are the same. </summary>
         public static bool operator ==(AnalyzeTextTaskKind left, AnalyzeTextTaskKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeTextTaskKind"/> values are not the same. </summary>

@@ -262,12 +262,6 @@ function GetExistingPackageVersions ($PackageName, $GroupId=$null)
 }
 
 function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
-  $suffix = ''
-  $parsedVersion = [AzureEngSemanticVersion]::ParseVersionString($PackageInfo.Version)
-  if ($parsedVersion.IsPrerelease) { 
-    $suffix = '-pre'
-  }
-
   $readmeName = $PackageInfo.Name.ToLower()
 
   # Readme names (which are used in the URL) should not include redundant terms
@@ -284,9 +278,9 @@ function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
 
   New-Object PSObject -Property @{
     DocsMsReadMeName = $readmeName
-    LatestReadMeLocation = 'api/overview/azure'
-    PreviewReadMeLocation = 'api/overview/azure'
-    Suffix = $suffix
+    LatestReadMeLocation = 'api/overview/azure/latest'
+    PreviewReadMeLocation = 'api/overview/azure/preview'
+    Suffix = ''
   }
 }
 
@@ -413,16 +407,26 @@ function EnsureCustomSource($package) {
   return $package
 }
 
+$PackageExclusions = @{
+  "Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents" = "The package asks auth when use `Find-Package` for public feeds. Issue: https://github.com/Azure/azure-docs-sdk-dotnet/issues/2244";
+}
+
 function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {
+  Write-Host "Excluded packages:"
+  foreach ($excludedPackage in $PackageExclusions.Keys) {
+    Write-Host "  $excludedPackage - $($PackageExclusions[$excludedPackage])"
+  }
+
+  $FilteredMetadata = $DocsMetadata.Where({ !($PackageExclusions.ContainsKey($_.Package)) })
   UpdateDocsMsPackages `
     (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet-preview.csv') `
     'preview' `
-    $DocsMetadata 
+    $FilteredMetadata 
 
   UpdateDocsMsPackages `
     (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet.csv') `
     'latest' `
-    $DocsMetadata
+    $FilteredMetadata
 }
 
 function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
