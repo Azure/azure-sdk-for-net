@@ -480,7 +480,7 @@ namespace Azure.Communication.CallAutomation
                 options.Targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
                 sourceDto,
                 options.CallbackUri.AbsoluteUri);
-            request.Subject = options.Subject;
+            request.OperationContext = options.OperationContext;
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
 
             return request;
