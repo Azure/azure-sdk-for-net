@@ -49,6 +49,19 @@ namespace Azure.ResourceManager.LoadTestService.Tests
 
         [RecordedTest]
         [AsyncOnly]
+        public async Task LoadTestResourcesListBySubscription()
+        {
+            //// List LoadTest resources by subscription
+            AsyncPageable<LoadTestResource> loadtestResources = Subscription.GetLoadTestResourcesAsync();
+            await foreach (LoadTestResource loadtestResource in loadtestResources)
+            {
+                Assert.IsNotNull(loadtestResource.Data.Name);
+            }
+            Assert.IsTrue(await loadtestResources.GetAsyncEnumerator().MoveNextAsync());
+        }
+
+        [RecordedTest]
+        [AsyncOnly]
         public async Task LoadTestResourceOperationTests()
         {
             var loadTestResourceName = Recording.GenerateAssetName("Sdk-LoadTestService-DotNet");
