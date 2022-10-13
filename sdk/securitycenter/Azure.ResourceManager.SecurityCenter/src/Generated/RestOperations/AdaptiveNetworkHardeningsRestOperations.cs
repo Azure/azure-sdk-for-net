@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListByExtendedResourceRequest(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceName, string resourceType)
+        internal HttpMessage CreateListByExtendedResourceRequest(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,20 +66,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
-        /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceName"/> or <paramref name="resourceType"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceName"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdaptiveNetworkHardeningsList>> ListByExtendedResourceAsync(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceName, string resourceType, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AdaptiveNetworkHardeningsList>> ListByExtendedResourceAsync(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceNamespace, nameof(resourceNamespace));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var message = CreateListByExtendedResourceRequest(subscriptionId, resourceGroupName, resourceNamespace, resourceName, resourceType);
+            using var message = CreateListByExtendedResourceRequest(subscriptionId, resourceGroupName, resourceNamespace, resourceType, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -99,20 +99,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
-        /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceName"/> or <paramref name="resourceType"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceName"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdaptiveNetworkHardeningsList> ListByExtendedResource(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceName, string resourceType, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AdaptiveNetworkHardeningsList> ListByExtendedResource(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceNamespace, nameof(resourceNamespace));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var message = CreateListByExtendedResourceRequest(subscriptionId, resourceGroupName, resourceNamespace, resourceName, resourceType);
+            using var message = CreateListByExtendedResourceRequest(subscriptionId, resourceGroupName, resourceNamespace, resourceType, resourceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceName, string resourceType, string adaptiveNetworkHardeningResourceName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -158,22 +158,22 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
-        /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="adaptiveNetworkHardeningResourceName"> The name of the Adaptive Network Hardening resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceName"/>, <paramref name="resourceType"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceName"/>, <paramref name="resourceType"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdaptiveNetworkHardeningData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceName, string resourceType, string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AdaptiveNetworkHardeningData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceNamespace, nameof(resourceNamespace));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(adaptiveNetworkHardeningResourceName, nameof(adaptiveNetworkHardeningResourceName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceNamespace, resourceName, resourceType, adaptiveNetworkHardeningResourceName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceNamespace, resourceType, resourceName, adaptiveNetworkHardeningResourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -195,22 +195,22 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
-        /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="adaptiveNetworkHardeningResourceName"> The name of the Adaptive Network Hardening resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceName"/>, <paramref name="resourceType"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceName"/>, <paramref name="resourceType"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdaptiveNetworkHardeningData> Get(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceName, string resourceType, string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AdaptiveNetworkHardeningData> Get(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceNamespace, nameof(resourceNamespace));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(adaptiveNetworkHardeningResourceName, nameof(adaptiveNetworkHardeningResourceName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceNamespace, resourceName, resourceType, adaptiveNetworkHardeningResourceName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceNamespace, resourceType, resourceName, adaptiveNetworkHardeningResourceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateEnforceRequest(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceName, string resourceType, string adaptiveNetworkHardeningResourceName, AdaptiveNetworkHardeningEnforceContent content)
+        internal HttpMessage CreateEnforceRequest(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName, AdaptiveNetworkHardeningEnforceContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -264,24 +264,24 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
-        /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="adaptiveNetworkHardeningResourceName"> The name of the Adaptive Network Hardening resource. </param>
         /// <param name="content"> The AdaptiveNetworkHardeningEnforceContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceName"/>, <paramref name="resourceType"/>, <paramref name="adaptiveNetworkHardeningResourceName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceName"/>, <paramref name="resourceType"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> EnforceAsync(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceName, string resourceType, string adaptiveNetworkHardeningResourceName, AdaptiveNetworkHardeningEnforceContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="adaptiveNetworkHardeningResourceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> EnforceAsync(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName, AdaptiveNetworkHardeningEnforceContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceNamespace, nameof(resourceNamespace));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(adaptiveNetworkHardeningResourceName, nameof(adaptiveNetworkHardeningResourceName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateEnforceRequest(subscriptionId, resourceGroupName, resourceNamespace, resourceName, resourceType, adaptiveNetworkHardeningResourceName, content);
+            using var message = CreateEnforceRequest(subscriptionId, resourceGroupName, resourceNamespace, resourceType, resourceName, adaptiveNetworkHardeningResourceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -297,24 +297,24 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
-        /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="adaptiveNetworkHardeningResourceName"> The name of the Adaptive Network Hardening resource. </param>
         /// <param name="content"> The AdaptiveNetworkHardeningEnforceContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceName"/>, <paramref name="resourceType"/>, <paramref name="adaptiveNetworkHardeningResourceName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceName"/>, <paramref name="resourceType"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Enforce(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceName, string resourceType, string adaptiveNetworkHardeningResourceName, AdaptiveNetworkHardeningEnforceContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="adaptiveNetworkHardeningResourceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="adaptiveNetworkHardeningResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Enforce(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName, AdaptiveNetworkHardeningEnforceContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceNamespace, nameof(resourceNamespace));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(adaptiveNetworkHardeningResourceName, nameof(adaptiveNetworkHardeningResourceName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateEnforceRequest(subscriptionId, resourceGroupName, resourceNamespace, resourceName, resourceType, adaptiveNetworkHardeningResourceName, content);
+            using var message = CreateEnforceRequest(subscriptionId, resourceGroupName, resourceNamespace, resourceType, resourceName, adaptiveNetworkHardeningResourceName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateListByExtendedResourceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceName, string resourceType)
+        internal HttpMessage CreateListByExtendedResourceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -345,21 +345,21 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
-        /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceName"/> or <paramref name="resourceType"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceName"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdaptiveNetworkHardeningsList>> ListByExtendedResourceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceName, string resourceType, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AdaptiveNetworkHardeningsList>> ListByExtendedResourceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceNamespace, nameof(resourceNamespace));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var message = CreateListByExtendedResourceNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceNamespace, resourceName, resourceType);
+            using var message = CreateListByExtendedResourceNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceNamespace, resourceType, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -380,21 +380,21 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
-        /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="resourceName"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceName"/> or <paramref name="resourceType"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceName"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdaptiveNetworkHardeningsList> ListByExtendedResourceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceName, string resourceType, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AdaptiveNetworkHardeningsList> ListByExtendedResourceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceNamespace, nameof(resourceNamespace));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var message = CreateListByExtendedResourceNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceNamespace, resourceName, resourceType);
+            using var message = CreateListByExtendedResourceNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceNamespace, resourceType, resourceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

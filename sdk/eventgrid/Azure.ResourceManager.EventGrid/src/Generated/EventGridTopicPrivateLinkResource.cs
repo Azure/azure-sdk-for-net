@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EventGrid.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -22,7 +21,7 @@ namespace Azure.ResourceManager.EventGrid
     /// A Class representing an EventGridTopicPrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventGridTopicPrivateLinkResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetEventGridTopicPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetEventGridTopicPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventGridTopicResource" /> using the GetEventGridTopicPrivateLinkResource method.
     /// </summary>
     public partial class EventGridTopicPrivateLinkResource : EventGridPrivateLinkResource
     {

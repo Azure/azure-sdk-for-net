@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EventGrid.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -22,7 +21,7 @@ namespace Azure.ResourceManager.EventGrid
     /// A Class representing a PartnerNamespacePrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PartnerNamespacePrivateLinkResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetPartnerNamespacePrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetPartnerNamespacePrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PartnerNamespaceResource" /> using the GetPartnerNamespacePrivateLinkResource method.
     /// </summary>
     public partial class PartnerNamespacePrivateLinkResource : EventGridPrivateLinkResource
     {

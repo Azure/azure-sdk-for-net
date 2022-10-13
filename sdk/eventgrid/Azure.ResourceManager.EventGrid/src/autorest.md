@@ -129,7 +129,7 @@ directive:
     where: $.paths..parameters[?(@.name=='scope')]
     transform: >
       $['x-ms-skip-url-encoding'] = true;
-  # PrivateEndpointConnection defines enum type but PrivateLinkResources not, should fix it in swagger 
+  # PrivateEndpointConnection defines enum type but PrivateLinkResources not, should fix it in swagger
   - from: EventGrid.json
     where: $.paths..parameters[?(@.name=='parentType')]
     transform: >
@@ -148,5 +148,5 @@ directive:
       $.properties.principalId.readOnly = true;
       $.properties.tenantId.readOnly = true;
     reason: Remove the setter to ensure this type can be replaced by the common type.
-  
+
 ```

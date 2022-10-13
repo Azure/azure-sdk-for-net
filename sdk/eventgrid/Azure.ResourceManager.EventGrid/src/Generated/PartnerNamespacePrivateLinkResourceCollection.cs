@@ -17,20 +17,18 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EventGrid.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A class representing a collection of <see cref="PartnerNamespacePrivateLinkResource" /> and their operations.
-    /// Each <see cref="PartnerNamespacePrivateLinkResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="PartnerNamespacePrivateLinkResourceCollection" /> instance call the GetPartnerNamespacePrivateLinkResources method from an instance of <see cref="ResourceGroupResource" />.
+    /// Each <see cref="PartnerNamespacePrivateLinkResource" /> in the collection will belong to the same instance of <see cref="PartnerNamespaceResource" />.
+    /// To get a <see cref="PartnerNamespacePrivateLinkResourceCollection" /> instance call the GetPartnerNamespacePrivateLinkResources method from an instance of <see cref="PartnerNamespaceResource" />.
     /// </summary>
     public partial class PartnerNamespacePrivateLinkResourceCollection : ArmCollection, IEnumerable<PartnerNamespacePrivateLinkResource>, IAsyncEnumerable<PartnerNamespacePrivateLinkResource>
     {
         private readonly ClientDiagnostics _partnerNamespacePrivateLinkResourcePrivateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResourcesRestOperations _partnerNamespacePrivateLinkResourcePrivateLinkResourcesRestClient;
-        private readonly string _parentName;
 
         /// <summary> Initializes a new instance of the <see cref="PartnerNamespacePrivateLinkResourceCollection"/> class for mocking. </summary>
         protected PartnerNamespacePrivateLinkResourceCollection()
@@ -40,12 +38,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Initializes a new instance of the <see cref="PartnerNamespacePrivateLinkResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="parentName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal PartnerNamespacePrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id, string parentName) : base(client, id)
+        internal PartnerNamespacePrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _parentName = parentName;
             _partnerNamespacePrivateLinkResourcePrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", PartnerNamespacePrivateLinkResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PartnerNamespacePrivateLinkResource.ResourceType, out string partnerNamespacePrivateLinkResourcePrivateLinkResourcesApiVersion);
             _partnerNamespacePrivateLinkResourcePrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, partnerNamespacePrivateLinkResourcePrivateLinkResourcesApiVersion);
@@ -56,8 +50,8 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            if (id.ResourceType != PartnerNamespaceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PartnerNamespaceResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -77,7 +71,7 @@ namespace Azure.ResourceManager.EventGrid
             scope.Start();
             try
             {
-                var response = await _partnerNamespacePrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, "partnerNamespaces", _parentName, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+                var response = await _partnerNamespacePrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, "partnerNamespaces", Id.Name, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PartnerNamespacePrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -106,7 +100,7 @@ namespace Azure.ResourceManager.EventGrid
             scope.Start();
             try
             {
-                var response = _partnerNamespacePrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, "partnerNamespaces", _parentName, privateLinkResourceName, cancellationToken);
+                var response = _partnerNamespacePrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, "partnerNamespaces", Id.Name, privateLinkResourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PartnerNamespacePrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -135,7 +129,7 @@ namespace Azure.ResourceManager.EventGrid
                 scope.Start();
                 try
                 {
-                    var response = await _partnerNamespacePrivateLinkResourcePrivateLinkResourcesRestClient.ListByResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, "partnerNamespaces", _parentName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _partnerNamespacePrivateLinkResourcePrivateLinkResourcesRestClient.ListByResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, "partnerNamespaces", Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new PartnerNamespacePrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -150,7 +144,7 @@ namespace Azure.ResourceManager.EventGrid
                 scope.Start();
                 try
                 {
-                    var response = await _partnerNamespacePrivateLinkResourcePrivateLinkResourcesRestClient.ListByResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "partnerNamespaces", _parentName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _partnerNamespacePrivateLinkResourcePrivateLinkResourcesRestClient.ListByResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "partnerNamespaces", Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new PartnerNamespacePrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -179,7 +173,7 @@ namespace Azure.ResourceManager.EventGrid
                 scope.Start();
                 try
                 {
-                    var response = _partnerNamespacePrivateLinkResourcePrivateLinkResourcesRestClient.ListByResource(Id.SubscriptionId, Id.ResourceGroupName, "partnerNamespaces", _parentName, filter, top, cancellationToken: cancellationToken);
+                    var response = _partnerNamespacePrivateLinkResourcePrivateLinkResourcesRestClient.ListByResource(Id.SubscriptionId, Id.ResourceGroupName, "partnerNamespaces", Id.Name, filter, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new PartnerNamespacePrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -194,7 +188,7 @@ namespace Azure.ResourceManager.EventGrid
                 scope.Start();
                 try
                 {
-                    var response = _partnerNamespacePrivateLinkResourcePrivateLinkResourcesRestClient.ListByResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "partnerNamespaces", _parentName, filter, top, cancellationToken: cancellationToken);
+                    var response = _partnerNamespacePrivateLinkResourcePrivateLinkResourcesRestClient.ListByResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "partnerNamespaces", Id.Name, filter, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new PartnerNamespacePrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -223,7 +217,7 @@ namespace Azure.ResourceManager.EventGrid
             scope.Start();
             try
             {
-                var response = await _partnerNamespacePrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, "partnerNamespaces", _parentName, privateLinkResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _partnerNamespacePrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, "partnerNamespaces", Id.Name, privateLinkResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -250,7 +244,7 @@ namespace Azure.ResourceManager.EventGrid
             scope.Start();
             try
             {
-                var response = _partnerNamespacePrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, "partnerNamespaces", _parentName, privateLinkResourceName, cancellationToken: cancellationToken);
+                var response = _partnerNamespacePrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, "partnerNamespaces", Id.Name, privateLinkResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

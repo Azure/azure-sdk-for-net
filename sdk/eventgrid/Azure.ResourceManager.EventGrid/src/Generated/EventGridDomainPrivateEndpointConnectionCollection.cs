@@ -17,20 +17,18 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EventGrid.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A class representing a collection of <see cref="EventGridDomainPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="EventGridDomainPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="EventGridDomainPrivateEndpointConnectionCollection" /> instance call the GetEventGridDomainPrivateEndpointConnections method from an instance of <see cref="ResourceGroupResource" />.
+    /// Each <see cref="EventGridDomainPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="EventGridDomainResource" />.
+    /// To get an <see cref="EventGridDomainPrivateEndpointConnectionCollection" /> instance call the GetEventGridDomainPrivateEndpointConnections method from an instance of <see cref="EventGridDomainResource" />.
     /// </summary>
     public partial class EventGridDomainPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<EventGridDomainPrivateEndpointConnectionResource>, IAsyncEnumerable<EventGridDomainPrivateEndpointConnectionResource>
     {
         private readonly ClientDiagnostics _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics;
         private readonly PrivateEndpointConnectionsRestOperations _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
-        private readonly string _parentName;
 
         /// <summary> Initializes a new instance of the <see cref="EventGridDomainPrivateEndpointConnectionCollection"/> class for mocking. </summary>
         protected EventGridDomainPrivateEndpointConnectionCollection()
@@ -40,12 +38,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Initializes a new instance of the <see cref="EventGridDomainPrivateEndpointConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="parentName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal EventGridDomainPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id, string parentName) : base(client, id)
+        internal EventGridDomainPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _parentName = parentName;
             _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventGridDomainPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(EventGridDomainPrivateEndpointConnectionResource.ResourceType, out string eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
             _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
@@ -56,8 +50,8 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            if (id.ResourceType != EventGridDomainResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EventGridDomainResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -80,8 +74,8 @@ namespace Azure.ResourceManager.EventGrid
             scope.Start();
             try
             {
-                var response = await _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, "domains", _parentName, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<EventGridDomainPrivateEndpointConnectionResource>(new EventGridDomainPrivateEndpointConnectionOperationSource(Client), _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, "domains", _parentName, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new EventGridArmOperation<EventGridDomainPrivateEndpointConnectionResource>(new EventGridDomainPrivateEndpointConnectionOperationSource(Client), _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -113,8 +107,8 @@ namespace Azure.ResourceManager.EventGrid
             scope.Start();
             try
             {
-                var response = _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, "domains", _parentName, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new EventGridArmOperation<EventGridDomainPrivateEndpointConnectionResource>(new EventGridDomainPrivateEndpointConnectionOperationSource(Client), _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, "domains", _parentName, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, privateEndpointConnectionName, data, cancellationToken);
+                var operation = new EventGridArmOperation<EventGridDomainPrivateEndpointConnectionResource>(new EventGridDomainPrivateEndpointConnectionOperationSource(Client), _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -143,7 +137,7 @@ namespace Azure.ResourceManager.EventGrid
             scope.Start();
             try
             {
-                var response = await _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, "domains", _parentName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EventGridDomainPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -172,7 +166,7 @@ namespace Azure.ResourceManager.EventGrid
             scope.Start();
             try
             {
-                var response = _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, "domains", _parentName, privateEndpointConnectionName, cancellationToken);
+                var response = _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EventGridDomainPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -201,7 +195,7 @@ namespace Azure.ResourceManager.EventGrid
                 scope.Start();
                 try
                 {
-                    var response = await _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, "domains", _parentName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new EventGridDomainPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -216,7 +210,7 @@ namespace Azure.ResourceManager.EventGrid
                 scope.Start();
                 try
                 {
-                    var response = await _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "domains", _parentName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new EventGridDomainPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -245,7 +239,7 @@ namespace Azure.ResourceManager.EventGrid
                 scope.Start();
                 try
                 {
-                    var response = _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByResource(Id.SubscriptionId, Id.ResourceGroupName, "domains", _parentName, filter, top, cancellationToken: cancellationToken);
+                    var response = _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByResource(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, filter, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new EventGridDomainPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -260,7 +254,7 @@ namespace Azure.ResourceManager.EventGrid
                 scope.Start();
                 try
                 {
-                    var response = _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "domains", _parentName, filter, top, cancellationToken: cancellationToken);
+                    var response = _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, filter, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new EventGridDomainPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -289,7 +283,7 @@ namespace Azure.ResourceManager.EventGrid
             scope.Start();
             try
             {
-                var response = await _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, "domains", _parentName, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -316,7 +310,7 @@ namespace Azure.ResourceManager.EventGrid
             scope.Start();
             try
             {
-                var response = _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, "domains", _parentName, privateEndpointConnectionName, cancellationToken: cancellationToken);
+                var response = _eventGridDomainPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
