@@ -32,6 +32,6 @@ namespace Azure.Identity
         /// <summary>
         /// The VisualStudio process timeout.
         /// </summary>
-        public TimeSpan? VisualStudioProcessTimeout { get; set; }
+        internal TimeSpan? VisualStudioProcessTimeout { get; set; }
     }
 }
