@@ -11,38 +11,51 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.ResourceGraph;
 using Azure.ResourceManager.ResourceGraph.Models;
 using Azure.ResourceManager.ResourceGraph.Tests;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.Management.ResourceGraph.Tests
 {
     public class ResourceGraphTest : ResourceGraphManagementTestBase
     {
+        private TenantResource _tenant;
+
         public ResourceGraphTest(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
+        }
+        public async Task<TenantResource> getTenantResourceAsync()
+        {
+            TenantCollection tenantsCollection = Client.GetTenants();
+            var tenantList = await tenantsCollection.GetAllAsync().ToEnumerableAsync();
+            var oneTenant = tenantList.FirstOrDefault();
+            return oneTenant;
+        }
+
+        [SetUp]
+        public async Task TestSetup()
+        {
+            _tenant = await getTenantResourceAsync();
         }
 
         [Test]
         public async Task ResourcesAsyncTest()
         {
-            var tenantsCollection = Client.GetTenants();
-            var tenantList = await tenantsCollection.GetAllAsync().ToEnumerableAsync();
-            var item = tenantList.FirstOrDefault();
-            var query = new QueryContent("project id, tags, properties | limit 2") {
+            var queryContent = new QueryContent("project id, tags, properties | limit 2") {
                 Subscriptions = { DefaultSubscription.Data.SubscriptionId }
             };
 
-            var response = (await item.ResourcesAsync(query)).Value;
-            Assert.IsNotNull(response);
+            var resultResponse = (await _tenant.ResourcesAsync(queryContent)).Value;
+            Assert.IsNotNull(resultResponse);
             //top response
-            Assert.AreEqual(2, response.Count);
-            Assert.AreEqual(2, response.TotalRecords);
-            Assert.IsNull(response.SkipToken);
-            Assert.AreEqual(response.ResultTruncated, ResultTruncated.False);
-            Assert.NotNull(response.Data);
-            Assert.NotNull(response.Facets);
+            Assert.AreEqual(2, resultResponse.Count);
+            Assert.AreEqual(2, resultResponse.TotalRecords);
+            Assert.IsNull(resultResponse.SkipToken);
+            Assert.AreEqual(resultResponse.ResultTruncated, ResultTruncated.False);
+            Assert.NotNull(resultResponse.Data);
+            Assert.NotNull(resultResponse.Facets);
             //Data
-            var list = response.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
+            var list = resultResponse.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
             Assert.IsNotNull(list);
             Assert.AreEqual(2, list.Count);
             Assert.AreEqual(3, list[0].Count);
@@ -55,10 +68,7 @@ namespace Azure.Management.ResourceGraph.Tests
         [Test]
         public async Task ResourcesBasicQueryTableAsyncTest()
         {
-            var tenantsCollection = Client.GetTenants();
-            var tenantList = await tenantsCollection.GetAllAsync().ToEnumerableAsync();
-            var item = tenantList.FirstOrDefault();
-            var query = new QueryContent("project id, tags, properties | limit 2")
+            var queryContent = new QueryContent("project id, tags, properties | limit 2")
             {
                 Subscriptions = { DefaultSubscription.Data.SubscriptionId },
                 Options = new QueryRequestOptions
@@ -67,18 +77,18 @@ namespace Azure.Management.ResourceGraph.Tests
                 }
             };
 
-            var response = (await item.ResourcesAsync(query)).Value;
-            Assert.IsNotNull(response);
+            var resultResponse = (await _tenant.ResourcesAsync(queryContent)).Value;
+            Assert.IsNotNull(resultResponse);
             //top response
-            Assert.AreEqual(2, response.Count);
-            Assert.AreEqual(2, response.TotalRecords);
-            Assert.IsNull(response.SkipToken);
-            Assert.AreEqual(response.ResultTruncated, ResultTruncated.False);
-            Assert.NotNull(response.Data);
-            Assert.NotNull(response.Facets);
+            Assert.AreEqual(2, resultResponse.Count);
+            Assert.AreEqual(2, resultResponse.TotalRecords);
+            Assert.IsNull(resultResponse.SkipToken);
+            Assert.AreEqual(resultResponse.ResultTruncated, ResultTruncated.False);
+            Assert.NotNull(resultResponse.Data);
+            Assert.NotNull(resultResponse.Facets);
 
             //data columns
-            StreamReader reader = new StreamReader(response.Data.ToStream());
+            StreamReader reader = new StreamReader(resultResponse.Data.ToStream());
             string content = reader.ReadToEnd();
             JsonSerializerOptions options = new JsonSerializerOptions
             {
@@ -106,10 +116,7 @@ namespace Azure.Management.ResourceGraph.Tests
         [Test]
         public async Task ResourcesQueryOptionsTest()
         {
-            var tenantsCollection = Client.GetTenants();
-            var tenantList = await tenantsCollection.GetAllAsync().ToEnumerableAsync();
-            var item = tenantList.FirstOrDefault();
-            var query = new QueryContent("project id")
+            var queryContent = new QueryContent("project id")
             {
                 Subscriptions = { DefaultSubscription.Data.SubscriptionId },
                 Options = new QueryRequestOptions
@@ -120,17 +127,17 @@ namespace Azure.Management.ResourceGraph.Tests
                 }
             };
 
-            var response = (await item.ResourcesAsync(query)).Value;
-            Assert.IsNotNull(response);
+            var resultResponse = (await _tenant.ResourcesAsync(queryContent)).Value;
+            Assert.IsNotNull(resultResponse);
             //top response
-            Assert.AreEqual(6, response.Count);
-            Assert.AreEqual(161, response.TotalRecords);
-            Assert.NotNull(response.SkipToken);
-            Assert.AreEqual(response.ResultTruncated, ResultTruncated.False);
-            Assert.NotNull(response.Data);
-            Assert.NotNull(response.Facets);
+            Assert.AreEqual(6, resultResponse.Count);
+            Assert.AreEqual(161, resultResponse.TotalRecords);
+            Assert.NotNull(resultResponse.SkipToken);
+            Assert.AreEqual(resultResponse.ResultTruncated, ResultTruncated.False);
+            Assert.NotNull(resultResponse.Data);
+            Assert.NotNull(resultResponse.Facets);
             //Data
-            var list = response.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
+            var list = resultResponse.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
             Assert.IsNotNull(list);
             Assert.AreEqual(6, list.Count);
             Assert.AreEqual(1, list[0].Count);
@@ -142,10 +149,7 @@ namespace Azure.Management.ResourceGraph.Tests
         {
             var validExpression = "location";
             var invalidExpression = "nonExistingColumn";
-            var tenantsCollection = Client.GetTenants();
-            var tenantList = await tenantsCollection.GetAllAsync().ToEnumerableAsync();
-            var item = tenantList.FirstOrDefault();
-            var query = new QueryContent("project id, location | limit 8")
+            var queryContent = new QueryContent("project id, location | limit 8")
             {
                 Subscriptions = { DefaultSubscription.Data.SubscriptionId },
                 Facets =
@@ -170,18 +174,18 @@ namespace Azure.Management.ResourceGraph.Tests
                 }
             };
 
-            var response = (await item.ResourcesAsync(query)).Value;
+            var resultResponse = (await _tenant.ResourcesAsync(queryContent)).Value;
             //top-level
-            Assert.AreEqual(8, response.Count);
-            Assert.AreEqual(8, response.TotalRecords);
-            Assert.IsNull(response.SkipToken);
-            Assert.AreEqual(response.ResultTruncated, ResultTruncated.False);
-            Assert.NotNull(response.Data);
-            Assert.NotNull(response.Facets);
-            Assert.AreEqual(2, response.Facets.Count);
+            Assert.AreEqual(8, resultResponse.Count);
+            Assert.AreEqual(8, resultResponse.TotalRecords);
+            Assert.IsNull(resultResponse.SkipToken);
+            Assert.AreEqual(resultResponse.ResultTruncated, ResultTruncated.False);
+            Assert.NotNull(resultResponse.Data);
+            Assert.NotNull(resultResponse.Facets);
+            Assert.AreEqual(2, resultResponse.Facets.Count);
 
             //Valid facet fields
-            var result = (FacetResult)response.Facets[0];
+            var result = (FacetResult)resultResponse.Facets[0];
             Assert.IsNotNull(result);
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual(4, result.TotalRecords);
@@ -196,7 +200,7 @@ namespace Azure.Management.ResourceGraph.Tests
             Assert.AreEqual(((JsonElement)result_data[0]["count"]).ValueKind, JsonValueKind.Number);
 
             //invalid facet
-            FacetError error = (FacetError)response.Facets[1];
+            FacetError error = (FacetError)resultResponse.Facets[1];
             Assert.IsNotNull(error);
             Assert.AreEqual(invalidExpression, error.Expression);
             Assert.NotNull(error.Errors);
@@ -206,39 +210,33 @@ namespace Azure.Management.ResourceGraph.Tests
         }
 
         [Test]
-        public async Task ResourcesMalformedQueryAsyncTest()
+        public Task ResourcesMalformedQueryAsyncTest()
         {
-            var tenantsCollection = Client.GetTenants();
-            var tenantList = await tenantsCollection.GetAllAsync().ToEnumerableAsync();
-            var item = tenantList.FirstOrDefault();
-            var query = new QueryContent("project id, location | where where")
+            var queryContent = new QueryContent("project id, location | where where")
             {
                 Subscriptions = { DefaultSubscription.Data.SubscriptionId }
             };
-            //where to put await
-            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await item.ResourcesAsync(query); });
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _tenant.ResourcesAsync(queryContent); });
             Assert.IsNotNull(exception);
+            return Task.CompletedTask;
         }
 
         [Test]
         public async Task ResourcesTenantLevelQueryAsyncTest()
         {
-            var tenantsCollection = Client.GetTenants();
-            var tenantList = await tenantsCollection.GetAllAsync().ToEnumerableAsync();
-            var item = tenantList.FirstOrDefault();
-            var query = new QueryContent("project id, tags, properties | limit 2");
+            var queryContent = new QueryContent("project id, tags, properties | limit 2");
 
-            var response = (await item.ResourcesAsync(query)).Value;
+            var resultResponse = (await _tenant.ResourcesAsync(queryContent)).Value;
             // Top-level response fields
-            Assert.AreEqual(2, response.Count);
-            Assert.AreEqual(2, response.TotalRecords);
-            Assert.IsNull(response.SkipToken);
-            Assert.AreEqual(response.ResultTruncated, ResultTruncated.False);
-            Assert.NotNull(response.Data);
-            Assert.NotNull(response.Facets);
+            Assert.AreEqual(2, resultResponse.Count);
+            Assert.AreEqual(2, resultResponse.TotalRecords);
+            Assert.IsNull(resultResponse.SkipToken);
+            Assert.AreEqual(resultResponse.ResultTruncated, ResultTruncated.False);
+            Assert.NotNull(resultResponse.Data);
+            Assert.NotNull(resultResponse.Facets);
 
             //Data
-            var list = response.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
+            var list = resultResponse.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
             Assert.IsNotNull(list);
             Assert.AreEqual(2, list.Count);
             Assert.AreEqual(3, list[0].Count);
@@ -250,25 +248,22 @@ namespace Azure.Management.ResourceGraph.Tests
         [Test]
         public async Task ResourcesManagementGroupLevelQueryAsyncTest()
         {
-            var tenantsCollection = Client.GetTenants();
-            var tenantList = await tenantsCollection.GetAllAsync().ToEnumerableAsync();
-            var item = tenantList.FirstOrDefault();
-            var query = new QueryContent("project id, tags, properties | limit 2")
+            var queryContent = new QueryContent("project id, tags, properties | limit 2")
             {
                 ManagementGroups = { "91f5d6bc-f464-8343-5e53-3c3e3f99e5c4" }
             };
 
-            var response = (await item.ResourcesAsync(query)).Value;
+            var resultResponse = (await _tenant.ResourcesAsync(queryContent)).Value;
             // Top-level response fields
-            Assert.AreEqual(2, response.Count);
-            Assert.AreEqual(2, response.TotalRecords);
-            Assert.IsNull(response.SkipToken);
-            Assert.AreEqual(response.ResultTruncated, ResultTruncated.False);
-            Assert.NotNull(response.Data);
-            Assert.NotNull(response.Facets);
+            Assert.AreEqual(2, resultResponse.Count);
+            Assert.AreEqual(2, resultResponse.TotalRecords);
+            Assert.IsNull(resultResponse.SkipToken);
+            Assert.AreEqual(resultResponse.ResultTruncated, ResultTruncated.False);
+            Assert.NotNull(resultResponse.Data);
+            Assert.NotNull(resultResponse.Facets);
 
             //Data
-            var list = response.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
+            var list = resultResponse.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
             Assert.IsNotNull(list);
             Assert.AreEqual(2, list.Count);
             Assert.AreEqual(3, list[0].Count);
@@ -280,25 +275,22 @@ namespace Azure.Management.ResourceGraph.Tests
         [Test]
         public async Task ResourcesMultiManagementGroupsLevelQueryTest()
         {
-            var tenantsCollection = Client.GetTenants();
-            var tenantList = await tenantsCollection.GetAllAsync().ToEnumerableAsync();
-            var item = tenantList.FirstOrDefault();
-            var query = new QueryContent("project id, tags, properties | limit 2")
+            var queryContent = new QueryContent("project id, tags, properties | limit 2")
             {
                 ManagementGroups = { "91f5d6bc-f464-8343-5e53-3c3e3f99e5c4", "makharchMg" }
             };
 
-            var response = (await item.ResourcesAsync(query)).Value;
+            var resultResponse = (await _tenant.ResourcesAsync(queryContent)).Value;
             // Top-level response fields
-            Assert.AreEqual(2, response.Count);
-            Assert.AreEqual(2, response.TotalRecords);
-            Assert.IsNull(response.SkipToken);
-            Assert.AreEqual(response.ResultTruncated, ResultTruncated.False);
-            Assert.NotNull(response.Data);
-            Assert.NotNull(response.Facets);
+            Assert.AreEqual(2, resultResponse.Count);
+            Assert.AreEqual(2, resultResponse.TotalRecords);
+            Assert.IsNull(resultResponse.SkipToken);
+            Assert.AreEqual(resultResponse.ResultTruncated, ResultTruncated.False);
+            Assert.NotNull(resultResponse.Data);
+            Assert.NotNull(resultResponse.Facets);
 
             //Data
-            var list = response.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
+            var list = resultResponse.Data.ToObjectFromJson<List<IDictionary<string, object>>>();
             Assert.IsNotNull(list);
             Assert.AreEqual(2, list.Count);
             Assert.AreEqual(3, list[0].Count);
@@ -310,10 +302,7 @@ namespace Azure.Management.ResourceGraph.Tests
         [Test]
         public async Task ResourceHistoryAsync()
         {
-            var tenantsCollection = Client.GetTenants();
-            var tenantList = await tenantsCollection.GetAllAsync().ToEnumerableAsync();
-            var item = tenantList.FirstOrDefault();
-            var content = new ResourcesHistoryContent()
+            var historyContent = new ResourcesHistoryContent()
             {
                 Query = "project id, tags, properties | limit 2",
                 ManagementGroups = { "91f5d6bc-f464-8343-5e53-3c3e3f99e5c4" },
@@ -322,7 +311,7 @@ namespace Azure.Management.ResourceGraph.Tests
                     Interval = new DateTimeInterval(Recording.Now.AddDays(-1), Recording.Now)
                 }
             };
-            var result = (await item.ResourcesHistoryAsync(content)).Value;
+            var result = (await _tenant.ResourcesHistoryAsync(historyContent)).Value;
             var dict = result.ToObjectFromJson<Dictionary<string, object>>();
             Assert.AreEqual(dict.Count, 2);
             Assert.AreEqual(((JsonElement)dict["count"]).ValueKind,JsonValueKind.Number);

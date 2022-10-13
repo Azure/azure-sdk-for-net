@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.ResourceGraph.Tests
         public AzureLocation azureLocation = AzureLocation.EastUS;
         public string DefaultRgnamePrefix = "Test";
         public SubscriptionResource DefaultSubscription { get; private set; }
-        //public ManagementGroupResource DefaultmanagementGroupResource { get; private set; }
 
         protected ResourceGraphManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
