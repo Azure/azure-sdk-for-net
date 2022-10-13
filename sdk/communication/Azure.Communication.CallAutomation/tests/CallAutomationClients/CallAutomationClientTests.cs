@@ -217,7 +217,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 targets: targets,
                 callbackUri: callbackUri)
             {
-                Subject = "subject",
                 MediaStreamingOptions = _mediaStreamingConfiguration
             };
 
@@ -239,7 +238,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 targets: targets,
                 callbackUri: callbackUri)
             {
-                Subject = "subject",
                 MediaStreamingOptions = _mediaStreamingConfiguration
             };
 
