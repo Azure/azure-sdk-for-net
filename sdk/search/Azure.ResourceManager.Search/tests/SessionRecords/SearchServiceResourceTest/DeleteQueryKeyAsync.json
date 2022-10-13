@@ -4784,39 +4784,39 @@
       },
       "ResponseBody": {
         "name": "queryKey-7509",
-        "key": "Onb6FGx8WqrwTbjJHyMLzJIsaQO1bQDPmKmxdiMgmjAzSeDhnbqc"
+        "key": "Sanitized"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdk-test4960/providers/Microsoft.Search/searchServices/search4109/deleteQueryKey/Onb6FGx8WqrwTbjJHyMLzJIsaQO1bQDPmKmxdiMgmjAzSeDhnbqc?api-version=2020-08-01",
-      "RequestMethod": "DELETE",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "traceparent": "00-060cf54a61c7a0d8525e196706d59c70-5740212f57b81d3a-00",
-        "User-Agent": "azsdk-net-ResourceManager.Search/1.0.0-alpha.20220920.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "86f424817b50894c18372522626b3195",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 204,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "client-request-id": "86f42481-7b50-894c-1837-2522626b3195",
-        "Date": "Thu, 22 Sep 2022 09:52:20 GMT",
-        "elapsed-time": "131",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "request-id": "86f42481-7b50-894c-1837-2522626b3195",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "86f42481-7b50-894c-1837-2522626b3195",
-        "x-ms-correlation-request-id": "f9d6cba6-f048-436d-a004-75525071dba6",
-        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
-        "x-ms-request-id": "86f42481-7b50-894c-1837-2522626b3195",
-        "x-ms-routing-request-id": "KOREASOUTH:20220922T095220Z:f9d6cba6-f048-436d-a004-75525071dba6"
-      },
-      "ResponseBody": null
+        "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdk-test4960/providers/Microsoft.Search/searchServices/search4109/deleteQueryKey/Sanitized?api-version=2020-08-01",
+        "RequestMethod": "DELETE",
+        "RequestHeaders": {
+            "Accept": "application/json",
+            "Authorization": "Sanitized",
+            "traceparent": "00-060cf54a61c7a0d8525e196706d59c70-5740212f57b81d3a-00",
+            "User-Agent": "azsdk-net-ResourceManager.Search/1.0.0-alpha.20220920.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+            "x-ms-client-request-id": "86f424817b50894c18372522626b3195",
+            "x-ms-return-client-request-id": "true"
+        },
+        "RequestBody": null,
+        "StatusCode": 204,
+        "ResponseHeaders": {
+            "Cache-Control": "no-cache",
+            "client-request-id": "86f42481-7b50-894c-1837-2522626b3195",
+            "Date": "Thu, 22 Sep 2022 09:52:20 GMT",
+            "elapsed-time": "131",
+            "Expires": "-1",
+            "Pragma": "no-cache",
+            "request-id": "86f42481-7b50-894c-1837-2522626b3195",
+            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+            "X-Content-Type-Options": "nosniff",
+            "x-ms-client-request-id": "86f42481-7b50-894c-1837-2522626b3195",
+            "x-ms-correlation-request-id": "f9d6cba6-f048-436d-a004-75525071dba6",
+            "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+            "x-ms-request-id": "86f42481-7b50-894c-1837-2522626b3195",
+            "x-ms-routing-request-id": "KOREASOUTH:20220922T095220Z:f9d6cba6-f048-436d-a004-75525071dba6"
+        },
+        "ResponseBody": null
     }
   ],
   "Variables": {
