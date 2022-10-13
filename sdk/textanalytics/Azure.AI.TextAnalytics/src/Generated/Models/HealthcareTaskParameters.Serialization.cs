@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -45,7 +46,7 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareTaskParameters DeserializeHealthcareTaskParameters(JsonElement element)
         {
-            Optional<FhirVersion> fhirVersion = default;
+            Optional<WellKnownFhirVersion> fhirVersion = default;
             Optional<DocumentType> documentType = default;
             Optional<StringIndexType> stringIndexType = default;
             Optional<string> modelVersion = default;
@@ -59,7 +60,7 @@ namespace Azure.AI.TextAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fhirVersion = new FhirVersion(property.Value.GetString());
+                    fhirVersion = new WellKnownFhirVersion(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("documentType"))

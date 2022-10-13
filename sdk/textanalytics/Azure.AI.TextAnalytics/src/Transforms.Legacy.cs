@@ -690,7 +690,8 @@ namespace Azure.AI.TextAnalytics
                     ConvertToDocumentStatistics(documentHealthcareEntities.Statistics),
                     ConvertToHealthcareEntityCollection(documentHealthcareEntities.Entities),
                     ConvertToHealthcareEntityRelationsCollection(documentHealthcareEntities.Entities, documentHealthcareEntities.Relations),
-                    ConvertToWarnings(documentHealthcareEntities.Warnings)));
+                    ConvertToWarnings(documentHealthcareEntities.Warnings),
+                    default));
             }
 
             healthcareEntititesResults = healthcareEntititesResults.OrderBy(result => idToIndexMap[result.Id]).ToList();

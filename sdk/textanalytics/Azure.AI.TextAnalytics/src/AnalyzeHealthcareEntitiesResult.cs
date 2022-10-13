@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The result of the analyze heathlcare operation,
+    /// The result of the analyze healthcare operation,
     /// containing the predicted healthcare entities, warning, and relations.
     /// </summary>
     public partial class AnalyzeHealthcareEntitiesResult : TextAnalyticsResult
@@ -18,15 +18,19 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesResult"/>.
         /// </summary>
-        internal AnalyzeHealthcareEntitiesResult(string id, TextDocumentStatistics statistics,
+        internal AnalyzeHealthcareEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
             IList<HealthcareEntity> healthcareEntities,
             IList<HealthcareEntityRelation> entityRelations,
-            IList<TextAnalyticsWarning> warnings)
+            IList<TextAnalyticsWarning> warnings,
+            IDictionary<string, object> fhirBundle)
             : base(id, statistics)
         {
             _entities = new ReadOnlyCollection<HealthcareEntity>(healthcareEntities);
             Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
             EntityRelations = new ReadOnlyCollection<HealthcareEntityRelation>(entityRelations);
+            FhirBundle = new ReadOnlyDictionary<string, object>(fhirBundle);
         }
 
         /// <summary>
@@ -62,5 +66,14 @@ namespace Azure.AI.TextAnalytics
         /// Gets the relations between the entities. <see cref="HealthcareEntityRelation"/>.
         /// </summary>
         public IReadOnlyCollection<HealthcareEntityRelation> EntityRelations { get; }
+
+        /// <summary>
+        /// Gets the FHIR bundle that was produced for this result according to the specified <see cref="AnalyzeHealthcareEntitiesOptions.FhirVersion"/>.
+        /// For additional information, see <see href="https://www.hl7.org/fhir/overview.html"/>.
+        /// </summary>
+        /// <remarks>
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// </remarks>
+        public IReadOnlyDictionary<string, object> FhirBundle { get; }
     }
 }
