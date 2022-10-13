@@ -20,7 +20,6 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
         [AsyncOnly]
         public async Task UploadTestFileAsync()
         {
-            #region Snippet:CreatingClient
 
             string endpoint = TestEnvironment.Endpoint;
             TokenCredential credential = TestEnvironment.Credential;
@@ -31,9 +30,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             // getting appropirate Subclient
             LoadTestAdministrationClient loadTestAdministrationClient = loadTestingClient.getLoadTestAdministration();
 
-            #endregion
-
-            #region Snippet:CreatOrUpdateTest
+            #region Snippet:UploadTestFileAsync
 
             // provide unique identifier for your test
             string testId = "my-test-id";

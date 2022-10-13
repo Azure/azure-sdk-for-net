@@ -21,8 +21,6 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
         [AsyncOnly]
         public async Task CreateAndUpdateTestAsync()
         {
-            #region Snippet:CreatingClient
-
             string endpoint = TestEnvironment.Endpoint;
             TokenCredential credential = TestEnvironment.Credential;
 
@@ -32,9 +30,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             // getting appropirate Subclient
             TestRunClient testRunClient = loadTestingClient.getLoadTestRun();
 
-            #endregion
-
-            #region Snippet:CreatOrUpdateTest
+            #region Snippet:CreateAndUpdateTestAsync
 
             // provide unique identifier for your test
             string testId = "my-test-id";
