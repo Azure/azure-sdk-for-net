@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,8 +17,8 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
     public partial class LoadTestingSamples: SamplesBase<LoadTestingClientTestEnvironment>
     {
         [Test]
-        [SyncOnly]
-        public void CreateOrUpdateTest()
+        [AsyncOnly]
+        public async Task UploadTestFileAsync()
         {
             #region Snippet:CreatingClient
 
@@ -36,27 +38,15 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             // provide unique identifier for your test
             string testId = "my-test-id";
 
-            // all data needs to be passed while creating a loadtest
-            var data = new
-            {
-                description = "This is created using SDK",
-                displayName = "SDK's LoadTest",
-                loadTestConfig = new
-                {
-                    engineInstances = 1,
-                    splitAllCSVs = false,
-                },
-                secrets = new { },
-                enviornmentVariables = new { },
-                passFailCriteria = new
-                {
-                    passFailMetrics = new { },
-                }
-            };
+            // provide unique identifier for your file
+            string fileId = "my-file-id";
 
             try
             {
-                Response response = loadTestAdministrationClient.CreateOrUpdateTest(testId, RequestContent.Create(data));
+                // uploading file
+                Response response = await loadTestAdministrationClient.UploadTestFileAsync(testId, fileId, File.OpenRead(
+                    Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "sample.jmx")
+                    ));
 
                 // if the test is created successfully, printing response
                 Console.WriteLine(response.Content);

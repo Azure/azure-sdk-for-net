@@ -3,12 +3,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.Developer.LoadTesting.Tests.Samples
 {
@@ -16,7 +19,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
     {
         [Test]
         [SyncOnly]
-        public void CreateOrUpdateTest()
+        public void CreateOrUpdateAppComponent()
         {
             #region Snippet:CreatingClient
 
@@ -36,28 +39,31 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             // provide unique identifier for your test
             string testId = "my-test-id";
 
-            // all data needs to be passed while creating a loadtest
+            // provide unique app component id
+            string appComponentId = "my-app-component-id";
+
+            string appComponentConnectionString = "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo";
+            // all other data to be sent to AppCompoent
             var data = new
             {
-                description = "This is created using SDK",
-                displayName = "SDK's LoadTest",
-                loadTestConfig = new
+                testid = testId,
+                name = "New App Component",
+                value = new
                 {
-                    engineInstances = 1,
-                    splitAllCSVs = false,
-                },
-                secrets = new { },
-                enviornmentVariables = new { },
-                passFailCriteria = new
-                {
-                    passFailMetrics = new { },
+                    appComponentConnectionString = new
+                    {
+                        resourceId = appComponentConnectionString,
+                        resourceName = "App-Service-Sample-Demo",
+                        resourceType = "Microsoft.Web/sites",
+                        subscriptionId = "7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a"
+                    }
                 }
             };
 
             try
             {
-                Response response = loadTestAdministrationClient.CreateOrUpdateTest(testId, RequestContent.Create(data));
-
+                // uploading file
+                Response response = loadTestAdministrationClient.CreateOrUpdateAppComponents(appComponentId, RequestContent.Create(data));
                 // if the test is created successfully, printing response
                 Console.WriteLine(response.Content);
             }

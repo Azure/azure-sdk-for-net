@@ -15,8 +15,8 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
     public partial class LoadTestingSamples: SamplesBase<LoadTestingClientTestEnvironment>
     {
         [Test]
-        [SyncOnly]
-        public void CreateOrUpdateTest()
+        [AsyncOnly]
+        public async Task CreateOrUpdateTestAsync()
         {
             #region Snippet:CreatingClient
 
@@ -56,14 +56,14 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
 
             try
             {
-                Response response = loadTestAdministrationClient.CreateOrUpdateTest(testId, RequestContent.Create(data));
+                Response response = await loadTestAdministrationClient.CreateOrUpdateTestAsync(testId, RequestContent.Create(data));
 
                 // if the test is created successfully, printing response
                 Console.WriteLine(response.Content);
             }
             catch (Exception e)
             {
-                Console.WriteLine(String.Format("Error : ", e.Message));
+                Console.WriteLine(string.Format("Error : ", e.Message));
             }
             #endregion
         }

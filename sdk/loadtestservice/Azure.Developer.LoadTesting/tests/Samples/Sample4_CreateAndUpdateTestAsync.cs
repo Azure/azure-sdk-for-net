@@ -3,20 +3,23 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.Developer.LoadTesting.Tests.Samples
 {
     public partial class LoadTestingSamples: SamplesBase<LoadTestingClientTestEnvironment>
     {
         [Test]
-        [SyncOnly]
-        public void CreateOrUpdateTest()
+        [AsyncOnly]
+        public async Task CreateAndUpdateTestAsync()
         {
             #region Snippet:CreatingClient
 
@@ -27,7 +30,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             LoadTestingClient loadTestingClient = new LoadTestingClient(endpoint, credential);
 
             // getting appropirate Subclient
-            LoadTestAdministrationClient loadTestAdministrationClient = loadTestingClient.getLoadTestAdministration();
+            TestRunClient testRunClient = loadTestingClient.getLoadTestRun();
 
             #endregion
 
@@ -36,28 +39,20 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             // provide unique identifier for your test
             string testId = "my-test-id";
 
-            // all data needs to be passed while creating a loadtest
+            // provide unique testrun id
+            string testRunId = "my-test-run-id";
+
+            // all other data to be sent to testRun
             var data = new
             {
-                description = "This is created using SDK",
-                displayName = "SDK's LoadTest",
-                loadTestConfig = new
-                {
-                    engineInstances = 1,
-                    splitAllCSVs = false,
-                },
-                secrets = new { },
-                enviornmentVariables = new { },
-                passFailCriteria = new
-                {
-                    passFailMetrics = new { },
-                }
+                testid = testId,
+                displayName = "Some display name"
             };
 
             try
             {
-                Response response = loadTestAdministrationClient.CreateOrUpdateTest(testId, RequestContent.Create(data));
-
+                // uploading file
+                Response response = await testRunClient.CreateAndUpdateTestAsync(testRunId, RequestContent.Create(data));
                 // if the test is created successfully, printing response
                 Console.WriteLine(response.Content);
             }
