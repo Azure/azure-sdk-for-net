@@ -63,7 +63,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"WjNcMr2vYTASFw4Cy42mfaSS1lKpCX3r9AzCaNAO6e4=\",\r\n  \"secondaryKey\": \"Z9bvx2sL8pctSU89eDipAYLBM7n0w7G2ZAzCaMnlE2g=\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"sanitizedpkey1\",\r\n  \"secondaryKey\": \"sanitizedskey2\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -135,7 +135,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"6uPcT1f70U40ZrszyvpII8yceGwYAdNs8AzCaFTZ6WA=\",\r\n  \"secondaryKey\": \"Z9bvx2sL8pctSU89eDipAYLBM7n0w7G2ZAzCaMnlE2g=\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"sanitizedpkey2\",\r\n  \"secondaryKey\": \"sanitizedskey2\"\r\n}",
       "StatusCode": 200
     }
   ],
