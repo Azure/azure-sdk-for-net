@@ -198,7 +198,7 @@ namespace Azure.Identity
         /// <summary>
         /// Specifies timeout for Developer credentials. e.g. Visual Studio, Azure CLI, Azure Powershell.
         /// </summary>
-        public TimeSpan? DeveloperCredentialTimeout { get; set; } = TimeSpan.FromSeconds(30);
+        internal TimeSpan? DeveloperCredentialTimeout { get; set; } = TimeSpan.FromSeconds(30);
 
         /// <summary>
         /// Specifies whether the <see cref="EnvironmentCredential"/> will be excluded from the authentication flow. Setting to true disables reading

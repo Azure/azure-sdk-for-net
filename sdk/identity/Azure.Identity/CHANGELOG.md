@@ -1,13 +1,8 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.8.0-beta.1 (2022-10-13)
 
 ### Features Added
-- Credentials that are implemented via launching a sub-process to acquire tokens now have configurable timeouts. This addresses scenarios where these proceses can take longer than the current default timeout values. (A community contribution, courtesy of _[reynaldoburgos](https://github.com/reynaldoburgos)_). The affected credentials and their associated options are:
-  - `AzureCliCredential` and `AzureCliCredentialOptions.CliProcessTimeout`
-  - `AzurePowerShellCredential` and `AzurePowerShellCredentialOptions.PowerShellProcessTimeout`
-  - `VisualStudioCredential` and `VisualStudioCredentialOptions.VisualStudioProcessTimeout`
-  - `DefaultAzureCredential` and `DefaultAzureCredentialOptions.DeveloperCredentialTimeout`  Note: this option applies to all developer credentials above when using `DefaultAzureCredential`.
 - Reintroduced `ManagedIdentityCredential` token caching support from 1.7.0-beta.1
 - `EnvironmentCredential` updated to support specifying a certificate password via the `AZURE_CLIENT_CERTIFICATE_PASSWORD` environment variable
 

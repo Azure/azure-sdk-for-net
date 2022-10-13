@@ -26,6 +26,6 @@ namespace Azure.Identity
         /// <summary>
         /// The Cli process timeout.
         /// </summary>
-        public TimeSpan? CliProcessTimeout { get; set; }
+        internal TimeSpan? CliProcessTimeout { get; set; }
     }
 }
