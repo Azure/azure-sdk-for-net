@@ -903,6 +903,12 @@
         "Msrp",
         "Hana"
         ]
+    },  
+    {
+      "filename": "**/sdk/securitydevops/**/*.cs",
+      "words": [
+        "Orgs"
+      ]
     }
   ],
   "allowCompoundWords": true
