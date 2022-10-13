@@ -45,7 +45,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetResourceBuilder(resourceBuilder)
                 .AddSource("TestActivitySource")
-                .SetSampler(new AlwaysOnSampler())
                 .AddAzureMonitorTraceExporter(o => o.ConnectionString = TestEnvironment.ConnectionString)
                 .Build();
 
