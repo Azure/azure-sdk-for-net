@@ -475,6 +475,28 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         }
 
         [Test]
+        public void PlayCanceledEventParsed_Test()
+        {
+            PlayCanceled @event = CallAutomationModelFactory.PlayCanceled(
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId",
+                operationContext: "operationContext");
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.PlayCanceled");
+            if (parsedEvent is PlayCanceled playCancelled)
+            {
+                Assert.AreEqual("correlationId", playCancelled.CorrelationId);
+                Assert.AreEqual("serverCallId", playCancelled.ServerCallId);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
         public void RecognizeCompletedEventParsed_Test()
         {
             RecognizeCompleted @event = CallAutomationModelFactory.RecognizeCompleted(
@@ -526,6 +548,28 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("serverCallId", recognizeFailed.ServerCallId);
                 Assert.AreEqual(400, recognizeFailed.ResultInformation?.Code);
                 Assert.AreEqual(ReasonCode.RecognizeInitialSilenceTimedOut, recognizeFailed.ReasonCode);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void RecognizeCancelledEventParsed_Test()
+        {
+            RecognizeCanceled @event = CallAutomationModelFactory.RecognizeCanceled(
+                operationContext: "operationContext",
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId");
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecognizeCanceled");
+            if (parsedEvent is RecognizeCanceled recognizeCancelled)
+            {
+                Assert.AreEqual("correlationId", recognizeCancelled.CorrelationId);
+                Assert.AreEqual("serverCallId", recognizeCancelled.ServerCallId);
             }
             else
             {

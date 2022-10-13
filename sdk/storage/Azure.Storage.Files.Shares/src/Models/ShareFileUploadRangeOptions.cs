@@ -33,13 +33,13 @@ namespace Azure.Storage.Files.Shares.Models
         public IProgress<long> ProgressHandler { get; set; }
 
         /// <summary>
-        /// Optional <see cref="UploadTransferValidationOptions"/> for using transactional
+        /// Optional override settings for this client's <see cref="ShareClientOptions.TransferValidation"/> settings.
         /// hashing on uploads.
         /// </summary>
-        public UploadTransferValidationOptions TransferValidationOptions { get; set; }
+        public UploadTransferValidationOptions TransferValidation { get; set; }
 
         /// <summary>
-        /// Legacy facade for <see cref="TransferValidationOptions"/>.
+        /// Legacy facade for <see cref="TransferValidation"/>.
         ///
         /// Optional MD5 hash of the range content.
         ///
@@ -54,13 +54,13 @@ namespace Azure.Storage.Files.Shares.Models
         {
             get
             {
-                if (TransferValidationOptions == null)
+                if (TransferValidation == null)
                 {
                     return null;
                 }
-                if (TransferValidationOptions.ChecksumAlgorithm == StorageChecksumAlgorithm.MD5)
+                if (TransferValidation.ChecksumAlgorithm == StorageChecksumAlgorithm.MD5)
                 {
-                    return TransferValidationOptions.PrecalculatedChecksum.ToArray();
+                    return TransferValidation.PrecalculatedChecksum.ToArray();
                 }
 
                 throw new InvalidOperationException("Legacy facade property cannot convert from non-MD5 ValidationAlgorithm.");
@@ -69,11 +69,11 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 if (value == null)
                 {
-                    TransferValidationOptions = null;
+                    TransferValidation = null;
                 }
                 else
                 {
-                    TransferValidationOptions = new UploadTransferValidationOptions
+                    TransferValidation = new UploadTransferValidationOptions
                     {
                         ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
                         PrecalculatedChecksum = value,

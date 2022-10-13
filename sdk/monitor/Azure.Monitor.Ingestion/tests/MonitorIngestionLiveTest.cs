@@ -175,5 +175,33 @@ namespace Azure.Monitor.Ingestion.Tests
             Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
             Assert.IsEmpty(response.Value.Errors);
         }
+
+        [Test]
+        public async Task ValidInputFromObjectAsJsonNoBatchingAsync()
+        {
+            LogsIngestionClient client = CreateClient();
+
+            BinaryData data = BinaryData.FromObjectAsJson(
+                // Use an anonymous type to create the payload
+                new[] {
+                    new
+                    {
+                        Time = Recording.Now.DateTime,
+                        Computer = "Computer1",
+                        AdditionalContext = 2,
+                    },
+                    new
+                    {
+                        Time = Recording.Now.DateTime,
+                        Computer = "Computer2",
+                        AdditionalContext = 3
+                    },
+                });
+
+            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(data)).ConfigureAwait(false); //takes StreamName not tablename
+            // Check the response
+            Assert.AreEqual(204, response.Status);
+            Assert.IsFalse(response.IsError);
+        }
     }
 }
