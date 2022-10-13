@@ -17,7 +17,7 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
 
-        private readonly QuestionAnsweringRuntimeRestClient _restClient;
+        private readonly QuestionAnsweringRestClient _restClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QuestionAnsweringClient"/> class.

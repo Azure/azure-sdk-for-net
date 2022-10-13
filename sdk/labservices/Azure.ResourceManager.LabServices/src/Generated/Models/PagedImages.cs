@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> Initializes a new instance of PagedImages. </summary>
         internal PagedImages()
         {
-            Value = new ChangeTrackingList<ImageData>();
+            Value = new ChangeTrackingList<LabVirtualMachineImageData>();
         }
 
         /// <summary> Initializes a new instance of PagedImages. </summary>
         /// <param name="value"> The array page of virtual machine images. </param>
         /// <param name="nextLink"> The link to get the next page of image results. </param>
-        internal PagedImages(IReadOnlyList<ImageData> value, string nextLink)
+        internal PagedImages(IReadOnlyList<LabVirtualMachineImageData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The array page of virtual machine images. </summary>
-        public IReadOnlyList<ImageData> Value { get; }
+        public IReadOnlyList<LabVirtualMachineImageData> Value { get; }
         /// <summary> The link to get the next page of image results. </summary>
         public string NextLink { get; }
     }

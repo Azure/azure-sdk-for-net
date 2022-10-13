@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of ProductLink. </summary>
         /// <param name="linkType"> Type of link. </param>
         /// <param name="linkUri"> Url of the link. </param>
-        internal ProductLink(LinkType? linkType, Uri linkUri)
+        internal ProductLink(ProductLinkType? linkType, Uri linkUri)
         {
             LinkType = linkType;
             LinkUri = linkUri;
         }
 
         /// <summary> Type of link. </summary>
-        public LinkType? LinkType { get; }
+        public ProductLinkType? LinkType { get; }
         /// <summary> Url of the link. </summary>
         public Uri LinkUri { get; }
     }

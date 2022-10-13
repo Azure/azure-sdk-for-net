@@ -26,18 +26,18 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="value"> Query results. </param>
         internal PolicyEventsQueryResults(string odataContext, int? odataCount, string odataNextLink, IReadOnlyList<PolicyEvent> value)
         {
-            OdataContext = odataContext;
-            OdataCount = odataCount;
-            OdataNextLink = odataNextLink;
+            ODataContext = odataContext;
+            ODataCount = odataCount;
+            ODataNextLink = odataNextLink;
             Value = value;
         }
 
         /// <summary> OData context string; used by OData clients to resolve type information based on metadata. </summary>
-        public string OdataContext { get; }
+        public string ODataContext { get; }
         /// <summary> OData entity count; represents the number of policy event records returned. </summary>
-        public int? OdataCount { get; }
+        public int? ODataCount { get; }
         /// <summary> Odata next link; URL to get the next set of results. </summary>
-        public string OdataNextLink { get; }
+        public string ODataNextLink { get; }
         /// <summary> Query results. </summary>
         public IReadOnlyList<PolicyEvent> Value { get; }
     }

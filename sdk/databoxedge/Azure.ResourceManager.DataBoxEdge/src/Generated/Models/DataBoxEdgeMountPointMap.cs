@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="mountPoint"> Mount point for the share. </param>
         /// <param name="mountType"> Mounting type. </param>
         /// <param name="roleType"> Role type. </param>
-        internal DataBoxEdgeMountPointMap(ResourceIdentifier shareId, ResourceIdentifier roleId, string mountPoint, DataBoxEdgeMountType? mountType, RoleType? roleType)
+        internal DataBoxEdgeMountPointMap(ResourceIdentifier shareId, ResourceIdentifier roleId, string mountPoint, DataBoxEdgeMountType? mountType, DataBoxEdgeRoleType? roleType)
         {
             ShareId = shareId;
             RoleId = roleId;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Mounting type. </summary>
         public DataBoxEdgeMountType? MountType { get; }
         /// <summary> Role type. </summary>
-        public RoleType? RoleType { get; }
+        public DataBoxEdgeRoleType? RoleType { get; }
     }
 }

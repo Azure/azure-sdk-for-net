@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DefaultAuthorizationPolicy. </summary>
         /// <param name="allowedPrincipals"> The configuration settings of the Azure Active Directory allowed principals. </param>
         /// <param name="allowedApplications"> The configuration settings of the Azure Active Directory allowed applications. </param>
-        internal DefaultAuthorizationPolicy(AllowedPrincipals allowedPrincipals, IList<string> allowedApplications)
+        internal DefaultAuthorizationPolicy(AppServiceAadAllowedPrincipals allowedPrincipals, IList<string> allowedApplications)
         {
             AllowedPrincipals = allowedPrincipals;
             AllowedApplications = allowedApplications;
         }
 
         /// <summary> The configuration settings of the Azure Active Directory allowed principals. </summary>
-        public AllowedPrincipals AllowedPrincipals { get; set; }
+        public AppServiceAadAllowedPrincipals AllowedPrincipals { get; set; }
         /// <summary> The configuration settings of the Azure Active Directory allowed applications. </summary>
         public IList<string> AllowedApplications { get; }
     }

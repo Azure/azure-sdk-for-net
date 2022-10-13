@@ -601,7 +601,7 @@ namespace Azure.Identity.Tests
             TestSetup();
             var options = new SharedTokenCacheCredentialOptions();
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
             mockPublicMsalClient.Accounts = new List<IAccount> { new MockAccount(expectedUsername, expectedTenantId) };
 
             var credential = InstrumentClient(new SharedTokenCacheCredential(TenantId, null, options, null, mockPublicMsalClient));
@@ -610,6 +610,12 @@ namespace Azure.Identity.Tests
 
             Assert.AreEqual(expectedToken, token.Token);
             Assert.AreEqual(expiresOn, token.ExpiresOn);
+        }
+
+        public override Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        {
+            Assert.Ignore("Tenant Enforcement tests do not apply to the SharedTokenCacheCredential.");
+            return Task.CompletedTask;
         }
     }
 }

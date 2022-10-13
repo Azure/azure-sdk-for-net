@@ -41,13 +41,18 @@ namespace Azure.Communication.CallAutomation
         public Uri CallbackUri { get; }
 
         /// <summary>
-        /// The subject.
+        /// The Operation context.
         /// </summary>
-        public string Subject { get; set; }
+        public string OperationContext { get; set; }
 
         /// <summary>
         /// Media Streaming Configuration.
         /// </summary>
         public MediaStreamingOptions MediaStreamingOptions { get; set; }
+
+        /// <summary>
+        /// Repeatability Headers.
+        /// </summary>
+        public RepeatabilityHeaders RepeatabilityHeaders { get; set; } = new RepeatabilityHeaders(Guid.NewGuid(), DateTimeOffset.UtcNow);
     }
 }

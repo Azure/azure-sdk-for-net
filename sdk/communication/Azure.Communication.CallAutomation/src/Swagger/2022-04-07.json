@@ -518,7 +518,7 @@
         },
         "x-ms-examples": {
           "Get participants from a call.": {
-            "$ref": "./examples/CallConnections_ListParticipants.json"
+            "$ref": "./examples/CallConnections_GetParticipants.json"
           }
         }
       }
@@ -874,8 +874,8 @@
           "$ref": "#/definitions/CallSource",
           "description": "The source of the call."
         },
-        "subject": {
-          "description": "The subject.",
+        "operationContext": {
+          "description": "A customer set value used to track the answering of a call.",
           "type": "string"
         },
         "callbackUri": {
@@ -1096,10 +1096,6 @@
         },
         "callConnectionState": {
           "$ref": "#/definitions/CallConnectionStateModel"
-        },
-        "subject": {
-          "description": "The subject.",
-          "type": "string"
         },
         "callbackUri": {
           "description": "The callback URI.",
@@ -1648,52 +1644,35 @@
         }
       }
     },
-    "AddParticipantsFailedEvent": {
+    "AddParticipantsFailed": {
       "type": "object",
       "properties": {
-        "eventSource": {
-          "type": "string",
-          "readOnly": true
-        },
-        "operationContext": {
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "readOnly": true
-        },
-        "participants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/CommunicationIdentifierModel"
-          },
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
         "callConnectionId": {
           "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
         "serverCallId": {
           "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
         "correlationId": {
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
+        "operationContext": {
+          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+          "type": "string"
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "description": "Contains the resulting SIP code/sub-code and message from NGC services."
+        },
+        "participants": {
+          "description": "The list of participants.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommunicationIdentifierModel"
+          }
         }
       }
     },
@@ -1713,284 +1692,167 @@
         }
       }
     },
-    "AddParticipantsSucceededEvent": {
+    "AddParticipantsSucceeded": {
       "type": "object",
       "properties": {
-        "eventSource": {
-          "type": "string",
-          "readOnly": true
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
         },
         "operationContext": {
-          "type": "string",
-          "readOnly": true
+          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+          "type": "string"
         },
         "resultInformation": {
           "$ref": "#/definitions/ResultInformation",
-          "readOnly": true
+          "description": "Contains the resulting SIP code/sub-code and message from NGC services."
         },
         "participants": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/CommunicationIdentifierModel"
-          },
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "callConnectionId": {
-          "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "serverCallId": {
-          "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
+          }
         }
       }
     },
-    "CallConnectedEvent": {
+    "CallConnected": {
       "type": "object",
       "properties": {
-        "eventSource": {
-          "type": "string",
-          "readOnly": true
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
         },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
+        },
+        "operationContext": {
+          "description": "Used by customers to set the context for creating a new call. This property will be null for answering a call.",
+          "type": "string"
+        }
+      }
+    },
+    "CallDisconnected": {
+      "type": "object",
+      "properties": {
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
+        },
+        "operationContext": {
+          "description": "Used by customers to set the context for creating a new call. This property will be null for answering a call.",
+          "type": "string"
+        }
+      }
+    },
+    "CallTransferAccepted": {
+      "type": "object",
+      "properties": {
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
         },
         "operationContext": {
           "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
         "resultInformation": {
           "$ref": "#/definitions/ResultInformation",
-          "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
-          "readOnly": true
-        },
-        "callConnectionId": {
-          "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "serverCallId": {
-          "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
+          "description": "Contains the resulting SIP code/sub-code and message from NGC services."
         }
       }
     },
-    "CallDisconnectedEvent": {
+    "CallTransferFailed": {
       "type": "object",
       "properties": {
-        "eventSource": {
-          "type": "string",
-          "readOnly": true
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
         },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
         },
         "operationContext": {
           "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
         "resultInformation": {
           "$ref": "#/definitions/ResultInformation",
-          "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
-          "readOnly": true
-        },
-        "callConnectionId": {
-          "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "serverCallId": {
-          "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
+          "description": "Contains the resulting SIP code/sub-code and message from NGC services."
         }
       }
     },
-    "CallTransferAcceptedEvent": {
+    "ParticipantsUpdated": {
       "type": "object",
       "properties": {
-        "eventSource": {
-          "type": "string",
-          "readOnly": true
-        },
-        "operationContext": {
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
         "callConnectionId": {
           "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
         "serverCallId": {
           "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
         "correlationId": {
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
-        }
-      }
-    },
-    "CallTransferFailedEvent": {
-      "type": "object",
-      "properties": {
-        "eventSource": {
-          "type": "string",
-          "readOnly": true
-        },
-        "operationContext": {
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "callConnectionId": {
-          "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "serverCallId": {
-          "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
-        }
-      }
-    },
-    "ParticipantsUpdatedEvent": {
-      "type": "object",
-      "properties": {
-        "eventSource": {
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
         "participants": {
+          "description": "The list of participants.",
           "type": "array",
           "items": {
             "$ref": "#/definitions/CommunicationIdentifierModel"
-          },
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "operationContext": {
-          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
-          "readOnly": true
-        },
-        "callConnectionId": {
-          "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "serverCallId": {
-          "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
+          }
         }
       }
     },
-    "RecordingStateChangedEvent": {
+    "RecordingStateChanged": {
       "type": "object",
       "properties": {
-        "eventSource": {
-          "type": "string",
-          "readOnly": true
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
         },
         "recordingId": {
           "description": "The call recording id",
@@ -2005,121 +1867,77 @@
           "description": "The time of the recording started",
           "type": "string",
           "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "operationContext": {
-          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
-          "readOnly": true
-        },
-        "callConnectionId": {
-          "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "serverCallId": {
-          "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
         }
       }
     },
     "PlayCompleted": {
       "type": "object",
       "properties": {
-        "operationContext": {
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
         "callConnectionId": {
           "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
         "serverCallId": {
           "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
         "correlationId": {
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
+        "operationContext": {
+          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+          "type": "string"
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "description": "Contains the resulting SIP code/sub-code and message from NGC services."
         }
       }
     },
     "PlayFailed": {
       "type": "object",
       "properties": {
-        "eventSource": {
-          "type": "string",
-          "readOnly": true
-        },
-        "operationContext": {
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
         "callConnectionId": {
           "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
         "serverCallId": {
           "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
         "correlationId": {
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
+        "operationContext": {
+          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+          "type": "string"
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "description": "Contains the resulting SIP code/sub-code and message from NGC services."
+        }
+      }
+    },
+    "PlayCanceled": {
+      "type": "object",
+      "properties": {
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
+        },
+        "operationContext": {
+          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+          "type": "string"
         }
       }
     },
@@ -2129,7 +1947,6 @@
         "dtmf"
       ],
       "type": "string",
-      "readOnly": true,
       "x-ms-enum": {
         "name": "RecognitionType",
         "modelAsString": true
@@ -2138,47 +1955,32 @@
     "RecognizeCompleted": {
       "type": "object",
       "properties": {
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
+        },
         "operationContext": {
-          "type": "string",
-          "readOnly": true
+          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+          "type": "string"
         },
         "resultInformation": {
           "$ref": "#/definitions/ResultInformation",
-          "description": "Result information defines the code, subcode and message",
-          "readOnly": true
+          "description": "Contains the resulting SIP code/sub-code and message from NGC services."
         },
         "recognitionType": {
           "$ref": "#/definitions/RecognitionType"
         },
         "collectTonesResult": {
           "$ref": "#/definitions/CollectTonesResult",
-          "description": "Defines the result for RecognitionType = Dtmf",
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "callConnectionId": {
-          "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "serverCallId": {
-          "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
+          "description": "Defines the result for RecognitionType = Dtmf"
         }
       }
     },
@@ -2197,38 +1999,46 @@
     "RecognizeFailed": {
       "type": "object",
       "properties": {
-        "operationContext": {
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
         "callConnectionId": {
           "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
         "serverCallId": {
           "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
         "correlationId": {
           "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
+        "operationContext": {
+          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+          "type": "string"
+        },
+        "resultInformation": {
+          "$ref": "#/definitions/ResultInformation",
+          "description": "Contains the resulting SIP code/sub-code and message from NGC services."
+        }
+      }
+    },
+    "RecognizeCanceled": {
+      "type": "object",
+      "properties": {
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
+        },
+        "operationContext": {
+          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+          "type": "string"
         }
       }
     },

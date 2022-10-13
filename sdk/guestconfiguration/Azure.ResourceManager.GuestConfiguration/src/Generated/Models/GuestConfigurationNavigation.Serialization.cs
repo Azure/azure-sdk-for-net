@@ -61,21 +61,21 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("assignmentType");
                 }
             }
-            if (Optional.IsCollectionDefined(ConfigurationParameter))
+            if (Optional.IsCollectionDefined(ConfigurationParameters))
             {
                 writer.WritePropertyName("configurationParameter");
                 writer.WriteStartArray();
-                foreach (var item in ConfigurationParameter)
+                foreach (var item in ConfigurationParameters)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedParameter))
+            if (Optional.IsCollectionDefined(ConfigurationProtectedParameters))
             {
                 writer.WritePropertyName("configurationProtectedParameter");
                 writer.WriteStartArray();
-                foreach (var item in ConfigurationProtectedParameter)
+                foreach (var item in ConfigurationProtectedParameters)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<GuestConfigurationAssignmentType?> assignmentType = default;
             Optional<string> assignmentSource = default;
             Optional<string> contentType = default;
-            Optional<IList<ConfigurationParameter>> configurationParameter = default;
-            Optional<IList<ConfigurationParameter>> configurationProtectedParameter = default;
+            Optional<IList<GuestConfigurationParameter>> configurationParameter = default;
+            Optional<IList<GuestConfigurationParameter>> configurationProtectedParameter = default;
             Optional<LcmConfigurationSetting> configurationSetting = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConfigurationParameter> array = new List<ConfigurationParameter>();
+                    List<GuestConfigurationParameter> array = new List<GuestConfigurationParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ConfigurationParameter.DeserializeConfigurationParameter(item));
+                        array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item));
                     }
                     configurationParameter = array;
                     continue;
@@ -186,10 +186,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConfigurationParameter> array = new List<ConfigurationParameter>();
+                    List<GuestConfigurationParameter> array = new List<GuestConfigurationParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ConfigurationParameter.DeserializeConfigurationParameter(item));
+                        array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item));
                     }
                     configurationProtectedParameter = array;
                     continue;

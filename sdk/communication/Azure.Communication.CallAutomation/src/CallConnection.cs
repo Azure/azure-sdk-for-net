@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Communication.CallAutomation
@@ -89,15 +90,36 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> HangUpAsync(bool forEveryone, CancellationToken cancellationToken = default)
         {
+            HangUpOptions options = new HangUpOptions(forEveryone);
+
+            return await HangUpAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Disconnect the current caller in a group-call or end a p2p-call.</summary>
+        /// <param name="options"> Options for the HangUp call operation. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
+        public virtual async Task<Response> HangUpAsync(HangUpOptions options, CancellationToken cancellationToken = default)
+        {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(HangUp)}");
             scope.Start();
             try
             {
-                if (forEveryone)
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+
+                if (options.ForEveryone)
                 {
+                    if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
+                        throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
+
                     return await RestClient.TerminateCallAsync(
-                        callConnectionId: CallConnectionId,
-                        cancellationToken: cancellationToken
+                        CallConnectionId,
+                        options.RepeatabilityHeaders.RepeatabilityRequestId,
+                        options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                        cancellationToken
                         ).ConfigureAwait(false);
                 }
                 else
@@ -121,15 +143,36 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response HangUp(bool forEveryone, CancellationToken cancellationToken = default)
         {
+            HangUpOptions options = new HangUpOptions(forEveryone);
+
+            return HangUp(options, cancellationToken);
+        }
+
+        /// <summary> Disconnect the current caller in a group-call or end a p2p-call. </summary>
+        /// <param name="options"> Options for the HangUp call operation. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
+        public virtual Response HangUp(HangUpOptions options,CancellationToken cancellationToken = default)
+        {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(HangUp)}");
             scope.Start();
             try
             {
-                if (forEveryone)
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+
+                if (options.ForEveryone)
                 {
+                    if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
+                        throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
+
                     return RestClient.TerminateCall(
-                        callConnectionId: CallConnectionId,
-                        cancellationToken: cancellationToken
+                        CallConnectionId,
+                        options.RepeatabilityHeaders.RepeatabilityRequestId,
+                        options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                        cancellationToken
                         );
                 }
                 else
@@ -148,28 +191,30 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Transfer this call to a participant. </summary>
-        /// <param name="targetParticipant"> The target participant. </param>
-        /// <param name="sourceCallerId"> The caller id of the source. </param>
-        /// <param name="userToUserInformation"> The UserToUserInformation. </param>
-        /// <param name="operationContext"> The operationContext for this transfer call. </param>
+        /// <param name="options"> Options for the Transfer Call To Participant operation. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<TransferCallToParticipantResult>> TransferCallToParticipantAsync(CommunicationIdentifier targetParticipant, PhoneNumberIdentifier sourceCallerId = default, string userToUserInformation = default, string operationContext = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
+        public virtual async Task<Response<TransferCallToParticipantResult>> TransferCallToParticipantAsync(TransferToParticipantOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TransferCallToParticipant)}");
             scope.Start();
             try
             {
-                TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(targetParticipant));
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
+                    throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
-                request.TransfereeCallerId = sourceCallerId == null ? null : new PhoneNumberIdentifierModel(sourceCallerId.PhoneNumber);
-                request.UserToUserInformation = userToUserInformation;
-                request.OperationContext = operationContext;
+                TransferToParticipantRequestInternal request = CreateTransferToParticipantRequest(options);;
 
                 return await RestClient.TransferToParticipantAsync(
-                    callConnectionId: CallConnectionId,
+                    CallConnectionId,
                     request,
-                    cancellationToken: cancellationToken
+                    options.RepeatabilityHeaders.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    cancellationToken
                     ).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -180,28 +225,30 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Transfer the call. </summary>
-        /// <param name="targetParticipant"> The target participant. </param>
-        /// <param name="sourceCallerId"> The caller id of the source. </param>
-        /// <param name="userToUserInformation"> The UserToUserInformation. </param>
-        /// <param name="operationContext"> The operationContext for this transfer call. </param>
+        /// <param name="options"> Options for the Transfer Call To Participant operation. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<TransferCallToParticipantResult> TransferCallToParticipant(CommunicationIdentifier targetParticipant, PhoneNumberIdentifier sourceCallerId = default, string userToUserInformation = default, string operationContext = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
+        public virtual Response<TransferCallToParticipantResult> TransferCallToParticipant(TransferToParticipantOptions options,CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TransferCallToParticipant)}");
             scope.Start();
             try
             {
-                TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(targetParticipant));
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
+                    throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
-                request.TransfereeCallerId = sourceCallerId == null ? null : new PhoneNumberIdentifierModel(sourceCallerId.PhoneNumber);
-                request.UserToUserInformation = userToUserInformation;
-                request.OperationContext = operationContext;
+                TransferToParticipantRequestInternal request = CreateTransferToParticipantRequest(options);
 
                 return RestClient.TransferToParticipant(
-                    callConnectionId: CallConnectionId,
+                    CallConnectionId,
                     request,
-                    cancellationToken: cancellationToken
+                    options.RepeatabilityHeaders.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    cancellationToken
                     );
             }
             catch (Exception ex)
@@ -211,29 +258,41 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        private static TransferToParticipantRequestInternal CreateTransferToParticipantRequest(TransferToParticipantOptions options)
+        {
+            TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+
+            request.TransfereeCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
+            request.UserToUserInformation = options.UserToUserInformation;
+            request.OperationContext = options.OperationContext;
+
+            return request;
+        }
+
         /// <summary> Add participants to the call. </summary>
-        /// <param name="participantsToAdd"> The list of identity of participants to be added to the call. </param>
-        /// <param name="sourceCallerId"> The caller id of the source. </param>
-        /// <param name="operationContext"> The Operation Context. </param>
-        /// <param name="invitationTimeoutInSeconds"> Timeout before invitation timesout. </param>
+        /// <param name="options"> Options for the Add Participants operation.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="participantsToAdd"/> is null. </exception>
-        public virtual async Task<Response<AddParticipantsResult>> AddParticipantsAsync(IEnumerable<CommunicationIdentifier> participantsToAdd, PhoneNumberIdentifier sourceCallerId = default, string operationContext = default, int? invitationTimeoutInSeconds = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
+        public virtual async Task<Response<AddParticipantsResult>> AddParticipantsAsync(AddParticipantsOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipants)}");
             scope.Start();
             try
             {
-                AddParticipantsRequestInternal request = new AddParticipantsRequestInternal(participantsToAdd.Select(t => CommunicationIdentifierSerializer.Serialize(t)));
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
+                    throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
-                request.SourceCallerId = sourceCallerId == null ? null : new PhoneNumberIdentifierModel(sourceCallerId.PhoneNumber);
-                request.OperationContext = operationContext;
-                request.InvitationTimeoutInSeconds = invitationTimeoutInSeconds;
+                AddParticipantsRequestInternal request = CreateAddParticipantRequest(options);
 
                 var response = await RestClient.AddParticipantAsync(
                     callConnectionId: CallConnectionId,
                     request,
+                    options.RepeatabilityHeaders.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
 
@@ -247,28 +306,29 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Add participants to the call. </summary>
-        /// <param name="participantsToAdd"> The list of identity of participants to be added to the call. </param>
-        /// <param name="sourceCallerId"> The caller id of the source. </param>
-        /// <param name="operationContext"> The Operation Context. </param>
-        /// <param name="invitationTimeoutInSeconds"> Timeout before invitation timesout. </param>
+        /// <param name="options"> Options for the Add Participants operation.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="participantsToAdd"/> is null. </exception>
-        public virtual Response<AddParticipantsResult> AddParticipants(IEnumerable<CommunicationIdentifier> participantsToAdd, PhoneNumberIdentifier sourceCallerId = default, string operationContext = default, int? invitationTimeoutInSeconds = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
+        public virtual Response<AddParticipantsResult> AddParticipants(AddParticipantsOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipants)}");
             scope.Start();
             try
             {
-                AddParticipantsRequestInternal request = new AddParticipantsRequestInternal(participantsToAdd.Select(t => CommunicationIdentifierSerializer.Serialize(t)));
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
+                    throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
-                request.SourceCallerId = sourceCallerId == null ? null : new PhoneNumberIdentifierModel(sourceCallerId.PhoneNumber);
-                request.OperationContext = operationContext;
-                request.InvitationTimeoutInSeconds = invitationTimeoutInSeconds;
+                AddParticipantsRequestInternal request = CreateAddParticipantRequest(options);
 
                 var response = RestClient.AddParticipant(
                     callConnectionId: CallConnectionId,
                     request,
+                    options.RepeatabilityHeaders.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken: cancellationToken
                     );
 
@@ -279,6 +339,17 @@ namespace Azure.Communication.CallAutomation
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        private static AddParticipantsRequestInternal CreateAddParticipantRequest(AddParticipantsOptions options)
+        {
+            AddParticipantsRequestInternal request = new AddParticipantsRequestInternal(options.ParticipantsToAdd.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
+
+            request.SourceCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
+            request.OperationContext = options.OperationContext;
+            request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
+
+            return request;
         }
 
         /// <summary> Get participant from a call. </summary>
@@ -393,18 +464,40 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToRemove"/> is null. </exception>
         public virtual async Task<Response<RemoveParticipantsResult>> RemoveParticipantsAsync(IEnumerable<CommunicationIdentifier> participantsToRemove, string operationContext = default, CancellationToken cancellationToken = default)
         {
+            RemoveParticipantsOptions options = new RemoveParticipantsOptions(participantsToRemove);
+            if (!String.IsNullOrEmpty(operationContext))
+                options.OperationContext = operationContext;
+
+            return await RemoveParticipantsAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Remove participants from the call. </summary>
+        /// <param name="options">Options for the RemoveParticipants operations.</param>
+        /// <param name="cancellationToken">The cancellation token</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
+        public virtual async Task<Response<RemoveParticipantsResult>> RemoveParticipantsAsync(RemoveParticipantsOptions options, CancellationToken cancellationToken = default)
+        {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(RemoveParticipants)}");
             scope.Start();
             try
             {
-                RemoveParticipantsRequestInternal request = new RemoveParticipantsRequestInternal(participantsToRemove.Select(t => CommunicationIdentifierSerializer.Serialize(t)));
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
+                    throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
-                request.OperationContext = operationContext;
+                RemoveParticipantsRequestInternal request = new RemoveParticipantsRequestInternal(options.ParticipantsToRemove.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
+
+                request.OperationContext = options.OperationContext;
 
                 return await RestClient.RemoveParticipantsAsync(
-                    callConnectionId: CallConnectionId,
+                    CallConnectionId,
                     request,
-                    cancellationToken: cancellationToken
+                    options.RepeatabilityHeaders.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    cancellationToken
                     ).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -422,19 +515,41 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToRemove"/> is null. </exception>
         public virtual Response<RemoveParticipantsResult> RemoveParticipants(IEnumerable<CommunicationIdentifier> participantsToRemove, string operationContext = default, CancellationToken cancellationToken = default)
         {
+            RemoveParticipantsOptions options = new RemoveParticipantsOptions(participantsToRemove);
+            if (!String.IsNullOrEmpty(operationContext))
+                options.OperationContext = operationContext;
+
+            return RemoveParticipants(options, cancellationToken);
+        }
+
+        /// <summary> Remove participants from the call. </summary>
+        /// <param name="options">Options for the RemoveParticipants operations.</param>
+        /// <param name="cancellationToken">The cancellation token</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
+        public virtual Response<RemoveParticipantsResult> RemoveParticipants(RemoveParticipantsOptions options, CancellationToken cancellationToken = default)
+        {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(RemoveParticipants)}");
             scope.Start();
             try
             {
-                RemoveParticipantsRequestInternal request = new RemoveParticipantsRequestInternal(participantsToRemove.Select(t => CommunicationIdentifierSerializer.Serialize(t)));
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
+                    throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
-                request.OperationContext = operationContext;
+                RemoveParticipantsRequestInternal request = new RemoveParticipantsRequestInternal(options.ParticipantsToRemove.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
 
-               return RestClient.RemoveParticipants(
-                    callConnectionId: CallConnectionId,
-                    request,
-                    cancellationToken: cancellationToken
-                    );
+                request.OperationContext = options.OperationContext;
+
+                return RestClient.RemoveParticipants(
+                     CallConnectionId,
+                     request,
+                     options.RepeatabilityHeaders.RepeatabilityRequestId,
+                     options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                     cancellationToken
+                     );
             }
             catch (Exception ex)
             {

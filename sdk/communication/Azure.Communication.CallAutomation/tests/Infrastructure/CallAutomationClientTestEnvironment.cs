@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Net;
 using Azure.Communication.Tests;
+using Azure.Core.TestFramework;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 {
     internal class CallAutomationClientTestEnvironment : CommunicationTestEnvironment
     {
@@ -24,6 +24,10 @@ namespace Azure.Communication.CallAutomation
         private string randomAcsUser = $"8:acs:{randomResourceIdentifier}_0000000e-abbe-44ad-9f37-b0a72a616d0b";
 
         private string randomAcsUser2 = $"8:acs:{randomResourceIdentifier}_0000000e-9f82-b5db-eef0-8b3a0d000839";
+
+        private string dispatcherEndpoint = "DISPATCHER_ENDPOINT";
+
+        private string servicebusString = "SERVICEBUS_STRING";
 
         /// <summary>
         /// The resource identifier associated with the Azure Communication Service.
@@ -55,6 +59,22 @@ namespace Azure.Communication.CallAutomation
         public string PMAEndpoint => GetRecordedOptionalVariable(Endpoint, options => options.IsSecret("https://sanitized.com"));
 
         /// <summary>
+        /// Dispatcher endpoint for automated testing
+        /// </summary>
+        public string DispatcherEndpoint => GetRecordedOptionalVariable(dispatcherEndpoint, options => options.IsSecret("https://sanitized.skype.com"));
+
+        /// <summary>
+        /// ServiceBus string
+        /// </summary>
+        public string ServiceBusConnectionString => GetRecordedOptionalVariable(servicebusString,
+            options => options.HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64).HasSecretConnectionStringParameter("SharedAccessKeyName"));
+
+        /// <summary>
+        /// The callback url of the application where notification would be received.
+        /// </summary>
+        public string DispatcherCallback => $"{DispatcherEndpoint}/api/servicebuscallback/events";
+
+        /// <summary>
         /// The secret for validating incoming request.
         /// </summary>
         public string IncomingRequestSecret => "helloworld";
@@ -68,5 +88,7 @@ namespace Azure.Communication.CallAutomation
         /// The callback url of the application where notification would be received.
         /// </summary>
         public string AppCallbackUrl => $"{AppBaseUrl}/api/incident/callback?SecretKey={WebUtility.UrlEncode(IncomingRequestSecret)}";
+
+        public string WebsocketUrl => $"wss://testwebsocket.webpubsub.azure.com/client/hubs/media?access_token=helloworld";
     }
 }

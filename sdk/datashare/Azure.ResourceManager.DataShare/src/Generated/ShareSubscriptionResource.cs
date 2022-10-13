@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataShare
     /// A Class representing a ShareSubscription along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ShareSubscriptionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetShareSubscriptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AccountResource" /> using the GetShareSubscription method.
+    /// Otherwise you can get one from its parent resource <see cref="DataShareAccountResource" /> using the GetShareSubscription method.
     /// </summary>
     public partial class ShareSubscriptionResource : ArmResource
     {
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.DataShare
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DataSetMappingResources in the ShareSubscription. </summary>
-        /// <returns> An object representing collection of DataSetMappingResources and their operations over a DataSetMappingResource. </returns>
-        public virtual DataSetMappingCollection GetDataSetMappings()
+        /// <summary> Gets a collection of ShareDataSetMappingResources in the ShareSubscription. </summary>
+        /// <returns> An object representing collection of ShareDataSetMappingResources and their operations over a ShareDataSetMappingResource. </returns>
+        public virtual ShareDataSetMappingCollection GetShareDataSetMappings()
         {
-            return GetCachedClient(Client => new DataSetMappingCollection(Client, Id));
+            return GetCachedClient(Client => new ShareDataSetMappingCollection(Client, Id));
         }
 
         /// <summary>
@@ -108,9 +108,9 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentException"> <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetMappingName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataSetMappingResource>> GetDataSetMappingAsync(string dataSetMappingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ShareDataSetMappingResource>> GetShareDataSetMappingAsync(string dataSetMappingName, CancellationToken cancellationToken = default)
         {
-            return await GetDataSetMappings().GetAsync(dataSetMappingName, cancellationToken).ConfigureAwait(false);
+            return await GetShareDataSetMappings().GetAsync(dataSetMappingName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -123,31 +123,16 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentException"> <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetMappingName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataSetMappingResource> GetDataSetMapping(string dataSetMappingName, CancellationToken cancellationToken = default)
+        public virtual Response<ShareDataSetMappingResource> GetShareDataSetMapping(string dataSetMappingName, CancellationToken cancellationToken = default)
         {
-            return GetDataSetMappings().Get(dataSetMappingName, cancellationToken);
+            return GetShareDataSetMappings().Get(dataSetMappingName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TriggerResources in the ShareSubscription. </summary>
-        /// <returns> An object representing collection of TriggerResources and their operations over a TriggerResource. </returns>
-        public virtual TriggerCollection GetTriggers()
+        /// <summary> Gets a collection of DataShareTriggerResources in the ShareSubscription. </summary>
+        /// <returns> An object representing collection of DataShareTriggerResources and their operations over a DataShareTriggerResource. </returns>
+        public virtual DataShareTriggerCollection GetDataShareTriggers()
         {
-            return GetCachedClient(Client => new TriggerCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get a Trigger in a shareSubscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/triggers/{triggerName}
-        /// Operation Id: Triggers_Get
-        /// </summary>
-        /// <param name="triggerName"> The name of the trigger. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<TriggerResource>> GetTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
-        {
-            return await GetTriggers().GetAsync(triggerName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new DataShareTriggerCollection(Client, Id));
         }
 
         /// <summary>
@@ -160,9 +145,24 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TriggerResource> GetTrigger(string triggerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataShareTriggerResource>> GetDataShareTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
         {
-            return GetTriggers().Get(triggerName, cancellationToken);
+            return await GetDataShareTriggers().GetAsync(triggerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Trigger in a shareSubscription
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/triggers/{triggerName}
+        /// Operation Id: Triggers_Get
+        /// </summary>
+        /// <param name="triggerName"> The name of the trigger. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataShareTriggerResource> GetDataShareTrigger(string triggerName, CancellationToken cancellationToken = default)
+        {
+            return GetDataShareTriggers().Get(triggerName, cancellationToken);
         }
 
         /// <summary>
@@ -220,14 +220,14 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<OperationResponse>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataShareOperationResult>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.Delete");
             scope.Start();
             try
             {
                 var response = await _shareSubscriptionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<OperationResponse>(new OperationResponseOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -246,14 +246,14 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<OperationResponse> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataShareOperationResult> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.Delete");
             scope.Start();
             try
             {
                 var response = _shareSubscriptionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataShareArmOperation<OperationResponse>(new OperationResponseOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -665,19 +665,19 @@ namespace Azure.ResourceManager.DataShare
         /// Operation Id: ShareSubscriptions_Synchronize
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="synchronize"> Synchronize payload. </param>
+        /// <param name="content"> Synchronize payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="synchronize"/> is null. </exception>
-        public virtual async Task<ArmOperation<ShareSubscriptionSynchronization>> SynchronizeAsync(WaitUntil waitUntil, Synchronize synchronize, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ShareSubscriptionSynchronization>> SynchronizeAsync(WaitUntil waitUntil, DataShareSynchronizeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(synchronize, nameof(synchronize));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.Synchronize");
             scope.Start();
             try
             {
-                var response = await _shareSubscriptionRestClient.SynchronizeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synchronize, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<ShareSubscriptionSynchronization>(new ShareSubscriptionSynchronizationOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateSynchronizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synchronize).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _shareSubscriptionRestClient.SynchronizeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new DataShareArmOperation<ShareSubscriptionSynchronization>(new ShareSubscriptionSynchronizationOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateSynchronizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -695,19 +695,19 @@ namespace Azure.ResourceManager.DataShare
         /// Operation Id: ShareSubscriptions_Synchronize
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="synchronize"> Synchronize payload. </param>
+        /// <param name="content"> Synchronize payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="synchronize"/> is null. </exception>
-        public virtual ArmOperation<ShareSubscriptionSynchronization> Synchronize(WaitUntil waitUntil, Synchronize synchronize, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ShareSubscriptionSynchronization> Synchronize(WaitUntil waitUntil, DataShareSynchronizeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(synchronize, nameof(synchronize));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.Synchronize");
             scope.Start();
             try
             {
-                var response = _shareSubscriptionRestClient.Synchronize(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synchronize, cancellationToken);
-                var operation = new DataShareArmOperation<ShareSubscriptionSynchronization>(new ShareSubscriptionSynchronizationOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateSynchronizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synchronize).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _shareSubscriptionRestClient.Synchronize(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new DataShareArmOperation<ShareSubscriptionSynchronization>(new ShareSubscriptionSynchronizationOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateSynchronizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

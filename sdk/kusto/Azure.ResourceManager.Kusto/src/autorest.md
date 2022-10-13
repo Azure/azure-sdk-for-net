@@ -9,7 +9,6 @@ csharp: true
 library-name: Kusto
 namespace: Azure.ResourceManager.Kusto
 require: https://github.com/Azure/azure-rest-api-specs/blob/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/azure-kusto/resource-manager/readme.md
-tag: package-2022-02
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -37,6 +36,7 @@ rename-mapping:
   AttachedDatabaseConfiguration.properties.clusterResourceId: -|arm-id
   ProvisioningState: KustoProvisioningState
   Cluster: KustoCluster
+  Cluster.properties.uri: ClusterUri
   Cluster.properties.enableAutoStop: IsAutoStopEnabled
   Cluster.properties.enableDiskEncryption: IsDiskEncryptionEnabled
   Cluster.properties.enableDoubleEncryption: IsDoubleEncryptionEnabled
@@ -62,7 +62,9 @@ rename-mapping:
   ClusterPrincipalAssignment.properties.principalId: -|uuid
   PrincipalType: KustoPrincipalAssignmentType
   ClusterPrincipalRole: KustoClusterPrincipalRole
-  LanguageExtensionsList: LanguageExtensionList
+  LanguageExtension: KustoLanguageExtension
+  LanguageExtensionsList: KustoLanguageExtensionList
+  LanguageExtensionName: KustoLanguageExtensionName
   AttachedDatabaseConfigurationsCheckNameRequest: KustoAttachedDatabaseConfigurationNameAvailabilityContent
   ClusterPrincipalAssignmentCheckNameRequest: KustoClusterPrincipalAssignmentNameAvailabilityContent
   ManagedPrivateEndpointsCheckNameRequest: KustoManagedPrivateEndpointNameAvailabilityContent
@@ -72,7 +74,7 @@ rename-mapping:
   DatabasePrincipalAssignment: KustoDatabasePrincipalAssignment
   DatabasePrincipalAssignmentType: KustoDatabasePrincipalAssignmentType
   DatabasePrincipalAssignment.properties.aadObjectId: -|uuid
-  DatabasePrincipalAssignment.properties.principalId: -|uuid
+  DatabasePrincipalAssignment.properties.principalId: DatabasePrincipalId
   DatabasePrincipalRole: KustoDatabasePrincipalRole
   DatabasePrincipalType: KustoDatabasePrincipalType
   DatabasePrincipal: KustoDatabasePrincipal
@@ -94,10 +96,10 @@ rename-mapping:
   AzureScaleType: KustoScaleType
   AzureSkuName: KustoSkuName
   AzureSkuName.Dev(No SLA)_Standard_D11_v2: DevNoSlaStandardD11V2
-  AzureSkuName.Dev(No SLA)_Standard_E2a_v4: DevNoSlaStandardE2aV4 
+  AzureSkuName.Dev(No SLA)_Standard_E2a_v4: DevNoSlaStandardE2aV4
   AzureSkuName.Standard_D32d_v4: StandardD32dV4
   AzureSkuName.Standard_D16d_v5: StandardD16dV5
-  AzureSkuName.Standard_D32d_v5: StandardD32dV5 
+  AzureSkuName.Standard_D32d_v5: StandardD32dV5
   AzureSkuName.Standard_L4s: StandardL4s
   AzureSkuName.Standard_L8s: StandardL8s
   AzureSkuName.Standard_L16s: StandardL16s
@@ -188,6 +190,11 @@ rename-mapping:
   SkuDescription: KustoSkuDescription
   SkuDescription.locations: -|azure-location
   SkuLocationInfoItem: KustoSkuLocationInfoItem
+  PrincipalsModificationKind: KustoDatabasePrincipalsModificationKind
+  DefaultPrincipalsModificationKind: KustoDatabaseDefaultPrincipalsModificationKind
+  TableLevelSharingProperties: KustoDatabaseTableLevelSharingProperties
+  TrustedExternalTenant: KustoClusterTrustedExternalTenant
+
 
 format-by-name-rules:
   'tenantId': 'uuid'

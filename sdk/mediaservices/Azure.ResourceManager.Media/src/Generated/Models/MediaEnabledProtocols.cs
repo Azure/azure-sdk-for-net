@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of MediaEnabledProtocols. </summary>
         /// <param name="isDownloadEnabled"> Enable Download protocol or not. </param>
         /// <param name="isDashEnabled"> Enable DASH protocol or not. </param>
-        /// <param name="isHttpLiveStreamingEnabled"> Enable HLS protocol or not. </param>
+        /// <param name="isHlsEnabled"> Enable HLS protocol or not. </param>
         /// <param name="isSmoothStreamingEnabled"> Enable SmoothStreaming protocol or not. </param>
-        public MediaEnabledProtocols(bool isDownloadEnabled, bool isDashEnabled, bool isHttpLiveStreamingEnabled, bool isSmoothStreamingEnabled)
+        public MediaEnabledProtocols(bool isDownloadEnabled, bool isDashEnabled, bool isHlsEnabled, bool isSmoothStreamingEnabled)
         {
             IsDownloadEnabled = isDownloadEnabled;
             IsDashEnabled = isDashEnabled;
-            IsHttpLiveStreamingEnabled = isHttpLiveStreamingEnabled;
+            IsHlsEnabled = isHlsEnabled;
             IsSmoothStreamingEnabled = isSmoothStreamingEnabled;
         }
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Enable DASH protocol or not. </summary>
         public bool IsDashEnabled { get; set; }
         /// <summary> Enable HLS protocol or not. </summary>
-        public bool IsHttpLiveStreamingEnabled { get; set; }
+        public bool IsHlsEnabled { get; set; }
         /// <summary> Enable SmoothStreaming protocol or not. </summary>
         public bool IsSmoothStreamingEnabled { get; set; }
     }
