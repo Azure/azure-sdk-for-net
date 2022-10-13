@@ -28,19 +28,26 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
-        public async Task GetAll()
+        [Ignore("The SDK doesn't support create a AlertsSuppressionRule")]
+        public async Task Update()
         {
             var data = new AlertsSuppressionRuleData()
             {
                 AlertType = "VM_EICAR",
+                State = RuleState.Enabled,
+                Reason = "test",
             };
-            var xx = await _alertsSuppressionRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, "JustForTest", data);
+            var alertSuppressionRule = await _alertsSuppressionRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, "JustForTest", data);
 
+            // Delete
+            await alertSuppressionRule.Value.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [RecordedTest]
+        public async Task GetAll()
+        {
             var list = await _alertsSuppressionRuleCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-
-            await xx.Value.DeleteAsync(WaitUntil.Completed);
-            list = await _alertsSuppressionRuleCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsEmpty(list);
         }
 
         private void ValidateAscLocation(AscLocationResource ascLocation, string ascLocationName)

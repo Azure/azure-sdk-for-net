@@ -16,7 +16,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
     internal class AdaptiveNetworkHardening : SecurityCenterManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
-        //private AdaptiveNetworkHardeningCollection _adaptiveNetworkHardeningCollection;
+        private AdaptiveNetworkHardeningCollection _adaptiveNetworkHardeningCollection;
+        private ResourceIdentifier _nsgId;
 
         public AdaptiveNetworkHardening(bool isAsync) : base(isAsync)
         {
@@ -26,13 +27,48 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task TestSetUp()
         {
             _resourceGroup = await CreateResourceGroup();
-            var network = await CreateDefaultNetwork(_resourceGroup,Recording.GenerateAssetName("vnet"));
-            _adaptiveNetworkHardeningCollection = _resourceGroup.GetAdaptiveNetworkHardenings();
+            var nsg = await CreateNetworkSecurityGroup(_resourceGroup, Recording.GenerateAssetName("nsg"));
+            var network = await CreateNetwork(_resourceGroup, nsg, Recording.GenerateAssetName("vnet"));
+            var networkInterface = await CreateNetworkInterface(_resourceGroup, network, Recording.GenerateAssetName("networkInterface"));
+            string vmName = Recording.GenerateAssetName("vm");
+            var vm = await CreateVirtualMachine(_resourceGroup, networkInterface.Data.Id, vmName);
+            _nsgId = nsg.Id;
+            _adaptiveNetworkHardeningCollection = _resourceGroup.GetAdaptiveNetworkHardenings("Microsoft.Compute", "virtualMachines", vmName);
         }
 
         [RecordedTest]
-        public void GetAll()
+        public async Task GetAll()
         {
+            var list = await _adaptiveNetworkHardeningCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsEmpty(list);
+        }
+
+        [RecordedTest]
+        [Ignore("SDK does not support create adaptiveNetworkHardenings")]
+        public async Task Enforce()
+        {
+            var list = await _adaptiveNetworkHardeningCollection.GetAllAsync().ToEnumerableAsync();
+            var adaptiveNetworkHardening = list.FirstOrDefault();
+
+            List<Rule> rules = new List<Rule>()
+            {
+                new Rule()
+                {
+                    Name = "SystemGenerated",
+                    Direction = Direction.Inbound,
+                    DestinationPort = 3389,
+                    Protocols =
+                    {
+                        "TCP"
+                    },
+                }
+            };
+            List<string> networkSecurityGroups = new List<string>()
+            {
+                _nsgId
+            };
+            AdaptiveNetworkHardeningEnforceContent content = new AdaptiveNetworkHardeningEnforceContent(rules, networkSecurityGroups) { };
+            await adaptiveNetworkHardening.EnforceAsync(WaitUntil.Completed, content);
         }
     }
 }
