@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="databaseName"> The database name owned by this cluster that was followed. * in case following all databases. </param>
         /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
         /// <param name="databaseShareOrigin"> The origin of the following setup. </param>
-        internal KustoFollowerDatabaseDefinition(ResourceIdentifier clusterResourceId, string attachedDatabaseConfigurationName, string databaseName, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties, DatabaseShareOrigin? databaseShareOrigin)
+        internal KustoFollowerDatabaseDefinition(ResourceIdentifier clusterResourceId, string attachedDatabaseConfigurationName, string databaseName, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties, KustoDatabaseShareOrigin? databaseShareOrigin)
         {
             ClusterResourceId = clusterResourceId;
             AttachedDatabaseConfigurationName = attachedDatabaseConfigurationName;
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Table level sharing specifications. </summary>
         public KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get; }
         /// <summary> The origin of the following setup. </summary>
-        public DatabaseShareOrigin? DatabaseShareOrigin { get; }
+        public KustoDatabaseShareOrigin? DatabaseShareOrigin { get; }
     }
 }

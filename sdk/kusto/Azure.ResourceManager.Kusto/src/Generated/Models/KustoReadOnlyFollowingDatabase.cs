@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
         /// <param name="originalDatabaseName"> The original database name, before databaseNameOverride or databaseNamePrefix where applied. </param>
         /// <param name="databaseShareOrigin"> The origin of the following setup. </param>
-        internal KustoReadOnlyFollowingDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoKind kind, KustoProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, string leaderClusterResourceId, string attachedDatabaseConfigurationName, KustoDatabasePrincipalsModificationKind? principalsModificationKind, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties, string originalDatabaseName, DatabaseShareOrigin? databaseShareOrigin) : base(id, name, resourceType, systemData, location, kind)
+        internal KustoReadOnlyFollowingDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoKind kind, KustoProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, string leaderClusterResourceId, string attachedDatabaseConfigurationName, KustoDatabasePrincipalsModificationKind? principalsModificationKind, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties, string originalDatabaseName, KustoDatabaseShareOrigin? databaseShareOrigin) : base(id, name, resourceType, systemData, location, kind)
         {
             ProvisioningState = provisioningState;
             SoftDeletePeriod = softDeletePeriod;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> The original database name, before databaseNameOverride or databaseNamePrefix where applied. </summary>
         public string OriginalDatabaseName { get; }
         /// <summary> The origin of the following setup. </summary>
-        public DatabaseShareOrigin? DatabaseShareOrigin { get; }
+        public KustoDatabaseShareOrigin? DatabaseShareOrigin { get; }
     }
 }

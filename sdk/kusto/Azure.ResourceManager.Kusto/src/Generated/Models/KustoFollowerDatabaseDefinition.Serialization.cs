@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Kusto.Models
             string attachedDatabaseConfigurationName = default;
             Optional<string> databaseName = default;
             Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
-            Optional<DatabaseShareOrigin> databaseShareOrigin = default;
+            Optional<KustoDatabaseShareOrigin> databaseShareOrigin = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterResourceId"))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    databaseShareOrigin = new DatabaseShareOrigin(property.Value.GetString());
+                    databaseShareOrigin = new KustoDatabaseShareOrigin(property.Value.GetString());
                     continue;
                 }
             }

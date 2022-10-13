@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Kusto.Tests
             Client = GetArmClient();
             Subscription = await Client.GetDefaultSubscriptionAsync();
 
-            if (TestEnvironment.Mode == RecordedTestMode.Record)
+            if (TestEnvironment.Mode == RecordedTestMode.Record || TestEnvironment.Mode == RecordedTestMode.Playback)
             {
                 _location = (await Client.GetTenantResourceProviderAsync("Microsoft.Kusto")).Value.ResourceTypes
                     .First(r => "clusters".Equals(r.ResourceType, StringComparison.Ordinal)).Locations
