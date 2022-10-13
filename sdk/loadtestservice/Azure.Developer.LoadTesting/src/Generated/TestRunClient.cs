@@ -17,7 +17,7 @@ namespace Azure.Developer.LoadTesting
     /// <summary> The TestRun service client. </summary>
     public partial class TestRunClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://loadtest.azure-dev.com/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://cnt-prod.loadtesting.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly string _endpoint;

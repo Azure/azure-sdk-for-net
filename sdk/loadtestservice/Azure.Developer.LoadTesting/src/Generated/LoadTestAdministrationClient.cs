@@ -17,7 +17,7 @@ namespace Azure.Developer.LoadTesting
     /// <summary> The LoadTestAdministration service client. </summary>
     public partial class LoadTestAdministrationClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://loadtest.azure-dev.com/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://cnt-prod.loadtesting.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly string _endpoint;
