@@ -6,6 +6,7 @@ To begin, please ensure that you're familiar with the items discussed in the [Ge
 
 ## Table of contents
 
+- [Choosing the number of processors for the consumer group](choosing-the-number-of-processors-for-the-consumer-group)
 - [Influencing load balancing behavior](#influencing-load-balancing-behavior)
     - [Load balancing strategy](#load-balancing-strategy)
     - [Load balancing intervals](#load-balancing-intervals)
@@ -17,6 +18,14 @@ To begin, please ensure that you're familiar with the items discussed in the [Ge
 - [Configuring the client retry thresholds](#configuring-the-client-retry-thresholds)
 - [Configuring the timeout used for Event Hubs service operations](#configuring-the-timeout-used-for-event-hubs-service-operations)
 - [Using a custom retry policy](#using-a-custom-retry-policy)
+
+## Choosing the number of processors for the consumer group
+
+The `EventProcessorClient` will coordinate with other instances using the same consumer group and Blob Storage container to process the Event Hub cooperatively.  The processors will dynamically distribute and share the Event Hub's partitions, ensuring each has a single processor responsible for reading it.  As `EventProcessorClient` instances are added or removed from the group, partition ownership will be re-balanced to ensure the load is shared evenly among them.
+
+When a processor owns too many partitions, it will often experience contention in the thread pool, potentially leading to starvation. During this time, activities will stall causing delays in `EventProcessorClient` operations. Because there is no fairness guarantee in scheduling, some partitions may appear to stop processing or load balancing may not be able to update ownership, causing partitions to "bounce" between owners.
+
+Because of this, it is important to carefully consider how many `EventProcessorClient` instances are needed in the consumer group for your application.  Generally, it is recommended each processor own no more than 3 partitions for every 1 CPU core of the host. Since the ratio will vary for each application, it is often helpful to start with using 1.5 partitions for each CPU core and test increasing the number of owned partitions gradually to measure what works best for your application.
 
 ## Influencing load balancing behavior
 

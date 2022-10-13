@@ -1543,7 +1543,9 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    Logger.EventProcessorLoadBalancingCycleStart(Identifier, EventHubName, partitionIds?.Length ?? 0, LoadBalancer.OwnedPartitionCount);
+                    var startingOwnedPartitionCount = LoadBalancer.OwnedPartitionCount;
+
+                    Logger.EventProcessorLoadBalancingCycleStart(Identifier, EventHubName, partitionIds?.Length ?? 0, startingOwnedPartitionCount);
                     cycleDuration = ValueStopwatch.StartNew();
 
                     try
@@ -1568,11 +1570,14 @@ namespace Azure.Messaging.EventHubs.Primitives
                         partitionIds = default;
                     }
 
-                    var remainingTimeUntilNextCycle = await PerformLoadBalancingAsync(cycleDuration, partitionIds, cancellationToken).ConfigureAwait(false);
-                    var cycleElapsedSeconds = cycleDuration.GetElapsedTime().TotalSeconds;
-                    var totalPartitions = partitionIds?.Length ?? 0;
+                    // Execute the current load balancing cycle.
 
-                    Logger.EventProcessorLoadBalancingCycleComplete(Identifier, EventHubName, totalPartitions, LoadBalancer.OwnedPartitionCount, cycleElapsedSeconds, remainingTimeUntilNextCycle.TotalSeconds);
+                    var totalPartitions = partitionIds?.Length ?? 0;
+                    var remainingTimeUntilNextCycle = await PerformLoadBalancingAsync(cycleDuration, partitionIds, cancellationToken).ConfigureAwait(false);
+                    var endingOwnedPartitionCount = LoadBalancer.OwnedPartitionCount;
+                    var cycleElapsedSeconds = cycleDuration.GetElapsedTime().TotalSeconds;
+
+                    Logger.EventProcessorLoadBalancingCycleComplete(Identifier, EventHubName, totalPartitions, endingOwnedPartitionCount, cycleElapsedSeconds, remainingTimeUntilNextCycle.TotalSeconds);
 
                     // If the duration of the load balancing cycle was long enough to potentially impact ownership stability,
                     // emit warnings.  This is impactful enough that the error handler will be pinged to ensure visibility for the
@@ -1588,12 +1593,12 @@ namespace Azure.Messaging.EventHubs.Primitives
                         _ = InvokeOnProcessingErrorAsync(slowException, null, Resources.OperationEventProcessingLoop, CancellationToken.None);
                     }
 
-                    // If the number of partitions owned is maximum advisable set, emit a warning.  This is an inaccurate heuristic and does
-                    // not apply to all workloads.  The error handler will not be pinged to avoid false positive notifications.
+                    // If the number of partitions owned has changed since the cycle started and is above maximum advisable set, emit a warning.  This is
+                    // an inaccurate heuristic and does not apply to all workloads.  The error handler will not be pinged to avoid false positive notifications.
 
-                    if (LoadBalancer.OwnedPartitionCount > MaximumAdvisedOwnedPartitions)
+                    if ((startingOwnedPartitionCount != endingOwnedPartitionCount) && (endingOwnedPartitionCount > MaximumAdvisedOwnedPartitions))
                     {
-                        Logger.EventProcessorHighPartitionOwnershipWarning(Identifier, EventHubName, totalPartitions, LoadBalancer.OwnedPartitionCount, MaximumAdvisedOwnedPartitions);
+                        Logger.EventProcessorHighPartitionOwnershipWarning(Identifier, EventHubName, totalPartitions, endingOwnedPartitionCount, MaximumAdvisedOwnedPartitions);
                     }
 
                     // Evaluate the time remaining before the next cycle and delay.
@@ -2027,12 +2032,18 @@ namespace Azure.Messaging.EventHubs.Primitives
 
         /// <summary>
         ///   Calculates the maximum number of partitions that it is advised this processor
-        ///   own, based on the host environment.
+        ///   own, based on the host environment and some general heuristics.
         /// </summary>
         ///
         /// <returns>The maximum number of partitions that it is advised this processor own.</returns>
         ///
-        private static int CalculateMaximumAdvisedOwnedPartitions() => (int)Math.Floor(Environment.ProcessorCount * 1.5);
+        /// <remarks>
+        ///   The safe number of partitions owned will vary quite a bit by application logic, event structure, and the
+        ///   host environment.  This is a general approximation based on support issues observed since the initial
+        ///   processor release.
+        /// </remarks>
+        ///
+        private static int CalculateMaximumAdvisedOwnedPartitions() => (Environment.ProcessorCount * 2);
 
         /// <summary>
         ///   A virtual <see cref="CheckpointStore" /> instance that delegates calls to the
