@@ -88,31 +88,33 @@ namespace Azure.Core.TestFramework
                 async ValueTask<T> Await()
                 {
                     invocation.Proceed();
-                    var tType = typeof(T);
-                    if (tType.IsGenericType && tType.GetGenericTypeDefinition().Equals(typeof(Response<>)))
+                    var signatureResponseType = typeof(T);
+                    if (signatureResponseType.IsGenericType && signatureResponseType.GetGenericTypeDefinition().Equals(typeof(Response<>)))
                     {
                         //guaranteed only one generic arg with Response<T>
-                        var tGenericType = tType.GetGenericArguments()[0];
-                        var returnType = invocation.ReturnValue.GetType();
-                        Type returnGenericType = null;
-                        if (returnType.IsGenericType && returnType.GetGenericTypeDefinition().Equals(typeof(Task<>)))
+                        var signatureGenericType = signatureResponseType.GetGenericArguments()[0];
+                        var runtimeTaskType = invocation.ReturnValue.GetType();
+                        Type runtimeGenericType = null;
+                        if (runtimeTaskType.IsGenericType && runtimeTaskType.GetGenericTypeDefinition().Equals(typeof(Task<>)))
                         {
-                            var returnInnerType = returnType.GetGenericArguments()[0];
-                            if (returnInnerType.IsGenericType && returnInnerType.GetGenericTypeDefinition().Equals(typeof(Response<>)))
+                            var runtimeResponseType = runtimeTaskType.GetGenericArguments()[0];
+                            if (!runtimeResponseType.Equals(signatureResponseType) && runtimeResponseType.IsGenericType && runtimeResponseType.GetGenericTypeDefinition().Equals(typeof(Response<>)))
                             {
-                                returnGenericType = returnInnerType.GetGenericArguments()[0];
+                                runtimeGenericType = runtimeResponseType.GetGenericArguments()[0];
                             }
                         }
-                        if (returnGenericType is not null && returnGenericType.IsSubclassOf(tGenericType))
+                        if (runtimeGenericType is not null && runtimeGenericType.IsSubclassOf(signatureGenericType))
                         {
-                            //get the object
-                            var responseObject = TaskExtensions.GetResultFromTask(invocation.ReturnValue);
-                            var rawResponse = responseObject.GetType().GetMethod("GetRawResponse", BindingFlags.Instance | BindingFlags.Public).Invoke(responseObject, null);
-                            var obj = responseObject.GetType().GetProperty("Value", BindingFlags.Public | BindingFlags.Instance).GetValue(responseObject);
+                            //keep async nature of the call and guaratee we are complete at this point
+                            await (Task)invocation.ReturnValue;
+                            var runtimeResponseObject = TaskExtensions.GetResultFromTask(invocation.ReturnValue);
+                            var runtimeRawResponse = runtimeResponseObject.GetType().GetMethod("GetRawResponse", BindingFlags.Instance | BindingFlags.Public).Invoke(runtimeResponseObject, null);
+                            var runtimeValue = runtimeResponseObject.GetType().GetProperty("Value", BindingFlags.Public | BindingFlags.Instance).GetValue(runtimeResponseObject);
+
                             //reconstruct
-                            var genericFromMethod = typeof(Response).GetMethod("FromValue", BindingFlags.Static | BindingFlags.Public).MakeGenericMethod(tGenericType);
-                            var newResponseObject = genericFromMethod.Invoke(null, new object[] { obj, rawResponse });
-                            return (T)newResponseObject;
+                            var signatureFromValueMethod = typeof(Response).GetMethod("FromValue", BindingFlags.Static | BindingFlags.Public).MakeGenericMethod(signatureGenericType);
+                            var convertedResponseObject = signatureFromValueMethod.Invoke(null, new object[] { runtimeValue, runtimeRawResponse });
+                            return (T)convertedResponseObject;
                         }
                     }
                     return await (Task<T>)invocation.ReturnValue;
@@ -178,6 +180,12 @@ namespace Azure.Core.TestFramework
             var methodNameWithoutSuffix = methodName.EndsWith("Async", StringComparison.OrdinalIgnoreCase) ?
                 methodName.Substring(0, methodName.Length - 5) :
                 methodName;
+
+            // check if this methodInfo is a "Core" method in mgmt plane, if it is, trim the Core suffix from the method name
+            if (methodInfo.IsFamily && methodNameWithoutSuffix.EndsWith("Core"))
+            {
+                methodNameWithoutSuffix = methodNameWithoutSuffix.Substring(0, methodNameWithoutSuffix.Length - 4);
+            }
 
             var expectedName = declaringType.Name + "." + methodNameWithoutSuffix;
             var forwardAttribute = methodInfo.GetCustomAttributes(true).FirstOrDefault(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
