@@ -604,7 +604,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumberType"> The type of phone numbers to search for. </param>
         /// <param name="phoneNumberAssignmentType"> The assignment type of the phone numbers to search for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<PhoneNumberOffering> GetAvailableOfferingsAsync(string twoLetterIsoCountryName, PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? phoneNumberAssignmentType, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PhoneNumberOffering> GetAvailableOfferingsAsync(string twoLetterIsoCountryName, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? phoneNumberAssignmentType = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<PhoneNumberOffering>> FirstPageFunc(int? pageSizeHint)
             {
@@ -644,7 +644,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumberType"> The type of phone numbers to search for. </param>
         /// <param name="phoneNumberAssignmentType"> The assignment type of the phone numbers to search for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<PhoneNumberOffering> GetAvailableOfferings(string twoLetterIsoCountryName, PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? phoneNumberAssignmentType, CancellationToken cancellationToken = default)
+        public virtual Pageable<PhoneNumberOffering> GetAvailableOfferings(string twoLetterIsoCountryName, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? phoneNumberAssignmentType = null, CancellationToken cancellationToken = default)
         {
             Page<PhoneNumberOffering> FirstPageFunc(int? pageSizeHint)
             {
