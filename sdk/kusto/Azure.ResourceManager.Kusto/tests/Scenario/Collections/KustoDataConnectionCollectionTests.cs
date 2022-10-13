@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario.Collections
         [SetUp]
         public async Task DataConnectionCollectionSetup()
         {
-            var cluster = await CreateCluster(ResourceGroup);
-            var database = await CreateDatabase(cluster);
+            var cluster = await GetCluster(ResourceGroup);
+            var database = await GetDatabase(cluster);
             _dataConnectionCollection = database.GetKustoDataConnections();
 
             _dataConnectionName = Recording.GenerateAssetName("dataConnection");

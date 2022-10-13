@@ -11,9 +11,6 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario.Collections
     {
         private KustoClusterCollection _clusterCollection;
 
-        private string _clusterName;
-        private KustoClusterData _clusterData;
-
         private CreateOrUpdateAsync<KustoClusterResource, KustoClusterData> _createOrUpdateAsync;
 
         public KustoClusterCollectionTests(bool isAsync)
@@ -26,9 +23,6 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario.Collections
         {
             _clusterCollection = ResourceGroup.GetKustoClusters();
 
-            _clusterName = Recording.GenerateAssetName("cluster");
-            _clusterData = new KustoClusterData(Location, Sku);
-
             _createOrUpdateAsync = (clusterName, clusterData) =>
                 _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData);
         }
@@ -38,7 +32,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario.Collections
         public async Task ClusterCollectionTests()
         {
             await CollectionTests(
-                _clusterName, _clusterData,
+                ClusterName, ClusterData,
                 _createOrUpdateAsync,
                 _clusterCollection.GetAsync,
                 _clusterCollection.GetAllAsync,

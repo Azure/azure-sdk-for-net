@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario.Collections
         [SetUp]
         public async Task ClusterPrincipalAssignmentCollectionSetup()
         {
-            var cluster = await CreateCluster(ResourceGroup);
+            var cluster = await GetCluster(ResourceGroup);
             _clusterPrincipalAssignmentCollection = cluster.GetKustoClusterPrincipalAssignments();
 
             _clusterPrincipalAssignmentName = Recording.GenerateAssetName("clusterPrincipalAssignment");

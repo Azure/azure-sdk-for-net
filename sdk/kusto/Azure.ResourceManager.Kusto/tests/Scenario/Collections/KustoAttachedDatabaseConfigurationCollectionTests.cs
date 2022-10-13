@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario.Collections
         [SetUp]
         public async Task AttachedDatabaseConfigurationCollectionSetup()
         {
-            var cluster = await CreateCluster(ResourceGroup);
+            var cluster = await GetCluster(ResourceGroup);
             _attachedDatabaseConfigurationCollection = cluster.GetKustoAttachedDatabaseConfigurations();
 
             _attachedDatabaseConfigurationName = Recording.GenerateAssetName("attachedDatabaseConfiguration");

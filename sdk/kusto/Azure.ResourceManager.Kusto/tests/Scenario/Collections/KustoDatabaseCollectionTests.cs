@@ -11,9 +11,6 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario.Collections
     {
         private KustoDatabaseCollection _databaseCollection;
 
-        private string _databaseName;
-        private KustoDatabaseData _databaseData;
-
         private CreateOrUpdateAsync<KustoDatabaseResource, KustoDatabaseData> _createOrUpdateAsync;
 
         public KustoDatabaseCollectionTests(bool isAsync)
@@ -24,11 +21,8 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario.Collections
         [SetUp]
         public async Task DatabaseCollectionSetup()
         {
-            var cluster = await CreateCluster(ResourceGroup);
+            var cluster = await GetCluster(ResourceGroup);
             _databaseCollection = cluster.GetKustoDatabases();
-
-            _databaseName = Recording.GenerateAssetName("database");
-            _databaseData = new KustoDatabaseData();
 
             _createOrUpdateAsync = (databaseName, databaseData) =>
                 _databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData);
@@ -39,7 +33,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario.Collections
         public async Task DatabaseCollectionTests()
         {
             await CollectionTests(
-                _databaseName, _databaseData,
+                DatabaseName, DatabaseData,
                 _createOrUpdateAsync,
                 _databaseCollection.GetAsync,
                 _databaseCollection.GetAllAsync,

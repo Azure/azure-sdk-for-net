@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario.Collections
         [SetUp]
         public async Task DatabasePrincipalAssignmentCollectionSetup()
         {
-            var cluster = await CreateCluster(ResourceGroup);
-            var database = await CreateDatabase(cluster);
+            var cluster = await GetCluster(ResourceGroup);
+            var database = await GetDatabase(cluster);
             _databasePrincipalAssignmentCollection = database.GetKustoDatabasePrincipalAssignments();
 
             _databasePrincipalAssignmentName = Recording.GenerateAssetName("databasePrincipalAssignment");

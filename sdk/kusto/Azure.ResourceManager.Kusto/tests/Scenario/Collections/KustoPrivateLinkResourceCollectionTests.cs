@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario.Collections
         [SetUp]
         public async Task PrivateLinkResourceCollectionSetup()
         {
-            var cluster = await CreateCluster(ResourceGroup);
+            var cluster = await GetCluster(ResourceGroup);
             _privateLinkResourceCollection = cluster.GetKustoPrivateLinkResources();
 
             _privateLinkResourceName = Recording.GenerateAssetName("privateLinkResource");
             _privateLinkResourceData = new KustoPrivateLinkResourceData();
 
             var privateLinkResourceId = KustoPrivateLinkResource.CreateResourceIdentifier(
-                Subscription.Id, ResourceGroup.Data.Name, cluster.Data.Name, _privateLinkResourceName
+                Subscription.Id, ResourceGroupName, ClusterName, _privateLinkResourceName
             );
             KustoPrivateLinkResource unused = new(Client, privateLinkResourceId);
         }

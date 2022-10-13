@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario.Collections
         [SetUp]
         public async Task ManagedPrivateEndpointCollectionSetup()
         {
-            var cluster = await CreateCluster(ResourceGroup);
+            var cluster = await GetCluster(ResourceGroup);
             _managedPrivateEndpointCollection = cluster.GetKustoManagedPrivateEndpoints();
 
             _managedPrivateEndpointName = Recording.GenerateAssetName("managedPrivateEndpoint");

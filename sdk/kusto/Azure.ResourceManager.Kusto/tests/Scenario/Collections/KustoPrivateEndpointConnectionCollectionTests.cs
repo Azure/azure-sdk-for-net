@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario.Collections
         [SetUp]
         public async Task PrivateEndpointConnectionCollectionSetup()
         {
-            var cluster = await CreateCluster(ResourceGroup);
+            var cluster = await GetCluster(ResourceGroup);
             _privateEndpointConnectionCollection = cluster.GetKustoPrivateEndpointConnections();
 
             _privateEndpointConnectionName = Recording.GenerateAssetName("privateEndpointConnection");
