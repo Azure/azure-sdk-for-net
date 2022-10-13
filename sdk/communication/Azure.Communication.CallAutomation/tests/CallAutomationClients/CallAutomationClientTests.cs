@@ -143,7 +143,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(204);
 
-            var response = await callAutomationClient.RejectCallAsync(incomingCallContext, reason).ConfigureAwait(false);
+            RejectCallOptions rejectOption = new RejectCallOptions(incomingCallContext);
+            rejectOption.CallRejectReason = reason;
+
+            var response = await callAutomationClient.RejectCallAsync(rejectOption).ConfigureAwait(false);
             Assert.NotNull(response);
             Assert.AreEqual((int)HttpStatusCode.NoContent, response.Status);
         }
@@ -153,7 +156,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(204);
 
-            var response = callAutomationClient.RejectCall(incomingCallContext, reason);
+            RejectCallOptions rejectOption = new RejectCallOptions(incomingCallContext);
+            rejectOption.CallRejectReason = reason;
+
+            var response = callAutomationClient.RejectCall(rejectOption);
             Assert.NotNull(response);
             Assert.AreEqual((int)HttpStatusCode.NoContent, response.Status);
         }
@@ -163,7 +169,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async() => await callAutomationClient.RejectCallAsync(incomingCallContext, reason).ConfigureAwait(false));
+            RejectCallOptions rejectOption = new RejectCallOptions(incomingCallContext);
+            rejectOption.CallRejectReason = reason;
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async() => await callAutomationClient.RejectCallAsync(rejectOption).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -173,7 +182,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.RejectCall(incomingCallContext, reason));
+            RejectCallOptions rejectOption = new RejectCallOptions(incomingCallContext);
+            rejectOption.CallRejectReason = reason;
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.RejectCall(rejectOption));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
