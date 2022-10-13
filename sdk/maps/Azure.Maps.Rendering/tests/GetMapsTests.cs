@@ -81,7 +81,7 @@ namespace Azure.Maps.Rendering.Tests
             Assert.AreEqual("1.0.0", tileSet.Value.TileSetVersion);
             Assert.AreEqual("microsoft.imagery", tileSet.Value.TileSetName);
             Assert.AreEqual(1, tileSet.Value.TileEndpoints.Count);
-            Assert.AreEqual(0, tileSet.Value.MinZoomLevel);
+            Assert.AreEqual(1, tileSet.Value.MinZoomLevel);
             Assert.AreEqual(19, tileSet.Value.MaxZoomLevel);
         }
 
