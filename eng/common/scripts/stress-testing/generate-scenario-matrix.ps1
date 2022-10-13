@@ -17,24 +17,23 @@ function GenerateScenarioMatrix(
 ) {
     $yamlConfig = Get-Content $matrixFilePath -Raw
 
-    $prettySerializedMatrix = &"$PSScriptRoot/../job-matrix/Create-JobMatrix.ps1" `
+    $prettyMatrix = &"$PSScriptRoot/../job-matrix/Create-JobMatrix.ps1" `
         -ConfigPath $matrixFilePath `
         -Selection $Selection `
         -DisplayNameFilter $DisplayNameFilter `
         -Filters $Filters `
         -Replace $Replace `
         -NonSparseParameters $NonSparseParameters
-
-    $prettyMatrix = $prettySerializedMatrix | ConvertFrom-Json -AsHashtable
+    $prettyMatrix = $prettyMatrix | ConvertFrom-Json
 
     $scenariosMatrix = @()
-    foreach($permutation in $prettyMatrix.GetEnumerator()) {
+    foreach($permutation in $prettyMatrix.psobject.properties) {
         $entry = @{}
-        $entry.Name = $permutation.key -replace '_', '-'
+        $entry.Name = $permutation.Name -replace '_', '-'
         $entry.Scenario = $entry.Name
         $entry.Remove("Name")
-        foreach ($param in $permutation.value.GetEnumerator()) {
-            $entry.add($param.key, $param.value)
+        foreach ($param in $permutation.value.psobject.properties) {
+            $entry.add($param.Name, $param.value)
         }
         $scenariosMatrix += $entry
     }

@@ -21,6 +21,7 @@ function FindStressPackages(
     [switch]$CI,
     [string]$namespaceOverride,
     [string]$MatrixSelection,
+    [Parameter(Mandatory=$False)][string]$MatrixFileName,
     [Parameter(Mandatory=$False)][string]$MatrixDisplayNameFilter,
     [Parameter(Mandatory=$False)][array]$MatrixFilters,
     [Parameter(Mandatory=$False)][array]$MatrixReplace,
@@ -28,13 +29,15 @@ function FindStressPackages(
 ) {
     # Bare minimum filter for stress tests
     $filters['stressTest'] = 'true'
-
     $packages = @()
     $chartFiles = Get-ChildItem -Recurse -Filter 'Chart.yaml' $directory 
+    if (!$MatrixFileName) {
+        $MatrixFileName = '/scenarios-matrix.yaml'
+    }
     foreach ($chartFile in $chartFiles) {
         $chart = ParseChart $chartFile
         if (matchesAnnotations $chart $filters) {
-            $matrixFilePath = (Join-Path $chartFile.Directory.FullName '/scenarios-matrix.yaml')
+            $matrixFilePath = (Join-Path $chartFile.Directory.FullName $MatrixFileName)
             if (Test-Path $matrixFilePath) {
                 GenerateScenarioMatrix `
                     -matrixFilePath $matrixFilePath `

@@ -80,6 +80,7 @@ function DeployStressTests(
         return $true
     })]
     [System.IO.FileInfo]$LocalAddonsPath,
+    [Parameter(Mandatory=$False)][string]$MatrixFileName,
     [Parameter(Mandatory=$False)][string]$MatrixSelection = "sparse",
     [Parameter(Mandatory=$False)][string]$MatrixDisplayNameFilter,
     [Parameter(Mandatory=$False)][array]$MatrixFilters,
@@ -127,6 +128,7 @@ function DeployStressTests(
                 -CI:$CI `
                 -namespaceOverride $Namespace `
                 -MatrixSelection $MatrixSelection `
+                -MatrixFileName $MatrixFileName `
                 -MatrixFilters $MatrixFilters `
                 -MatrixReplace $MatrixReplace `
                 -MatrixNonSparseParameters $MatrixNonSparseParameters)
