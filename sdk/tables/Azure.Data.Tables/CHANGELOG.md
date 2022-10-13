@@ -6,6 +6,7 @@
 - Added a `Uri` property to `TableClient` and `TableServiceClient`
 
 ### Breaking Changes
+- `TableClient.GetEntityIfNotExists` now returns `NullableResponse<T>` which has a `HasValue` property which returns false when the entity did not exist. Accessing the `Value` property in this case will throw an exception.
 
 ### Bugs Fixed
 - Fixed a OData filter issue with implicit boolean comparisons (for example expressions such as `ent => ent.BooleanProperty`) when calling `TableClient.QueryAsync(Expression<Func<T, bool>> filter, ...)`. ([#30185](https://github.com/Azure/azure-sdk-for-net/issues/30185))

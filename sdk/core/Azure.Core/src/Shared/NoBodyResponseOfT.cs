@@ -16,6 +16,9 @@ namespace Azure
             _response = response;
         }
 
+        /// <inheritdoc />
+        public override bool HasValue => false;
+
         public override T Value
         {
             get

@@ -14,9 +14,20 @@ namespace Azure
 #pragma warning restore SA1649 // File name should match first type name
     {
         /// <summary>
-        /// Gets the value returned by the service.
+        /// Gets a value indicating whether the current instance has a valid value of its underlying type.
         /// </summary>
-        public T? Value { get; }
+        public abstract bool HasValue { get; }
+
+        /// <summary>
+        /// Gets the value returned by the service. Accessing this property will throw if <see cref="HasValue"/> is false.
+        /// </summary>
+        public abstract T Value { get; }
+
+        /// <summary>
+        /// Returns the HTTP response returned by the service.
+        /// </summary>
+        /// <returns>The HTTP response returned by the service.</returns>
+        public abstract Response GetRawResponse();
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -25,5 +36,11 @@ namespace Azure
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return $"Status: {GetRawResponse().Status}, Value: {Value}";
+        }
     }
 }
