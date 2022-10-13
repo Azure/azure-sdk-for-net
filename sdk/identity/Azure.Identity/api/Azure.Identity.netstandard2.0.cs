@@ -60,7 +60,6 @@ namespace Azure.Identity
     {
         public AzureCliCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
-        public System.TimeSpan? CliProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
     public partial class AzurePowerShellCredential : Azure.Core.TokenCredential
@@ -74,7 +73,6 @@ namespace Azure.Identity
     {
         public AzurePowerShellCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
-        public System.TimeSpan? PowerShellProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
     public partial class ChainedTokenCredential : Azure.Core.TokenCredential
@@ -149,7 +147,6 @@ namespace Azure.Identity
     {
         public DefaultAzureCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
-        public System.TimeSpan? DeveloperCredentialTimeout { get { throw null; } set { } }
         public bool ExcludeAzureCliCredential { get { throw null; } set { } }
         public bool ExcludeAzurePowerShellCredential { get { throw null; } set { } }
         public bool ExcludeEnvironmentCredential { get { throw null; } set { } }
@@ -381,6 +378,5 @@ namespace Azure.Identity
         public VisualStudioCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public string TenantId { get { throw null; } set { } }
-        public System.TimeSpan? VisualStudioProcessTimeout { get { throw null; } set { } }
     }
 }
