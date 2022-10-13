@@ -943,6 +943,8 @@ namespace Azure.Maps.Search
                 var operation = new FuzzySearchBatchOperation(this, new Uri(originalResponse.Headers.Location));
                 if (waitUntil == WaitUntil.Completed)
                 {
+                    // TODO: Remove Thread.Sleep after adding RetryAfterInSeconds parameter
+                    Thread.Sleep(400);
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
@@ -1011,6 +1013,8 @@ namespace Azure.Maps.Search
                 var operation = new SearchAddressBatchOperation(this, new Uri(originalResponse.Headers.Location));
                 if (waitUntil == WaitUntil.Completed)
                 {
+                    // TODO: Remove Thread.Sleep after adding RetryAfterInSeconds parameter
+                    Thread.Sleep(400);
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
@@ -1079,6 +1083,8 @@ namespace Azure.Maps.Search
                 var operation = new ReverseSearchAddressBatchOperation(this, new Uri(originalResponse.Headers.Location));
                 if (waitUntil == WaitUntil.Completed)
                 {
+                    // TODO: Remove Thread.Sleep after adding RetryAfterInSeconds parameter
+                    Thread.Sleep(400);
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
