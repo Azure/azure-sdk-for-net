@@ -10,15 +10,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     public partial class PostgreSqlFlexibleServerCollection
     {
-        private GetCachedServerNameRestOperations _getCachedServerNameRestClient;
-
-        private GetCachedServerNameRestOperations GetCachedServerNameRestClient => _getCachedServerNameRestClient ??= new GetCachedServerNameRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-
         /// <summary>
         /// Creates a new server using fast provisioning method.
         /// </summary>
@@ -33,37 +30,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             scope.Start();
             try
             {
-                string serverName = null;
+                var rg = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
 
-                using var cachedServerNameScope = _postgreSqlFlexibleServerServersClientDiagnostics.CreateScope("PostgreSqlFlexibleServerCollection.GetPostgreSqlFlexibleServerCachedServerName");
-                cachedServerNameScope.Start();
-                try
-                {
-                    var cachedServerNameRequest = new Models.PostgreSqlFlexibleServerCachedServerNameContent(data.Version ?? Models.PostgreSqlFlexibleServerVersion.Ver12, data.Storage, data.Sku);
-                    var cachedServerNameResponse = await GetCachedServerNameRestClient.ExecuteAsync(Id.SubscriptionId, Id.ResourceGroupName, data.Location, cachedServerNameRequest, cancellationToken).ConfigureAwait(false);
-                    serverName = cachedServerNameResponse.Value.Name;
-                }
-                catch (Exception e)
-                {
-                    cachedServerNameScope.Failed(e);
-                    throw;
-                }
+                var cachedServerNameRequest = new Models.PostgreSqlFlexibleServerCachedServerNameContent(data.Version ?? Models.PostgreSqlFlexibleServerVersion.Ver12, data.Storage, data.Sku);
+                var cachedServerNameResponse = await rg.GetPostgreSqlFlexibleServerCachedServerNameAsync(data.Location, cachedServerNameRequest, cancellationToken).ConfigureAwait(false);
+                var serverName = cachedServerNameResponse.Value.Name;
 
-                using var serverScope = _postgreSqlFlexibleServerServersClientDiagnostics.CreateScope("PostgreSqlFlexibleServerCollection.CreateOrUpdate");
-                serverScope.Start();
-                try
-                {
-                    var serverResponse = await _postgreSqlFlexibleServerServersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, data, cancellationToken).ConfigureAwait(false);
-                    var serverOperation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerResource>(new PostgreSqlFlexibleServerOperationSource(Client), _postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, data).Request, serverResponse, OperationFinalStateVia.Location);
-                    if (waitUntil == WaitUntil.Completed)
-                        await serverOperation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                    return serverOperation;
-                }
-                catch (Exception e)
-                {
-                    serverScope.Failed(e);
-                    throw;
-                }
+                return await CreateOrUpdateAsync(waitUntil, serverName, data, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -86,37 +59,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             scope.Start();
             try
             {
-                string serverName = null;
+                var rg = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
 
-                using var cachedServerNameScope = _postgreSqlFlexibleServerServersClientDiagnostics.CreateScope("PostgreSqlFlexibleServerCollection.GetPostgreSqlFlexibleServerCachedServerName");
-                cachedServerNameScope.Start();
-                try
-                {
-                    var cachedServerNameRequest = new Models.PostgreSqlFlexibleServerCachedServerNameContent(data.Version ?? Models.PostgreSqlFlexibleServerVersion.Ver12, data.Storage, data.Sku);
-                    var cachedServerNameResponse = GetCachedServerNameRestClient.Execute(Id.SubscriptionId, Id.ResourceGroupName, data.Location, cachedServerNameRequest, cancellationToken);
-                    serverName = cachedServerNameResponse.Value.Name;
-                }
-                catch (Exception e)
-                {
-                    cachedServerNameScope.Failed(e);
-                    throw;
-                }
+                var cachedServerNameRequest = new Models.PostgreSqlFlexibleServerCachedServerNameContent(data.Version ?? Models.PostgreSqlFlexibleServerVersion.Ver12, data.Storage, data.Sku);
+                var cachedServerNameResponse = rg.GetPostgreSqlFlexibleServerCachedServerName(data.Location, cachedServerNameRequest, cancellationToken);
+                var serverName = cachedServerNameResponse.Value.Name;
 
-                using var serverScope = _postgreSqlFlexibleServerServersClientDiagnostics.CreateScope("PostgreSqlFlexibleServerCollection.CreateOrUpdate");
-                serverScope.Start();
-                try
-                {
-                    var serverResponse = _postgreSqlFlexibleServerServersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, serverName, data, cancellationToken);
-                    var serverOperation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerResource>(new PostgreSqlFlexibleServerOperationSource(Client), _postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, data).Request, serverResponse, OperationFinalStateVia.Location);
-                    if (waitUntil == WaitUntil.Completed)
-                        serverOperation.WaitForCompletion(cancellationToken);
-                    return serverOperation;
-                }
-                catch (Exception e)
-                {
-                    serverScope.Failed(e);
-                    throw;
-                }
+                return CreateOrUpdate(waitUntil, serverName, data, cancellationToken);
             }
             catch (Exception e)
             {
