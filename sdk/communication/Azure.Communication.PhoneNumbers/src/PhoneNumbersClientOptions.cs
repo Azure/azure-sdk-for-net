@@ -27,24 +27,15 @@ namespace Azure.Communication.PhoneNumbers
 
         internal string Version { get; }
 
-        internal string? AcceptedLanguage { get; }
-
-        /// <summary> Initializes new instance of PhoneNumbersClientOptions. </summary>
-        public PhoneNumbersClientOptions(ServiceVersion version = LatestVersion)
-            : this(version, null) { }
+        internal string? AcceptedLanguage { get; set; }
 
 #pragma warning disable AZC0009 // ClientOptions constructors should take a ServiceVersion as their first parameter
-        /// <summary>
-        /// Initializes new instance of PhoneNumbersClientOptions using the latest supported API version
-        /// and the provided language to localize responses
-        /// </summary>
-        public PhoneNumbersClientOptions(string acceptedLanguage)
-            : this(LatestVersion, acceptedLanguage) { }
+
 #pragma warning restore AZC0009 // ClientOptions constructors should take a ServiceVersion as their first parameter
 
 #pragma warning disable AZC0010 // ClientOptions constructors should default ServiceVersion to latest supported service version
         /// <summary> Initializes new instance of PhoneNumbersClientOptions. </summary>
-        public PhoneNumbersClientOptions(ServiceVersion version, string? acceptedLanguage)
+        public PhoneNumbersClientOptions(ServiceVersion version)
         {
             Version = version switch
             {
@@ -52,8 +43,6 @@ namespace Azure.Communication.PhoneNumbers
                 ServiceVersion.V2022_01_11_Preview_2 => "2022-01-11-preview2",
                 _ => throw new NotSupportedException()
             };
-
-            AcceptedLanguage = acceptedLanguage;
         }
 #pragma warning restore AZC0010 // ClientOptions constructors should default ServiceVersion to latest supported service version
     }
