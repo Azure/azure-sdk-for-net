@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 #region Snippet:SearchImportNamespace
 using Azure.Core.GeoJson;
@@ -141,6 +141,8 @@ namespace Azure.Maps.Search.Tests
             // Get the operation ID and store somewhere
             string operationId = operation.Id;
             #endregion
+            // Sleep a while to prevent live test failure
+            Thread.Sleep(500);
             #region Snippet:FuzzyBatchSearchWithOperationId2
             // Within 14 days, users can retrive the cached result with operation ID
             // The `endpoint` argument in `clientOptions` should be the same!
@@ -244,6 +246,8 @@ namespace Azure.Maps.Search.Tests
             // Get the operation ID and store somewhere
             string operationId = operation.Id;
             #endregion
+            // Sleep a while to prevent live test failure
+            Thread.Sleep(500);
             #region Snippet:ReverseSearchAddressBatchAsyncWithOperationId2
             // Within 14 days, users can retrive the cached result with operation ID
             // The `endpoint` argument in `clientOptions` should be the same!
@@ -340,7 +344,8 @@ namespace Azure.Maps.Search.Tests
             // Get the operation ID and store somewhere
             string operationId = operation.Id;
             #endregion
-
+            // Sleep a while to prevent live test failure
+            Thread.Sleep(500);
             #region Snippet:SearchAddressBatchWithOperationId2
             // Within 14 days, users can retrive the cached result with operation ID
             // The `endpoint` argument in `clientOptions` should be the same!
