@@ -205,7 +205,7 @@ For example, if you try to search with invalid coordinates, a error is returned,
 
 ## Next steps
 
-* [More detailed samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/tests/Samples)
+* [More samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/samples)
 
 ## Contributing
 
