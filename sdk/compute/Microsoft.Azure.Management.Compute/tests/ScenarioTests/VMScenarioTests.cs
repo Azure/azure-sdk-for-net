@@ -116,7 +116,9 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
             {
-                ImageReference image = new ImageReference(publisher: "MICROSOFTWINDOWSDESKTOP", offer: "WINDOWS-10", version: "latest", sku: "20H2-ENT-G2");
+                ImageReference image =
+                    new ImageReference(id:
+                    "/subscriptions/2ab0c1f8-57a3-460e-b21f-d1dd91908ddc/resourceGroups/Images/providers/Microsoft.Compute/galleries/SharedImageGallery01/images/AsapNvmeImage/versions/3.0.0");
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
                 TestVMScenarioOperationsInternal("TestVMScenarioOperations_TrustedLaunch", vmSize: VirtualMachineSizeTypes.StandardD2sV3, hasManagedDisks: true,
                     osDiskStorageAccountType: StorageAccountTypes.StandardSSDLRS, securityType: "TrustedLaunch", imageReference: image, validateListAvailableSize: false);

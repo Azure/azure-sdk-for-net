@@ -83,6 +83,28 @@ namespace Compute.Tests
         }
 
         /// <summary>
+        /// To record this test case, you need to run it again zone supported regions like eastus2euap.
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_ManagedDisks_DiskControllerType")]
+        public void TestVMScaleSetScenarioOperations_ManagedDisks_DiskControllerType()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
+                using (MockContext context = MockContext.Start(this.GetType()))
+                {
+                    TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, zones: new List<string> { "1" });
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
+        /// <summary>
         /// To record this test case, you need to run it in region which support local diff disks.
         /// </summary>
         [Fact]
@@ -632,6 +654,44 @@ namespace Compute.Tests
                         {
                             Assert.True(1 == vmScaleSet.VirtualMachineProfile.HardwareProfile?.VmSizeProperties?.VCPUsAvailable);
                             Assert.True(1 == vmScaleSet.VirtualMachineProfile.HardwareProfile?.VmSizeProperties?.VCPUsPerCore);
+                        });
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_DiskControllerType")]
+        public void TestVMScaleSetScenarioOperations_DiskControllerType()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            ImageReference imageReference = new ImageReference
+            {
+                Publisher = "CANONICAL",
+                Offer = "UBUNTUSERVER",
+                Sku = "18_04-LTS-GEN2",
+                Version = "latest"
+            };
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westcentralus");
+                using (MockContext context = MockContext.Start(this.GetType()))
+                {
+                    EnsureClientsInitialized(context);
+
+                    TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, imageReference: imageReference,
+                        vmSize: VirtualMachineSizeTypes.Standard_E2bs_v5,
+                        vmScaleSetCustomizer:
+                        vmScaleSet =>
+                        {
+                            vmScaleSet.VirtualMachineProfile.StorageProfile.DiskControllerType = DiskControllerTypes.SCSI;
+                        },
+                        vmScaleSetValidator: vmScaleSet =>
+                        {
+                            Assert.True(DiskControllerTypes.SCSI == vmScaleSet.VirtualMachineProfile.StorageProfile?.DiskControllerType);
                         });
                 }
             }
