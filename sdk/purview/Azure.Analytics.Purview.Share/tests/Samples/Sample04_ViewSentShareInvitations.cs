@@ -45,7 +45,7 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
                 return;
             }
 
-            var responseInvitationDocument = JsonDocument.Parse(responseInvitation);
+            using var responseInvitationDocument = JsonDocument.Parse(responseInvitation);
             var targetEmail = responseInvitationDocument.RootElement.GetProperty("name");
             #endregion Snippet:Azure_Analytics_Purview_Share_Samples_ViewSentShareInvitations
         }
