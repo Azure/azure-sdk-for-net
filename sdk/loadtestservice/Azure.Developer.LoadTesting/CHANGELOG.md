@@ -3,9 +3,4 @@
 ## 1.0.0-beta.1 (Unreleased)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Initial preview release features added for Azure Loadtesting SDK
