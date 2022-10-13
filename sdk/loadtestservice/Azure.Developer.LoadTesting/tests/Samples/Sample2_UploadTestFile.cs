@@ -29,7 +29,6 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             // getting appropirate Subclient
             LoadTestAdministrationClient loadTestAdministrationClient = loadTestingClient.getLoadTestAdministration();
 
-
             #region Snippet:UploadTestFile
 
             // provide unique identifier for your test

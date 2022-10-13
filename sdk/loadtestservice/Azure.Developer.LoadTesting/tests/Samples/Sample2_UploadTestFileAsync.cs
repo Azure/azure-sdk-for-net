@@ -20,7 +20,6 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
         [AsyncOnly]
         public async Task UploadTestFileAsync()
         {
-
             string endpoint = TestEnvironment.Endpoint;
             TokenCredential credential = TestEnvironment.Credential;
 

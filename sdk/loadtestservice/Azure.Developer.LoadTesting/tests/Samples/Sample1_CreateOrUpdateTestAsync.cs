@@ -18,7 +18,6 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
         [AsyncOnly]
         public async Task CreateOrUpdateTestAsync()
         {
-
             string endpoint = TestEnvironment.Endpoint;
             TokenCredential credential = TestEnvironment.Credential;
 
