@@ -4,7 +4,9 @@
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StorageSync.Tests.CustomPolicy;
 using Azure.ResourceManager.TestFramework;
+using Castle.DynamicProxy;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
@@ -16,6 +18,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
         public static string DefaultLocation = IsTestTenant ? null : "eastus2";
+        public StorageSyncResponseNullFilterPolicy StorageSyncNullFilterPolicy = new StorageSyncResponseNullFilterPolicy();
 
         protected StorageSyncManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -30,8 +33,24 @@ namespace Azure.ResourceManager.StorageSync.Tests
         [SetUp]
         public async Task CreateCommonClient()
         {
-            Client = GetArmClient();
+            Client = GetCustomArmClient();
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
+        }
+
+        protected ArmClient GetCustomArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default)
+        {
+            var options = InstrumentClientOptions(clientOptions ?? new ArmClientOptions());
+            options.Environment = ArmEnvironment.AzurePublicCloud;
+            options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
+            options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
+            options.AddPolicy(StorageSyncNullFilterPolicy, HttpPipelinePosition.PerRetry);
+            //if (ApiVersion is not null)
+            //    options.SetApiVersion(_resourceType, ApiVersion);
+
+            return InstrumentClient(new ArmClient(
+                TestEnvironment.Credential,
+                subscriptionId ?? TestEnvironment.SubscriptionId,
+                options), new IInterceptor[] { new ManagementInterceptor(this) });
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)

@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using Azure.ResourceManager.StorageSync.Models;
 using System.Collections.Generic;
 using NUnit.Framework;
