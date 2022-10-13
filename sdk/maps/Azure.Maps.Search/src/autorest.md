@@ -17,6 +17,10 @@ directive:
   transform: |
     $["azure_auth"] = $["AADToken"];
     delete $["AADToken"];
+- from: swagger-document
+  where: $.securityDefinitions
+  transform: |
+    $["SharedKey"]["in"] = "header";
 input-file:
 - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c1260c7a90d503c18b0aeaf29968dfc0b4bf9e11/specification/maps/data-plane/Search/preview/1.0/search.json
 title: SearchClient
@@ -26,9 +30,6 @@ add-credentials: true
 # at some point those credentials will move away to Swagger according to [this](https://github.com/Azure/autorest/issues/3718)
 credential-default-policy-type: BearerTokenCredentialPolicy
 credential-scopes: https://atlas.microsoft.com/.default
-use-extension:
-    "@autorest/modelerfour": "4.22.3"
-
 generation1-convenience-client: true
 sync-methods: None
 license-header: MICROSOFT_MIT_NO_VERSION
