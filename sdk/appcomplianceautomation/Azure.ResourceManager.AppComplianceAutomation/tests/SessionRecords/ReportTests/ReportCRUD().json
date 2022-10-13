@@ -1,0 +1,3356 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.AppComplianceAutomation/reports/sdk-report1725?api-version=2022-11-16-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "392",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.AppComplianceAutomation/1.0.0-alpha.20221013.1 (.NET 6.0.10; Microsoft Windows 10.0.22000)",
+        "x-ms-aad-user-token": "Sanitized",
+        "x-ms-client-request-id": "81f891c057cd3be871669f5103cea24a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "timeZone": "GMT Standard Time",
+          "triggerTime": "2021-12-31T16:00:00.0000000Z",
+          "resources": [
+            {
+              "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/sdk-test/providers/Microsoft.Storage/storageAccounts/sdkteststorageaccount",
+              "resourceType": "microsoft.storage/storageaccounts",
+              "resourceKind": "StorageV2",
+              "resourceName": "sdkteststorageaccount",
+              "tags": {}
+            }
+          ]
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.AppComplianceAutomation/locations/WESTUS3/operationStatuses/2e099f38-c2b7-415c-b1c8-acb9e8d801fa*521DA4319F0A5B94A93EF17CBD4D8E27B148B1ED1FA64D6916A07DFB2AE79EEE?api-version=2022-11-16-preview",
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "1161",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 13 Oct 2022 08:15:10 GMT",
+        "Location": "https://management.azure.com/providers/Microsoft.AppComplianceAutomation/locations/WESTUS3/operationStatuses/2e099f38-c2b7-415c-b1c8-acb9e8d801fa*521DA4319F0A5B94A93EF17CBD4D8E27B148B1ED1FA64D6916A07DFB2AE79EEE?api-version=2022-11-16-preview",
+        "mise-correlation-id": "ed798600-112b-4898-acaf-4c31e651dc76",
+        "Request-Context": "appId=cid-v1:7ecf4129-cb5b-4aab-a086-b332c76641c8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Azure-Ref": "0DclHYwAAAACJnVm7sbPMR49GKxVQKbSYQk9NMDFFREdFMDUyMQAwYjg5MzVkOC1iNjY0LTQxNjUtYTkwZi1jM2NiYWJkZTdkYmI=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "81f891c057cd3be871669f5103cea24a",
+        "x-ms-correlation-request-id": "670c02bd-98cb-4c38-9226-5e69921332d5",
+        "X-ms-Operation-Id": "5d004f24201ed9d4bc5b2f5455fb0a9f",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-tenant-writes": "1199",
+        "x-ms-request-id": "9ac35bc8-846e-41ef-a552-22f3ecc9bf70",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T081510Z:670c02bd-98cb-4c38-9226-5e69921332d5",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.AppComplianceAutomation/reports/sdk-report1725",
+        "name": "sdk-report1725",
+        "type": "microsoft.appcomplianceautomation/reports",
+        "systemData": {
+          "createdBy": "4132ff8f-5c93-489e-ad02-9e3fb97dcf34",
+          "createdByType": "Application",
+          "createdAt": "2022-10-13T08:15:07.7396263Z",
+          "lastModifiedBy": "4132ff8f-5c93-489e-ad02-9e3fb97dcf34",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-10-13T08:15:07.7396263Z"
+        },
+        "properties": {
+          "id": "1d326dfc-19b1-4605-b21c-c1d952c55685",
+          "status": "Active",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+          "reportName": "sdk-report1725",
+          "offerGuid": "",
+          "timeZone": "GMT Standard Time",
+          "triggerTime": "2021-12-31T16:00:00Z",
+          "nextTriggerTime": "2022-10-14T16:00:00Z",
+          "subscriptions": [
+            "f744fbde-a95f-437e-8fcf-38f9324e3d9c"
+          ],
+          "resources": [
+            {
+              "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/sdk-test/providers/Microsoft.Storage/storageAccounts/sdkteststorageaccount",
+              "resourceType": "microsoft.storage/storageaccounts",
+              "resourceName": "sdkteststorageaccount",
+              "resourceKind": "StorageV2",
+              "tags": {}
+            }
+          ],
+          "complianceStatus": {
+            "m365": {
+              "passed": 0,
+              "failed": 0,
+              "manual": 0
+            }
+          },
+          "provisioningState": "Accepted"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.AppComplianceAutomation/locations/WESTUS3/operationStatuses/2e099f38-c2b7-415c-b1c8-acb9e8d801fa*521DA4319F0A5B94A93EF17CBD4D8E27B148B1ED1FA64D6916A07DFB2AE79EEE?api-version=2022-11-16-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22000)",
+        "x-ms-aad-user-token": "Sanitized",
+        "x-ms-client-request-id": "1a2df1fbcc2d559a441e2dae02a7c72e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "448",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 13 Oct 2022 08:15:10 GMT",
+        "ETag": "\u00220000213d-0000-4d00-0000-6347c90d0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1a2df1fbcc2d559a441e2dae02a7c72e",
+        "x-ms-correlation-request-id": "abeb8a74-12ec-4c39-b131-44c141c43ac2",
+        "x-ms-ratelimit-remaining-tenant-reads": "11999",
+        "x-ms-request-id": "27b73eb7-c881-44f1-8acf-d676c3363334",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T081511Z:abeb8a74-12ec-4c39-b131-44c141c43ac2"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.AppComplianceAutomation/locations/WESTUS3/operationStatuses/2e099f38-c2b7-415c-b1c8-acb9e8d801fa*521DA4319F0A5B94A93EF17CBD4D8E27B148B1ED1FA64D6916A07DFB2AE79EEE",
+        "name": "2e099f38-c2b7-415c-b1c8-acb9e8d801fa*521DA4319F0A5B94A93EF17CBD4D8E27B148B1ED1FA64D6916A07DFB2AE79EEE",
+        "resourceId": "/providers/Microsoft.AppComplianceAutomation/reports/sdk-report1725",
+        "status": "Accepted",
+        "startTime": "2022-10-13T08:15:08.1450374Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.AppComplianceAutomation/locations/WESTUS3/operationStatuses/2e099f38-c2b7-415c-b1c8-acb9e8d801fa*521DA4319F0A5B94A93EF17CBD4D8E27B148B1ED1FA64D6916A07DFB2AE79EEE?api-version=2022-11-16-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22000)",
+        "x-ms-aad-user-token": "Sanitized",
+        "x-ms-client-request-id": "b36374ae646c6e4ac8d2fc2f0777d6be",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "518",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 13 Oct 2022 08:15:11 GMT",
+        "ETag": "\u00220000233d-0000-4d00-0000-6347c9100000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b36374ae646c6e4ac8d2fc2f0777d6be",
+        "x-ms-correlation-request-id": "269c9122-fc1c-4b0b-8370-65e419ec4bac",
+        "x-ms-ratelimit-remaining-tenant-reads": "11998",
+        "x-ms-request-id": "3d015b88-700d-4f88-98b9-f4ba75612765",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T081512Z:269c9122-fc1c-4b0b-8370-65e419ec4bac"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.AppComplianceAutomation/locations/WESTUS3/operationStatuses/2e099f38-c2b7-415c-b1c8-acb9e8d801fa*521DA4319F0A5B94A93EF17CBD4D8E27B148B1ED1FA64D6916A07DFB2AE79EEE",
+        "name": "2e099f38-c2b7-415c-b1c8-acb9e8d801fa*521DA4319F0A5B94A93EF17CBD4D8E27B148B1ED1FA64D6916A07DFB2AE79EEE",
+        "resourceId": "/providers/Microsoft.AppComplianceAutomation/reports/sdk-report1725",
+        "status": "Succeeded",
+        "startTime": "2022-10-13T08:15:08.1450374Z",
+        "endTime": "2022-10-13T08:15:12.281584Z",
+        "error": {},
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.AppComplianceAutomation/reports/sdk-report1725?api-version=2022-11-16-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22000)",
+        "x-ms-aad-user-token": "Sanitized",
+        "x-ms-client-request-id": "12550bef87a0921ca3aa1b18251a23dd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "1090",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 13 Oct 2022 08:15:12 GMT",
+        "mise-correlation-id": "8861c0f7-9168-4c69-ace9-81cef1b288be",
+        "Request-Context": "appId=cid-v1:7ecf4129-cb5b-4aab-a086-b332c76641c8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Azure-Ref": "0EMlHYwAAAAC9X8PmH6zQSoGMtTFv3dOTQk9NMDFFREdFMDUyMQAwYjg5MzVkOC1iNjY0LTQxNjUtYTkwZi1jM2NiYWJkZTdkYmI=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "12550bef87a0921ca3aa1b18251a23dd",
+        "x-ms-correlation-request-id": "f987b5db-f123-4de7-add2-b73971f4fa55",
+        "X-ms-Operation-Id": "d29437a14873bc5874966ed2285d66fb",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-tenant-reads": "11997",
+        "x-ms-request-id": "f04e1312-c8d6-4b47-a474-18adbc0f5d70",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T081512Z:f987b5db-f123-4de7-add2-b73971f4fa55",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.AppComplianceAutomation/reports/sdk-report1725",
+        "name": "sdk-report1725",
+        "type": "Microsoft.AppComplianceAutomation/reports",
+        "systemData": {
+          "createdBy": "",
+          "createdByType": "Application",
+          "createdAt": "2022-10-13T08:15:07.7396263Z",
+          "lastModifiedBy": "",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-10-13T08:15:07.7396263Z"
+        },
+        "properties": {
+          "id": "1d326dfc-19b1-4605-b21c-c1d952c55685",
+          "status": "Active",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+          "reportName": "sdk-report1725",
+          "offerGuid": "",
+          "timeZone": "GMT Standard Time",
+          "triggerTime": "2021-12-31T16:00:00Z",
+          "nextTriggerTime": "2022-10-14T16:00:00Z",
+          "subscriptions": [
+            "f744fbde-a95f-437e-8fcf-38f9324e3d9c"
+          ],
+          "resources": [
+            {
+              "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/sdk-test/providers/Microsoft.Storage/storageAccounts/sdkteststorageaccount",
+              "resourceType": "microsoft.storage/storageaccounts",
+              "resourceName": "sdkteststorageaccount",
+              "resourceKind": "StorageV2",
+              "tags": {}
+            }
+          ],
+          "complianceStatus": {
+            "m365": {
+              "passed": 0,
+              "failed": 0,
+              "manual": 0
+            }
+          },
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.AppComplianceAutomation/reports?api-version=2022-11-16-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.AppComplianceAutomation/1.0.0-alpha.20221013.1 (.NET 6.0.10; Microsoft Windows 10.0.22000)",
+        "x-ms-aad-user-token": "Sanitized",
+        "x-ms-client-request-id": "efc221d6c3509626a7be525bd06b4dcc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "111974",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 13 Oct 2022 08:15:13 GMT",
+        "mise-correlation-id": "e8fbf0ba-30ef-4746-97ec-0fd9d19468d0",
+        "Request-Context": "appId=cid-v1:7ecf4129-cb5b-4aab-a086-b332c76641c8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Azure-Ref": "0EclHYwAAAAD97EVGev4uTKvzKLO\u002B3Io2Qk9NMDFFREdFMDUyMQAwYjg5MzVkOC1iNjY0LTQxNjUtYTkwZi1jM2NiYWJkZTdkYmI=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "efc221d6c3509626a7be525bd06b4dcc",
+        "x-ms-correlation-request-id": "f6403e7a-6c5a-44ca-881f-e257546dc32a",
+        "X-ms-Operation-Id": "529e3c0696457701dc78481684fd9873",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-tenant-reads": "11996",
+        "x-ms-request-id": "1a3cf22f-0a0b-4695-ae08-de0f29274b7a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T081513Z:f6403e7a-6c5a-44ca-881f-e257546dc32a",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/providers/Microsoft.AppComplianceAutomation/reports/sdk-report1725",
+            "name": "sdk-report1725",
+            "type": "Microsoft.AppComplianceAutomation/reports",
+            "systemData": {
+              "createdBy": "",
+              "createdByType": "Application",
+              "createdAt": "2022-10-13T08:15:07.7396263Z",
+              "lastModifiedBy": "",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-10-13T08:15:07.7396263Z"
+            },
+            "properties": {
+              "id": "1d326dfc-19b1-4605-b21c-c1d952c55685",
+              "status": "Active",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "reportName": "sdk-report1725",
+              "offerGuid": "",
+              "timeZone": "GMT Standard Time",
+              "triggerTime": "2021-12-31T16:00:00Z",
+              "nextTriggerTime": "2022-10-14T16:00:00Z",
+              "subscriptions": [
+                "f744fbde-a95f-437e-8fcf-38f9324e3d9c"
+              ],
+              "resources": [
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/sdk-test/providers/Microsoft.Storage/storageAccounts/sdkteststorageaccount",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "sdkteststorageaccount",
+                  "resourceKind": "StorageV2",
+                  "tags": {}
+                }
+              ],
+              "complianceStatus": {
+                "m365": {
+                  "passed": 0,
+                  "failed": 0,
+                  "manual": 0
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/providers/Microsoft.AppComplianceAutomation/reports/xqqtestOnboardingFailure",
+            "name": "xqqtestOnboardingFailure",
+            "type": "Microsoft.AppComplianceAutomation/reports",
+            "systemData": {
+              "createdBy": "",
+              "createdByType": "User",
+              "createdAt": "2022-09-21T13:44:24.1347693Z",
+              "lastModifiedBy": "",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-10-08T01:46:52.302098Z"
+            },
+            "properties": {
+              "id": "22166aaa-b952-4b98-b489-d4024ac0d020",
+              "status": "Active",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "reportName": "xqqtestOnboardingFailure",
+              "offerGuid": "",
+              "timeZone": "Pacific Standard Time",
+              "triggerTime": "2022-10-08T12:00:00.000Z",
+              "nextTriggerTime": "2022-10-13T12:00:00Z",
+              "lastTriggerTime": "2022-10-12T12:07:08.719Z",
+              "subscriptions": [
+                "f744fbde-a95f-437e-8fcf-38f9324e3d9c"
+              ],
+              "resources": [
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/suntiantest/providers/Microsoft.ApiManagement/service/apimcontrolpolicymapping",
+                  "resourceType": "microsoft.apimanagement/service",
+                  "resourceName": "apimcontrolpolicymapping",
+                  "resourceKind": "",
+                  "tags": {}
+                }
+              ],
+              "complianceStatus": {
+                "m365": {
+                  "passed": 32,
+                  "failed": 3,
+                  "manual": 58
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/providers/Microsoft.AppComplianceAutomation/reports/testyezhu081802",
+            "name": "testyezhu081802",
+            "type": "Microsoft.AppComplianceAutomation/reports",
+            "systemData": {
+              "createdBy": "",
+              "createdByType": "User",
+              "createdAt": "2022-08-18T07:29:36.0588663Z",
+              "lastModifiedBy": "",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-09-05T07:16:36.9412745Z"
+            },
+            "properties": {
+              "id": "51c1df5f-c4f7-49ab-860b-b2895e223d28",
+              "status": "Active",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "reportName": "testyezhu081802",
+              "offerGuid": "831d93ce-f1e7-4873-8ab0-b055916c0100",
+              "timeZone": "China Standard Time",
+              "triggerTime": "2022-09-04T17:00:00.000Z",
+              "nextTriggerTime": "2022-10-13T17:00:00Z",
+              "lastTriggerTime": "2022-10-12T17:07:58.051Z",
+              "subscriptions": [
+                "f744fbde-a95f-437e-8fcf-38f9324e3d9c"
+              ],
+              "resources": [
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.Storage/storageAccounts/gsm2753881213xt",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "gsm2753881213xt",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "genevaWPStorageGroupName": "acatppelsruntimesecurity",
+                    "genevaWPNamespaceName": "acatPPELsRuntime",
+                    "genevaWPAccountName": "acatPPELogsRuntime",
+                    "genevaWPMonikerName": "acatppelsruntimesecurityusw3"
+                  }
+                }
+              ],
+              "complianceStatus": {
+                "m365": {
+                  "passed": 27,
+                  "failed": 8,
+                  "manual": 58
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/providers/Microsoft.AppComplianceAutomation/reports/testttt",
+            "name": "testttt",
+            "type": "Microsoft.AppComplianceAutomation/reports",
+            "systemData": {
+              "createdBy": "",
+              "createdByType": "User",
+              "createdAt": "2022-08-12T03:07:50.1546643Z",
+              "lastModifiedBy": "",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-08-12T03:07:50.1546643Z"
+            },
+            "properties": {
+              "id": "bd5de8f9-b661-4b96-900a-b272a69e61d4",
+              "status": "Active",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "reportName": "testttt",
+              "offerGuid": "",
+              "timeZone": "Pacific Standard Time",
+              "triggerTime": "2022-08-12T10:00:00Z",
+              "nextTriggerTime": "2022-10-13T10:00:00Z",
+              "lastTriggerTime": "2022-10-12T10:09:20.585Z",
+              "subscriptions": [
+                "f744fbde-a95f-437e-8fcf-38f9324e3d9c"
+              ],
+              "resources": [
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-centraluseuap",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "AzSecPackAutoConfigUA-centraluseuap",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-eastus",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "AzSecPackAutoConfigUA-eastus",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-eastus2",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "AzSecPackAutoConfigUA-eastus2",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-westeurope",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "AzSecPackAutoConfigUA-westeurope",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-westus2",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "AzSecPackAutoConfigUA-westus2",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-westus3",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "AzSecPackAutoConfigUA-westus3",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/DefaultResourceGroup-EUS/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/DefaultResourceGroup-EUS2/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS2",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS2",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/DefaultResourceGroup-USW3/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-USW3",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-USW3",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/DefaultResourceGroup-WEU/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WEU",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WEU",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/DefaultResourceGroup-WUS/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/DefaultResourceGroup-WUS2/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS2",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS2",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.EventHub/namespaces/gsm1073059647eh",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "gsm1073059647eh",
+                  "resourceKind": "",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatSandboxLogsRuntime",
+                    "genevaWPStorageGroupName": "acatsandboxlogsruntimeaudit",
+                    "genevaWPAccountName": "acatSandboxLogsRuntime",
+                    "genevaWPMonikerName": "acatsandboxlogsruntimeauditbl"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.EventHub/namespaces/gsm1598189882eh",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "gsm1598189882eh",
+                  "resourceKind": "",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatPPELsRuntime",
+                    "genevaWPStorageGroupName": "acatppelsruntimeaudit",
+                    "genevaWPAccountName": "acatPPELogsRuntime",
+                    "genevaWPMonikerName": "acatppelsruntimeauditusw3"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.EventHub/namespaces/gsm2753881213eh",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "gsm2753881213eh",
+                  "resourceKind": "",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatPPELsRuntime",
+                    "genevaWPStorageGroupName": "acatppelsruntimesecurity",
+                    "genevaWPAccountName": "acatPPELogsRuntime",
+                    "genevaWPMonikerName": "acatppelsruntimesecurityusw3"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.EventHub/namespaces/gsm2823839650eh",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "gsm2823839650eh",
+                  "resourceKind": "",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatSandboxLogsRuntime",
+                    "genevaWPStorageGroupName": "acatsandboxlogsruntimesecurity",
+                    "genevaWPAccountName": "acatSandboxLogsRuntime",
+                    "genevaWPMonikerName": "acatsandboxlogsruntimesecuritybl"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.EventHub/namespaces/gsm3335042501eh",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "gsm3335042501eh",
+                  "resourceKind": "",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatSandboxLogsRuntime",
+                    "genevaWPStorageGroupName": "acatsandboxlogsruntimediag",
+                    "genevaWPAccountName": "acatSandboxLogsRuntime",
+                    "genevaWPMonikerName": "acatsandboxlogsruntimediagbl"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.EventHub/namespaces/gsm3592045728eh",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "gsm3592045728eh",
+                  "resourceKind": "",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatPPELsRuntime",
+                    "genevaWPStorageGroupName": "acatppelsruntimediag",
+                    "genevaWPAccountName": "acatPPELogsRuntime",
+                    "genevaWPMonikerName": "acatppelsruntimediagusw3"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.Storage/storageAccounts/gsm1073059647xt",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "gsm1073059647xt",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatSandboxLogsRuntime",
+                    "genevaWPStorageGroupName": "acatsandboxlogsruntimeaudit",
+                    "genevaWPAccountName": "acatSandboxLogsRuntime",
+                    "genevaWPMonikerName": "acatsandboxlogsruntimeauditbl"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.Storage/storageAccounts/gsm1598189882xt",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "gsm1598189882xt",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatPPELsRuntime",
+                    "genevaWPStorageGroupName": "acatppelsruntimeaudit",
+                    "genevaWPAccountName": "acatPPELogsRuntime",
+                    "genevaWPMonikerName": "acatppelsruntimeauditusw3"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.Storage/storageAccounts/gsm2753881213xt",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "gsm2753881213xt",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatPPELsRuntime",
+                    "genevaWPStorageGroupName": "acatppelsruntimesecurity",
+                    "genevaWPAccountName": "acatPPELogsRuntime",
+                    "genevaWPMonikerName": "acatppelsruntimesecurityusw3"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.Storage/storageAccounts/gsm2823839650xt",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "gsm2823839650xt",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatSandboxLogsRuntime",
+                    "genevaWPStorageGroupName": "acatsandboxlogsruntimesecurity",
+                    "genevaWPAccountName": "acatSandboxLogsRuntime",
+                    "genevaWPMonikerName": "acatsandboxlogsruntimesecuritybl"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.Storage/storageAccounts/gsm3335042501xt",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "gsm3335042501xt",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatSandboxLogsRuntime",
+                    "genevaWPStorageGroupName": "acatsandboxlogsruntimediag",
+                    "genevaWPAccountName": "acatSandboxLogsRuntime",
+                    "genevaWPMonikerName": "acatsandboxlogsruntimediagbl"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.Storage/storageAccounts/gsm3592045728xt",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "gsm3592045728xt",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatPPELsRuntime",
+                    "genevaWPStorageGroupName": "acatppelsruntimediag",
+                    "genevaWPAccountName": "acatPPELogsRuntime",
+                    "genevaWPMonikerName": "acatppelsruntimediagusw3"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_centraluseuap",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_centraluseuap",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_eastus",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_eastus",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_eastus2",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_eastus2",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_westeurope",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_westeurope",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_westus",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_westus",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_westus2",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_westus2",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_westus3",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_westus3",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/cloud-shell-storage-southeastasia/providers/Microsoft.Storage/storageAccounts/cs1100320019147968f",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "cs1100320019147968f",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "ms-resource-usage": "azure-cloud-shell"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/cloud-shell-storage-southeastasia/providers/Microsoft.Storage/storageAccounts/cs1100320020691b8ad",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "cs1100320020691b8ad",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "ms-resource-usage": "azure-cloud-shell"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/defaultresourcegroup-eus/providers/Microsoft.OperationsManagement/solutions/SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS)",
+                  "resourceType": "microsoft.operationsmanagement/solutions",
+                  "resourceName": "SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS)",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/defaultresourcegroup-eus2/providers/Microsoft.OperationsManagement/solutions/SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS2)",
+                  "resourceType": "microsoft.operationsmanagement/solutions",
+                  "resourceName": "SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS2)",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/defaultresourcegroup-usw3/providers/Microsoft.OperationsManagement/solutions/SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-USW3)",
+                  "resourceType": "microsoft.operationsmanagement/solutions",
+                  "resourceName": "SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-USW3)",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/defaultresourcegroup-weu/providers/Microsoft.OperationsManagement/solutions/SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WEU)",
+                  "resourceType": "microsoft.operationsmanagement/solutions",
+                  "resourceName": "SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WEU)",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/defaultresourcegroup-wus/providers/Microsoft.OperationsManagement/solutions/SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS)",
+                  "resourceType": "microsoft.operationsmanagement/solutions",
+                  "resourceName": "SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS)",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/defaultresourcegroup-wus2/providers/Microsoft.OperationsManagement/solutions/SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS2)",
+                  "resourceType": "microsoft.operationsmanagement/solutions",
+                  "resourceName": "SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS2)",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/guestConfiguration/providers/Microsoft.Storage/storageAccounts/guestconfigtestsa",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "guestconfigtestsa",
+                  "resourceKind": "StorageV2",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/lisong-rg/providers/Microsoft.Network/networkSecurityGroups/NRMS-b624tyznf67qulsVNet",
+                  "resourceType": "microsoft.network/networksecuritygroups",
+                  "resourceName": "NRMS-b624tyznf67qulsVNet",
+                  "resourceKind": "",
+                  "tags": {
+                    "creator": "Automatically added by NRMS Azure Policy",
+                    "nrmS-Version": "2019-03-20",
+                    "nrmS-Info": "http://aka.ms/nrms"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/lisong-rg/providers/Microsoft.Network/networkSecurityGroups/NRMS-o5nv55qof2d5ulsVNet-ase-subnet",
+                  "resourceType": "microsoft.network/networksecuritygroups",
+                  "resourceName": "NRMS-o5nv55qof2d5ulsVNet-ase-subnet",
+                  "resourceKind": "",
+                  "tags": {
+                    "creator": "Automatically added by NRMS Azure Policy",
+                    "nrmS-Version": "2019-03-20",
+                    "nrmS-Info": "http://aka.ms/nrms"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/lisong-rg/providers/Microsoft.Network/networkSecurityGroups/NRMS-tsyvtz6u26giclsVNet-ase",
+                  "resourceType": "microsoft.network/networksecuritygroups",
+                  "resourceName": "NRMS-tsyvtz6u26giclsVNet-ase",
+                  "resourceKind": "",
+                  "tags": {
+                    "creator": "Automatically added by NRMS Azure Policy",
+                    "nrmS-Version": "2019-03-20",
+                    "nrmS-Info": "http://aka.ms/nrms"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/lisong-rg/providers/Microsoft.Network/trafficmanagerprofiles/lisongtest",
+                  "resourceType": "microsoft.network/trafficmanagerprofiles",
+                  "resourceName": "lisongtest",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/lisong-rg/providers/Microsoft.Network/virtualNetworks/lsVNet",
+                  "resourceType": "microsoft.network/virtualnetworks",
+                  "resourceName": "lsVNet",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/lisong-rg/providers/Microsoft.Web/hostingEnvironments/lsase",
+                  "resourceType": "microsoft.web/hostingenvironments",
+                  "resourceName": "lsase",
+                  "resourceKind": "ASEV3",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/lisong-rg/providers/Microsoft.Web/serverFarms/lsasp",
+                  "resourceType": "microsoft.web/serverfarms",
+                  "resourceName": "lsasp",
+                  "resourceKind": "app",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/lisong-rg/providers/Microsoft.Web/sites/lsas",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "lsas",
+                  "resourceKind": "app",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.DocumentDB/databaseAccounts/mcatppecmdb",
+                  "resourceType": "microsoft.documentdb/databaseaccounts",
+                  "resourceName": "mcatppecmdb",
+                  "resourceKind": "GlobalDocumentDB",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.EventHub/namespaces/mcatppeevns",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "mcatppeevns",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.KeyVault/vaults/mcatppeportalvault",
+                  "resourceType": "microsoft.keyvault/vaults",
+                  "resourceName": "mcatppeportalvault",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.KeyVault/vaults/mcatppevault",
+                  "resourceType": "microsoft.keyvault/vaults",
+                  "resourceName": "mcatppevault",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Kusto/clusters/mcatppekusto",
+                  "resourceType": "microsoft.kusto/clusters",
+                  "resourceName": "mcatppekusto",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.OperationalInsights/workspaces/mcatppeinsightsws",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "mcatppeinsightsws",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Storage/storageAccounts/mcatppeadls",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "mcatppeadls",
+                  "resourceKind": "StorageV2",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Storage/storageAccounts/mcatppeportal",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "mcatppeportal",
+                  "resourceKind": "StorageV2",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Synapse/workspaces/mcatppews",
+                  "resourceType": "microsoft.synapse/workspaces",
+                  "resourceName": "mcatppews",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Synapse/workspaces/mcatppews/bigDataPools/mcatsparkpool",
+                  "resourceType": "microsoft.synapse/workspaces/bigdatapools",
+                  "resourceName": "mcatsparkpool",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Web/serverFarms/mcatppeappsp",
+                  "resourceType": "microsoft.web/serverfarms",
+                  "resourceName": "mcatppeappsp",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Web/sites/mcatppeapi",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "mcatppeapi",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Web/sites/mcatppeapi/slots/staging",
+                  "resourceType": "microsoft.web/sites/slots",
+                  "resourceName": "mcatppeapi/staging",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Web/sites/mcatppefunc",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "mcatppefunc",
+                  "resourceKind": "functionapp"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.insights/components/mcatppeai",
+                  "resourceType": "microsoft.insights/components",
+                  "resourceName": "mcatppeai",
+                  "resourceKind": "web",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.DocumentDB/databaseAccounts/mcatsandboxcmdb",
+                  "resourceType": "microsoft.documentdb/databaseaccounts",
+                  "resourceName": "mcatsandboxcmdb",
+                  "resourceKind": "GlobalDocumentDB",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.EventHub/namespaces/mcatsandboxevns",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "mcatsandboxevns",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.KeyVault/vaults/mcatsandboxvault",
+                  "resourceType": "microsoft.keyvault/vaults",
+                  "resourceName": "mcatsandboxvault",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.KeyVault/vaults/sandbox2vault",
+                  "resourceType": "microsoft.keyvault/vaults",
+                  "resourceName": "sandbox2vault",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Kusto/clusters/mcatsandboxkusto",
+                  "resourceType": "microsoft.kusto/clusters",
+                  "resourceName": "mcatsandboxkusto",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.ManagedIdentity/userAssignedIdentities/mcatsandboxmgid",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "mcatsandboxmgid",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Network/networkSecurityGroups/mcatsandboxnsg",
+                  "resourceType": "microsoft.network/networksecuritygroups",
+                  "resourceName": "mcatsandboxnsg",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Network/virtualNetworks/mcatsandboxvnet",
+                  "resourceType": "microsoft.network/virtualnetworks",
+                  "resourceName": "mcatsandboxvnet",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.OperationalInsights/workspaces/mcatsandboxinsightsws",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "mcatsandboxinsightsws",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Portal/dashboards/f05969f1-10cb-42b2-84fa-f014e30de470-dashboard",
+                  "resourceType": "microsoft.portal/dashboards",
+                  "resourceName": "f05969f1-10cb-42b2-84fa-f014e30de470-dashboard",
+                  "resourceKind": "",
+                  "tags": {
+                    "hidden-title": "mcatsandboxai Dashboard"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Storage/storageAccounts/mcatsandboxadls",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "mcatsandboxadls",
+                  "resourceKind": "StorageV2",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Storage/storageAccounts/mcatsandboxb261",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "mcatsandboxb261",
+                  "resourceKind": "Storage",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Synapse/workspaces/mcatsandboxws",
+                  "resourceType": "microsoft.synapse/workspaces",
+                  "resourceName": "mcatsandboxws",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Synapse/workspaces/mcatsandboxws/bigDataPools/mcatsparkpool",
+                  "resourceType": "microsoft.synapse/workspaces/bigdatapools",
+                  "resourceName": "mcatsparkpool",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/hostingEnvironments/mcatsandboxase",
+                  "resourceType": "microsoft.web/hostingenvironments",
+                  "resourceName": "mcatsandboxase",
+                  "resourceKind": "ASEV3",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/serverFarms/mcatsandboxappsp",
+                  "resourceType": "microsoft.web/serverfarms",
+                  "resourceName": "mcatsandboxappsp",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/serverFarms/mcatsandboxasp",
+                  "resourceType": "microsoft.web/serverfarms",
+                  "resourceName": "mcatsandboxasp",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/sites/mcatsandboxapi",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "mcatsandboxapi",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/sites/mcatsandboxapi/slots/staging",
+                  "resourceType": "microsoft.web/sites/slots",
+                  "resourceName": "mcatsandboxapi/staging",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/sites/mcatsandboxas",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "mcatsandboxas",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/sites/mcatsandboxas/slots/apislot",
+                  "resourceType": "microsoft.web/sites/slots",
+                  "resourceName": "mcatsandboxas/apislot",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/sites/mcatsandboxasefunc",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "mcatsandboxasefunc",
+                  "resourceKind": "functionapp",
+                  "tags": {
+                    "hidden-link: /app-insights-instrumentation-key": "41d4eb0c-886b-46ba-b990-beeb129f5592",
+                    "hidden-link: /app-insights-resource-id": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/microsoft.insights/components/mcatsandboxai",
+                    "hidden-link: /app-insights-conn-string": "InstrumentationKey=41d4eb0c-886b-46ba-b990-beeb129f5592;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/sites/mcatsandboxfunc",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "mcatsandboxfunc",
+                  "resourceKind": "functionapp"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.insights/components/mcatsandboxai",
+                  "resourceType": "microsoft.insights/components",
+                  "resourceName": "mcatsandboxai",
+                  "resourceKind": "web",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/suntiantest/providers/Microsoft.DocumentDb/databaseAccounts/policytoolcosmos",
+                  "resourceType": "microsoft.documentdb/databaseaccounts",
+                  "resourceName": "policytoolcosmos",
+                  "resourceKind": "GlobalDocumentDB",
+                  "tags": {
+                    "defaultExperience": "Core (SQL)",
+                    "hidden-cosmos-mmspecial": ""
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/suntiantest/providers/Microsoft.Web/serverFarms/Control-PolicyMappingTool-Plan",
+                  "resourceType": "microsoft.web/serverfarms",
+                  "resourceName": "Control-PolicyMappingTool-Plan",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/suntiantest/providers/Microsoft.Web/serverFarms/policytool-plan",
+                  "resourceType": "microsoft.web/serverfarms",
+                  "resourceName": "policytool-plan",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/suntiantest/providers/Microsoft.Web/serverFarms/stdemoapp1-plan",
+                  "resourceType": "microsoft.web/serverfarms",
+                  "resourceName": "stdemoapp1-plan",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/suntiantest/providers/Microsoft.Web/sites/Control-PolicyMappingTool",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "Control-PolicyMappingTool",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/suntiantest/providers/Microsoft.Web/sites/policytool",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "policytool",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/suntiantest/providers/Microsoft.Web/sites/stdemoapp1",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "stdemoapp1",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/suntiantest/providers/microsoft.insights/components/Control-PolicyMappingTool",
+                  "resourceType": "microsoft.insights/components",
+                  "resourceName": "Control-PolicyMappingTool",
+                  "resourceKind": "web",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/suntiantest/providers/microsoft.insights/components/policytool",
+                  "resourceType": "microsoft.insights/components",
+                  "resourceName": "policytool",
+                  "resourceKind": "web",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/suntiantest/providers/microsoft.insights/components/stdemoapp1",
+                  "resourceType": "microsoft.insights/components",
+                  "resourceName": "stdemoapp1",
+                  "resourceKind": "web",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/yanwentest/providers/Microsoft.Network/virtualNetworks/FW1",
+                  "resourceType": "microsoft.network/virtualnetworks",
+                  "resourceName": "FW1",
+                  "resourceKind": "",
+                  "tags": {}
+                }
+              ],
+              "complianceStatus": {
+                "m365": {
+                  "passed": 23,
+                  "failed": 12,
+                  "manual": 58
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/providers/Microsoft.AppComplianceAutomation/reports/yezhutest0809",
+            "name": "yezhutest0809",
+            "type": "Microsoft.AppComplianceAutomation/reports",
+            "systemData": {
+              "createdBy": "",
+              "createdByType": "User",
+              "createdAt": "2022-08-09T07:15:41.4195287Z",
+              "lastModifiedBy": "",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-08-09T07:15:41.4195287Z"
+            },
+            "properties": {
+              "id": "4b4e30ae-6c92-4995-81a7-44d958f6b00e",
+              "status": "Active",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "reportName": "yezhutest0809",
+              "offerGuid": "",
+              "timeZone": "Pacific Standard Time",
+              "triggerTime": "2022-08-09T10:00:00Z",
+              "nextTriggerTime": "2022-10-13T10:00:00Z",
+              "lastTriggerTime": "2022-10-12T10:09:27.041Z",
+              "subscriptions": [
+                "f744fbde-a95f-437e-8fcf-38f9324e3d9c"
+              ],
+              "resources": [
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-centraluseuap",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "AzSecPackAutoConfigUA-centraluseuap",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-eastus",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "AzSecPackAutoConfigUA-eastus",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-eastus2",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "AzSecPackAutoConfigUA-eastus2",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-westeurope",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "AzSecPackAutoConfigUA-westeurope",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-westus2",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "AzSecPackAutoConfigUA-westus2",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-westus3",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "AzSecPackAutoConfigUA-westus3",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/DefaultResourceGroup-EUS/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/DefaultResourceGroup-EUS2/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS2",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS2",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/DefaultResourceGroup-USW3/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-USW3",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-USW3",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/DefaultResourceGroup-WEU/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WEU",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WEU",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/DefaultResourceGroup-WUS/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/DefaultResourceGroup-WUS2/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS2",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS2",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.EventHub/namespaces/gsm1073059647eh",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "gsm1073059647eh",
+                  "resourceKind": "",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatSandboxLogsRuntime",
+                    "genevaWPStorageGroupName": "acatsandboxlogsruntimeaudit",
+                    "genevaWPMonikerName": "acatsandboxlogsruntimeauditbl",
+                    "genevaWPAccountName": "acatSandboxLogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.EventHub/namespaces/gsm1598189882eh",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "gsm1598189882eh",
+                  "resourceKind": "",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatPPELsRuntime",
+                    "genevaWPStorageGroupName": "acatppelsruntimeaudit",
+                    "genevaWPMonikerName": "acatppelsruntimeauditusw3",
+                    "genevaWPAccountName": "acatPPELogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.EventHub/namespaces/gsm2753881213eh",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "gsm2753881213eh",
+                  "resourceKind": "",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatPPELsRuntime",
+                    "genevaWPStorageGroupName": "acatppelsruntimesecurity",
+                    "genevaWPMonikerName": "acatppelsruntimesecurityusw3",
+                    "genevaWPAccountName": "acatPPELogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.EventHub/namespaces/gsm2823839650eh",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "gsm2823839650eh",
+                  "resourceKind": "",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatSandboxLogsRuntime",
+                    "genevaWPStorageGroupName": "acatsandboxlogsruntimesecurity",
+                    "genevaWPMonikerName": "acatsandboxlogsruntimesecuritybl",
+                    "genevaWPAccountName": "acatSandboxLogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.EventHub/namespaces/gsm3335042501eh",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "gsm3335042501eh",
+                  "resourceKind": "",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatSandboxLogsRuntime",
+                    "genevaWPStorageGroupName": "acatsandboxlogsruntimediag",
+                    "genevaWPMonikerName": "acatsandboxlogsruntimediagbl",
+                    "genevaWPAccountName": "acatSandboxLogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.EventHub/namespaces/gsm3592045728eh",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "gsm3592045728eh",
+                  "resourceKind": "",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatPPELsRuntime",
+                    "genevaWPStorageGroupName": "acatppelsruntimediag",
+                    "genevaWPMonikerName": "acatppelsruntimediagusw3",
+                    "genevaWPAccountName": "acatPPELogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.Storage/storageAccounts/gsm1073059647xt",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "gsm1073059647xt",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatSandboxLogsRuntime",
+                    "genevaWPStorageGroupName": "acatsandboxlogsruntimeaudit",
+                    "genevaWPMonikerName": "acatsandboxlogsruntimeauditbl",
+                    "genevaWPAccountName": "acatSandboxLogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.Storage/storageAccounts/gsm1598189882xt",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "gsm1598189882xt",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatPPELsRuntime",
+                    "genevaWPStorageGroupName": "acatppelsruntimeaudit",
+                    "genevaWPMonikerName": "acatppelsruntimeauditusw3",
+                    "genevaWPAccountName": "acatPPELogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.Storage/storageAccounts/gsm2753881213xt",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "gsm2753881213xt",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatPPELsRuntime",
+                    "genevaWPStorageGroupName": "acatppelsruntimesecurity",
+                    "genevaWPMonikerName": "acatppelsruntimesecurityusw3",
+                    "genevaWPAccountName": "acatPPELogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.Storage/storageAccounts/gsm2823839650xt",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "gsm2823839650xt",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatSandboxLogsRuntime",
+                    "genevaWPStorageGroupName": "acatsandboxlogsruntimesecurity",
+                    "genevaWPMonikerName": "acatsandboxlogsruntimesecuritybl",
+                    "genevaWPAccountName": "acatSandboxLogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.Storage/storageAccounts/gsm3335042501xt",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "gsm3335042501xt",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatSandboxLogsRuntime",
+                    "genevaWPStorageGroupName": "acatsandboxlogsruntimediag",
+                    "genevaWPMonikerName": "acatsandboxlogsruntimediagbl",
+                    "genevaWPAccountName": "acatSandboxLogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.Storage/storageAccounts/gsm3592045728xt",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "gsm3592045728xt",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "genevaWPNamespaceName": "acatPPELsRuntime",
+                    "genevaWPStorageGroupName": "acatppelsruntimediag",
+                    "genevaWPMonikerName": "acatppelsruntimediagusw3",
+                    "genevaWPAccountName": "acatPPELogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_centraluseuap",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_centraluseuap",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_eastus",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_eastus",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_eastus2",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_eastus2",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_westeurope",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_westeurope",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_westus",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_westus",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_westus2",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_westus2",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_westus3",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_westus3",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/cloud-shell-storage-southeastasia/providers/Microsoft.Storage/storageAccounts/cs1100320019147968f",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "cs1100320019147968f",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "ms-resource-usage": "azure-cloud-shell"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/cloud-shell-storage-southeastasia/providers/Microsoft.Storage/storageAccounts/cs1100320020691b8ad",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "cs1100320020691b8ad",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "ms-resource-usage": "azure-cloud-shell"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/defaultresourcegroup-eus/providers/Microsoft.OperationsManagement/solutions/SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS)",
+                  "resourceType": "microsoft.operationsmanagement/solutions",
+                  "resourceName": "SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS)",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/defaultresourcegroup-eus2/providers/Microsoft.OperationsManagement/solutions/SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS2)",
+                  "resourceType": "microsoft.operationsmanagement/solutions",
+                  "resourceName": "SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS2)",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/defaultresourcegroup-usw3/providers/Microsoft.OperationsManagement/solutions/SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-USW3)",
+                  "resourceType": "microsoft.operationsmanagement/solutions",
+                  "resourceName": "SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-USW3)",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/defaultresourcegroup-weu/providers/Microsoft.OperationsManagement/solutions/SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WEU)",
+                  "resourceType": "microsoft.operationsmanagement/solutions",
+                  "resourceName": "SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WEU)",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/defaultresourcegroup-wus/providers/Microsoft.OperationsManagement/solutions/SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS)",
+                  "resourceType": "microsoft.operationsmanagement/solutions",
+                  "resourceName": "SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS)",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/defaultresourcegroup-wus2/providers/Microsoft.OperationsManagement/solutions/SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS2)",
+                  "resourceType": "microsoft.operationsmanagement/solutions",
+                  "resourceName": "SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS2)",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/guestConfiguration/providers/Microsoft.Storage/storageAccounts/guestconfigtestsa",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "guestconfigtestsa",
+                  "resourceKind": "StorageV2",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/lisong-rg/providers/Microsoft.Network/networkSecurityGroups/NRMS-b624tyznf67qulsVNet",
+                  "resourceType": "microsoft.network/networksecuritygroups",
+                  "resourceName": "NRMS-b624tyznf67qulsVNet",
+                  "resourceKind": "",
+                  "tags": {
+                    "creator": "Automatically added by NRMS Azure Policy",
+                    "nrmS-Version": "2019-03-20",
+                    "nrmS-Info": "http://aka.ms/nrms"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/lisong-rg/providers/Microsoft.Network/networkSecurityGroups/NRMS-o5nv55qof2d5ulsVNet-ase-subnet",
+                  "resourceType": "microsoft.network/networksecuritygroups",
+                  "resourceName": "NRMS-o5nv55qof2d5ulsVNet-ase-subnet",
+                  "resourceKind": "",
+                  "tags": {
+                    "creator": "Automatically added by NRMS Azure Policy",
+                    "nrmS-Version": "2019-03-20",
+                    "nrmS-Info": "http://aka.ms/nrms"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/lisong-rg/providers/Microsoft.Network/networkSecurityGroups/NRMS-tsyvtz6u26giclsVNet-ase",
+                  "resourceType": "microsoft.network/networksecuritygroups",
+                  "resourceName": "NRMS-tsyvtz6u26giclsVNet-ase",
+                  "resourceKind": "",
+                  "tags": {
+                    "creator": "Automatically added by NRMS Azure Policy",
+                    "nrmS-Version": "2019-03-20",
+                    "nrmS-Info": "http://aka.ms/nrms"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/lisong-rg/providers/Microsoft.Network/trafficmanagerprofiles/lisongtest",
+                  "resourceType": "microsoft.network/trafficmanagerprofiles",
+                  "resourceName": "lisongtest",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/lisong-rg/providers/Microsoft.Network/virtualNetworks/lsVNet",
+                  "resourceType": "microsoft.network/virtualnetworks",
+                  "resourceName": "lsVNet",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/lisong-rg/providers/Microsoft.Web/hostingEnvironments/lsase",
+                  "resourceType": "microsoft.web/hostingenvironments",
+                  "resourceName": "lsase",
+                  "resourceKind": "ASEV3",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.DocumentDB/databaseAccounts/mcatppecmdb",
+                  "resourceType": "microsoft.documentdb/databaseaccounts",
+                  "resourceName": "mcatppecmdb",
+                  "resourceKind": "GlobalDocumentDB",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.EventHub/namespaces/mcatppeevns",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "mcatppeevns",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.KeyVault/vaults/mcatppeportalvault",
+                  "resourceType": "microsoft.keyvault/vaults",
+                  "resourceName": "mcatppeportalvault",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.KeyVault/vaults/mcatppevault",
+                  "resourceType": "microsoft.keyvault/vaults",
+                  "resourceName": "mcatppevault",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Kusto/clusters/mcatppekusto",
+                  "resourceType": "microsoft.kusto/clusters",
+                  "resourceName": "mcatppekusto",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.OperationalInsights/workspaces/mcatppeinsightsws",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "mcatppeinsightsws",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Storage/storageAccounts/mcatppeadls",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "mcatppeadls",
+                  "resourceKind": "StorageV2",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Storage/storageAccounts/mcatppeportal",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "mcatppeportal",
+                  "resourceKind": "StorageV2",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Synapse/workspaces/mcatppews",
+                  "resourceType": "microsoft.synapse/workspaces",
+                  "resourceName": "mcatppews",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Synapse/workspaces/mcatppews/bigDataPools/mcatsparkpool",
+                  "resourceType": "microsoft.synapse/workspaces/bigdatapools",
+                  "resourceName": "mcatsparkpool",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Web/serverFarms/mcatppeappsp",
+                  "resourceType": "microsoft.web/serverfarms",
+                  "resourceName": "mcatppeappsp",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Web/sites/mcatppeapi",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "mcatppeapi",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Web/sites/mcatppeapi/slots/staging",
+                  "resourceType": "microsoft.web/sites/slots",
+                  "resourceName": "mcatppeapi/staging",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Web/sites/mcatppefunc",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "mcatppefunc",
+                  "resourceKind": "functionapp"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.insights/components/mcatppeai",
+                  "resourceType": "microsoft.insights/components",
+                  "resourceName": "mcatppeai",
+                  "resourceKind": "web",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.DocumentDB/databaseAccounts/mcatsandboxcmdb",
+                  "resourceType": "microsoft.documentdb/databaseaccounts",
+                  "resourceName": "mcatsandboxcmdb",
+                  "resourceKind": "GlobalDocumentDB",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.EventHub/namespaces/mcatsandboxevns",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "mcatsandboxevns",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.KeyVault/vaults/mcatsandboxvault",
+                  "resourceType": "microsoft.keyvault/vaults",
+                  "resourceName": "mcatsandboxvault",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.KeyVault/vaults/sandbox2vault",
+                  "resourceType": "microsoft.keyvault/vaults",
+                  "resourceName": "sandbox2vault",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Kusto/clusters/mcatsandboxkusto",
+                  "resourceType": "microsoft.kusto/clusters",
+                  "resourceName": "mcatsandboxkusto",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.ManagedIdentity/userAssignedIdentities/mcatsandboxmgid",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "mcatsandboxmgid",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Network/networkSecurityGroups/mcatsandboxnsg",
+                  "resourceType": "microsoft.network/networksecuritygroups",
+                  "resourceName": "mcatsandboxnsg",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Network/virtualNetworks/mcatsandboxvnet",
+                  "resourceType": "microsoft.network/virtualnetworks",
+                  "resourceName": "mcatsandboxvnet",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.OperationalInsights/workspaces/mcatsandboxinsightsws",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "mcatsandboxinsightsws",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Portal/dashboards/f05969f1-10cb-42b2-84fa-f014e30de470-dashboard",
+                  "resourceType": "microsoft.portal/dashboards",
+                  "resourceName": "f05969f1-10cb-42b2-84fa-f014e30de470-dashboard",
+                  "resourceKind": "",
+                  "tags": {
+                    "hidden-title": "mcatsandboxai Dashboard"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Storage/storageAccounts/mcatsandboxadls",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "mcatsandboxadls",
+                  "resourceKind": "StorageV2",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Storage/storageAccounts/mcatsandboxb261",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "mcatsandboxb261",
+                  "resourceKind": "Storage",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Synapse/workspaces/mcatsandboxws",
+                  "resourceType": "microsoft.synapse/workspaces",
+                  "resourceName": "mcatsandboxws",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Synapse/workspaces/mcatsandboxws/bigDataPools/mcatsparkpool",
+                  "resourceType": "microsoft.synapse/workspaces/bigdatapools",
+                  "resourceName": "mcatsparkpool",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/hostingEnvironments/mcatsandboxase",
+                  "resourceType": "microsoft.web/hostingenvironments",
+                  "resourceName": "mcatsandboxase",
+                  "resourceKind": "ASEV3",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/serverFarms/mcatsandboxappsp",
+                  "resourceType": "microsoft.web/serverfarms",
+                  "resourceName": "mcatsandboxappsp",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/serverFarms/mcatsandboxasp",
+                  "resourceType": "microsoft.web/serverfarms",
+                  "resourceName": "mcatsandboxasp",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/sites/mcatsandboxapi",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "mcatsandboxapi",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/sites/mcatsandboxapi/slots/staging",
+                  "resourceType": "microsoft.web/sites/slots",
+                  "resourceName": "mcatsandboxapi/staging",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/sites/mcatsandboxas",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "mcatsandboxas",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/sites/mcatsandboxas/slots/apislot",
+                  "resourceType": "microsoft.web/sites/slots",
+                  "resourceName": "mcatsandboxas/apislot",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/sites/mcatsandboxasefunc",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "mcatsandboxasefunc",
+                  "resourceKind": "functionapp",
+                  "tags": {
+                    "hidden-link: /app-insights-resource-id": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/microsoft.insights/components/mcatsandboxai",
+                    "hidden-link: /app-insights-instrumentation-key": "41d4eb0c-886b-46ba-b990-beeb129f5592",
+                    "hidden-link: /app-insights-conn-string": "InstrumentationKey=41d4eb0c-886b-46ba-b990-beeb129f5592;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/sites/mcatsandboxfunc",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "mcatsandboxfunc",
+                  "resourceKind": "functionapp"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.insights/components/mcatsandboxai",
+                  "resourceType": "microsoft.insights/components",
+                  "resourceName": "mcatsandboxai",
+                  "resourceKind": "web",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/suntiantest/providers/Microsoft.DocumentDB/databaseAccounts/policytoolcosmos",
+                  "resourceType": "microsoft.documentdb/databaseaccounts",
+                  "resourceName": "policytoolcosmos",
+                  "resourceKind": "GlobalDocumentDB",
+                  "tags": {
+                    "defaultExperience": "Core (SQL)",
+                    "hidden-cosmos-mmspecial": ""
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/suntiantest/providers/Microsoft.Web/serverFarms/policytool-plan",
+                  "resourceType": "microsoft.web/serverfarms",
+                  "resourceName": "policytool-plan",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/suntiantest/providers/Microsoft.Web/serverFarms/stdemoapp1-plan",
+                  "resourceType": "microsoft.web/serverfarms",
+                  "resourceName": "stdemoapp1-plan",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/suntiantest/providers/Microsoft.Web/sites/policytool",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "policytool",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/suntiantest/providers/Microsoft.Web/sites/stdemoapp1",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "stdemoapp1",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/suntiantest/providers/microsoft.insights/components/policytool",
+                  "resourceType": "microsoft.insights/components",
+                  "resourceName": "policytool",
+                  "resourceKind": "web",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/suntiantest/providers/microsoft.insights/components/stdemoapp1",
+                  "resourceType": "microsoft.insights/components",
+                  "resourceName": "stdemoapp1",
+                  "resourceKind": "web",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/yanwentest/providers/Microsoft.Network/virtualNetworks/FW1",
+                  "resourceType": "microsoft.network/virtualnetworks",
+                  "resourceName": "FW1",
+                  "resourceKind": "",
+                  "tags": {}
+                }
+              ],
+              "complianceStatus": {
+                "m365": {
+                  "passed": 23,
+                  "failed": 12,
+                  "manual": 58
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/providers/Microsoft.AppComplianceAutomation/reports/hqtestreport2",
+            "name": "hqtestreport2",
+            "type": "Microsoft.AppComplianceAutomation/reports",
+            "systemData": {
+              "createdBy": "",
+              "createdByType": "User",
+              "createdAt": "2022-07-19T08:18:43.8474483Z",
+              "lastModifiedBy": "",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-09-26T07:53:27.7739283Z"
+            },
+            "properties": {
+              "id": "aa94f292-9625-42de-a2aa-b676ea1df93c",
+              "status": "Active",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "reportName": "hqtestreport2",
+              "offerGuid": "bd5bdc99-4e42-465f-8808-a5680c8cd7a5",
+              "timeZone": "W. Central Africa Standard Time",
+              "triggerTime": "2022-09-26T06:00:00.000Z",
+              "nextTriggerTime": "2022-10-14T06:00:00Z",
+              "lastTriggerTime": "2022-10-13T06:06:41.644Z",
+              "subscriptions": [
+                "f744fbde-a95f-437e-8fcf-38f9324e3d9c"
+              ],
+              "resources": [
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/sites/acatscheduler",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "acatscheduler",
+                  "resourceKind": "functionapp,workflowapp",
+                  "tags": {
+                    "hidden-link: /app-insights-resource-id": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Insights/components/acatscheduler"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/microsoft.insights/components/acatscheduler",
+                  "resourceType": "microsoft.insights/components",
+                  "resourceName": "acatscheduler",
+                  "resourceKind": "web",
+                  "tags": {}
+                }
+              ],
+              "complianceStatus": {
+                "m365": {
+                  "passed": 32,
+                  "failed": 3,
+                  "manual": 58
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/providers/Microsoft.AppComplianceAutomation/reports/sdk-report279",
+            "name": "sdk-report279",
+            "type": "Microsoft.AppComplianceAutomation/reports",
+            "systemData": {
+              "createdBy": "",
+              "createdByType": "Application",
+              "createdAt": "2022-07-15T05:29:52.6703841Z",
+              "lastModifiedBy": "",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-07-15T05:29:52.6703841Z"
+            },
+            "properties": {
+              "id": "3d016c48-623f-4998-beef-086e86842e13",
+              "status": "Active",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "reportName": "sdk-report279",
+              "offerGuid": "",
+              "timeZone": "GMT Standard Time",
+              "triggerTime": "2021-12-31T16:00:00Z",
+              "nextTriggerTime": "2022-10-13T16:00:00Z",
+              "lastTriggerTime": "2022-10-12T16:07:12.298Z",
+              "subscriptions": [
+                "f744fbde-a95f-437e-8fcf-38f9324e3d9c"
+              ],
+              "resources": [
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.insights/components/mcatsandboxai"
+                }
+              ],
+              "complianceStatus": {
+                "m365": {
+                  "passed": 32,
+                  "failed": 3,
+                  "manual": 58
+                }
+              },
+              "provisioningState": "Creating"
+            }
+          },
+          {
+            "id": "/providers/Microsoft.AppComplianceAutomation/reports/hqtestreport",
+            "name": "hqtestreport",
+            "type": "Microsoft.AppComplianceAutomation/reports",
+            "systemData": {
+              "createdBy": "",
+              "createdByType": "User",
+              "createdAt": "2022-07-15T03:17:59.5122899Z",
+              "lastModifiedBy": "",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-09-01T05:59:49.0650141Z"
+            },
+            "properties": {
+              "id": "f39d1544-2770-4834-9856-1b105bbb4eb7",
+              "status": "Active",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "reportName": "hqtestreport",
+              "offerGuid": "",
+              "timeZone": "GTB Standard Time",
+              "triggerTime": "2022-08-25T06:00:00.000Z",
+              "nextTriggerTime": "2022-10-14T06:00:00Z",
+              "lastTriggerTime": "2022-10-13T06:06:39.934Z",
+              "subscriptions": [
+                "f744fbde-a95f-437e-8fcf-38f9324e3d9c"
+              ],
+              "resources": [
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/sites/acatscheduler",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "acatscheduler",
+                  "resourceKind": "functionapp,workflowapp",
+                  "tags": {
+                    "hidden-link: /app-insights-resource-id": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Insights/components/acatscheduler"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/microsoft.insights/components/acatscheduler",
+                  "resourceType": "microsoft.insights/components",
+                  "resourceName": "acatscheduler",
+                  "resourceKind": "web",
+                  "tags": {}
+                }
+              ],
+              "complianceStatus": {
+                "m365": {
+                  "passed": 32,
+                  "failed": 3,
+                  "manual": 58
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/providers/Microsoft.AppComplianceAutomation/reports/sdk-report7673",
+            "name": "sdk-report7673",
+            "type": "Microsoft.AppComplianceAutomation/reports",
+            "systemData": {
+              "createdBy": "",
+              "createdByType": "Application",
+              "createdAt": "2022-07-14T06:29:20.1433014Z",
+              "lastModifiedBy": "",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-07-14T06:29:20.1433014Z"
+            },
+            "properties": {
+              "id": "f13bd2ed-c0ec-4cdf-83cb-a97446e4d8f1",
+              "status": "Active",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "reportName": "sdk-report7673",
+              "offerGuid": "",
+              "timeZone": "GMT Standard Time",
+              "triggerTime": "2021-12-31T16:00:00Z",
+              "nextTriggerTime": "2022-10-13T16:00:00Z",
+              "lastTriggerTime": "2022-10-12T16:07:10.176Z",
+              "subscriptions": [
+                "f744fbde-a95f-437e-8fcf-38f9324e3d9c"
+              ],
+              "resources": [
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.insights/components/mcatsandboxai"
+                }
+              ],
+              "complianceStatus": {
+                "m365": {
+                  "passed": 32,
+                  "failed": 3,
+                  "manual": 58
+                }
+              },
+              "provisioningState": "Creating"
+            }
+          },
+          {
+            "id": "/providers/Microsoft.AppComplianceAutomation/reports/yanwen-mic-999",
+            "name": "yanwen-mic-999",
+            "type": "Microsoft.AppComplianceAutomation/reports",
+            "systemData": {
+              "createdBy": "",
+              "createdByType": "User",
+              "createdAt": "2022-07-13T02:51:47.9904256Z",
+              "lastModifiedBy": "",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-07-13T02:51:47.9904256Z"
+            },
+            "properties": {
+              "id": "672842ff-9e9f-4cf6-b3c7-d7f89598d812",
+              "status": "Active",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "reportName": "yanwen-mic-999",
+              "offerGuid": "",
+              "timeZone": "Pacific Standard Time",
+              "triggerTime": "2022-07-13T10:00:00Z",
+              "nextTriggerTime": "2022-10-13T10:00:00Z",
+              "lastTriggerTime": "2022-10-12T10:09:46.147Z",
+              "subscriptions": [
+                "f744fbde-a95f-437e-8fcf-38f9324e3d9c"
+              ],
+              "resources": [
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/sites/acatscheduler",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "acatscheduler",
+                  "resourceKind": "functionapp,workflowapp",
+                  "tags": {
+                    "hidden-link: /app-insights-resource-id": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Insights/components/acatscheduler"
+                  }
+                }
+              ],
+              "complianceStatus": {
+                "m365": {
+                  "passed": 32,
+                  "failed": 3,
+                  "manual": 58
+                }
+              },
+              "provisioningState": "Creating"
+            }
+          },
+          {
+            "id": "/providers/Microsoft.AppComplianceAutomation/reports/sdk-report1297",
+            "name": "sdk-report1297",
+            "type": "Microsoft.AppComplianceAutomation/reports",
+            "systemData": {
+              "createdBy": "",
+              "createdByType": "Application",
+              "createdAt": "2022-07-13T01:47:27.6922891Z",
+              "lastModifiedBy": "",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-07-13T01:47:27.6922891Z"
+            },
+            "properties": {
+              "id": "6bff5dee-8fe8-4684-9343-2daa9e00ad83",
+              "status": "Active",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "reportName": "sdk-report1297",
+              "offerGuid": "",
+              "timeZone": "GMT Standard Time",
+              "triggerTime": "2021-12-31T16:00:00Z",
+              "nextTriggerTime": "2022-10-13T16:00:00Z",
+              "lastTriggerTime": "2022-10-12T16:07:08.264Z",
+              "subscriptions": [
+                "f744fbde-a95f-437e-8fcf-38f9324e3d9c"
+              ],
+              "resources": [
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.insights/components/mcatsandboxai"
+                }
+              ],
+              "complianceStatus": {
+                "m365": {
+                  "passed": 32,
+                  "failed": 3,
+                  "manual": 58
+                }
+              },
+              "provisioningState": "Creating"
+            }
+          },
+          {
+            "id": "/providers/Microsoft.AppComplianceAutomation/reports/sdk-report38",
+            "name": "sdk-report38",
+            "type": "Microsoft.AppComplianceAutomation/reports",
+            "systemData": {
+              "createdBy": "",
+              "createdByType": "Application",
+              "createdAt": "2022-07-13T01:08:59.280688Z",
+              "lastModifiedBy": "",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-07-13T01:08:59.280688Z"
+            },
+            "properties": {
+              "id": "98914b9f-010e-416a-90a3-38ffe458ca1c",
+              "status": "Active",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "reportName": "sdk-report38",
+              "offerGuid": "",
+              "timeZone": "GMT Standard Time",
+              "triggerTime": "2022-07-01T15:59:00Z",
+              "nextTriggerTime": "2022-10-13T15:59:00Z",
+              "lastTriggerTime": "2022-10-12T15:06:16.722Z",
+              "subscriptions": [
+                "f744fbde-a95f-437e-8fcf-38f9324e3d9c"
+              ],
+              "resources": [
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.insights/components/mcatsandboxai"
+                }
+              ],
+              "complianceStatus": {
+                "m365": {
+                  "passed": 32,
+                  "failed": 3,
+                  "manual": 58
+                }
+              },
+              "provisioningState": "Creating"
+            }
+          },
+          {
+            "id": "/providers/Microsoft.AppComplianceAutomation/reports/sdk-report",
+            "name": "sdk-report",
+            "type": "Microsoft.AppComplianceAutomation/reports",
+            "systemData": {
+              "createdBy": "",
+              "createdByType": "Application",
+              "createdAt": "2022-07-13T01:01:52.9598132Z",
+              "lastModifiedBy": "",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-07-13T01:01:52.9598132Z"
+            },
+            "properties": {
+              "id": "a5cd48da-df80-4818-82ca-c577402ba07f",
+              "status": "Active",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "reportName": "sdk-report",
+              "offerGuid": "",
+              "timeZone": "GMT Standard Time",
+              "triggerTime": "2022-07-01T15:59:00Z",
+              "nextTriggerTime": "2022-10-13T15:59:00Z",
+              "lastTriggerTime": "2022-10-12T15:06:18.99Z",
+              "subscriptions": [
+                "f744fbde-a95f-437e-8fcf-38f9324e3d9c"
+              ],
+              "resources": [
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.insights/components/mcatsandboxai"
+                }
+              ],
+              "complianceStatus": {
+                "m365": {
+                  "passed": 32,
+                  "failed": 3,
+                  "manual": 58
+                }
+              },
+              "provisioningState": "Creating"
+            }
+          },
+          {
+            "id": "/providers/Microsoft.AppComplianceAutomation/reports/sdk-report9634",
+            "name": "sdk-report9634",
+            "type": "Microsoft.AppComplianceAutomation/reports",
+            "systemData": {
+              "createdBy": "",
+              "createdByType": "Application",
+              "createdAt": "2022-07-07T04:55:04.7105949Z",
+              "lastModifiedBy": "",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-07-07T04:55:04.7105949Z"
+            },
+            "properties": {
+              "id": "c1d54b07-668d-40e2-83df-efd0f98f001e",
+              "status": "Active",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "reportName": "sdk-report9634",
+              "offerGuid": "",
+              "timeZone": "GMT Standard Time",
+              "triggerTime": "2022-07-01T15:59:00Z",
+              "nextTriggerTime": "2022-10-13T15:59:00Z",
+              "lastTriggerTime": "2022-10-12T15:06:20.71Z",
+              "subscriptions": [
+                "f744fbde-a95f-437e-8fcf-38f9324e3d9c"
+              ],
+              "resources": [
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.insights/components/mcatsandboxai"
+                }
+              ],
+              "complianceStatus": {
+                "m365": {
+                  "passed": 32,
+                  "failed": 3,
+                  "manual": 58
+                }
+              },
+              "provisioningState": "Creating"
+            }
+          },
+          {
+            "id": "/providers/Microsoft.AppComplianceAutomation/reports/test222",
+            "name": "test222",
+            "type": "Microsoft.AppComplianceAutomation/reports",
+            "systemData": {
+              "createdBy": "",
+              "createdByType": "User",
+              "createdAt": "2022-06-22T02:50:22.67121Z",
+              "lastModifiedBy": "",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-07-08T09:21:06.6857461Z"
+            },
+            "properties": {
+              "id": "0b25d952-a0c2-43f6-b4a4-241d56563983",
+              "status": "Active",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "reportName": "test222",
+              "offerGuid": "cb074303-1407-4a68-a40d-9d04ce8955d6",
+              "timeZone": "Pacific Standard Time",
+              "triggerTime": "2022-06-22T10:00:00Z",
+              "nextTriggerTime": "2022-10-13T10:00:00Z",
+              "lastTriggerTime": "2022-10-12T10:09:59.987Z",
+              "subscriptions": [
+                "f744fbde-a95f-437e-8fcf-38f9324e3d9c"
+              ],
+              "resources": [
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-eastus",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "AzSecPackAutoConfigUA-eastus",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-eastus2",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "AzSecPackAutoConfigUA-eastus2",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-westeurope",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "AzSecPackAutoConfigUA-westeurope",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-westus2",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "AzSecPackAutoConfigUA-westus2",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-westus3",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "AzSecPackAutoConfigUA-westus3",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/DefaultResourceGroup-EUS/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/DefaultResourceGroup-EUS2/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS2",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS2",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/DefaultResourceGroup-USW3/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-USW3",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-USW3",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/DefaultResourceGroup-WEU/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WEU",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WEU",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/DefaultResourceGroup-WUS/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/DefaultResourceGroup-WUS2/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS2",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS2",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/EHOUTEST/providers/Microsoft.Compute/disks/LinuxUbuntu_disk1_159b5340202242d0abaf2f0f6971f0d9",
+                  "resourceType": "microsoft.compute/disks",
+                  "resourceName": "LinuxUbuntu_disk1_159b5340202242d0abaf2f0f6971f0d9",
+                  "resourceKind": "",
+                  "tags": {
+                    "platformsettings.host_environment.service.platform_optedin_for_rootcerts": "true",
+                    "azsecpack": "nonprod"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/EHOUTEST/providers/Microsoft.Compute/disks/win103day_OsDisk_1_f626c2c878654449a8471f51650a2289",
+                  "resourceType": "microsoft.compute/disks",
+                  "resourceName": "win103day_OsDisk_1_f626c2c878654449a8471f51650a2289",
+                  "resourceKind": "",
+                  "tags": {
+                    "platformsettings.host_environment.service.platform_optedin_for_rootcerts": "true",
+                    "azsecpack": "nonprod"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/EHOUTEST/providers/Microsoft.Compute/disks/win10_OsDisk_1_446b64985307407ab74c99f2210166a5",
+                  "resourceType": "microsoft.compute/disks",
+                  "resourceName": "win10_OsDisk_1_446b64985307407ab74c99f2210166a5",
+                  "resourceKind": "",
+                  "tags": {
+                    "platformsettings.host_environment.service.platform_optedin_for_rootcerts": "true",
+                    "azsecpack": "nonprod"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/EHOUTEST/providers/Microsoft.Compute/virtualMachines/LinuxUbuntu",
+                  "resourceType": "microsoft.compute/virtualmachines",
+                  "resourceName": "LinuxUbuntu",
+                  "resourceKind": "",
+                  "tags": {
+                    "platformsettings.host_environment.service.platform_optedin_for_rootcerts": "true",
+                    "azsecpack": "nonprod"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/EHOUTEST/providers/Microsoft.Compute/virtualMachines/win103day",
+                  "resourceType": "microsoft.compute/virtualmachines",
+                  "resourceName": "win103day",
+                  "resourceKind": "",
+                  "tags": {
+                    "platformsettings.host_environment.service.platform_optedin_for_rootcerts": "true",
+                    "azsecpack": "nonprod"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.EventHub/namespaces/gsm1073059647eh",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "gsm1073059647eh",
+                  "resourceKind": "",
+                  "tags": {
+                    "genevaWPStorageGroupName": "acatsandboxlogsruntimeaudit",
+                    "genevaWPNamespaceName": "acatSandboxLogsRuntime",
+                    "genevaWPMonikerName": "acatsandboxlogsruntimeauditbl",
+                    "genevaWPAccountName": "acatSandboxLogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.EventHub/namespaces/gsm1598189882eh",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "gsm1598189882eh",
+                  "resourceKind": "",
+                  "tags": {
+                    "genevaWPStorageGroupName": "acatppelsruntimeaudit",
+                    "genevaWPNamespaceName": "acatPPELsRuntime",
+                    "genevaWPMonikerName": "acatppelsruntimeauditusw3",
+                    "genevaWPAccountName": "acatPPELogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.EventHub/namespaces/gsm2753881213eh",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "gsm2753881213eh",
+                  "resourceKind": "",
+                  "tags": {
+                    "genevaWPStorageGroupName": "acatppelsruntimesecurity",
+                    "genevaWPNamespaceName": "acatPPELsRuntime",
+                    "genevaWPMonikerName": "acatppelsruntimesecurityusw3",
+                    "genevaWPAccountName": "acatPPELogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.EventHub/namespaces/gsm2823839650eh",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "gsm2823839650eh",
+                  "resourceKind": "",
+                  "tags": {
+                    "genevaWPStorageGroupName": "acatsandboxlogsruntimesecurity",
+                    "genevaWPNamespaceName": "acatSandboxLogsRuntime",
+                    "genevaWPMonikerName": "acatsandboxlogsruntimesecuritybl",
+                    "genevaWPAccountName": "acatSandboxLogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.EventHub/namespaces/gsm3335042501eh",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "gsm3335042501eh",
+                  "resourceKind": "",
+                  "tags": {
+                    "genevaWPStorageGroupName": "acatsandboxlogsruntimediag",
+                    "genevaWPNamespaceName": "acatSandboxLogsRuntime",
+                    "genevaWPMonikerName": "acatsandboxlogsruntimediagbl",
+                    "genevaWPAccountName": "acatSandboxLogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.EventHub/namespaces/gsm3592045728eh",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "gsm3592045728eh",
+                  "resourceKind": "",
+                  "tags": {
+                    "genevaWPStorageGroupName": "acatppelsruntimediag",
+                    "genevaWPNamespaceName": "acatPPELsRuntime",
+                    "genevaWPMonikerName": "acatppelsruntimediagusw3",
+                    "genevaWPAccountName": "acatPPELogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.Storage/storageAccounts/gsm1073059647xt",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "gsm1073059647xt",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "genevaWPStorageGroupName": "acatsandboxlogsruntimeaudit",
+                    "genevaWPNamespaceName": "acatSandboxLogsRuntime",
+                    "genevaWPMonikerName": "acatsandboxlogsruntimeauditbl",
+                    "genevaWPAccountName": "acatSandboxLogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.Storage/storageAccounts/gsm1598189882xt",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "gsm1598189882xt",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "genevaWPStorageGroupName": "acatppelsruntimeaudit",
+                    "genevaWPNamespaceName": "acatPPELsRuntime",
+                    "genevaWPMonikerName": "acatppelsruntimeauditusw3",
+                    "genevaWPAccountName": "acatPPELogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.Storage/storageAccounts/gsm2753881213xt",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "gsm2753881213xt",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "genevaWPStorageGroupName": "acatppelsruntimesecurity",
+                    "genevaWPNamespaceName": "acatPPELsRuntime",
+                    "genevaWPMonikerName": "acatppelsruntimesecurityusw3",
+                    "genevaWPAccountName": "acatPPELogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.Storage/storageAccounts/gsm2823839650xt",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "gsm2823839650xt",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "genevaWPStorageGroupName": "acatsandboxlogsruntimesecurity",
+                    "genevaWPNamespaceName": "acatSandboxLogsRuntime",
+                    "genevaWPMonikerName": "acatsandboxlogsruntimesecuritybl",
+                    "genevaWPAccountName": "acatSandboxLogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.Storage/storageAccounts/gsm3335042501xt",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "gsm3335042501xt",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "genevaWPStorageGroupName": "acatsandboxlogsruntimediag",
+                    "genevaWPNamespaceName": "acatSandboxLogsRuntime",
+                    "genevaWPMonikerName": "acatsandboxlogsruntimediagbl",
+                    "genevaWPAccountName": "acatSandboxLogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/GenevaWarmPathManageRG/providers/Microsoft.Storage/storageAccounts/gsm3592045728xt",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "gsm3592045728xt",
+                  "resourceKind": "StorageV2",
+                  "tags": {
+                    "genevaWPStorageGroupName": "acatppelsruntimediag",
+                    "genevaWPNamespaceName": "acatPPELsRuntime",
+                    "genevaWPMonikerName": "acatppelsruntimediagusw3",
+                    "genevaWPAccountName": "acatPPELogsRuntime"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/MSUBUNTU_GROUP/providers/Microsoft.Compute/disks/MSUbuntu_OsDisk_1_862c3859e2d64f249207bcb65a588932",
+                  "resourceType": "microsoft.compute/disks",
+                  "resourceName": "MSUbuntu_OsDisk_1_862c3859e2d64f249207bcb65a588932",
+                  "resourceKind": "",
+                  "tags": {
+                    "platformsettings.host_environment.service.platform_optedin_for_rootcerts": "true",
+                    "azsecpack": "nonprod"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/MSUBUNTU_GROUP/providers/Microsoft.Compute/virtualMachines/MSUbuntu",
+                  "resourceType": "microsoft.compute/virtualmachines",
+                  "resourceName": "MSUbuntu",
+                  "resourceKind": "",
+                  "tags": {
+                    "platformsettings.host_environment.service.platform_optedin_for_rootcerts": "true",
+                    "azsecpack": "nonprod"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/MSUbuntu_group/providers/Microsoft.Compute/sshPublicKeys/MSUbuntu_key",
+                  "resourceType": "microsoft.compute/sshpublickeys",
+                  "resourceName": "MSUbuntu_key",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/MSUbuntu_group/providers/Microsoft.Network/networkInterfaces/msubuntu438_z1",
+                  "resourceType": "microsoft.network/networkinterfaces",
+                  "resourceName": "msubuntu438_z1",
+                  "resourceKind": "Regular"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/MSUbuntu_group/providers/Microsoft.Network/networkSecurityGroups/MSUbuntu-nsg",
+                  "resourceType": "microsoft.network/networksecuritygroups",
+                  "resourceName": "MSUbuntu-nsg",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/MSUbuntu_group/providers/Microsoft.Network/networkSecurityGroups/NRMS-3sevttsohzkj6MSUbuntu_group-vnet",
+                  "resourceType": "microsoft.network/networksecuritygroups",
+                  "resourceName": "NRMS-3sevttsohzkj6MSUbuntu_group-vnet",
+                  "resourceKind": "",
+                  "tags": {
+                    "creator": "Automatically added by NRMS Azure Policy",
+                    "nrmS-Version": "2019-03-20",
+                    "nrmS-Info": "http://aka.ms/nrms"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/MSUbuntu_group/providers/Microsoft.Network/publicIPAddresses/MSUbuntu-ip",
+                  "resourceType": "microsoft.network/publicipaddresses",
+                  "resourceName": "MSUbuntu-ip",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/MSUbuntu_group/providers/Microsoft.Network/virtualNetworks/MSUbuntu_group-vnet",
+                  "resourceType": "microsoft.network/virtualnetworks",
+                  "resourceName": "MSUbuntu_group-vnet",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_eastus",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_eastus",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_eastus2",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_eastus2",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_westeurope",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_westeurope",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_westus",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_westus",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_westus2",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_westus2",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_westus3",
+                  "resourceType": "microsoft.network/networkwatchers",
+                  "resourceName": "NetworkWatcher_westus3",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/defaultresourcegroup-eus/providers/Microsoft.OperationsManagement/solutions/SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS)",
+                  "resourceType": "microsoft.operationsmanagement/solutions",
+                  "resourceName": "SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS)",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/defaultresourcegroup-eus2/providers/Microsoft.OperationsManagement/solutions/SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS2)",
+                  "resourceType": "microsoft.operationsmanagement/solutions",
+                  "resourceName": "SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-EUS2)",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/defaultresourcegroup-usw3/providers/Microsoft.OperationsManagement/solutions/SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-USW3)",
+                  "resourceType": "microsoft.operationsmanagement/solutions",
+                  "resourceName": "SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-USW3)",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/defaultresourcegroup-weu/providers/Microsoft.OperationsManagement/solutions/SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WEU)",
+                  "resourceType": "microsoft.operationsmanagement/solutions",
+                  "resourceName": "SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WEU)",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/defaultresourcegroup-wus/providers/Microsoft.OperationsManagement/solutions/SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS)",
+                  "resourceType": "microsoft.operationsmanagement/solutions",
+                  "resourceName": "SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS)",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/defaultresourcegroup-wus2/providers/Microsoft.OperationsManagement/solutions/SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS2)",
+                  "resourceType": "microsoft.operationsmanagement/solutions",
+                  "resourceName": "SecurityCenterFree(DefaultWorkspace-f744fbde-a95f-437e-8fcf-38f9324e3d9c-WUS2)",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/ehoutest/providers/Microsoft.Compute/sshPublicKeys/LinuxUbuntu_key",
+                  "resourceType": "microsoft.compute/sshpublickeys",
+                  "resourceName": "LinuxUbuntu_key",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/ehoutest/providers/Microsoft.Compute/virtualMachines/win10",
+                  "resourceType": "microsoft.compute/virtualmachines",
+                  "resourceName": "win10",
+                  "resourceKind": "",
+                  "tags": {
+                    "platformsettings.host_environment.service.platform_optedin_for_rootcerts": "true",
+                    "azsecpack": "nonprod"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/ehoutest/providers/Microsoft.Network/bastionHosts/ehoutest-vnet-bastion",
+                  "resourceType": "microsoft.network/bastionhosts",
+                  "resourceName": "ehoutest-vnet-bastion",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/ehoutest/providers/Microsoft.Network/networkInterfaces/linuxubuntu398_z1",
+                  "resourceType": "microsoft.network/networkinterfaces",
+                  "resourceName": "linuxubuntu398_z1",
+                  "resourceKind": "Regular"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/ehoutest/providers/Microsoft.Network/networkInterfaces/win103day347_z1",
+                  "resourceType": "microsoft.network/networkinterfaces",
+                  "resourceName": "win103day347_z1",
+                  "resourceKind": "Regular"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/ehoutest/providers/Microsoft.Network/networkInterfaces/win10817_z1",
+                  "resourceType": "microsoft.network/networkinterfaces",
+                  "resourceName": "win10817_z1",
+                  "resourceKind": "Regular"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/ehoutest/providers/Microsoft.Network/networkSecurityGroups/LinuxUbuntu-nsg",
+                  "resourceType": "microsoft.network/networksecuritygroups",
+                  "resourceName": "LinuxUbuntu-nsg",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/ehoutest/providers/Microsoft.Network/networkSecurityGroups/NRMS-ezw76z5fx4d34ehoutest-vnet",
+                  "resourceType": "microsoft.network/networksecuritygroups",
+                  "resourceName": "NRMS-ezw76z5fx4d34ehoutest-vnet",
+                  "resourceKind": "",
+                  "tags": {
+                    "creator": "Automatically added by NRMS Azure Policy",
+                    "nrmS-Version": "2019-03-20",
+                    "nrmS-Info": "http://aka.ms/nrms"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/ehoutest/providers/Microsoft.Network/networkSecurityGroups/NRMS-klzmjnvnsqofeehoutestvnet130",
+                  "resourceType": "microsoft.network/networksecuritygroups",
+                  "resourceName": "NRMS-klzmjnvnsqofeehoutestvnet130",
+                  "resourceKind": "",
+                  "tags": {
+                    "creator": "Automatically added by NRMS Azure Policy",
+                    "nrmS-Version": "2019-03-20",
+                    "nrmS-Info": "http://aka.ms/nrms"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/ehoutest/providers/Microsoft.Network/networkSecurityGroups/NRMS-yp7b3a3jy7hjiehoutest-vnet-AzureBastionSubnet",
+                  "resourceType": "microsoft.network/networksecuritygroups",
+                  "resourceName": "NRMS-yp7b3a3jy7hjiehoutest-vnet-AzureBastionSubnet",
+                  "resourceKind": "",
+                  "tags": {
+                    "creator": "Automatically added by NRMS Azure Policy",
+                    "nrmS-Version": "2019-03-20",
+                    "nrmS-Info": "http://aka.ms/nrms"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/ehoutest/providers/Microsoft.Network/networkSecurityGroups/win10-nsg",
+                  "resourceType": "microsoft.network/networksecuritygroups",
+                  "resourceName": "win10-nsg",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/ehoutest/providers/Microsoft.Network/publicIPAddresses/LinuxUbuntu-ip",
+                  "resourceType": "microsoft.network/publicipaddresses",
+                  "resourceName": "LinuxUbuntu-ip",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/ehoutest/providers/Microsoft.Network/publicIPAddresses/ehoutest-vnet-ip",
+                  "resourceType": "microsoft.network/publicipaddresses",
+                  "resourceName": "ehoutest-vnet-ip",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/ehoutest/providers/Microsoft.Network/publicIPAddresses/win10-ip",
+                  "resourceType": "microsoft.network/publicipaddresses",
+                  "resourceName": "win10-ip",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/ehoutest/providers/Microsoft.Network/publicIPAddresses/win103day-ip",
+                  "resourceType": "microsoft.network/publicipaddresses",
+                  "resourceName": "win103day-ip",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/ehoutest/providers/Microsoft.Network/virtualNetworks/ehoutest-vnet",
+                  "resourceType": "microsoft.network/virtualnetworks",
+                  "resourceName": "ehoutest-vnet",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/ehoutest/providers/Microsoft.Network/virtualNetworks/ehoutestvnet130",
+                  "resourceType": "microsoft.network/virtualnetworks",
+                  "resourceName": "ehoutestvnet130",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/ehoutest/providers/Microsoft.Storage/storageAccounts/guestconfigurationtest2",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "guestconfigurationtest2",
+                  "resourceKind": "StorageV2",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/guestConfiguration/providers/Microsoft.Storage/storageAccounts/guestconfigtestsa",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "guestconfigtestsa",
+                  "resourceKind": "StorageV2",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.DocumentDB/databaseAccounts/mcatppecmdb",
+                  "resourceType": "microsoft.documentdb/databaseaccounts",
+                  "resourceName": "mcatppecmdb",
+                  "resourceKind": "GlobalDocumentDB",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.EventHub/namespaces/mcatppeevns",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "mcatppeevns",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.KeyVault/vaults/mcatppeportalvault",
+                  "resourceType": "microsoft.keyvault/vaults",
+                  "resourceName": "mcatppeportalvault",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.KeyVault/vaults/mcatppevault",
+                  "resourceType": "microsoft.keyvault/vaults",
+                  "resourceName": "mcatppevault",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Kusto/clusters/mcatppekusto",
+                  "resourceType": "microsoft.kusto/clusters",
+                  "resourceName": "mcatppekusto",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.OperationalInsights/workspaces/mcatppeinsightsws",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "mcatppeinsightsws",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Storage/storageAccounts/mcatppeadls",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "mcatppeadls",
+                  "resourceKind": "StorageV2",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Storage/storageAccounts/mcatppeportal",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "mcatppeportal",
+                  "resourceKind": "StorageV2",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Synapse/workspaces/mcatppews",
+                  "resourceType": "microsoft.synapse/workspaces",
+                  "resourceName": "mcatppews",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Synapse/workspaces/mcatppews/bigDataPools/mcatsparkpool",
+                  "resourceType": "microsoft.synapse/workspaces/bigdatapools",
+                  "resourceName": "mcatsparkpool",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Web/serverFarms/mcatppeappsp",
+                  "resourceType": "microsoft.web/serverfarms",
+                  "resourceName": "mcatppeappsp",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Web/sites/mcatppeapi",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "mcatppeapi",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Web/sites/mcatppeapi/slots/staging",
+                  "resourceType": "microsoft.web/sites/slots",
+                  "resourceName": "mcatppeapi/staging",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.Web/sites/mcatppefunc",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "mcatppefunc",
+                  "resourceKind": "functionapp"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatppe/providers/Microsoft.insights/components/mcatppeai",
+                  "resourceType": "microsoft.insights/components",
+                  "resourceName": "mcatppeai",
+                  "resourceKind": "web",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.DocumentDB/databaseAccounts/mcatsandboxcmdb",
+                  "resourceType": "microsoft.documentdb/databaseaccounts",
+                  "resourceName": "mcatsandboxcmdb",
+                  "resourceKind": "GlobalDocumentDB",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.EventHub/namespaces/mcatsandboxevns",
+                  "resourceType": "microsoft.eventhub/namespaces",
+                  "resourceName": "mcatsandboxevns",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.KeyVault/vaults/mcatsandboxvault",
+                  "resourceType": "microsoft.keyvault/vaults",
+                  "resourceName": "mcatsandboxvault",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.KeyVault/vaults/sandbox2vault",
+                  "resourceType": "microsoft.keyvault/vaults",
+                  "resourceName": "sandbox2vault",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Kusto/clusters/mcatsandboxkusto",
+                  "resourceType": "microsoft.kusto/clusters",
+                  "resourceName": "mcatsandboxkusto",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.ManagedIdentity/userAssignedIdentities/mcatsandboxmgid",
+                  "resourceType": "microsoft.managedidentity/userassignedidentities",
+                  "resourceName": "mcatsandboxmgid",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.OperationalInsights/workspaces/mcatsandboxinsightsws",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "resourceName": "mcatsandboxinsightsws",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Portal/dashboards/f05969f1-10cb-42b2-84fa-f014e30de470-dashboard",
+                  "resourceType": "microsoft.portal/dashboards",
+                  "resourceName": "f05969f1-10cb-42b2-84fa-f014e30de470-dashboard",
+                  "resourceKind": "",
+                  "tags": {
+                    "hidden-title": "mcatsandboxai Dashboard"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Storage/storageAccounts/mcatsandboxadls",
+                  "resourceType": "microsoft.storage/storageaccounts",
+                  "resourceName": "mcatsandboxadls",
+                  "resourceKind": "StorageV2",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Synapse/workspaces/mcatsandboxws",
+                  "resourceType": "microsoft.synapse/workspaces",
+                  "resourceName": "mcatsandboxws",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Synapse/workspaces/mcatsandboxws/bigDataPools/mcatsparkpool",
+                  "resourceType": "microsoft.synapse/workspaces/bigdatapools",
+                  "resourceName": "mcatsparkpool",
+                  "resourceKind": ""
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/serverFarms/mcatsandboxappsp",
+                  "resourceType": "microsoft.web/serverfarms",
+                  "resourceName": "mcatsandboxappsp",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/sites/mcatsandboxapi",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "mcatsandboxapi",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/sites/mcatsandboxapi/slots/staging",
+                  "resourceType": "microsoft.web/sites/slots",
+                  "resourceName": "mcatsandboxapi/staging",
+                  "resourceKind": "app"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.Web/sites/mcatsandboxfunc",
+                  "resourceType": "microsoft.web/sites",
+                  "resourceName": "mcatsandboxfunc",
+                  "resourceKind": "functionapp"
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/mcatsandbox/providers/Microsoft.insights/components/mcatsandboxai",
+                  "resourceType": "microsoft.insights/components",
+                  "resourceName": "mcatsandboxai",
+                  "resourceKind": "web",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/yanwentest/providers/Microsoft.Network/azureFirewalls/testFW",
+                  "resourceType": "microsoft.network/azurefirewalls",
+                  "resourceName": "testFW",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/yanwentest/providers/Microsoft.Network/firewallPolicies/firewallPolicy",
+                  "resourceType": "microsoft.network/firewallpolicies",
+                  "resourceName": "firewallPolicy",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/yanwentest/providers/Microsoft.Network/networkSecurityGroups/NRMS-djrs2p3cnz74gyanwen-vnet",
+                  "resourceType": "microsoft.network/networksecuritygroups",
+                  "resourceName": "NRMS-djrs2p3cnz74gyanwen-vnet",
+                  "resourceKind": "",
+                  "tags": {
+                    "creator": "Automatically added by NRMS Azure Policy",
+                    "nrmS-Version": "2019-03-20",
+                    "nrmS-Info": "http://aka.ms/nrms"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/yanwentest/providers/Microsoft.Network/networkSecurityGroups/NRMS-y5efet4qj5za4FW1",
+                  "resourceType": "microsoft.network/networksecuritygroups",
+                  "resourceName": "NRMS-y5efet4qj5za4FW1",
+                  "resourceKind": "",
+                  "tags": {
+                    "creator": "Automatically added by NRMS Azure Policy",
+                    "nrmS-Version": "2019-03-20",
+                    "nrmS-Info": "http://aka.ms/nrms"
+                  }
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/yanwentest/providers/Microsoft.Network/publicIPAddresses/publicIp1",
+                  "resourceType": "microsoft.network/publicipaddresses",
+                  "resourceName": "publicIp1",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/yanwentest/providers/Microsoft.Network/virtualNetworks/FW1",
+                  "resourceType": "microsoft.network/virtualnetworks",
+                  "resourceName": "FW1",
+                  "resourceKind": "",
+                  "tags": {}
+                },
+                {
+                  "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/yanwentest/providers/Microsoft.Network/virtualNetworks/yanwen-vnet",
+                  "resourceType": "microsoft.network/virtualnetworks",
+                  "resourceName": "yanwen-vnet",
+                  "resourceKind": "",
+                  "tags": {}
+                }
+              ],
+              "complianceStatus": {
+                "m365": {
+                  "passed": 25,
+                  "failed": 10,
+                  "manual": 58
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.AppComplianceAutomation/reports/sdk-report1725?api-version=2022-11-16-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.AppComplianceAutomation/1.0.0-alpha.20221013.1 (.NET 6.0.10; Microsoft Windows 10.0.22000)",
+        "x-ms-aad-user-token": "Sanitized",
+        "x-ms-client-request-id": "f6be6e47b552278d57d00fc2493148ad",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "1090",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 13 Oct 2022 08:15:13 GMT",
+        "mise-correlation-id": "5a6ed493-a071-494a-b8d1-28fbd6d3f1f3",
+        "Request-Context": "appId=cid-v1:7ecf4129-cb5b-4aab-a086-b332c76641c8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Azure-Ref": "0EslHYwAAAABHPXtTBee0QZvPAcazPgrqQk9NMDFFREdFMDUyMQAwYjg5MzVkOC1iNjY0LTQxNjUtYTkwZi1jM2NiYWJkZTdkYmI=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f6be6e47b552278d57d00fc2493148ad",
+        "x-ms-correlation-request-id": "4cd809fd-0aa6-4ecb-8e44-e69532e7b502",
+        "X-ms-Operation-Id": "d970766b3c0b028f207985d59e1a3199",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-tenant-reads": "11995",
+        "x-ms-request-id": "75fb4339-74ea-46c3-ac71-66bbf5340358",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T081514Z:4cd809fd-0aa6-4ecb-8e44-e69532e7b502",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.AppComplianceAutomation/reports/sdk-report1725",
+        "name": "sdk-report1725",
+        "type": "Microsoft.AppComplianceAutomation/reports",
+        "systemData": {
+          "createdBy": "",
+          "createdByType": "Application",
+          "createdAt": "2022-10-13T08:15:07.7396263Z",
+          "lastModifiedBy": "",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-10-13T08:15:07.7396263Z"
+        },
+        "properties": {
+          "id": "1d326dfc-19b1-4605-b21c-c1d952c55685",
+          "status": "Active",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+          "reportName": "sdk-report1725",
+          "offerGuid": "",
+          "timeZone": "GMT Standard Time",
+          "triggerTime": "2021-12-31T16:00:00Z",
+          "nextTriggerTime": "2022-10-14T16:00:00Z",
+          "subscriptions": [
+            "f744fbde-a95f-437e-8fcf-38f9324e3d9c"
+          ],
+          "resources": [
+            {
+              "resourceId": "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/sdk-test/providers/Microsoft.Storage/storageAccounts/sdkteststorageaccount",
+              "resourceType": "microsoft.storage/storageaccounts",
+              "resourceName": "sdkteststorageaccount",
+              "resourceKind": "StorageV2",
+              "tags": {}
+            }
+          ],
+          "complianceStatus": {
+            "m365": {
+              "passed": 0,
+              "failed": 0,
+              "manual": 0
+            }
+          },
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.AppComplianceAutomation/reports/sdk-report1725?api-version=2022-11-16-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.AppComplianceAutomation/1.0.0-alpha.20221013.1 (.NET 6.0.10; Microsoft Windows 10.0.22000)",
+        "x-ms-aad-user-token": "Sanitized",
+        "x-ms-client-request-id": "e5581fafe7b52c6ee5be6ae135c1c238",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.AppComplianceAutomation/locations/WESTUS3/operationStatuses/ef48e44d-bca6-4c97-9ae2-0e796b22ac27*521DA4319F0A5B94A93EF17CBD4D8E27B148B1ED1FA64D6916A07DFB2AE79EEE?api-version=2022-11-16-preview",
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "4",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 13 Oct 2022 08:15:14 GMT",
+        "Location": "https://management.azure.com/providers/Microsoft.AppComplianceAutomation/locations/WESTUS3/operationStatuses/ef48e44d-bca6-4c97-9ae2-0e796b22ac27*521DA4319F0A5B94A93EF17CBD4D8E27B148B1ED1FA64D6916A07DFB2AE79EEE?api-version=2022-11-16-preview",
+        "mise-correlation-id": "2bf79c30-03c6-440e-9a8a-df452f2e2a25",
+        "Request-Context": "appId=cid-v1:7ecf4129-cb5b-4aab-a086-b332c76641c8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Azure-Ref": "0EslHYwAAAADb7iH9PQ8uT4xy30CQxMoFQk9NMDFFREdFMDUyMQAwYjg5MzVkOC1iNjY0LTQxNjUtYTkwZi1jM2NiYWJkZTdkYmI=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e5581fafe7b52c6ee5be6ae135c1c238",
+        "x-ms-correlation-request-id": "30aa7cf2-c674-42f4-abea-2efb083f2016",
+        "X-ms-Operation-Id": "ca0526130c0e441b07767b9d12f31649",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-tenant-deletes": "14999",
+        "x-ms-request-id": "4c2c5903-4150-4cc0-bb21-74bd4bf8d9f5",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T081515Z:30aa7cf2-c674-42f4-abea-2efb083f2016",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": "null"
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.AppComplianceAutomation/locations/WESTUS3/operationStatuses/ef48e44d-bca6-4c97-9ae2-0e796b22ac27*521DA4319F0A5B94A93EF17CBD4D8E27B148B1ED1FA64D6916A07DFB2AE79EEE?api-version=2022-11-16-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22000)",
+        "x-ms-aad-user-token": "Sanitized",
+        "x-ms-client-request-id": "b0aba47667136017009211934aabf295",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "448",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 13 Oct 2022 08:15:14 GMT",
+        "ETag": "\u00220000243d-0000-4d00-0000-6347c9120000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b0aba47667136017009211934aabf295",
+        "x-ms-correlation-request-id": "c425a66b-6af0-4871-a4fe-0d7684144966",
+        "x-ms-ratelimit-remaining-tenant-reads": "11994",
+        "x-ms-request-id": "0f1b4194-ed92-4624-924b-278e5f777e08",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T081515Z:c425a66b-6af0-4871-a4fe-0d7684144966"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.AppComplianceAutomation/locations/WESTUS3/operationStatuses/ef48e44d-bca6-4c97-9ae2-0e796b22ac27*521DA4319F0A5B94A93EF17CBD4D8E27B148B1ED1FA64D6916A07DFB2AE79EEE",
+        "name": "ef48e44d-bca6-4c97-9ae2-0e796b22ac27*521DA4319F0A5B94A93EF17CBD4D8E27B148B1ED1FA64D6916A07DFB2AE79EEE",
+        "resourceId": "/providers/Microsoft.AppComplianceAutomation/reports/sdk-report1725",
+        "status": "Deleting",
+        "startTime": "2022-10-13T08:15:14.5755372Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.AppComplianceAutomation/locations/WESTUS3/operationStatuses/ef48e44d-bca6-4c97-9ae2-0e796b22ac27*521DA4319F0A5B94A93EF17CBD4D8E27B148B1ED1FA64D6916A07DFB2AE79EEE?api-version=2022-11-16-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22000)",
+        "x-ms-aad-user-token": "Sanitized",
+        "x-ms-client-request-id": "fa65d70e926083519437511a4fee7880",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "519",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 13 Oct 2022 08:15:16 GMT",
+        "ETag": "\u00220000263d-0000-4d00-0000-6347c9140000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "fa65d70e926083519437511a4fee7880",
+        "x-ms-correlation-request-id": "98eab4c1-1add-49b2-a814-f8ed649a965b",
+        "x-ms-ratelimit-remaining-tenant-reads": "11993",
+        "x-ms-request-id": "6a9322fa-0f31-4462-b76b-10d56b1d6d20",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T081516Z:98eab4c1-1add-49b2-a814-f8ed649a965b"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.AppComplianceAutomation/locations/WESTUS3/operationStatuses/ef48e44d-bca6-4c97-9ae2-0e796b22ac27*521DA4319F0A5B94A93EF17CBD4D8E27B148B1ED1FA64D6916A07DFB2AE79EEE",
+        "name": "ef48e44d-bca6-4c97-9ae2-0e796b22ac27*521DA4319F0A5B94A93EF17CBD4D8E27B148B1ED1FA64D6916A07DFB2AE79EEE",
+        "resourceId": "/providers/Microsoft.AppComplianceAutomation/reports/sdk-report1725",
+        "status": "Succeeded",
+        "startTime": "2022-10-13T08:15:14.5755372Z",
+        "endTime": "2022-10-13T08:15:16.3534461Z",
+        "error": {},
+        "properties": null
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "1834102149",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "SUBSCRIPTION_ID": "f744fbde-a95f-437e-8fcf-38f9324e3d9c"
+  }
+}

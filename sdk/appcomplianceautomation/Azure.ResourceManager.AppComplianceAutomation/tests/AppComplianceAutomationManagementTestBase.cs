@@ -6,36 +6,41 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
+using System;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Tests
 {
     public class AppComplianceAutomationManagementTestBase : ManagementRecordedTestBase<AppComplianceAutomationManagementTestEnvironment>
     {
+        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
         protected ArmClient Client { get; private set; }
+        protected ReportResourceCollection ReportResources { get; private set; }
 
         protected AppComplianceAutomationManagementTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, mode)
+        : base(isAsync, RecordedTestMode.Playback)
         {
+            SanitizedHeaders.Add(UserTokenPolicy.UserTokenHeader);
         }
 
-        protected AppComplianceAutomationManagementTestBase(bool isAsync)
-            : base(isAsync)
+        public AppComplianceAutomationManagementTestBase(bool isAsync)
+            : base(isAsync, RecordedTestMode.Playback)
         {
+            SanitizedHeaders.Add(UserTokenPolicy.UserTokenHeader);
         }
 
-        [SetUp]
         public void CreateCommonClient()
         {
             Client = GetArmClient();
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        // The App Compliance Automation provider need user token in a separated header in the following scenarios.
+        protected void InitializeUserTokenClients()
         {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
-            return lro.Value;
+            UserTokenPolicy userTokenPolicy = new UserTokenPolicy(TestEnvironment.Credential, TestEnvironment.ResourceManagerUrl + "/.default");
+            ArmClientOptions options = new ArmClientOptions();
+            options.AddPolicy(userTokenPolicy, HttpPipelinePosition.PerRetry);
+            Client = GetArmClient(options);
         }
     }
 }
