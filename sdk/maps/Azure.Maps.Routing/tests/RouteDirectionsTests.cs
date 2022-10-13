@@ -85,8 +85,6 @@ namespace Azure.Maps.Routing.Tests
             queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
 
             var operation = await client.GetDirectionsBatchAsync(WaitUntil.Completed, queries);
-            // Sleep 400ms to wait for operation ready
-            Thread.Sleep(400);
             var result = operation.WaitForCompletion();
 
             Assert.AreEqual(2, result.Value.Results.Count);

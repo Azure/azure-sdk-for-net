@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: DeploymentManager
 namespace: Azure.ResourceManager.DeploymentManager
+# default tag is a preview version
 require: https://github.com/Azure/azure-rest-api-specs/blob/2f28b5026a4b44adefd0237087acb0c48cfe31a6/specification/deploymentmanager/resource-manager/readme.md
-tag: package-2019-11-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -48,7 +48,7 @@ rename-rules:
 
 directive:
   # It generates a new model if the property is `allOf`, that will cause dup model error.
-  # So the normal solution is changing all `allOf` property to direct `ref`, but `ref` doesn't support multiple target, 
+  # So the normal solution is changing all `allOf` property to direct `ref`, but `ref` doesn't support multiple target,
   # to solve this problem here defines a temporary model `tempRolloutProperties` as a workaround.
   - from: deploymentmanager.json
     where: $.definitions
@@ -76,7 +76,7 @@ directive:
     where: $.definitions
     transform: >
       $.HealthCheckStepAttributes.properties.waitDuration['format'] = 'duration';
-      $.HealthCheckStepAttributes.properties.maxElasticDuration['format'] = 'duration'; 
+      $.HealthCheckStepAttributes.properties.maxElasticDuration['format'] = 'duration';
       $.HealthCheckStepAttributes.properties.healthyStateDuration['format'] = 'duration';
       $.WaitStepAttributes.properties.duration['format'] = 'duration';
   # `Rollout` is a superset of `RolloutRequest`, if not change this then the tag operations code can't pass compile
