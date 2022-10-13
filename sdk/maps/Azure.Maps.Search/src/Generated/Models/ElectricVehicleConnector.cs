@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Search.Models
+namespace Azure.Maps.Search
 {
     /// <summary> The ElectricVehicleConnector. </summary>
     public readonly partial struct ElectricVehicleConnector : IEquatable<ElectricVehicleConnector>

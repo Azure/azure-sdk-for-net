@@ -271,7 +271,7 @@ namespace Azure.Maps.Rendering
         public static Azure.Maps.Rendering.RenderingLanguage EnglishAustralia { get { throw null; } }
         public static Azure.Maps.Rendering.RenderingLanguage EnglishGreatBritain { get { throw null; } }
         public static Azure.Maps.Rendering.RenderingLanguage EnglishNewZealand { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage EnglishUSA { get { throw null; } }
+        public static Azure.Maps.Rendering.RenderingLanguage EnglishUsa { get { throw null; } }
         public static Azure.Maps.Rendering.RenderingLanguage Finnish { get { throw null; } }
         public static Azure.Maps.Rendering.RenderingLanguage FrenchFrance { get { throw null; } }
         public static Azure.Maps.Rendering.RenderingLanguage German { get { throw null; } }
