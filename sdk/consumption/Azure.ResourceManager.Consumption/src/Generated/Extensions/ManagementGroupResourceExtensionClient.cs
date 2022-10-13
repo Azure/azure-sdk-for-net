@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Consumption
         /// </summary>
         /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagementGroupAggregatedCostResult>> GetByManagementGroupAggregatedCostAsync(string filter = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConsumptionAggregatedCostResult>> GetAggregatedCostAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            using var scope = AggregatedCostClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetByManagementGroupAggregatedCost");
+            using var scope = AggregatedCostClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetAggregatedCost");
             scope.Start();
             try
             {
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.Consumption
         /// </summary>
         /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagementGroupAggregatedCostResult> GetByManagementGroupAggregatedCost(string filter = null, CancellationToken cancellationToken = default)
+        public virtual Response<ConsumptionAggregatedCostResult> GetAggregatedCost(string filter = null, CancellationToken cancellationToken = default)
         {
-            using var scope = AggregatedCostClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetByManagementGroupAggregatedCost");
+            using var scope = AggregatedCostClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetAggregatedCost");
             scope.Start();
             try
             {
@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.Consumption
         /// </summary>
         /// <param name="billingPeriodName"> Billing Period Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagementGroupAggregatedCostResult>> GetForBillingPeriodByManagementGroupAggregatedCostAsync(string billingPeriodName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConsumptionAggregatedCostResult>> GetAggregatedCostWithBillingPeriodAsync(string billingPeriodName, CancellationToken cancellationToken = default)
         {
-            using var scope = AggregatedCostClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetForBillingPeriodByManagementGroupAggregatedCost");
+            using var scope = AggregatedCostClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetAggregatedCostWithBillingPeriod");
             scope.Start();
             try
             {
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Consumption
         /// </summary>
         /// <param name="billingPeriodName"> Billing Period Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagementGroupAggregatedCostResult> GetForBillingPeriodByManagementGroupAggregatedCost(string billingPeriodName, CancellationToken cancellationToken = default)
+        public virtual Response<ConsumptionAggregatedCostResult> GetAggregatedCostWithBillingPeriod(string billingPeriodName, CancellationToken cancellationToken = default)
         {
-            using var scope = AggregatedCostClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetForBillingPeriodByManagementGroupAggregatedCost");
+            using var scope = AggregatedCostClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetAggregatedCostWithBillingPeriod");
             scope.Start();
             try
             {

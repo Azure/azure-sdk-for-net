@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Consumption
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of BudgetResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of BudgetResources and their operations over a BudgetResource. </returns>
-        public virtual BudgetCollection GetBudgets()
+        /// <summary> Gets a collection of ConsumptionBudgetResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of ConsumptionBudgetResources and their operations over a ConsumptionBudgetResource. </returns>
+        public virtual ConsumptionBudgetCollection GetConsumptionBudgets()
         {
-            return GetCachedClient(Client => new BudgetCollection(Client, Id));
+            return GetCachedClient(Client => new ConsumptionBudgetCollection(Client, Id));
         }
     }
 }

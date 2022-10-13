@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.Consumption
         /// </summary>
         /// <param name="billingAccountId"> BillingAccount ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Balance>> GetByBillingAccountBalanceAsync(string billingAccountId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConsumptionBalanceResult>> GetBalanceAsync(string billingAccountId, CancellationToken cancellationToken = default)
         {
-            using var scope = BalancesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetByBillingAccountBalance");
+            using var scope = BalancesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetBalance");
             scope.Start();
             try
             {
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.Consumption
         /// </summary>
         /// <param name="billingAccountId"> BillingAccount ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Balance> GetByBillingAccountBalance(string billingAccountId, CancellationToken cancellationToken = default)
+        public virtual Response<ConsumptionBalanceResult> GetBalance(string billingAccountId, CancellationToken cancellationToken = default)
         {
-            using var scope = BalancesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetByBillingAccountBalance");
+            using var scope = BalancesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetBalance");
             scope.Start();
             try
             {
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingAccountId"> BillingAccount ID. </param>
         /// <param name="billingPeriodName"> Billing Period Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Balance>> GetForBillingPeriodByBillingAccountBalanceAsync(string billingAccountId, string billingPeriodName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConsumptionBalanceResult>> GetBalanceAsync(string billingAccountId, string billingPeriodName, CancellationToken cancellationToken = default)
         {
-            using var scope = BalancesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetForBillingPeriodByBillingAccountBalance");
+            using var scope = BalancesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetBalance");
             scope.Start();
             try
             {
@@ -145,9 +145,9 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingAccountId"> BillingAccount ID. </param>
         /// <param name="billingPeriodName"> Billing Period Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Balance> GetForBillingPeriodByBillingAccountBalance(string billingAccountId, string billingPeriodName, CancellationToken cancellationToken = default)
+        public virtual Response<ConsumptionBalanceResult> GetBalance(string billingAccountId, string billingPeriodName, CancellationToken cancellationToken = default)
         {
-            using var scope = BalancesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetForBillingPeriodByBillingAccountBalance");
+            using var scope = BalancesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetBalance");
             scope.Start();
             try
             {
@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="grain"> Can be daily or monthly. </param>
         /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReservationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReservationSummary> GetReservationsSummariesByReservationOrderAsync(string reservationOrderId, Datagrain grain, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionReservationSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionReservationSummary> GetReservationSummariesAsync(string reservationOrderId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ReservationSummary>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ConsumptionReservationSummary>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ReservationsSummariesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationsSummariesByReservationOrder");
+                using var scope = ReservationsSummariesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationSummaries");
                 scope.Start();
                 try
                 {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            async Task<Page<ReservationSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ConsumptionReservationSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ReservationsSummariesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationsSummariesByReservationOrder");
+                using var scope = ReservationsSummariesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationSummaries");
                 scope.Start();
                 try
                 {
@@ -215,12 +215,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="grain"> Can be daily or monthly. </param>
         /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReservationSummary> GetReservationsSummariesByReservationOrder(string reservationOrderId, Datagrain grain, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionReservationSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionReservationSummary> GetReservationSummaries(string reservationOrderId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ReservationSummary> FirstPageFunc(int? pageSizeHint)
+            Page<ConsumptionReservationSummary> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ReservationsSummariesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationsSummariesByReservationOrder");
+                using var scope = ReservationsSummariesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationSummaries");
                 scope.Start();
                 try
                 {
@@ -233,9 +233,9 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            Page<ReservationSummary> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ConsumptionReservationSummary> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ReservationsSummariesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationsSummariesByReservationOrder");
+                using var scope = ReservationsSummariesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationSummaries");
                 scope.Start();
                 try
                 {
@@ -261,12 +261,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="grain"> Can be daily or monthly. </param>
         /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReservationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReservationSummary> GetReservationsSummariesByReservationOrderAndReservationAsync(string reservationOrderId, string reservationId, Datagrain grain, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionReservationSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionReservationSummary> GetReservationSummariesAsync(string reservationOrderId, string reservationId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ReservationSummary>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ConsumptionReservationSummary>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ReservationsSummariesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationsSummariesByReservationOrderAndReservation");
+                using var scope = ReservationsSummariesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationSummaries");
                 scope.Start();
                 try
                 {
@@ -279,9 +279,9 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            async Task<Page<ReservationSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ConsumptionReservationSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ReservationsSummariesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationsSummariesByReservationOrderAndReservation");
+                using var scope = ReservationsSummariesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationSummaries");
                 scope.Start();
                 try
                 {
@@ -307,12 +307,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="grain"> Can be daily or monthly. </param>
         /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReservationSummary> GetReservationsSummariesByReservationOrderAndReservation(string reservationOrderId, string reservationId, Datagrain grain, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionReservationSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionReservationSummary> GetReservationSummaries(string reservationOrderId, string reservationId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ReservationSummary> FirstPageFunc(int? pageSizeHint)
+            Page<ConsumptionReservationSummary> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ReservationsSummariesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationsSummariesByReservationOrderAndReservation");
+                using var scope = ReservationsSummariesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationSummaries");
                 scope.Start();
                 try
                 {
@@ -325,9 +325,9 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            Page<ReservationSummary> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ConsumptionReservationSummary> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ReservationsSummariesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationsSummariesByReservationOrderAndReservation");
+                using var scope = ReservationsSummariesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationSummaries");
                 scope.Start();
                 try
                 {
@@ -351,12 +351,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="filter"> Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReservationDetail" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReservationDetail> GetReservationsDetailsByReservationOrderAsync(string reservationOrderId, string filter, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionReservationDetail" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionReservationDetail> GetReservationDetailsAsync(string reservationOrderId, string filter, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ReservationDetail>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ConsumptionReservationDetail>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ReservationsDetailsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationsDetailsByReservationOrder");
+                using var scope = ReservationsDetailsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationDetails");
                 scope.Start();
                 try
                 {
@@ -369,9 +369,9 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            async Task<Page<ReservationDetail>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ConsumptionReservationDetail>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ReservationsDetailsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationsDetailsByReservationOrder");
+                using var scope = ReservationsDetailsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationDetails");
                 scope.Start();
                 try
                 {
@@ -395,12 +395,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="filter"> Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationDetail" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReservationDetail> GetReservationsDetailsByReservationOrder(string reservationOrderId, string filter, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionReservationDetail" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionReservationDetail> GetReservationDetails(string reservationOrderId, string filter, CancellationToken cancellationToken = default)
         {
-            Page<ReservationDetail> FirstPageFunc(int? pageSizeHint)
+            Page<ConsumptionReservationDetail> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ReservationsDetailsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationsDetailsByReservationOrder");
+                using var scope = ReservationsDetailsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationDetails");
                 scope.Start();
                 try
                 {
@@ -413,9 +413,9 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            Page<ReservationDetail> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ConsumptionReservationDetail> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ReservationsDetailsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationsDetailsByReservationOrder");
+                using var scope = ReservationsDetailsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationDetails");
                 scope.Start();
                 try
                 {
@@ -440,12 +440,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationId"> Id of the reservation. </param>
         /// <param name="filter"> Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReservationDetail" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReservationDetail> GetReservationsDetailsByReservationOrderAndReservationAsync(string reservationOrderId, string reservationId, string filter, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionReservationDetail" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionReservationDetail> GetReservationDetailsAsync(string reservationOrderId, string reservationId, string filter, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ReservationDetail>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ConsumptionReservationDetail>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ReservationsDetailsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationsDetailsByReservationOrderAndReservation");
+                using var scope = ReservationsDetailsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationDetails");
                 scope.Start();
                 try
                 {
@@ -458,9 +458,9 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            async Task<Page<ReservationDetail>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ConsumptionReservationDetail>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ReservationsDetailsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationsDetailsByReservationOrderAndReservation");
+                using var scope = ReservationsDetailsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationDetails");
                 scope.Start();
                 try
                 {
@@ -485,12 +485,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationId"> Id of the reservation. </param>
         /// <param name="filter"> Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationDetail" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReservationDetail> GetReservationsDetailsByReservationOrderAndReservation(string reservationOrderId, string reservationId, string filter, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionReservationDetail" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionReservationDetail> GetReservationDetails(string reservationOrderId, string reservationId, string filter, CancellationToken cancellationToken = default)
         {
-            Page<ReservationDetail> FirstPageFunc(int? pageSizeHint)
+            Page<ConsumptionReservationDetail> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ReservationsDetailsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationsDetailsByReservationOrderAndReservation");
+                using var scope = ReservationsDetailsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationDetails");
                 scope.Start();
                 try
                 {
@@ -503,9 +503,9 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            Page<ReservationDetail> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ConsumptionReservationDetail> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ReservationsDetailsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationsDetailsByReservationOrderAndReservation");
+                using var scope = ReservationsDetailsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationDetails");
                 scope.Start();
                 try
                 {
@@ -529,10 +529,10 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingAccountId"> BillingAccount ID. </param>
         /// <param name="filter"> Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. Note: API returns data for the entire start date&apos;s and end date&apos;s billing month. For example, filter properties/eventDate+ge+2020-01-01+AND+properties/eventDate+le+2020-12-29 will include data for the entire December 2020 month (i.e. will contain records for dates December 30 and 31). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReservationTransaction> GetReservationTransactionsAsync(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionReservationTransaction> GetReservationTransactionsAsync(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ReservationTransaction>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ConsumptionReservationTransaction>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ReservationTransactionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationTransactions");
                 scope.Start();
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            async Task<Page<ReservationTransaction>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ConsumptionReservationTransaction>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ReservationTransactionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationTransactions");
                 scope.Start();
@@ -573,10 +573,10 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingAccountId"> BillingAccount ID. </param>
         /// <param name="filter"> Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. Note: API returns data for the entire start date&apos;s and end date&apos;s billing month. For example, filter properties/eventDate+ge+2020-01-01+AND+properties/eventDate+le+2020-12-29 will include data for the entire December 2020 month (i.e. will contain records for dates December 30 and 31). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReservationTransaction> GetReservationTransactions(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionReservationTransaction> GetReservationTransactions(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ReservationTransaction> FirstPageFunc(int? pageSizeHint)
+            Page<ConsumptionReservationTransaction> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ReservationTransactionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationTransactions");
                 scope.Start();
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            Page<ReservationTransaction> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ConsumptionReservationTransaction> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ReservationTransactionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationTransactions");
                 scope.Start();
@@ -618,12 +618,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
         /// <param name="filter"> Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. Note: API returns data for the entire start date&apos;s and end date&apos;s billing month. For example, filter properties/eventDate+ge+2020-01-01+AND+properties/eventDate+le+2020-12-29 will include data for entire December 2020 month (i.e. will contain records for dates December 30 and 31). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ModernReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ModernReservationTransaction> GetReservationTransactionsByBillingProfileAsync(string billingAccountId, string billingProfileId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionModernReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionModernReservationTransaction> GetReservationTransactionsAsync(string billingAccountId, string billingProfileId, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ModernReservationTransaction>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ConsumptionModernReservationTransaction>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ReservationTransactionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationTransactionsByBillingProfile");
+                using var scope = ReservationTransactionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationTransactions");
                 scope.Start();
                 try
                 {
@@ -636,9 +636,9 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            async Task<Page<ModernReservationTransaction>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ConsumptionModernReservationTransaction>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ReservationTransactionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationTransactionsByBillingProfile");
+                using var scope = ReservationTransactionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationTransactions");
                 scope.Start();
                 try
                 {
@@ -663,12 +663,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
         /// <param name="filter"> Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. Note: API returns data for the entire start date&apos;s and end date&apos;s billing month. For example, filter properties/eventDate+ge+2020-01-01+AND+properties/eventDate+le+2020-12-29 will include data for entire December 2020 month (i.e. will contain records for dates December 30 and 31). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ModernReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ModernReservationTransaction> GetReservationTransactionsByBillingProfile(string billingAccountId, string billingProfileId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionModernReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionModernReservationTransaction> GetReservationTransactions(string billingAccountId, string billingProfileId, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ModernReservationTransaction> FirstPageFunc(int? pageSizeHint)
+            Page<ConsumptionModernReservationTransaction> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ReservationTransactionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationTransactionsByBillingProfile");
+                using var scope = ReservationTransactionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationTransactions");
                 scope.Start();
                 try
                 {
@@ -681,9 +681,9 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            Page<ModernReservationTransaction> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ConsumptionModernReservationTransaction> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ReservationTransactionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationTransactionsByBillingProfile");
+                using var scope = ReservationTransactionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationTransactions");
                 scope.Start();
                 try
                 {
@@ -709,12 +709,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="startDate"> Start date. </param>
         /// <param name="endDate"> End date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventSummary> GetEventsByBillingProfileAsync(string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionEventSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionEventSummary> GetEventsAsync(string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            async Task<Page<EventSummary>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ConsumptionEventSummary>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEventsByBillingProfile");
+                using var scope = EventsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEvents");
                 scope.Start();
                 try
                 {
@@ -727,9 +727,9 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            async Task<Page<EventSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ConsumptionEventSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEventsByBillingProfile");
+                using var scope = EventsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEvents");
                 scope.Start();
                 try
                 {
@@ -755,12 +755,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="startDate"> Start date. </param>
         /// <param name="endDate"> End date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventSummary> GetEventsByBillingProfile(string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionEventSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionEventSummary> GetEvents(string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            Page<EventSummary> FirstPageFunc(int? pageSizeHint)
+            Page<ConsumptionEventSummary> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEventsByBillingProfile");
+                using var scope = EventsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEvents");
                 scope.Start();
                 try
                 {
@@ -773,9 +773,9 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            Page<EventSummary> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ConsumptionEventSummary> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEventsByBillingProfile");
+                using var scope = EventsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEvents");
                 scope.Start();
                 try
                 {
@@ -799,12 +799,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingAccountId"> BillingAccount ID. </param>
         /// <param name="filter"> May be used to filter the events by lotId, lotSource etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventSummary> GetEventsByBillingAccountAsync(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionEventSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionEventSummary> GetEventsAsync(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<EventSummary>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ConsumptionEventSummary>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEventsByBillingAccount");
+                using var scope = EventsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEvents");
                 scope.Start();
                 try
                 {
@@ -817,9 +817,9 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            async Task<Page<EventSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ConsumptionEventSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEventsByBillingAccount");
+                using var scope = EventsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEvents");
                 scope.Start();
                 try
                 {
@@ -843,12 +843,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingAccountId"> BillingAccount ID. </param>
         /// <param name="filter"> May be used to filter the events by lotId, lotSource etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventSummary> GetEventsByBillingAccount(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionEventSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionEventSummary> GetEvents(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<EventSummary> FirstPageFunc(int? pageSizeHint)
+            Page<ConsumptionEventSummary> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEventsByBillingAccount");
+                using var scope = EventsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEvents");
                 scope.Start();
                 try
                 {
@@ -861,9 +861,9 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            Page<EventSummary> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ConsumptionEventSummary> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEventsByBillingAccount");
+                using var scope = EventsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEvents");
                 scope.Start();
                 try
                 {
@@ -887,10 +887,10 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingAccountId"> BillingAccount ID. </param>
         /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LotSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LotSummary> GetLotsByBillingProfileAsync(string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionLotSummary> GetLotsByBillingProfileAsync(string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
         {
-            async Task<Page<LotSummary>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ConsumptionLotSummary>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLotsByBillingProfile");
                 scope.Start();
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            async Task<Page<LotSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ConsumptionLotSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLotsByBillingProfile");
                 scope.Start();
@@ -931,10 +931,10 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingAccountId"> BillingAccount ID. </param>
         /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LotSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LotSummary> GetLotsByBillingProfile(string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionLotSummary> GetLotsByBillingProfile(string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
         {
-            Page<LotSummary> FirstPageFunc(int? pageSizeHint)
+            Page<ConsumptionLotSummary> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLotsByBillingProfile");
                 scope.Start();
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            Page<LotSummary> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ConsumptionLotSummary> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLotsByBillingProfile");
                 scope.Start();
@@ -975,12 +975,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingAccountId"> BillingAccount ID. </param>
         /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LotSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LotSummary> GetLotsByBillingAccountAsync(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionLotSummary> GetLotsAsync(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<LotSummary>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ConsumptionLotSummary>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLotsByBillingAccount");
+                using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLots");
                 scope.Start();
                 try
                 {
@@ -993,9 +993,9 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            async Task<Page<LotSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ConsumptionLotSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLotsByBillingAccount");
+                using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLots");
                 scope.Start();
                 try
                 {
@@ -1019,12 +1019,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingAccountId"> BillingAccount ID. </param>
         /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LotSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LotSummary> GetLotsByBillingAccount(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionLotSummary> GetLots(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<LotSummary> FirstPageFunc(int? pageSizeHint)
+            Page<ConsumptionLotSummary> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLotsByBillingAccount");
+                using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLots");
                 scope.Start();
                 try
                 {
@@ -1037,9 +1037,9 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            Page<LotSummary> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ConsumptionLotSummary> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLotsByBillingAccount");
+                using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLots");
                 scope.Start();
                 try
                 {
@@ -1064,12 +1064,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="customerId"> Customer ID. </param>
         /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LotSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LotSummary> GetLotsByCustomerAsync(string billingAccountId, string customerId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionLotSummary> GetLotsAsync(string billingAccountId, string customerId, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<LotSummary>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ConsumptionLotSummary>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLotsByCustomer");
+                using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLots");
                 scope.Start();
                 try
                 {
@@ -1082,9 +1082,9 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            async Task<Page<LotSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ConsumptionLotSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLotsByCustomer");
+                using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLots");
                 scope.Start();
                 try
                 {
@@ -1109,12 +1109,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="customerId"> Customer ID. </param>
         /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LotSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LotSummary> GetLotsByCustomer(string billingAccountId, string customerId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionLotSummary> GetLots(string billingAccountId, string customerId, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<LotSummary> FirstPageFunc(int? pageSizeHint)
+            Page<ConsumptionLotSummary> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLotsByCustomer");
+                using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLots");
                 scope.Start();
                 try
                 {
@@ -1127,9 +1127,9 @@ namespace Azure.ResourceManager.Consumption
                     throw;
                 }
             }
-            Page<LotSummary> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ConsumptionLotSummary> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLotsByCustomer");
+                using var scope = LotsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetLots");
                 scope.Start();
                 try
                 {
@@ -1153,7 +1153,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingAccountId"> BillingAccount ID. </param>
         /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CreditSummary>> GetCreditAsync(string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConsumptionCreditSummary>> GetCreditAsync(string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
         {
             using var scope = CreditsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetCredit");
             scope.Start();
@@ -1177,7 +1177,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingAccountId"> BillingAccount ID. </param>
         /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CreditSummary> GetCredit(string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
+        public virtual Response<ConsumptionCreditSummary> GetCredit(string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
         {
             using var scope = CreditsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetCredit");
             scope.Start();

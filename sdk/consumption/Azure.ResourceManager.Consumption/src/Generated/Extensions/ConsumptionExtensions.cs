@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
-        public static async Task<Response<Balance>> GetByBillingAccountBalanceAsync(this TenantResource tenantResource, string billingAccountId, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConsumptionBalanceResult>> GetBalanceAsync(this TenantResource tenantResource, string billingAccountId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
-            return await GetExtensionClient(tenantResource).GetByBillingAccountBalanceAsync(billingAccountId, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(tenantResource).GetBalanceAsync(billingAccountId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
-        public static Response<Balance> GetByBillingAccountBalance(this TenantResource tenantResource, string billingAccountId, CancellationToken cancellationToken = default)
+        public static Response<ConsumptionBalanceResult> GetBalance(this TenantResource tenantResource, string billingAccountId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
-            return GetExtensionClient(tenantResource).GetByBillingAccountBalance(billingAccountId, cancellationToken);
+            return GetExtensionClient(tenantResource).GetBalance(billingAccountId, cancellationToken);
         }
 
         /// <summary>
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingPeriodName"/> is null. </exception>
-        public static async Task<Response<Balance>> GetForBillingPeriodByBillingAccountBalanceAsync(this TenantResource tenantResource, string billingAccountId, string billingPeriodName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConsumptionBalanceResult>> GetBalanceAsync(this TenantResource tenantResource, string billingAccountId, string billingPeriodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
 
-            return await GetExtensionClient(tenantResource).GetForBillingPeriodByBillingAccountBalanceAsync(billingAccountId, billingPeriodName, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(tenantResource).GetBalanceAsync(billingAccountId, billingPeriodName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingPeriodName"/> is null. </exception>
-        public static Response<Balance> GetForBillingPeriodByBillingAccountBalance(this TenantResource tenantResource, string billingAccountId, string billingPeriodName, CancellationToken cancellationToken = default)
+        public static Response<ConsumptionBalanceResult> GetBalance(this TenantResource tenantResource, string billingAccountId, string billingPeriodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
 
-            return GetExtensionClient(tenantResource).GetForBillingPeriodByBillingAccountBalance(billingAccountId, billingPeriodName, cancellationToken);
+            return GetExtensionClient(tenantResource).GetBalance(billingAccountId, billingPeriodName, cancellationToken);
         }
 
         /// <summary>
@@ -113,12 +113,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReservationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReservationSummary> GetReservationsSummariesByReservationOrderAsync(this TenantResource tenantResource, string reservationOrderId, Datagrain grain, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionReservationSummary" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConsumptionReservationSummary> GetReservationSummariesAsync(this TenantResource tenantResource, string reservationOrderId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
 
-            return GetExtensionClient(tenantResource).GetReservationsSummariesByReservationOrderAsync(reservationOrderId, grain, filter, cancellationToken);
+            return GetExtensionClient(tenantResource).GetReservationSummariesAsync(reservationOrderId, grain, filter, cancellationToken);
         }
 
         /// <summary>
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReservationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReservationSummary> GetReservationsSummariesByReservationOrder(this TenantResource tenantResource, string reservationOrderId, Datagrain grain, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionReservationSummary" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConsumptionReservationSummary> GetReservationSummaries(this TenantResource tenantResource, string reservationOrderId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
 
-            return GetExtensionClient(tenantResource).GetReservationsSummariesByReservationOrder(reservationOrderId, grain, filter, cancellationToken);
+            return GetExtensionClient(tenantResource).GetReservationSummaries(reservationOrderId, grain, filter, cancellationToken);
         }
 
         /// <summary>
@@ -154,13 +154,13 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReservationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReservationSummary> GetReservationsSummariesByReservationOrderAndReservationAsync(this TenantResource tenantResource, string reservationOrderId, string reservationId, Datagrain grain, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionReservationSummary" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConsumptionReservationSummary> GetReservationSummariesAsync(this TenantResource tenantResource, string reservationOrderId, string reservationId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
 
-            return GetExtensionClient(tenantResource).GetReservationsSummariesByReservationOrderAndReservationAsync(reservationOrderId, reservationId, grain, filter, cancellationToken);
+            return GetExtensionClient(tenantResource).GetReservationSummariesAsync(reservationOrderId, reservationId, grain, filter, cancellationToken);
         }
 
         /// <summary>
@@ -176,13 +176,13 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReservationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReservationSummary> GetReservationsSummariesByReservationOrderAndReservation(this TenantResource tenantResource, string reservationOrderId, string reservationId, Datagrain grain, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionReservationSummary" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConsumptionReservationSummary> GetReservationSummaries(this TenantResource tenantResource, string reservationOrderId, string reservationId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
 
-            return GetExtensionClient(tenantResource).GetReservationsSummariesByReservationOrderAndReservation(reservationOrderId, reservationId, grain, filter, cancellationToken);
+            return GetExtensionClient(tenantResource).GetReservationSummaries(reservationOrderId, reservationId, grain, filter, cancellationToken);
         }
 
         /// <summary>
@@ -196,13 +196,13 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReservationDetail" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReservationDetail> GetReservationsDetailsByReservationOrderAsync(this TenantResource tenantResource, string reservationOrderId, string filter, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionReservationDetail" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConsumptionReservationDetail> GetReservationDetailsAsync(this TenantResource tenantResource, string reservationOrderId, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            return GetExtensionClient(tenantResource).GetReservationsDetailsByReservationOrderAsync(reservationOrderId, filter, cancellationToken);
+            return GetExtensionClient(tenantResource).GetReservationDetailsAsync(reservationOrderId, filter, cancellationToken);
         }
 
         /// <summary>
@@ -216,13 +216,13 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReservationDetail" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReservationDetail> GetReservationsDetailsByReservationOrder(this TenantResource tenantResource, string reservationOrderId, string filter, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionReservationDetail" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConsumptionReservationDetail> GetReservationDetails(this TenantResource tenantResource, string reservationOrderId, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            return GetExtensionClient(tenantResource).GetReservationsDetailsByReservationOrder(reservationOrderId, filter, cancellationToken);
+            return GetExtensionClient(tenantResource).GetReservationDetails(reservationOrderId, filter, cancellationToken);
         }
 
         /// <summary>
@@ -237,14 +237,14 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReservationDetail" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReservationDetail> GetReservationsDetailsByReservationOrderAndReservationAsync(this TenantResource tenantResource, string reservationOrderId, string reservationId, string filter, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionReservationDetail" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConsumptionReservationDetail> GetReservationDetailsAsync(this TenantResource tenantResource, string reservationOrderId, string reservationId, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            return GetExtensionClient(tenantResource).GetReservationsDetailsByReservationOrderAndReservationAsync(reservationOrderId, reservationId, filter, cancellationToken);
+            return GetExtensionClient(tenantResource).GetReservationDetailsAsync(reservationOrderId, reservationId, filter, cancellationToken);
         }
 
         /// <summary>
@@ -259,14 +259,14 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReservationDetail" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReservationDetail> GetReservationsDetailsByReservationOrderAndReservation(this TenantResource tenantResource, string reservationOrderId, string reservationId, string filter, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionReservationDetail" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConsumptionReservationDetail> GetReservationDetails(this TenantResource tenantResource, string reservationOrderId, string reservationId, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            return GetExtensionClient(tenantResource).GetReservationsDetailsByReservationOrderAndReservation(reservationOrderId, reservationId, filter, cancellationToken);
+            return GetExtensionClient(tenantResource).GetReservationDetails(reservationOrderId, reservationId, filter, cancellationToken);
         }
 
         /// <summary>
@@ -280,8 +280,8 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReservationTransaction> GetReservationTransactionsAsync(this TenantResource tenantResource, string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConsumptionReservationTransaction> GetReservationTransactionsAsync(this TenantResource tenantResource, string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
@@ -299,8 +299,8 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReservationTransaction> GetReservationTransactions(this TenantResource tenantResource, string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConsumptionReservationTransaction> GetReservationTransactions(this TenantResource tenantResource, string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
@@ -319,13 +319,13 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ModernReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ModernReservationTransaction> GetReservationTransactionsByBillingProfileAsync(this TenantResource tenantResource, string billingAccountId, string billingProfileId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionModernReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConsumptionModernReservationTransaction> GetReservationTransactionsAsync(this TenantResource tenantResource, string billingAccountId, string billingProfileId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
 
-            return GetExtensionClient(tenantResource).GetReservationTransactionsByBillingProfileAsync(billingAccountId, billingProfileId, filter, cancellationToken);
+            return GetExtensionClient(tenantResource).GetReservationTransactionsAsync(billingAccountId, billingProfileId, filter, cancellationToken);
         }
 
         /// <summary>
@@ -340,13 +340,13 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
-        /// <returns> A collection of <see cref="ModernReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ModernReservationTransaction> GetReservationTransactionsByBillingProfile(this TenantResource tenantResource, string billingAccountId, string billingProfileId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionModernReservationTransaction" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConsumptionModernReservationTransaction> GetReservationTransactions(this TenantResource tenantResource, string billingAccountId, string billingProfileId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
 
-            return GetExtensionClient(tenantResource).GetReservationTransactionsByBillingProfile(billingAccountId, billingProfileId, filter, cancellationToken);
+            return GetExtensionClient(tenantResource).GetReservationTransactions(billingAccountId, billingProfileId, filter, cancellationToken);
         }
 
         /// <summary>
@@ -362,15 +362,15 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
-        /// <returns> An async collection of <see cref="EventSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventSummary> GetEventsByBillingProfileAsync(this TenantResource tenantResource, string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionEventSummary" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConsumptionEventSummary> GetEventsAsync(this TenantResource tenantResource, string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
             Argument.AssertNotNull(startDate, nameof(startDate));
             Argument.AssertNotNull(endDate, nameof(endDate));
 
-            return GetExtensionClient(tenantResource).GetEventsByBillingProfileAsync(billingAccountId, billingProfileId, startDate, endDate, cancellationToken);
+            return GetExtensionClient(tenantResource).GetEventsAsync(billingAccountId, billingProfileId, startDate, endDate, cancellationToken);
         }
 
         /// <summary>
@@ -386,15 +386,15 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
-        /// <returns> A collection of <see cref="EventSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventSummary> GetEventsByBillingProfile(this TenantResource tenantResource, string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionEventSummary" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConsumptionEventSummary> GetEvents(this TenantResource tenantResource, string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
             Argument.AssertNotNull(startDate, nameof(startDate));
             Argument.AssertNotNull(endDate, nameof(endDate));
 
-            return GetExtensionClient(tenantResource).GetEventsByBillingProfile(billingAccountId, billingProfileId, startDate, endDate, cancellationToken);
+            return GetExtensionClient(tenantResource).GetEvents(billingAccountId, billingProfileId, startDate, endDate, cancellationToken);
         }
 
         /// <summary>
@@ -408,12 +408,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="EventSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventSummary> GetEventsByBillingAccountAsync(this TenantResource tenantResource, string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionEventSummary" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConsumptionEventSummary> GetEventsAsync(this TenantResource tenantResource, string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
-            return GetExtensionClient(tenantResource).GetEventsByBillingAccountAsync(billingAccountId, filter, cancellationToken);
+            return GetExtensionClient(tenantResource).GetEventsAsync(billingAccountId, filter, cancellationToken);
         }
 
         /// <summary>
@@ -427,12 +427,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
-        /// <returns> A collection of <see cref="EventSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventSummary> GetEventsByBillingAccount(this TenantResource tenantResource, string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionEventSummary" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConsumptionEventSummary> GetEvents(this TenantResource tenantResource, string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
-            return GetExtensionClient(tenantResource).GetEventsByBillingAccount(billingAccountId, filter, cancellationToken);
+            return GetExtensionClient(tenantResource).GetEvents(billingAccountId, filter, cancellationToken);
         }
 
         /// <summary>
@@ -446,8 +446,8 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="LotSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LotSummary> GetLotsByBillingProfileAsync(this TenantResource tenantResource, string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConsumptionLotSummary> GetLotsByBillingProfileAsync(this TenantResource tenantResource, string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
@@ -466,8 +466,8 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
-        /// <returns> A collection of <see cref="LotSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LotSummary> GetLotsByBillingProfile(this TenantResource tenantResource, string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConsumptionLotSummary> GetLotsByBillingProfile(this TenantResource tenantResource, string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
@@ -486,12 +486,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="LotSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LotSummary> GetLotsByBillingAccountAsync(this TenantResource tenantResource, string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConsumptionLotSummary> GetLotsAsync(this TenantResource tenantResource, string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
-            return GetExtensionClient(tenantResource).GetLotsByBillingAccountAsync(billingAccountId, filter, cancellationToken);
+            return GetExtensionClient(tenantResource).GetLotsAsync(billingAccountId, filter, cancellationToken);
         }
 
         /// <summary>
@@ -505,12 +505,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
-        /// <returns> A collection of <see cref="LotSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LotSummary> GetLotsByBillingAccount(this TenantResource tenantResource, string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConsumptionLotSummary> GetLots(this TenantResource tenantResource, string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
-            return GetExtensionClient(tenantResource).GetLotsByBillingAccount(billingAccountId, filter, cancellationToken);
+            return GetExtensionClient(tenantResource).GetLots(billingAccountId, filter, cancellationToken);
         }
 
         /// <summary>
@@ -525,13 +525,13 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="customerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="customerId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="LotSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LotSummary> GetLotsByCustomerAsync(this TenantResource tenantResource, string billingAccountId, string customerId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConsumptionLotSummary> GetLotsAsync(this TenantResource tenantResource, string billingAccountId, string customerId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(customerId, nameof(customerId));
 
-            return GetExtensionClient(tenantResource).GetLotsByCustomerAsync(billingAccountId, customerId, filter, cancellationToken);
+            return GetExtensionClient(tenantResource).GetLotsAsync(billingAccountId, customerId, filter, cancellationToken);
         }
 
         /// <summary>
@@ -546,13 +546,13 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="customerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="customerId"/> is null. </exception>
-        /// <returns> A collection of <see cref="LotSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LotSummary> GetLotsByCustomer(this TenantResource tenantResource, string billingAccountId, string customerId, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConsumptionLotSummary> GetLots(this TenantResource tenantResource, string billingAccountId, string customerId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(customerId, nameof(customerId));
 
-            return GetExtensionClient(tenantResource).GetLotsByCustomer(billingAccountId, customerId, filter, cancellationToken);
+            return GetExtensionClient(tenantResource).GetLots(billingAccountId, customerId, filter, cancellationToken);
         }
 
         /// <summary>
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
-        public static async Task<Response<CreditSummary>> GetCreditAsync(this TenantResource tenantResource, string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConsumptionCreditSummary>> GetCreditAsync(this TenantResource tenantResource, string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
-        public static Response<CreditSummary> GetCredit(this TenantResource tenantResource, string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
+        public static Response<ConsumptionCreditSummary> GetCredit(this TenantResource tenantResource, string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
@@ -645,11 +645,11 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingPeriodName"/> is null. </exception>
-        public static async Task<Response<PriceSheetResult>> GetByBillingPeriodPriceSheetAsync(this SubscriptionResource subscriptionResource, string billingPeriodName, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<PriceSheetResult>> GetPriceSheetAsync(this SubscriptionResource subscriptionResource, string billingPeriodName, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
 
-            return await GetExtensionClient(subscriptionResource).GetByBillingPeriodPriceSheetAsync(billingPeriodName, expand, skiptoken, top, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).GetPriceSheetAsync(billingPeriodName, expand, skiptoken, top, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -665,11 +665,11 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingPeriodName"/> is null. </exception>
-        public static Response<PriceSheetResult> GetByBillingPeriodPriceSheet(this SubscriptionResource subscriptionResource, string billingPeriodName, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public static Response<PriceSheetResult> GetPriceSheet(this SubscriptionResource subscriptionResource, string billingPeriodName, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
 
-            return GetExtensionClient(subscriptionResource).GetByBillingPeriodPriceSheet(billingPeriodName, expand, skiptoken, top, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetPriceSheet(billingPeriodName, expand, skiptoken, top, cancellationToken);
         }
 
         private static ManagementGroupResourceExtensionClient GetExtensionClient(ManagementGroupResource managementGroupResource)
@@ -689,9 +689,9 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<ManagementGroupAggregatedCostResult>> GetByManagementGroupAggregatedCostAsync(this ManagementGroupResource managementGroupResource, string filter = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConsumptionAggregatedCostResult>> GetAggregatedCostAsync(this ManagementGroupResource managementGroupResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionClient(managementGroupResource).GetByManagementGroupAggregatedCostAsync(filter, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(managementGroupResource).GetAggregatedCostAsync(filter, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -702,9 +702,9 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<ManagementGroupAggregatedCostResult> GetByManagementGroupAggregatedCost(this ManagementGroupResource managementGroupResource, string filter = null, CancellationToken cancellationToken = default)
+        public static Response<ConsumptionAggregatedCostResult> GetAggregatedCost(this ManagementGroupResource managementGroupResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(managementGroupResource).GetByManagementGroupAggregatedCost(filter, cancellationToken);
+            return GetExtensionClient(managementGroupResource).GetAggregatedCost(filter, cancellationToken);
         }
 
         /// <summary>
@@ -717,11 +717,11 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingPeriodName"/> is null. </exception>
-        public static async Task<Response<ManagementGroupAggregatedCostResult>> GetForBillingPeriodByManagementGroupAggregatedCostAsync(this ManagementGroupResource managementGroupResource, string billingPeriodName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConsumptionAggregatedCostResult>> GetAggregatedCostWithBillingPeriodAsync(this ManagementGroupResource managementGroupResource, string billingPeriodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
 
-            return await GetExtensionClient(managementGroupResource).GetForBillingPeriodByManagementGroupAggregatedCostAsync(billingPeriodName, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(managementGroupResource).GetAggregatedCostWithBillingPeriodAsync(billingPeriodName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -734,11 +734,11 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingPeriodName"/> is null. </exception>
-        public static Response<ManagementGroupAggregatedCostResult> GetForBillingPeriodByManagementGroupAggregatedCost(this ManagementGroupResource managementGroupResource, string billingPeriodName, CancellationToken cancellationToken = default)
+        public static Response<ConsumptionAggregatedCostResult> GetAggregatedCostWithBillingPeriod(this ManagementGroupResource managementGroupResource, string billingPeriodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
 
-            return GetExtensionClient(managementGroupResource).GetForBillingPeriodByManagementGroupAggregatedCost(billingPeriodName, cancellationToken);
+            return GetExtensionClient(managementGroupResource).GetAggregatedCostWithBillingPeriod(billingPeriodName, cancellationToken);
         }
 
         private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
@@ -759,13 +759,13 @@ namespace Azure.ResourceManager.Consumption
             );
         }
 
-        /// <summary> Gets a collection of BudgetResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of ConsumptionBudgetResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of BudgetResources and their operations over a BudgetResource. </returns>
-        public static BudgetCollection GetBudgets(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> An object representing collection of ConsumptionBudgetResources and their operations over a ConsumptionBudgetResource. </returns>
+        public static ConsumptionBudgetCollection GetConsumptionBudgets(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetBudgets();
+            return GetExtensionClient(client, scope).GetConsumptionBudgets();
         }
 
         /// <summary>
@@ -780,9 +780,9 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BudgetResource>> GetBudgetAsync(this ArmClient client, ResourceIdentifier scope, string budgetName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConsumptionBudgetResource>> GetConsumptionBudgetAsync(this ArmClient client, ResourceIdentifier scope, string budgetName, CancellationToken cancellationToken = default)
         {
-            return await client.GetBudgets(scope).GetAsync(budgetName, cancellationToken).ConfigureAwait(false);
+            return await client.GetConsumptionBudgets(scope).GetAsync(budgetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -797,25 +797,25 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<BudgetResource> GetBudget(this ArmClient client, ResourceIdentifier scope, string budgetName, CancellationToken cancellationToken = default)
+        public static Response<ConsumptionBudgetResource> GetConsumptionBudget(this ArmClient client, ResourceIdentifier scope, string budgetName, CancellationToken cancellationToken = default)
         {
-            return client.GetBudgets(scope).Get(budgetName, cancellationToken);
+            return client.GetConsumptionBudgets(scope).Get(budgetName, cancellationToken);
         }
 
-        #region BudgetResource
+        #region ConsumptionBudgetResource
         /// <summary>
-        /// Gets an object representing a <see cref="BudgetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BudgetResource.CreateResourceIdentifier" /> to create a <see cref="BudgetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ConsumptionBudgetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConsumptionBudgetResource.CreateResourceIdentifier" /> to create a <see cref="ConsumptionBudgetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BudgetResource" /> object. </returns>
-        public static BudgetResource GetBudgetResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConsumptionBudgetResource" /> object. </returns>
+        public static ConsumptionBudgetResource GetConsumptionBudgetResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BudgetResource.ValidateResourceId(id);
-                return new BudgetResource(client, id);
+                ConsumptionBudgetResource.ValidateResourceId(id);
+                return new ConsumptionBudgetResource(client, id);
             }
             );
         }

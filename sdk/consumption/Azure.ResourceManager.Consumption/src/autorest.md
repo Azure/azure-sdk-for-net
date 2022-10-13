@@ -21,6 +21,22 @@ request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default
   - /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/credits/balanceSummary
 
+override-operation-name:
+  Balances_GetByBillingAccount: GetBalance
+  Balances_GetForBillingPeriodByBillingAccount: GetBalance
+  PriceSheet_GetByBillingPeriod: GetPriceSheet
+  AggregatedCost_GetByManagementGroup: GetAggregatedCost
+  AggregatedCost_GetForBillingPeriodByManagementGroup: GetAggregatedCostWithBillingPeriod
+  Events_ListByBillingAccount: GetEvents
+  Events_ListByBillingProfile: GetEvents
+  Lots_ListByBillingAccount: GetLots
+  Lots_ListByCustomer: GetLots
+  ReservationsDetails_ListByReservationOrderAndReservation: GetReservationDetails
+  ReservationsDetails_ListByReservationOrder: GetReservationDetails
+  ReservationsSummaries_ListByReservationOrderAndReservation: GetReservationSummaries
+  ReservationsSummaries_ListByReservationOrder: GetReservationSummaries
+  ReservationTransactions_ListByBillingProfile: GetReservationTransactions
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -50,5 +66,85 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  skiptoken: SkipToken|skipToken
+
+rename-mapping:
+  Budget: ConsumptionBudget
+  CategoryType: BudgetCategoryType
+  CurrentSpend: BudgetCurrentSpend
+  BudgetFilter: ConsumptionBudgetFilter
+  ForecastSpend: BudgetForecastSpend
+  Notification: BudgetAssociatedNotification
+  Notification.enabled: IsEnabled
+  TimeGrainType: BudgetTimeGrainType
+  Balance: ConsumptionBalanceResult
+  Balance.properties.priceHidden: IsPriceHidden
+  CreditSummary: ConsumptionCreditSummary
+  EventSummary: ConsumptionEventSummary
+  EventSummary.properties.billingProfileId: -|arm-id
+  EventSummary.properties.lotId: -|arm-id
+  EventSummary.properties.transactionDate: TransactOn
+  EventType: ConsumptionEventType
+  ManagementGroupAggregatedCostResult: ConsumptionAggregatedCostResult
+  ManagementGroupAggregatedCostResult.properties.usageStart: UsageStartOn
+  ManagementGroupAggregatedCostResult.properties.usageEnd: UsageEndOn
+  LotSummary: ConsumptionLotSummary
+  LotSource: ConsumptionLotSource
+  Status: ConsumptionLotStatus
+  ReservationDetail: ConsumptionReservationDetail
+  ReservationSummary: ConsumptionReservationSummary
+  Datagrain: ReservationSummaryDataGrain
+  ReservationTransaction: ConsumptionReservationTransaction
+  ReservationTransaction.properties.eventDate: TransactOn
+  ModernReservationTransaction: ConsumptionModernReservationTransaction
+  ModernReservationTransaction.properties.eventDate: TransactOn
+  ModernReservationTransaction.properties.billingProfileId: -|arm-id
+  ModernReservationTransaction.properties.invoiceId: -|arm-id
+  ModernReservationTransaction.properties.invoiceSectionId: -|arm-id
+  Amount: ConsumptionAmount
+  AmountWithExchangeRate: ConsumptionAmountWithExchangeRate
+  BillingFrequency: ConsumptionBillingFrequency
+  BalancePropertiesAdjustmentDetailsItem: ConsumptionBalanceAdjustmentDetail
+  BalancePropertiesNewPurchasesDetailsItem: ConsumptionBalanceNewPurchasesDetail
+  Reseller: ConsumptionReseller
+  Reseller.resellerId: -|arm-id
+  CultureCode: RecipientNotificationLanguageCode
+  CultureCode.en-us: EnglishUnitedStates
+  CultureCode.ja-jp: JapaneseJapan
+  CultureCode.zh-cn: ChinesePrc
+  CultureCode.de-de: GermanGermany
+  CultureCode.es-es: SpanishSpain
+  CultureCode.fr-fr: FrenchFrance
+  CultureCode.it-it: ItalianItaly
+  CultureCode.ko-kr: KoreanKorea
+  CultureCode.pt-br: PortugueseBrazil
+  CultureCode.ru-ru: RussianRussia
+  CultureCode.zh-tw: ChineseTaiwan
+  CultureCode.cs-cz: CzechCzechRepublic
+  CultureCode.pl-pl: PolishPoland
+  CultureCode.tr-tr: TurkishTurkey
+  CultureCode.da-dk: DanishDenmark
+  CultureCode.en-gb: EnglishUnitedKingdom
+  CultureCode.hu-hu: HungarianHungary
+  CultureCode.nb-no: NorwegianNorway
+  CultureCode.nl-nl: DutchNetherlands
+  CultureCode.pt-pt: PortuguesePortugal
+  CultureCode.sv-se: SwedishSweden
+  MeterDetails: ConsumptionMeterDetails
+  OperatorType: NotificationAlertTriggerType
+  ThresholdType: NotificationThresholdType
+  PriceSheetProperties.billingPeriodId: -|arm-id
+  ReservationDetail.properties.instanceId: -|arm-id
+  ReservationDetail.properties.usageDate: ConsumptionOccurredOn
+  ReservationSummary.properties.usageDate: UseOn
+
+directive:
+  - from: consumption.json
+    where: $.definitions
+    transform: >
+      delete $.CreditSummaryProperties.properties.eTag;
+      delete $.EventProperties.properties.eTag;
+      delete $.LotProperties.properties.eTag;
+    reason: delete the eTag property in Properties model as the original model already has got an eTag property from allOf keyword.
 
 ```
