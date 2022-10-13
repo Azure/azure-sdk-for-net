@@ -357,5 +357,49 @@ namespace Azure.ResourceManager.Avs
                 throw;
             }
         }
+
+        /// <summary>
+        /// List hosts by zone in a cluster
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/listZones
+        /// Operation Id: Clusters_ListZones
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ClusterZoneList>> GetZonesAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _avsPrivateCloudClusterClustersClientDiagnostics.CreateScope("AvsPrivateCloudClusterResource.GetZones");
+            scope.Start();
+            try
+            {
+                var response = await _avsPrivateCloudClusterClustersRestClient.ListZonesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List hosts by zone in a cluster
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/listZones
+        /// Operation Id: Clusters_ListZones
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ClusterZoneList> GetZones(CancellationToken cancellationToken = default)
+        {
+            using var scope = _avsPrivateCloudClusterClustersClientDiagnostics.CreateScope("AvsPrivateCloudClusterResource.GetZones");
+            scope.Start();
+            try
+            {
+                var response = _avsPrivateCloudClusterClustersRestClient.ListZones(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

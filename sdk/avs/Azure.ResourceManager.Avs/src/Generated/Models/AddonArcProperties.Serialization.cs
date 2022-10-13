@@ -10,32 +10,33 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class AvsPrivateCloudAddonProperties : IUtf8JsonSerializable
+    public partial class AddonArcProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(VCenter))
+            {
+                writer.WritePropertyName("vCenter");
+                writer.WriteStringValue(VCenter);
+            }
             writer.WritePropertyName("addonType");
             writer.WriteStringValue(AddonType.ToString());
             writer.WriteEndObject();
         }
 
-        internal static AvsPrivateCloudAddonProperties DeserializeAvsPrivateCloudAddonProperties(JsonElement element)
+        internal static AddonArcProperties DeserializeAddonArcProperties(JsonElement element)
         {
-            if (element.TryGetProperty("addonType", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "Arc": return AddonArcProperties.DeserializeAddonArcProperties(element);
-                    case "HCX": return AddonHcxProperties.DeserializeAddonHcxProperties(element);
-                    case "SRM": return AddonSrmProperties.DeserializeAddonSrmProperties(element);
-                    case "VR": return AddonVrProperties.DeserializeAddonVrProperties(element);
-                }
-            }
+            Optional<string> vCenter = default;
             AddonType addonType = default;
             Optional<AddonProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("vCenter"))
+                {
+                    vCenter = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("addonType"))
                 {
                     addonType = new AddonType(property.Value.GetString());
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new UnknownAvsPrivateCloudAddonProperties(addonType, Optional.ToNullable(provisioningState));
+            return new AddonArcProperties(addonType, Optional.ToNullable(provisioningState), vCenter.Value);
         }
     }
 }
