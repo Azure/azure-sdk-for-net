@@ -11,8 +11,6 @@ using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Castle.DynamicProxy;
-using System.Security.AccessControl;
 
 namespace Azure.ResourceManager.Storage.Tests.Helpers
 {
@@ -57,22 +55,6 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         {
             Client = GetArmClient();
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
-        }
-
-        protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default)
-        {
-            var options = InstrumentClientOptions(clientOptions ?? new ArmClientOptions());
-            options.Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl);
-            options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
-            options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
-            options.AddPolicy(NullFilterPolicy, HttpPipelinePosition.PerRetry);
-            if (ApiVersion is not null)
-                options.SetApiVersion(_resourceType, ApiVersion);
-
-            return InstrumentClient(new ArmClient(
-                TestEnvironment.Credential,
-                subscriptionId ?? TestEnvironment.SubscriptionId,
-                options), new IInterceptor[] { new ManagementInterceptor(this) });
         }
 
         [TearDown]
