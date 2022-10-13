@@ -30,20 +30,20 @@ namespace Azure.ResourceManager.Media
         /// <param name="systemData"> The systemData. </param>
         /// <param name="assetName"> Asset Name. </param>
         /// <param name="createdOn"> The creation time of the Streaming Locator. </param>
-        /// <param name="startsOn"> The start time of the Streaming Locator. </param>
-        /// <param name="endsOn"> The end time of the Streaming Locator. </param>
+        /// <param name="startOn"> The start time of the Streaming Locator. </param>
+        /// <param name="endOn"> The end time of the Streaming Locator. </param>
         /// <param name="streamingLocatorId"> The StreamingLocatorId of the Streaming Locator. </param>
         /// <param name="streamingPolicyName"> Name of the Streaming Policy used by this Streaming Locator. Either specify the name of Streaming Policy you created or use one of the predefined Streaming Policies. The predefined Streaming Policies available are: &apos;Predefined_DownloadOnly&apos;, &apos;Predefined_ClearStreamingOnly&apos;, &apos;Predefined_DownloadAndClearStreaming&apos;, &apos;Predefined_ClearKey&apos;, &apos;Predefined_MultiDrmCencStreaming&apos; and &apos;Predefined_MultiDrmStreaming&apos;. </param>
         /// <param name="defaultContentKeyPolicyName"> Name of the default ContentKeyPolicy used by this Streaming Locator. </param>
         /// <param name="contentKeys"> The ContentKeys used by this Streaming Locator. </param>
         /// <param name="alternativeMediaId"> Alternative Media ID of this Streaming Locator. </param>
         /// <param name="filters"> A list of asset or account filters which apply to this streaming locator. </param>
-        internal StreamingLocatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string assetName, DateTimeOffset? createdOn, DateTimeOffset? startsOn, DateTimeOffset? endsOn, Guid? streamingLocatorId, string streamingPolicyName, string defaultContentKeyPolicyName, IList<StreamingLocatorContentKey> contentKeys, string alternativeMediaId, IList<string> filters) : base(id, name, resourceType, systemData)
+        internal StreamingLocatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string assetName, DateTimeOffset? createdOn, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? streamingLocatorId, string streamingPolicyName, string defaultContentKeyPolicyName, IList<StreamingLocatorContentKey> contentKeys, string alternativeMediaId, IList<string> filters) : base(id, name, resourceType, systemData)
         {
             AssetName = assetName;
             CreatedOn = createdOn;
-            StartsOn = startsOn;
-            EndsOn = endsOn;
+            StartOn = startOn;
+            EndOn = endOn;
             StreamingLocatorId = streamingLocatorId;
             StreamingPolicyName = streamingPolicyName;
             DefaultContentKeyPolicyName = defaultContentKeyPolicyName;
@@ -57,9 +57,9 @@ namespace Azure.ResourceManager.Media
         /// <summary> The creation time of the Streaming Locator. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The start time of the Streaming Locator. </summary>
-        public DateTimeOffset? StartsOn { get; set; }
+        public DateTimeOffset? StartOn { get; set; }
         /// <summary> The end time of the Streaming Locator. </summary>
-        public DateTimeOffset? EndsOn { get; set; }
+        public DateTimeOffset? EndOn { get; set; }
         /// <summary> The StreamingLocatorId of the Streaming Locator. </summary>
         public Guid? StreamingLocatorId { get; set; }
         /// <summary> Name of the Streaming Policy used by this Streaming Locator. Either specify the name of Streaming Policy you created or use one of the predefined Streaming Policies. The predefined Streaming Policies available are: &apos;Predefined_DownloadOnly&apos;, &apos;Predefined_ClearStreamingOnly&apos;, &apos;Predefined_DownloadAndClearStreaming&apos;, &apos;Predefined_ClearKey&apos;, &apos;Predefined_MultiDrmCencStreaming&apos; and &apos;Predefined_MultiDrmStreaming&apos;. </summary>

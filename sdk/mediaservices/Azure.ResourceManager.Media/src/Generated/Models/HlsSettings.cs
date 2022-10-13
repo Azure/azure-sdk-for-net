@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> The HLS setting for a text track. </summary>
+    /// <summary> The HLS setting for a track. </summary>
     public partial class HlsSettings
     {
         /// <summary> Initializes a new instance of HlsSettings. </summary>

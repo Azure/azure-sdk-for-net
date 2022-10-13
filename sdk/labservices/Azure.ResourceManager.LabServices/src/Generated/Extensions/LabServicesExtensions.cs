@@ -85,40 +85,6 @@ namespace Azure.ResourceManager.LabServices
         }
 
         /// <summary>
-        /// Returns an azure operation result.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/operationResults/{operationResultId}
-        /// Operation Id: OperationResults_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="operationResultId"> The operation result ID / name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationResultId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationResultId"/> is null. </exception>
-        public static async Task<Response<OperationResult>> GetOperationResultAsync(this SubscriptionResource subscriptionResource, string operationResultId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationResultId, nameof(operationResultId));
-
-            return await GetExtensionClient(subscriptionResource).GetOperationResultAsync(operationResultId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns an azure operation result.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/operationResults/{operationResultId}
-        /// Operation Id: OperationResults_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="operationResultId"> The operation result ID / name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationResultId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationResultId"/> is null. </exception>
-        public static Response<OperationResult> GetOperationResult(this SubscriptionResource subscriptionResource, string operationResultId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationResultId, nameof(operationResultId));
-
-            return GetExtensionClient(subscriptionResource).GetOperationResult(operationResultId, cancellationToken);
-        }
-
-        /// <summary>
         /// Returns a list of Azure Lab Services resource SKUs.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/skus
         /// Operation Id: Skus_List
@@ -156,9 +122,9 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LabServicesUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LabServicesUsage> GetUsagesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<LabServicesUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetUsagesByLocationAsync(location, filter, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetUsagesAsync(location, filter, cancellationToken);
         }
 
         /// <summary>
@@ -171,9 +137,9 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LabServicesUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LabServicesUsage> GetUsagesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
+        public static Pageable<LabServicesUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetUsagesByLocation(location, filter, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetUsages(location, filter, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -265,20 +231,20 @@ namespace Azure.ResourceManager.LabServices
             return resourceGroupResource.GetLabs().Get(labName, cancellationToken);
         }
 
-        #region ImageResource
+        #region LabVirtualMachineImageResource
         /// <summary>
-        /// Gets an object representing an <see cref="ImageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ImageResource.CreateResourceIdentifier" /> to create an <see cref="ImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LabVirtualMachineImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabVirtualMachineImageResource.CreateResourceIdentifier" /> to create a <see cref="LabVirtualMachineImageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ImageResource" /> object. </returns>
-        public static ImageResource GetImageResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LabVirtualMachineImageResource" /> object. </returns>
+        public static LabVirtualMachineImageResource GetLabVirtualMachineImageResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ImageResource.ValidateResourceId(id);
-                return new ImageResource(client, id);
+                LabVirtualMachineImageResource.ValidateResourceId(id);
+                return new LabVirtualMachineImageResource(client, id);
             }
             );
         }
@@ -322,58 +288,58 @@ namespace Azure.ResourceManager.LabServices
         }
         #endregion
 
-        #region ScheduleResource
+        #region LabServicesScheduleResource
         /// <summary>
-        /// Gets an object representing a <see cref="ScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScheduleResource.CreateResourceIdentifier" /> to create a <see cref="ScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LabServicesScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabServicesScheduleResource.CreateResourceIdentifier" /> to create a <see cref="LabServicesScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScheduleResource" /> object. </returns>
-        public static ScheduleResource GetScheduleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LabServicesScheduleResource" /> object. </returns>
+        public static LabServicesScheduleResource GetLabServicesScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ScheduleResource.ValidateResourceId(id);
-                return new ScheduleResource(client, id);
+                LabServicesScheduleResource.ValidateResourceId(id);
+                return new LabServicesScheduleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region UserResource
+        #region LabUserResource
         /// <summary>
-        /// Gets an object representing an <see cref="UserResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="UserResource.CreateResourceIdentifier" /> to create an <see cref="UserResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LabUserResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabUserResource.CreateResourceIdentifier" /> to create a <see cref="LabUserResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="UserResource" /> object. </returns>
-        public static UserResource GetUserResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LabUserResource" /> object. </returns>
+        public static LabUserResource GetLabUserResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                UserResource.ValidateResourceId(id);
-                return new UserResource(client, id);
+                LabUserResource.ValidateResourceId(id);
+                return new LabUserResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualMachineResource
+        #region LabVirtualMachineResource
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LabVirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="LabVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineResource" /> object. </returns>
-        public static VirtualMachineResource GetVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LabVirtualMachineResource" /> object. </returns>
+        public static LabVirtualMachineResource GetLabVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VirtualMachineResource.ValidateResourceId(id);
-                return new VirtualMachineResource(client, id);
+                LabVirtualMachineResource.ValidateResourceId(id);
+                return new LabVirtualMachineResource(client, id);
             }
             );
         }

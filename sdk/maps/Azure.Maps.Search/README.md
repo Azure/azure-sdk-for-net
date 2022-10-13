@@ -21,7 +21,7 @@ dotnet add package Azure.Maps.Search --prerelease
 To create a new Azure Maps account, you can use the Azure Portal, Azure PowerShell, or the Azure CLI. Here's an example using the Azure CLI:
 
 ```powershell
-az maps account create --kind "Gen2" --disable-local-auth true --account-name "myMapAccountName" --resource-group "<resource group>" --sku "G2" --accept-tos
+az maps account create --kind "Gen2" --account-name "myMapAccountName" --resource-group "<resource group>" --sku "G2"
 ```
 
 ### Authenticate the client
@@ -35,7 +35,7 @@ There are 2 ways to authenticate the client: Shared key authentication and Azure
 
 ```C# Snippet:InstantiateSearchClientViaSubscriptionKey
 // Create a SearchClient that will authenticate through Subscription Key (Shared key)
-var credential = new AzureKeyCredential("<My Subscription Key>");
+AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
 MapsSearchClient client = new MapsSearchClient(credential);
 ```
 
@@ -49,20 +49,20 @@ We also need **Azure Maps Client ID** which can get from Azure Maps page > Authe
 
 ```C# Snippet:InstantiateSearchClientViaAAD
 // Create a MapsSearchClient that will authenticate through AAD
-var credential = new DefaultAzureCredential();
-var clientId = "<My Map Account Client Id>";
+DefaultAzureCredential credential = new DefaultAzureCredential();
+string clientId = "<My Map Account Client Id>";
 MapsSearchClient client = new MapsSearchClient(credential, clientId);
 ```
 
 ## Key concepts
 
-`MapsSearchClient` is designed for:
+`MapsSearchClient` is designed to:
 
 * Communicate with Azure Maps endpoint to query addresses or points of locations
 * Communicate with Azure Maps endpoint to request the geometry data such as a city or country outline for a set of entities
 * Communicate with Azure Maps endpoint to perform a free form search inside a single geometry or many of them
 
-Learn more about examples in [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/tests/Samples)
+Learn more by viewing our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/tests/Samples)
 
 ### Thread safety
 
@@ -81,43 +81,61 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/tests/Samples).
+You can familiarize yourself with different APIs using our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/tests/Samples).
 
 ### Example Get Polygons
+
 ```C# Snippet:GetPolygons
 // Get Addresses
-var searchResult = await client.SearchAddressAsync("Seattle");
+Response<SearchAddressResult> searchResult = await client.SearchAddressAsync("Seattle");
 
 // Extract geometry ids from addresses
-var geometry0Id = searchResult.Value.Results.First().DataSources.Geometry.Id;
-var geometry1Id = searchResult.Value.Results[1].DataSources.Geometry.Id;
+string geometry0Id = searchResult.Value.Results[0].DataSources.Geometry.Id;
+string geometry1Id = searchResult.Value.Results[1].DataSources.Geometry.Id;
 
 // Extract position coordinates
-var positionCoordinates = searchResult.Value.Results.First().Position;
+GeoPosition positionCoordinates = searchResult.Value.Results[0].Position;
 
 // Get polygons from geometry ids
 PolygonResult polygonResponse = await client.GetPolygonsAsync(new[] { geometry0Id, geometry1Id });
+
+// Get polygons objects
+IReadOnlyList<PolygonObject> polygonList = polygonResponse.Polygons;
 ```
 
 ### Example Fuzzy Search
+
 ```C# Snippet:FuzzySearch
-var fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearchOptions {
+Response<SearchAddressResult> fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearchOptions
+{
     Coordinates = new GeoPosition(121.56, 25.04),
-    Language = "en"
+    Language = SearchLanguage.EnglishUsa
 });
+
+// Print out the possible results
+Console.WriteLine("The possible results for coffee shop:");
+foreach (SearchAddressResultItem result in fuzzySearchResponse.Value.Results)
+{
+    Console.WriteLine("Coordinate: {0}, Address: {1}",
+        result.Position, result.Address.FreeformAddress);
+}
 ```
 
 ### Example Reverse Search Cross Street Address
+
 ```C# Snippet:ReverseSearchCrossStreetAddress
-var reverseResult = await client.ReverseSearchCrossStreetAddressAsync(new ReverseSearchCrossStreetOptions {
-    coordinates = new GeoPosition(121.0, 24.0),
-    Language = "en"
+var reverseResult = await client.ReverseSearchCrossStreetAddressAsync(new ReverseSearchCrossStreetOptions
+{
+    Coordinates = new GeoPosition(121.0, 24.0),
+    Language = SearchLanguage.EnglishUsa
 });
 ```
 
 ### Example Search Structured Address
+
 ```C# Snippet:SearchStructuredAddress
-var address = new StructuredAddress {
+var address = new StructuredAddress
+{
     CountryCode = "US",
     StreetNumber = "15127",
     StreetName = "NE 24th Street",
@@ -125,12 +143,17 @@ var address = new StructuredAddress {
     CountrySubdivision = "WA",
     PostalCode = "98052"
 };
-var searchResult = await client.SearchStructuredAddressAsync(address);
+Response<SearchAddressResult> searchResult = await client.SearchStructuredAddressAsync(address);
+
+SearchAddressResultItem resultItem = searchResult.Value.Results[0];
+Console.WriteLine("First result - Coordinate: {0}, Address: {1}",
+    resultItem.Position, resultItem.Address.FreeformAddress);
 ```
 
 ### Example Search Inside Geometry
+
 ```C# Snippet:SearchInsideGeometry
-var sfPolygon = new GeoPolygon(new[]
+GeoPolygon sfPolygon = new GeoPolygon(new[]
 {
     new GeoPosition(-122.43576049804686, 37.752415234354402),
     new GeoPosition(-122.4330139160, 37.706604725423119),
@@ -138,7 +161,7 @@ var sfPolygon = new GeoPolygon(new[]
     new GeoPosition(-122.43576049804686, 37.7524152343544)
 });
 
-var taipeiPolygon = new GeoPolygon(new[]
+GeoPolygon taipeiPolygon = new GeoPolygon(new[]
 {
     new GeoPosition(121.56, 25.04),
     new GeoPosition(121.565, 25.04),
@@ -147,14 +170,29 @@ var taipeiPolygon = new GeoPolygon(new[]
     new GeoPosition(121.56, 25.04)
 });
 
-var searchResponse = await client.SearchInsideGeometryAsync("coffee", new GeoCollection(new[] { sfPolygon, taipeiPolygon }), new SearchInsideGeometryOptions {
-    Language = "en"
+// Search coffee shop in Both polygons, return results in en-US
+Response<SearchAddressResult> searchResponse = await client.SearchInsideGeometryAsync("coffee", new GeoCollection(new[] { sfPolygon, taipeiPolygon }), new SearchInsideGeometryOptions
+{
+    Language = SearchLanguage.EnglishUsa
 });
+
+// Get Taipei Cafe and San Francisco cafe and print first place
+SearchAddressResultItem taipeiCafe = searchResponse.Value.Results.Where(addressItem => addressItem.SearchAddressResultType == "POI" && addressItem.Address.Municipality == "Taipei City").First();
+SearchAddressResultItem sfCafe = searchResponse.Value.Results.Where(addressItem => addressItem.SearchAddressResultType == "POI" && addressItem.Address.Municipality == "San Francisco").First();
+
+Console.WriteLine("Possible Coffee shop in the Polygons:");
+Console.WriteLine("Coffee shop address in Taipei: {0}", taipeiCafe.Address.FreeformAddress);
+Console.WriteLine("Coffee shop address in San Francisco: {0}", sfCafe.Address.FreeformAddress);
 ```
 
 ### Example Search Address
+
 ```C# Snippet:SearchAddress
-var searchResult = await client.SearchAddressAsync("Seattle");
+Response<SearchAddressResult> searchResult = await client.SearchAddressAsync("Seattle");
+
+SearchAddressResultItem resultItem = searchResult.Value.Results[0];
+Console.WriteLine("First result - Coordinate: {0}, Address: {1}",
+    resultItem.Position, resultItem.Address.FreeformAddress);
 ```
 
 ## Troubleshooting
@@ -167,7 +205,7 @@ For example, if you try to search with invalid coordinates, a error is returned,
 
 ## Next steps
 
-* [More detailed samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/tests/Samples)
+* [More samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/samples)
 
 ## Contributing
 

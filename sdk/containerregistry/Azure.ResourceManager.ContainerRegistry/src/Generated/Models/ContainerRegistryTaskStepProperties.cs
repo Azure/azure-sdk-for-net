@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// Please note <see cref="ContainerRegistryTaskStepProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ContainerRegistryDockerBuildStep"/>, <see cref="ContainerRegistryEncodedTaskStep"/> and <see cref="ContainerRegistryFileTaskStep"/>.
     /// </summary>
-    public partial class ContainerRegistryTaskStepProperties
+    public abstract partial class ContainerRegistryTaskStepProperties
     {
         /// <summary> Initializes a new instance of ContainerRegistryTaskStepProperties. </summary>
-        public ContainerRegistryTaskStepProperties()
+        protected ContainerRegistryTaskStepProperties()
         {
             BaseImageDependencies = new ChangeTrackingList<ContainerRegistryBaseImageDependency>();
         }

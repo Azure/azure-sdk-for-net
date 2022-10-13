@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="canonicalName"> CNAME of the certificate to be issued via free certificate. </param>
         /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppCertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? isValid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, ResourceIdentifier serverFarmId, string canonicalName, string domainValidationMethod, string kind) : base(id, name, resourceType, systemData)
+        internal AppCertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, BinaryData thumbprint, bool? isValid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, ResourceIdentifier serverFarmId, string canonicalName, string domainValidationMethod, string kind) : base(id, name, resourceType, systemData)
         {
             Password = password;
             FriendlyName = friendlyName;
@@ -94,8 +94,37 @@ namespace Azure.ResourceManager.AppService.Models
         public DateTimeOffset? IssueOn { get; }
         /// <summary> Certificate expiration date. </summary>
         public DateTimeOffset? ExpireOn { get; }
-        /// <summary> Certificate thumbprint. </summary>
-        public string Thumbprint { get; }
+        /// <summary>
+        /// Certificate thumbprint.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Thumbprint { get; }
         /// <summary> Is the certificate valid?. </summary>
         public bool? IsValid { get; }
         /// <summary> Raw bytes of .cer file. </summary>

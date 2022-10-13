@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="lastWorkflowId"> StorageSyncService lastWorkflowId. </param>
         /// <param name="lastOperationName"> Resource Last Operation Name. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified storage sync service. </param>
-        internal StorageSyncServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IncomingTrafficPolicy? incomingTrafficPolicy, int? storageSyncServiceStatus, string storageSyncServiceUid, string provisioningState, string lastWorkflowId, string lastOperationName, IReadOnlyList<StorageSyncPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        internal StorageSyncServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IncomingTrafficPolicy? incomingTrafficPolicy, int? storageSyncServiceStatus, Guid? storageSyncServiceUid, string provisioningState, string lastWorkflowId, string lastOperationName, IReadOnlyList<StorageSyncPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             IncomingTrafficPolicy = incomingTrafficPolicy;
             StorageSyncServiceStatus = storageSyncServiceStatus;
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <summary> Storage Sync service status. </summary>
         public int? StorageSyncServiceStatus { get; }
         /// <summary> Storage Sync service Uid. </summary>
-        public string StorageSyncServiceUid { get; }
+        public Guid? StorageSyncServiceUid { get; }
         /// <summary> StorageSyncService Provisioning State. </summary>
         public string ProvisioningState { get; }
         /// <summary> StorageSyncService lastWorkflowId. </summary>

@@ -9,7 +9,6 @@ csharp: true
 library-name: DataBox
 namespace: Azure.ResourceManager.DataBox
 require: https://github.com/Azure/azure-rest-api-specs/blob/df70965d3a207eb2a628c96aa6ed935edc6b7911/specification/databox/resource-manager/readme.md
-tag: package-2022-02
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -57,6 +56,8 @@ rename-rules:
   SMB: Smb
   NFS: Nfs
   HCS: Hcs
+  AzureDC: AzureDataCenter
+  TeraBytes: Terabytes
 
 prepend-rp-prefix:
   - CopyStatus
@@ -119,7 +120,6 @@ rename-mapping:
   UserAssignedProperties: DataBoxUserAssignedIdentity
   JobDetails: DataBoxBasicJobDetails
   JobStages: DataBoxJobStage
-  MarkDevicesShippedContent.deliverToDcPackageDetails: DeliverToDataCenterPackageDetails
   Preferences: DataBoxOrderPreferences
   RegionConfigurationRequest: RegionConfigurationContent
   RegionConfigurationResponse: RegionConfigurationResult
@@ -133,7 +133,9 @@ rename-mapping:
   CancellationReason: DataBoxJobCancellationReason
   ClassDiscriminator: DataBoxOrderType
   TransferType: DataBoxJobTransferType
-
+  JobSecrets.dcAccessSecurityCode: DataCenterAccessSecurityCode
+  MarkDevicesShippedRequest.deliverToDcPackageDetails: DeliverToDataCenterPackageDetails
+  LastMitigationActionOnJob.actionDateTimeInUtc: ActionPerformedOn
 
 override-operation-name:
   Service_ListAvailableSkusByResourceGroup: GetAvailableSkus

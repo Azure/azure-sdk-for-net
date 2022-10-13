@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static AddonList DeserializeAddonList(JsonElement element)
         {
-            Optional<IReadOnlyList<AddonData>> value = default;
+            Optional<IReadOnlyList<DataBoxEdgeRoleAddonData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AddonData> array = new List<AddonData>();
+                    List<DataBoxEdgeRoleAddonData> array = new List<DataBoxEdgeRoleAddonData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AddonData.DeserializeAddonData(item));
+                        array.Add(DataBoxEdgeRoleAddonData.DeserializeDataBoxEdgeRoleAddonData(item));
                     }
                     value = array;
                     continue;

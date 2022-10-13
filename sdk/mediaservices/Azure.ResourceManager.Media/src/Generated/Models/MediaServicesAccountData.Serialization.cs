@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.Media
             Optional<MediaStorageAuthentication?> storageAuthentication = default;
             Optional<AccountEncryption> encryption = default;
             Optional<MediaKeyDelivery> keyDelivery = default;
-            Optional<MediaPublicNetworkAccessStatus?> publicNetworkAccess = default;
-            Optional<MediaProvisioningState> provisioningState = default;
+            Optional<MediaServicesPublicNetworkAccess?> publicNetworkAccess = default;
+            Optional<MediaServicesProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<MediaServicesPrivateEndpointConnectionData>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Media
                                 publicNetworkAccess = null;
                                 continue;
                             }
-                            publicNetworkAccess = new MediaPublicNetworkAccessStatus(property0.Value.GetString());
+                            publicNetworkAccess = new MediaServicesPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Media
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new MediaProvisioningState(property0.Value.GetString());
+                            provisioningState = new MediaServicesProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"))

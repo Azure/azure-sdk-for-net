@@ -11,12 +11,14 @@ azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
 require: https://github.com/Azure/azure-rest-api-specs/blob/261132757bc9806f4aa90bd5b176ecfa6a447726/specification/compute/resource-manager/readme.md
-tag: package-2022-04-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+update-required-copy:
+  GalleryImage: OSType
 
 format-by-name-rules:
   'tenantId': 'uuid'

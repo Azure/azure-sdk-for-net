@@ -64,6 +64,7 @@ namespace Azure.AI.TextAnalytics
         protected AnalyzeHealthcareEntitiesOperation() { }
         public AnalyzeHealthcareEntitiesOperation(string operationId, Azure.AI.TextAnalytics.TextAnalyticsClient client) { }
         public virtual System.DateTimeOffset CreatedOn { get { throw null; } }
+        public virtual string DisplayName { get { throw null; } }
         public virtual System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
@@ -85,6 +86,7 @@ namespace Azure.AI.TextAnalytics
     public partial class AnalyzeHealthcareEntitiesOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
     {
         public AnalyzeHealthcareEntitiesOptions() { }
+        public string DisplayName { get { throw null; } set { } }
     }
     public partial class AnalyzeHealthcareEntitiesResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
@@ -176,6 +178,7 @@ namespace Azure.AI.TextAnalytics
         protected ClassifyDocumentOperation() { }
         public ClassifyDocumentOperation(string operationId, Azure.AI.TextAnalytics.TextAnalyticsClient client) { }
         public virtual System.DateTimeOffset CreatedOn { get { throw null; } }
+        public virtual string DisplayName { get { throw null; } }
         public virtual System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
@@ -348,6 +351,8 @@ namespace Azure.AI.TextAnalytics
         private readonly int _dummyPrimitive;
         public HealthcareEntityCategory(string value) { throw null; }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory AdministrativeEvent { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityCategory Age { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory AGE { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory BodyStructure { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory CareEnvironment { get { throw null; } }
@@ -360,6 +365,8 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory FamilyRelation { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory Frequency { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory Gender { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityCategory GeneOrProtein { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory GeneORProtein { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory HealthcareProfession { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory MeasurementUnit { get { throw null; } }
@@ -369,6 +376,8 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory MedicationName { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory MedicationRoute { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory RelationalOperator { get { throw null; } }
+        public static Azure.AI.TextAnalytics.HealthcareEntityCategory SymptomOrSign { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory SymptomORSign { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory Time { get { throw null; } }
         public static Azure.AI.TextAnalytics.HealthcareEntityCategory TreatmentName { get { throw null; } }
@@ -482,7 +491,8 @@ namespace Azure.AI.TextAnalytics
     {
         public MultiLabelClassifyOptions() { }
         public bool? DisableServiceLogs { get { throw null; } set { } }
-        public bool IncludeStatistics { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public bool? IncludeStatistics { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PiiEntity
@@ -714,6 +724,7 @@ namespace Azure.AI.TextAnalytics
         protected RecognizeCustomEntitiesOperation() { }
         public RecognizeCustomEntitiesOperation(string operationId, Azure.AI.TextAnalytics.TextAnalyticsClient client) { }
         public virtual System.DateTimeOffset CreatedOn { get { throw null; } }
+        public virtual string DisplayName { get { throw null; } }
         public virtual System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
@@ -736,7 +747,8 @@ namespace Azure.AI.TextAnalytics
     {
         public RecognizeCustomEntitiesOptions() { }
         public bool? DisableServiceLogs { get { throw null; } set { } }
-        public bool IncludeStatistics { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public bool? IncludeStatistics { get { throw null; } set { } }
     }
     public partial class RecognizeCustomEntitiesResultCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.AI.TextAnalytics.RecognizeEntitiesResult>
     {
@@ -869,7 +881,8 @@ namespace Azure.AI.TextAnalytics
     {
         public SingleLabelClassifyOptions() { }
         public bool? DisableServiceLogs { get { throw null; } set { } }
-        public bool IncludeStatistics { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public bool? IncludeStatistics { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TargetSentiment
@@ -1007,7 +1020,7 @@ namespace Azure.AI.TextAnalytics
     }
     public partial class TextAnalyticsClientOptions : Azure.Core.ClientOptions
     {
-        public TextAnalyticsClientOptions(Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion version = Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion.V2022_05_01) { }
+        public TextAnalyticsClientOptions(Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion version = Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview) { }
         public Azure.AI.TextAnalytics.TextAnalyticsAudience? Audience { get { throw null; } set { } }
         public string DefaultCountryHint { get { throw null; } set { } }
         public string DefaultLanguage { get { throw null; } set { } }
@@ -1016,6 +1029,7 @@ namespace Azure.AI.TextAnalytics
             V3_0 = 1,
             V3_1 = 2,
             V2022_05_01 = 3,
+            V2022_10_01_Preview = 4,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

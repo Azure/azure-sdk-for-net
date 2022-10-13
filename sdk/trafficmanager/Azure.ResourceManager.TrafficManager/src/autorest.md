@@ -13,6 +13,47 @@ output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 
+rename-mapping:
+  CheckTrafficManagerRelativeDnsNameAvailabilityParameters: TrafficManagerRelativeDnsNameAvailabilityParameters
+  CheckTrafficManagerRelativeDnsNameAvailabilityParameters.type: -|resource-type
+  Endpoint.properties.targetResourceId: -|arm-id
+  EndpointPropertiesCustomHeadersItem: TrafficManagerEndpointCustomHeaderInfo
+  EndpointPropertiesSubnetsItem: TrafficManagerEndpointSubnetInfo
+  EndpointPropertiesSubnetsItem.first: -|ip-address
+  EndpointPropertiesSubnetsItem.last: -|ip-address
+  HeatMapEndpoint.resourceId: -|arm-id
+  HeatMapModel: TrafficManagerHeatMap
+  MonitorConfigCustomHeadersItem: TrafficManagerMonitorConfigCustomHeaderInfo
+  MonitorConfigExpectedStatusCodeRangesItem: ExpectedStatusCodeRangeInfo
+  QueryExperience: TrafficManagerHeatMapQueryExperience
+  ProxyResource: TrafficManagerProxyResourceData
+  Resource.id: -|arm-id
+  Resource.type: -|resource-type
+  TrafficFlow: TrafficManagerHeatMapTrafficFlow
+  TrafficFlow.sourceIp: -|ip-address
+  TrackedResource: TrafficManagerTrackedResourceData
+  TrackedResource.location: -|azure-location
+  TrafficManagerNameAvailability: TrafficManagerNameAvailabilityResult
+  TrafficManagerNameAvailability.nameAvailable: IsNameAvailable
+  TrafficManagerNameAvailability.reason: UnavailableReason
+  TrafficManagerNameAvailability.type: -|resource-type
+  UserMetricsModel: TrafficManagerUserMetrics
+
+prepend-rp-prefix:
+  - DnsConfig
+  - Endpoint
+  - EndpointMonitorStatus
+  - EndpointStatus
+  - HeatMapType
+  - HeatMapEndpoint
+  - MonitorConfig
+  - MonitorProtocol
+  - Profile
+  - ProfileListResult
+  - ProfileMonitorStatus
+  - ProfileStatus
+  - Region
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -33,6 +74,10 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  TCP: Tcp
+
+override-operation-name:
+  Profiles_CheckTrafficManagerRelativeDnsNameAvailability: CheckTrafficManagerRelativeDnsNameAvailability
 
 directive:
   - from: trafficmanager.json
@@ -59,5 +104,8 @@ directive:
 list-exception:
  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName} 
  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}
+
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default: TrafficManagerUserMetrics
 
 ```

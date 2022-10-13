@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Administration
 {
+    // Data plane generated client. The PurviewAccount service client.
     /// <summary> The PurviewAccount service client. </summary>
     public partial class PurviewAccountClient
     {

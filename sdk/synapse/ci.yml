@@ -9,7 +9,13 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/synapse/
+    - sdk/synapse/ci.yml
+    - sdk/synapse/service.projects
+    - sdk/synapse/Azure.Analytics.Synapse.AccessControl
+    - sdk/synapse/Azure.Analytics.Synapse.Artifacts
+    - sdk/synapse/Azure.Analytics.Synapse.ManagedPrivateEndpoints
+    - sdk/synapse/Azure.Analytics.Synapse.Monitoring
+    - sdk/synapse/Azure.Analytics.Synapse.Spark
 
 pr:
   branches:
@@ -20,11 +26,18 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/synapse/
+    - sdk/synapse/ci.yml
+    - sdk/synapse/service.projects
+    - sdk/synapse/Azure.Analytics.Synapse.AccessControl
+    - sdk/synapse/Azure.Analytics.Synapse.Artifacts
+    - sdk/synapse/Azure.Analytics.Synapse.ManagedPrivateEndpoints
+    - sdk/synapse/Azure.Analytics.Synapse.Monitoring
+    - sdk/synapse/Azure.Analytics.Synapse.Spark
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SDKType: client
     ServiceDirectory: synapse
     ArtifactName: packages
     Artifacts:

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Media
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of AccountFilterResources in the MediaServicesAccount. </summary>
-        /// <returns> An object representing collection of AccountFilterResources and their operations over a AccountFilterResource. </returns>
-        public virtual AccountFilterCollection GetAccountFilters()
+        /// <summary> Gets a collection of MediaServicesAccountFilterResources in the MediaServicesAccount. </summary>
+        /// <returns> An object representing collection of MediaServicesAccountFilterResources and their operations over a MediaServicesAccountFilterResource. </returns>
+        public virtual MediaServicesAccountFilterCollection GetMediaServicesAccountFilters()
         {
-            return GetCachedClient(Client => new AccountFilterCollection(Client, Id));
+            return GetCachedClient(Client => new MediaServicesAccountFilterCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AccountFilterResource>> GetAccountFilterAsync(string filterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaServicesAccountFilterResource>> GetMediaServicesAccountFilterAsync(string filterName, CancellationToken cancellationToken = default)
         {
-            return await GetAccountFilters().GetAsync(filterName, cancellationToken).ConfigureAwait(false);
+            return await GetMediaServicesAccountFilters().GetAsync(filterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AccountFilterResource> GetAccountFilter(string filterName, CancellationToken cancellationToken = default)
+        public virtual Response<MediaServicesAccountFilterResource> GetMediaServicesAccountFilter(string filterName, CancellationToken cancellationToken = default)
         {
-            return GetAccountFilters().Get(filterName, cancellationToken);
+            return GetMediaServicesAccountFilters().Get(filterName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MediaServicesPrivateLinkResources in the MediaServicesAccount. </summary>
@@ -385,11 +385,11 @@ namespace Azure.ResourceManager.Media
             return GetStreamingLocators().Get(streamingLocatorName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LiveEventResources in the MediaServicesAccount. </summary>
-        /// <returns> An object representing collection of LiveEventResources and their operations over a LiveEventResource. </returns>
-        public virtual LiveEventCollection GetLiveEvents()
+        /// <summary> Gets a collection of MediaLiveEventResources in the MediaServicesAccount. </summary>
+        /// <returns> An object representing collection of MediaLiveEventResources and their operations over a MediaLiveEventResource. </returns>
+        public virtual MediaLiveEventCollection GetMediaLiveEvents()
         {
-            return GetCachedClient(Client => new LiveEventCollection(Client, Id));
+            return GetCachedClient(Client => new MediaLiveEventCollection(Client, Id));
         }
 
         /// <summary>
@@ -402,9 +402,9 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LiveEventResource>> GetLiveEventAsync(string liveEventName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaLiveEventResource>> GetMediaLiveEventAsync(string liveEventName, CancellationToken cancellationToken = default)
         {
-            return await GetLiveEvents().GetAsync(liveEventName, cancellationToken).ConfigureAwait(false);
+            return await GetMediaLiveEvents().GetAsync(liveEventName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -417,9 +417,9 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LiveEventResource> GetLiveEvent(string liveEventName, CancellationToken cancellationToken = default)
+        public virtual Response<MediaLiveEventResource> GetMediaLiveEvent(string liveEventName, CancellationToken cancellationToken = default)
         {
-            return GetLiveEvents().Get(liveEventName, cancellationToken);
+            return GetMediaLiveEvents().Get(liveEventName, cancellationToken);
         }
 
         /// <summary> Gets a collection of StreamingEndpointResources in the MediaServicesAccount. </summary>
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<EdgePolicies>> GetEdgePoliciesAsync(GetEdgePoliciesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaServicesEdgePolicies>> GetEdgePoliciesAsync(EdgePoliciesRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<EdgePolicies> GetEdgePolicies(GetEdgePoliciesContent content, CancellationToken cancellationToken = default)
+        public virtual Response<MediaServicesEdgePolicies> GetEdgePolicies(EdgePoliciesRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -741,11 +741,26 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues[key] = value;
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _mediaServicesAccountMediaservicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MediaServicesAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _mediaServicesAccountMediaservicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new MediaServicesAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new MediaServicesAccountPatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -772,11 +787,26 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues[key] = value;
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _mediaServicesAccountMediaservicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new MediaServicesAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _mediaServicesAccountMediaservicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new MediaServicesAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new MediaServicesAccountPatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -801,12 +831,23 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _mediaServicesAccountMediaservicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MediaServicesAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _mediaServicesAccountMediaservicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new MediaServicesAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new MediaServicesAccountPatch();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -831,12 +872,23 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _mediaServicesAccountMediaservicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new MediaServicesAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _mediaServicesAccountMediaservicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new MediaServicesAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new MediaServicesAccountPatch();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -861,11 +913,26 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.Remove(key);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _mediaServicesAccountMediaservicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MediaServicesAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _mediaServicesAccountMediaservicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new MediaServicesAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new MediaServicesAccountPatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -890,11 +957,26 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.Remove(key);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _mediaServicesAccountMediaservicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new MediaServicesAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _mediaServicesAccountMediaservicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new MediaServicesAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new MediaServicesAccountPatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {

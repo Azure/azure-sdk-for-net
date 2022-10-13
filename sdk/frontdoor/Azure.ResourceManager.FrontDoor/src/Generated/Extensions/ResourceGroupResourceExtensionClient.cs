@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.FrontDoor
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of WebApplicationFirewallPolicyResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of WebApplicationFirewallPolicyResources and their operations over a WebApplicationFirewallPolicyResource. </returns>
-        public virtual WebApplicationFirewallPolicyCollection GetWebApplicationFirewallPolicies()
+        /// <summary> Gets a collection of FrontDoorWebApplicationFirewallPolicyResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of FrontDoorWebApplicationFirewallPolicyResources and their operations over a FrontDoorWebApplicationFirewallPolicyResource. </returns>
+        public virtual FrontDoorWebApplicationFirewallPolicyCollection GetFrontDoorWebApplicationFirewallPolicies()
         {
-            return GetCachedClient(Client => new WebApplicationFirewallPolicyCollection(Client, Id));
+            return GetCachedClient(Client => new FrontDoorWebApplicationFirewallPolicyCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of FrontDoorResources in the ResourceGroupResource. </summary>
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.FrontDoor
             return GetCachedClient(Client => new FrontDoorCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ProfileResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ProfileResources and their operations over a ProfileResource. </returns>
-        public virtual ProfileCollection GetProfiles()
+        /// <summary> Gets a collection of FrontDoorNetworkExperimentProfileResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of FrontDoorNetworkExperimentProfileResources and their operations over a FrontDoorNetworkExperimentProfileResource. </returns>
+        public virtual FrontDoorNetworkExperimentProfileCollection GetFrontDoorNetworkExperimentProfiles()
         {
-            return GetCachedClient(Client => new ProfileCollection(Client, Id));
+            return GetCachedClient(Client => new FrontDoorNetworkExperimentProfileCollection(Client, Id));
         }
     }
 }

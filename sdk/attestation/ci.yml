@@ -9,6 +9,8 @@ trigger:
   paths:
     include:
     - sdk/attestation/
+    exclude:
+    - sdk/attestation/Azure.ResourceManager.Attestation/
 
 pr:
   branches:
@@ -20,6 +22,8 @@ pr:
   paths:
     include:
     - sdk/attestation/
+    exclude:
+    - sdk/attestation/Azure.ResourceManager.Attestation/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

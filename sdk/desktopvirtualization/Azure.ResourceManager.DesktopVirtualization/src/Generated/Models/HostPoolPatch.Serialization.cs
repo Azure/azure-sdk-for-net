@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("ring");
                 writer.WriteNumberValue(Ring.Value);
             }
-            if (Optional.IsDefined(ValidationEnvironment))
+            if (Optional.IsDefined(IsValidationEnvironment))
             {
                 writer.WritePropertyName("validationEnvironment");
-                writer.WriteBooleanValue(ValidationEnvironment.Value);
+                writer.WriteBooleanValue(IsValidationEnvironment.Value);
             }
             if (Optional.IsDefined(RegistrationInfo))
             {

@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string ApplicationState { get { throw null; } }
         public string ApplicationType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole> ComputeRoles { get { throw null; } }
-        public string CreatedDate { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationHttpsEndpoint> HttpsEndpoints { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction> InstallScriptActions { get { throw null; } }
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal HDInsightBillingResources() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Models.HDInsightBillingMeters> BillingMeters { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Models.HDInsightDiskBillingMeters> DiskBillingMeters { get { throw null; } }
-        public string Region { get { throw null; } }
+        public Azure.Core.AzureLocation? Region { get { throw null; } }
     }
     public partial class HDInsightBillingSpecsListResult
     {
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public Azure.ResourceManager.HDInsight.Models.HDInsightComputeIsolationProperties ComputeIsolationProperties { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole> ComputeRoles { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.ConnectivityEndpoint> ConnectivityEndpoints { get { throw null; } }
-        public string CreatedDate { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightDiskEncryptionProperties DiskEncryptionProperties { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.ExcludedServicesConfig ExcludedServicesConfig { get { throw null; } set { } }
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string Domain { get { throw null; } set { } }
         public string DomainUsername { get { throw null; } set { } }
         public string DomainUserPassword { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> LdapsUrls { get { throw null; } }
+        public System.Collections.Generic.IList<System.Uri> LdapUris { get { throw null; } }
         public Azure.Core.ResourceIdentifier MsiResourceId { get { throw null; } set { } }
         public string OrganizationalUnitDN { get { throw null; } set { } }
     }
@@ -1014,9 +1014,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal HDInsightVmSizeCompatibilityFilterV2() { }
         public System.Collections.Generic.IReadOnlyList<string> ClusterFlavors { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ClusterVersions { get { throw null; } }
-        public string ComputeIsolationSupported { get { throw null; } }
         public string EspApplied { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightFilterMode? FilterMode { get { throw null; } }
+        public string IsComputeIsolationSupported { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> NodeTypes { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Models.HDInsightOSType> OSType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Regions { get { throw null; } }
@@ -1027,12 +1027,12 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal HDInsightVmSizeProperty() { }
         public int? Cores { get { throw null; } }
         public string DataDiskStorageTier { get { throw null; } }
+        public bool? IsSupportedByVirtualMachines { get { throw null; } }
+        public bool? IsSupportedByWebWorkerRoles { get { throw null; } }
         public string Label { get { throw null; } }
         public long? MaxDataDiskCount { get { throw null; } }
         public long? MemoryInMB { get { throw null; } }
         public string Name { get { throw null; } }
-        public bool? SupportedByVirtualMachines { get { throw null; } }
-        public bool? SupportedByWebWorkerRoles { get { throw null; } }
         public long? VirtualMachineResourceDiskSizeInMB { get { throw null; } }
         public long? WebWorkerResourceDiskSizeInMB { get { throw null; } }
     }
@@ -1073,7 +1073,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal RegionalQuotaCapability() { }
         public long? CoresAvailable { get { throw null; } }
         public long? CoresUsed { get { throw null; } }
-        public string RegionName { get { throw null; } }
+        public Azure.Core.AzureLocation? Region { get { throw null; } }
     }
     public partial class RegionsCapability
     {

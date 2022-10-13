@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FirewallPolicyRule(name.Value, description.Value, ruleType);
+            return new UnknownFirewallPolicyRule(name.Value, description.Value, ruleType);
         }
     }
 }

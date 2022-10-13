@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobData>> GetAsync(string subscriptionId, string resourceGroupName, string deviceName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<DataBoxEdgeJobData>> GetAsync(string subscriptionId, string resourceGroupName, string deviceName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case 200:
                     {
-                        JobData value = default;
+                        DataBoxEdgeJobData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobData.DeserializeJobData(document.RootElement);
+                        value = DataBoxEdgeJobData.DeserializeDataBoxEdgeJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((JobData)null, message.Response);
+                    return Response.FromValue((DataBoxEdgeJobData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobData> Get(string subscriptionId, string resourceGroupName, string deviceName, string name, CancellationToken cancellationToken = default)
+        public Response<DataBoxEdgeJobData> Get(string subscriptionId, string resourceGroupName, string deviceName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,13 +112,13 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case 200:
                     {
-                        JobData value = default;
+                        DataBoxEdgeJobData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobData.DeserializeJobData(document.RootElement);
+                        value = DataBoxEdgeJobData.DeserializeDataBoxEdgeJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((JobData)null, message.Response);
+                    return Response.FromValue((DataBoxEdgeJobData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

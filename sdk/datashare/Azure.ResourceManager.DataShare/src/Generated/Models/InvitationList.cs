@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Initializes a new instance of InvitationList. </summary>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal InvitationList(IEnumerable<InvitationData> value)
+        internal InvitationList(IEnumerable<DataShareInvitationData> value)
         {
             if (value == null)
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Initializes a new instance of InvitationList. </summary>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
-        internal InvitationList(string nextLink, IReadOnlyList<InvitationData> value)
+        internal InvitationList(string nextLink, IReadOnlyList<DataShareInvitationData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> The Url of next result page. </summary>
         public string NextLink { get; }
         /// <summary> Collection of items of type DataTransferObjects. </summary>
-        public IReadOnlyList<InvitationData> Value { get; }
+        public IReadOnlyList<DataShareInvitationData> Value { get; }
     }
 }

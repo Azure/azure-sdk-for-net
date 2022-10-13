@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Models
         public string Id { get; }
         /// <summary> The input text to process. </summary>
         public string Text { get; }
-        /// <summary> (Optional) This is the 2 letter ISO 639-1 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default. </summary>
+        /// <summary> (Optional) This is the 2 letter ISO 639-1 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. For Auto Language Detection, use &quot;auto&quot;. If not set, use &quot;en&quot; for English as default. </summary>
         public string Language { get; set; }
     }
 }

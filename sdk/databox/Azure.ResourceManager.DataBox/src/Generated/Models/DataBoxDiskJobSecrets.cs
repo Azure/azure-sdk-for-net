@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary> Initializes a new instance of DataBoxDiskJobSecrets. </summary>
         /// <param name="jobSecretsType"> Used to indicate what type of job secrets object. </param>
-        /// <param name="dcAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
+        /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="diskSecrets"> Contains the list of secrets object for that device. </param>
         /// <param name="passkey"> PassKey for the disk Job. </param>
         /// <param name="isPasskeyUserDefined"> Whether passkey was provided by user. </param>
-        internal DataBoxDiskJobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dcAccessSecurityCode, ResponseError error, IReadOnlyList<DataBoxDiskSecret> diskSecrets, string passkey, bool? isPasskeyUserDefined) : base(jobSecretsType, dcAccessSecurityCode, error)
+        internal DataBoxDiskJobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dataCenterAccessSecurityCode, ResponseError error, IReadOnlyList<DataBoxDiskSecret> diskSecrets, string passkey, bool? isPasskeyUserDefined) : base(jobSecretsType, dataCenterAccessSecurityCode, error)
         {
             DiskSecrets = diskSecrets;
             Passkey = passkey;

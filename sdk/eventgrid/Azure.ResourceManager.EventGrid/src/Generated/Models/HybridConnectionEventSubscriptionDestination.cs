@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
         /// </param>
-        internal HybridConnectionEventSubscriptionDestination(EndpointType endpointType, string resourceId, IList<DeliveryAttributeMapping> deliveryAttributeMappings) : base(endpointType)
+        internal HybridConnectionEventSubscriptionDestination(EndpointType endpointType, ResourceIdentifier resourceId, IList<DeliveryAttributeMapping> deliveryAttributeMappings) : base(endpointType)
         {
             ResourceId = resourceId;
             DeliveryAttributeMappings = deliveryAttributeMappings;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The Azure Resource ID of an hybrid connection that is the destination of an event subscription. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary>
         /// Delivery attribute details.
         /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

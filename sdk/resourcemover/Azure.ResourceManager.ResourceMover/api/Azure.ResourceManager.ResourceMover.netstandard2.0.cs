@@ -69,8 +69,6 @@ namespace Azure.ResourceManager.ResourceMover
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ResourceMover.Models.MoverOperationStatus> Commit(Azure.WaitUntil waitUntil, Azure.ResourceManager.ResourceMover.Models.MoverCommitContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ResourceMover.Models.MoverOperationStatus>> CommitAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ResourceMover.Models.MoverCommitContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string moverResourceSetName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ResourceMover.Models.MoverOperationStatus> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ResourceMover.Models.MoverOperationStatus>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ResourceMover.Models.MoverOperationStatus> Discard(Azure.WaitUntil waitUntil, Azure.ResourceManager.ResourceMover.Models.MoverDiscardContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ResourceMover.Models.MoverOperationStatus>> DiscardAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ResourceMover.Models.MoverDiscardContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ResourceMover.MoverResourceSetResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -435,11 +433,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
     }
     public partial class MoverResourceSetProperties
     {
-        public MoverResourceSetProperties(string sourceRegion, string targetRegion) { }
+        public MoverResourceSetProperties(Azure.Core.AzureLocation sourceRegion, Azure.Core.AzureLocation targetRegion) { }
         public Azure.ResponseError ErrorsProperties { get { throw null; } }
         public Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState? ProvisioningState { get { throw null; } }
-        public string SourceRegion { get { throw null; } set { } }
-        public string TargetRegion { get { throw null; } set { } }
+        public Azure.Core.AzureLocation SourceRegion { get { throw null; } set { } }
+        public Azure.Core.AzureLocation TargetRegion { get { throw null; } set { } }
     }
     public abstract partial class MoverResourceSettings
     {
@@ -478,6 +476,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
         internal MoverUnresolvedDependency() { }
         public int? Count { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+    }
+    public partial class MoverVirtualNetworkResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
+    {
+        public MoverVirtualNetworkResourceSettings(string targetResourceName) : base (default(string)) { }
+        public System.Collections.Generic.IList<string> AddressSpace { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> DnsServers { get { throw null; } set { } }
+        public bool? EnableDdosProtection { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.SubnetResourceSettings> Subnets { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
     }
     public partial class NetworkInterfaceResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
     {
@@ -595,14 +602,5 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public Azure.ResourceManager.ResourceMover.Models.MoverTargetAvailabilityZone? TargetAvailabilityZone { get { throw null; } set { } }
         public string TargetVmSize { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> UserManagedIdentities { get { throw null; } }
-    }
-    public partial class VirtualNetworkResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
-    {
-        public VirtualNetworkResourceSettings(string targetResourceName) : base (default(string)) { }
-        public System.Collections.Generic.IList<string> AddressSpace { get { throw null; } }
-        public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
-        public bool? EnableDdosProtection { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.SubnetResourceSettings> Subnets { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
 }
