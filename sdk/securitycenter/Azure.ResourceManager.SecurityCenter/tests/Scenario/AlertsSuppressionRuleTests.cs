@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
     internal class AlertsSuppressionRuleTests : SecurityCenterManagementTestBase
     {
         private AlertsSuppressionRuleCollection _alertsSuppressionRuleCollection => DefaultSubscription.GetAlertsSuppressionRules();
-        private const string _existAscLocationName = "centralus";
 
         public AlertsSuppressionRuleTests(bool isAsync) : base(isAsync)
         {
@@ -48,14 +47,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             var list = await _alertsSuppressionRuleCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
-        }
-
-        private void ValidateAscLocation(AscLocationResource ascLocation, string ascLocationName)
-        {
-            Assert.IsNotNull(ascLocation);
-            Assert.IsNotNull(ascLocation.Data.Id);
-            Assert.AreEqual(ascLocationName, ascLocation.Data.Name);
-            Assert.AreEqual("Microsoft.Security/locations", ascLocation.Data.ResourceType.ToString());
         }
     }
 }
