@@ -183,15 +183,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             var queryName = Recording.GenerateAssetName("queryKey-");
             var key = SearchResource.CreateQueryKeyAsync(queryName).Result.Value.Key;
-            Response result = null;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                result = await SearchResource.DeleteQueryKeyAsync("Sanitized");
-            }
-            else
-            {
-                result = await SearchResource.DeleteQueryKeyAsync(key);
-            }
+            var result = Mode == RecordedTestMode.Playback ? await SearchResource.DeleteQueryKeyAsync("Sanitized") : await SearchResource.DeleteQueryKeyAsync(key);
             Assert.NotNull(result);
             Assert.IsFalse(result.IsError);
             Assert.NotNull(result.ReasonPhrase);
