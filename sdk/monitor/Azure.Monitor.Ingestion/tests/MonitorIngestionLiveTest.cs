@@ -128,19 +128,6 @@ namespace Azure.Monitor.Ingestion.Tests
             Assert.IsEmpty(response.Value.Errors);
         }
 
-        [LiveOnly]
-        [Test]
-        public async Task InvalidInputFromObjectAsJsonNoBatchingNoGzipAsync()
-        {
-            LogsIngestionClient client = CreateClient();
-
-            Response<UploadLogsResult> response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10000, Recording.Now.DateTime)).ConfigureAwait(false); //takes StreamName not tablename
-            // Check the response - run without Batching and Gzip for error 413
-            Assert.AreEqual(UploadLogsStatus.Failure, response.Value.Status);
-            Assert.AreEqual(413, response.Value.Errors.FirstOrDefault().Error.Code);
-            Assert.AreEqual(10000, response.Value.Errors.FirstOrDefault().FailedLogs.Count());
-        }
-
         [AsyncOnly]
         [Test]
         public async Task ConcurrencyMultiThread()
