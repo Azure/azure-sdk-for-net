@@ -13,10 +13,10 @@ namespace Azure.Developer.DevCenter.Tests.Samples
 {
     public partial class DevCenterSamples: SamplesBase<DevCenterClientTestEnvironment>
     {
-        #region Snippet:Azure_DevCenter_DevBox_Scenario
         public async Task CreateDeleteDevBoxAsync(string tenantId, string devCenterName)
         {
             // Create and delete a user devbox
+            #region Snippet:Azure_DevCenter_GetProjects_Scenario
             var credential = new DefaultAzureCredential();
             var devCenterClient = new DevCenterClient(tenantId, devCenterName, credential);
             string targetProjectName = null;
@@ -25,6 +25,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 targetProjectName = result.GetProperty("name").ToString();
             }
+            #endregion
 
             if (targetProjectName is null)
             {
@@ -32,6 +33,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             }
 
             // Grab a pool
+            #region Snippet:Azure_DevCenter_GetPools_Scenario
             var devBoxesClient = new DevBoxesClient(tenantId, devCenterName, targetProjectName, credential);
             string targetPoolName = null;
             await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(filter: null, maxCount: 1))
@@ -39,6 +41,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 targetPoolName = result.GetProperty("name").ToString();
             }
+            #endregion
 
             if (targetPoolName is null)
             {
@@ -46,6 +49,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             }
 
             // Provision your dev box in the selected pool
+            #region Snippet:Azure_DevCenter_CreateDevBox_Scenario
             var content = new
             {
                 poolName = targetPoolName,
@@ -55,17 +59,21 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             BinaryData devBoxData = await devBoxCreateOperation.WaitForCompletionAsync();
             JsonElement devBox = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
             Console.WriteLine($"Completed provisioning for dev box with status {devBox.GetProperty("provisioningState")}.");
+            #endregion
 
             // Fetch the web connection URL to access your dev box from the browser
+            #region Snippet:Azure_DevCenter_ConnectToDevBox_Scenario
             Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync("MyDevBox");
             JsonElement remoteConnectionData = JsonDocument.Parse(remoteConnectionResponse.ContentStream).RootElement;
             Console.WriteLine($"Connect using web URL {remoteConnectionData.GetProperty("webUrl")}.");
+            #endregion
 
             // Delete your dev box when finished
+            #region Snippet:Azure_DevCenter_DeleteDevBox_Scenario
             Operation devBoxDeleteOperation = await devBoxesClient.DeleteDevBoxAsync(WaitUntil.Completed, "MyDevBox");
             await devBoxDeleteOperation.WaitForCompletionResponseAsync();
             Console.WriteLine($"Completed dev box deletion.");
+            #endregion
         }
-        #endregion
     }
 }
