@@ -5,6 +5,5 @@ stages:
     parameters:
       ServiceDirectory: monitor
       Artifacts:
-        - name: azure-monitor-ingestion
-          groupId: com.azure
-          safeName: azure-monitor-ingestion
+        - name: Azure.Monitor.Ingestion
+          safeName: AzureMonitorIngestion

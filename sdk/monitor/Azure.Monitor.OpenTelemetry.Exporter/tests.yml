@@ -5,6 +5,5 @@ stages:
     parameters:
       ServiceDirectory: monitor
       Artifacts:
-        - name: azure-monitor-opentelemetry-exporter
-          groupId: com.azure
-          safeName: azuremonitoropentelemetryexporter
+        - name: Azure.Monitor.OpenTelemetry.Exporter
+          safeName: AzureMonitorOpenetemetryExporter
