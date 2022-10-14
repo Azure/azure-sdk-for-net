@@ -49,12 +49,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// &lt;br&gt;&lt;br&gt; For more information about disks, see [About
         /// disks and VHDs for Azure virtual
         /// machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview).</param>
-        public VirtualMachineScaleSetStorageProfile(ImageReference imageReference = default(ImageReference), VirtualMachineScaleSetOSDisk osDisk = default(VirtualMachineScaleSetOSDisk), IList<VirtualMachineScaleSetDataDisk> dataDisks = default(IList<VirtualMachineScaleSetDataDisk>), string diskControllerType = default(string))
+        public VirtualMachineScaleSetStorageProfile(ImageReference imageReference = default(ImageReference), VirtualMachineScaleSetOSDisk osDisk = default(VirtualMachineScaleSetOSDisk), IList<VirtualMachineScaleSetDataDisk> dataDisks = default(IList<VirtualMachineScaleSetDataDisk>))
         {
             ImageReference = imageReference;
             OsDisk = osDisk;
             DataDisks = dataDisks;
-            DiskControllerType = diskControllerType;
             CustomInit();
         }
 
@@ -92,11 +91,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "dataDisks")]
         public IList<VirtualMachineScaleSetDataDisk> DataDisks { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "diskControllerType")]
-        public string DiskControllerType { get; set; }
 
         /// <summary>
         /// Validate the object.

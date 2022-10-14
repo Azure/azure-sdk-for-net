@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="hostCaching">The host caching of the disk. Valid
         /// values are 'None', 'ReadOnly', and 'ReadWrite'. Possible values
         /// include: 'None', 'ReadOnly', 'ReadWrite'</param>
-        public GalleryDiskImage(int? sizeInGB = default(int?), HostCaching? hostCaching = default(HostCaching?), GalleryDiskImageSource source = default(GalleryDiskImageSource))
+        public GalleryDiskImage(int? sizeInGB = default(int?), HostCaching? hostCaching = default(HostCaching?), GalleryArtifactVersionSource source = default(GalleryArtifactVersionSource))
         {
             SizeInGB = sizeInGB;
             HostCaching = hostCaching;
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "source")]
-        public GalleryDiskImageSource Source { get; set; }
+        public GalleryArtifactVersionSource Source { get; set; }
 
     }
 }

@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="groups">A list of sharing profile groups.</param>
         /// <param name="communityGalleryInfo">Information of community gallery
         /// if current gallery is shared to community.</param>
-        public SharingProfile(string permissions = default(string), IList<SharingProfileGroup> groups = default(IList<SharingProfileGroup>), CommunityGalleryInfo communityGalleryInfo = default(CommunityGalleryInfo))
+        public SharingProfile(string permissions = default(string), IList<SharingProfileGroup> groups = default(IList<SharingProfileGroup>), object communityGalleryInfo = default(object))
         {
             Permissions = permissions;
             Groups = groups;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// shared to community.
         /// </summary>
         [JsonProperty(PropertyName = "communityGalleryInfo")]
-        public CommunityGalleryInfo CommunityGalleryInfo { get; set; }
+        public object CommunityGalleryInfo { get; set; }
 
     }
 }

@@ -55,10 +55,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// related to VM Guest Patching on Windows.</param>
         /// <param name="winRM">Specifies the Windows Remote Management
         /// listeners. This enables remote Windows PowerShell.</param>
-        /// <param name="enableVMAgentPlatformUpdates">Indicates whether
-        /// VMAgent Platform Updates is enabled for the Windows virtual
-        /// machine. Default value is false.</param>
-        public WindowsConfiguration(bool? provisionVMAgent = default(bool?), bool? enableAutomaticUpdates = default(bool?), string timeZone = default(string), IList<AdditionalUnattendContent> additionalUnattendContent = default(IList<AdditionalUnattendContent>), PatchSettings patchSettings = default(PatchSettings), WinRMConfiguration winRM = default(WinRMConfiguration), bool? enableVMAgentPlatformUpdates = default(bool?))
+        public WindowsConfiguration(bool? provisionVMAgent = default(bool?), bool? enableAutomaticUpdates = default(bool?), string timeZone = default(string), IList<AdditionalUnattendContent> additionalUnattendContent = default(IList<AdditionalUnattendContent>), PatchSettings patchSettings = default(PatchSettings), WinRMConfiguration winRM = default(WinRMConfiguration))
         {
             ProvisionVMAgent = provisionVMAgent;
             EnableAutomaticUpdates = enableAutomaticUpdates;
@@ -66,7 +63,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             AdditionalUnattendContent = additionalUnattendContent;
             PatchSettings = patchSettings;
             WinRM = winRM;
-            EnableVMAgentPlatformUpdates = enableVMAgentPlatformUpdates;
             CustomInit();
         }
 
@@ -128,13 +124,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "winRM")]
         public WinRMConfiguration WinRM { get; set; }
-
-        /// <summary>
-        /// Gets or sets indicates whether VMAgent Platform Updates is enabled
-        /// for the Windows virtual machine. Default value is false.
-        /// </summary>
-        [JsonProperty(PropertyName = "enableVMAgentPlatformUpdates")]
-        public bool? EnableVMAgentPlatformUpdates { get; set; }
 
     }
 }
