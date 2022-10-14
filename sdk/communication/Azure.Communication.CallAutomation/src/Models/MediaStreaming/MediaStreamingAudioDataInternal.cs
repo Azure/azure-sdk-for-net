@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Azure.Communication.CallAutomation
@@ -10,28 +9,29 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Streaming audio.
     /// </summary>
-    internal class MediaStreamingAudioInternal
+    internal class MediaStreamingAudioDataInternal
     {
         /// <summary>
-        /// The audio data.
+        /// The audio data in base64 string.
         /// </summary>
         [JsonPropertyName("data")]
-        public byte[] Data { get; set; }
+        public string Data { get; set; }
 
         /// <summary>
         /// The timestamp of thwn the media was sourced.
         /// </summary>
         [JsonPropertyName("timestamp")]
         public DateTime Timestamp { get; set; }
+
         /// <summary>
-        /// Participant ID
+        /// Participant ID.
         /// </summary>
-        [JsonPropertyName("participantId")]
-        public string ParticipantId { get; set; }
+        [JsonPropertyName("participantRawId")]
+        public string ParticipantRawId { get; set; }
         /// <summary>
         /// Indicates if the received audio buffer contains only silence.
         /// </summary>
-        [JsonPropertyName("isSilence")]
-        public bool IsSilence { get; set; }
+        [JsonPropertyName("silent")]
+        public bool Silent { get; set; }
     }
 }

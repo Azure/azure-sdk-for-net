@@ -300,13 +300,12 @@ namespace Azure.Communication.CallAutomation
 
         /// Reject an incoming call.
         /// <param name="incomingCallContext"> The incoming call context </param>
-        /// <param name="callRejectReason"> The reason for rejecting call. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
-        public virtual async Task<Response> RejectCallAsync(string incomingCallContext, CallRejectReason callRejectReason, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RejectCallAsync(string incomingCallContext, CancellationToken cancellationToken = default)
         {
-            RejectCallOptions options = new RejectCallOptions(incomingCallContext, callRejectReason);
+            RejectCallOptions options = new RejectCallOptions(incomingCallContext);
 
             return await RejectCallAsync(options, cancellationToken).ConfigureAwait(false);
         }
@@ -347,13 +346,12 @@ namespace Azure.Communication.CallAutomation
 
         /// Reject an incoming call.
         /// <param name="incomingCallContext"> The incoming call context </param>
-        /// <param name="callRejectReason"> The reason for rejecting call. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
-        public virtual Response RejectCall(string incomingCallContext, CallRejectReason callRejectReason, CancellationToken cancellationToken = default)
+        public virtual Response RejectCall(string incomingCallContext, CancellationToken cancellationToken = default)
         {
-            RejectCallOptions options = new RejectCallOptions(incomingCallContext, callRejectReason);
+            RejectCallOptions options = new RejectCallOptions(incomingCallContext);
 
             return RejectCall(options, cancellationToken);
         }

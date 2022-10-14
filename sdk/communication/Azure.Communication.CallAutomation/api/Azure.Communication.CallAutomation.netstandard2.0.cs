@@ -61,9 +61,9 @@ namespace Azure.Communication.CallAutomation
         public virtual System.Threading.Tasks.Task<Azure.Response> RedirectCallAsync(Azure.Communication.CallAutomation.RedirectCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RedirectCallAsync(string incomingCallContext, Azure.Communication.CommunicationIdentifier target, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RejectCall(Azure.Communication.CallAutomation.RejectCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response RejectCall(string incomingCallContext, Azure.Communication.CallAutomation.CallRejectReason callRejectReason, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response RejectCall(string incomingCallContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RejectCallAsync(Azure.Communication.CallAutomation.RejectCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RejectCallAsync(string incomingCallContext, Azure.Communication.CallAutomation.CallRejectReason callRejectReason, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RejectCallAsync(string incomingCallContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CallAutomationClientOptions : Azure.Core.ClientOptions
     {
@@ -417,14 +417,6 @@ namespace Azure.Communication.CallAutomation
         public bool ForEveryone { get { throw null; } }
         public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
     }
-    public partial class MediaStreamingAudio : Azure.Communication.CallAutomation.MediaStreamingPackageBase
-    {
-        internal MediaStreamingAudio() { }
-        public byte[] Data { get { throw null; } }
-        public bool IsSilent { get { throw null; } }
-        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
-        public System.DateTime Timestamp { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaStreamingAudioChannel : System.IEquatable<Azure.Communication.CallAutomation.MediaStreamingAudioChannel>
     {
@@ -442,6 +434,14 @@ namespace Azure.Communication.CallAutomation
         public static implicit operator Azure.Communication.CallAutomation.MediaStreamingAudioChannel (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallAutomation.MediaStreamingAudioChannel left, Azure.Communication.CallAutomation.MediaStreamingAudioChannel right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class MediaStreamingAudioData : Azure.Communication.CallAutomation.MediaStreamingPackageBase
+    {
+        internal MediaStreamingAudioData() { }
+        public string Data { get { throw null; } }
+        public bool IsSilent { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
+        public System.DateTime Timestamp { get { throw null; } }
     }
     public partial class MediaStreamingConfiguration
     {
@@ -467,20 +467,6 @@ namespace Azure.Communication.CallAutomation
         public static implicit operator Azure.Communication.CallAutomation.MediaStreamingContent (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallAutomation.MediaStreamingContent left, Azure.Communication.CallAutomation.MediaStreamingContent right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class MediaStreamingFormat
-    {
-        internal MediaStreamingFormat() { }
-        public int Channels { get { throw null; } }
-        public string Encoding { get { throw null; } }
-        public double Length { get { throw null; } }
-        public int SampleRate { get { throw null; } }
-    }
-    public partial class MediaStreamingMetadata : Azure.Communication.CallAutomation.MediaStreamingPackageBase
-    {
-        internal MediaStreamingMetadata() { }
-        public Azure.Communication.CallAutomation.MediaStreamingFormat Format { get { throw null; } }
-        public string MediaSubscriptionId { get { throw null; } }
     }
     public partial class MediaStreamingOptions
     {
@@ -696,8 +682,8 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class RejectCallOptions
     {
-        public RejectCallOptions(string incomingCallContext, Azure.Communication.CallAutomation.CallRejectReason callRejectReason) { }
-        public Azure.Communication.CallAutomation.CallRejectReason CallRejectReason { get { throw null; } }
+        public RejectCallOptions(string incomingCallContext) { }
+        public Azure.Communication.CallAutomation.CallRejectReason CallRejectReason { get { throw null; } set { } }
         public string IncomingCallContext { get { throw null; } }
         public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
     }
@@ -757,5 +743,22 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.PhoneNumberIdentifier SourceCallerId { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
         public string UserToUserInformation { get { throw null; } set { } }
+    }
+}
+namespace Azure.Communication.CallAutomation.Models.MediaStreaming
+{
+    public partial class MediaStreamingMetadata : Azure.Communication.CallAutomation.MediaStreamingPackageBase
+    {
+        public MediaStreamingMetadata() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("channels")]
+        public int Channels { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("encoding")]
+        public string Encoding { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("length")]
+        public int Length { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("subscriptionId")]
+        public string MediaSubscriptionId { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("sampleRate")]
+        public int SampleRate { get { throw null; } set { } }
     }
 }

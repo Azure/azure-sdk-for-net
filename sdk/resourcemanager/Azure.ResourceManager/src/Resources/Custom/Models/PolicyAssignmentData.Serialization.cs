@@ -71,7 +71,8 @@ namespace Azure.ResourceManager.Resources
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Metadata);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
+                using var jsonDocument = JsonDocument.Parse(Metadata.ToString());
+                JsonSerializer.Serialize(writer, jsonDocument.RootElement);
 #endif
             }
             if (Optional.IsDefined(EnforcementMode))

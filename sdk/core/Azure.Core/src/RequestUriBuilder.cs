@@ -278,16 +278,7 @@ namespace Azure.Core
                 stringBuilder.Append(PathSeparator);
             }
 
-            // TODO: Escaping can be done in-place
-            if (!HasQuery)
-            {
-                stringBuilder.Append(_pathAndQuery);
-            }
-            else
-            {
-                stringBuilder.Append(_pathAndQuery.ToString(0, _queryIndex));
-                stringBuilder.Append(_pathAndQuery.ToString(_queryIndex, _pathAndQuery.Length - _queryIndex));
-            }
+            stringBuilder.Append(_pathAndQuery);
 
             return stringBuilder.ToString();
         }
