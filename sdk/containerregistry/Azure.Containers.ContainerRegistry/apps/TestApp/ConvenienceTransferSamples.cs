@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Containers.ContainerRegistry.Specialized;
+using Azure.Containers.ContainerRegistry;
 using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -13,16 +13,16 @@ namespace TestApp
 {
     public class ConvenienceTransferSamples
     {
-        public static async Task TransferArtifactAsync(ContainerRegistryBlobClient acrClient, BlobContainerClient blobContainerClient)
+        public static async Task TransferArtifactAsync(ContainerRegistryClient acrClient, BlobContainerClient blobContainerClient)
         {
-            // Set the directory where the artifact files live
+            // Set the directory where the artifact files will be downloaded to
             // and tune the concurrency and chunk size settings
             string path = "<path-to-container-files>";
             int maxWorkers = 4;
             int maxChunkSize = 128 * 1024;
 
             // Download the files comprising the OCI artifact from ACR
-            await acrClient.DownloadToAsync(path, new ArtifactDownloadToOptions
+            await acrClient.GetArtifact("<repository-name>", "<tag-name>").DownloadToAsync(path, new ArtifactDownloadToOptions
             {
                 MaxConcurrency = maxWorkers,
                 MaxDownloadSize = maxChunkSize
