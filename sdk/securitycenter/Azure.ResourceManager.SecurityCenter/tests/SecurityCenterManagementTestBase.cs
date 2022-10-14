@@ -12,6 +12,10 @@ using System.Threading.Tasks;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute;
 using System.Linq;
+using Azure.ResourceManager.Logic.Models;
+using Azure.ResourceManager.Logic;
+using System;
+using System.IO;
 
 namespace Azure.ResourceManager.SecurityCenter.Tests
 {
@@ -166,6 +170,28 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             };
             ArmOperation<VirtualMachineResource> lro = await vmCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
             return lro.Value;
+        }
+
+        protected async Task<LogicWorkflowResource> CreateLogicWorkFlow(ResourceGroupResource resourceGroup)
+        {
+            // create integration Account
+            string integrationAccountName = Recording.GenerateAssetName("integrationAccount");
+            IntegrationAccountData integrationAccountData = new IntegrationAccountData(resourceGroup.Data.Location)
+            {
+                SkuName = IntegrationAccountSkuName.Standard,
+            };
+            var integrationAccount = await resourceGroup.GetIntegrationAccounts().CreateOrUpdateAsync(WaitUntil.Completed, integrationAccountName, integrationAccountData);
+
+            // create logic work flow
+            string logicWorkflowName = Recording.GenerateAssetName("logicWorkFlow");
+            byte[] definition = File.ReadAllBytes(@"TestData/WorkflowDefinition.json");
+            LogicWorkflowData logicWorkflowData = new LogicWorkflowData(resourceGroup.Data.Location)
+            {
+                Definition = new BinaryData(definition),
+                IntegrationAccount = new LogicResourceReference() { Id = integrationAccount.Value.Data.Id },
+            };
+            var workflow = await resourceGroup.GetLogicWorkflows().CreateOrUpdateAsync(WaitUntil.Completed, logicWorkflowName, logicWorkflowData);
+            return workflow.Value;
         }
     }
 }

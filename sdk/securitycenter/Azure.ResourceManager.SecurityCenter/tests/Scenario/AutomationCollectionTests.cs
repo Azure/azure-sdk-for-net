@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         private AutomationCollection _automationCollection => _resourceGroup.GetAutomations();
         private ResourceGroupResource _resourceGroup;
 
-        public AutomationCollectionTests(bool isAsync) : base(isAsync,RecordedTestMode.Record)
+        public AutomationCollectionTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -28,30 +29,98 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             _resourceGroup = await CreateResourceGroup();
         }
 
+        private async Task<AutomationResource> CreateSecurityAutomation(string automationName)
+        {
+            // prerequisites
+            var workflow = await CreateLogicWorkFlow(_resourceGroup);
+
+            AutomationData data = new AutomationData(_resourceGroup.Data.Location)
+            {
+                Scopes =
+                {
+                    new AutomationScope()
+                    {
+                        Description = "A description that helps to identify this scope",
+                        ScopePath = $"{_resourceGroup.Data.Id}"
+                    }
+                },
+                Sources =
+                {
+                    new AutomationSource()
+                    {
+                        EventSource = "Assessments",
+                    }
+                },
+                Actions =
+                {
+                    new AutomationActionLogicApp()
+                    {
+                        LogicAppResourceId = workflow.Data.Id,
+                        Uri = new Uri("https://justtestsample.azurewebsites.net"),
+                    }
+                }
+            };
+            var automation = await _automationCollection.CreateOrUpdateAsync(WaitUntil.Completed, automationName, data);
+            return automation.Value;
+        }
+
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
             string automationName = Recording.GenerateAssetName("automation");
-            AutomationData data = new AutomationData(_resourceGroup.Data.Location)
-            {
-            };
-            var automation = await _automationCollection.CreateOrUpdateAsync(WaitUntil.Completed, automationName, data);
-            Assert.IsNotNull(automation);
+            var automation = await CreateSecurityAutomation(automationName);
+            ValidateAutomation(automation, automationName);
+        }
+
+        [RecordedTest]
+        public async Task Exist()
+        {
+            string automationName = Recording.GenerateAssetName("automation");
+            var automation = await CreateSecurityAutomation(automationName);
+            bool flag = await _automationCollection.ExistsAsync(automationName);
+            Assert.IsTrue(flag);
+        }
+
+        [RecordedTest]
+        public async Task Get()
+        {
+            string automationName = Recording.GenerateAssetName("automation");
+            await CreateSecurityAutomation(automationName);
+            var automation = await _automationCollection.GetAsync(automationName);
+            ValidateAutomation(automation, automationName);
         }
 
         [RecordedTest]
         public async Task GetAll()
         {
+            string automationName = Recording.GenerateAssetName("automation");
+            await CreateSecurityAutomation(automationName);
             var list = await _automationCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
+            ValidateAutomation(list.First(item => item.Data.Name == automationName), automationName);
         }
 
-        private void ValidateAscLocation(AscLocationResource ascLocation, string ascLocationName)
+        [RecordedTest]
+        public async Task Delete()
         {
-            Assert.IsNotNull(ascLocation);
-            Assert.IsNotNull(ascLocation.Data.Id);
-            Assert.AreEqual(ascLocationName, ascLocation.Data.Name);
-            Assert.AreEqual("Microsoft.Security/locations", ascLocation.Data.ResourceType.ToString());
+            string automationName = Recording.GenerateAssetName("automation");
+            var automation = await CreateSecurityAutomation(automationName);
+            bool flag = await _automationCollection.ExistsAsync(automationName);
+            Assert.IsTrue(flag);
+
+            await automation.DeleteAsync(WaitUntil.Completed);
+            flag = await _automationCollection.ExistsAsync(automationName);
+            Assert.IsFalse(flag);
+        }
+
+        private void ValidateAutomation(AutomationResource automation, string automationName)
+        {
+            Assert.IsNotNull(automation);
+            Assert.IsNotNull(automation.Data.Id);
+            Assert.AreEqual(automationName, automation.Data.Name);
+            Assert.AreEqual(DefaultLocation, automation.Data.Location);
+            Assert.AreEqual("Assessments", automation.Data.Sources.First().EventSource.ToString());
+            Assert.AreEqual("Microsoft.Security/automations", automation.Data.ResourceType.ToString());
         }
     }
 }
