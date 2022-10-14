@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(Location, nginxDeployment, nginxConfigurationName, virtualPath);
 
             NginxConfigurationFile rootConfigFile = new NginxConfigurationFile();
-            rootConfigFile.Content = TestEnvironment.NginxConfigurationContent;
+            rootConfigFile.Content = NginxConfigurationContent;
             rootConfigFile.VirtualPath = "/etc/nginx/app.conf";
 
             NginxConfigurationProperties configurationProperties = new NginxConfigurationProperties();

@@ -24,6 +24,9 @@ namespace Azure.ResourceManager.Nginx.Tests
         protected string ResourceGroupPrefix { get; set; }
         protected SubscriptionResource Subscription { get; set; }
         protected string NginxDeploymentResourceType { get; set; }
+        protected string NginxConfigurationContent { get; set; }
+        protected string ManagedIdentityResourceID { get; set; }
+        protected string KeyVaultSecretId { get; set; }
 
         protected NginxManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -45,6 +48,7 @@ namespace Azure.ResourceManager.Nginx.Tests
             NginxDeploymentResourceType = "NGINX.NGINXPLUS/nginxDeployments";
             Client = GetArmClient();
             Subscription = await Client.GetDefaultSubscriptionAsync();
+            NginxConfigurationContent = "aHR0cCB7CiAgICBzZXJ2ZXIgewogICAgICAgIGxpc3RlbiA4MDsKICAgICAgICBsb2NhdGlvbiAvIHsKICAgICAgICAgICAgZGVmYXVsdF90eXBlIHRleHQvaHRtbDsKICAgICAgICAgICAgcmV0dXJuIDIwMCAnPCFET0NUWVBFIGh0bWw+PGgxIHN0eWxlPSJmb250LXNpemU6MzBweDsiPk5naW54IGNvbmZpZyBpcyB3b3JraW5nITwvaDE+JzsKICAgICAgICB9CiAgICB9Cn0=";
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
@@ -235,7 +239,8 @@ namespace Azure.ResourceManager.Nginx.Tests
             deploymentProperties.EnableDiagnosticsSupport = true;
 
             ManagedServiceIdentity identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
-            identity.UserAssignedIdentities.Add(new ResourceIdentifier(TestEnvironment.ManagedIdentityResourceID), new UserAssignedIdentity());
+            ManagedIdentityResourceID = $"/subscriptions/{Subscription.Data.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{nginxDeploymentName}-identity";
+            identity.UserAssignedIdentities.Add(new ResourceIdentifier(ManagedIdentityResourceID), new UserAssignedIdentity());
 
             NginxDeploymentData nginxDeploymentData = new NginxDeploymentData(location);
             nginxDeploymentData.Identity = identity;
@@ -258,7 +263,7 @@ namespace Azure.ResourceManager.Nginx.Tests
             }
 
             NginxConfigurationFile rootConfigFile = new NginxConfigurationFile();
-            rootConfigFile.Content = TestEnvironment.NginxConfigurationContent;
+            rootConfigFile.Content = NginxConfigurationContent;
             rootConfigFile.VirtualPath = virtualPath;
 
             NginxConfigurationProperties configurationProperties = new NginxConfigurationProperties();
@@ -283,10 +288,11 @@ namespace Azure.ResourceManager.Nginx.Tests
                 throw new ArgumentNullException(nameof(nginxCertificateName));
             }
 
+            KeyVaultSecretId = $"https://{nginxDeployment.Data.Name}-kv.vault.azure.net/secrets/cert";
             NginxCertificateProperties certificateProperties = new NginxCertificateProperties();
             certificateProperties.CertificateVirtualPath = certificateVirtualPath;
             certificateProperties.KeyVirtualPath = keyVirtualPath;
-            certificateProperties.KeyVaultSecretId = TestEnvironment.KeyVaultSecretId;
+            certificateProperties.KeyVaultSecretId = KeyVaultSecretId;
 
             NginxCertificateData nginxCertificateData = new NginxCertificateData(location);
             nginxCertificateData.Properties = certificateProperties;
