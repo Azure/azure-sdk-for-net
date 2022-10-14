@@ -13,6 +13,9 @@ namespace Azure.ResourceManager.Advisor.Tests
     public class AdvisorManagementTestBase : ManagementRecordedTestBase<AdvisorManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
+        public SubscriptionResource DefaultSubscription { get; private set; }
+        public AzureLocation DefaultLocation => AzureLocation.EastUS;
+        public const string ResourceGroupNamePrefix = "AdvisorRG";
 
         protected AdvisorManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -25,16 +28,17 @@ namespace Azure.ResourceManager.Advisor.Tests
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            string rgName = Recording.GenerateAssetName(ResourceGroupNamePrefix);
+            ResourceGroupData input = new ResourceGroupData(DefaultLocation);
+            var lro = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }
     }

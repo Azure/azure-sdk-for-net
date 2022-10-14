@@ -26,17 +26,15 @@ namespace Azure.Communication.CallAutomation
         /// <param name="source"> The source of the call. </param>
         /// <param name="targets"> The targets of the call. </param>
         /// <param name="callConnectionState"> The state of the call connection. </param>
-        /// <param name="subject"> The subject. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="mediaSubscriptionId"> SubscriptionId for media streaming. </param>
-        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, CallSourceInternal source, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string subject, string callbackUri, string mediaSubscriptionId)
+        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, CallSourceInternal source, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, string mediaSubscriptionId)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             Source = source;
             Targets = targets;
             CallConnectionState = callConnectionState;
-            Subject = subject;
             CallbackUri = callbackUri;
             MediaSubscriptionId = mediaSubscriptionId;
         }
@@ -51,8 +49,6 @@ namespace Azure.Communication.CallAutomation
         public IReadOnlyList<CommunicationIdentifierModel> Targets { get; }
         /// <summary> The state of the call connection. </summary>
         public CallConnectionState? CallConnectionState { get; }
-        /// <summary> The subject. </summary>
-        public string Subject { get; }
         /// <summary> The callback URI. </summary>
         public string CallbackUri { get; }
         /// <summary> SubscriptionId for media streaming. </summary>

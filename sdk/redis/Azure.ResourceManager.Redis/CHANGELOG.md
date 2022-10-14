@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.0.2 (2022-10-01)
+
+### Bugs Fixed
+
+- Fixed the serialization issue of `RedisCommonConfiguration.IsAofBackupEnabled` and `RedisCommonConfiguration.IsRdbBackupEnabled`.
+
 ## 1.0.1 (2022-09-27)
 
 ### Bugs Fixed

@@ -8,9 +8,8 @@ azure-arm: true
 csharp: true
 library-name: ManagementPartner
 namespace: Azure.ResourceManager.ManagementPartner
+# default tag is a preview version
 require: https://github.com/Azure/azure-rest-api-specs/blob/7d5d1db0c45d6fe0934c97b6a6f9bb34112d42d1/specification/managementpartner/resource-manager/readme.md
-# This is a preview version
-tag: package-2018-02
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

@@ -30,7 +30,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                 var targetUser = TestEnvironment.TargetUserId;
                 string ngrok = "https://localhost";
                 var targets = new CommunicationIdentifier[] { new CommunicationUserIdentifier(targetUser) };
-                var callResponse = await client.CreateCallAsync(new CreateCallOptions(new CallSource(user), targets, new Uri(ngrok))).ConfigureAwait(false);
+                var createCallOptions = new CreateCallOptions(new CallSource(user), targets, new Uri(ngrok))
+                {
+                    RepeatabilityHeaders = new RepeatabilityHeaders(new Guid("619e45a5-41f2-40bd-a20e-98b13944e146"), new DateTimeOffset(2022, 9, 19, 22, 20, 00, new TimeSpan(0, 0, 0)))
+                };
+                var callResponse = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                 Assert.NotNull(callResponse);
                 Assert.NotNull(callResponse.Value);
                 await WaitForOperationCompletion().ConfigureAwait(false);
@@ -89,7 +93,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             finally
             {
                 var callConnection = client.GetCallConnection(callConnectionId);
-                await callConnection.HangUpAsync(true).ConfigureAwait(false);
+                var hangUpOptions = new HangUpOptions(true)
+                {
+                    RepeatabilityHeaders = new RepeatabilityHeaders(new Guid("fed6e917-f1df-4e21-b7de-c26d0947124b"), new DateTimeOffset(2022, 9, 19, 22, 20, 00, new TimeSpan(0, 0, 0)))
+                };
+                await callConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
             }
         }
     }

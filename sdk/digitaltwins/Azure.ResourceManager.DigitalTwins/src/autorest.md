@@ -9,7 +9,6 @@ csharp: true
 library-name: DigitalTwins
 namespace: Azure.ResourceManager.DigitalTwins
 require: https://github.com/Azure/azure-rest-api-specs/blob/df70965d3a207eb2a628c96aa6ed935edc6b7911/specification/digitaltwins/resource-manager/readme.md
-tag: package-2022-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
