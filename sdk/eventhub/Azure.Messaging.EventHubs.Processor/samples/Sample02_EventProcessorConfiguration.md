@@ -6,7 +6,7 @@ To begin, please ensure that you're familiar with the items discussed in the [Ge
 
 ## Table of contents
 
-- [Choosing the number of processors for the consumer group](choosing-the-number-of-processors-for-the-consumer-group)
+- [Choosing the number of processors for the consumer group](#choosing-the-number-of-processors-for-the-consumer-group)
 - [Influencing load balancing behavior](#influencing-load-balancing-behavior)
     - [Load balancing strategy](#load-balancing-strategy)
     - [Load balancing intervals](#load-balancing-intervals)
