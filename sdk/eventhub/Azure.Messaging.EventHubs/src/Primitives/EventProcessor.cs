@@ -1594,7 +1594,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                     }
 
                     // If the number of partitions owned has changed since the cycle started and is above maximum advisable set, emit a warning.  This is
-                    // an inaccurate heuristic and does not apply to all workloads.  The error handler will not be pinged to avoid false positive notifications.
+                    // a loose heuristic and does not apply to all workloads.  The error handler will not be pinged to avoid false positive notifications.
 
                     if ((startingOwnedPartitionCount != endingOwnedPartitionCount) && (endingOwnedPartitionCount > MaximumAdvisedOwnedPartitions))
                     {
