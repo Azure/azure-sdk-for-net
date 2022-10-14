@@ -118,7 +118,6 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "PrivateLinkServices", "2022-05-01"),
                 new Tuple<string, string, string>("Network", "PublicIPAddresses", "2022-05-01"),
                 new Tuple<string, string, string>("Network", "PublicIPPrefixes", "2022-05-01"),
-                new Tuple<string, string, string>("Network", "PublicIpAddresses", "2022-05-01"),
                 new Tuple<string, string, string>("Network", "PutBastionShareableLink", "2022-05-01"),
                 new Tuple<string, string, string>("Network", "ResourceNavigationLinks", "2022-05-01"),
                 new Tuple<string, string, string>("Network", "RouteFilterRules", "2022-05-01"),
@@ -173,16 +172,5 @@ namespace Microsoft.Azure.Management.Network
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "2.0.4421";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/network/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=D:\\GitRepos\\ForkAzureSdkForNet_09_19_2022\\sdk";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "549bc277952e66577d69ce137eea810c9815ef22";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-
