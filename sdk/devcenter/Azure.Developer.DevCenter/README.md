@@ -81,7 +81,7 @@ public async Task CreateDeleteDevBoxAsync(string tenantId, string devCenterName)
     var credential = new DefaultAzureCredential();
     var devCenterClient = new DevCenterClient(tenantId, devCenterName, credential);
     string targetProjectName = null;
-    await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, top: 1))
+    await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1))
     {
         JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         targetProjectName = result.GetProperty("name").ToString();
@@ -95,7 +95,7 @@ public async Task CreateDeleteDevBoxAsync(string tenantId, string devCenterName)
     // Grab a pool
     var devBoxesClient = new DevBoxesClient(tenantId, devCenterName, targetProjectName, credential);
     string targetPoolName = null;
-    await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(filter: null, top: 1))
+    await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(filter: null, maxCount: 1))
     {
         JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         targetPoolName = result.GetProperty("name").ToString();
@@ -138,7 +138,7 @@ public async Task CreateDeleteEnvironmentAsync(string tenantId, string devCenter
     var credential = new DefaultAzureCredential();
     var devCenterClient = new DevCenterClient(tenantId, devCenterName, credential);
     string projectName = null;
-    await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, top: 1))
+    await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1))
     {
         JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         projectName = result.GetProperty("name").ToString();
@@ -151,7 +151,7 @@ public async Task CreateDeleteEnvironmentAsync(string tenantId, string devCenter
 
     var environmentsClient = new EnvironmentsClient(tenantId, devCenterName, projectName, credential);
     string catalogItemName = null;
-    await foreach (BinaryData data in environmentsClient.GetCatalogItemsAsync(top: 1))
+    await foreach (BinaryData data in environmentsClient.GetCatalogItemsAsync(maxCount: 1))
     {
         JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         catalogItemName = result.GetProperty("name").ToString();
@@ -163,7 +163,7 @@ public async Task CreateDeleteEnvironmentAsync(string tenantId, string devCenter
     }
 
     string environmentTypeName = null;
-    await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(top: 1))
+    await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(maxCount: 1))
     {
         JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         environmentTypeName = result.GetProperty("name").ToString();
