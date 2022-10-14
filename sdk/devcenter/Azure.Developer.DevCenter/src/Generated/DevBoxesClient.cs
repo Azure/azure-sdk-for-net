@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Developer.DevCenter
 {
+    // Data plane generated client. The DevBoxes service client.
     /// <summary> The DevBoxes service client. </summary>
     public partial class DevBoxesClient
     {
@@ -359,11 +360,11 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary> Gets a Dev Box. </summary>
-        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
@@ -382,7 +383,7 @@ namespace Azure.Developer.DevCenter
         /// var credential = new DefaultAzureCredential();
         /// var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
         /// 
-        /// Response response = await client.GetDevBoxByUserAsync(<me>, "<devBoxName>");
+        /// Response response = await client.GetDevBoxByUserAsync("<devBoxName>", <me>);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -456,8 +457,8 @@ namespace Azure.Developer.DevCenter
         /// </remarks>
         public virtual async Task<Response> GetDevBoxByUserAsync(string devBoxName, string userId = "me", RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetDevBoxByUser");
             scope.Start();
@@ -474,11 +475,11 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary> Gets a Dev Box. </summary>
-        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
@@ -497,7 +498,7 @@ namespace Azure.Developer.DevCenter
         /// var credential = new DefaultAzureCredential();
         /// var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
         /// 
-        /// Response response = client.GetDevBoxByUser(<me>, "<devBoxName>");
+        /// Response response = client.GetDevBoxByUser("<devBoxName>", <me>);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -571,8 +572,8 @@ namespace Azure.Developer.DevCenter
         /// </remarks>
         public virtual Response GetDevBoxByUser(string devBoxName, string userId = "me", RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetDevBoxByUser");
             scope.Start();
@@ -589,11 +590,11 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary> Gets RDP Connection info. </summary>
-        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
@@ -612,7 +613,7 @@ namespace Azure.Developer.DevCenter
         /// var credential = new DefaultAzureCredential();
         /// var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
         /// 
-        /// Response response = await client.GetRemoteConnectionAsync(<me>, "<devBoxName>");
+        /// Response response = await client.GetRemoteConnectionAsync("<devBoxName>", <me>);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("webUrl").ToString());
@@ -634,8 +635,8 @@ namespace Azure.Developer.DevCenter
         /// </remarks>
         public virtual async Task<Response> GetRemoteConnectionAsync(string devBoxName, string userId = "me", RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetRemoteConnection");
             scope.Start();
@@ -652,11 +653,11 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary> Gets RDP Connection info. </summary>
-        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
@@ -675,7 +676,7 @@ namespace Azure.Developer.DevCenter
         /// var credential = new DefaultAzureCredential();
         /// var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
         /// 
-        /// Response response = client.GetRemoteConnection(<me>, "<devBoxName>");
+        /// Response response = client.GetRemoteConnection("<devBoxName>", <me>);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("webUrl").ToString());
@@ -697,8 +698,8 @@ namespace Azure.Developer.DevCenter
         /// </remarks>
         public virtual Response GetRemoteConnection(string devBoxName, string userId = "me", RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetRemoteConnection");
             scope.Start();
@@ -715,7 +716,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary> Lists available pools. </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -788,12 +789,12 @@ namespace Azure.Developer.DevCenter
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetPoolsAsync(int? top = null, string filter = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetPoolsAsync(int? maxCount = null, string filter = null, RequestContext context = null)
         {
-            return GetPoolsImplementationAsync("DevBoxesClient.GetPools", top, filter, context);
+            return GetPoolsImplementationAsync("DevBoxesClient.GetPools", maxCount, filter, context);
         }
 
-        private AsyncPageable<BinaryData> GetPoolsImplementationAsync(string diagnosticsScopeName, int? top, string filter, RequestContext context)
+        private AsyncPageable<BinaryData> GetPoolsImplementationAsync(string diagnosticsScopeName, int? maxCount, string filter, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -801,8 +802,8 @@ namespace Azure.Developer.DevCenter
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetPoolsRequest(top, filter, context)
-                        : CreateGetPoolsNextPageRequest(nextLink, top, filter, context);
+                        ? CreateGetPoolsRequest(maxCount, filter, context)
+                        : CreateGetPoolsNextPageRequest(nextLink, maxCount, filter, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -811,7 +812,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary> Lists available pools. </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -884,12 +885,12 @@ namespace Azure.Developer.DevCenter
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetPools(int? top = null, string filter = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetPools(int? maxCount = null, string filter = null, RequestContext context = null)
         {
-            return GetPoolsImplementation("DevBoxesClient.GetPools", top, filter, context);
+            return GetPoolsImplementation("DevBoxesClient.GetPools", maxCount, filter, context);
         }
 
-        private Pageable<BinaryData> GetPoolsImplementation(string diagnosticsScopeName, int? top, string filter, RequestContext context)
+        private Pageable<BinaryData> GetPoolsImplementation(string diagnosticsScopeName, int? maxCount, string filter, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -897,8 +898,8 @@ namespace Azure.Developer.DevCenter
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetPoolsRequest(top, filter, context)
-                        : CreateGetPoolsNextPageRequest(nextLink, top, filter, context);
+                        ? CreateGetPoolsRequest(maxCount, filter, context)
+                        : CreateGetPoolsNextPageRequest(nextLink, maxCount, filter, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -908,7 +909,7 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Lists available schedules for a pool. </summary>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
@@ -959,14 +960,14 @@ namespace Azure.Developer.DevCenter
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetSchedulesByPoolAsync(string poolName, int? top = null, string filter = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSchedulesByPoolAsync(string poolName, int? maxCount = null, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            return GetSchedulesByPoolImplementationAsync("DevBoxesClient.GetSchedulesByPool", poolName, top, filter, context);
+            return GetSchedulesByPoolImplementationAsync("DevBoxesClient.GetSchedulesByPool", poolName, maxCount, filter, context);
         }
 
-        private AsyncPageable<BinaryData> GetSchedulesByPoolImplementationAsync(string diagnosticsScopeName, string poolName, int? top, string filter, RequestContext context)
+        private AsyncPageable<BinaryData> GetSchedulesByPoolImplementationAsync(string diagnosticsScopeName, string poolName, int? maxCount, string filter, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -974,8 +975,8 @@ namespace Azure.Developer.DevCenter
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSchedulesByPoolRequest(poolName, top, filter, context)
-                        : CreateGetSchedulesByPoolNextPageRequest(nextLink, poolName, top, filter, context);
+                        ? CreateGetSchedulesByPoolRequest(poolName, maxCount, filter, context)
+                        : CreateGetSchedulesByPoolNextPageRequest(nextLink, poolName, maxCount, filter, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -985,7 +986,7 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Lists available schedules for a pool. </summary>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
@@ -1036,14 +1037,14 @@ namespace Azure.Developer.DevCenter
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetSchedulesByPool(string poolName, int? top = null, string filter = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSchedulesByPool(string poolName, int? maxCount = null, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            return GetSchedulesByPoolImplementation("DevBoxesClient.GetSchedulesByPool", poolName, top, filter, context);
+            return GetSchedulesByPoolImplementation("DevBoxesClient.GetSchedulesByPool", poolName, maxCount, filter, context);
         }
 
-        private Pageable<BinaryData> GetSchedulesByPoolImplementation(string diagnosticsScopeName, string poolName, int? top, string filter, RequestContext context)
+        private Pageable<BinaryData> GetSchedulesByPoolImplementation(string diagnosticsScopeName, string poolName, int? maxCount, string filter, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1051,8 +1052,8 @@ namespace Azure.Developer.DevCenter
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSchedulesByPoolRequest(poolName, top, filter, context)
-                        : CreateGetSchedulesByPoolNextPageRequest(nextLink, poolName, top, filter, context);
+                        ? CreateGetSchedulesByPoolRequest(poolName, maxCount, filter, context)
+                        : CreateGetSchedulesByPoolNextPageRequest(nextLink, poolName, maxCount, filter, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1063,7 +1064,7 @@ namespace Azure.Developer.DevCenter
         /// <summary> Lists Dev Boxes in the project for a particular user. </summary>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1159,14 +1160,14 @@ namespace Azure.Developer.DevCenter
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetDevBoxesByUserAsync(string userId = "me", string filter = null, int? top = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetDevBoxesByUserAsync(string userId = "me", string filter = null, int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return GetDevBoxesByUserImplementationAsync("DevBoxesClient.GetDevBoxesByUser", userId, filter, top, context);
+            return GetDevBoxesByUserImplementationAsync("DevBoxesClient.GetDevBoxesByUser", userId, filter, maxCount, context);
         }
 
-        private AsyncPageable<BinaryData> GetDevBoxesByUserImplementationAsync(string diagnosticsScopeName, string userId, string filter, int? top, RequestContext context)
+        private AsyncPageable<BinaryData> GetDevBoxesByUserImplementationAsync(string diagnosticsScopeName, string userId, string filter, int? maxCount, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1174,8 +1175,8 @@ namespace Azure.Developer.DevCenter
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDevBoxesByUserRequest(userId, filter, top, context)
-                        : CreateGetDevBoxesByUserNextPageRequest(nextLink, userId, filter, top, context);
+                        ? CreateGetDevBoxesByUserRequest(userId, filter, maxCount, context)
+                        : CreateGetDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1186,7 +1187,7 @@ namespace Azure.Developer.DevCenter
         /// <summary> Lists Dev Boxes in the project for a particular user. </summary>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1282,14 +1283,14 @@ namespace Azure.Developer.DevCenter
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetDevBoxesByUser(string userId = "me", string filter = null, int? top = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetDevBoxesByUser(string userId = "me", string filter = null, int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return GetDevBoxesByUserImplementation("DevBoxesClient.GetDevBoxesByUser", userId, filter, top, context);
+            return GetDevBoxesByUserImplementation("DevBoxesClient.GetDevBoxesByUser", userId, filter, maxCount, context);
         }
 
-        private Pageable<BinaryData> GetDevBoxesByUserImplementation(string diagnosticsScopeName, string userId, string filter, int? top, RequestContext context)
+        private Pageable<BinaryData> GetDevBoxesByUserImplementation(string diagnosticsScopeName, string userId, string filter, int? maxCount, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1297,8 +1298,8 @@ namespace Azure.Developer.DevCenter
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDevBoxesByUserRequest(userId, filter, top, context)
-                        : CreateGetDevBoxesByUserNextPageRequest(nextLink, userId, filter, top, context);
+                        ? CreateGetDevBoxesByUserRequest(userId, filter, maxCount, context)
+                        : CreateGetDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1308,12 +1309,12 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Creates or updates a Dev Box. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/>, <paramref name="content"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <example>
@@ -1342,7 +1343,7 @@ namespace Azure.Developer.DevCenter
         ///     localAdministrator = "Enabled",
         /// };
         /// 
-        /// var operation = await client.CreateDevBoxAsync(WaitUntil.Completed, <me>, "<devBoxName>", RequestContent.Create(data));
+        /// var operation = await client.CreateDevBoxAsync(WaitUntil.Completed, "<devBoxName>", RequestContent.Create(data), <me>);
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1457,9 +1458,9 @@ namespace Azure.Developer.DevCenter
         /// </remarks>
         public virtual async Task<Operation<BinaryData>> CreateDevBoxAsync(WaitUntil waitUntil, string devBoxName, RequestContent content, string userId = "me", RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
             Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.CreateDevBox");
             scope.Start();
@@ -1477,12 +1478,12 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Creates or updates a Dev Box. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/>, <paramref name="content"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <example>
@@ -1511,7 +1512,7 @@ namespace Azure.Developer.DevCenter
         ///     localAdministrator = "Enabled",
         /// };
         /// 
-        /// var operation = client.CreateDevBox(WaitUntil.Completed, <me>, "<devBoxName>", RequestContent.Create(data));
+        /// var operation = client.CreateDevBox(WaitUntil.Completed, "<devBoxName>", RequestContent.Create(data), <me>);
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1626,9 +1627,9 @@ namespace Azure.Developer.DevCenter
         /// </remarks>
         public virtual Operation<BinaryData> CreateDevBox(WaitUntil waitUntil, string devBoxName, RequestContent content, string userId = "me", RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
             Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.CreateDevBox");
             scope.Start();
@@ -1646,11 +1647,11 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Deletes a Dev Box. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <example>
@@ -1670,7 +1671,7 @@ namespace Azure.Developer.DevCenter
         /// var credential = new DefaultAzureCredential();
         /// var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
         /// 
-        /// var operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, <me>, "<devBoxName>");
+        /// var operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<devBoxName>", <me>);
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1745,8 +1746,8 @@ namespace Azure.Developer.DevCenter
         /// </remarks>
         public virtual async Task<Operation<BinaryData>> DeleteDevBoxAsync(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.DeleteDevBox");
             scope.Start();
@@ -1764,11 +1765,11 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Deletes a Dev Box. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <example>
@@ -1788,7 +1789,7 @@ namespace Azure.Developer.DevCenter
         /// var credential = new DefaultAzureCredential();
         /// var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
         /// 
-        /// var operation = client.DeleteDevBox(WaitUntil.Completed, <me>, "<devBoxName>");
+        /// var operation = client.DeleteDevBox(WaitUntil.Completed, "<devBoxName>", <me>);
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1863,8 +1864,8 @@ namespace Azure.Developer.DevCenter
         /// </remarks>
         public virtual Operation<BinaryData> DeleteDevBox(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.DeleteDevBox");
             scope.Start();
@@ -1882,11 +1883,11 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Starts a Dev Box. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <example>
@@ -1906,7 +1907,7 @@ namespace Azure.Developer.DevCenter
         /// var credential = new DefaultAzureCredential();
         /// var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
         /// 
-        /// var operation = await client.StartDevBoxAsync(WaitUntil.Completed, <me>, "<devBoxName>");
+        /// var operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<devBoxName>", <me>);
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1981,8 +1982,8 @@ namespace Azure.Developer.DevCenter
         /// </remarks>
         public virtual async Task<Operation<BinaryData>> StartDevBoxAsync(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.StartDevBox");
             scope.Start();
@@ -2000,11 +2001,11 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Starts a Dev Box. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <example>
@@ -2024,7 +2025,7 @@ namespace Azure.Developer.DevCenter
         /// var credential = new DefaultAzureCredential();
         /// var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
         /// 
-        /// var operation = client.StartDevBox(WaitUntil.Completed, <me>, "<devBoxName>");
+        /// var operation = client.StartDevBox(WaitUntil.Completed, "<devBoxName>", <me>);
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -2099,8 +2100,8 @@ namespace Azure.Developer.DevCenter
         /// </remarks>
         public virtual Operation<BinaryData> StartDevBox(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.StartDevBox");
             scope.Start();
@@ -2118,31 +2119,31 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Stops a Dev Box. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call StopDevBoxAsync with required parameters and parse the result.
+        /// This sample shows how to call StopAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
         /// 
-        /// var operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<devBoxName>");
+        /// var operation = await client.StopAsync(WaitUntil.Completed, "<devBoxName>");
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("poolName").ToString());
         /// ]]></code>
-        /// This sample shows how to call StopDevBoxAsync with all parameters, and how to parse the result.
+        /// This sample shows how to call StopAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
         /// 
-        /// var operation = await client.StopDevBoxAsync(WaitUntil.Completed, <me>, "<devBoxName>");
+        /// var operation = await client.StopAsync(WaitUntil.Completed, "<devBoxName>", <me>);
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -2215,17 +2216,17 @@ namespace Azure.Developer.DevCenter
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> StopDevBoxAsync(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> StopAsync(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.StopDevBox");
+            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.Stop");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStopDevBoxRequest(userId, devBoxName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBox", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateStopRequest(userId, devBoxName, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.Stop", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2236,31 +2237,31 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Stops a Dev Box. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call StopDevBox with required parameters and parse the result.
+        /// This sample shows how to call Stop with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
         /// 
-        /// var operation = client.StopDevBox(WaitUntil.Completed, "<devBoxName>");
+        /// var operation = client.Stop(WaitUntil.Completed, "<devBoxName>");
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("poolName").ToString());
         /// ]]></code>
-        /// This sample shows how to call StopDevBox with all parameters, and how to parse the result.
+        /// This sample shows how to call Stop with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
         /// 
-        /// var operation = client.StopDevBox(WaitUntil.Completed, <me>, "<devBoxName>");
+        /// var operation = client.Stop(WaitUntil.Completed, "<devBoxName>", <me>);
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -2333,17 +2334,17 @@ namespace Azure.Developer.DevCenter
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> StopDevBox(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
+        public virtual Operation<BinaryData> Stop(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.StopDevBox");
+            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.Stop");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStopDevBoxRequest(userId, devBoxName, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBox", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateStopRequest(userId, devBoxName, context);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DevBoxesClient.Stop", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2352,7 +2353,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        internal HttpMessage CreateGetPoolsRequest(int? top, string filter, RequestContext context)
+        internal HttpMessage CreateGetPoolsRequest(int? maxCount, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2368,9 +2369,9 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath(_projectName, true);
             uri.AppendPath("/pools", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("top", top.Value, true);
+                uri.AppendQuery("top", maxCount.Value, true);
             }
             if (filter != null)
             {
@@ -2403,7 +2404,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetSchedulesByPoolRequest(string poolName, int? top, string filter, RequestContext context)
+        internal HttpMessage CreateGetSchedulesByPoolRequest(string poolName, int? maxCount, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2421,9 +2422,9 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath(poolName, true);
             uri.AppendPath("/schedules", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("top", top.Value, true);
+                uri.AppendQuery("top", maxCount.Value, true);
             }
             if (filter != null)
             {
@@ -2458,7 +2459,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetDevBoxesByUserRequest(string userId, string filter, int? top, RequestContext context)
+        internal HttpMessage CreateGetDevBoxesByUserRequest(string userId, string filter, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2480,9 +2481,9 @@ namespace Azure.Developer.DevCenter
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("top", top.Value, true);
+                uri.AppendQuery("top", maxCount.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2588,7 +2589,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateStopDevBoxRequest(string userId, string devBoxName, RequestContext context)
+        internal HttpMessage CreateStopRequest(string userId, string devBoxName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
@@ -2638,7 +2639,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetPoolsNextPageRequest(string nextLink, int? top, string filter, RequestContext context)
+        internal HttpMessage CreateGetPoolsNextPageRequest(string nextLink, int? maxCount, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2656,7 +2657,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetSchedulesByPoolNextPageRequest(string nextLink, string poolName, int? top, string filter, RequestContext context)
+        internal HttpMessage CreateGetSchedulesByPoolNextPageRequest(string nextLink, string poolName, int? maxCount, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2674,7 +2675,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetDevBoxesByUserNextPageRequest(string nextLink, string userId, string filter, int? top, RequestContext context)
+        internal HttpMessage CreateGetDevBoxesByUserNextPageRequest(string nextLink, string userId, string filter, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

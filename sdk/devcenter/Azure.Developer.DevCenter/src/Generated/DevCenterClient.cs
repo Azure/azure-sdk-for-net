@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Developer.DevCenter
 {
+    // Data plane generated client. The DevCenter service client.
     /// <summary> The DevCenter service client. </summary>
     public partial class DevCenterClient
     {
@@ -175,7 +176,7 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Lists all projects. </summary>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -217,12 +218,12 @@ namespace Azure.Developer.DevCenter
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetProjectsAsync(string filter = null, int? top = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetProjectsAsync(string filter = null, int? maxCount = null, RequestContext context = null)
         {
-            return GetProjectsImplementationAsync("DevCenterClient.GetProjects", filter, top, context);
+            return GetProjectsImplementationAsync("DevCenterClient.GetProjects", filter, maxCount, context);
         }
 
-        private AsyncPageable<BinaryData> GetProjectsImplementationAsync(string diagnosticsScopeName, string filter, int? top, RequestContext context)
+        private AsyncPageable<BinaryData> GetProjectsImplementationAsync(string diagnosticsScopeName, string filter, int? maxCount, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -230,8 +231,8 @@ namespace Azure.Developer.DevCenter
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProjectsRequest(filter, top, context)
-                        : CreateGetProjectsNextPageRequest(nextLink, filter, top, context);
+                        ? CreateGetProjectsRequest(filter, maxCount, context)
+                        : CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -241,7 +242,7 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Lists all projects. </summary>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -283,12 +284,12 @@ namespace Azure.Developer.DevCenter
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetProjects(string filter = null, int? top = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetProjects(string filter = null, int? maxCount = null, RequestContext context = null)
         {
-            return GetProjectsImplementation("DevCenterClient.GetProjects", filter, top, context);
+            return GetProjectsImplementation("DevCenterClient.GetProjects", filter, maxCount, context);
         }
 
-        private Pageable<BinaryData> GetProjectsImplementation(string diagnosticsScopeName, string filter, int? top, RequestContext context)
+        private Pageable<BinaryData> GetProjectsImplementation(string diagnosticsScopeName, string filter, int? maxCount, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -296,8 +297,8 @@ namespace Azure.Developer.DevCenter
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProjectsRequest(filter, top, context)
-                        : CreateGetProjectsNextPageRequest(nextLink, filter, top, context);
+                        ? CreateGetProjectsRequest(filter, maxCount, context)
+                        : CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -307,7 +308,7 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Lists Dev Boxes that the caller has access to in the DevCenter. </summary>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -401,12 +402,12 @@ namespace Azure.Developer.DevCenter
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetAllDevBoxesAsync(string filter = null, int? top = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetAllDevBoxesAsync(string filter = null, int? maxCount = null, RequestContext context = null)
         {
-            return GetAllDevBoxesImplementationAsync("DevCenterClient.GetAllDevBoxes", filter, top, context);
+            return GetAllDevBoxesImplementationAsync("DevCenterClient.GetAllDevBoxes", filter, maxCount, context);
         }
 
-        private AsyncPageable<BinaryData> GetAllDevBoxesImplementationAsync(string diagnosticsScopeName, string filter, int? top, RequestContext context)
+        private AsyncPageable<BinaryData> GetAllDevBoxesImplementationAsync(string diagnosticsScopeName, string filter, int? maxCount, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -414,8 +415,8 @@ namespace Azure.Developer.DevCenter
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllDevBoxesRequest(filter, top, context)
-                        : CreateGetAllDevBoxesNextPageRequest(nextLink, filter, top, context);
+                        ? CreateGetAllDevBoxesRequest(filter, maxCount, context)
+                        : CreateGetAllDevBoxesNextPageRequest(nextLink, filter, maxCount, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -425,7 +426,7 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Lists Dev Boxes that the caller has access to in the DevCenter. </summary>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -519,12 +520,12 @@ namespace Azure.Developer.DevCenter
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetAllDevBoxes(string filter = null, int? top = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetAllDevBoxes(string filter = null, int? maxCount = null, RequestContext context = null)
         {
-            return GetAllDevBoxesImplementation("DevCenterClient.GetAllDevBoxes", filter, top, context);
+            return GetAllDevBoxesImplementation("DevCenterClient.GetAllDevBoxes", filter, maxCount, context);
         }
 
-        private Pageable<BinaryData> GetAllDevBoxesImplementation(string diagnosticsScopeName, string filter, int? top, RequestContext context)
+        private Pageable<BinaryData> GetAllDevBoxesImplementation(string diagnosticsScopeName, string filter, int? maxCount, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -532,8 +533,8 @@ namespace Azure.Developer.DevCenter
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllDevBoxesRequest(filter, top, context)
-                        : CreateGetAllDevBoxesNextPageRequest(nextLink, filter, top, context);
+                        ? CreateGetAllDevBoxesRequest(filter, maxCount, context)
+                        : CreateGetAllDevBoxesNextPageRequest(nextLink, filter, maxCount, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -544,7 +545,7 @@ namespace Azure.Developer.DevCenter
         /// <summary> Lists Dev Boxes in the Dev Center for a particular user. </summary>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -640,14 +641,14 @@ namespace Azure.Developer.DevCenter
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetAllDevBoxesByUserAsync(string userId = "me", string filter = null, int? top = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetAllDevBoxesByUserAsync(string userId = "me", string filter = null, int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return GetAllDevBoxesByUserImplementationAsync("DevCenterClient.GetAllDevBoxesByUser", userId, filter, top, context);
+            return GetAllDevBoxesByUserImplementationAsync("DevCenterClient.GetAllDevBoxesByUser", userId, filter, maxCount, context);
         }
 
-        private AsyncPageable<BinaryData> GetAllDevBoxesByUserImplementationAsync(string diagnosticsScopeName, string userId, string filter, int? top, RequestContext context)
+        private AsyncPageable<BinaryData> GetAllDevBoxesByUserImplementationAsync(string diagnosticsScopeName, string userId, string filter, int? maxCount, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -655,8 +656,8 @@ namespace Azure.Developer.DevCenter
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllDevBoxesByUserRequest(userId, filter, top, context)
-                        : CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, filter, top, context);
+                        ? CreateGetAllDevBoxesByUserRequest(userId, filter, maxCount, context)
+                        : CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -667,7 +668,7 @@ namespace Azure.Developer.DevCenter
         /// <summary> Lists Dev Boxes in the Dev Center for a particular user. </summary>
         /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -763,14 +764,14 @@ namespace Azure.Developer.DevCenter
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetAllDevBoxesByUser(string userId = "me", string filter = null, int? top = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetAllDevBoxesByUser(string userId = "me", string filter = null, int? maxCount = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return GetAllDevBoxesByUserImplementation("DevCenterClient.GetAllDevBoxesByUser", userId, filter, top, context);
+            return GetAllDevBoxesByUserImplementation("DevCenterClient.GetAllDevBoxesByUser", userId, filter, maxCount, context);
         }
 
-        private Pageable<BinaryData> GetAllDevBoxesByUserImplementation(string diagnosticsScopeName, string userId, string filter, int? top, RequestContext context)
+        private Pageable<BinaryData> GetAllDevBoxesByUserImplementation(string diagnosticsScopeName, string userId, string filter, int? maxCount, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -778,8 +779,8 @@ namespace Azure.Developer.DevCenter
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllDevBoxesByUserRequest(userId, filter, top, context)
-                        : CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, filter, top, context);
+                        ? CreateGetAllDevBoxesByUserRequest(userId, filter, maxCount, context)
+                        : CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -787,7 +788,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        internal HttpMessage CreateGetProjectsRequest(string filter, int? top, RequestContext context)
+        internal HttpMessage CreateGetProjectsRequest(string filter, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -805,9 +806,9 @@ namespace Azure.Developer.DevCenter
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("top", top.Value, true);
+                uri.AppendQuery("top", maxCount.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -834,7 +835,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetAllDevBoxesRequest(string filter, int? top, RequestContext context)
+        internal HttpMessage CreateGetAllDevBoxesRequest(string filter, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -852,16 +853,16 @@ namespace Azure.Developer.DevCenter
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("top", top.Value, true);
+                uri.AppendQuery("top", maxCount.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetAllDevBoxesByUserRequest(string userId, string filter, int? top, RequestContext context)
+        internal HttpMessage CreateGetAllDevBoxesByUserRequest(string userId, string filter, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -881,16 +882,16 @@ namespace Azure.Developer.DevCenter
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("top", top.Value, true);
+                uri.AppendQuery("top", maxCount.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetProjectsNextPageRequest(string nextLink, string filter, int? top, RequestContext context)
+        internal HttpMessage CreateGetProjectsNextPageRequest(string nextLink, string filter, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -908,7 +909,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetAllDevBoxesNextPageRequest(string nextLink, string filter, int? top, RequestContext context)
+        internal HttpMessage CreateGetAllDevBoxesNextPageRequest(string nextLink, string filter, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -926,7 +927,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetAllDevBoxesByUserNextPageRequest(string nextLink, string userId, string filter, int? top, RequestContext context)
+        internal HttpMessage CreateGetAllDevBoxesByUserNextPageRequest(string nextLink, string userId, string filter, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

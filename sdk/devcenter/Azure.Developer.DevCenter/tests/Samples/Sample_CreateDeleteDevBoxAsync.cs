@@ -20,7 +20,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             var credential = new DefaultAzureCredential();
             var devCenterClient = new DevCenterClient(tenantId, devCenterName, credential);
             string targetProjectName = null;
-            await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, top: 1))
+            await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1))
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 targetProjectName = result.GetProperty("name").ToString();
@@ -34,7 +34,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             // Grab a pool
             var devBoxesClient = new DevBoxesClient(tenantId, devCenterName, targetProjectName, credential);
             string targetPoolName = null;
-            await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(filter: null, top: 1))
+            await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(filter: null, maxCount: 1))
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 targetPoolName = result.GetProperty("name").ToString();
