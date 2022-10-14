@@ -14,5 +14,4 @@ input-file:
 namespace: Azure.Developer.DevCenter
 security: AADToken
 security-scopes: https://devcenter.azure.com/.default
-
 ```
