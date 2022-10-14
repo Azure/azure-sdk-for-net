@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.LoadTestService.Tests.ScenarioTests
             {
                 await CreateCommonClient();
             }
-            _quotaResourceCollection = Subscription.GetQuotaResources(LoadTestResourceHelper.RESOURCE_LOCATION);
+            _quotaResourceCollection = Subscription.GetQuotaResources(LoadTestResourceHelper.LOADTESTS_RESOURCE_LOCATION);
         }
 
         [OneTimeTearDown]
@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.LoadTestService.Tests.ScenarioTests
         }
 
         [RecordedTest]
-        [AsyncOnly]
         public async Task GetQuotaLimitAndUsage()
         {
             //// Quota get limit and usage tests
@@ -53,7 +52,6 @@ namespace Azure.ResourceManager.LoadTestService.Tests.ScenarioTests
         }
 
         [RecordedTest]
-        [AsyncOnly]
         public async Task CheckQuotaAvailability()
         {
             //// Quota check availability tests
@@ -69,7 +67,7 @@ namespace Azure.ResourceManager.LoadTestService.Tests.ScenarioTests
             Assert.AreEqual("maxConcurrentTestRuns", quotaResource.Data.Name);
 
             QuotaBucketRequestPropertiesDimensions dimensions = new QuotaBucketRequestPropertiesDimensions(
-                Subscription.Id.SubscriptionId, LoadTestResourceHelper.RESOURCE_LOCATION);
+                Subscription.Id.SubscriptionId, LoadTestResourceHelper.LOADTESTS_RESOURCE_LOCATION);
 
             QuotaBucketContent quotaAvailabilityPayload = new QuotaBucketContent(
                 quotaResponse.Value.Data.Id,

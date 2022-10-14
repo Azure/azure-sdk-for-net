@@ -7,6 +7,5 @@ namespace Azure.ResourceManager.LoadTestService.Tests
 {
     public class LoadTestServiceManagementTestEnvironment : TestEnvironment
     {
-        public string LOADTESTSERVICE_RESOURCE_NAME => "loadtestsdk-resource-dotnet";
     }
 }

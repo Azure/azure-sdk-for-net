@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.LoadTestService.Tests
                 await CreateCommonClient();
             }
             var resourceGroupName = Recording.GenerateAssetName("SdkRg");
-            await LoadTestResourceHelper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, LoadTestResourceHelper.RESOURCE_LOCATION, resourceGroupName);
+            await TryRegisterResourceGroupAsync(ResourceGroupsOperations, LoadTestResourceHelper.LOADTESTS_RESOURCE_LOCATION, resourceGroupName);
 
             _loadTestResourceCollection = (await GetResourceGroupAsync(resourceGroupName)).GetLoadTestResources();
-            _loadTestResourceData = new LoadTestResourceData(LoadTestResourceHelper.RESOURCE_LOCATION);
+            _loadTestResourceData = new LoadTestResourceData(LoadTestResourceHelper.LOADTESTS_RESOURCE_LOCATION);
         }
 
         [OneTimeTearDown]
@@ -48,32 +48,17 @@ namespace Azure.ResourceManager.LoadTestService.Tests
         }
 
         [RecordedTest]
-        [AsyncOnly]
-        public async Task LoadTestResourcesListBySubscription()
-        {
-            //// List LoadTest resources by subscription
-            AsyncPageable<LoadTestResource> loadtestResources = Subscription.GetLoadTestResourcesAsync();
-            await foreach (LoadTestResource loadtestResource in loadtestResources)
-            {
-                Assert.IsNotNull(loadtestResource.Data.Name);
-            }
-            Assert.IsTrue(await loadtestResources.GetAsyncEnumerator().MoveNextAsync());
-        }
-
-        [RecordedTest]
-        [AsyncOnly]
         public async Task LoadTestResourceOperationTests()
         {
             var loadTestResourceName = Recording.GenerateAssetName("Sdk-LoadTestService-DotNet");
 
             //// Create
             ArmOperation<LoadTestResource> loadTestCreateResponse = await _loadTestResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, loadTestResourceName, _loadTestResourceData);
-            await loadTestCreateResponse.WaitForCompletionAsync();
 
             Assert.IsTrue(loadTestCreateResponse.HasCompleted);
             Assert.IsTrue(loadTestCreateResponse.HasValue);
             Assert.AreEqual(loadTestResourceName, loadTestCreateResponse.Value.Data.Name);
-            Assert.AreEqual(LoadTestResourceHelper.RESOURCE_LOCATION, loadTestCreateResponse.Value.Data.Location.Name);
+            Assert.AreEqual(LoadTestResourceHelper.LOADTESTS_RESOURCE_LOCATION, loadTestCreateResponse.Value.Data.Location.Name);
             Assert.AreEqual(LoadTestResourceHelper.LOADTESTS_RESOURCE_TYPE.ToLower(), loadTestCreateResponse.Value.Data.ResourceType.ToString().ToLower());
 
             //// Get
@@ -82,7 +67,7 @@ namespace Azure.ResourceManager.LoadTestService.Tests
 
             Assert.IsNotNull(loadTestGetResponseValue);
             Assert.AreEqual(loadTestResourceName, loadTestGetResponseValue.Data.Name);
-            Assert.AreEqual(LoadTestResourceHelper.RESOURCE_LOCATION, loadTestGetResponseValue.Data.Location.Name);
+            Assert.AreEqual(LoadTestResourceHelper.LOADTESTS_RESOURCE_LOCATION, loadTestGetResponseValue.Data.Location.Name);
             Assert.AreEqual(LoadTestResourceHelper.LOADTESTS_RESOURCE_TYPE.ToLower(), loadTestGetResponseValue.Data.ResourceType.ToString().ToLower());
 
             //// List outbound network dependencies
@@ -99,7 +84,7 @@ namespace Azure.ResourceManager.LoadTestService.Tests
 
             Assert.IsNotNull(loadTestPatchResponseValue);
             Assert.AreEqual(loadTestResourceName, loadTestPatchResponseValue.Data.Name);
-            Assert.AreEqual(LoadTestResourceHelper.RESOURCE_LOCATION, loadTestPatchResponseValue.Data.Location.Name);
+            Assert.AreEqual(LoadTestResourceHelper.LOADTESTS_RESOURCE_LOCATION, loadTestPatchResponseValue.Data.Location.Name);
             Assert.AreEqual(LoadTestResourceHelper.LOADTESTS_RESOURCE_TYPE.ToLower(), loadTestPatchResponseValue.Data.ResourceType.ToString().ToLower());
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, loadTestPatchResponseValue.Data.Identity.ManagedServiceIdentityType);
 
