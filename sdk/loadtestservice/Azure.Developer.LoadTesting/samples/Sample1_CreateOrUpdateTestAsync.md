@@ -5,7 +5,7 @@ To use these samples, you'll first need to set up resources. See [getting starte
 You can create a LoadTestclient and call the `CreateOrUpdateTestAsync` method from SubClient `LoadTestAdministrationClient`
 
 ## Create LoadTestAdministrationClient
-```C# Snippet:CreatingClient
+```C# Snippet:Azure_Developer_LoadTesting_CreatingClient
 string endpoint = TestEnvironment.Endpoint;
 TokenCredential credential = TestEnvironment.Credential;
 
@@ -17,7 +17,7 @@ LoadTestAdministrationClient loadTestAdministrationClient = loadTestingClient.ge
 ```
 
 ## Calling CreateOrUpdateTestAsync
-```C# Snippet:CreateOrUpdateTestAsync
+```C# Snippet:Azure_Developer_LoadTesting_CreateOrUpdateTestAsync
 // provide unique identifier for your test
 string testId = "my-test-id";
 
