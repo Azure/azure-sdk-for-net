@@ -5,7 +5,7 @@ using System.Text.Json;
 using Azure.Core;
 using BenchmarkDotNet.Attributes;
 
-namespace Azure.Data.AppConfiguration.Performance
+namespace Azure.Core.Perf
 {
     [MemoryDiagnoser]
     public class FirstReadBenchmark
@@ -21,7 +21,7 @@ namespace Azure.Data.AppConfiguration.Performance
         [Benchmark]
         public int ReadJsonData()
         {
-            return (int)JsonData.FromString(_json)["a"]["b"];
+            return (int)JsonData.Parse(_json)["a"]["b"];
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text.Json;
 using Azure.Core;
 using BenchmarkDotNet.Attributes;
 
-namespace Azure.Data.AppConfiguration.Performance
+namespace Azure.Core.Perf
 {
     [MemoryDiagnoser]
     public class StronglyTypedReadingBenchmark
@@ -13,7 +13,7 @@ namespace Azure.Data.AppConfiguration.Performance
         private static string _json = "{\"a\":{\"b\":5}}";
 
         private static JsonElement _element = JsonDocument.Parse(_json).RootElement;
-        private static JsonData _jsonData = JsonData.FromString(_json);
+        private static JsonData _jsonData = JsonData.Parse(_json);
 
         [Benchmark(Baseline = true)]
         public int ReadJsonElement()
