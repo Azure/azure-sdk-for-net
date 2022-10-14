@@ -10,7 +10,7 @@
 
 ### Other Changes
 
-- Adjusted the frequency that a warning logged when the processor owns more partitions than a basic heuristic believes is ideal.  Warnings will no longer log on each load balancing cycle, only when the number of partitions owned changes.
+- Adjusted the frequency that a warning is logged when the processor owns more partitions than a basic heuristic believes is ideal.  Warnings will no longer log on each load balancing cycle, only when the number of partitions owned changes.
 
 ## 5.7.3 (2022-10-11)
 
