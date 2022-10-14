@@ -6,6 +6,8 @@ $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/main/_data/releases/latest/dotnet-packages.csv"
 $BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=container&comp=list&prefix=dotnet%2F&delimiter=%2F"
 
+. "$PSScriptRoot/docs/Docs-ToC.ps1"
+
 function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
   $allPackageProps = @()
@@ -112,7 +114,7 @@ function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
 # Return list of nupkg artifacts
 function Get-dotnet-Package-Artifacts ($Location)
 {
-  $pkgs = Get-ChildItem "${Location}" -Recurse | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
+  $pkgs = @(Get-ChildItem $Location -Recurse | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")})
   if (!$pkgs)
   {
     Write-Host "$($Location) does not have any package"

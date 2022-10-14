@@ -174,13 +174,18 @@ stages:
                             PackageInfoLocations:
                               - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
                             WorkingDirectory: $(System.DefaultWorkingDirectory)
-                            TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
+                            TargetDocRepoOwner: Azure
                             TargetDocRepoName: ${{parameters.TargetDocRepoName}}
                             Language: 'dotnet'
                             SparseCheckoutPaths:
                               - /api/overview/azure/
                               - /metadata/
-
+                        - template: /eng/pipelines/templates/steps/fetch-namespaces.yml
+                          parameters:
+                            DotnetNupkgLocation: "$(Pipeline.Workspace)/${{parameters.ArtifactName}}"
+                            ArtifactName: ${{artifact.name}}
+                            DocRepoLocation: $(DocRepoLocation)
+                            TargetBranch: $(TargetBranchName)
             - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
               - deployment: PublishDocs
                 displayName: Publish Docs to GitHub pages
@@ -301,10 +306,18 @@ stages:
               - ${{ each artifact in parameters.Artifacts }}:
                 - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
             WorkingDirectory: $(System.DefaultWorkingDirectory)
-            TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
+            TargetDocRepoOwner: Azure
             TargetDocRepoName: ${{parameters.TargetDocRepoName}}
             Language: 'dotnet'
             DailyDocsBuild: true
             SparseCheckoutPaths:
               - /api/overview/azure/
               - /metadata/
+        - ${{ each artifact in parameters.Artifacts }}:
+          - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
+            - template: /eng/pipelines/templates/steps/fetch-namespaces.yml
+              parameters:
+                DotnetNupkgLocation: "$(Pipeline.Workspace)/${{parameters.ArtifactName}}"
+                ArtifactName: ${{artifact.name}}
+                TargetBranch: $(TargetBranchName)
+                DocRepoLocation: $(DocRepoLocation)
