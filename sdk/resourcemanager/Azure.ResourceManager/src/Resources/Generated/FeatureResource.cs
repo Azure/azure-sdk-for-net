@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _featureRestClient.GetAsync(Id.SubscriptionId, Id.Provider, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _featureRestClient.GetAsync(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _featureRestClient.Get(Id.SubscriptionId, Id.Provider, Id.Name, cancellationToken);
+                var response = _featureRestClient.Get(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _featureRestClient.RegisterAsync(Id.SubscriptionId, Id.Provider, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _featureRestClient.RegisterAsync(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _featureRestClient.Register(Id.SubscriptionId, Id.Provider, Id.Name, cancellationToken);
+                var response = _featureRestClient.Register(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken);
                 return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _featureRestClient.UnregisterAsync(Id.SubscriptionId, Id.Provider, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _featureRestClient.UnregisterAsync(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _featureRestClient.Unregister(Id.SubscriptionId, Id.Provider, Id.Name, cancellationToken);
+                var response = _featureRestClient.Unregister(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken);
                 return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
