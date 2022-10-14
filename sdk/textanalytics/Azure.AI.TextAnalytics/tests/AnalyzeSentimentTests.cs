@@ -39,6 +39,8 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        // Temporarily setting max version to V2022-05-01 since V2022-10-01-preview does not support AAD yet.
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         public async Task AnalyzeSentimentWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
