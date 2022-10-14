@@ -10,6 +10,7 @@ using NUnit.Framework;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
 using System.Collections.Generic;
 using Azure.Core;
+using System.Linq;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
 {
@@ -42,7 +43,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
         public async Task ReportCRUD()
         {
             string reportName = Recording.GenerateAssetName("sdk-report");
-            ReportResourceCollection reports = new ReportResourceCollection(Client, new ResourceIdentifier("/providers/Microsoft.Resources/tenants/72f988bf-86f1-41af-91ab-2d7cd011db47"));
+            TenantCollection tenantCollection = Client.GetTenants();
+            var tenants = await tenantCollection.GetAllAsync().ToEnumerableAsync();
+            var tenant = tenants.FirstOrDefault();
+            ReportResourceCollection reports = tenant.GetReportResources();
 
             // create report
             List<ResourceMetadata> resources = new List<ResourceMetadata>();
