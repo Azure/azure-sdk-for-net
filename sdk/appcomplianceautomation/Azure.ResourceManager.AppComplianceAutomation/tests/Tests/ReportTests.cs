@@ -53,12 +53,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
                 "StorageV2",
                 "sdkteststorageaccount",
                 tags));
-            ReportProperties properties = new ReportProperties("GMT Standard Time", new DateTimeOffset(new DateTime(2022, 01, 01, 0, 0, 0)), resources);
+            DateTime univDateTime = new DateTime(2022, 01, 01, 0, 0, 0).ToUniversalTime();
+            ReportProperties properties = new ReportProperties("GMT Standard Time", new DateTimeOffset(univDateTime), resources);
             ArmOperation<ReportResource> response = await reports.CreateOrUpdateAsync(WaitUntil.Completed, reportName, new ReportResourceData(properties));
-
-            // list report
-            var reportResources = await reports.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(reportResources.Count, 1);
 
             // get report
             Response<ReportResource> getResponse = await reports.GetAsync(reportName);
