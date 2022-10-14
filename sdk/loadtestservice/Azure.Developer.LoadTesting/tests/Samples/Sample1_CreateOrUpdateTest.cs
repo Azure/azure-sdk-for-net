@@ -18,7 +18,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
         [SyncOnly]
         public void CreateOrUpdateTest()
         {
-            #region Snippet:CreatingClient
+            #region Snippet:Azure_Developer_LoadTesting_CreatingClient
 
             string endpoint = TestEnvironment.Endpoint;
             TokenCredential credential = TestEnvironment.Credential;
@@ -31,7 +31,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
 
             #endregion
 
-            #region Snippet:CreatOrUpdateTest
+            #region Snippet:Azure_Developer_LoadTesting_CreatOrUpdateTest
 
             // provide unique identifier for your test
             string testId = "my-test-id";

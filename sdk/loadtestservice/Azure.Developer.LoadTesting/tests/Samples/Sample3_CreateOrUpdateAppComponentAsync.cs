@@ -30,7 +30,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             // getting appropirate Subclient
             LoadTestAdministrationClient loadTestAdministrationClient = loadTestingClient.getLoadTestAdministration();
 
-            #region Snippet:CreateOrUpdateAppComponentAsync
+            #region Snippet:Azure_Developer_LoadTesting_CreateOrUpdateAppComponentAsync
 
             // provide unique identifier for your test
             string testId = "my-test-id";

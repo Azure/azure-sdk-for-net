@@ -29,7 +29,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             // getting appropirate Subclient
             LoadTestAdministrationClient loadTestAdministrationClient = loadTestingClient.getLoadTestAdministration();
 
-            #region Snippet:UploadTestFile
+            #region Snippet:Azure_Developer_LoadTesting_UploadTestFile
 
             // provide unique identifier for your test
             string testId = "my-test-id";
