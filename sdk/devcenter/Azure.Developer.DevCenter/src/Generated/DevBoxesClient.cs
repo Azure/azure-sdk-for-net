@@ -2127,23 +2127,23 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call StopAsync with required parameters and parse the result.
+        /// This sample shows how to call StopDevBoxAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
         /// 
-        /// var operation = await client.StopAsync(WaitUntil.Completed, "<devBoxName>");
+        /// var operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<devBoxName>");
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("poolName").ToString());
         /// ]]></code>
-        /// This sample shows how to call StopAsync with all parameters, and how to parse the result.
+        /// This sample shows how to call StopDevBoxAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
         /// 
-        /// var operation = await client.StopAsync(WaitUntil.Completed, "<devBoxName>", <me>);
+        /// var operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<devBoxName>", <me>);
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -2216,17 +2216,17 @@ namespace Azure.Developer.DevCenter
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> StopAsync(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> StopDevBoxAsync(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.Stop");
+            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.StopDevBox");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStopRequest(userId, devBoxName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.Stop", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateStopDevBoxRequest(userId, devBoxName, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBox", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2245,23 +2245,23 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call Stop with required parameters and parse the result.
+        /// This sample shows how to call StopDevBox with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
         /// 
-        /// var operation = client.Stop(WaitUntil.Completed, "<devBoxName>");
+        /// var operation = client.StopDevBox(WaitUntil.Completed, "<devBoxName>");
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("poolName").ToString());
         /// ]]></code>
-        /// This sample shows how to call Stop with all parameters, and how to parse the result.
+        /// This sample shows how to call StopDevBox with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
         /// 
-        /// var operation = client.Stop(WaitUntil.Completed, "<devBoxName>", <me>);
+        /// var operation = client.StopDevBox(WaitUntil.Completed, "<devBoxName>", <me>);
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -2334,17 +2334,17 @@ namespace Azure.Developer.DevCenter
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> Stop(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
+        public virtual Operation<BinaryData> StopDevBox(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.Stop");
+            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.StopDevBox");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStopRequest(userId, devBoxName, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DevBoxesClient.Stop", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateStopDevBoxRequest(userId, devBoxName, context);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBox", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2589,7 +2589,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateStopRequest(string userId, string devBoxName, RequestContext context)
+        internal HttpMessage CreateStopDevBoxRequest(string userId, string devBoxName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;

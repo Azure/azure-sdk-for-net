@@ -26,8 +26,8 @@ namespace Azure.Developer.DevCenter
         public virtual Azure.AsyncPageable<System.BinaryData> GetSchedulesByPoolAsync(string poolName, int? maxCount = default(int?), string filter = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation<System.BinaryData> StartDevBox(Azure.WaitUntil waitUntil, string devBoxName, string userId = "me", Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> StartDevBoxAsync(Azure.WaitUntil waitUntil, string devBoxName, string userId = "me", Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> Stop(Azure.WaitUntil waitUntil, string devBoxName, string userId = "me", Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> StopAsync(Azure.WaitUntil waitUntil, string devBoxName, string userId = "me", Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> StopDevBox(Azure.WaitUntil waitUntil, string devBoxName, string userId = "me", Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> StopDevBoxAsync(Azure.WaitUntil waitUntil, string devBoxName, string userId = "me", Azure.RequestContext context = null) { throw null; }
     }
     public partial class DevCenterClient
     {
