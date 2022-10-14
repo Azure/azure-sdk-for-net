@@ -89,6 +89,40 @@ namespace Azure
         public static bool operator !=(Azure.HttpRange left, Azure.HttpRange right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
+    public partial class JsonData : System.Dynamic.IDynamicMetaObjectProvider, System.IEquatable<Azure.JsonData>
+    {
+        internal JsonData() { }
+        public Azure.JsonData this[int arrayIndex] { get { throw null; } }
+        public Azure.JsonData this[string propertyName] { get { throw null; } }
+        public bool Equals(Azure.JsonData? other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.JsonData? left, string? right) { throw null; }
+        public static bool operator ==(string? left, Azure.JsonData? right) { throw null; }
+        public static explicit operator bool (Azure.JsonData json) { throw null; }
+        public static explicit operator double (Azure.JsonData json) { throw null; }
+        public static explicit operator int (Azure.JsonData json) { throw null; }
+        public static explicit operator long (Azure.JsonData json) { throw null; }
+        public static explicit operator bool? (Azure.JsonData json) { throw null; }
+        public static explicit operator double? (Azure.JsonData json) { throw null; }
+        public static explicit operator int? (Azure.JsonData json) { throw null; }
+        public static explicit operator long? (Azure.JsonData json) { throw null; }
+        public static explicit operator float? (Azure.JsonData json) { throw null; }
+        public static explicit operator float (Azure.JsonData json) { throw null; }
+        public static explicit operator string (Azure.JsonData json) { throw null; }
+        public static bool operator !=(Azure.JsonData? left, string? right) { throw null; }
+        public static bool operator !=(string? left, Azure.JsonData? right) { throw null; }
+        public static Azure.JsonData Parse(System.BinaryData utf8Json) { throw null; }
+        public static Azure.JsonData Parse(System.IO.Stream utf8Json) { throw null; }
+        public static Azure.JsonData Parse(System.ReadOnlyMemory<byte> utf8Json) { throw null; }
+        public static Azure.JsonData Parse(string json) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.JsonData> ParseAsync(System.IO.Stream utf8Json, System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class JsonPatchDocument
     {
         public JsonPatchDocument() { }
