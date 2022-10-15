@@ -24,9 +24,10 @@ namespace Azure.ResourceManager.StorageSync.Tests
         [SetUp]
         public async Task CreateStorageSyncResources()
         {
+            // Create resources required for testing StorageSyncService
             _resourceGroup = await CreateResourceGroupAsync();
-            _storageSyncServiceName = Recording.GenerateAssetName("sss-cepcreate");
 
+            _storageSyncServiceName = Recording.GenerateAssetName(DefaultStorageSyncServiceRecordingName);
             _storageSyncServiceCreateOrUpdateContent = StorageSyncManagementTestUtilities.GetDefaultStorageSyncServiceParameters();
         }
 
@@ -83,9 +84,9 @@ namespace Azure.ResourceManager.StorageSync.Tests
             StorageSyncManagementTestUtilities.VerifyStorageSyncServiceProperties(storageSyncServiceResource, true);
 
             // Verify StorageSyncServiceCollection contains a single StorageSyncService
-            List<StorageSyncServiceResource> storageSynceServiceResources = await storageSyncServiceCollection.ToEnumerableAsync();
-            Assert.NotNull(storageSynceServiceResources);
-            Assert.AreEqual(storageSynceServiceResources.Count(), 1);
+            List<StorageSyncServiceResource> storageSyncServiceResources = await storageSyncServiceCollection.ToEnumerableAsync();
+            Assert.NotNull(storageSyncServiceResources);
+            Assert.AreEqual(storageSyncServiceResources.Count(), 1);
             StorageSyncManagementTestUtilities.VerifyStorageSyncServiceProperties(storageSyncServiceResource, false);
 
             // Retrieve list of StorageSyncServices for given Subscription

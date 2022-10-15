@@ -15,11 +15,4 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SessionRecords\CloudEndpointTests\" />
-    <Folder Include="SessionRecords\RegisteredServerTests\" />
-    <Folder Include="SessionRecords\ServerEndpointTests\" />
-    <Folder Include="SessionRecords\StorageSyncServiceTests\" />
-    <Folder Include="SessionRecords\SyncGroupTests\" />
-  </ItemGroup>
 </Project>

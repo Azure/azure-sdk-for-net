@@ -15,13 +15,11 @@ namespace Azure.ResourceManager.StorageSync.Tests
     public class ServerEndpointTests : StorageSyncManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
-        private string _storageSyncServiceName;
-        private string _syncGroupName;
-        private string _cloudEndpointName;
+        private StorageSyncServiceResource _storageSyncServiceResource;
+        private StorageSyncGroupResource _storageSyncGroupResource;
+        private CloudEndpointResource _cloudEndpointResource;
+
         private string _serverEndpointName;
-        private StorageSyncServiceCreateOrUpdateContent _storageSyncServiceCreateOrUpdateContent;
-        private StorageSyncGroupCreateOrUpdateContent _storageSyncGroupCreateOrUpdateContent;
-        private CloudEndpointCreateOrUpdateContent _cloudEndpointCreateOrUpdateContent;
 
         public ServerEndpointTests(bool async) : base(async) //, RecordedTestMode.Record)
         {
@@ -31,55 +29,35 @@ namespace Azure.ResourceManager.StorageSync.Tests
         public async Task CreateStorageSyncResources()
         {
             _resourceGroup = await CreateResourceGroupAsync();
-            _storageSyncServiceName = Recording.GenerateAssetName("sss-cepcreate");
-            _syncGroupName = Recording.GenerateAssetName("sg-cepcreate");
-            _cloudEndpointName = Recording.GenerateAssetName("cepcreate");
-            _serverEndpointName = Recording.GenerateAssetName("sepall");
+            _storageSyncServiceResource = await CreateSyncServiceAsync(_resourceGroup);
+            _storageSyncGroupResource = await CreateSyncGroupAsync(_storageSyncServiceResource);
+            _cloudEndpointResource = await CreateCloudEndpointAsync(_storageSyncGroupResource);
 
-            _storageSyncServiceCreateOrUpdateContent = StorageSyncManagementTestUtilities.GetDefaultStorageSyncServiceParameters();
-            _storageSyncGroupCreateOrUpdateContent = StorageSyncManagementTestUtilities.GetDefaultSyncGroupParameters();
-            _cloudEndpointCreateOrUpdateContent = StorageSyncManagementTestUtilities.GetDefaultCloudEndpointParameters();
+            _serverEndpointName = Recording.GenerateAssetName(DefaultServerEndpointRecordingName);
         }
 
         [Test]
         [RecordedTest]
         public async Task ServerEndpointAllOperationsTest()
         {
-            // Create StorageSyncService
-            StorageSyncServiceResource storageSyncServiceResource = (await _resourceGroup.GetStorageSyncServices().CreateOrUpdateAsync(WaitUntil.Completed, _storageSyncServiceName, _storageSyncServiceCreateOrUpdateContent)).Value;
-            Assert.NotNull(storageSyncServiceResource);
-            StorageSyncManagementTestUtilities.VerifyStorageSyncServiceProperties(storageSyncServiceResource, true);
-
-            // Create StorageSyncGroup
-            StorageSyncGroupResource syncGroupResource = (await storageSyncServiceResource.GetStorageSyncGroups().CreateOrUpdateAsync(WaitUntil.Completed, _syncGroupName, _storageSyncGroupCreateOrUpdateContent)).Value;
-            Assert.NotNull(syncGroupResource);
-            StorageSyncManagementTestUtilities.VerifySyncGroupProperties(syncGroupResource, true);
-
-            // Create CloudEndpoint
-            CloudEndpointResource cloudEndpointResource = (await syncGroupResource.GetCloudEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, _cloudEndpointName, _cloudEndpointCreateOrUpdateContent)).Value;
-            Assert.NotNull(cloudEndpointResource);
-            StorageSyncManagementTestUtilities.VerifyCloudEndpointProperties(cloudEndpointResource, true);
-
             // Create RegisteredServer
-            StorageSyncRegisteredServerResource registeredServerResource = await EnsureRegisteredServerResource(storageSyncServiceResource);
-
-            //StorageSyncRegisteredServerResource registeredServerResource = (await storageSyncServiceResource.GetStorageSyncRegisteredServers().CreateOrUpdateAsync(WaitUntil.Completed, _guid, _registeredServerCreateOrUpdateContent)).Value;
+            StorageSyncRegisteredServerResource registeredServerResource = await EnsureRegisteredServerResource(_storageSyncServiceResource);
             Assert.NotNull(registeredServerResource);
             StorageSyncManagementTestUtilities.VerifyRegisteredServerProperties(registeredServerResource);
 
             StorageSyncServerEndpointCreateOrUpdateContent serverEndpointParameters = StorageSyncManagementTestUtilities.GetDefaultServerEndpointParameters(registeredServerResource.Id);
 
             // Create ServerEndpoints
-            StorageSyncServerEndpointResource serverEndpointResource = (await syncGroupResource.GetStorageSyncServerEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, _serverEndpointName, serverEndpointParameters)).Value;
+            StorageSyncServerEndpointResource serverEndpointResource = (await _storageSyncGroupResource.GetStorageSyncServerEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, _serverEndpointName, serverEndpointParameters)).Value;
             Assert.NotNull(serverEndpointResource);
             StorageSyncManagementTestUtilities.VerifyServerEndpointProperties(serverEndpointResource, true);
 
             // Get ServerEndpoint
-            serverEndpointResource = (await syncGroupResource.GetStorageSyncServerEndpointAsync(_serverEndpointName)).Value;
+            serverEndpointResource = (await _storageSyncGroupResource.GetStorageSyncServerEndpointAsync(_serverEndpointName)).Value;
             StorageSyncManagementTestUtilities.VerifyServerEndpointProperties(serverEndpointResource, true);
 
             // List ServerEndpoints
-            List<StorageSyncServerEndpointResource> serverEndpointResources = await syncGroupResource.GetStorageSyncServerEndpoints().ToEnumerableAsync();
+            List<StorageSyncServerEndpointResource> serverEndpointResources = await _storageSyncGroupResource.GetStorageSyncServerEndpoints().ToEnumerableAsync();
             Assert.NotNull(serverEndpointResources);
             Assert.AreEqual(serverEndpointResources.Count(), 1);
             StorageSyncManagementTestUtilities.VerifyServerEndpointProperties(serverEndpointResources.First(), false);
@@ -99,12 +77,12 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             // Delete ServerEndpoint
             await serverEndpointResource.DeleteAsync(WaitUntil.Completed);
-            Assert.IsFalse((await syncGroupResource.GetStorageSyncServerEndpoints().ExistsAsync(_serverEndpointName)).Value);
+            Assert.IsFalse((await _storageSyncGroupResource.GetStorageSyncServerEndpoints().ExistsAsync(_serverEndpointName)).Value);
 
-            await cloudEndpointResource.DeleteAsync(WaitUntil.Completed);
+            await _cloudEndpointResource.DeleteAsync(WaitUntil.Completed);
             await registeredServerResource.DeleteAsync(WaitUntil.Completed);
-            await syncGroupResource.DeleteAsync(WaitUntil.Completed);
-            await storageSyncServiceResource.DeleteAsync(WaitUntil.Completed);
+            await _storageSyncGroupResource.DeleteAsync(WaitUntil.Completed);
+            await _storageSyncServiceResource.DeleteAsync(WaitUntil.Completed);
         }
 
         private async Task<StorageSyncRegisteredServerResource> EnsureRegisteredServerResource(StorageSyncServiceResource storageSyncServiceResource)
@@ -117,9 +95,9 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             string message = $"$ResourceGroupName = \"{_resourceGroup.Id.Name}\";" + Environment.NewLine +
                              $"$StorageSyncServiceName = \"{storageSyncServiceResource.Id.Name}\";" + Environment.NewLine +
-                             $"$SyncGroupName = \"{_syncGroupName}\";";
+                             $"$SyncGroupName = \"{_storageSyncGroupResource.Id.Name}\";";
 
-            // For Record :  PLACE A BREAKPOINT HERE , REGISTER SERVER AND CONITNUE.
+            // For Record :  PLACE A BREAKPOINT HERE , REGISTER SERVER AND CONTINUE.
             List<StorageSyncRegisteredServerResource> registeredServerResources = await storageSyncServiceResource.GetStorageSyncRegisteredServers().ToEnumerableAsync();
             Assert.AreEqual(registeredServerResources.Count(), 1);
 

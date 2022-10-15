@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
     public class SyncGroupTests : StorageSyncManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
-        private string _storageSyncServiceName;
         private string _syncGroupName;
-        private StorageSyncServiceCreateOrUpdateContent _storageSyncServiceCreateOrUpdateContent;
         private StorageSyncGroupCreateOrUpdateContent _storageSyncGroupCreateOrUpdateContent;
         private StorageSyncServiceResource _storageSyncServiceResource;
 
@@ -28,17 +26,12 @@ namespace Azure.ResourceManager.StorageSync.Tests
         [SetUp]
         public async Task CreateStorageSyncResources()
         {
+            // Create resources required for testing StorageSyncGroup
             _resourceGroup = await CreateResourceGroupAsync();
-            _storageSyncServiceName = Recording.GenerateAssetName("sss-cepcreate");
+            _storageSyncServiceResource = await CreateSyncServiceAsync(_resourceGroup);
+
             _syncGroupName = Recording.GenerateAssetName("sg-cepcreate");
-
-            _storageSyncServiceCreateOrUpdateContent = StorageSyncManagementTestUtilities.GetDefaultStorageSyncServiceParameters();
             _storageSyncGroupCreateOrUpdateContent = StorageSyncManagementTestUtilities.GetDefaultSyncGroupParameters();
-
-            // Create StorageSyncService
-            _storageSyncServiceResource = (await _resourceGroup.GetStorageSyncServices().CreateOrUpdateAsync(WaitUntil.Completed, _storageSyncServiceName, _storageSyncServiceCreateOrUpdateContent)).Value;
-            Assert.NotNull(_storageSyncServiceResource);
-            StorageSyncManagementTestUtilities.VerifyStorageSyncServiceProperties(_storageSyncServiceResource, true);
         }
 
         [TearDown]
