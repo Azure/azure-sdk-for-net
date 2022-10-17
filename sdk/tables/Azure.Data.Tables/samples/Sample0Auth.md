@@ -1,13 +1,13 @@
 # Authentication
 
-Every request made against an Azure table must be authorized using a connection string, 
+Every request made against an Azure Table must be authorized using a connection string, 
 shared key credential, or shared access signature. The samples below demonstrate the usage 
 of these methods.
 
 ## Connection string
 
 A connection string includes the authentication information required for your application to 
-access data in an Azure table at runtime using Shared Key authorization.
+access data in an Azure Table at runtime using Shared Key authorization.
 
 You can obtain your connection string from the Azure Portal (click **Access Keys** under Settings 
 in the Portal Storage account blade or **Connection String** under Settings in the Portal Cosmos DB 
@@ -66,7 +66,7 @@ await client.CreateIfNotExistsAsync();
 
 ## Shared Access Signature (SAS)
 
-A shared access signature allows administrators to delegate granular access to an Azure table 
+A shared access signature allows administrators to delegate granular access to an Azure Table
 without sharing the access key directly. You can control what resources the client may access, 
 what permissions they have on those resources, and how long the SAS is valid, among other parameters. 
 It relies on your account access keys and other parameters to produce an encrypted signature string 
