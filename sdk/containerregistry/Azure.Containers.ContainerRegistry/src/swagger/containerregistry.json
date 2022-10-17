@@ -55,6 +55,7 @@
                 ],
                 "description": "Tells whether this Docker Registry instance supports Docker Registry HTTP API v2",
                 "operationId": "ContainerRegistry_CheckDockerV2Support",
+                "x-accessibility": "internal",
                 "x-ms-examples": {
                     "Check Docker Registry V2 Support": {
                         "$ref": "./examples/GetDockerRegistryV2Support.json"
@@ -84,7 +85,7 @@
                         "$ref": "./examples/GetManifest.json"
                     }
                 },
-                "operationId": "ContainerRegistry_GetManifest",
+                "operationId": "ContainerRegistryBlob_GetManifest",
                 "parameters": [
                     {
                         "$ref": "#/parameters/ImageName"
@@ -129,7 +130,7 @@
                 "consumes": [
                     "application/vnd.docker.distribution.manifest.v2+json"
                 ],
-                "operationId": "ContainerRegistry_CreateManifest",
+                "operationId": "ContainerRegistryBlob_CreateManifest",
                 "parameters": [
                     {
                         "$ref": "#/parameters/ImageName"

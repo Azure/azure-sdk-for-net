@@ -48,6 +48,494 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             _url = url;
         }
 
+        /// <summary> Get the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
+        /// <param name="accept"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetManifestAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// 
+        /// Response response = await client.GetManifestAsync("<name>", "<reference>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetManifestAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// 
+        /// Response response = await client.GetManifestAsync("<name>", "<reference>", "<accept>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("mediaType").ToString());
+        /// Console.WriteLine(result.GetProperty("manifests")[0].GetProperty("mediaType").ToString());
+        /// Console.WriteLine(result.GetProperty("manifests")[0].GetProperty("size").ToString());
+        /// Console.WriteLine(result.GetProperty("manifests")[0].GetProperty("digest").ToString());
+        /// Console.WriteLine(result.GetProperty("manifests")[0].GetProperty("platform").GetProperty("architecture").ToString());
+        /// Console.WriteLine(result.GetProperty("manifests")[0].GetProperty("platform").GetProperty("os").ToString());
+        /// Console.WriteLine(result.GetProperty("manifests")[0].GetProperty("platform").GetProperty("os.version").ToString());
+        /// Console.WriteLine(result.GetProperty("manifests")[0].GetProperty("platform").GetProperty("os.features")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("manifests")[0].GetProperty("platform").GetProperty("variant").ToString());
+        /// Console.WriteLine(result.GetProperty("manifests")[0].GetProperty("platform").GetProperty("features")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("mediaType").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("size").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("digest").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("urls")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.created").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.authors").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.url").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.documentation").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.source").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.version").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.revision").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.vendor").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.licenses").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.ref.name").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.title").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.description").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("mediaType").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("size").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("digest").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("urls")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.created").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.authors").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.url").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.documentation").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.source").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.version").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.revision").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.vendor").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.licenses").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.ref.name").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.title").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.description").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.created").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.authors").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.url").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.documentation").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.source").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.version").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.revision").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.vendor").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.licenses").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.ref.name").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.title").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.description").ToString());
+        /// Console.WriteLine(result.GetProperty("architecture").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("tag").ToString());
+        /// Console.WriteLine(result.GetProperty("fsLayers")[0].GetProperty("blobSum").ToString());
+        /// Console.WriteLine(result.GetProperty("history")[0].GetProperty("v1Compatibility").ToString());
+        /// Console.WriteLine(result.GetProperty("signatures")[0].GetProperty("header").GetProperty("jwk").GetProperty("crv").ToString());
+        /// Console.WriteLine(result.GetProperty("signatures")[0].GetProperty("header").GetProperty("jwk").GetProperty("kid").ToString());
+        /// Console.WriteLine(result.GetProperty("signatures")[0].GetProperty("header").GetProperty("jwk").GetProperty("kty").ToString());
+        /// Console.WriteLine(result.GetProperty("signatures")[0].GetProperty("header").GetProperty("jwk").GetProperty("x").ToString());
+        /// Console.WriteLine(result.GetProperty("signatures")[0].GetProperty("header").GetProperty("jwk").GetProperty("y").ToString());
+        /// Console.WriteLine(result.GetProperty("signatures")[0].GetProperty("header").GetProperty("alg").ToString());
+        /// Console.WriteLine(result.GetProperty("signatures")[0].GetProperty("signature").ToString());
+        /// Console.WriteLine(result.GetProperty("signatures")[0].GetProperty("protected").ToString());
+        /// Console.WriteLine(result.GetProperty("schemaVersion").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ManifestWrapper</c>:
+        /// <code>{
+        ///   mediaType: string, # Optional. Media type for this Manifest
+        ///   manifests: [
+        ///     {
+        ///       mediaType: string, # Optional. The MIME type of the referenced object. This will generally be application/vnd.docker.image.manifest.v2+json, but it could also be application/vnd.docker.image.manifest.v1+json
+        ///       size: number, # Optional. The size in bytes of the object
+        ///       digest: string, # Optional. The digest of the content, as defined by the Registry V2 HTTP API Specification
+        ///       platform: {
+        ///         architecture: string, # Optional. Specifies the CPU architecture, for example amd64 or ppc64le.
+        ///         os: string, # Optional. The os field specifies the operating system, for example linux or windows.
+        ///         os.version: string, # Optional. The optional os.version field specifies the operating system version, for example 10.0.10586.
+        ///         os.features: [string], # Optional. The optional os.features field specifies an array of strings, each listing a required OS feature (for example on Windows win32k
+        ///         variant: string, # Optional. The optional variant field specifies a variant of the CPU, for example armv6l to specify a particular CPU variant of the ARM CPU.
+        ///         features: [string], # Optional. The optional features field specifies an array of strings, each listing a required CPU feature (for example sse4 or aes
+        ///       }, # Optional. The platform object describes the platform which the image in the manifest runs on. A full list of valid operating system and architecture values are listed in the Go language documentation for $GOOS and $GOARCH
+        ///     }
+        ///   ], # Optional. (ManifestList, OCIIndex) List of V2 image layer information
+        ///   config: {
+        ///     mediaType: string, # Optional. Layer media type
+        ///     size: number, # Optional. Layer size
+        ///     digest: string, # Optional. Layer digest
+        ///     urls: [string], # Optional. Specifies a list of URIs from which this object may be downloaded.
+        ///     annotations: {
+        ///       org.opencontainers.image.created: string (ISO 8601 Format), # Optional. Date and time on which the image was built (string, date-time as defined by https://tools.ietf.org/html/rfc3339#section-5.6)
+        ///       org.opencontainers.image.authors: string, # Optional. Contact details of the people or organization responsible for the image.
+        ///       org.opencontainers.image.url: string, # Optional. URL to find more information on the image.
+        ///       org.opencontainers.image.documentation: string, # Optional. URL to get documentation on the image.
+        ///       org.opencontainers.image.source: string, # Optional. URL to get source code for building the image.
+        ///       org.opencontainers.image.version: string, # Optional. Version of the packaged software. The version MAY match a label or tag in the source code repository, may also be Semantic versioning-compatible
+        ///       org.opencontainers.image.revision: string, # Optional. Source control revision identifier for the packaged software.
+        ///       org.opencontainers.image.vendor: string, # Optional. Name of the distributing entity, organization or individual.
+        ///       org.opencontainers.image.licenses: string, # Optional. License(s) under which contained software is distributed as an SPDX License Expression.
+        ///       org.opencontainers.image.ref.name: string, # Optional. Name of the reference for a target.
+        ///       org.opencontainers.image.title: string, # Optional. Human-readable title of the image
+        ///       org.opencontainers.image.description: string, # Optional. Human-readable description of the software packaged in the image
+        ///     }, # Optional. Additional information provided through arbitrary metadata.
+        ///   }, # Optional. (V2, OCI) Image config descriptor
+        ///   layers: [Descriptor], # Optional. (V2, OCI) List of V2 image layer information
+        ///   annotations: Annotations, # Optional. (OCI, OCIIndex) Additional metadata
+        ///   architecture: string, # Optional. (V1) CPU architecture
+        ///   name: string, # Optional. (V1) Image name
+        ///   tag: string, # Optional. (V1) Image tag
+        ///   fsLayers: [
+        ///     {
+        ///       blobSum: string, # Optional. SHA of an image layer
+        ///     }
+        ///   ], # Optional. (V1) List of layer information
+        ///   history: [
+        ///     {
+        ///       v1Compatibility: string, # Optional. The raw v1 compatibility information
+        ///     }
+        ///   ], # Optional. (V1) Image history
+        ///   signatures: [
+        ///     {
+        ///       header: {
+        ///         jwk: {
+        ///           crv: string, # Optional. crv value
+        ///           kid: string, # Optional. kid value
+        ///           kty: string, # Optional. kty value
+        ///           x: string, # Optional. x value
+        ///           y: string, # Optional. y value
+        ///         }, # Optional. JSON web key parameter
+        ///         alg: string, # Optional. The algorithm used to sign or encrypt the JWT
+        ///       }, # Optional. A JSON web signature
+        ///       signature: string, # Optional. A signature for the image manifest, signed by a libtrust private key
+        ///       protected: string, # Optional. The signed protected header
+        ///     }
+        ///   ], # Optional. (V1) Image signature
+        ///   schemaVersion: number, # Optional. Schema version
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetManifestAsync(string name, string reference, string accept = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(reference, nameof(reference));
+
+            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetManifest");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetManifestRequest(name, reference, accept, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
+        /// <param name="accept"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetManifest with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// 
+        /// Response response = client.GetManifest("<name>", "<reference>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetManifest with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// 
+        /// Response response = client.GetManifest("<name>", "<reference>", "<accept>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("mediaType").ToString());
+        /// Console.WriteLine(result.GetProperty("manifests")[0].GetProperty("mediaType").ToString());
+        /// Console.WriteLine(result.GetProperty("manifests")[0].GetProperty("size").ToString());
+        /// Console.WriteLine(result.GetProperty("manifests")[0].GetProperty("digest").ToString());
+        /// Console.WriteLine(result.GetProperty("manifests")[0].GetProperty("platform").GetProperty("architecture").ToString());
+        /// Console.WriteLine(result.GetProperty("manifests")[0].GetProperty("platform").GetProperty("os").ToString());
+        /// Console.WriteLine(result.GetProperty("manifests")[0].GetProperty("platform").GetProperty("os.version").ToString());
+        /// Console.WriteLine(result.GetProperty("manifests")[0].GetProperty("platform").GetProperty("os.features")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("manifests")[0].GetProperty("platform").GetProperty("variant").ToString());
+        /// Console.WriteLine(result.GetProperty("manifests")[0].GetProperty("platform").GetProperty("features")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("mediaType").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("size").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("digest").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("urls")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.created").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.authors").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.url").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.documentation").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.source").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.version").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.revision").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.vendor").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.licenses").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.ref.name").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.title").ToString());
+        /// Console.WriteLine(result.GetProperty("config").GetProperty("annotations").GetProperty("org.opencontainers.image.description").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("mediaType").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("size").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("digest").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("urls")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.created").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.authors").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.url").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.documentation").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.source").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.version").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.revision").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.vendor").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.licenses").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.ref.name").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.title").ToString());
+        /// Console.WriteLine(result.GetProperty("layers")[0].GetProperty("annotations").GetProperty("org.opencontainers.image.description").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.created").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.authors").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.url").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.documentation").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.source").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.version").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.revision").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.vendor").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.licenses").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.ref.name").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.title").ToString());
+        /// Console.WriteLine(result.GetProperty("annotations").GetProperty("org.opencontainers.image.description").ToString());
+        /// Console.WriteLine(result.GetProperty("architecture").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("tag").ToString());
+        /// Console.WriteLine(result.GetProperty("fsLayers")[0].GetProperty("blobSum").ToString());
+        /// Console.WriteLine(result.GetProperty("history")[0].GetProperty("v1Compatibility").ToString());
+        /// Console.WriteLine(result.GetProperty("signatures")[0].GetProperty("header").GetProperty("jwk").GetProperty("crv").ToString());
+        /// Console.WriteLine(result.GetProperty("signatures")[0].GetProperty("header").GetProperty("jwk").GetProperty("kid").ToString());
+        /// Console.WriteLine(result.GetProperty("signatures")[0].GetProperty("header").GetProperty("jwk").GetProperty("kty").ToString());
+        /// Console.WriteLine(result.GetProperty("signatures")[0].GetProperty("header").GetProperty("jwk").GetProperty("x").ToString());
+        /// Console.WriteLine(result.GetProperty("signatures")[0].GetProperty("header").GetProperty("jwk").GetProperty("y").ToString());
+        /// Console.WriteLine(result.GetProperty("signatures")[0].GetProperty("header").GetProperty("alg").ToString());
+        /// Console.WriteLine(result.GetProperty("signatures")[0].GetProperty("signature").ToString());
+        /// Console.WriteLine(result.GetProperty("signatures")[0].GetProperty("protected").ToString());
+        /// Console.WriteLine(result.GetProperty("schemaVersion").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ManifestWrapper</c>:
+        /// <code>{
+        ///   mediaType: string, # Optional. Media type for this Manifest
+        ///   manifests: [
+        ///     {
+        ///       mediaType: string, # Optional. The MIME type of the referenced object. This will generally be application/vnd.docker.image.manifest.v2+json, but it could also be application/vnd.docker.image.manifest.v1+json
+        ///       size: number, # Optional. The size in bytes of the object
+        ///       digest: string, # Optional. The digest of the content, as defined by the Registry V2 HTTP API Specification
+        ///       platform: {
+        ///         architecture: string, # Optional. Specifies the CPU architecture, for example amd64 or ppc64le.
+        ///         os: string, # Optional. The os field specifies the operating system, for example linux or windows.
+        ///         os.version: string, # Optional. The optional os.version field specifies the operating system version, for example 10.0.10586.
+        ///         os.features: [string], # Optional. The optional os.features field specifies an array of strings, each listing a required OS feature (for example on Windows win32k
+        ///         variant: string, # Optional. The optional variant field specifies a variant of the CPU, for example armv6l to specify a particular CPU variant of the ARM CPU.
+        ///         features: [string], # Optional. The optional features field specifies an array of strings, each listing a required CPU feature (for example sse4 or aes
+        ///       }, # Optional. The platform object describes the platform which the image in the manifest runs on. A full list of valid operating system and architecture values are listed in the Go language documentation for $GOOS and $GOARCH
+        ///     }
+        ///   ], # Optional. (ManifestList, OCIIndex) List of V2 image layer information
+        ///   config: {
+        ///     mediaType: string, # Optional. Layer media type
+        ///     size: number, # Optional. Layer size
+        ///     digest: string, # Optional. Layer digest
+        ///     urls: [string], # Optional. Specifies a list of URIs from which this object may be downloaded.
+        ///     annotations: {
+        ///       org.opencontainers.image.created: string (ISO 8601 Format), # Optional. Date and time on which the image was built (string, date-time as defined by https://tools.ietf.org/html/rfc3339#section-5.6)
+        ///       org.opencontainers.image.authors: string, # Optional. Contact details of the people or organization responsible for the image.
+        ///       org.opencontainers.image.url: string, # Optional. URL to find more information on the image.
+        ///       org.opencontainers.image.documentation: string, # Optional. URL to get documentation on the image.
+        ///       org.opencontainers.image.source: string, # Optional. URL to get source code for building the image.
+        ///       org.opencontainers.image.version: string, # Optional. Version of the packaged software. The version MAY match a label or tag in the source code repository, may also be Semantic versioning-compatible
+        ///       org.opencontainers.image.revision: string, # Optional. Source control revision identifier for the packaged software.
+        ///       org.opencontainers.image.vendor: string, # Optional. Name of the distributing entity, organization or individual.
+        ///       org.opencontainers.image.licenses: string, # Optional. License(s) under which contained software is distributed as an SPDX License Expression.
+        ///       org.opencontainers.image.ref.name: string, # Optional. Name of the reference for a target.
+        ///       org.opencontainers.image.title: string, # Optional. Human-readable title of the image
+        ///       org.opencontainers.image.description: string, # Optional. Human-readable description of the software packaged in the image
+        ///     }, # Optional. Additional information provided through arbitrary metadata.
+        ///   }, # Optional. (V2, OCI) Image config descriptor
+        ///   layers: [Descriptor], # Optional. (V2, OCI) List of V2 image layer information
+        ///   annotations: Annotations, # Optional. (OCI, OCIIndex) Additional metadata
+        ///   architecture: string, # Optional. (V1) CPU architecture
+        ///   name: string, # Optional. (V1) Image name
+        ///   tag: string, # Optional. (V1) Image tag
+        ///   fsLayers: [
+        ///     {
+        ///       blobSum: string, # Optional. SHA of an image layer
+        ///     }
+        ///   ], # Optional. (V1) List of layer information
+        ///   history: [
+        ///     {
+        ///       v1Compatibility: string, # Optional. The raw v1 compatibility information
+        ///     }
+        ///   ], # Optional. (V1) Image history
+        ///   signatures: [
+        ///     {
+        ///       header: {
+        ///         jwk: {
+        ///           crv: string, # Optional. crv value
+        ///           kid: string, # Optional. kid value
+        ///           kty: string, # Optional. kty value
+        ///           x: string, # Optional. x value
+        ///           y: string, # Optional. y value
+        ///         }, # Optional. JSON web key parameter
+        ///         alg: string, # Optional. The algorithm used to sign or encrypt the JWT
+        ///       }, # Optional. A JSON web signature
+        ///       signature: string, # Optional. A signature for the image manifest, signed by a libtrust private key
+        ///       protected: string, # Optional. The signed protected header
+        ///     }
+        ///   ], # Optional. (V1) Image signature
+        ///   schemaVersion: number, # Optional. Schema version
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetManifest(string name, string reference, string accept = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(reference, nameof(reference));
+
+            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetManifest");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetManifestRequest(name, reference, accept, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Put the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="contentType"> The manifest&apos;s Content-Type. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call CreateManifestAsync with required parameters and request content.
+        /// <code><![CDATA[
+        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// Response response = await client.CreateManifestAsync("<name>", "<reference>", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call CreateManifestAsync with all parameters and request content.
+        /// <code><![CDATA[
+        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// Response response = await client.CreateManifestAsync("<name>", "<reference>", RequestContent.Create(data), "<contentType>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
+        public virtual async Task<Response> CreateManifestAsync(string name, string reference, RequestContent content, string contentType = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(reference, nameof(reference));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.CreateManifest");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateManifestRequest(name, reference, content, contentType, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Put the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="contentType"> The manifest&apos;s Content-Type. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call CreateManifest with required parameters and request content.
+        /// <code><![CDATA[
+        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// Response response = client.CreateManifest("<name>", "<reference>", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call CreateManifest with all parameters and request content.
+        /// <code><![CDATA[
+        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// Response response = client.CreateManifest("<name>", "<reference>", RequestContent.Create(data), "<contentType>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
+        public virtual Response CreateManifest(string name, string reference, RequestContent content, string contentType = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(reference, nameof(reference));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.CreateManifest");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateManifestRequest(name, reference, content, contentType, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Retrieve the blob from the registry identified by digest. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
@@ -878,6 +1366,47 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             }
         }
 
+        internal HttpMessage CreateGetManifestRequest(string name, string reference, string accept, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/manifests/", false);
+            uri.AppendPath(reference, true);
+            request.Uri = uri;
+            if (accept != null)
+            {
+                request.Headers.Add("accept", accept);
+            }
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateManifestRequest(string name, string reference, RequestContent content, string contentType, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier201);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/manifests/", false);
+            uri.AppendPath(reference, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (contentType != null)
+            {
+                request.Headers.Add("Content-Type", contentType);
+            }
+            request.Content = content;
+            return message;
+        }
+
         internal HttpMessage CreateGetBlobRequest(string name, string digest, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200307);
@@ -1053,17 +1582,17 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             return message;
         }
 
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier201;
+        private static ResponseClassifier ResponseClassifier201 => _responseClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
         private static ResponseClassifier _responseClassifier200307;
         private static ResponseClassifier ResponseClassifier200307 => _responseClassifier200307 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 307 });
         private static ResponseClassifier _responseClassifier202;
         private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
-        private static ResponseClassifier _responseClassifier201;
-        private static ResponseClassifier ResponseClassifier201 => _responseClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
         private static ResponseClassifier _responseClassifier204;
         private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
         private static ResponseClassifier _responseClassifier206;
         private static ResponseClassifier ResponseClassifier206 => _responseClassifier206 ??= new StatusCodeClassifier(stackalloc ushort[] { 206 });
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }
