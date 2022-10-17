@@ -6,7 +6,9 @@ using Azure.Containers.ContainerRegistry.Specialized;
 
 namespace Azure.Containers.ContainerRegistry
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public static partial class ContainerRegistryModelFactory
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     {
         /// <summary> Initializes a new instance of <see cref="Specialized.UploadManifestResult" />. </summary>
         /// <param name="digest"> The digest of the uploaded manifest, calculated by the registry. </param>

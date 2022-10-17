@@ -36,16 +36,16 @@ namespace Azure.Containers.ContainerRegistry
         /// </summary>
         public virtual string Name => _name;
 
-        ///// <summary>
-        ///// </summary>
-        //internal ContainerRepository(Uri registryEndpoint, string name, ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient)
-        //{
-        //    _name = name;
-        //    _registryEndpoint = registryEndpoint;
+        /// <summary>
+        /// </summary>
+        internal ContainerRepository(Uri registryEndpoint, string name)
+        {
+            _name = name;
+            _registryEndpoint = registryEndpoint;
 
-        //    _clientDiagnostics = clientDiagnostics;
-        //    _restClient = restClient;
-        //}
+            //_clientDiagnostics = clientDiagnostics;
+            //_restClient = restClient;
+        }
 
         /// <summary> Initializes a new instance of ContainerRepository for mocking. </summary>
         protected ContainerRepository()

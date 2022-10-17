@@ -12,8 +12,8 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> The Azure Container Registry service client. </summary>
     public partial class ContainerRegistryClient
     {
-        private readonly Uri _endpoint;
-        private readonly string _registryName;
+        private readonly Uri _endpoint = new(string.Empty);
+        private readonly string _registryName = string.Empty;
         private readonly HttpPipeline _pipeline;
         //private readonly HttpPipeline _acrAuthPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;

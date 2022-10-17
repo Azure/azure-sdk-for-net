@@ -8,10 +8,11 @@
 using System;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Containers.ContainerRegistry;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Containers.ContainerRegistry
+namespace Azure.Containers.ContainerRegistry.Specialized
 {
     // Data plane generated client. The ContainerRegistryBlob service client.
     /// <summary> The ContainerRegistryBlob service client. </summary>
@@ -25,11 +26,6 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
-
-        /// <summary> Initializes a new instance of ContainerRegistryBlobClient for mocking. </summary>
-        protected ContainerRegistryBlobClient()
-        {
-        }
 
         /// <summary> Initializes a new instance of ContainerRegistryBlobClient. </summary>
         /// <param name="url"> Registry login URL. </param>

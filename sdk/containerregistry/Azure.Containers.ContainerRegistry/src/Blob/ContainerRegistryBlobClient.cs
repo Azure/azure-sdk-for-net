@@ -13,7 +13,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary> The Azure Container Registry blob client, responsible for uploading and downloading
     /// blobs and manifests, the building blocks of artifacts. </summary>
-    public class ContainerRegistryBlobClient
+    [CodeGenClient("ContainerRegistryBlobClient")]
+    public partial class ContainerRegistryBlobClient
     {
         private readonly Uri _endpoint;
         private readonly string _registryName;
