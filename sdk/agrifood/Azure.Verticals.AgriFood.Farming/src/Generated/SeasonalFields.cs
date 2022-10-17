@@ -837,7 +837,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="avgSeedPopulationUnit"> Unit of average seed population value attribute. </param>
         /// <param name="minPlantingDateTime"> Minimum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxPlantingDateTime"> Maximum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="seasonalFieldIds"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
@@ -878,7 +878,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var credential = new DefaultAzureCredential();
         /// var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(null, <2021-03-31-preview>);
         /// 
-        /// await foreach (var data in client.GetSeasonalFieldsByFarmerIdAsync("<farmerId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// await foreach (var data in client.GetSeasonalFieldsByFarmerIdAsync("<farmerId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<seasonalFieldIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -940,15 +940,19 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
+<<<<<<< HEAD
 >>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual AsyncPageable<BinaryData> GetSeasonalFieldsByFarmerIdAsync(string farmerId, IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+=======
+        public virtual AsyncPageable<BinaryData> GetSeasonalFieldsByFarmerIdAsync(string farmerId, IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> seasonalFieldIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+>>>>>>> Fixing clients hierarchy and renaming some clients
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
 
-            return GetSeasonalFieldsByFarmerIdImplementationAsync("SeasonalFields.GetSeasonalFieldsByFarmerId", farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetSeasonalFieldsByFarmerIdImplementationAsync("SeasonalFields.GetSeasonalFieldsByFarmerId", farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private AsyncPageable<BinaryData> GetSeasonalFieldsByFarmerIdImplementationAsync(string diagnosticsScopeName, string farmerId, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private AsyncPageable<BinaryData> GetSeasonalFieldsByFarmerIdImplementationAsync(string diagnosticsScopeName, string farmerId, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> seasonalFieldIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -956,8 +960,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSeasonalFieldsByFarmerIdRequest(farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetSeasonalFieldsByFarmerIdNextPageRequest(nextLink, farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetSeasonalFieldsByFarmerIdRequest(farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetSeasonalFieldsByFarmerIdNextPageRequest(nextLink, farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -980,7 +984,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="avgSeedPopulationUnit"> Unit of average seed population value attribute. </param>
         /// <param name="minPlantingDateTime"> Minimum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxPlantingDateTime"> Maximum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="seasonalFieldIds"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
@@ -1021,7 +1025,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var credential = new DefaultAzureCredential();
         /// var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(null, <2021-03-31-preview>);
         /// 
-        /// foreach (var data in client.GetSeasonalFieldsByFarmerId("<farmerId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// foreach (var data in client.GetSeasonalFieldsByFarmerId("<farmerId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<seasonalFieldIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -1083,15 +1087,19 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
+<<<<<<< HEAD
 >>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual Pageable<BinaryData> GetSeasonalFieldsByFarmerId(string farmerId, IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+=======
+        public virtual Pageable<BinaryData> GetSeasonalFieldsByFarmerId(string farmerId, IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> seasonalFieldIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+>>>>>>> Fixing clients hierarchy and renaming some clients
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
 
-            return GetSeasonalFieldsByFarmerIdImplementation("SeasonalFields.GetSeasonalFieldsByFarmerId", farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetSeasonalFieldsByFarmerIdImplementation("SeasonalFields.GetSeasonalFieldsByFarmerId", farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private Pageable<BinaryData> GetSeasonalFieldsByFarmerIdImplementation(string diagnosticsScopeName, string farmerId, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private Pageable<BinaryData> GetSeasonalFieldsByFarmerIdImplementation(string diagnosticsScopeName, string farmerId, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> seasonalFieldIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1099,8 +1107,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSeasonalFieldsByFarmerIdRequest(farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetSeasonalFieldsByFarmerIdNextPageRequest(nextLink, farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetSeasonalFieldsByFarmerIdRequest(farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetSeasonalFieldsByFarmerIdNextPageRequest(nextLink, farmerId, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1122,7 +1130,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="avgSeedPopulationUnit"> Unit of average seed population value attribute. </param>
         /// <param name="minPlantingDateTime"> Minimum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxPlantingDateTime"> Maximum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="seasonalFieldIds"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
@@ -1161,7 +1169,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var credential = new DefaultAzureCredential();
         /// var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(null, <2021-03-31-preview>);
         /// 
-        /// await foreach (var data in client.GetSeasonalFieldsAsync(new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// await foreach (var data in client.GetSeasonalFieldsAsync(new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<seasonalFieldIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -1223,13 +1231,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
+<<<<<<< HEAD
 >>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual AsyncPageable<BinaryData> GetSeasonalFieldsAsync(IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+=======
+        public virtual AsyncPageable<BinaryData> GetSeasonalFieldsAsync(IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> seasonalFieldIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+>>>>>>> Fixing clients hierarchy and renaming some clients
         {
-            return GetSeasonalFieldsImplementationAsync("SeasonalFields.GetSeasonalFields", farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetSeasonalFieldsImplementationAsync("SeasonalFields.GetSeasonalFields", farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private AsyncPageable<BinaryData> GetSeasonalFieldsImplementationAsync(string diagnosticsScopeName, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private AsyncPageable<BinaryData> GetSeasonalFieldsImplementationAsync(string diagnosticsScopeName, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> seasonalFieldIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1237,8 +1249,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSeasonalFieldsRequest(farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetSeasonalFieldsNextPageRequest(nextLink, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetSeasonalFieldsRequest(farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetSeasonalFieldsNextPageRequest(nextLink, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1260,7 +1272,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="avgSeedPopulationUnit"> Unit of average seed population value attribute. </param>
         /// <param name="minPlantingDateTime"> Minimum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxPlantingDateTime"> Maximum planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="seasonalFieldIds"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
@@ -1299,7 +1311,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var credential = new DefaultAzureCredential();
         /// var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(null, <2021-03-31-preview>);
         /// 
-        /// foreach (var data in client.GetSeasonalFields(new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// foreach (var data in client.GetSeasonalFields(new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<seasonalFieldIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -1361,13 +1373,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
+<<<<<<< HEAD
 >>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual Pageable<BinaryData> GetSeasonalFields(IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+=======
+        public virtual Pageable<BinaryData> GetSeasonalFields(IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> cropIds = null, double? minAvgYieldValue = null, double? maxAvgYieldValue = null, string avgYieldUnit = null, double? minAvgSeedPopulationValue = null, double? maxAvgSeedPopulationValue = null, string avgSeedPopulationUnit = null, DateTimeOffset? minPlantingDateTime = null, DateTimeOffset? maxPlantingDateTime = null, IEnumerable<string> seasonalFieldIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+>>>>>>> Fixing clients hierarchy and renaming some clients
         {
-            return GetSeasonalFieldsImplementation("SeasonalFields.GetSeasonalFields", farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetSeasonalFieldsImplementation("SeasonalFields.GetSeasonalFields", farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private Pageable<BinaryData> GetSeasonalFieldsImplementation(string diagnosticsScopeName, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private Pageable<BinaryData> GetSeasonalFieldsImplementation(string diagnosticsScopeName, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> seasonalFieldIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1375,8 +1391,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSeasonalFieldsRequest(farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetSeasonalFieldsNextPageRequest(nextLink, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetSeasonalFieldsRequest(farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetSeasonalFieldsNextPageRequest(nextLink, farmIds, fieldIds, seasonIds, cropVarietyIds, cropIds, minAvgYieldValue, maxAvgYieldValue, avgYieldUnit, minAvgSeedPopulationValue, maxAvgSeedPopulationValue, avgSeedPopulationUnit, minPlantingDateTime, maxPlantingDateTime, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1562,7 +1578,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateGetSeasonalFieldsByFarmerIdRequest(string farmerId, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetSeasonalFieldsByFarmerIdRequest(string farmerId, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> seasonalFieldIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1639,9 +1655,9 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxPlantingDateTime", maxPlantingDateTime.Value, "O", true);
             }
-            if (ids != null)
+            if (seasonalFieldIds != null)
             {
-                foreach (var param in ids)
+                foreach (var param in seasonalFieldIds)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
@@ -1697,7 +1713,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetSeasonalFieldsRequest(IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetSeasonalFieldsRequest(IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> seasonalFieldIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1772,9 +1788,9 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxPlantingDateTime", maxPlantingDateTime.Value, "O", true);
             }
-            if (ids != null)
+            if (seasonalFieldIds != null)
             {
-                foreach (var param in ids)
+                foreach (var param in seasonalFieldIds)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
@@ -1915,7 +1931,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetSeasonalFieldsByFarmerIdNextPageRequest(string nextLink, string farmerId, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetSeasonalFieldsByFarmerIdNextPageRequest(string nextLink, string farmerId, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> seasonalFieldIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1928,7 +1944,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetSeasonalFieldsNextPageRequest(string nextLink, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetSeasonalFieldsNextPageRequest(string nextLink, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropVarietyIds, IEnumerable<string> cropIds, double? minAvgYieldValue, double? maxAvgYieldValue, string avgYieldUnit, double? minAvgSeedPopulationValue, double? maxAvgSeedPopulationValue, string avgSeedPopulationUnit, DateTimeOffset? minPlantingDateTime, DateTimeOffset? maxPlantingDateTime, IEnumerable<string> seasonalFieldIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

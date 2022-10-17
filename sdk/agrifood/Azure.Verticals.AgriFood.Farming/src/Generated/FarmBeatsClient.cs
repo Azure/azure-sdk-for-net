@@ -123,16 +123,16 @@ namespace Azure.Verticals.AgriFood.Farming
             return new Farmers(ClientDiagnostics, _pipeline, _tokenCredential, endpoint, apiVersion);
         }
 
-        /// <summary> Initializes a new instance of Farm. </summary>
+        /// <summary> Initializes a new instance of FarmOperationsDataIngestion. </summary>
         /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public virtual Farm GetFarmClient(Uri endpoint, string apiVersion = "2021-03-31-preview")
+        public virtual FarmOperationsDataIngestion GetFarmOperationsDataIngestionClient(Uri endpoint, string apiVersion = "2021-03-31-preview")
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new Farm(ClientDiagnostics, _pipeline, _tokenCredential, endpoint, apiVersion);
+            return new FarmOperationsDataIngestion(ClientDiagnostics, _pipeline, _tokenCredential, endpoint, apiVersion);
         }
 
         /// <summary> Initializes a new instance of Farms. </summary>
@@ -195,16 +195,16 @@ namespace Azure.Verticals.AgriFood.Farming
             return new OAuthProviders(ClientDiagnostics, _pipeline, _tokenCredential, endpoint, apiVersion);
         }
 
-        /// <summary> Initializes a new instance of OAuthTokens. </summary>
+        /// <summary> Initializes a new instance of FarmerOAuthTokens. </summary>
         /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public virtual OAuthTokens GetOAuthTokensClient(Uri endpoint, string apiVersion = "2021-03-31-preview")
+        public virtual FarmerOAuthTokens GetFarmerOAuthTokensClient(Uri endpoint, string apiVersion = "2021-03-31-preview")
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new OAuthTokens(ClientDiagnostics, _pipeline, _tokenCredential, endpoint, apiVersion);
+            return new FarmerOAuthTokens(ClientDiagnostics, _pipeline, _tokenCredential, endpoint, apiVersion);
         }
 
         /// <summary> Initializes a new instance of PlantingData. </summary>

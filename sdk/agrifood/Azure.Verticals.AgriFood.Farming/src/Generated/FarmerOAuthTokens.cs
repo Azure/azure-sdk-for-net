@@ -16,9 +16,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    // Data plane generated sub-client. The OAuthTokens sub-client.
-    /// <summary> The OAuthTokens sub-client. </summary>
-    public partial class OAuthTokens
+    // Data plane generated sub-client. The FarmerOAuthTokens sub-client.
+    /// <summary> The FarmerOAuthTokens sub-client. </summary>
+    public partial class FarmerOAuthTokens
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -32,18 +32,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of OAuthTokens for mocking. </summary>
-        protected OAuthTokens()
+        /// <summary> Initializes a new instance of FarmerOAuthTokens for mocking. </summary>
+        protected FarmerOAuthTokens()
         {
         }
 
-        /// <summary> Initializes a new instance of OAuthTokens. </summary>
+        /// <summary> Initializes a new instance of FarmerOAuthTokens. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal OAuthTokens(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal FarmerOAuthTokens(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -64,7 +64,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetOAuthConnectionLinkAsync with required request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetOAuthTokensClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {
         ///     farmerId = "<farmerId>",
@@ -80,7 +80,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetOAuthConnectionLinkAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetOAuthTokensClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {
         ///     farmerId = "<farmerId>",
@@ -113,7 +113,7 @@ namespace Azure.Verticals.AgriFood.Farming
 >>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual async Task<Response> GetOAuthConnectionLinkAsync(RequestContent content, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("OAuthTokens.GetOAuthConnectionLink");
+            using var scope = ClientDiagnostics.CreateScope("FarmerOAuthTokens.GetOAuthConnectionLink");
             scope.Start();
             try
             {
@@ -139,7 +139,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetOAuthConnectionLink with required request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetOAuthTokensClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {
         ///     farmerId = "<farmerId>",
@@ -155,7 +155,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetOAuthConnectionLink with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetOAuthTokensClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {
         ///     farmerId = "<farmerId>",
@@ -188,7 +188,7 @@ namespace Azure.Verticals.AgriFood.Farming
 >>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual Response GetOAuthConnectionLink(RequestContent content, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("OAuthTokens.GetOAuthConnectionLink");
+            using var scope = ClientDiagnostics.CreateScope("FarmerOAuthTokens.GetOAuthConnectionLink");
             scope.Start();
             try
             {
@@ -216,7 +216,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetOAuthTokensClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(null, <2021-03-31-preview>);
         /// 
         /// Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
         /// 
@@ -271,7 +271,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("OAuthTokens.GetCascadeDeleteJobDetails");
+            using var scope = ClientDiagnostics.CreateScope("FarmerOAuthTokens.GetCascadeDeleteJobDetails");
             scope.Start();
             try
             {
@@ -299,7 +299,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetOAuthTokensClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(null, <2021-03-31-preview>);
         /// 
         /// Response response = client.GetCascadeDeleteJobDetails("<jobId>");
         /// 
@@ -354,7 +354,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("OAuthTokens.GetCascadeDeleteJobDetails");
+            using var scope = ClientDiagnostics.CreateScope("FarmerOAuthTokens.GetCascadeDeleteJobDetails");
             scope.Start();
             try
             {
@@ -388,24 +388,24 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/OAuthTokensClient.xml" path="doc/members/member[@name='GetOAuthTokensAsync(IEnumerable,IEnumerable,Boolean,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
 =======
         /// <example>
-        /// This sample shows how to call GetOAuthTokensAsync and parse the result.
+        /// This sample shows how to call GetAuthenticatedFarmersDetailsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetOAuthTokensClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(null, <2021-03-31-preview>);
         /// 
-        /// await foreach (var data in client.GetOAuthTokensAsync())
+        /// await foreach (var data in client.GetAuthenticatedFarmersDetailsAsync())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
         ///     Console.WriteLine(result.GetProperty("authProviderId").ToString());
         /// }
         /// ]]></code>
-        /// This sample shows how to call GetOAuthTokensAsync with all parameters, and how to parse the result.
+        /// This sample shows how to call GetAuthenticatedFarmersDetailsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetOAuthTokensClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(null, <2021-03-31-preview>);
         /// 
-        /// await foreach (var data in client.GetOAuthTokensAsync(new String[]{"<authProviderIds>"}, new String[]{"<farmerIds>"}, true, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// await foreach (var data in client.GetAuthenticatedFarmersDetailsAsync(new String[]{"<authProviderIds>"}, new String[]{"<farmerIds>"}, true, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -434,13 +434,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/OAuthTokens.cs
 >>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual AsyncPageable<BinaryData> GetOAuthTokensAsync(IEnumerable<string> authProviderIds = null, IEnumerable<string> farmerIds = null, bool? isValid = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+=======
+        public virtual AsyncPageable<BinaryData> GetAuthenticatedFarmersDetailsAsync(IEnumerable<string> authProviderIds = null, IEnumerable<string> farmerIds = null, bool? isValid = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+>>>>>>> Fixing clients hierarchy and renaming some clients:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/FarmerOAuthTokens.cs
         {
-            return GetOAuthTokensImplementationAsync("OAuthTokens.GetOAuthTokens", authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetAuthenticatedFarmersDetailsImplementationAsync("FarmerOAuthTokens.GetAuthenticatedFarmersDetails", authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private AsyncPageable<BinaryData> GetOAuthTokensImplementationAsync(string diagnosticsScopeName, IEnumerable<string> authProviderIds, IEnumerable<string> farmerIds, bool? isValid, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private AsyncPageable<BinaryData> GetAuthenticatedFarmersDetailsImplementationAsync(string diagnosticsScopeName, IEnumerable<string> authProviderIds, IEnumerable<string> farmerIds, bool? isValid, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -448,8 +452,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetOAuthTokensRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetOAuthTokensNextPageRequest(nextLink, authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetAuthenticatedFarmersDetailsRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetAuthenticatedFarmersDetailsNextPageRequest(nextLink, authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -477,24 +481,24 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/OAuthTokensClient.xml" path="doc/members/member[@name='GetOAuthTokens(IEnumerable,IEnumerable,Boolean,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
 =======
         /// <example>
-        /// This sample shows how to call GetOAuthTokens and parse the result.
+        /// This sample shows how to call GetAuthenticatedFarmersDetails and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetOAuthTokensClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(null, <2021-03-31-preview>);
         /// 
-        /// foreach (var data in client.GetOAuthTokens())
+        /// foreach (var data in client.GetAuthenticatedFarmersDetails())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
         ///     Console.WriteLine(result.GetProperty("authProviderId").ToString());
         /// }
         /// ]]></code>
-        /// This sample shows how to call GetOAuthTokens with all parameters, and how to parse the result.
+        /// This sample shows how to call GetAuthenticatedFarmersDetails with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetOAuthTokensClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(null, <2021-03-31-preview>);
         /// 
-        /// foreach (var data in client.GetOAuthTokens(new String[]{"<authProviderIds>"}, new String[]{"<farmerIds>"}, true, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// foreach (var data in client.GetAuthenticatedFarmersDetails(new String[]{"<authProviderIds>"}, new String[]{"<farmerIds>"}, true, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -523,13 +527,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/OAuthTokens.cs
 >>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual Pageable<BinaryData> GetOAuthTokens(IEnumerable<string> authProviderIds = null, IEnumerable<string> farmerIds = null, bool? isValid = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+=======
+        public virtual Pageable<BinaryData> GetAuthenticatedFarmersDetails(IEnumerable<string> authProviderIds = null, IEnumerable<string> farmerIds = null, bool? isValid = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+>>>>>>> Fixing clients hierarchy and renaming some clients:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/FarmerOAuthTokens.cs
         {
-            return GetOAuthTokensImplementation("OAuthTokens.GetOAuthTokens", authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetAuthenticatedFarmersDetailsImplementation("FarmerOAuthTokens.GetAuthenticatedFarmersDetails", authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private Pageable<BinaryData> GetOAuthTokensImplementation(string diagnosticsScopeName, IEnumerable<string> authProviderIds, IEnumerable<string> farmerIds, bool? isValid, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private Pageable<BinaryData> GetAuthenticatedFarmersDetailsImplementation(string diagnosticsScopeName, IEnumerable<string> authProviderIds, IEnumerable<string> farmerIds, bool? isValid, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -537,8 +545,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetOAuthTokensRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetOAuthTokensNextPageRequest(nextLink, authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetAuthenticatedFarmersDetailsRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetAuthenticatedFarmersDetailsNextPageRequest(nextLink, authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -563,7 +571,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetOAuthTokensClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(null, <2021-03-31-preview>);
         /// 
         /// var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<oauthProviderId>");
         /// 
@@ -621,12 +629,12 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(farmerId, nameof(farmerId));
             Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
 
-            using var scope = ClientDiagnostics.CreateScope("OAuthTokens.CreateCascadeDeleteJob");
+            using var scope = ClientDiagnostics.CreateScope("FarmerOAuthTokens.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, oauthProviderId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "OAuthTokens.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "FarmerOAuthTokens.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -652,7 +660,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new FarmBeatsClient(credential).GetOAuthTokensClient(null, <2021-03-31-preview>);
+        /// var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(null, <2021-03-31-preview>);
         /// 
         /// var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<oauthProviderId>");
         /// 
@@ -710,12 +718,12 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(farmerId, nameof(farmerId));
             Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
 
-            using var scope = ClientDiagnostics.CreateScope("OAuthTokens.CreateCascadeDeleteJob");
+            using var scope = ClientDiagnostics.CreateScope("FarmerOAuthTokens.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, oauthProviderId, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "OAuthTokens.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "FarmerOAuthTokens.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -724,7 +732,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateGetOAuthTokensRequest(IEnumerable<string> authProviderIds, IEnumerable<string> farmerIds, bool? isValid, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetAuthenticatedFarmersDetailsRequest(IEnumerable<string> authProviderIds, IEnumerable<string> farmerIds, bool? isValid, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -828,7 +836,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetOAuthTokensNextPageRequest(string nextLink, IEnumerable<string> authProviderIds, IEnumerable<string> farmerIds, bool? isValid, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetAuthenticatedFarmersDetailsNextPageRequest(string nextLink, IEnumerable<string> authProviderIds, IEnumerable<string> farmerIds, bool? isValid, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

@@ -922,7 +922,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="parentIds"> Parent Ids of the resource. </param>
         /// <param name="minAcreage"> Minimum acreage of the boundary (inclusive). </param>
         /// <param name="maxAcreage"> Maximum acreage of the boundary (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="boundaryIds"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
@@ -964,7 +964,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var credential = new DefaultAzureCredential();
         /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
-        /// await foreach (var data in client.GetBoundariesByFarmerIdAsync("<farmerId>", true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// await foreach (var data in client.GetBoundariesByFarmerIdAsync("<farmerId>", true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<boundaryIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -1014,19 +1014,23 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
+<<<<<<< HEAD
 <<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
         public virtual AsyncPageable<BinaryData> GetBoundariesAsync(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 >>>>>>> Updating clients for 2021-07-31-preview API version
 =======
         public virtual AsyncPageable<BinaryData> GetBoundariesByFarmerIdAsync(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 >>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
+=======
+        public virtual AsyncPageable<BinaryData> GetBoundariesByFarmerIdAsync(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> boundaryIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+>>>>>>> Fixing clients hierarchy and renaming some clients
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
 
-            return GetBoundariesByFarmerIdImplementationAsync("Boundaries.GetBoundariesByFarmerId", farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetBoundariesByFarmerIdImplementationAsync("Boundaries.GetBoundariesByFarmerId", farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, boundaryIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private AsyncPageable<BinaryData> GetBoundariesByFarmerIdImplementationAsync(string diagnosticsScopeName, string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private AsyncPageable<BinaryData> GetBoundariesByFarmerIdImplementationAsync(string diagnosticsScopeName, string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> boundaryIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1034,8 +1038,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetBoundariesByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetBoundariesByFarmerIdNextPageRequest(nextLink, farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetBoundariesByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, boundaryIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetBoundariesByFarmerIdNextPageRequest(nextLink, farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, boundaryIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1050,7 +1054,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="parentIds"> Parent Ids of the resource. </param>
         /// <param name="minAcreage"> Minimum acreage of the boundary (inclusive). </param>
         /// <param name="maxAcreage"> Maximum acreage of the boundary (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="boundaryIds"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
@@ -1092,7 +1096,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var credential = new DefaultAzureCredential();
         /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
-        /// foreach (var data in client.GetBoundariesByFarmerId("<farmerId>", true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// foreach (var data in client.GetBoundariesByFarmerId("<farmerId>", true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<boundaryIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -1142,19 +1146,23 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
+<<<<<<< HEAD
 <<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
         public virtual Pageable<BinaryData> GetBoundaries(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 >>>>>>> Updating clients for 2021-07-31-preview API version
 =======
         public virtual Pageable<BinaryData> GetBoundariesByFarmerId(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 >>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
+=======
+        public virtual Pageable<BinaryData> GetBoundariesByFarmerId(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> boundaryIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+>>>>>>> Fixing clients hierarchy and renaming some clients
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
 
-            return GetBoundariesByFarmerIdImplementation("Boundaries.GetBoundariesByFarmerId", farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetBoundariesByFarmerIdImplementation("Boundaries.GetBoundariesByFarmerId", farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, boundaryIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private Pageable<BinaryData> GetBoundariesByFarmerIdImplementation(string diagnosticsScopeName, string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private Pageable<BinaryData> GetBoundariesByFarmerIdImplementation(string diagnosticsScopeName, string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> boundaryIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1162,8 +1170,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetBoundariesByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetBoundariesByFarmerIdNextPageRequest(nextLink, farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetBoundariesByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, boundaryIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetBoundariesByFarmerIdNextPageRequest(nextLink, farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, boundaryIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1513,7 +1521,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="parentIds"> Parent Ids of the resource. </param>
         /// <param name="minAcreage"> Minimum acreage of the boundary (inclusive). </param>
         /// <param name="maxAcreage"> Maximum acreage of the boundary (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="boundaryIds"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
@@ -1553,7 +1561,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var credential = new DefaultAzureCredential();
         /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
-        /// await foreach (var data in client.GetBoundariesAsync(true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// await foreach (var data in client.GetBoundariesAsync(true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<boundaryIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -1603,17 +1611,21 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
+<<<<<<< HEAD
 <<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
         public virtual AsyncPageable<BinaryData> GetBoundariesByFarmerIdAsync(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 >>>>>>> Updating clients for 2021-07-31-preview API version
 =======
         public virtual AsyncPageable<BinaryData> GetBoundariesAsync(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 >>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
+=======
+        public virtual AsyncPageable<BinaryData> GetBoundariesAsync(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> boundaryIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+>>>>>>> Fixing clients hierarchy and renaming some clients
         {
-            return GetBoundariesImplementationAsync("Boundaries.GetBoundaries", isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetBoundariesImplementationAsync("Boundaries.GetBoundaries", isPrimary, parentType, parentIds, minAcreage, maxAcreage, boundaryIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private AsyncPageable<BinaryData> GetBoundariesImplementationAsync(string diagnosticsScopeName, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private AsyncPageable<BinaryData> GetBoundariesImplementationAsync(string diagnosticsScopeName, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> boundaryIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1621,8 +1633,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetBoundariesRequest(isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetBoundariesNextPageRequest(nextLink, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetBoundariesRequest(isPrimary, parentType, parentIds, minAcreage, maxAcreage, boundaryIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetBoundariesNextPageRequest(nextLink, isPrimary, parentType, parentIds, minAcreage, maxAcreage, boundaryIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1636,7 +1648,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="parentIds"> Parent Ids of the resource. </param>
         /// <param name="minAcreage"> Minimum acreage of the boundary (inclusive). </param>
         /// <param name="maxAcreage"> Maximum acreage of the boundary (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="boundaryIds"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
@@ -1676,7 +1688,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var credential = new DefaultAzureCredential();
         /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
-        /// foreach (var data in client.GetBoundaries(true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// foreach (var data in client.GetBoundaries(true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<boundaryIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -1726,17 +1738,21 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
+<<<<<<< HEAD
 <<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
         public virtual Pageable<BinaryData> GetBoundariesByFarmerId(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 >>>>>>> Updating clients for 2021-07-31-preview API version
 =======
         public virtual Pageable<BinaryData> GetBoundaries(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 >>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
+=======
+        public virtual Pageable<BinaryData> GetBoundaries(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> boundaryIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+>>>>>>> Fixing clients hierarchy and renaming some clients
         {
-            return GetBoundariesImplementation("Boundaries.GetBoundaries", isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetBoundariesImplementation("Boundaries.GetBoundaries", isPrimary, parentType, parentIds, minAcreage, maxAcreage, boundaryIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private Pageable<BinaryData> GetBoundariesImplementation(string diagnosticsScopeName, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private Pageable<BinaryData> GetBoundariesImplementation(string diagnosticsScopeName, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> boundaryIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1744,8 +1760,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetBoundariesRequest(isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetBoundariesNextPageRequest(nextLink, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetBoundariesRequest(isPrimary, parentType, parentIds, minAcreage, maxAcreage, boundaryIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetBoundariesNextPageRequest(nextLink, isPrimary, parentType, parentIds, minAcreage, maxAcreage, boundaryIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2257,7 +2273,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateGetBoundariesByFarmerIdRequest(string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetBoundariesByFarmerIdRequest(string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> boundaryIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2290,9 +2306,9 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxAcreage", maxAcreage.Value, true);
             }
-            if (ids != null)
+            if (boundaryIds != null)
             {
-                foreach (var param in ids)
+                foreach (var param in boundaryIds)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
@@ -2366,7 +2382,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetBoundariesRequest(bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetBoundariesRequest(bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> boundaryIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2397,9 +2413,9 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxAcreage", maxAcreage.Value, true);
             }
-            if (ids != null)
+            if (boundaryIds != null)
             {
-                foreach (var param in ids)
+                foreach (var param in boundaryIds)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
@@ -2576,7 +2592,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetBoundariesByFarmerIdNextPageRequest(string nextLink, string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetBoundariesByFarmerIdNextPageRequest(string nextLink, string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> boundaryIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2602,7 +2618,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetBoundariesNextPageRequest(string nextLink, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetBoundariesNextPageRequest(string nextLink, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> boundaryIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
