@@ -270,7 +270,6 @@ namespace Azure.Developer.LoadTesting
                 writer.Write(newline + newline + "--" + boundary + "--");
                 writer.Flush();
                 body.Position = 0;
-                Console.WriteLine(body);
 
                 using HttpMessage message = CreateUploadTestFileRequest(testId, fileId, RequestContent.Create(body), fileType, context);
                 message.Request.Headers.SetValue("Content-Type", "multipart/form-data;boundary=" + boundary);
