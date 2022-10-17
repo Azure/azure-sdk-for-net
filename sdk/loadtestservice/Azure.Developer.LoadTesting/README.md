@@ -3,6 +3,14 @@ Azure Load Testing provides client library in .NET to the user by which they can
 
   [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/src) | [Package (NuGet)](https://www.nuget.org/packages?q=Azure.Developer.Loadtesting) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://learn.microsoft.com/azure/load-testing/)
 
+
+## Documentation
+
+Various documentation is available to help you get started
+
+- [API reference documentation][api_reference_doc]
+- [Product Documentation][product_documentation]
+ 
 ## Getting started
 
 
@@ -32,36 +40,57 @@ As an example, sign in via the Azure CLI `az login` command and [DefaultAzureCre
 
 Use the returned token credential to authenticate the client.
 
+## Key concepts
+
+The following components make up the Azure Load Testing service. The Azure Load Test client library for C# allows you to interact with each of these components through the use of clients. There is a top level client  `LoadTestingClient` with two sub-clients
+
+- `LoadTestAdministrationClient`
+
+- `TestRunClient`
+
+These sub-clients are used for managing and using different components of the service. For each method in both of these sub-clients there is a corresponding Async method in the same class, with Async with same implimentation howeven enabling async functionalities, example, if there is a method, `CreateOrUpdateTest` as a part of `LoadTestAdministrationClient` then there always exists one more function `CreateOrUpdateTestAsync` in the same client class. 
+
+### Load Test Administration Client
+
+The `LoadTestAdministration` sub-clients is used to administer and configure the load tests, app components and metrics.
+
+#### Test
+
+A test specifies the test script, and configuration settings for running a load test. You can create one or more tests in an Azure Load Testing resource.
+
+#### App Component
+
+When you run a load test for an Azure-hosted application, you can monitor resource metrics for the different Azure application components (server-side metrics). While the load test runs, and after completion of the test, you can monitor and analyze the resource metrics in the Azure Load Testing dashboard.
+
+#### Metrics
+
+During a load test, Azure Load Testing collects metrics about the test execution. There are two types of metrics:
+
+1. Client-side metrics give you details reported by the test engine. These metrics include the number of virtual users, the request response time, the number of failed requests, or the number of requests per second.
+
+2. Server-side metrics are available for Azure-hosted applications and provide information about your Azure application components. Metrics can be for the number of database reads, the type of HTTP responses, or container resource consumption.
+
+### Test Run Client
+
+The `TestRun` sub-clients is used to start and stop test runs corresponding to a load test. A test run represents one execution of a load test. It collects the logs associated with running the Apache JMeter script, the load test YAML configuration, the list of app components to monitor, and the results of the test.
+
+### Data-Plane Endpoint
+
+Data-plane of Azure Load Testing resources is addressable using the following URL format:
+
+`00000000-0000-0000-0000-000000000000.aaa.cnt-prod.loadtesting.azure.com`
+
+The first GUID `00000000-0000-0000-0000-000000000000` is the unique identifier used for accessing the Azure Load Testing resource. This is followed by  `aaa` which is the Azure region of the resource.
+
+The data-plane endpoint is obtained from Control Plane APIs.
+
+**Example:** `1234abcd-12ab-12ab-12ab-123456abcdef.eus.cnt-prod.loadtesting.azure.com`
+
+In the above example, `eus` represents the Azure region `East US`.
 ## Examples
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.LoadTesting/samples).
 
-
-## Key concepts
-
-The following components make up the Azure Load Testing Service. The Azure Load Test client library for Python allows you to interact with each of these components through the use of a dedicated client object.
-
-### Load testing resource
-The Load testing resource is the top-level resource for your load-testing activities. This resource provides a centralized place to view and manage load tests, test results, and related artifacts. A load testing resource contains zero or more load tests.
-
-### Test
-A test specifies the test script, and configuration settings for running a load test. You can create one or more tests in an Azure Load Testing resource.
-
-### Test Engine
-A test engine is computing infrastructure that runs the Apache JMeter test script. You can scale out your load test by configuring the number of test engines. The test script runs in parallel across the specified number of test engines.
-
-### Test Run
-A test run represents one execution of a load test. It collects the logs associated with running the Apache JMeter script, the load test YAML configuration, the list of app components to monitor, and the results of the test.
-
-### App Component
-When you run a load test for an Azure-hosted application, you can monitor resource metrics for the different Azure application components (server-side metrics). While the load test runs, and after completion of the test, you can monitor and analyze the resource metrics in the Azure Load Testing dashboard.
-
-### Metrics
-During a load test, Azure Load Testing collects metrics about the test execution. There are two types of metrics:
-
-1. Client-side metrics give you details reported by the test engine. These metrics include the number of virtual users, the request response time, the number of failed requests, or the number of requests per second. 
-
-2. Server-side metrics are available for Azure-hosted applications and provide information about your Azure application components. Metrics can be for the number of database reads, the type of HTTP responses, or container resource consumption.
 
 ## Troubleshooting
 More about it is coming soon...
@@ -102,3 +131,5 @@ This is a template, but your SDK readme should include details on how to contrib
 [client_secret_credential]: https://learn.microsoft.com/dotnet/api/azure.identity.clientsecretcredential
 [nuget]: https://www.nuget.org/
 [azure_sub]: https://azure.microsoft.com/free/
+[api_reference_doc]: https://docs.microsoft.com/rest/api/loadtesting/
+[product_documentation]: https://azure.microsoft.com/services/load-testing/
