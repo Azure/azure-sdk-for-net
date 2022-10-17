@@ -20,6 +20,16 @@ request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default
   - /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/credits/balanceSummary
 
+partial-resources:
+  /providers/Microsoft.Billing/billingAccounts/{billingAccountId}: BillingAccount
+  /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}: BillingProfile
+  /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}: TenantBillingPeriod
+  /subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}: SubscriptionBillingPeriod
+  /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}: ManagementGroupBillingPeriod
+  /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}: BillingCustomer
+  /providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}: ReservationDetail
+  /providers/Microsoft.Capacity/reservationorders/{reservationOrderId}: ReservationOrder
+
 override-operation-name:
   Balances_GetByBillingAccount: GetBalance
   Balances_GetForBillingPeriodByBillingAccount: GetBalance
@@ -29,6 +39,7 @@ override-operation-name:
   Events_ListByBillingAccount: GetEvents
   Events_ListByBillingProfile: GetEvents
   Lots_ListByBillingAccount: GetLots
+  Lots_ListByBillingProfile: GetLots
   Lots_ListByCustomer: GetLots
   ReservationsDetails_ListByReservationOrderAndReservation: GetReservationDetails
   ReservationsDetails_ListByReservationOrder: GetReservationDetails
@@ -90,7 +101,6 @@ rename-mapping:
   LotSummary: ConsumptionLotSummary
   LotSource: ConsumptionLotSource
   Status: ConsumptionLotStatus
-  ReservationDetail: ConsumptionReservationDetail
   ReservationSummary: ConsumptionReservationSummary
   Datagrain: ReservationSummaryDataGrain
   ReservationTransaction: ConsumptionReservationTransaction
@@ -133,8 +143,6 @@ rename-mapping:
   OperatorType: NotificationAlertTriggerType
   ThresholdType: NotificationThresholdType
   PriceSheetProperties.billingPeriodId: -|arm-id
-  ReservationDetail.properties.instanceId: -|arm-id
-  ReservationDetail.properties.usageDate: ConsumptionOccurredOn
   ReservationSummary.properties.usageDate: UseOn
 
 directive:
@@ -145,5 +153,11 @@ directive:
       delete $.EventProperties.properties.eTag;
       delete $.LotProperties.properties.eTag;
     reason: delete the eTag property in Properties model as the original model already has got an eTag property from allOf keyword.
+  - from: consumption.json
+    where: $.definitions
+    transform: >
+      $.ReservationDetail['x-ms-client-name'] = 'ConsumptionReservationDetail';
+      $.ReservationDetailProperties.properties.usageDate['x-ms-client-name'] = 'ConsumptionOccurredOn';
+      $.ReservationDetailProperties.properties.instanceId['x-ms-format'] = 'arm-id';
 
 ```
