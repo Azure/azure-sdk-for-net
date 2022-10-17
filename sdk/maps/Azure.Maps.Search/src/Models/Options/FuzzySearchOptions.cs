@@ -5,7 +5,6 @@
 
 using System.Collections.Generic;
 using Azure.Core.GeoJson;
-using Azure.Maps.Search.Models;
 
 namespace Azure.Maps.Search
 {
@@ -22,7 +21,7 @@ namespace Azure.Maps.Search
         /// </summary>
         public OperatingHoursRange? OperatingHours { get; set; }
         /// <summary>
-        /// Specifies the level of filtering performed on geographies. Narrows the search for specified geography entity types, e.g. return only municipality. The resulting response will contain the geography ID as well as the entity type matched. If you provide more than one entity as a comma separated list, endpoint will return the &apos;smallest entity available&apos;. Returned Geometry ID can be used to get the geometry of that geography via [Get Search Polygon](https://docs.microsoft.com/rest/api/maps/search/getsearchpolygon) API. The following parameters are ignored when entityType is set:
+        /// Specifies the level of filtering performed on geographies. Narrows the search for specified geography entity types, e.g. return only municipality. The resulting response will contain the geography ID as well as the entity type matched. If you provide more than one entity as a comma separated list, endpoint will return the &apos;smallest entity available&apos;. Returned Geometry ID can be used to get the geometry of that geography via <see href="https://docs.microsoft.com/rest/api/maps/search/getsearchpolygon">Get Search Polygon</see> API. The following parameters are ignored when entityType is set:
         /// </summary>
         /// <list>
         /// <item><description> heading </description></item>
@@ -38,15 +37,11 @@ namespace Azure.Maps.Search
         /// </summary>
         /// <list>
         /// <item><description> Level 1 has no spell checking. </description></item>
-        ///
         /// <item><description> Level 2 uses normal n-gram spell checking. For example, query &quot;restrant&quot; can be matched to &quot;restaurant.&quot; </description></item>
-        ///
         /// <item><description> Level 3 uses sound-like spell checking, and shingle spell checking. Sound-like spell checking is for &quot;rstrnt&quot; to &quot;restaurant&quot; matching. Shingle spell checking is for &quot;mountainview&quot; to &quot;mountain view&quot; matching. </description></item>
-        ///
         /// <item><description> Level 4 doesn’t add any more spell checking functions. </description></item>
-        ///
-        /// The search engine will start looking for a match on the level defined by minFuzzyLevel, and will stop searching at the level specified by maxFuzzyLevel.
         /// </list>
+        /// The search engine will start looking for a match on the level defined by minFuzzyLevel, and will stop searching at the level specified by maxFuzzyLevel.
         public int? MinFuzzyLevel { get; set; }
         /// <summary>
         /// Maximum fuzziness level to be used. Default: 2, minimum: 1 and maximum: 4
@@ -54,13 +49,9 @@ namespace Azure.Maps.Search
         /// </summary>
         /// <list>
         /// <item><description> Level 1 has no spell checking. </description></item>
-        ///
         /// <item><description> Level 2 uses normal n-gram spell checking. For example, query &quot;restrant&quot; can be matched to &quot;restaurant.&quot; </description></item>
-        ///
         /// <item><description> Level 3 uses sound-like spell checking, and shingle spell checking. Sound-like spell checking is for &quot;rstrnt&quot; to &quot;restaurant&quot; matching. Shingle spell checking is for &quot;mountainview&quot; to &quot;mountain view&quot; matching. </description></item>
-        ///
         /// <item><description> Level 4 doesn’t add any more spell checking functions. </description></item>
-        ///
         /// </list>
         public int? MaxFuzzyLevel { get; set; }
         /// <summary> A comma separated list of indexes which should be utilized for the search. Item order does not matter. Available indexes are: Addr = Address range interpolation, Geo = Geographies, PAD = Point Addresses, POI = Points of interest, Str = Streets, Xstr = Cross Streets (intersections). </summary>
@@ -71,31 +62,16 @@ namespace Azure.Maps.Search
         ///
         /// Available indexes are:
         /// <list>
-        /// <item><description> Addr = Address ranges </description></item>
-        ///
-        ///  <item><description> Geo = Geographies </description></item>
-        ///
-        ///  <item><description> PAD = Point Addresses </description></item>
-        ///
-        ///  <item><description> POI = Points of Interest </description></item>
-        ///
-        ///  <item><description> Str = Streets </description></item>
-        ///
-        ///  <item><description> XStr = Cross Streets (intersections) </description></item>
+        /// <item><description> <c>Addr</c> - Address ranges </description></item>
+        /// <item><description> <c>Geo</c> - Geographies </description></item>
+        /// <item><description> <c>PAD</c> - Point Addresses </description></item>
+        /// <item><description> <c>POI</c> - Points of Interest </description></item>
+        /// <item><description> <c>Str</c> - Streets </description></item>
+        /// <item><description> <c>XStr</c> - Cross Streets (intersections) </description></item>
         /// </list>
-        /// Value should be a comma separated list of index types (in any order) or **None** for no indexes.
+        /// Value should be a comma separated list of index types (in any order) or <c>null</c> for no indexes.
         ///
         /// By default extended postal codes are included for all indexes except Geo. Extended postal code lists for geographies can be quite long so they have to be explicitly requested when needed.
-        ///
-        /// Usage examples:
-        ///
-        ///  extendedPostalCodesFor=POI
-        ///
-        ///  extendedPostalCodesFor=PAD,Addr,POI
-        ///
-        ///  extendedPostalCodesFor=None
-        ///
-        /// Extended postal code is returned as an **extendedPostalCode** property of an address. Availability is region-dependent.
         /// </summary>
         public new IEnumerable<SearchIndex> ExtendedPostalCodesFor { get; set; }
     }

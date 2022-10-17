@@ -412,7 +412,8 @@ namespace Azure.Storage.Files.DataLake
                 ColumnSeparator = options.ColumnSeparator,
                 QuotationCharacter = options.QuotationCharacter,
                 EscapeCharacter = options.EscapeCharacter,
-                HasHeaders = options.HasHeaders
+                HasHeaders = options.HasHeaders,
+                RecordSeparator = options.RecordSeparator,
             };
 
         internal static BlobQueryArrowOptions ToBlobQueryArrowOptions(this DataLakeQueryArrowOptions options)
