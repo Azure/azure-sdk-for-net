@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Billing
             Optional<string> displayName = default;
             Optional<string> enrollmentAccountId = default;
             Optional<string> enrollmentAccountDisplayName = default;
-            Optional<string> invoiceSectionId = default;
+            Optional<ResourceIdentifier> invoiceSectionId = default;
             Optional<string> invoiceSectionDisplayName = default;
             Optional<string> invoiceSectionName = default;
             Optional<BillingAmount> lastMonthCharges = default;
@@ -254,7 +254,12 @@ namespace Azure.ResourceManager.Billing
                         }
                         if (property0.NameEquals("invoiceSectionId"))
                         {
-                            invoiceSectionId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            invoiceSectionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("invoiceSectionDisplayName"))

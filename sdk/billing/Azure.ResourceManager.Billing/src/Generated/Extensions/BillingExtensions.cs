@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.Billing
             return tenantResource.GetBillingSubscriptionAliases(billingAccountName).Get(aliasName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PaymentMethodResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of BillingPaymentMethodResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of PaymentMethodResources and their operations over a PaymentMethodResource. </returns>
-        public static PaymentMethodCollection GetPaymentMethods(this TenantResource tenantResource)
+        /// <returns> An object representing collection of BillingPaymentMethodResources and their operations over a BillingPaymentMethodResource. </returns>
+        public static BillingPaymentMethodCollection GetBillingPaymentMethods(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetPaymentMethods();
+            return GetExtensionClient(tenantResource).GetBillingPaymentMethods();
         }
 
         /// <summary>
@@ -140,9 +140,9 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentException"> <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<PaymentMethodResource>> GetPaymentMethodAsync(this TenantResource tenantResource, string paymentMethodName, CancellationToken cancellationToken = default)
+        public static async Task<Response<BillingPaymentMethodResource>> GetBillingPaymentMethodAsync(this TenantResource tenantResource, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetPaymentMethods().GetAsync(paymentMethodName, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetBillingPaymentMethods().GetAsync(paymentMethodName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -156,9 +156,9 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentException"> <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<PaymentMethodResource> GetPaymentMethod(this TenantResource tenantResource, string paymentMethodName, CancellationToken cancellationToken = default)
+        public static Response<BillingPaymentMethodResource> GetBillingPaymentMethod(this TenantResource tenantResource, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetPaymentMethods().Get(paymentMethodName, cancellationToken);
+            return tenantResource.GetBillingPaymentMethods().Get(paymentMethodName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BillingAccountPaymentMethodResources in the TenantResource. </summary>
@@ -297,20 +297,20 @@ namespace Azure.ResourceManager.Billing
         }
         #endregion
 
-        #region PaymentMethodResource
+        #region BillingPaymentMethodResource
         /// <summary>
-        /// Gets an object representing a <see cref="PaymentMethodResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PaymentMethodResource.CreateResourceIdentifier" /> to create a <see cref="PaymentMethodResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BillingPaymentMethodResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingPaymentMethodResource.CreateResourceIdentifier" /> to create a <see cref="BillingPaymentMethodResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PaymentMethodResource" /> object. </returns>
-        public static PaymentMethodResource GetPaymentMethodResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingPaymentMethodResource" /> object. </returns>
+        public static BillingPaymentMethodResource GetBillingPaymentMethodResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PaymentMethodResource.ValidateResourceId(id);
-                return new PaymentMethodResource(client, id);
+                BillingPaymentMethodResource.ValidateResourceId(id);
+                return new BillingPaymentMethodResource(client, id);
             }
             );
         }

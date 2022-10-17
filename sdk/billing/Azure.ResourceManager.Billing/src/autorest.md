@@ -16,6 +16,8 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+request-path-to-resource-name:
+  /providers/Microsoft.Billing/paymentMethods/{paymentMethodName}: BillingPaymentMethod
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -67,6 +69,7 @@ directive:
     where: $.definitions
     transform: >
       $.BillingSubscriptionProperties.properties.billingProfileId['x-ms-format'] = 'arm-id';
+      $.BillingSubscriptionProperties.properties.invoiceSectionId['x-ms-format'] = 'arm-id';
       $.BillingSubscriptionProperties.properties.termDuration['format'] = 'duration';
       $.BillingSubscriptionSplitRequest.properties.termDuration['format'] = 'duration';
       $.RenewalTermDetails.properties.termDuration['format'] = 'duration';
