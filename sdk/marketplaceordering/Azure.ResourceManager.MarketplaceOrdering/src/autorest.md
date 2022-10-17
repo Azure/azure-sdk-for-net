@@ -9,7 +9,6 @@ csharp: true
 library-name: MarketplaceOrdering
 namespace: Azure.ResourceManager.MarketplaceOrdering
 require: https://github.com/Azure/azure-rest-api-specs/blob/6b08774c89877269e73e11ac3ecbd1bd4e14f5a0/specification/marketplaceordering/resource-manager/readme.md
-tag: package-2021-01-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

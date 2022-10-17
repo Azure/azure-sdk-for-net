@@ -27,6 +27,6 @@ if (acceptedSentShare == null)
     //No accepted sent shares
     return;
 }
-
-var receiverEmail = JsonDocument.Parse(acceptedSentShare).RootElement.GetProperty("properties").GetProperty("receiverEmail").GetString();
+using var jsonDocument = JsonDocument.Parse(acceptedSentShare);
+var receiverEmail = jsonDocument.RootElement.GetProperty("properties").GetProperty("receiverEmail").GetString();
 ```

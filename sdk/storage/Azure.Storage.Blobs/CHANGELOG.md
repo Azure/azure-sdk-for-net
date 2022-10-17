@@ -1,6 +1,16 @@
 # Release History
 
-## 12.14.0 (2022-10-11)
+## 12.15.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.14.0 (2022-10-12)
 - Includes all features from 12.14.0-beta.1.
 - Added support for leading and trailing '/' characters in blob names when constructing URIs via builder.
 
