@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceGraph.Tests
     {
         protected ArmClient Client { get; private set; }
 
-        public AzureLocation azureLocation = AzureLocation.EastUS;
+        public AzureLocation AzureLocation = AzureLocation.EastUS;
         public string DefaultRgnamePrefix = "Test";
         public SubscriptionResource DefaultSubscription { get; private set; }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ResourceGraph.Tests
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription)
         {
             string rgName = Recording.GenerateAssetName(DefaultRgnamePrefix);
-            ResourceGroupData input = new ResourceGroupData(azureLocation);
+            ResourceGroupData input = new ResourceGroupData(AzureLocation);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }
