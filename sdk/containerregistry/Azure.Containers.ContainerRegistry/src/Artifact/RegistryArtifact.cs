@@ -15,6 +15,7 @@ namespace Azure.Containers.ContainerRegistry
     /// The <see cref="RegistryArtifact"/> class is a helper class that groups information and operations about an image or artifact in this container registry.
     /// </para>
     /// </summary>
+    [CodeGenClient("RegistryArtifactClient", ParentClient = typeof(ContainerRegistryClient))]
     public partial class RegistryArtifact
     {
         private readonly ClientDiagnostics _clientDiagnostics;

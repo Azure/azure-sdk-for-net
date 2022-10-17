@@ -17,6 +17,7 @@ namespace Azure.Containers.ContainerRegistry
     /// container registry.
     /// </para>
     /// </summary>
+    [CodeGenClient("ContainerRepositoryClient", ParentClient = typeof(ContainerRegistryClient))]
     public partial class ContainerRepository
     {
         private readonly ClientDiagnostics _clientDiagnostics;

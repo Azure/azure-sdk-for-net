@@ -179,7 +179,7 @@
                         "$ref": "./examples/DeleteManifest.json"
                     }
                 },
-                "operationId": "ContainerRegistry_DeleteManifest",
+                "operationId": "RegistryArtifact_Delete",
                 "parameters": [
                     {
                         "$ref": "#/parameters/ImageName"
@@ -590,7 +590,7 @@
                     "Registry"
                 ],
                 "description": "List repositories",
-                "operationId": "ContainerRegistry_GetRepositories",
+                "operationId": "ContainerRegistry_GetRepositoryNames",
                 "x-ms-pageable": {
                     "itemName": "repositories",
                     "nextLinkName": "link"
@@ -639,7 +639,7 @@
                     "Registry"
                 ],
                 "description": "Get repository attributes",
-                "operationId": "ContainerRegistry_GetProperties",
+                "operationId": "ContainerRepository_GetProperties",
                 "x-ms-examples": {
                     "Get details of repository": {
                         "$ref": "./examples/GetRepositoryAttributes.json"
@@ -673,7 +673,7 @@
                     "Registry"
                 ],
                 "description": "Delete the repository identified by `name`",
-                "operationId": "ContainerRegistry_DeleteRepository",
+                "operationId": "ContainerRepository_Delete",
                 "x-ms-examples": {
                     "Delete a repository": {
                         "$ref": "./examples/DeleteAcrRepository.json"
@@ -710,7 +710,7 @@
                     "Registry"
                 ],
                 "description": "Update the attribute identified by `name` where `reference` is the name of the repository.",
-                "operationId": "ContainerRegistry_UpdateProperties",
+                "operationId": "ContainerRepository_UpdateProperties",
                 "x-ms-examples": {
                     "Update repository attributes": {
                         "$ref": "./examples/UpdateRepositoryAttributes.json"
@@ -752,7 +752,7 @@
                     "Repository"
                 ],
                 "description": "List tags of a repository",
-                "operationId": "ContainerRegistry_GetTags",
+                "operationId": "RegistryArtifact_GetAllTagProperties",
                 "x-ms-examples": {
                     "Get tags of a repository": {
                         "$ref": "./examples/GetTagList.json"
@@ -810,7 +810,7 @@
                     "Repository"
                 ],
                 "description": "Get tag attributes by tag",
-                "operationId": "ContainerRegistry_GetTagProperties",
+                "operationId": "RegistryArtifact_GetTagProperties",
                 "x-ms-examples": {
                     "Get tag attributes": {
                         "$ref": "./examples/GetTagAttributes.json"
@@ -847,7 +847,7 @@
                     "Repository"
                 ],
                 "description": "Update tag attributes",
-                "operationId": "ContainerRegistry_UpdateTagAttributes",
+                "operationId": "RegistryArtifact_UpdateTagProperties",
                 "consumes": [
                     "application/json"
                 ],
@@ -890,7 +890,7 @@
                     "Repository"
                 ],
                 "description": "Delete tag",
-                "operationId": "ContainerRegistry_DeleteTag",
+                "operationId": "RegistryArtifact_DeleteTag",
                 "consumes": [
                     "application/json"
                 ],
@@ -932,7 +932,7 @@
                     "Repository"
                 ],
                 "description": "List manifests of a repository",
-                "operationId": "ContainerRegistry_GetManifests",
+                "operationId": "ContainerRepository_GetAllManifestProperties",
                 "x-ms-examples": {
                     "Get list of available manifests": {
                         "$ref": "./examples/GetManifestList.json"
@@ -987,7 +987,7 @@
                     "Repository"
                 ],
                 "description": "Get manifest attributes",
-                "operationId": "ContainerRegistry_GetManifestProperties",
+                "operationId": "RegistryArtifact_GetManifestProperties",
                 "x-ms-examples": {
                     "Get manifest attributes": {
                         "$ref": "./examples/GetManifestAttributes.json"
@@ -1024,7 +1024,7 @@
                     "Repository"
                 ],
                 "description": "Update properties of a manifest",
-                "operationId": "ContainerRegistry_UpdateManifestProperties",
+                "operationId": "RegistryArtifact_UpdateManifestProperties",
                 "consumes": [
                     "application/json"
                 ],
