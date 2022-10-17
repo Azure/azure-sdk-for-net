@@ -4,7 +4,7 @@ This sample demonstrates how to authenticate the `ServiceBusClient`, which is th
 
 ## Authenticate with a connection string
 
-The simplest way to authenticate with the Service Bus is to use a connection string, which is created automatically when creating a Service Bus namespace. If you aren't familiar with shared access policies in Azure, you may wish to follow the step-by-step guide to [get a Service Bus connection string](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-quickstart-topics-subscriptions-portal#get-the-connection-string). For production scenarios, we recommend using Azure.Identity authentication as it provides [role-based access control](https://docs.microsoft.com/azure/role-based-access-control/overview) without the need to manage connection strings or shared access keys.
+The simplest way to authenticate with the Service Bus is to use a connection string, which is created automatically when creating a Service Bus namespace. If you aren't familiar with connection strings in Service Bus, you may wish to follow the step-by-step guide to [get a Service Bus connection string](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-quickstart-topics-subscriptions-portal#get-the-connection-string). For production scenarios, we recommend using Azure.Identity authentication as it provides [role-based access control](https://docs.microsoft.com/azure/role-based-access-control/overview) without the need to manage connection strings or shared access keys.
 
 ```C# Snippet:ServiceBusAuthConnString
 // Create a ServiceBusClient that will authenticate using a connection string
