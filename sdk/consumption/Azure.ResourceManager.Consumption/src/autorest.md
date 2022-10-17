@@ -27,7 +27,7 @@ partial-resources:
   /subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}: SubscriptionBillingPeriod
   /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}: ManagementGroupBillingPeriod
   /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}: BillingCustomer
-  /providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}: ReservationDetail
+  /providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}: Reservation
   /providers/Microsoft.Capacity/reservationorders/{reservationOrderId}: ReservationOrder
 
 override-operation-name:
@@ -76,7 +76,6 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-  skiptoken: SkipToken|skipToken
 
 rename-mapping:
   Budget: ConsumptionBudget
@@ -159,5 +158,14 @@ directive:
       $.ReservationDetail['x-ms-client-name'] = 'ConsumptionReservationDetail';
       $.ReservationDetailProperties.properties.usageDate['x-ms-client-name'] = 'ConsumptionOccurredOn';
       $.ReservationDetailProperties.properties.instanceId['x-ms-format'] = 'arm-id';
+    reason: avoid duplicated schema issue in partial resource generation process.
+  - from: consumption.json
+    where: $.paths
+    transform: >
+      $['/{scope}/providers/Microsoft.Consumption/usageDetails'].get.parameters[3]['x-ms-client-name'] = 'skipToken';
+      $['/{scope}/providers/Microsoft.Consumption/marketplaces'].get.parameters[2]['x-ms-client-name'] = 'skipToken';
+      $['/subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default'].get.parameters[1]['x-ms-client-name'] = 'skipToken';
+      $['/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default'].get.parameters[1]['x-ms-client-name'] = 'skipToken';
+    reason: change the query parameter name from skiptoken to skipToken.
 
 ```

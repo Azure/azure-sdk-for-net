@@ -16,12 +16,12 @@ using Azure.ResourceManager.Consumption.Models;
 namespace Azure.ResourceManager.Consumption
 {
     /// <summary>
-    /// A class extending from the ReservationDetailResource in Azure.ResourceManager.Consumption along with the instance operations that can be performed on it.
-    /// You can only construct a <see cref="ReservationDetailConsumptionResource" /> from a <see cref="ResourceIdentifier" /> with a resource type of Microsoft.Capacity/reservationorders/reservations.
+    /// A class extending from the ReservationResource in Azure.ResourceManager.Consumption along with the instance operations that can be performed on it.
+    /// You can only construct a <see cref="ReservationConsumptionResource" /> from a <see cref="ResourceIdentifier" /> with a resource type of Microsoft.Capacity/reservationorders/reservations.
     /// </summary>
-    public partial class ReservationDetailConsumptionResource : ArmResource
+    public partial class ReservationConsumptionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ReservationDetailConsumptionResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ReservationConsumptionResource"/> instance. </summary>
         internal static ResourceIdentifier CreateResourceIdentifier(string reservationOrderId, string reservationId)
         {
             var resourceId = $"/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}";
@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.Consumption
         private readonly ClientDiagnostics _reservationsDetailsClientDiagnostics;
         private readonly ReservationsDetailsRestOperations _reservationsDetailsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ReservationDetailConsumptionResource"/> class for mocking. </summary>
-        protected ReservationDetailConsumptionResource()
+        /// <summary> Initializes a new instance of the <see cref="ReservationConsumptionResource"/> class for mocking. </summary>
+        protected ReservationConsumptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ReservationDetailConsumptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ReservationConsumptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ReservationDetailConsumptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ReservationConsumptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _reservationsSummariesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _reservationsSummariesRestClient = new ReservationsSummariesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Consumption
         {
             async Task<Page<ConsumptionReservationSummary>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _reservationsSummariesClientDiagnostics.CreateScope("ReservationDetailConsumptionResource.GetReservationSummaries");
+                using var scope = _reservationsSummariesClientDiagnostics.CreateScope("ReservationConsumptionResource.GetReservationSummaries");
                 scope.Start();
                 try
                 {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Consumption
             }
             async Task<Page<ConsumptionReservationSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _reservationsSummariesClientDiagnostics.CreateScope("ReservationDetailConsumptionResource.GetReservationSummaries");
+                using var scope = _reservationsSummariesClientDiagnostics.CreateScope("ReservationConsumptionResource.GetReservationSummaries");
                 scope.Start();
                 try
                 {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Consumption
         {
             Page<ConsumptionReservationSummary> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _reservationsSummariesClientDiagnostics.CreateScope("ReservationDetailConsumptionResource.GetReservationSummaries");
+                using var scope = _reservationsSummariesClientDiagnostics.CreateScope("ReservationConsumptionResource.GetReservationSummaries");
                 scope.Start();
                 try
                 {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Consumption
             }
             Page<ConsumptionReservationSummary> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _reservationsSummariesClientDiagnostics.CreateScope("ReservationDetailConsumptionResource.GetReservationSummaries");
+                using var scope = _reservationsSummariesClientDiagnostics.CreateScope("ReservationConsumptionResource.GetReservationSummaries");
                 scope.Start();
                 try
                 {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Consumption
 
             async Task<Page<ConsumptionReservationDetail>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _reservationsDetailsClientDiagnostics.CreateScope("ReservationDetailConsumptionResource.GetReservationDetails");
+                using var scope = _reservationsDetailsClientDiagnostics.CreateScope("ReservationConsumptionResource.GetReservationDetails");
                 scope.Start();
                 try
                 {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Consumption
             }
             async Task<Page<ConsumptionReservationDetail>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _reservationsDetailsClientDiagnostics.CreateScope("ReservationDetailConsumptionResource.GetReservationDetails");
+                using var scope = _reservationsDetailsClientDiagnostics.CreateScope("ReservationConsumptionResource.GetReservationDetails");
                 scope.Start();
                 try
                 {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Consumption
 
             Page<ConsumptionReservationDetail> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _reservationsDetailsClientDiagnostics.CreateScope("ReservationDetailConsumptionResource.GetReservationDetails");
+                using var scope = _reservationsDetailsClientDiagnostics.CreateScope("ReservationConsumptionResource.GetReservationDetails");
                 scope.Start();
                 try
                 {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Consumption
             }
             Page<ConsumptionReservationDetail> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _reservationsDetailsClientDiagnostics.CreateScope("ReservationDetailConsumptionResource.GetReservationDetails");
+                using var scope = _reservationsDetailsClientDiagnostics.CreateScope("ReservationConsumptionResource.GetReservationDetails");
                 scope.Start();
                 try
                 {

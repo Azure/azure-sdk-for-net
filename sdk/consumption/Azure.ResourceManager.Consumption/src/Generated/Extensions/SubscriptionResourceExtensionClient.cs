@@ -49,16 +49,16 @@ namespace Azure.ResourceManager.Consumption
         /// Operation Id: PriceSheet_Get
         /// </summary>
         /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the top N results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PriceSheetResult>> GetPriceSheetAsync(string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PriceSheetResult>> GetPriceSheetAsync(string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = PriceSheetClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPriceSheet");
             scope.Start();
             try
             {
-                var response = await PriceSheetRestClient.GetAsync(Id.SubscriptionId, expand, skiptoken, top, cancellationToken).ConfigureAwait(false);
+                var response = await PriceSheetRestClient.GetAsync(Id.SubscriptionId, expand, skipToken, top, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.Consumption
         /// Operation Id: PriceSheet_Get
         /// </summary>
         /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the top N results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PriceSheetResult> GetPriceSheet(string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Response<PriceSheetResult> GetPriceSheet(string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = PriceSheetClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPriceSheet");
             scope.Start();
             try
             {
-                var response = PriceSheetRestClient.Get(Id.SubscriptionId, expand, skiptoken, top, cancellationToken);
+                var response = PriceSheetRestClient.Get(Id.SubscriptionId, expand, skipToken, top, cancellationToken);
                 return response;
             }
             catch (Exception e)

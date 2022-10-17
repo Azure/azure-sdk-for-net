@@ -164,20 +164,20 @@ namespace Azure.ResourceManager.Consumption
         }
         #endregion
 
-        #region ReservationDetailConsumptionResource
+        #region ReservationConsumptionResource
         /// <summary>
-        /// Gets an object representing a <see cref="ReservationDetailConsumptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReservationDetailConsumptionResource.CreateResourceIdentifier" /> to create a <see cref="ReservationDetailConsumptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReservationConsumptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReservationConsumptionResource.CreateResourceIdentifier" /> to create a <see cref="ReservationConsumptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReservationDetailConsumptionResource" /> object. </returns>
-        public static ReservationDetailConsumptionResource GetReservationDetailConsumptionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReservationConsumptionResource" /> object. </returns>
+        public static ReservationConsumptionResource GetReservationConsumptionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ReservationDetailConsumptionResource.ValidateResourceId(id);
-                return new ReservationDetailConsumptionResource(client, id);
+                ReservationConsumptionResource.ValidateResourceId(id);
+                return new ReservationConsumptionResource(client, id);
             }
             );
         }
