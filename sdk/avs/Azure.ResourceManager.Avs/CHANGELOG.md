@@ -1,6 +1,8 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (Unreleased)
+
+Updated to [API version 2022-05-01](https://github.com/Azure/azure-rest-api-specs/pull/20873).
 
 ### Features Added
 
