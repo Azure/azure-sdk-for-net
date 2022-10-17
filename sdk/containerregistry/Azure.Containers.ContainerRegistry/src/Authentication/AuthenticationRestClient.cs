@@ -3,7 +3,7 @@
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class AuthenticationRestClient : IContainerRegistryAuthenticationClient
+    internal partial class AuthenticationClient : IContainerRegistryAuthenticationClient
     {
     }
 }
