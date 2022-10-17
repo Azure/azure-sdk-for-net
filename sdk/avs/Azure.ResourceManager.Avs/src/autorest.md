@@ -9,7 +9,6 @@ csharp: true
 library-name: Avs
 namespace: Azure.ResourceManager.Avs
 require: https://github.com/Azure/azure-rest-api-specs/blob/80065490402157d0df0dd37ab347c651b22eb576/specification/vmware/resource-manager/readme.md
-tag: package-2021-12-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

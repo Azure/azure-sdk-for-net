@@ -8,7 +8,6 @@ csharp: true
 library-name: Reservations
 namespace: Azure.ResourceManager.Reservations
 require: https://github.com/Azure/azure-rest-api-specs/blob/04efa7dde730c9eaa35bdab1681117d639522edb/specification/reservations/resource-manager/readme.md
-tag: package-2022-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -32,6 +31,8 @@ override-operation-name:
   CalculateExchange_Post: CalculateReservationExchange
   Exchange_Post: Exchange
   GetAppliedReservationList: GetAppliedReservations
+  CalculateRefund_Post: CalculateRefund
+  Return_Post: Return
 
 rename-rules:
   CPU: Cpu
@@ -92,6 +93,17 @@ rename-mapping:
   OperationStatus: ReservationOperationStatus
   ResourceName: ReservationResourceName
   Patch.properties.renew: IsRenewEnabled
+  CalculateRefundRequest: ReservationCalculateRefundContent
+  CalculateRefundResponse: ReservationCalculateRefundResult
+  CalculateRefundRequestProperties: ReservationCalculateRefundRequestProperties
+  RefundResponse: ReservationRefundResult
+  RefundBillingInformation: ReservationRefundBillingInformation
+  RefundRequest: ReservationRefundContent
+  RefundPolicyError: ReservationRefundPolicyError
+  RefundPolicyResultProperty: ReservationRefundPolicyResultProperty
+  RefundRequestProperties: ReservationRefundRequestProperties
+  RefundResponseProperties: ReservationRefundResponseProperties
+  ErrorResponseCode: ReservationErrorResponseCode
 
 directive:
   - from: quota.json

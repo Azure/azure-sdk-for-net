@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Maintenance
 namespace: Azure.ResourceManager.Maintenance
+# default tag is a preview version
 require: https://github.com/Azure/azure-rest-api-specs/blob/7d5d1db0c45d6fe0934c97b6a6f9bb34112d42d1/specification/maintenance/resource-manager/readme.md
-tag: package-preview-2022-07
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -56,7 +56,7 @@ rename-rules:
   Etag: ETag|etag
   Sqldb: SqlDB
   SQL: Sql
-  
+
 
 directive:
   - from: Maintenance.json

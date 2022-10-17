@@ -9,7 +9,6 @@ csharp: true
 library-name: SecurityCenter
 namespace: Azure.ResourceManager.SecurityCenter
 require: https://github.com/Azure/azure-rest-api-specs/blob/e686ed79e9b0bbc10355fd8d7ba36d1a07e4ba28/specification/security/resource-manager/readme.md
-tag: package-composite-v3
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

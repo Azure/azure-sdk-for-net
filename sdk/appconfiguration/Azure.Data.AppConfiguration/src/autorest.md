@@ -19,3 +19,26 @@ directive:
   where: $.parameters.Endpoint
   transform: $.format = "url"
   ```
+
+  ### Modify operation names
+``` yaml
+directive:
+- rename-operation:
+    from: PutKeyValue
+    to: SetConfigurationSetting
+- rename-operation:
+    from: DeleteKeyValue
+    to: DeleteConfigurationSetting
+- rename-operation:
+    from: GetKeyValue
+    to: GetConfigurationSetting
+- rename-operation:
+    from: GetKeyValues
+    to: GetConfigurationSettings
+- rename-operation:
+    from: PutLock
+    to: CreateReadOnlyLock
+- rename-operation:
+    from: DeleteLock
+    to: DeleteReadOnlyLock
+```

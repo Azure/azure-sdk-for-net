@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GeoRegionCollection>> ListGeoRegionsAsync(string subscriptionId, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceGeoRegionListResult>> ListGeoRegionsAsync(string subscriptionId, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -635,9 +635,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        GeoRegionCollection value = default;
+                        AppServiceGeoRegionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GeoRegionCollection.DeserializeGeoRegionCollection(document.RootElement);
+                        value = AppServiceGeoRegionListResult.DeserializeAppServiceGeoRegionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GeoRegionCollection> ListGeoRegions(string subscriptionId, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceGeoRegionListResult> ListGeoRegions(string subscriptionId, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -664,9 +664,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        GeoRegionCollection value = default;
+                        AppServiceGeoRegionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GeoRegionCollection.DeserializeGeoRegionCollection(document.RootElement);
+                        value = AppServiceGeoRegionListResult.DeserializeAppServiceGeoRegionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PremierAddOnOfferCollection>> ListPremierAddOnOffersAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<PremierAddOnOfferListResult>> ListPremierAddOnOffersAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -781,9 +781,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        PremierAddOnOfferCollection value = default;
+                        PremierAddOnOfferListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PremierAddOnOfferCollection.DeserializePremierAddOnOfferCollection(document.RootElement);
+                        value = PremierAddOnOfferListResult.DeserializePremierAddOnOfferListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PremierAddOnOfferCollection> ListPremierAddOnOffers(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<PremierAddOnOfferListResult> ListPremierAddOnOffers(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -806,9 +806,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        PremierAddOnOfferCollection value = default;
+                        PremierAddOnOfferListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PremierAddOnOfferCollection.DeserializePremierAddOnOfferCollection(document.RootElement);
+                        value = PremierAddOnOfferListResult.DeserializePremierAddOnOfferListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1197,7 +1197,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GeoRegionCollection>> ListGeoRegionsNextPageAsync(string nextLink, string subscriptionId, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceGeoRegionListResult>> ListGeoRegionsNextPageAsync(string nextLink, string subscriptionId, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1208,9 +1208,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        GeoRegionCollection value = default;
+                        AppServiceGeoRegionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GeoRegionCollection.DeserializeGeoRegionCollection(document.RootElement);
+                        value = AppServiceGeoRegionListResult.DeserializeAppServiceGeoRegionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1228,7 +1228,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GeoRegionCollection> ListGeoRegionsNextPage(string nextLink, string subscriptionId, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceGeoRegionListResult> ListGeoRegionsNextPage(string nextLink, string subscriptionId, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1239,9 +1239,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        GeoRegionCollection value = default;
+                        AppServiceGeoRegionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GeoRegionCollection.DeserializeGeoRegionCollection(document.RootElement);
+                        value = AppServiceGeoRegionListResult.DeserializeAppServiceGeoRegionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1341,7 +1341,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PremierAddOnOfferCollection>> ListPremierAddOnOffersNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<PremierAddOnOfferListResult>> ListPremierAddOnOffersNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1352,9 +1352,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        PremierAddOnOfferCollection value = default;
+                        PremierAddOnOfferListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PremierAddOnOfferCollection.DeserializePremierAddOnOfferCollection(document.RootElement);
+                        value = PremierAddOnOfferListResult.DeserializePremierAddOnOfferListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1368,7 +1368,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PremierAddOnOfferCollection> ListPremierAddOnOffersNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<PremierAddOnOfferListResult> ListPremierAddOnOffersNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1379,9 +1379,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        PremierAddOnOfferCollection value = default;
+                        PremierAddOnOfferListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PremierAddOnOfferCollection.DeserializePremierAddOnOfferCollection(document.RootElement);
+                        value = PremierAddOnOfferListResult.DeserializePremierAddOnOfferListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -1983,7 +1983,7 @@ namespace Azure.Storage.Files.DataLake
             AppendInternal(
                 content,
                 offset,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 options?.LeaseId,
                 options?.LeaseAction,
                 options?.LeaseDuration,
@@ -2035,7 +2035,7 @@ namespace Azure.Storage.Files.DataLake
             await AppendInternal(
                 content,
                 offset,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 options?.LeaseId,
                 options?.LeaseAction,
                 options?.LeaseDuration,
@@ -4402,7 +4402,7 @@ namespace Azure.Storage.Files.DataLake
 
             var uploader = GetPartitionedUploader(
                 options.TransferOptions,
-                validationOptions: options?.TransferValidationOptions,
+                validationOptions: options?.TransferValidation,
                 operationName: $"{nameof(DataLakeFileClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -5167,7 +5167,7 @@ namespace Azure.Storage.Files.DataLake
                     position: position,
                     conditions: conditions,
                     progressHandler: options?.ProgressHandler,
-                    validationOptions: options?.TransferValidationOptions,
+                    validationOptions: options?.TransferValidation,
                     closeEvent: options?.Close);
             }
             catch (Exception ex)

@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: DevCenter
 namespace: Azure.ResourceManager.DevCenter
+# default tag is a preview version
 require: https://github.com/Azure/azure-rest-api-specs/blob/1b3b9c1dd4d2c875997ea0b392dc71418fb1f28d/specification/devcenter/resource-manager/readme.md
-tag: package-2022-08-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

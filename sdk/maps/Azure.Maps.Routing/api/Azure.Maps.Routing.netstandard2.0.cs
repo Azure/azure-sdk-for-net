@@ -1,5 +1,42 @@
 namespace Azure.Maps.Routing
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AlternativeRouteType : System.IEquatable<Azure.Maps.Routing.AlternativeRouteType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AlternativeRouteType(string value) { throw null; }
+        public static Azure.Maps.Routing.AlternativeRouteType AnyRoute { get { throw null; } }
+        public static Azure.Maps.Routing.AlternativeRouteType BetterRoute { get { throw null; } }
+        public bool Equals(Azure.Maps.Routing.AlternativeRouteType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Maps.Routing.AlternativeRouteType left, Azure.Maps.Routing.AlternativeRouteType right) { throw null; }
+        public static implicit operator Azure.Maps.Routing.AlternativeRouteType (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Routing.AlternativeRouteType left, Azure.Maps.Routing.AlternativeRouteType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct InclineLevel : System.IEquatable<Azure.Maps.Routing.InclineLevel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public InclineLevel(string value) { throw null; }
+        public static Azure.Maps.Routing.InclineLevel High { get { throw null; } }
+        public static Azure.Maps.Routing.InclineLevel Low { get { throw null; } }
+        public static Azure.Maps.Routing.InclineLevel Normal { get { throw null; } }
+        public bool Equals(Azure.Maps.Routing.InclineLevel other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Maps.Routing.InclineLevel left, Azure.Maps.Routing.InclineLevel right) { throw null; }
+        public static implicit operator Azure.Maps.Routing.InclineLevel (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Routing.InclineLevel left, Azure.Maps.Routing.InclineLevel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class MapsRoutingClient
     {
         protected MapsRoutingClient() { }
@@ -7,50 +44,425 @@ namespace Azure.Maps.Routing
         public MapsRoutingClient(Azure.AzureKeyCredential credential, Azure.Maps.Routing.MapsRoutingClientOptions options) { }
         public MapsRoutingClient(Azure.Core.TokenCredential credential, string clientId) { }
         public MapsRoutingClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Routing.MapsRoutingClientOptions options) { }
-        public virtual Azure.Response<Azure.Maps.Routing.Models.RouteDirections> GetDirections(Azure.Maps.Routing.Models.RouteDirectionQuery routeDirectionQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteDirections>> GetDirectionsAsync(Azure.Maps.Routing.Models.RouteDirectionQuery routeDirectionQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Routing.Models.RouteRangeResult> GetRouteRange(Azure.Maps.Routing.Models.RouteRangeOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteRangeResult>> GetRouteRangeAsync(Azure.Maps.Routing.Models.RouteRangeOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Maps.Routing.Models.RequestRouteDirectionsOperation RequestRouteDirectionsBatch(Azure.WaitUntil waitUntil, System.Collections.Generic.IList<Azure.Maps.Routing.Models.RouteDirectionQuery> routeDirectionsQueries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Maps.Routing.Models.RequestRouteDirectionsOperation> RequestRouteDirectionsBatchAsync(Azure.WaitUntil waitUntil, System.Collections.Generic.IList<Azure.Maps.Routing.Models.RouteDirectionQuery> routeDirectionsQueries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Maps.Routing.Models.RequestRouteMatrixOperation RequestRouteMatrix(Azure.WaitUntil waitUntil, Azure.Maps.Routing.Models.RouteMatrixOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Maps.Routing.Models.RequestRouteMatrixOperation> RequestRouteMatrixAsync(Azure.WaitUntil waitUntil, Azure.Maps.Routing.Models.RouteMatrixOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult> SyncRequestRouteDirectionsBatch(System.Collections.Generic.IList<Azure.Maps.Routing.Models.RouteDirectionQuery> routeDirectionQueries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>> SyncRequestRouteDirectionsBatchAsync(System.Collections.Generic.IList<Azure.Maps.Routing.Models.RouteDirectionQuery> routeDirectionQueries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult> SyncRequestRouteMatrix(Azure.Maps.Routing.Models.RouteMatrixOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult> SyncRequestRouteMatrix(Azure.Maps.Routing.Models.RouteMatrixQuery routeMatrixQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult>> SyncRequestRouteMatrixAsync(Azure.Maps.Routing.Models.RouteMatrixOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult>> SyncRequestRouteMatrixAsync(Azure.Maps.Routing.Models.RouteMatrixQuery routeMatrixQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Routing.Models.RouteDirections> GetDirections(Azure.Maps.Routing.RouteDirectionQuery query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteDirections>> GetDirectionsAsync(Azure.Maps.Routing.RouteDirectionQuery query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Maps.Routing.Models.GetDirectionsOperation GetDirectionsBatch(Azure.WaitUntil waitUntil, System.Collections.Generic.IEnumerable<Azure.Maps.Routing.RouteDirectionQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Maps.Routing.Models.GetDirectionsOperation> GetDirectionsBatchAsync(Azure.WaitUntil waitUntil, System.Collections.Generic.IEnumerable<Azure.Maps.Routing.RouteDirectionQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult> GetDirectionsImmediateBatch(System.Collections.Generic.IEnumerable<Azure.Maps.Routing.RouteDirectionQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>> GetDirectionsImmediateBatchAsync(System.Collections.Generic.IEnumerable<Azure.Maps.Routing.RouteDirectionQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult> GetImmediateRouteMatrix(Azure.Maps.Routing.RouteMatrixOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult> GetImmediateRouteMatrix(Azure.Maps.Routing.RouteMatrixQuery routeMatrixQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult>> GetImmediateRouteMatrixAsync(Azure.Maps.Routing.RouteMatrixOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult>> GetImmediateRouteMatrixAsync(Azure.Maps.Routing.RouteMatrixQuery routeMatrixQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Maps.Routing.Models.GetRouteMatrixOperation GetRouteMatrix(Azure.WaitUntil waitUntil, Azure.Maps.Routing.RouteMatrixOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Maps.Routing.Models.GetRouteMatrixOperation> GetRouteMatrixAsync(Azure.WaitUntil waitUntil, Azure.Maps.Routing.RouteMatrixOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Routing.Models.RouteRangeResult> GetRouteRange(Azure.Maps.Routing.RouteRangeOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Routing.Models.RouteRangeResult>> GetRouteRangeAsync(Azure.Maps.Routing.RouteRangeOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MapsRoutingClientOptions : Azure.Core.ClientOptions
     {
         public MapsRoutingClientOptions(Azure.Maps.Routing.MapsRoutingClientOptions.ServiceVersion version = Azure.Maps.Routing.MapsRoutingClientOptions.ServiceVersion.V1_0, System.Uri endpoint = null) { }
+        public System.Uri Endpoint { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V1_0 = 1,
         }
     }
-}
-namespace Azure.Maps.Routing.Models
-{
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AlternativeRouteType : System.IEquatable<Azure.Maps.Routing.Models.AlternativeRouteType>
+    public readonly partial struct RouteAvoidType : System.IEquatable<Azure.Maps.Routing.RouteAvoidType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public AlternativeRouteType(string value) { throw null; }
-        public static Azure.Maps.Routing.Models.AlternativeRouteType AnyRoute { get { throw null; } }
-        public static Azure.Maps.Routing.Models.AlternativeRouteType BetterRoute { get { throw null; } }
-        public bool Equals(Azure.Maps.Routing.Models.AlternativeRouteType other) { throw null; }
+        public RouteAvoidType(string value) { throw null; }
+        public static Azure.Maps.Routing.RouteAvoidType AlreadyUsedRoads { get { throw null; } }
+        public static Azure.Maps.Routing.RouteAvoidType BorderCrossings { get { throw null; } }
+        public static Azure.Maps.Routing.RouteAvoidType Carpools { get { throw null; } }
+        public static Azure.Maps.Routing.RouteAvoidType Ferries { get { throw null; } }
+        public static Azure.Maps.Routing.RouteAvoidType Motorways { get { throw null; } }
+        public static Azure.Maps.Routing.RouteAvoidType TollRoads { get { throw null; } }
+        public static Azure.Maps.Routing.RouteAvoidType UnpavedRoads { get { throw null; } }
+        public bool Equals(Azure.Maps.Routing.RouteAvoidType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Routing.Models.AlternativeRouteType left, Azure.Maps.Routing.Models.AlternativeRouteType right) { throw null; }
-        public static implicit operator Azure.Maps.Routing.Models.AlternativeRouteType (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Routing.Models.AlternativeRouteType left, Azure.Maps.Routing.Models.AlternativeRouteType right) { throw null; }
+        public static bool operator ==(Azure.Maps.Routing.RouteAvoidType left, Azure.Maps.Routing.RouteAvoidType right) { throw null; }
+        public static implicit operator Azure.Maps.Routing.RouteAvoidType (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Routing.RouteAvoidType left, Azure.Maps.Routing.RouteAvoidType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class RouteDirectionOptions
+    {
+        public RouteDirectionOptions() { }
+        public double? AccelerationEfficiency { get { throw null; } set { } }
+        public Azure.Maps.Routing.AlternativeRouteType? AlternativeType { get { throw null; } set { } }
+        public System.DateTimeOffset? ArriveAt { get { throw null; } set { } }
+        public double? AuxiliaryPowerInKilowatts { get { throw null; } set { } }
+        public double? AuxiliaryPowerInLitersPerHour { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Maps.Routing.RouteAvoidType> Avoid { get { throw null; } }
+        public bool? ComputeBestWaypointOrder { get { throw null; } set { } }
+        public string ConstantSpeedConsumptionInKilowattHoursPerHundredKilometer { get { throw null; } set { } }
+        public string ConstantSpeedConsumptionInLitersPerHundredKilometer { get { throw null; } set { } }
+        public double? CurrentChargeInKilowattHours { get { throw null; } set { } }
+        public double? CurrentFuelInLiters { get { throw null; } set { } }
+        public double? DecelerationEfficiency { get { throw null; } set { } }
+        public System.DateTimeOffset? DepartAt { get { throw null; } set { } }
+        public double? DownhillEfficiency { get { throw null; } set { } }
+        public double? FuelEnergyDensityInMegajoulesPerLiter { get { throw null; } set { } }
+        public Azure.Maps.Routing.InclineLevel? InclineLevel { get { throw null; } set { } }
+        public Azure.Maps.Routing.RouteInstructionsType? InstructionsType { get { throw null; } set { } }
+        public bool? IsCommercialVehicle { get { throw null; } set { } }
+        public Azure.Maps.Routing.RoutingLanguage Language { get { throw null; } set { } }
+        public int? MaxAlternatives { get { throw null; } set { } }
+        public double? MaxChargeInKilowattHours { get { throw null; } set { } }
+        public int? MinDeviationDistance { get { throw null; } set { } }
+        public int? MinDeviationTime { get { throw null; } set { } }
+        public Azure.Maps.Routing.RouteDirectionParameters RouteDirectionParameters { get { throw null; } set { } }
+        public Azure.Maps.Routing.RouteRepresentationForBestOrder? RouteRepresentationForBestOrder { get { throw null; } set { } }
+        public Azure.Maps.Routing.RouteType? RouteType { get { throw null; } set { } }
+        public Azure.Maps.Routing.SectionType? SectionFilter { get { throw null; } set { } }
+        public bool? ShouldReportEffectiveSettings { get { throw null; } set { } }
+        public Azure.Maps.Routing.TravelMode? TravelMode { get { throw null; } set { } }
+        public Azure.Maps.Routing.TravelTimeType? TravelTimeType { get { throw null; } set { } }
+        public double? UphillEfficiency { get { throw null; } set { } }
+        public bool? UseTrafficData { get { throw null; } set { } }
+        public int? VehicleAxleWeightInKilograms { get { throw null; } set { } }
+        public Azure.Maps.Routing.VehicleEngineType? VehicleEngineType { get { throw null; } set { } }
+        public int? VehicleHeading { get { throw null; } set { } }
+        public double? VehicleHeightInMeters { get { throw null; } set { } }
+        public double? VehicleLengthInMeters { get { throw null; } set { } }
+        public Azure.Maps.Routing.VehicleLoadType? VehicleLoadType { get { throw null; } set { } }
+        public int? VehicleMaxSpeedInKilometersPerHour { get { throw null; } set { } }
+        public int? VehicleWeightInKilograms { get { throw null; } set { } }
+        public double? VehicleWidthInMeters { get { throw null; } set { } }
+        public Azure.Maps.Routing.WindingnessLevel? Windingness { get { throw null; } set { } }
+    }
+    public partial class RouteDirectionParameters
+    {
+        public RouteDirectionParameters() { }
+        public System.Collections.Generic.IList<string> AllowVignette { get { throw null; } }
+        public Azure.Core.GeoJson.GeoPolygonCollection AvoidAreas { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> AvoidVignette { get { throw null; } }
+        public Azure.Core.GeoJson.GeoCollection SupportingPoints { get { throw null; } set { } }
+    }
+    public partial class RouteDirectionQuery
+    {
+        protected RouteDirectionQuery() { }
+        public RouteDirectionQuery(System.Collections.Generic.IList<Azure.Core.GeoJson.GeoPosition> routePoints, Azure.Maps.Routing.RouteDirectionOptions options = null) { }
+        public Azure.Maps.Routing.RouteDirectionOptions RouteDirectionOptions { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.GeoJson.GeoPosition> RoutePoints { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RouteInstructionsType : System.IEquatable<Azure.Maps.Routing.RouteInstructionsType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RouteInstructionsType(string value) { throw null; }
+        public static Azure.Maps.Routing.RouteInstructionsType Coded { get { throw null; } }
+        public static Azure.Maps.Routing.RouteInstructionsType Tagged { get { throw null; } }
+        public static Azure.Maps.Routing.RouteInstructionsType Text { get { throw null; } }
+        public bool Equals(Azure.Maps.Routing.RouteInstructionsType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Maps.Routing.RouteInstructionsType left, Azure.Maps.Routing.RouteInstructionsType right) { throw null; }
+        public static implicit operator Azure.Maps.Routing.RouteInstructionsType (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Routing.RouteInstructionsType left, Azure.Maps.Routing.RouteInstructionsType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class RouteMatrixOptions
+    {
+        protected RouteMatrixOptions() { }
+        public RouteMatrixOptions(Azure.Maps.Routing.RouteMatrixQuery query) { }
+        public System.DateTimeOffset? ArriveAt { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Maps.Routing.RouteAvoidType> Avoid { get { throw null; } }
+        public System.DateTimeOffset? DepartAt { get { throw null; } set { } }
+        public Azure.Maps.Routing.InclineLevel? InclineLevel { get { throw null; } set { } }
+        public Azure.Maps.Routing.RouteMatrixQuery Query { get { throw null; } }
+        public Azure.Maps.Routing.RouteType? RouteType { get { throw null; } set { } }
+        public Azure.Maps.Routing.SectionType? SectionFilter { get { throw null; } set { } }
+        public Azure.Maps.Routing.TravelMode? TravelMode { get { throw null; } set { } }
+        public Azure.Maps.Routing.TravelTimeType? TravelTimeType { get { throw null; } set { } }
+        public bool? UseTrafficData { get { throw null; } set { } }
+        public int? VehicleAxleWeightInKilograms { get { throw null; } set { } }
+        public double? VehicleHeightInMeters { get { throw null; } set { } }
+        public double? VehicleLengthInMeters { get { throw null; } set { } }
+        public Azure.Maps.Routing.VehicleLoadType? VehicleLoadType { get { throw null; } set { } }
+        public int? VehicleMaxSpeedInKilometersPerHour { get { throw null; } set { } }
+        public int? VehicleWeightInKilograms { get { throw null; } set { } }
+        public double? VehicleWidthInMeters { get { throw null; } set { } }
+        public Azure.Maps.Routing.WindingnessLevel? Windingness { get { throw null; } set { } }
+    }
+    public partial class RouteMatrixQuery
+    {
+        public RouteMatrixQuery() { }
+        public System.Collections.Generic.IList<Azure.Core.GeoJson.GeoPosition> Destinations { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.GeoJson.GeoPosition> Origins { get { throw null; } set { } }
+    }
+    public partial class RouteRangeOptions
+    {
+        protected RouteRangeOptions() { }
+        public RouteRangeOptions(Azure.Core.GeoJson.GeoPosition routeRangePoint) { }
+        public RouteRangeOptions(double longitude, double latitude) { }
+        public double? AccelerationEfficiency { get { throw null; } set { } }
+        public double? AuxiliaryPowerInKilowatts { get { throw null; } set { } }
+        public double? AuxiliaryPowerInLitersPerHour { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Maps.Routing.RouteAvoidType> Avoid { get { throw null; } }
+        public string ConstantSpeedConsumptionInKilowattHoursPerHundredKilometer { get { throw null; } set { } }
+        public string ConstantSpeedConsumptionInLitersPerHundredKilometer { get { throw null; } set { } }
+        public double? CurrentChargeInKilowattHours { get { throw null; } set { } }
+        public double? CurrentFuelInLiters { get { throw null; } set { } }
+        public double? DecelerationEfficiency { get { throw null; } set { } }
+        public System.DateTimeOffset? DepartAt { get { throw null; } set { } }
+        public double? DistanceBudgetInMeters { get { throw null; } set { } }
+        public double? DownhillEfficiency { get { throw null; } set { } }
+        public double? EnergyBudgetInKilowattHours { get { throw null; } set { } }
+        public double? FuelBudgetInLiters { get { throw null; } set { } }
+        public double? FuelEnergyDensityInMegajoulesPerLiter { get { throw null; } set { } }
+        public Azure.Maps.Routing.InclineLevel? InclineLevel { get { throw null; } set { } }
+        public bool? IsCommercialVehicle { get { throw null; } set { } }
+        public double? MaxChargeInKilowattHours { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<double> Query { get { throw null; } }
+        public Azure.Maps.Routing.RouteType? RouteType { get { throw null; } set { } }
+        public System.TimeSpan? TimeBudget { get { throw null; } set { } }
+        public Azure.Maps.Routing.TravelMode? TravelMode { get { throw null; } set { } }
+        public double? UphillEfficiency { get { throw null; } set { } }
+        public bool? UseTrafficData { get { throw null; } set { } }
+        public int? VehicleAxleWeightInKilograms { get { throw null; } set { } }
+        public Azure.Maps.Routing.VehicleEngineType? VehicleEngineType { get { throw null; } set { } }
+        public double? VehicleHeightInMeters { get { throw null; } set { } }
+        public double? VehicleLengthInMeters { get { throw null; } set { } }
+        public Azure.Maps.Routing.VehicleLoadType? VehicleLoadType { get { throw null; } set { } }
+        public int? VehicleMaxSpeedInKilometersPerHour { get { throw null; } set { } }
+        public int? VehicleWeightInKilograms { get { throw null; } set { } }
+        public double? VehicleWidthInMeters { get { throw null; } set { } }
+        public Azure.Maps.Routing.WindingnessLevel? Windingness { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RouteRepresentationForBestOrder : System.IEquatable<Azure.Maps.Routing.RouteRepresentationForBestOrder>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RouteRepresentationForBestOrder(string value) { throw null; }
+        public static Azure.Maps.Routing.RouteRepresentationForBestOrder None { get { throw null; } }
+        public static Azure.Maps.Routing.RouteRepresentationForBestOrder Polyline { get { throw null; } }
+        public static Azure.Maps.Routing.RouteRepresentationForBestOrder SummaryOnly { get { throw null; } }
+        public bool Equals(Azure.Maps.Routing.RouteRepresentationForBestOrder other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Maps.Routing.RouteRepresentationForBestOrder left, Azure.Maps.Routing.RouteRepresentationForBestOrder right) { throw null; }
+        public static implicit operator Azure.Maps.Routing.RouteRepresentationForBestOrder (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Routing.RouteRepresentationForBestOrder left, Azure.Maps.Routing.RouteRepresentationForBestOrder right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RouteType : System.IEquatable<Azure.Maps.Routing.RouteType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RouteType(string value) { throw null; }
+        public static Azure.Maps.Routing.RouteType Economy { get { throw null; } }
+        public static Azure.Maps.Routing.RouteType Fastest { get { throw null; } }
+        public static Azure.Maps.Routing.RouteType Shortest { get { throw null; } }
+        public static Azure.Maps.Routing.RouteType Thrilling { get { throw null; } }
+        public bool Equals(Azure.Maps.Routing.RouteType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Maps.Routing.RouteType left, Azure.Maps.Routing.RouteType right) { throw null; }
+        public static implicit operator Azure.Maps.Routing.RouteType (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Routing.RouteType left, Azure.Maps.Routing.RouteType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RoutingLanguage : System.IEquatable<Azure.Maps.Routing.RoutingLanguage>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RoutingLanguage(string value) { throw null; }
+        public static Azure.Maps.Routing.RoutingLanguage Afrikaans { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Arabic { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Bulgarian { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Czech { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Danish { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage DutchNetherlands { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage EnglishGreatBritain { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage EnglishUsa { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Finnish { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage FrenchFrance { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage German { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Greek { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Hungarian { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Indonesian { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Italian { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Korean { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Lithuanian { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Malay { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Norwegian { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Polish { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage PortugueseBrazil { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage PortuguesePortugal { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Russian { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Slovak { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Slovenian { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage SpanishMexico { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage SpanishSpain { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Swedish { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Thai { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage TraditionalChinese { get { throw null; } }
+        public static Azure.Maps.Routing.RoutingLanguage Turkish { get { throw null; } }
+        public bool Equals(Azure.Maps.Routing.RoutingLanguage other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Maps.Routing.RoutingLanguage left, Azure.Maps.Routing.RoutingLanguage right) { throw null; }
+        public static implicit operator Azure.Maps.Routing.RoutingLanguage (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Routing.RoutingLanguage left, Azure.Maps.Routing.RoutingLanguage right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SectionType : System.IEquatable<Azure.Maps.Routing.SectionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SectionType(string value) { throw null; }
+        public static Azure.Maps.Routing.SectionType CarOrTrain { get { throw null; } }
+        public static Azure.Maps.Routing.SectionType Carpool { get { throw null; } }
+        public static Azure.Maps.Routing.SectionType Country { get { throw null; } }
+        public static Azure.Maps.Routing.SectionType Ferry { get { throw null; } }
+        public static Azure.Maps.Routing.SectionType Motorway { get { throw null; } }
+        public static Azure.Maps.Routing.SectionType Pedestrian { get { throw null; } }
+        public static Azure.Maps.Routing.SectionType TollRoad { get { throw null; } }
+        public static Azure.Maps.Routing.SectionType TollVignette { get { throw null; } }
+        public static Azure.Maps.Routing.SectionType Traffic { get { throw null; } }
+        public static Azure.Maps.Routing.SectionType TravelMode { get { throw null; } }
+        public static Azure.Maps.Routing.SectionType Tunnel { get { throw null; } }
+        public static Azure.Maps.Routing.SectionType Urban { get { throw null; } }
+        public bool Equals(Azure.Maps.Routing.SectionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Maps.Routing.SectionType left, Azure.Maps.Routing.SectionType right) { throw null; }
+        public static implicit operator Azure.Maps.Routing.SectionType (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Routing.SectionType left, Azure.Maps.Routing.SectionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TravelMode : System.IEquatable<Azure.Maps.Routing.TravelMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TravelMode(string value) { throw null; }
+        public static Azure.Maps.Routing.TravelMode Bicycle { get { throw null; } }
+        public static Azure.Maps.Routing.TravelMode Bus { get { throw null; } }
+        public static Azure.Maps.Routing.TravelMode Car { get { throw null; } }
+        public static Azure.Maps.Routing.TravelMode Motorcycle { get { throw null; } }
+        public static Azure.Maps.Routing.TravelMode Pedestrian { get { throw null; } }
+        public static Azure.Maps.Routing.TravelMode Taxi { get { throw null; } }
+        public static Azure.Maps.Routing.TravelMode Truck { get { throw null; } }
+        public static Azure.Maps.Routing.TravelMode Van { get { throw null; } }
+        public bool Equals(Azure.Maps.Routing.TravelMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Maps.Routing.TravelMode left, Azure.Maps.Routing.TravelMode right) { throw null; }
+        public static implicit operator Azure.Maps.Routing.TravelMode (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Routing.TravelMode left, Azure.Maps.Routing.TravelMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TravelTimeType : System.IEquatable<Azure.Maps.Routing.TravelTimeType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TravelTimeType(string value) { throw null; }
+        public static Azure.Maps.Routing.TravelTimeType All { get { throw null; } }
+        public static Azure.Maps.Routing.TravelTimeType None { get { throw null; } }
+        public bool Equals(Azure.Maps.Routing.TravelTimeType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Maps.Routing.TravelTimeType left, Azure.Maps.Routing.TravelTimeType right) { throw null; }
+        public static implicit operator Azure.Maps.Routing.TravelTimeType (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Routing.TravelTimeType left, Azure.Maps.Routing.TravelTimeType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VehicleEngineType : System.IEquatable<Azure.Maps.Routing.VehicleEngineType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VehicleEngineType(string value) { throw null; }
+        public static Azure.Maps.Routing.VehicleEngineType Combustion { get { throw null; } }
+        public static Azure.Maps.Routing.VehicleEngineType Electric { get { throw null; } }
+        public bool Equals(Azure.Maps.Routing.VehicleEngineType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Maps.Routing.VehicleEngineType left, Azure.Maps.Routing.VehicleEngineType right) { throw null; }
+        public static implicit operator Azure.Maps.Routing.VehicleEngineType (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Routing.VehicleEngineType left, Azure.Maps.Routing.VehicleEngineType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VehicleLoadType : System.IEquatable<Azure.Maps.Routing.VehicleLoadType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VehicleLoadType(string value) { throw null; }
+        public static Azure.Maps.Routing.VehicleLoadType OtherHazmatExplosive { get { throw null; } }
+        public static Azure.Maps.Routing.VehicleLoadType OtherHazmatGeneral { get { throw null; } }
+        public static Azure.Maps.Routing.VehicleLoadType OtherHazmatHarmfulToWater { get { throw null; } }
+        public static Azure.Maps.Routing.VehicleLoadType USHazmatClass1 { get { throw null; } }
+        public static Azure.Maps.Routing.VehicleLoadType USHazmatClass2 { get { throw null; } }
+        public static Azure.Maps.Routing.VehicleLoadType USHazmatClass3 { get { throw null; } }
+        public static Azure.Maps.Routing.VehicleLoadType USHazmatClass4 { get { throw null; } }
+        public static Azure.Maps.Routing.VehicleLoadType USHazmatClass5 { get { throw null; } }
+        public static Azure.Maps.Routing.VehicleLoadType USHazmatClass6 { get { throw null; } }
+        public static Azure.Maps.Routing.VehicleLoadType USHazmatClass7 { get { throw null; } }
+        public static Azure.Maps.Routing.VehicleLoadType USHazmatClass8 { get { throw null; } }
+        public static Azure.Maps.Routing.VehicleLoadType USHazmatClass9 { get { throw null; } }
+        public bool Equals(Azure.Maps.Routing.VehicleLoadType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Maps.Routing.VehicleLoadType left, Azure.Maps.Routing.VehicleLoadType right) { throw null; }
+        public static implicit operator Azure.Maps.Routing.VehicleLoadType (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Routing.VehicleLoadType left, Azure.Maps.Routing.VehicleLoadType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WindingnessLevel : System.IEquatable<Azure.Maps.Routing.WindingnessLevel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WindingnessLevel(string value) { throw null; }
+        public static Azure.Maps.Routing.WindingnessLevel High { get { throw null; } }
+        public static Azure.Maps.Routing.WindingnessLevel Low { get { throw null; } }
+        public static Azure.Maps.Routing.WindingnessLevel Normal { get { throw null; } }
+        public bool Equals(Azure.Maps.Routing.WindingnessLevel other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Maps.Routing.WindingnessLevel left, Azure.Maps.Routing.WindingnessLevel right) { throw null; }
+        public static implicit operator Azure.Maps.Routing.WindingnessLevel (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Routing.WindingnessLevel left, Azure.Maps.Routing.WindingnessLevel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+}
+namespace Azure.Maps.Routing.Models
+{
     public partial class BatchResult
     {
         internal BatchResult() { }
@@ -101,6 +513,38 @@ namespace Azure.Maps.Routing.Models
         internal EffectiveSetting() { }
         public string Key { get { throw null; } }
         public string Value { get { throw null; } }
+    }
+    public partial class GetDirectionsOperation : Azure.Operation<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>
+    {
+        protected GetDirectionsOperation() { }
+        public GetDirectionsOperation(Azure.Maps.Routing.MapsRoutingClient client, string id) { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Maps.Routing.Models.RouteDirectionsBatchResult Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public partial class GetRouteMatrixOperation : Azure.Operation<Azure.Maps.Routing.Models.RouteMatrixResult>
+    {
+        protected GetRouteMatrixOperation() { }
+        public GetRouteMatrixOperation(Azure.Maps.Routing.MapsRoutingClient client, string id) { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Maps.Routing.Models.RouteMatrixResult Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GuidanceInstructionType : System.IEquatable<Azure.Maps.Routing.Models.GuidanceInstructionType>
@@ -174,25 +618,6 @@ namespace Azure.Maps.Routing.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct InclineLevel : System.IEquatable<Azure.Maps.Routing.Models.InclineLevel>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public InclineLevel(string value) { throw null; }
-        public static Azure.Maps.Routing.Models.InclineLevel High { get { throw null; } }
-        public static Azure.Maps.Routing.Models.InclineLevel Low { get { throw null; } }
-        public static Azure.Maps.Routing.Models.InclineLevel Normal { get { throw null; } }
-        public bool Equals(Azure.Maps.Routing.Models.InclineLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Routing.Models.InclineLevel left, Azure.Maps.Routing.Models.InclineLevel right) { throw null; }
-        public static implicit operator Azure.Maps.Routing.Models.InclineLevel (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Routing.Models.InclineLevel left, Azure.Maps.Routing.Models.InclineLevel right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JunctionType : System.IEquatable<Azure.Maps.Routing.Models.JunctionType>
     {
         private readonly object _dummy;
@@ -210,38 +635,6 @@ namespace Azure.Maps.Routing.Models
         public static implicit operator Azure.Maps.Routing.Models.JunctionType (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Routing.Models.JunctionType left, Azure.Maps.Routing.Models.JunctionType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class RequestRouteDirectionsOperation : Azure.Operation<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>
-    {
-        protected RequestRouteDirectionsOperation() { }
-        public RequestRouteDirectionsOperation(Azure.Maps.Routing.MapsRoutingClient client, string id) { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Maps.Routing.Models.RouteDirectionsBatchResult Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Routing.Models.RouteDirectionsBatchResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
-    }
-    public partial class RequestRouteMatrixOperation : Azure.Operation<Azure.Maps.Routing.Models.RouteMatrixResult>
-    {
-        protected RequestRouteMatrixOperation() { }
-        public RequestRouteMatrixOperation(Azure.Maps.Routing.MapsRoutingClient client, string id) { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Maps.Routing.Models.RouteMatrixResult Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Routing.Models.RouteMatrixResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResponseSectionType : System.IEquatable<Azure.Maps.Routing.Models.ResponseSectionType>
@@ -296,29 +689,6 @@ namespace Azure.Maps.Routing.Models
         public static bool operator !=(Azure.Maps.Routing.Models.ResponseTravelMode left, Azure.Maps.Routing.Models.ResponseTravelMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RouteAvoidType : System.IEquatable<Azure.Maps.Routing.Models.RouteAvoidType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RouteAvoidType(string value) { throw null; }
-        public static Azure.Maps.Routing.Models.RouteAvoidType AlreadyUsedRoads { get { throw null; } }
-        public static Azure.Maps.Routing.Models.RouteAvoidType BorderCrossings { get { throw null; } }
-        public static Azure.Maps.Routing.Models.RouteAvoidType Carpools { get { throw null; } }
-        public static Azure.Maps.Routing.Models.RouteAvoidType Ferries { get { throw null; } }
-        public static Azure.Maps.Routing.Models.RouteAvoidType Motorways { get { throw null; } }
-        public static Azure.Maps.Routing.Models.RouteAvoidType TollRoads { get { throw null; } }
-        public static Azure.Maps.Routing.Models.RouteAvoidType UnpavedRoads { get { throw null; } }
-        public bool Equals(Azure.Maps.Routing.Models.RouteAvoidType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Routing.Models.RouteAvoidType left, Azure.Maps.Routing.Models.RouteAvoidType right) { throw null; }
-        public static implicit operator Azure.Maps.Routing.Models.RouteAvoidType (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Routing.Models.RouteAvoidType left, Azure.Maps.Routing.Models.RouteAvoidType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class RouteData
     {
         internal RouteData() { }
@@ -326,67 +696,6 @@ namespace Azure.Maps.Routing.Models
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Routing.Models.RouteLeg> Legs { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Routing.Models.RouteSection> Sections { get { throw null; } }
         public Azure.Maps.Routing.Models.RouteSummary Summary { get { throw null; } }
-    }
-    public partial class RouteDirectionOptions
-    {
-        public RouteDirectionOptions() { }
-        public double? AccelerationEfficiency { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.AlternativeRouteType? AlternativeType { get { throw null; } set { } }
-        public System.DateTimeOffset? ArriveAt { get { throw null; } set { } }
-        public double? AuxiliaryPowerInKw { get { throw null; } set { } }
-        public double? AuxiliaryPowerInLitersPerHour { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Maps.Routing.Models.RouteAvoidType> Avoid { get { throw null; } }
-        public bool? ComputeBestWaypointOrder { get { throw null; } set { } }
-        public string ConstantSpeedConsumptionInKwHPerHundredKm { get { throw null; } set { } }
-        public string ConstantSpeedConsumptionInLitersPerHundredKm { get { throw null; } set { } }
-        public double? CurrentChargeInKwH { get { throw null; } set { } }
-        public double? CurrentFuelInLiters { get { throw null; } set { } }
-        public double? DecelerationEfficiency { get { throw null; } set { } }
-        public System.DateTimeOffset? DepartAt { get { throw null; } set { } }
-        public double? DownhillEfficiency { get { throw null; } set { } }
-        public double? FuelEnergyDensityInMegajoulesPerLiter { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.InclineLevel? InclineLevel { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.RouteInstructionsType? InstructionsType { get { throw null; } set { } }
-        public bool? IsCommercialVehicle { get { throw null; } set { } }
-        public string Language { get { throw null; } set { } }
-        public int? MaxAlternatives { get { throw null; } set { } }
-        public double? MaxChargeInKwH { get { throw null; } set { } }
-        public int? MinDeviationDistance { get { throw null; } set { } }
-        public int? MinDeviationTime { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.RouteDirectionParameters RouteDirectionParameters { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.RouteRepresentationForBestOrder? RouteRepresentationForBestOrder { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.RouteType? RouteType { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.SectionType? SectionFilter { get { throw null; } set { } }
-        public bool? ShouldReportEffectiveSettings { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.TravelMode? TravelMode { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.TravelTimeType? TravelTimeType { get { throw null; } set { } }
-        public double? UphillEfficiency { get { throw null; } set { } }
-        public bool? UseTrafficData { get { throw null; } set { } }
-        public int? VehicleAxleWeightInKilograms { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.VehicleEngineType? VehicleEngineType { get { throw null; } set { } }
-        public int? VehicleHeading { get { throw null; } set { } }
-        public double? VehicleHeightInMeters { get { throw null; } set { } }
-        public double? VehicleLengthInMeters { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.VehicleLoadType? VehicleLoadType { get { throw null; } set { } }
-        public int? VehicleMaxSpeedInKmPerHour { get { throw null; } set { } }
-        public int? VehicleWeightInKilograms { get { throw null; } set { } }
-        public double? VehicleWidthInMeters { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.WindingnessLevel? Windingness { get { throw null; } set { } }
-    }
-    public partial class RouteDirectionParameters
-    {
-        public RouteDirectionParameters() { }
-        public System.Collections.Generic.IList<string> AllowVignette { get { throw null; } }
-        public Azure.Core.GeoJson.GeoPolygonCollection AvoidAreas { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> AvoidVignette { get { throw null; } }
-        public Azure.Core.GeoJson.GeoCollection SupportingPoints { get { throw null; } set { } }
-    }
-    public partial class RouteDirectionQuery
-    {
-        protected RouteDirectionQuery() { }
-        public RouteDirectionQuery(System.Collections.Generic.IList<Azure.Core.GeoJson.GeoPosition> routePoints, Azure.Maps.Routing.Models.RouteDirectionOptions options = null) { }
-        public Azure.Maps.Routing.Models.RouteDirectionOptions RouteDirectionOptions { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Core.GeoJson.GeoPosition> RoutePoints { get { throw null; } }
     }
     public partial class RouteDirections
     {
@@ -443,25 +752,6 @@ namespace Azure.Maps.Routing.Models
         public string GroupMessage { get { throw null; } }
         public int? LastInstructionIndex { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RouteInstructionsType : System.IEquatable<Azure.Maps.Routing.Models.RouteInstructionsType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RouteInstructionsType(string value) { throw null; }
-        public static Azure.Maps.Routing.Models.RouteInstructionsType Coded { get { throw null; } }
-        public static Azure.Maps.Routing.Models.RouteInstructionsType Tagged { get { throw null; } }
-        public static Azure.Maps.Routing.Models.RouteInstructionsType Text { get { throw null; } }
-        public bool Equals(Azure.Maps.Routing.Models.RouteInstructionsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Routing.Models.RouteInstructionsType left, Azure.Maps.Routing.Models.RouteInstructionsType right) { throw null; }
-        public static implicit operator Azure.Maps.Routing.Models.RouteInstructionsType (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Routing.Models.RouteInstructionsType left, Azure.Maps.Routing.Models.RouteInstructionsType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class RouteLeg
     {
         internal RouteLeg() { }
@@ -487,35 +777,6 @@ namespace Azure.Maps.Routing.Models
         internal RouteMatrix() { }
         public int? StatusCode { get { throw null; } }
         public Azure.Maps.Routing.Models.RouteLegSummary Summary { get { throw null; } }
-    }
-    public partial class RouteMatrixOptions
-    {
-        protected RouteMatrixOptions() { }
-        public RouteMatrixOptions(Azure.Maps.Routing.Models.RouteMatrixQuery query) { }
-        public System.DateTimeOffset? ArriveAt { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Maps.Routing.Models.RouteAvoidType> Avoid { get { throw null; } }
-        public System.DateTimeOffset? DepartAt { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.InclineLevel? InclineLevel { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.RouteMatrixQuery Query { get { throw null; } }
-        public Azure.Maps.Routing.Models.RouteType? RouteType { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.SectionType? SectionFilter { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.TravelMode? TravelMode { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.TravelTimeType? TravelTimeType { get { throw null; } set { } }
-        public bool? UseTrafficData { get { throw null; } set { } }
-        public int? VehicleAxleWeightInKilograms { get { throw null; } set { } }
-        public double? VehicleHeightInMeters { get { throw null; } set { } }
-        public double? VehicleLengthInMeters { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.VehicleLoadType? VehicleLoadType { get { throw null; } set { } }
-        public int? VehicleMaxSpeedInKmPerHour { get { throw null; } set { } }
-        public int? VehicleWeightInKilograms { get { throw null; } set { } }
-        public double? VehicleWidthInMeters { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.WindingnessLevel? Windingness { get { throw null; } set { } }
-    }
-    public partial class RouteMatrixQuery
-    {
-        public RouteMatrixQuery() { }
-        public System.Collections.Generic.IList<Azure.Core.GeoJson.GeoPosition> Destinations { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Core.GeoJson.GeoPosition> Origins { get { throw null; } set { } }
     }
     public partial class RouteMatrixResult
     {
@@ -559,45 +820,6 @@ namespace Azure.Maps.Routing.Models
         public System.Collections.Generic.IReadOnlyList<Azure.Core.GeoJson.GeoPosition> Boundary { get { throw null; } }
         public Azure.Core.GeoJson.GeoPosition Center { get { throw null; } }
     }
-    public partial class RouteRangeOptions
-    {
-        protected RouteRangeOptions() { }
-        public RouteRangeOptions(Azure.Core.GeoJson.GeoPosition routeRangePoint) { }
-        public RouteRangeOptions(double longitude, double latitude) { }
-        public double? AccelerationEfficiency { get { throw null; } set { } }
-        public double? AuxiliaryPowerInKw { get { throw null; } set { } }
-        public double? AuxiliaryPowerInLitersPerHour { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Maps.Routing.Models.RouteAvoidType> Avoid { get { throw null; } }
-        public string ConstantSpeedConsumptionInKwHPerHundredKm { get { throw null; } set { } }
-        public string ConstantSpeedConsumptionInLitersPerHundredKm { get { throw null; } set { } }
-        public double? CurrentChargeInKwH { get { throw null; } set { } }
-        public double? CurrentFuelInLiters { get { throw null; } set { } }
-        public double? DecelerationEfficiency { get { throw null; } set { } }
-        public System.DateTimeOffset? DepartAt { get { throw null; } set { } }
-        public double? DistanceBudgetInMeters { get { throw null; } set { } }
-        public double? DownhillEfficiency { get { throw null; } set { } }
-        public double? EnergyBudgetInKwH { get { throw null; } set { } }
-        public double? FuelBudgetInLiters { get { throw null; } set { } }
-        public double? FuelEnergyDensityInMegajoulesPerLiter { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.InclineLevel? InclineLevel { get { throw null; } set { } }
-        public bool? IsCommercialVehicle { get { throw null; } set { } }
-        public double? MaxChargeInKwH { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<double> Query { get { throw null; } }
-        public Azure.Maps.Routing.Models.RouteType? RouteType { get { throw null; } set { } }
-        public System.TimeSpan? TimeBudget { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.TravelMode? TravelMode { get { throw null; } set { } }
-        public double? UphillEfficiency { get { throw null; } set { } }
-        public bool? UseTrafficData { get { throw null; } set { } }
-        public int? VehicleAxleWeightInKilograms { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.VehicleEngineType? VehicleEngineType { get { throw null; } set { } }
-        public double? VehicleHeightInMeters { get { throw null; } set { } }
-        public double? VehicleLengthInMeters { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.VehicleLoadType? VehicleLoadType { get { throw null; } set { } }
-        public int? VehicleMaxSpeedInKmPerHour { get { throw null; } set { } }
-        public int? VehicleWeightInKilograms { get { throw null; } set { } }
-        public double? VehicleWidthInMeters { get { throw null; } set { } }
-        public Azure.Maps.Routing.Models.WindingnessLevel? Windingness { get { throw null; } set { } }
-    }
     public partial class RouteRangeResult
     {
         internal RouteRangeResult() { }
@@ -609,25 +831,6 @@ namespace Azure.Maps.Routing.Models
     {
         internal RouteReport() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Routing.Models.EffectiveSetting> EffectiveSettings { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RouteRepresentationForBestOrder : System.IEquatable<Azure.Maps.Routing.Models.RouteRepresentationForBestOrder>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RouteRepresentationForBestOrder(string value) { throw null; }
-        public static Azure.Maps.Routing.Models.RouteRepresentationForBestOrder None { get { throw null; } }
-        public static Azure.Maps.Routing.Models.RouteRepresentationForBestOrder Polyline { get { throw null; } }
-        public static Azure.Maps.Routing.Models.RouteRepresentationForBestOrder SummaryOnly { get { throw null; } }
-        public bool Equals(Azure.Maps.Routing.Models.RouteRepresentationForBestOrder other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Routing.Models.RouteRepresentationForBestOrder left, Azure.Maps.Routing.Models.RouteRepresentationForBestOrder right) { throw null; }
-        public static implicit operator Azure.Maps.Routing.Models.RouteRepresentationForBestOrder (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Routing.Models.RouteRepresentationForBestOrder left, Azure.Maps.Routing.Models.RouteRepresentationForBestOrder right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class RouteSection
     {
@@ -664,54 +867,6 @@ namespace Azure.Maps.Routing.Models
         public int? TravelTimeInSeconds { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RouteType : System.IEquatable<Azure.Maps.Routing.Models.RouteType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RouteType(string value) { throw null; }
-        public static Azure.Maps.Routing.Models.RouteType Economy { get { throw null; } }
-        public static Azure.Maps.Routing.Models.RouteType Fastest { get { throw null; } }
-        public static Azure.Maps.Routing.Models.RouteType Shortest { get { throw null; } }
-        public static Azure.Maps.Routing.Models.RouteType Thrilling { get { throw null; } }
-        public bool Equals(Azure.Maps.Routing.Models.RouteType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Routing.Models.RouteType left, Azure.Maps.Routing.Models.RouteType right) { throw null; }
-        public static implicit operator Azure.Maps.Routing.Models.RouteType (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Routing.Models.RouteType left, Azure.Maps.Routing.Models.RouteType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SectionType : System.IEquatable<Azure.Maps.Routing.Models.SectionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SectionType(string value) { throw null; }
-        public static Azure.Maps.Routing.Models.SectionType CarOrTrain { get { throw null; } }
-        public static Azure.Maps.Routing.Models.SectionType Carpool { get { throw null; } }
-        public static Azure.Maps.Routing.Models.SectionType Country { get { throw null; } }
-        public static Azure.Maps.Routing.Models.SectionType Ferry { get { throw null; } }
-        public static Azure.Maps.Routing.Models.SectionType Motorway { get { throw null; } }
-        public static Azure.Maps.Routing.Models.SectionType Pedestrian { get { throw null; } }
-        public static Azure.Maps.Routing.Models.SectionType TollRoad { get { throw null; } }
-        public static Azure.Maps.Routing.Models.SectionType TollVignette { get { throw null; } }
-        public static Azure.Maps.Routing.Models.SectionType Traffic { get { throw null; } }
-        public static Azure.Maps.Routing.Models.SectionType TravelMode { get { throw null; } }
-        public static Azure.Maps.Routing.Models.SectionType Tunnel { get { throw null; } }
-        public static Azure.Maps.Routing.Models.SectionType Urban { get { throw null; } }
-        public bool Equals(Azure.Maps.Routing.Models.SectionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Routing.Models.SectionType left, Azure.Maps.Routing.Models.SectionType right) { throw null; }
-        public static implicit operator Azure.Maps.Routing.Models.SectionType (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Routing.Models.SectionType left, Azure.Maps.Routing.Models.SectionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TrafficIncidentCategory : System.IEquatable<Azure.Maps.Routing.Models.TrafficIncidentCategory>
     {
         private readonly object _dummy;
@@ -729,113 +884,6 @@ namespace Azure.Maps.Routing.Models
         public static bool operator ==(Azure.Maps.Routing.Models.TrafficIncidentCategory left, Azure.Maps.Routing.Models.TrafficIncidentCategory right) { throw null; }
         public static implicit operator Azure.Maps.Routing.Models.TrafficIncidentCategory (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Routing.Models.TrafficIncidentCategory left, Azure.Maps.Routing.Models.TrafficIncidentCategory right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TravelMode : System.IEquatable<Azure.Maps.Routing.Models.TravelMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TravelMode(string value) { throw null; }
-        public static Azure.Maps.Routing.Models.TravelMode Bicycle { get { throw null; } }
-        public static Azure.Maps.Routing.Models.TravelMode Bus { get { throw null; } }
-        public static Azure.Maps.Routing.Models.TravelMode Car { get { throw null; } }
-        public static Azure.Maps.Routing.Models.TravelMode Motorcycle { get { throw null; } }
-        public static Azure.Maps.Routing.Models.TravelMode Pedestrian { get { throw null; } }
-        public static Azure.Maps.Routing.Models.TravelMode Taxi { get { throw null; } }
-        public static Azure.Maps.Routing.Models.TravelMode Truck { get { throw null; } }
-        public static Azure.Maps.Routing.Models.TravelMode Van { get { throw null; } }
-        public bool Equals(Azure.Maps.Routing.Models.TravelMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Routing.Models.TravelMode left, Azure.Maps.Routing.Models.TravelMode right) { throw null; }
-        public static implicit operator Azure.Maps.Routing.Models.TravelMode (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Routing.Models.TravelMode left, Azure.Maps.Routing.Models.TravelMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TravelTimeType : System.IEquatable<Azure.Maps.Routing.Models.TravelTimeType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TravelTimeType(string value) { throw null; }
-        public static Azure.Maps.Routing.Models.TravelTimeType All { get { throw null; } }
-        public static Azure.Maps.Routing.Models.TravelTimeType None { get { throw null; } }
-        public bool Equals(Azure.Maps.Routing.Models.TravelTimeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Routing.Models.TravelTimeType left, Azure.Maps.Routing.Models.TravelTimeType right) { throw null; }
-        public static implicit operator Azure.Maps.Routing.Models.TravelTimeType (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Routing.Models.TravelTimeType left, Azure.Maps.Routing.Models.TravelTimeType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VehicleEngineType : System.IEquatable<Azure.Maps.Routing.Models.VehicleEngineType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public VehicleEngineType(string value) { throw null; }
-        public static Azure.Maps.Routing.Models.VehicleEngineType Combustion { get { throw null; } }
-        public static Azure.Maps.Routing.Models.VehicleEngineType Electric { get { throw null; } }
-        public bool Equals(Azure.Maps.Routing.Models.VehicleEngineType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Routing.Models.VehicleEngineType left, Azure.Maps.Routing.Models.VehicleEngineType right) { throw null; }
-        public static implicit operator Azure.Maps.Routing.Models.VehicleEngineType (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Routing.Models.VehicleEngineType left, Azure.Maps.Routing.Models.VehicleEngineType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VehicleLoadType : System.IEquatable<Azure.Maps.Routing.Models.VehicleLoadType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public VehicleLoadType(string value) { throw null; }
-        public static Azure.Maps.Routing.Models.VehicleLoadType OtherHazmatExplosive { get { throw null; } }
-        public static Azure.Maps.Routing.Models.VehicleLoadType OtherHazmatGeneral { get { throw null; } }
-        public static Azure.Maps.Routing.Models.VehicleLoadType OtherHazmatHarmfulToWater { get { throw null; } }
-        public static Azure.Maps.Routing.Models.VehicleLoadType USHazmatClass1 { get { throw null; } }
-        public static Azure.Maps.Routing.Models.VehicleLoadType USHazmatClass2 { get { throw null; } }
-        public static Azure.Maps.Routing.Models.VehicleLoadType USHazmatClass3 { get { throw null; } }
-        public static Azure.Maps.Routing.Models.VehicleLoadType USHazmatClass4 { get { throw null; } }
-        public static Azure.Maps.Routing.Models.VehicleLoadType USHazmatClass5 { get { throw null; } }
-        public static Azure.Maps.Routing.Models.VehicleLoadType USHazmatClass6 { get { throw null; } }
-        public static Azure.Maps.Routing.Models.VehicleLoadType USHazmatClass7 { get { throw null; } }
-        public static Azure.Maps.Routing.Models.VehicleLoadType USHazmatClass8 { get { throw null; } }
-        public static Azure.Maps.Routing.Models.VehicleLoadType USHazmatClass9 { get { throw null; } }
-        public bool Equals(Azure.Maps.Routing.Models.VehicleLoadType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Routing.Models.VehicleLoadType left, Azure.Maps.Routing.Models.VehicleLoadType right) { throw null; }
-        public static implicit operator Azure.Maps.Routing.Models.VehicleLoadType (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Routing.Models.VehicleLoadType left, Azure.Maps.Routing.Models.VehicleLoadType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WindingnessLevel : System.IEquatable<Azure.Maps.Routing.Models.WindingnessLevel>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public WindingnessLevel(string value) { throw null; }
-        public static Azure.Maps.Routing.Models.WindingnessLevel High { get { throw null; } }
-        public static Azure.Maps.Routing.Models.WindingnessLevel Low { get { throw null; } }
-        public static Azure.Maps.Routing.Models.WindingnessLevel Normal { get { throw null; } }
-        public bool Equals(Azure.Maps.Routing.Models.WindingnessLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Routing.Models.WindingnessLevel left, Azure.Maps.Routing.Models.WindingnessLevel right) { throw null; }
-        public static implicit operator Azure.Maps.Routing.Models.WindingnessLevel (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Routing.Models.WindingnessLevel left, Azure.Maps.Routing.Models.WindingnessLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

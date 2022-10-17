@@ -4498,7 +4498,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12063")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_QueryTextConfigurations()

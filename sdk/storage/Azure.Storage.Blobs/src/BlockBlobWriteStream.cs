@@ -30,12 +30,12 @@ namespace Azure.Storage.Blobs
             BlobHttpHeaders blobHttpHeaders,
             IDictionary<string, string> metadata,
             IDictionary<string, string> tags,
-            UploadTransferValidationOptions validationOptions
+            UploadTransferValidationOptions transferValidation
             ) : base(
                 position,
                 bufferSize,
                 progressHandler,
-                validationOptions
+                transferValidation
                 )
         {
             ValidateBufferSize(bufferSize);

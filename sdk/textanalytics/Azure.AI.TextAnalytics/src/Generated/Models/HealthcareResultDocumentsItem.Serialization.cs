@@ -17,6 +17,11 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(DetectedLanguage))
+            {
+                writer.WritePropertyName("detectedLanguage");
+                writer.WriteObjectValue(DetectedLanguage.Value);
+            }
             writer.WritePropertyName("entities");
             writer.WriteStartArray();
             foreach (var item in Entities)
@@ -31,6 +36,17 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(FhirBundle))
+            {
+                writer.WritePropertyName("fhirBundle");
+                writer.WriteStartObject();
+                foreach (var item in FhirBundle)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
             writer.WritePropertyName("warnings");
@@ -50,13 +66,25 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareResultDocumentsItem DeserializeHealthcareResultDocumentsItem(JsonElement element)
         {
+            Optional<DetectedLanguageInternal> detectedLanguage = default;
             IList<HealthcareEntityInternal> entities = default;
             IList<HealthcareRelationInternal> relations = default;
+            Optional<IDictionary<string, object>> fhirBundle = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("detectedLanguage"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    detectedLanguage = DetectedLanguageInternal.DeserializeDetectedLanguageInternal(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("entities"))
                 {
                     List<HealthcareEntityInternal> array = new List<HealthcareEntityInternal>();
@@ -75,6 +103,21 @@ namespace Azure.AI.TextAnalytics.Models
                         array.Add(HealthcareRelationInternal.DeserializeHealthcareRelationInternal(item));
                     }
                     relations = array;
+                    continue;
+                }
+                if (property.NameEquals("fhirBundle"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                    }
+                    fhirBundle = dictionary;
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -103,7 +146,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), entities, relations);
+            return new HealthcareResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), entities, relations, Optional.ToDictionary(fhirBundle), Optional.ToNullable(detectedLanguage));
         }
     }
 }
