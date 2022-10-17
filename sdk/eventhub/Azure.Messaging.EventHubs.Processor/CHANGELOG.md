@@ -10,7 +10,11 @@
 
 ### Other Changes
 
+<<<<<<< Updated upstream
 - Adjusted the frequency that a warning is logged when the processor owns more partitions than a basic heuristic believes is ideal.  Warnings will no longer log on each load balancing cycle, only when the number of partitions owned changes.
+=======
+- The AMQP transport library (Microsoft.Azure.Amqp) has been updated to v2.5.12
+>>>>>>> Stashed changes
 
 ## 5.7.3 (2022-10-11)
 
