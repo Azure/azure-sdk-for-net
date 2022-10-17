@@ -3,8 +3,7 @@
 using System;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
-using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using Tags = System.Collections.Generic.IDictionary<string, string>;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.Blobs.DataMovement.Models
 {

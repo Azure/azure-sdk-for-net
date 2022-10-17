@@ -3,6 +3,7 @@
 using System;
 using Azure.Core;
 using Azure.Storage.DataMovement;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.Blobs.DataMovement.Models
 {

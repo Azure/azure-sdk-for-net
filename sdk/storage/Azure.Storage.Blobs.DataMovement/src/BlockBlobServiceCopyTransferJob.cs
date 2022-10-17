@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using Azure.Core.Pipeline;
 using System.Linq;
 using System.Xml.Linq;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.Blobs.DataMovement
 {

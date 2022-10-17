@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using Azure.Storage.Shared;
 using System.Security.Cryptography;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.Blobs.DataMovement
 {

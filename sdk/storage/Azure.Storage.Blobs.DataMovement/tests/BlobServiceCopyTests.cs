@@ -15,6 +15,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement;
 using Castle.Core.Internal;
 using NUnit.Framework;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.Blobs.DataMovement.Tests
 {

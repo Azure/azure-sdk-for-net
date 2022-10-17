@@ -80,6 +80,23 @@ namespace Azure.Storage.DataMovement
 
         internal DataController(DataControllerOptions options)
         {
+            _jobsToProcessChannel = Channel.CreateUnbounded<TransferJobInternal>(
+                new UnboundedChannelOptions()
+                {
+                    AllowSynchronousContinuations = true,
+                    SingleReader = true, // To limit the task of processing one job at a time.
+                    // Allow single writers
+                });
+            _partsToProcessChannel = Channel.CreateUnbounded<JobPartInternal>(
+                new UnboundedChannelOptions()
+                {
+                    AllowSynchronousContinuations = true,
+                });
+            _chunksToProcessChannel = Channel.CreateUnbounded<Func<Task>>(
+                new UnboundedChannelOptions()
+                {
+                    AllowSynchronousContinuations = true,
+                });
             _currentTaskIsProcessingJob = Task.Run(() => NotifyOfPendingJobProcessing());
             _currentTaskIsProcessingJobPart = Task.Run(() => NotifyOfPendingJobPartProcessing());
             _currentTaskIsProcessingJobChunk = Task.Run(() => NotifyOfPendingJobChunkProcessing());

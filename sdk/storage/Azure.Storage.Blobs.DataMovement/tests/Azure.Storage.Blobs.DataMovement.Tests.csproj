@@ -34,7 +34,7 @@
     <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" LinkBase="Shared\Storage" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureStorageDataMovementTestSharedSources)DataMovementTestBase.cs" LinkBase="Shared\DataMovmement" />
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)DataMovementTestBase.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared" />

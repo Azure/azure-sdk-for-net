@@ -5,9 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.DataMovement.Tests;
-using Azure.Storage.DataMovement.Tests.Shared;
 using Azure.Core.TestFramework;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Blobs.Models;
@@ -19,6 +16,7 @@ using System.IO;
 using NUnit.Framework;
 using Azure.Core;
 using System.Threading;
+using Azure.Storage.DataMovement.Tests;
 
 namespace Azure.Storage.Blobs.DataMovement.Tests.Shared
 {

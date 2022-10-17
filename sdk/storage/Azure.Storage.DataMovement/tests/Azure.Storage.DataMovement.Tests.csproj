@@ -10,6 +10,7 @@
     <PackageReference Include="System.IO.FileSystem.AccessControl" VersionOverride="5.0.0" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.DataMovement.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs.DataMovement\src\Azure.Storage.Blobs.DataMovement.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared\Core" />

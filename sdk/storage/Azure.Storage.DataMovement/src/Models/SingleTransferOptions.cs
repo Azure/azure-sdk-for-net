@@ -10,7 +10,7 @@ namespace Azure.Storage.DataMovement.Models
     /// <summary>
     /// <see cref="SingleTransferOptions"/> is used to provide options for parallel transfers.
     /// </summary>
-    public struct SingleTransferOptions : IEquatable<SingleTransferOptions>
+    public class SingleTransferOptions : IEquatable<SingleTransferOptions>
     {
         /// <summary>
         /// The maximum length of an transfer in bytes.
@@ -76,8 +76,8 @@ namespace Azure.Storage.DataMovement.Models
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool Equals(SingleTransferOptions obj)
-            => MaximumTransferChunkSize == obj.MaximumTransferChunkSize
-            && InitialTransferSize == obj.InitialTransferSize
+            => MaximumTransferChunkSize == obj?.MaximumTransferChunkSize
+            && InitialTransferSize == obj?.InitialTransferSize
             ;
 
         /// <summary>

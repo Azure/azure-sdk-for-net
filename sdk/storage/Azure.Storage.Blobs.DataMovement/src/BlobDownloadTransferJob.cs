@@ -9,14 +9,11 @@ using Azure.Storage.Blobs.Models;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.DataMovement.Models;
 using Azure.Storage.DataMovement;
-using Azure.Storage.Blobs;
 using Azure.Core;
 using System.Collections.Generic;
-using System.Xml.Linq;
 using System.IO;
-using System.Diagnostics;
 using System.Globalization;
-using System.Text.RegularExpressions;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.Blobs.DataMovement
 {

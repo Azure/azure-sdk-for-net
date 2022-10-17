@@ -19,7 +19,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// </summary>
         /// <param name="blobClient"></param>
         /// <returns></returns>
-        public static StorageResource GenerateBlockBlobResource(BlockBlobClient blobClient)
+        public static StorageResource GetBlockBlob(BlockBlobClient blobClient)
         {
             return new BlockBlobStorageResource(blobClient);
         }
@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <param name="containerClient">Container CLient</param>
         /// <param name="encodedPath">Encoded Directory Path</param>
         /// <returns></returns>
-        public static StorageResourceContainer GetBlobDirectoryResource(BlobContainerClient containerClient, List<string> encodedPath)
+        public static StorageResourceContainer GetBlobVirtualDirectory(BlobContainerClient containerClient, List<string> encodedPath)
         {
             return new BlobDirectoryStorageResourceContainer(containerClient, encodedPath);
         }
@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// </summary>
         /// <param name="containerClient"></param>
         /// <returns></returns>
-        public static StorageResourceContainer GetBlobContainerResource(BlobContainerClient containerClient)
+        internal static StorageResourceContainer GetBlobContainer(BlobContainerClient containerClient)
         {
             return new BlobStorageResourceContainer(containerClient);
         }
