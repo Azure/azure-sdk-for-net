@@ -82,14 +82,16 @@ namespace Azure.ResourceManager.TestFramework
 
         protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default, bool enableDeleteAfter = false)
         {
-            AddDeleteAfterTagPolicy DeleteAfterTagPolicy = new AddDeleteAfterTagPolicy(Recording.UtcNow);
             var options = InstrumentClientOptions(clientOptions ?? new ArmClientOptions());
             options.Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl);
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(NullFilterPolicy, HttpPipelinePosition.PerRetry);
             if (enableDeleteAfter)
-                options.AddPolicy(DeleteAfterTagPolicy, HttpPipelinePosition.PerCall);
+            {
+                AddDeleteAfterTagPolicy deleteAfterTagPolicy = new AddDeleteAfterTagPolicy(Recording.UtcNow);
+                options.AddPolicy(deleteAfterTagPolicy, HttpPipelinePosition.PerCall);
+            }
             if (ApiVersion is not null)
                 options.SetApiVersion(_resourceType, ApiVersion);
 
