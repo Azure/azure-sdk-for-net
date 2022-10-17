@@ -29,6 +29,12 @@ namespace Azure.Containers.ContainerRegistry
         public static bool operator !=(Azure.Containers.ContainerRegistry.ArtifactArchitecture left, Azure.Containers.ContainerRegistry.ArtifactArchitecture right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ArtifactDownloadToOptions
+    {
+        public ArtifactDownloadToOptions() { }
+        public int? MaxConcurrency { get { throw null; } set { } }
+        public long? MaxDownloadSize { get { throw null; } set { } }
+    }
     public enum ArtifactManifestOrder
     {
         None = 0,
@@ -90,6 +96,13 @@ namespace Azure.Containers.ContainerRegistry
         public static bool operator !=(Azure.Containers.ContainerRegistry.ArtifactOperatingSystem left, Azure.Containers.ContainerRegistry.ArtifactOperatingSystem right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ArtifactStreams
+    {
+        public ArtifactStreams() { }
+        public System.IO.Stream Config { get { throw null; } set { } }
+        public System.Collections.Generic.IList<System.IO.Stream> Layers { get { throw null; } }
+        public System.IO.Stream Manifest { get { throw null; } set { } }
+    }
     public enum ArtifactTagOrder
     {
         None = 0,
@@ -109,6 +122,16 @@ namespace Azure.Containers.ContainerRegistry
         public string Name { get { throw null; } }
         public string RegistryLoginServer { get { throw null; } }
         public string RepositoryName { get { throw null; } }
+    }
+    public partial class ArtifactUploadInfo
+    {
+        public ArtifactUploadInfo() { }
+    }
+    public partial class ArtifactUploadOptions
+    {
+        public ArtifactUploadOptions() { }
+        public int? MaxConcurrency { get { throw null; } set { } }
+        public long? MaxUploadSize { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerRegistryAudience : System.IEquatable<Azure.Containers.ContainerRegistry.ContainerRegistryAudience>
@@ -221,6 +244,10 @@ namespace Azure.Containers.ContainerRegistry
         public virtual Azure.Response DeleteTag(string tag, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTagAsync(string name, string reference, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTagAsync(string tag, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DownloadTo(Azure.Containers.ContainerRegistry.ArtifactStreams destination, Azure.Containers.ContainerRegistry.ArtifactDownloadToOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DownloadTo(string path, Azure.Containers.ContainerRegistry.ArtifactDownloadToOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DownloadToAsync(Azure.Containers.ContainerRegistry.ArtifactStreams destination, Azure.Containers.ContainerRegistry.ArtifactDownloadToOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DownloadToAsync(string path, Azure.Containers.ContainerRegistry.ArtifactDownloadToOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Containers.ContainerRegistry.ArtifactTagProperties> GetAllTagProperties(Azure.Containers.ContainerRegistry.ArtifactTagOrder tagOrder = Azure.Containers.ContainerRegistry.ArtifactTagOrder.None, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetAllTagProperties(string name, string last = null, int? n = default(int?), string orderby = null, string digest = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Containers.ContainerRegistry.ArtifactTagProperties> GetAllTagPropertiesAsync(Azure.Containers.ContainerRegistry.ArtifactTagOrder tagOrder = Azure.Containers.ContainerRegistry.ArtifactTagOrder.None, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -243,6 +270,10 @@ namespace Azure.Containers.ContainerRegistry
         public virtual Azure.Response UpdateTagProperties(string name, string reference, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.ArtifactTagProperties>> UpdateTagPropertiesAsync(string tag, Azure.Containers.ContainerRegistry.ArtifactTagProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateTagPropertiesAsync(string name, string reference, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.Containers.ContainerRegistry.ArtifactUploadInfo> Upload(Azure.Containers.ContainerRegistry.ArtifactStreams content, Azure.Containers.ContainerRegistry.ArtifactUploadOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Containers.ContainerRegistry.ArtifactUploadInfo> Upload(string path, Azure.Containers.ContainerRegistry.ArtifactUploadOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.ArtifactUploadInfo>> UploadAsync(Azure.Containers.ContainerRegistry.ArtifactStreams content, Azure.Containers.ContainerRegistry.ArtifactUploadOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.ArtifactUploadInfo>> UploadAsync(string path, Azure.Containers.ContainerRegistry.ArtifactUploadOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.Containers.ContainerRegistry.Specialized
