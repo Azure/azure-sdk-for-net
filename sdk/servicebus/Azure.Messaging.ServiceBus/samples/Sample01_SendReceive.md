@@ -178,4 +178,4 @@ var message = new ServiceBusMessage("Hello world!") { TimeToLive = TimeSpan.From
 
 To see the full example source, see:
 
-* [Sample1_HelloWorld.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample01_HelloWorld.cs)
+* [Sample01_SendReceive.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample01_SendReceive.cs)

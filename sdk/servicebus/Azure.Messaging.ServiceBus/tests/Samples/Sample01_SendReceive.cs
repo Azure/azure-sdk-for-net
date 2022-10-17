@@ -5,12 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
 {
-    public class Sample01_HelloWorld : ServiceBusLiveTestBase
+    public class Sample01_SendReceive : ServiceBusLiveTestBase
     {
         [Test]
         public async Task SendAndReceiveMessage()
@@ -280,30 +279,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 #endregion
                 Assert.AreEqual("Hello world!", receivedMessage.Body.ToString());
             }
-        }
-
-        /// <summary>
-        /// Authenticate with <see cref="DefaultAzureCredential"/>.
-        /// </summary>
-        public void AuthenticateWithAAD()
-        {
-            #region Snippet:ServiceBusAuthAAD
-            // Create a ServiceBusClient that will authenticate through Active Directory
-            string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
-            ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
-            #endregion
-        }
-
-        /// <summary>
-        /// Authenticate with a connection string.
-        /// </summary>
-        public void AuthenticateWithConnectionString()
-        {
-            #region Snippet:ServiceBusAuthConnString
-            // Create a ServiceBusClient that will authenticate using a connection string
-            string connectionString = "<connection_string>";
-            ServiceBusClient client = new ServiceBusClient(connectionString);
-            #endregion
         }
 
         /// <summary>
