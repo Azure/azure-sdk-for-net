@@ -17,7 +17,9 @@ modelerfour:
 
 generate-virtual-operations:
 - AccountBackups_Get
+- AccountBackups_Delete
 - Backups_Get
+- Backups_Delete
 
 format-by-name-rules:
   'tenantId': 'uuid'

@@ -18,9 +18,11 @@ modelerfour:
 generate-virtual-operations:
 - PrivateEndpointConnections_Get
 - PrivateEndpointConnections_CreateOrUpdate
+- PrivateEndpointConnections_Delete
 - PrivateLinkResources_Get
 - WorkspacePrivateEndpointConnections_Get
 - WorkspacePrivateEndpointConnections_CreateOrUpdate
+- WorkspacePrivateEndpointConnections_Delete
 - WorkspacePrivateLinkResources_Get
 
 format-by-name-rules:

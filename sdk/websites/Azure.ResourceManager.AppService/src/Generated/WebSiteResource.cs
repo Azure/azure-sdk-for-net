@@ -1137,6 +1137,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
         /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual new async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
+        {
+            return await base.DeleteAsync(waitUntil, deleteMetrics, deleteEmptyServerFarm, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Deletes a web, mobile, or API app, or one of the deployment slots.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// Operation Id: WebApps_Delete
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
+        /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.Delete");
@@ -1154,6 +1169,21 @@ namespace Azure.ResourceManager.AppService
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Description for Deletes a web, mobile, or API app, or one of the deployment slots.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// Operation Id: WebApps_Delete
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
+        /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual new ArmOperation Delete(WaitUntil waitUntil, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
+        {
+            return base.Delete(waitUntil, deleteMetrics, deleteEmptyServerFarm, cancellationToken);
         }
 
         /// <summary>

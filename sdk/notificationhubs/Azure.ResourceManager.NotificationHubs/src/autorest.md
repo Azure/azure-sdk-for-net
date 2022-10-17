@@ -18,8 +18,10 @@ modelerfour:
 generate-virtual-operations:
 - NotificationHubs_GetAuthorizationRule
 - NotificationHubs_CreateOrUpdateAuthorizationRule
+- NotificationHubs_DeleteAuthorizationRule
 - Namespaces_GetAuthorizationRule
 - Namespaces_CreateOrUpdateAuthorizationRule
+- Namespaces_DeleteAuthorizationRule
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}: NotificationHubNamespaceAuthorizationRule

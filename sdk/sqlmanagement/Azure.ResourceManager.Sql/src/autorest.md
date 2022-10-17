@@ -22,26 +22,34 @@ generate-virtual-operations:
 - ManagedDatabaseSchemas_Get
 - ManagedDatabaseSensitivityLabels_Get
 - ManagedDatabaseSensitivityLabels_CreateOrUpdate
+- ManagedDatabaseSensitivityLabels_Delete
 - ManagedDatabaseTables_Get
 - SensitivityLabels_CreateOrUpdate
 - ManagedDatabaseVulnerabilityAssessments_Get
 - ManagedDatabaseVulnerabilityAssessments_CreateOrUpdate
+- ManagedDatabaseVulnerabilityAssessments_Delete
 - ManagedDatabaseVulnerabilityAssessmentRuleBaselines_Get
 - ManagedDatabaseVulnerabilityAssessmentRuleBaselines_CreateOrUpdate
+- ManagedDatabaseVulnerabilityAssessmentRuleBaselines_Delete
 - ManagedDatabaseVulnerabilityAssessmentScans_Get
 - ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies_Get
 - ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies_Update
 - LongTermRetentionBackups_GetByResourceGroup
+- LongTermRetentionBackups_DeleteByResourceGroup
 - LongTermRetentionManagedInstanceBackups_GetByResourceGroup
+- LongTermRetentionManagedInstanceBackups_DeleteByResourceGroup
 - DatabaseAdvisors_Get
 - DatabaseAdvisors_Update
 - SensitivityLabels_Get
+- SensitivityLabels_Delete
 - DatabaseSchemas_Get
 - DatabaseTables_Get
 - DatabaseVulnerabilityAssessments_Get
 - DatabaseVulnerabilityAssessments_CreateOrUpdate
+- DatabaseVulnerabilityAssessments_Delete
 - DatabaseVulnerabilityAssessmentRuleBaselines_Get
 - DatabaseVulnerabilityAssessmentRuleBaselines_CreateOrUpdate
+- DatabaseVulnerabilityAssessmentRuleBaselines_Delete
 - DatabaseVulnerabilityAssessmentScans_Get
 - ServerAdvisors_Get
 - ServerAdvisors_Update
@@ -51,7 +59,9 @@ generate-virtual-operations:
 - JobSteps_Get
 - JobSteps_GetByVersion
 - LongTermRetentionBackups_Get
+- LongTermRetentionBackups_Delete
 - LongTermRetentionManagedInstanceBackups_Get
+- LongTermRetentionManagedInstanceBackups_Delete
 - DatabaseColumns_Get
 
 format-by-name-rules:

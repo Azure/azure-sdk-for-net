@@ -26,8 +26,10 @@ base-resource-name-mapping:
 generate-virtual-operations:
 - VirtualMachineRunCommands_GetByVirtualMachine
 - VirtualMachineRunCommands_Update
+- VirtualMachineRunCommands_Delete
 - VirtualMachineScaleSetVMRunCommands_Get
 - VirtualMachineScaleSetVMRunCommands_Update
+- VirtualMachineScaleSetVMRunCommands_Delete
 
 format-by-name-rules:
   'tenantId': 'uuid'

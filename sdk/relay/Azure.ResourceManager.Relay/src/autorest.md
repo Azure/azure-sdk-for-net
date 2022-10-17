@@ -18,10 +18,13 @@ modelerfour:
 generate-virtual-operations:
 - HybridConnections_GetAuthorizationRule
 - HybridConnections_CreateOrUpdateAuthorizationRule
+- HybridConnections_DeleteAuthorizationRule
 - Namespaces_GetAuthorizationRule
 - Namespaces_CreateOrUpdateAuthorizationRule
+- Namespaces_DeleteAuthorizationRule
 - WCFRelays_GetAuthorizationRule
 - WCFRelays_CreateOrUpdateAuthorizationRule
+- WCFRelays_DeleteAuthorizationRule
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}: RelayNamespaceAuthorizationRule

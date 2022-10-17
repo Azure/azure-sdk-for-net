@@ -83,20 +83,26 @@ rename-rules:
 generate-virtual-operations:
 - ApiDiagnostic_Get
 - ApiDiagnostic_Update
+- ApiDiagnostic_Delete
 - Diagnostic_Get
 - Diagnostic_Update
+- Diagnostic_Delete
 - Policy_Get
 - Policy_CreateOrUpdate
+- Policy_Delete
 - ProductPolicy_Get
 - ProductPolicy_CreateOrUpdate
+- ProductPolicy_Delete
 - Tag_GetByProduct
 - UserSubscription_Get
 - Subscription_Get
 - Tag_Get
 - ApiPolicy_Get
 - ApiPolicy_CreateOrUpdate
+- ApiPolicy_Delete
 - ApiOperationPolicy_Get
 - ApiOperationPolicy_CreateOrUpdate
+- ApiOperationPolicy_Delete
 - Tag_GetByOperation
 - Tag_GetByApi
 

@@ -20,10 +20,9 @@ list-exception:
 
 generate-virtual-operations:
 - Accounts_Get
+- Accounts_Delete
 - DeletedAccounts_Get
-
-# override-operation-name:
-#   Accounts_List: GetCognitiveServicesAccountsBySubscription
+- DeletedAccounts_Purge
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}: CognitiveServicesDeletedAccount
