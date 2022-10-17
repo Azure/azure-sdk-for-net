@@ -34,7 +34,6 @@ namespace Azure.Storage.DataMovement
         /// Gets the path
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public override List<string> GetPath()
         {
             return _path;

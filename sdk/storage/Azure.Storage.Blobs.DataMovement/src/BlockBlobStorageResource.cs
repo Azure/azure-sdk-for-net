@@ -37,7 +37,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// Creates readable stream to download
         /// </summary>
         /// <returns></returns>
-        public override Stream ReadableInputStream()
+        public override Stream GetReadableInputStream()
         {
             return blobClient.OpenRead();
         }
@@ -46,7 +46,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// Creates writable stream to upload
         /// </summary>
         /// <returns></returns>
-        public override Stream ConsumableStream()
+        public override Stream GetConsumableStream()
         {
             // TODO: check for proper conversion
             return blobClient.OpenWrite(overwrite: false);

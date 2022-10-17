@@ -55,7 +55,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
-        public override Stream ConsumableStream()
+        public override Stream GetConsumableStream()
         {
             // Cannot produce consumable stream
             throw new NotSupportedException();
@@ -170,7 +170,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override Stream ReadableInputStream()
+        public override Stream GetReadableInputStream()
         {
             return new FileStream(_originalPath, FileMode.Open, FileAccess.Read);
         }

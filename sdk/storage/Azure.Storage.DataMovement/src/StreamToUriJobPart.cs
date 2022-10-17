@@ -132,7 +132,7 @@ namespace Azure.Storage.DataMovement
                 {
                     // Single Put Blob Request
                     await QueueChunk( async () => await _destinationResource.ConsumeReadableStream(
-                        _sourceResource.ConsumableStream(),
+                        _sourceResource.GetConsumableStream(),
                         default,
                         _cancellationTokenSource.Token).ConfigureAwait(false)).ConfigureAwait(false);
                 }
@@ -180,7 +180,7 @@ namespace Azure.Storage.DataMovement
             try
             {
                 Stream slicedStream = Stream.Null;
-                using (Stream stream = _sourceResource.ConsumableStream())
+                using (Stream stream = _sourceResource.GetConsumableStream())
                 {
                     //await OnTransferStatusChanged(StorageTransferStatus.InProgress, true).ConfigureAwait(false);
                     slicedStream = await GetOffsetPartitionInternal(

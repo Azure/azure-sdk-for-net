@@ -8,7 +8,7 @@ using System.Text;
 namespace Azure.Storage.DataMovement.Models
 {
     /// <summary>
-    /// Options for when calling <see cref="StorageResource.ConsumableStream"/>
+    /// Options for when calling <see cref="StorageResource.GetConsumableStream"/>
     /// </summary>
     public class ConsumeReadableStreamOptions
     {

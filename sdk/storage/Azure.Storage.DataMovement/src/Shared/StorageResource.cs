@@ -25,13 +25,13 @@ namespace Azure.Storage.DataMovement
         /// Produces readable stream to download
         /// </summary>
         /// <returns></returns>
-        public abstract Stream ReadableInputStream();
+        public abstract Stream GetReadableInputStream();
 
         /// <summary>
         /// Produces writable stream to upload
         /// </summary>
         /// <returns></returns>
-        public abstract Stream ConsumableStream();
+        public abstract Stream GetConsumableStream();
 
         /// <summary>
         /// Defines whether the object can consume a readable stream and upload it
