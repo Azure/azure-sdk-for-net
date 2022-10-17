@@ -9,7 +9,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary>
     /// Options that allow users to configure the requests sent to the Container Registry service.
     /// </summary>
-    public class ContainerRegistryClientOptions : ClientOptions
+    public partial class ContainerRegistryClientOptions : ClientOptions
     {
         internal string Version { get; }
 
@@ -42,18 +42,6 @@ namespace Azure.Containers.ContainerRegistry
             Diagnostics.LoggedQueryParameters.Add("n");
             Diagnostics.LoggedQueryParameters.Add("last");
             Diagnostics.LoggedQueryParameters.Add("digest");
-        }
-
-        /// <summary>
-        /// The versions of the Container Registry service supported by this client library.
-        /// </summary>
-        public enum ServiceVersion
-        {
-            /// <summary>
-            /// </summary>
-#pragma warning disable CA1707 // Remove the underscores from member name
-            V2021_07_01 = 1
-#pragma warning restore
         }
     }
 }

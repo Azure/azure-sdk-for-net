@@ -15,10 +15,9 @@ namespace Azure.Containers.ContainerRegistry
         private readonly Uri _endpoint;
         private readonly string _registryName;
         private readonly HttpPipeline _pipeline;
-        private readonly HttpPipeline _acrAuthPipeline;
+        //private readonly HttpPipeline _acrAuthPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ContainerRegistryRestClient _restClient;
-        private readonly AuthenticationRestClient _acrAuthClient;
+        //private readonly AuthenticationClient _acrAuthClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryClient"/> for managing container images and artifacts,
@@ -81,12 +80,12 @@ namespace Azure.Containers.ContainerRegistry
             _registryName = endpoint.Host.Split('.')[0];
             _clientDiagnostics = new ClientDiagnostics(options);
 
-            _acrAuthPipeline = HttpPipelineBuilder.Build(options);
-            _acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
+            //_acrAuthPipeline = HttpPipelineBuilder.Build(options);
+            //_acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
 
-            string defaultScope = options.Audience + "/.default";
-            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
-            _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
+            //string defaultScope = options.Audience + "/.default";
+            //_pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
+            //_restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
         }
 
         /// <summary> Initializes a new instance of RepositoryClient for mocking. </summary>
@@ -104,40 +103,42 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual AsyncPageable<string> GetRepositoryNamesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositoryNames)}");
-                scope.Start();
-                try
-                {
-                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesAsync(last: null, n: pageSizeHint, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
+            throw new NotImplementedException();
 
-            async Task<Page<string>> NextPageFunc(string continuationToken, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositoryNames)}");
-                scope.Start();
-                try
-                {
-                    string uriReference = ParseUriReferenceFromLinkHeader(continuationToken);
-                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesNextPageAsync(uriReference, last: null, n: null, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
+            //async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
+            //{
+            //    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositoryNames)}");
+            //    scope.Start();
+            //    try
+            //    {
+            //        ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesAsync(last: null, n: pageSizeHint, cancellationToken).ConfigureAwait(false);
+            //        return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        scope.Failed(e);
+            //        throw;
+            //    }
+            //}
 
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            //async Task<Page<string>> NextPageFunc(string continuationToken, int? pageSizeHint)
+            //{
+            //    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositoryNames)}");
+            //    scope.Start();
+            //    try
+            //    {
+            //        string uriReference = ParseUriReferenceFromLinkHeader(continuationToken);
+            //        ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesNextPageAsync(uriReference, last: null, n: null, cancellationToken).ConfigureAwait(false);
+            //        return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        scope.Failed(e);
+            //        throw;
+            //    }
+            //}
+
+            //return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> List the names of the repositories in this registry. </summary>
@@ -145,40 +146,41 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Pageable<string> GetRepositoryNames(CancellationToken cancellationToken = default)
         {
-            Page<string> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositoryNames)}");
-                scope.Start();
-                try
-                {
-                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = _restClient.GetRepositories(last: null, n: pageSizeHint, cancellationToken);
-                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
+            throw new NotImplementedException();
+            //Page<string> FirstPageFunc(int? pageSizeHint)
+            //{
+            //    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositoryNames)}");
+            //    scope.Start();
+            //    try
+            //    {
+            //        ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = _restClient.GetRepositories(last: null, n: pageSizeHint, cancellationToken);
+            //        return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        scope.Failed(e);
+            //        throw;
+            //    }
+            //}
 
-            Page<string> NextPageFunc(string continuationToken, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositoryNames)}");
-                scope.Start();
-                try
-                {
-                    string uriReference = ParseUriReferenceFromLinkHeader(continuationToken);
-                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = _restClient.GetRepositoriesNextPage(uriReference, last: null, n: null, cancellationToken);
-                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
+            //Page<string> NextPageFunc(string continuationToken, int? pageSizeHint)
+            //{
+            //    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositoryNames)}");
+            //    scope.Start();
+            //    try
+            //    {
+            //        string uriReference = ParseUriReferenceFromLinkHeader(continuationToken);
+            //        ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = _restClient.GetRepositoriesNextPage(uriReference, last: null, n: null, cancellationToken);
+            //        return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        scope.Failed(e);
+            //        throw;
+            //    }
+            //}
 
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            //return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         internal static string ParseUriReferenceFromLinkHeader(string linkValue)
@@ -201,21 +203,25 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="repositoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> Thrown when <paramref name="repositoryName"/> is empty. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public virtual async Task<Response> DeleteRepositoryAsync(string repositoryName, CancellationToken cancellationToken = default)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
+            throw new NotImplementedException();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(DeleteRepository)}");
-            scope.Start();
-            try
-            {
-                return await _restClient.DeleteRepositoryAsync(repositoryName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            //Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
+
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(DeleteRepository)}");
+            //scope.Start();
+            //try
+            //{
+            //    return await _restClient.DeleteRepositoryAsync(repositoryName, cancellationToken).ConfigureAwait(false);
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
         }
 
         /// <summary> Delete the repository identified by `repository` and all associated artifacts.</summary>
@@ -226,19 +232,20 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response DeleteRepository(string repositoryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
+            throw new NotImplementedException();
+            //Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(DeleteRepository)}");
-            scope.Start();
-            try
-            {
-                return _restClient.DeleteRepository(repositoryName, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(DeleteRepository)}");
+            //scope.Start();
+            //try
+            //{
+            //    return _restClient.DeleteRepository(repositoryName, cancellationToken);
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
         }
 
         /// <summary>
@@ -250,13 +257,14 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentException"> Thrown when <paramref name="repositoryName"/> is empty. </exception>
         public virtual ContainerRepository GetRepository(string repositoryName)
         {
-            Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
+            throw new NotImplementedException();
+            //Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
 
-            return new ContainerRepository(
-                _endpoint,
-                repositoryName,
-                _clientDiagnostics,
-                _restClient);
+            //return new ContainerRepository(
+            //    _endpoint,
+            //    repositoryName,
+            //    _clientDiagnostics,
+            //    _restClient);
         }
 
         /// <summary>
@@ -271,15 +279,17 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentException"> Thrown when <paramref name="tagOrDigest"/> is empty. </exception>
         public virtual RegistryArtifact GetArtifact(string repositoryName, string tagOrDigest)
         {
-            Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
-            Argument.AssertNotNullOrEmpty(tagOrDigest, nameof(tagOrDigest));
+            throw new NotImplementedException();
 
-            return new RegistryArtifact(
-                _endpoint,
-                repositoryName,
-                tagOrDigest,
-                _clientDiagnostics,
-                _restClient);
+            //Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
+            //Argument.AssertNotNullOrEmpty(tagOrDigest, nameof(tagOrDigest));
+
+            //return new RegistryArtifact(
+            //    _endpoint,
+            //    repositoryName,
+            //    tagOrDigest,
+            //    _clientDiagnostics,
+            //    _restClient);
         }
     }
 }

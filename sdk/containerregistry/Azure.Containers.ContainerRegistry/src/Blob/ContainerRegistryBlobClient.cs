@@ -18,12 +18,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         private readonly Uri _endpoint;
         private readonly string _registryName;
         private readonly string _repositoryName;
-        private readonly HttpPipeline _pipeline;
+        //private readonly HttpPipeline _pipeline;
         private readonly HttpPipeline _acrAuthPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ContainerRegistryRestClient _restClient;
-        private readonly IContainerRegistryAuthenticationClient _acrAuthClient;
-        private readonly ContainerRegistryBlobRestClient _blobRestClient;
+        //private readonly ContainerRegistryRestClient _restClient;
+        //private readonly IContainerRegistryAuthenticationClient _acrAuthClient;
+        //private readonly ContainerRegistryBlobRestClient _blobRestClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryBlobClient"/> for managing container images and artifacts,
@@ -85,7 +85,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Uri endpoint,
             TokenCredential credential,
             string repository,
+#pragma warning disable CA1801 // Review unused parameters
             IContainerRegistryAuthenticationClient authenticationClient,
+#pragma warning restore CA1801 // Review unused parameters
             ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -103,12 +105,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             _clientDiagnostics = new ClientDiagnostics(options);
 
             _acrAuthPipeline = HttpPipelineBuilder.Build(options);
-            _acrAuthClient = authenticationClient ?? new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
+            //_acrAuthClient = authenticationClient ?? new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
 
-            string defaultScope = options.Audience + "/.default";
-            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
-            _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
-            _blobRestClient = new ContainerRegistryBlobRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
+            //string defaultScope = options.Audience + "/.default";
+            //_pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
+            //_restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
+            //_blobRestClient = new ContainerRegistryBlobRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryBlobClient for mocking. </summary>
@@ -135,33 +137,34 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual Response<UploadManifestResult> UploadManifest(OciManifest manifest, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(manifest, nameof(manifest));
+            throw new NotImplementedException();
+            //Argument.AssertNotNull(manifest, nameof(manifest));
 
-            options ??= new UploadManifestOptions();
+            //options ??= new UploadManifestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
-            scope.Start();
-            try
-            {
-                Stream manifestStream = SerializeManifest(manifest);
-                string manifestDigest = OciBlobDescriptor.ComputeDigest(manifestStream);
-                string tagOrDigest = options.Tag ?? manifestDigest;
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
+            //scope.Start();
+            //try
+            //{
+            //    Stream manifestStream = SerializeManifest(manifest);
+            //    string manifestDigest = OciBlobDescriptor.ComputeDigest(manifestStream);
+            //    string tagOrDigest = options.Tag ?? manifestDigest;
 
-                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken);
+            //    ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken);
 
-                if (!manifestDigest.Equals(response.Headers.DockerContentDigest, StringComparison.Ordinal))
-                {
-                    throw _clientDiagnostics.CreateRequestFailedException(response,
-                        new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
-                }
+            //    if (!manifestDigest.Equals(response.Headers.DockerContentDigest, StringComparison.Ordinal))
+            //    {
+            //        throw _clientDiagnostics.CreateRequestFailedException(response,
+            //            new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
+            //    }
 
-                return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            //    return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
         }
 
         /// <summary>
@@ -173,35 +176,36 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual Response<UploadManifestResult> UploadManifest(Stream manifestStream, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(manifestStream, nameof(manifestStream));
+            throw new NotImplementedException();
+            //Argument.AssertNotNull(manifestStream, nameof(manifestStream));
 
-            options ??= new UploadManifestOptions();
+            //options ??= new UploadManifestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
-            scope.Start();
-            try
-            {
-                using Stream stream = new MemoryStream();
-                manifestStream.CopyTo(stream);
-                manifestStream.Position = 0;
-                stream.Position = 0;
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
+            //scope.Start();
+            //try
+            //{
+            //    using Stream stream = new MemoryStream();
+            //    manifestStream.CopyTo(stream);
+            //    manifestStream.Position = 0;
+            //    stream.Position = 0;
 
-                string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(manifestStream);
-                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken);
+            //    string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(manifestStream);
+            //    ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken);
 
-                if (!ValidateDigest(stream, response.Headers.DockerContentDigest))
-                {
-                    throw _clientDiagnostics.CreateRequestFailedException(response,
-                        new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
-                }
+            //    if (!ValidateDigest(stream, response.Headers.DockerContentDigest))
+            //    {
+            //        throw _clientDiagnostics.CreateRequestFailedException(response,
+            //            new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
+            //    }
 
-                return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            //    return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
         }
 
         /// <summary>
@@ -211,35 +215,38 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="options">Options for configuring the upload operation.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(OciManifest manifest, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            Argument.AssertNotNull(manifest, nameof(manifest));
+            throw new NotImplementedException();
+            //Argument.AssertNotNull(manifest, nameof(manifest));
 
-            options ??= new UploadManifestOptions();
+            //options ??= new UploadManifestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
-            scope.Start();
-            try
-            {
-                Stream manifestStream = SerializeManifest(manifest);
-                string manifestDigest = OciBlobDescriptor.ComputeDigest(manifestStream);
-                string tagOrDigest = options.Tag ?? manifestDigest;
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
+            //scope.Start();
+            //try
+            //{
+            //    Stream manifestStream = SerializeManifest(manifest);
+            //    string manifestDigest = OciBlobDescriptor.ComputeDigest(manifestStream);
+            //    string tagOrDigest = options.Tag ?? manifestDigest;
 
-                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
+            //    ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
 
-                if (!manifestDigest.Equals(response.Headers.DockerContentDigest, StringComparison.Ordinal))
-                {
-                    throw _clientDiagnostics.CreateRequestFailedException(response,
-                        new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
-                }
+            //    if (!manifestDigest.Equals(response.Headers.DockerContentDigest, StringComparison.Ordinal))
+            //    {
+            //        throw _clientDiagnostics.CreateRequestFailedException(response,
+            //            new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
+            //    }
 
-                return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            //    return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
         }
 
         /// <summary>
@@ -249,37 +256,40 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="options">Options for configuring the upload operation.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(Stream manifestStream, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            Argument.AssertNotNull(manifestStream, nameof(manifestStream));
+            throw new NotImplementedException();
+            //Argument.AssertNotNull(manifestStream, nameof(manifestStream));
 
-            options ??= new UploadManifestOptions();
+            //options ??= new UploadManifestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
-            scope.Start();
-            try
-            {
-                using Stream stream = new MemoryStream();
-                await manifestStream.CopyToAsync(stream).ConfigureAwait(false);
-                manifestStream.Position = 0;
-                stream.Position = 0;
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
+            //scope.Start();
+            //try
+            //{
+            //    using Stream stream = new MemoryStream();
+            //    await manifestStream.CopyToAsync(stream).ConfigureAwait(false);
+            //    manifestStream.Position = 0;
+            //    stream.Position = 0;
 
-                string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(manifestStream);
-                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
+            //    string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(manifestStream);
+            //    ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
 
-                if (!ValidateDigest(stream, response.Headers.DockerContentDigest))
-                {
-                    throw _clientDiagnostics.CreateRequestFailedException(response,
-                        new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
-                }
+            //    if (!ValidateDigest(stream, response.Headers.DockerContentDigest))
+            //    {
+            //        throw _clientDiagnostics.CreateRequestFailedException(response,
+            //            new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
+            //    }
 
-                return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            //    return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
         }
 
         private static Stream SerializeManifest(OciManifest manifest)
@@ -308,30 +318,31 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual Response<UploadBlobResult> UploadBlob(Stream stream, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            throw new NotImplementedException();
+            //Argument.AssertNotNull(stream, nameof(stream));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadBlob)}");
-            scope.Start();
-            try
-            {
-                string digest = OciBlobDescriptor.ComputeDigest(stream);
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadBlob)}");
+            //scope.Start();
+            //try
+            //{
+            //    string digest = OciBlobDescriptor.ComputeDigest(stream);
 
-                ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
-                    _blobRestClient.StartUpload(_repositoryName, cancellationToken);
+            //    ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
+            //        _blobRestClient.StartUpload(_repositoryName, cancellationToken);
 
-                ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult =
-                    _blobRestClient.UploadChunk(startUploadResult.Headers.Location, stream, cancellationToken);
+            //    ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult =
+            //        _blobRestClient.UploadChunk(startUploadResult.Headers.Location, stream, cancellationToken);
 
-                ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
-                    _blobRestClient.CompleteUpload(digest, uploadChunkResult.Headers.Location, null, cancellationToken);
+            //    ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
+            //        _blobRestClient.CompleteUpload(digest, uploadChunkResult.Headers.Location, null, cancellationToken);
 
-                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest), completeUploadResult.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            //    return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest), completeUploadResult.GetRawResponse());
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
         }
 
         /// <summary>
@@ -340,32 +351,35 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="stream">The stream containing the blob data.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public virtual async Task<Response<UploadBlobResult>> UploadBlobAsync(Stream stream, CancellationToken cancellationToken = default)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            throw new NotImplementedException();
+            //Argument.AssertNotNull(stream, nameof(stream));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadBlob)}");
-            scope.Start();
-            try
-            {
-                string digest = OciBlobDescriptor.ComputeDigest(stream);
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadBlob)}");
+            //scope.Start();
+            //try
+            //{
+            //    string digest = OciBlobDescriptor.ComputeDigest(stream);
 
-                ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
-                    await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
+            //    ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
+            //        await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
 
-                ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult =
-                    await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location, stream, cancellationToken).ConfigureAwait(false);
+            //    ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult =
+            //        await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location, stream, cancellationToken).ConfigureAwait(false);
 
-                ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
-                    await _blobRestClient.CompleteUploadAsync(digest, uploadChunkResult.Headers.Location, null, cancellationToken).ConfigureAwait(false);
+            //    ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
+            //        await _blobRestClient.CompleteUploadAsync(digest, uploadChunkResult.Headers.Location, null, cancellationToken).ConfigureAwait(false);
 
-                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest), completeUploadResult.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            //    return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest), completeUploadResult.GetRawResponse());
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            ////}
         }
 
         /// <summary>
@@ -376,35 +390,36 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns>The download manifest result.</returns>
         public virtual Response<DownloadManifestResult> DownloadManifest(DownloadManifestOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            throw new NotImplementedException();
+            //Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadManifest)}");
-            scope.Start();
-            try
-            {
-                Response<ManifestWrapper> response = _restClient.GetManifest(_repositoryName, options.Tag ?? options.Digest, ManifestMediaType.OciManifest.ToString(), cancellationToken);
-                Response rawResponse = response.GetRawResponse();
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadManifest)}");
+            //scope.Start();
+            //try
+            //{
+            //    Response<ManifestWrapper> response = _restClient.GetManifest(_repositoryName, options.Tag ?? options.Digest, ManifestMediaType.OciManifest.ToString(), cancellationToken);
+            //    Response rawResponse = response.GetRawResponse();
 
-                rawResponse.Headers.TryGetValue("Docker-Content-Digest", out var digest);
+            //    rawResponse.Headers.TryGetValue("Docker-Content-Digest", out var digest);
 
-                if (!ValidateDigest(rawResponse.ContentStream, digest))
-                {
-                    throw _clientDiagnostics.CreateRequestFailedException(rawResponse,
-                        new ResponseError(null, "The requested digest does not match the digest of the received manifest."));
-                }
+            //    if (!ValidateDigest(rawResponse.ContentStream, digest))
+            //    {
+            //        throw _clientDiagnostics.CreateRequestFailedException(rawResponse,
+            //            new ResponseError(null, "The requested digest does not match the digest of the received manifest."));
+            //    }
 
-                using var document = JsonDocument.Parse(rawResponse.ContentStream);
-                var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
+            //    using var document = JsonDocument.Parse(rawResponse.ContentStream);
+            //    var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
 
-                rawResponse.ContentStream.Position = 0;
+            //    rawResponse.ContentStream.Position = 0;
 
-                return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.ContentStream), rawResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            //    return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.ContentStream), rawResponse);
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
         }
 
         /// <summary>
@@ -413,37 +428,40 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="options">Options for the download operation.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>The download manifest result.</returns>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public virtual async Task<Response<DownloadManifestResult>> DownloadManifestAsync(DownloadManifestOptions options, CancellationToken cancellationToken = default)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            Argument.AssertNotNull(options, nameof(options));
+            throw new NotImplementedException();
+            //Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadManifest)}");
-            scope.Start();
-            try
-            {
-                Response<ManifestWrapper> response = await _restClient.GetManifestAsync(_repositoryName, options.Tag ?? options.Digest, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
-                Response rawResponse = response.GetRawResponse();
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadManifest)}");
+            //scope.Start();
+            //try
+            //{
+            //    Response<ManifestWrapper> response = await _restClient.GetManifestAsync(_repositoryName, options.Tag ?? options.Digest, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
+            //    Response rawResponse = response.GetRawResponse();
 
-                rawResponse.Headers.TryGetValue("Docker-Content-Digest", out var digest);
+            //    rawResponse.Headers.TryGetValue("Docker-Content-Digest", out var digest);
 
-                if (!ValidateDigest(rawResponse.ContentStream, digest))
-                {
-                    throw _clientDiagnostics.CreateRequestFailedException(rawResponse,
-                        new ResponseError(null, "The requested digest does not match the digest of the received manifest."));
-                }
+            //    if (!ValidateDigest(rawResponse.ContentStream, digest))
+            //    {
+            //        throw _clientDiagnostics.CreateRequestFailedException(rawResponse,
+            //            new ResponseError(null, "The requested digest does not match the digest of the received manifest."));
+            //    }
 
-                using var document = JsonDocument.Parse(rawResponse.ContentStream);
-                var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
+            //    using var document = JsonDocument.Parse(rawResponse.ContentStream);
+            //    var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
 
-                rawResponse.ContentStream.Position = 0;
+            //    rawResponse.ContentStream.Position = 0;
 
-                return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.ContentStream), rawResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            //    return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.ContentStream), rawResponse);
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
         }
 
         private static bool ValidateDigest(Stream content, string digest)
@@ -464,27 +482,28 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual Response<DownloadBlobResult> DownloadBlob(string digest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(digest, nameof(digest));
+            throw new NotImplementedException();
+            //Argument.AssertNotNull(digest, nameof(digest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlob)}");
-            scope.Start();
-            try
-            {
-                ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = _blobRestClient.GetBlob(_repositoryName, digest, cancellationToken);
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlob)}");
+            //scope.Start();
+            //try
+            //{
+            //    ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = _blobRestClient.GetBlob(_repositoryName, digest, cancellationToken);
 
-                if (!ValidateDigest(blobResult.Value, digest))
-                {
-                    throw _clientDiagnostics.CreateRequestFailedException(blobResult,
-                        new ResponseError(null, "The requested digest does not match the digest of the received manifest."));
-                }
+            //    if (!ValidateDigest(blobResult.Value, digest))
+            //    {
+            //        throw _clientDiagnostics.CreateRequestFailedException(blobResult,
+            //            new ResponseError(null, "The requested digest does not match the digest of the received manifest."));
+            //    }
 
-                return Response.FromValue(new DownloadBlobResult(digest, blobResult.Value), blobResult.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            //    return Response.FromValue(new DownloadBlobResult(digest, blobResult.Value), blobResult.GetRawResponse());
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
         }
 
         /// <summary>
@@ -493,29 +512,32 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public virtual async Task<Response<DownloadBlobResult>> DownloadBlobAsync(string digest, CancellationToken cancellationToken = default)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            Argument.AssertNotNull(digest, nameof(digest));
+            throw new NotImplementedException();
+            //Argument.AssertNotNull(digest, nameof(digest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlob)}");
-            scope.Start();
-            try
-            {
-                ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlob)}");
+            //scope.Start();
+            //try
+            //{
+            //    ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
 
-                if (!ValidateDigest(blobResult.Value, digest))
-                {
-                    throw _clientDiagnostics.CreateRequestFailedException(blobResult,
-                        new ResponseError(null, "The requested digest does not match the digest of the received manifest."));
-                }
+            //    if (!ValidateDigest(blobResult.Value, digest))
+            //    {
+            //        throw _clientDiagnostics.CreateRequestFailedException(blobResult,
+            //            new ResponseError(null, "The requested digest does not match the digest of the received manifest."));
+            //    }
 
-                return Response.FromValue(new DownloadBlobResult(digest, blobResult.Value), blobResult.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            //    return Response.FromValue(new DownloadBlobResult(digest, blobResult.Value), blobResult.GetRawResponse());
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
         }
 
         /// <summary>
@@ -526,20 +548,21 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual Response DeleteBlob(string digest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(digest, nameof(digest));
+            throw new NotImplementedException();
+            //Argument.AssertNotNull(digest, nameof(digest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteBlob)}");
-            scope.Start();
-            try
-            {
-                ResponseWithHeaders<Stream, ContainerRegistryBlobDeleteBlobHeaders> blobResult = _blobRestClient.DeleteBlob(_repositoryName, digest, cancellationToken);
-                return blobResult.GetRawResponse();
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteBlob)}");
+            //scope.Start();
+            //try
+            //{
+            //    ResponseWithHeaders<Stream, ContainerRegistryBlobDeleteBlobHeaders> blobResult = _blobRestClient.DeleteBlob(_repositoryName, digest, cancellationToken);
+            //    return blobResult.GetRawResponse();
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
         }
 
         /// <summary>
@@ -548,22 +571,25 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="digest">The digest of the blob to delete.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public virtual async Task<Response> DeleteBlobAsync(string digest, CancellationToken cancellationToken = default)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            Argument.AssertNotNull(digest, nameof(digest));
+            throw new NotImplementedException();
+            //Argument.AssertNotNull(digest, nameof(digest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteBlob)}");
-            scope.Start();
-            try
-            {
-                ResponseWithHeaders<Stream, ContainerRegistryBlobDeleteBlobHeaders> blobResult = await _blobRestClient.DeleteBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
-                return blobResult.GetRawResponse();
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteBlob)}");
+            //scope.Start();
+            //try
+            //{
+            //    ResponseWithHeaders<Stream, ContainerRegistryBlobDeleteBlobHeaders> blobResult = await _blobRestClient.DeleteBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
+            //    return blobResult.GetRawResponse();
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
         }
 
         /// <summary>
@@ -574,19 +600,20 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual Response DeleteManifest(string digest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(digest, nameof(digest));
+            throw new NotImplementedException();
+            //Argument.AssertNotNull(digest, nameof(digest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteManifest)}");
-            scope.Start();
-            try
-            {
-                return _restClient.DeleteManifest(_repositoryName, digest, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteManifest)}");
+            //scope.Start();
+            //try
+            //{
+            //    return _restClient.DeleteManifest(_repositoryName, digest, cancellationToken);
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
         }
 
         /// <summary>
@@ -595,21 +622,24 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="digest">The digest of the manifest to delete.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public virtual async Task<Response> DeleteManifestAsync(string digest, CancellationToken cancellationToken = default)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            Argument.AssertNotNull(digest, nameof(digest));
+            throw new NotImplementedException();
+            //Argument.AssertNotNull(digest, nameof(digest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteManifest)}");
-            scope.Start();
-            try
-            {
-                return await _restClient.DeleteManifestAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteManifest)}");
+            //scope.Start();
+            //try
+            //{
+            //    return await _restClient.DeleteManifestAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
         }
     }
 }
