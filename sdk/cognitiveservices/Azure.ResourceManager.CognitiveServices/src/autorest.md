@@ -22,6 +22,9 @@ generate-virtual-operations:
 - Accounts_Get
 - DeletedAccounts_Get
 
+# override-operation-name:
+#   Accounts_List: GetCognitiveServicesAccountsBySubscription
+
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}: CognitiveServicesDeletedAccount
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}: CognitiveServicesAccount

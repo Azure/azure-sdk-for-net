@@ -99,32 +99,6 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/deletedAccounts
-        /// Operation Id: DeletedAccounts_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BaseCognitiveServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BaseCognitiveServicesAccountResource> GetDeletedAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/deletedAccounts
-        /// Operation Id: DeletedAccounts_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BaseCognitiveServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BaseCognitiveServicesAccountResource> GetDeletedAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetDeletedAccounts(cancellationToken);
-        }
-
-        /// <summary>
         /// Gets the list of Microsoft.CognitiveServices SKUs available for your Subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/skus
         /// Operation Id: ResourceSkus_List
