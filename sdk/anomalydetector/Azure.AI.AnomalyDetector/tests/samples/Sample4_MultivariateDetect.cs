@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
@@ -12,17 +13,18 @@ using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.AI.AnomalyDetector.Models;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.AI.AnomalyDetector.Tests.Samples
 {
     public partial class AnomalyDetectorSamples : SamplesBase<AnomalyDetectorTestEnvironment>
     {
         [Test]
-        public async Task MultivariateDetect()
+        public void MultivariateDetect()
         {
             //read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
@@ -31,96 +33,116 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             Console.WriteLine(endpoint);
             var endpointUri = new Uri(endpoint);
             var credential = new AzureKeyCredential(apiKey);
+            String apiVersion = "v1.1";
 
             //create client
-            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
+            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
 
             // train
             TimeSpan offset = new TimeSpan(0);
-            DateTimeOffset start_time = new DateTimeOffset(2021, 1, 1, 0, 0, 0, offset);
-            DateTimeOffset end_time = new DateTimeOffset(2021, 1, 2, 12, 0, 0, offset);
+            DateTimeOffset start_time = new DateTimeOffset(2021, 1, 2, 0, 0, 0, offset);
+            DateTimeOffset end_time = new DateTimeOffset(2021, 1, 2, 5, 0, 0, offset);
             Guid? model_id_raw = null;
             try
             {
-                model_id_raw = await TrainAsync(client, datasource, start_time, end_time).ConfigureAwait(false);
-                Console.WriteLine(model_id_raw);
+                model_id_raw = TrainModel(client, datasource, start_time, end_time);
                 Guid model_id = model_id_raw.GetValueOrDefault();
 
                 // detect
-                start_time = end_time;
-                end_time = new DateTimeOffset(2021, 1, 3, 0, 0, 0, offset);
-                DetectionResult result = await DetectAsync(client, datasource, model_id, start_time, end_time).ConfigureAwait(false);
+                end_time = new DateTimeOffset(2021, 1, 2, 1, 0, 0, offset);
+                JsonElement? result = BatchDetect(client, datasource, model_id, start_time, end_time);
                 if (result != null)
                 {
-                    Console.WriteLine(String.Format("Result ID: {0}", result.ResultId));
-                    Console.WriteLine(String.Format("Result summary: {0}", result.Summary));
-                    Console.WriteLine(String.Format("Result length: {0}", result.Results.Count));
+                    JsonElement valid_result = (JsonElement)result;
+                    Console.WriteLine(String.Format("Result ID: {0}", valid_result.GetProperty("resultId").ToString()));
+                    Console.WriteLine(String.Format("Result summary: {0}", valid_result.GetProperty("summary").ToString()));
+                    Console.WriteLine(String.Format("Result length: {0}", valid_result.GetProperty("results").GetArrayLength()));
                 }
 
                 //detect last
-                await DetectLastAsync(client, model_id).ConfigureAwait(false);
-
-                // export model
-                await ExportAsync(client, model_id).ConfigureAwait(false);
+                JsonElement last_detection_result = DetectLast(client, model_id);
+                Console.WriteLine("Variable States: {0}", last_detection_result.GetProperty("variableStates"));
+                Console.WriteLine("Variable States length: {0}", last_detection_result.GetProperty("variableStates").GetArrayLength());
+                Console.WriteLine("Results: {0}", last_detection_result.GetProperty("results"));
+                Console.WriteLine("Results length: {0}", last_detection_result.GetProperty("results").GetArrayLength());
 
                 // delete
-                await DeleteAsync(client, model_id).ConfigureAwait(false);
+                DeleteModel(client, model_id);
             }
             catch (Exception e)
             {
                 String msg = String.Format("Multivariate error. {0}", e.Message);
-                if (model_id_raw != null)
-                {
-                    await DeleteAsync(client, model_id_raw.GetValueOrDefault()).ConfigureAwait(false);
-                }
                 Console.WriteLine(msg);
                 throw;
             }
         }
 
+        private int GetModelNumber(AnomalyDetectorClient client)
+        {
+            int model_number = 0;
+            foreach (var multivariateModel in client.GetMultivariateModels())
+            {
+                model_number++;
+            }
+            return model_number;
+        }
+
         #region Snippet:TrainMultivariateModel
-        private async Task<Guid?> TrainAsync(AnomalyDetectorClient client, string datasource, DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
+        private Guid? TrainModel(AnomalyDetectorClient client, string datasource, DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
         {
             try
             {
                 Console.WriteLine("Training new model...");
 
-                int model_number = await GetModelNumberAsync(client, false).ConfigureAwait(false);
-                Console.WriteLine(String.Format("{0} available models before training.", model_number));
+                Console.WriteLine(String.Format("{0} available models before training.", GetModelNumber(client)));
 
-                ModelInfo data_feed = new ModelInfo(datasource, start_time, end_time);
-                Response response_header = client.TrainMultivariateModel(data_feed);
-                response_header.Headers.TryGetValue("Location", out string trained_model_id_path);
-                Guid trained_model_id = Guid.Parse(trained_model_id_path.Split('/').LastOrDefault());
-                Console.WriteLine(trained_model_id);
+                var data = new {
+                    dataSource = datasource,
+                    startTime = start_time,
+                    endTime = end_time,
+                    slidingWindow = 200
+                };
+
+                TestContext.Progress.WriteLine("Training new model...(it may take a few minutes)");
+                Response response = client.CreateMultivariateModel(RequestContent.Create(data));
+                JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+                Guid trained_model_id = Guid.Parse(result.GetProperty("modelId").ToString());
+                Console.WriteLine(String.Format("Training model id is {0}", trained_model_id));
 
                 // Wait until the model is ready. It usually takes several minutes
-                Response<Model> get_response = await client.GetMultivariateModelAsync(trained_model_id).ConfigureAwait(false);
-                ModelStatus? model_status = null;
+                String model_status = null;
                 int tryout_count = 0;
-                while (tryout_count < max_tryout & model_status != ModelStatus.Ready)
+                while (tryout_count < max_tryout & model_status != "READY" & model_status != "FAILED")
                 {
-                    System.Threading.Thread.Sleep(10000);
-                    get_response = await client.GetMultivariateModelAsync(trained_model_id).ConfigureAwait(false);
-                    ModelInfo model_info = get_response.Value.ModelInfo;
-                    Console.WriteLine(String.Format("model_id: {0}, createdTime: {1}, lastUpdateTime: {2}, status: {3}.", get_response.Value.ModelId, get_response.Value.CreatedTime, get_response.Value.LastUpdatedTime, model_info.Status));
-
-                    if (model_info != null)
-                    {
-                        model_status = model_info.Status;
-                    }
+                    System.Threading.Thread.Sleep(1000);
+                    response = client.GetMultivariateModel(trained_model_id);
+                    result = JsonDocument.Parse(response.ContentStream).RootElement;
+                    model_status = result.GetProperty("modelInfo").GetProperty("status").ToString();
+                    TestContext.Progress.WriteLine(String.Format("try {0}, model_id: {1}, status: {2}.", tryout_count, trained_model_id, model_status));
                     tryout_count += 1;
                 };
-                get_response = await client.GetMultivariateModelAsync(trained_model_id).ConfigureAwait(false);
 
-                if (model_status != ModelStatus.Ready)
+                if (model_status == "READY")
                 {
-                    Console.WriteLine(String.Format("Request timeout after {0} tryouts", max_tryout));
+                    Console.WriteLine("Creating model succeeds.");
+                    Console.WriteLine(String.Format("{0} available models after training.", GetModelNumber(client)));
+                    return trained_model_id;
                 }
 
-                model_number = await GetModelNumberAsync(client).ConfigureAwait(false);
-                Console.WriteLine(String.Format("{0} available models after training.", model_number));
-                return trained_model_id;
+                if (model_status == "FAILED")
+                {
+                    Console.WriteLine("Creating model failed.");
+                    Console.WriteLine("Errors:");
+                    try
+                    {
+                        Console.WriteLine(String.Format("Error code: {0}, Message: {1}", result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("code").ToString(), result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("message").ToString()));
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(String.Format("Get error message fail: {0}", e.Message));
+                    }
+                }
+                return null;
             }
             catch (Exception e)
             {
@@ -131,34 +153,54 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         #endregion
 
         #region Snippet:DetectMultivariateAnomaly
-        private async Task<DetectionResult> DetectAsync(AnomalyDetectorClient client, string datasource, Guid model_id,DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
+        private JsonElement? BatchDetect(AnomalyDetectorClient client, string datasource, Guid model_id,DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
         {
             try
             {
-                Console.WriteLine("Start detect...");
-                Response<Model> get_response = await client.GetMultivariateModelAsync(model_id).ConfigureAwait(false);
+                Console.WriteLine("Start batch detect...");
+                var data = new {
+                    dataSource = datasource,
+                    topContributorCount = 10,
+                    startTime = start_time,
+                    endTime = end_time,
+                };
 
-                DetectionRequest detectionRequest = new DetectionRequest(datasource, start_time, end_time);
-                Response result_response = await client.DetectAnomalyAsync(model_id, detectionRequest).ConfigureAwait(false);
-                var ok = result_response.Headers.TryGetValue("Location", out string result_id_path);
-                Guid result_id = Guid.Parse(result_id_path.Split('/').LastOrDefault());
+                TestContext.Progress.WriteLine("Start batch detection, this might take a few minutes...");
+                var operation = client.BatchDetectAnomaly(WaitUntil.Completed, model_id, RequestContent.Create(data));
+                BinaryData rawResult= operation.WaitForCompletion();
+                JsonElement result = JsonDocument.Parse(rawResult.ToStream()).RootElement;
+                Guid result_id = Guid.Parse(result.GetProperty("resultId").ToString());
+                TestContext.Progress.WriteLine(String.Format("result id is: {0}", result_id));
+
                 // get detection result
-                Response<DetectionResult> result = await client.GetDetectionResultAsync(result_id).ConfigureAwait(false);
+                Response response = client.GetBatchDetectionResult(result_id);
+                JsonElement detection_result = JsonDocument.Parse(response.ContentStream).RootElement;
+                String result_status = result.GetProperty("summary").GetProperty("status").ToString();
                 int tryout_count = 0;
-                while (result.Value.Summary.Status != DetectionStatus.Ready & tryout_count < max_tryout)
+                while (tryout_count < max_tryout & result_status != "READY" & result_status != "FAILED")
                 {
-                    System.Threading.Thread.Sleep(2000);
-                    result = await client.GetDetectionResultAsync(result_id).ConfigureAwait(false);
-                    tryout_count += 1;
+                    System.Threading.Thread.Sleep(1000);
+                    response = client.GetBatchDetectionResult(result_id);
+                    detection_result = JsonDocument.Parse(response.ContentStream).RootElement;
+                    result_status = detection_result.GetProperty("summary").GetProperty("status").ToString();
+                    TestContext.Progress.WriteLine(String.Format("try: {0}, result id: {1} Detection status is {2}", tryout_count, result_id, result_status));
+                    Console.Out.Flush();
                 }
 
-                if (result.Value.Summary.Status != DetectionStatus.Ready)
+                if (result_status == "FAILED")
                 {
-                    Console.WriteLine(String.Format("Request timeout after {0} tryouts", max_tryout));
+                    Console.WriteLine("Detection failed.");
+                    Console.WriteLine("Errors:");
+                    try
+                    {
+                        Console.WriteLine(String.Format("Error code: {}. Message: {}", detection_result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("code").ToString(), detection_result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("message").ToString()));
+                    } catch (Exception e)
+                    {
+                        Console.WriteLine(String.Format("Get error message fail: {0}", e.Message));
+                    }
                     return null;
                 }
-
-                return result.Value;
+                return detection_result;
             }
             catch (Exception e)
             {
@@ -168,86 +210,35 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         }
         #endregion
 
-        #region Snippet:ExportMultivariateModel
-        private async Task ExportAsync(AnomalyDetectorClient client, Guid model_id, string model_path = "model.zip")
+        #region Snippet:DetectLastMultivariateAnomaly
+        private JsonElement DetectLast(AnomalyDetectorClient client, Guid model_id)
         {
+            Console.WriteLine("Start last detect...");
             try
             {
-                Stream model = await client.ExportModelAsync(model_id).ConfigureAwait(false);
-                if (model != null)
+                JsonElement data;
+                using (StreamReader r = new StreamReader("./samples/data/multivariate_sample_data.json"))
                 {
-                    var fileStream = File.Create(model_path);
-                    model.Seek(0, SeekOrigin.Begin);
-                    model.CopyTo(fileStream);
-                    fileStream.Close();
+                    string json = r.ReadToEnd();
+                    data = JsonDocument.Parse(json).RootElement;
                 }
+                Response response = client.LastDetectAnomaly(model_id, RequestContent.Create(data));
+                return JsonDocument.Parse(response.ContentStream).RootElement;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(String.Format("Export error. {0}", e.Message));
+                Console.WriteLine(String.Format("Last detection error. {0}", ex.Message));
                 throw;
             }
         }
         #endregion
 
         #region Snippet:DeleteMultivariateModel
-        private async Task DeleteAsync(AnomalyDetectorClient client, Guid model_id)
+        private void DeleteModel(AnomalyDetectorClient client, Guid model_id)
         {
-            await client.DeleteMultivariateModelAsync(model_id).ConfigureAwait(false);
-            int model_number = await GetModelNumberAsync(client).ConfigureAwait(false);
+            client.DeleteMultivariateModel(model_id);
+            int model_number = GetModelNumber(client);
             Console.WriteLine(String.Format("{0} available models after deletion.", model_number));
-        }
-        private async Task<int> GetModelNumberAsync(AnomalyDetectorClient client, bool delete = false)
-        {
-            int count = 0;
-            AsyncPageable<ModelSnapshot> model_list = client.ListMultivariateModelAsync(0, 10000);
-            await foreach (ModelSnapshot x in model_list)
-            {
-                count += 1;
-                Console.WriteLine(String.Format("model_id: {0}, createdTime: {1}, lastUpdateTime: {2}.", x.ModelId, x.CreatedTime, x.LastUpdatedTime));
-                if (delete & count < 4)
-                {
-                    await client.DeleteMultivariateModelAsync(x.ModelId).ConfigureAwait(false);
-                }
-            }
-            return count;
-        }
-        #endregion
-
-        #region Snippet:DetectLastMultivariateAnomaly
-        private async Task<LastDetectionResult> DetectLastAsync(AnomalyDetectorClient client, Guid model_id)
-        {
-            Console.WriteLine("Start detect...");
-
-            List<VariableValues> variables = new List<VariableValues>();
-            variables.Add(new VariableValues("variables_name1", new[] { "2021-01-01 00:00:00", "2021-01-01 01:00:00", "2021-01-01 02:00:00" }, new[] { 0.0f, 0.0f, 0.0f }));
-            variables.Add(new VariableValues("variables_name2", new[] { "2021-01-01 00:00:00", "2021-01-01 01:00:00", "2021-01-01 02:00:00" }, new[] { 0.0f, 0.0f, 0.0f }));
-
-            LastDetectionRequest lastDetectionRequest = new LastDetectionRequest(variables, 1);
-
-            try
-            {
-                Response<LastDetectionResult> response = await client.LastDetectAnomalyAsync(model_id, lastDetectionRequest).ConfigureAwait(false);
-                if (response.GetRawResponse().Status == 200)
-                {
-                    foreach (AnomalyState state in response.Value.Results)
-                    {
-                        Console.WriteLine(String.Format("timestamp: {}, isAnomaly: {}, score: {}.", state.Timestamp, state.Value.IsAnomaly, state.Value.Score));
-                    }
-                }
-
-                return response;
-            }
-            catch (RequestFailedException ex)
-            {
-                Console.WriteLine(String.Format("Last detection failed: {0}", ex.Message));
-                throw;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
-                throw;
-            }
         }
         #endregion
     }
