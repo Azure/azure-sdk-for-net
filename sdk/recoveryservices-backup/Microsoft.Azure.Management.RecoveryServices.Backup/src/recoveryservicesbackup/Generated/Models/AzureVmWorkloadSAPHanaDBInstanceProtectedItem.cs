@@ -16,23 +16,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     using System.Linq;
 
     /// <summary>
-    /// Azure VM workload-specific protected item representing SQL Database.
+    /// Azure VM workload-specific protected item representing SAP HANA
+    /// DBInstance.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureVmWorkloadSQLDatabase")]
-    public partial class AzureVmWorkloadSQLDatabaseProtectedItem : AzureVmWorkloadProtectedItem
+    [Newtonsoft.Json.JsonObject("AzureVmWorkloadSAPHanaDBInstance")]
+    public partial class AzureVmWorkloadSAPHanaDBInstanceProtectedItem : AzureVmWorkloadProtectedItem
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// AzureVmWorkloadSQLDatabaseProtectedItem class.
+        /// AzureVmWorkloadSAPHanaDBInstanceProtectedItem class.
         /// </summary>
-        public AzureVmWorkloadSQLDatabaseProtectedItem()
+        public AzureVmWorkloadSAPHanaDBInstanceProtectedItem()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// AzureVmWorkloadSQLDatabaseProtectedItem class.
+        /// AzureVmWorkloadSAPHanaDBInstanceProtectedItem class.
         /// </summary>
         /// <param name="backupManagementType">Type of backup management for
         /// the backed up item. Possible values include: 'Invalid',
@@ -104,7 +105,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="extendedInfo">Additional information for this backup
         /// item.</param>
         /// <param name="kpisHealths">Health details of different KPIs</param>
-        public AzureVmWorkloadSQLDatabaseProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), IList<string> resourceGuardOperationRequests = default(IList<string>), bool? isArchiveEnabled = default(bool?), string policyName = default(string), int? softDeleteRetentionPeriod = default(int?), string friendlyName = default(string), string serverName = default(string), string parentName = default(string), string parentType = default(string), string protectionStatus = default(string), string protectionState = default(string), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), ErrorDetail lastBackupErrorDetail = default(ErrorDetail), string protectedItemDataSourceId = default(string), string protectedItemHealthStatus = default(string), AzureVmWorkloadProtectedItemExtendedInfo extendedInfo = default(AzureVmWorkloadProtectedItemExtendedInfo), IDictionary<string, KPIResourceHealthDetails> kpisHealths = default(IDictionary<string, KPIResourceHealthDetails>))
+        public AzureVmWorkloadSAPHanaDBInstanceProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), IList<string> resourceGuardOperationRequests = default(IList<string>), bool? isArchiveEnabled = default(bool?), string policyName = default(string), int? softDeleteRetentionPeriod = default(int?), string friendlyName = default(string), string serverName = default(string), string parentName = default(string), string parentType = default(string), string protectionStatus = default(string), string protectionState = default(string), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), ErrorDetail lastBackupErrorDetail = default(ErrorDetail), string protectedItemDataSourceId = default(string), string protectedItemHealthStatus = default(string), AzureVmWorkloadProtectedItemExtendedInfo extendedInfo = default(AzureVmWorkloadProtectedItemExtendedInfo), IDictionary<string, KPIResourceHealthDetails> kpisHealths = default(IDictionary<string, KPIResourceHealthDetails>))
             : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriod, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupTime, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths)
         {
             CustomInit();
