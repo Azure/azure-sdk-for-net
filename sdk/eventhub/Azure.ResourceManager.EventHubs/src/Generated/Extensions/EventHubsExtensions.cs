@@ -303,25 +303,6 @@ namespace Azure.ResourceManager.EventHubs
         }
         #endregion
 
-        #region EventHubAuthorizationRuleResource
-        /// <summary>
-        /// Gets an object representing an <see cref="EventHubAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubAuthorizationRuleResource.CreateResourceIdentifier" /> to create an <see cref="EventHubAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventHubAuthorizationRuleResource" /> object. </returns>
-        public static EventHubAuthorizationRuleResource GetEventHubAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                EventHubAuthorizationRuleResource.ValidateResourceId(id);
-                return new EventHubAuthorizationRuleResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region EventHubsDisasterRecoveryAuthorizationRuleResource
         /// <summary>
         /// Gets an object representing an <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
@@ -336,6 +317,25 @@ namespace Azure.ResourceManager.EventHubs
             {
                 EventHubsDisasterRecoveryAuthorizationRuleResource.ValidateResourceId(id);
                 return new EventHubsDisasterRecoveryAuthorizationRuleResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region EventHubAuthorizationRuleResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EventHubAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventHubAuthorizationRuleResource.CreateResourceIdentifier" /> to create an <see cref="EventHubAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventHubAuthorizationRuleResource" /> object. </returns>
+        public static EventHubAuthorizationRuleResource GetEventHubAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                EventHubAuthorizationRuleResource.ValidateResourceId(id);
+                return new EventHubAuthorizationRuleResource(client, id);
             }
             );
         }
@@ -360,25 +360,6 @@ namespace Azure.ResourceManager.EventHubs
         }
         #endregion
 
-        #region EventHubResource
-        /// <summary>
-        /// Gets an object representing an <see cref="EventHubResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubResource.CreateResourceIdentifier" /> to create an <see cref="EventHubResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventHubResource" /> object. </returns>
-        public static EventHubResource GetEventHubResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                EventHubResource.ValidateResourceId(id);
-                return new EventHubResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region EventHubsDisasterRecoveryResource
         /// <summary>
         /// Gets an object representing an <see cref="EventHubsDisasterRecoveryResource" /> along with the instance operations that can be performed on it but with no data.
@@ -393,6 +374,25 @@ namespace Azure.ResourceManager.EventHubs
             {
                 EventHubsDisasterRecoveryResource.ValidateResourceId(id);
                 return new EventHubsDisasterRecoveryResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region EventHubResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EventHubResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventHubResource.CreateResourceIdentifier" /> to create an <see cref="EventHubResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventHubResource" /> object. </returns>
+        public static EventHubResource GetEventHubResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                EventHubResource.ValidateResourceId(id);
+                return new EventHubResource(client, id);
             }
             );
         }
@@ -431,6 +431,25 @@ namespace Azure.ResourceManager.EventHubs
             {
                 EventHubsSchemaGroupResource.ValidateResourceId(id);
                 return new EventHubsSchemaGroupResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ApplicationGroupResource
+        /// <summary>
+        /// Gets an object representing an <see cref="ApplicationGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationGroupResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApplicationGroupResource" /> object. </returns>
+        public static ApplicationGroupResource GetApplicationGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ApplicationGroupResource.ValidateResourceId(id);
+                return new ApplicationGroupResource(client, id);
             }
             );
         }

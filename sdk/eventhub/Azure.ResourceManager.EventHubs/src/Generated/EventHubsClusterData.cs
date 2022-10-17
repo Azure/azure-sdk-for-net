@@ -34,13 +34,15 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="updatedOn"> The UTC time when the Event Hubs Cluster was last updated. </param>
         /// <param name="metricId"> The metric ID of the cluster resource. Provided by the service and not modifiable by the user. </param>
         /// <param name="status"> Status of the Cluster resource. </param>
-        internal EventHubsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsClusterSku sku, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string metricId, string status) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="supportsScaling"> A value that indicates whether Scaling is Supported. </param>
+        internal EventHubsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsClusterSku sku, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string metricId, string status, bool? supportsScaling) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
             MetricId = metricId;
             Status = status;
+            SupportsScaling = supportsScaling;
         }
 
         /// <summary> Properties of the cluster SKU. </summary>
@@ -53,5 +55,7 @@ namespace Azure.ResourceManager.EventHubs
         public string MetricId { get; }
         /// <summary> Status of the Cluster resource. </summary>
         public string Status { get; }
+        /// <summary> A value that indicates whether Scaling is Supported. </summary>
+        public bool? SupportsScaling { get; set; }
     }
 }
