@@ -674,6 +674,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         [TestCase(null)]
         [TestCase(true)]
         [TestCase(false)]
+        [RecordedTest]
         public async Task AddSetRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
@@ -684,18 +685,18 @@ namespace Azure.ResourceManager.EventHubs.Tests
             EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
 
             //add a tag
-            eventHubNamespace = await eventHubNamespace.AddTagAsync("key", "value");
+            eventHubNamespace = await eventHubNamespace.AddTagAsync("key1", "value1");
             Assert.AreEqual(eventHubNamespace.Data.Tags.Count, 1);
-            Assert.AreEqual(eventHubNamespace.Data.Tags["key"], "value");
-
-            //set the tag
-            eventHubNamespace.Data.Tags.Add("key1", "value1");
-            eventHubNamespace = await eventHubNamespace.SetTagsAsync(eventHubNamespace.Data.Tags);
-            Assert.AreEqual(eventHubNamespace.Data.Tags.Count, 2);
             Assert.AreEqual(eventHubNamespace.Data.Tags["key1"], "value1");
 
+            //set the tag
+            eventHubNamespace.Data.Tags.Add("key2", "value2");
+            eventHubNamespace = await eventHubNamespace.SetTagsAsync(eventHubNamespace.Data.Tags);
+            Assert.AreEqual(eventHubNamespace.Data.Tags.Count, 2);
+            Assert.AreEqual(eventHubNamespace.Data.Tags["key2"], "value2");
+
             //remove a tag
-            eventHubNamespace = await eventHubNamespace.RemoveTagAsync("key");
+            eventHubNamespace = await eventHubNamespace.RemoveTagAsync("key1");
             Assert.AreEqual(eventHubNamespace.Data.Tags.Count, 1);
 
             //wait until provision state is succeeded

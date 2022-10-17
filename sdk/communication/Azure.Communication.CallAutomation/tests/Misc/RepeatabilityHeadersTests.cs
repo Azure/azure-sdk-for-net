@@ -74,7 +74,8 @@ namespace Azure.Communication.CallAutomation.Tests.Misc
         public void RepeatablityHeaders_IsSetByDefault_RejectCallOptions()
         {
             // arrange
-            var options = new RejectCallOptions("context", CallRejectReason.Busy);
+            var options = new RejectCallOptions("context");
+            options.CallRejectReason = CallRejectReason.Busy;
 
             // act & assert
             Assert.IsNotNull(options.RepeatabilityHeaders);

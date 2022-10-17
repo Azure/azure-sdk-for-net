@@ -9,7 +9,6 @@ csharp: true
 library-name: DataFactory
 namespace: Azure.ResourceManager.DataFactory
 require: https://github.com/Azure/azure-rest-api-specs/blob/de400f7204d30d25543ac967636180728d52a88f/specification/datafactory/resource-manager/readme.md
-tag: package-2018-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -230,7 +229,7 @@ rename-mapping:
   SsisObjectMetadataStatusResponse: SsisObjectMetadataStatusResult
   SsisParameter: SsisParameterInfo
   IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse: IntegrationRuntimeOutboundNetworkDependenciesResult
-  
+
 override-operation-name:
   ActivityRuns_QueryByPipelineRun: GetActivityRun
   PipelineRuns_QueryByFactory: GetPipelineRuns

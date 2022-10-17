@@ -122,6 +122,65 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedProperties: new Dictionary<string, string> { { "integer", "1" }, { "message", "Hello World!" }, { "intArray", "1,2,3" } });
         }
 
+        [Fact]
+        public void VerifyExceptionWithinActivity()
+        {
+            // SETUP
+            var uniqueTestId = Guid.NewGuid();
+
+            var activitySourceName = $"activitySourceName{uniqueTestId}";
+            using var activitySource = new ActivitySource(activitySourceName);
+
+            var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource(activitySourceName)
+                .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems)
+                .Build();
+
+            // ACT
+            string spanId = null, traceId = null;
+
+            using (var activity = activitySource.StartActivity(name: "ActivityWithException"))
+            {
+                traceId = activity.TraceId.ToHexString();
+                spanId = activity.SpanId.ToHexString();
+
+                try
+                {
+                    throw new Exception("Test exception");
+                }
+                catch (Exception ex)
+                {
+                    activity?.SetStatus(ActivityStatusCode.Error);
+                    activity?.RecordException(ex);
+                }
+            }
+
+            // CLEANUP
+            tracerProvider.Dispose();
+
+            // ASSERT
+            Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(telemetryItems);
+            var activityTelemetryItem = telemetryItems.First(x => x.Name == "RemoteDependency"); // TODO: Change to Single(). Still investigating random duplicate export which only repros on build server.
+
+            TelemetryItemValidationHelper.AssertActivity_As_DependencyTelemetry(
+                telemetryItem: activityTelemetryItem,
+                expectedName: "ActivityWithException",
+                expectedTraceId: traceId,
+                expectedSpanId: spanId,
+                expectedProperties: null,
+                expectedSuccess: false);
+
+            var exceptionTelemetryItem = telemetryItems.First(x => x.Name == "Exception");
+
+            TelemetryItemValidationHelper.AssertActivity_RecordedException(
+                telemetryItem: exceptionTelemetryItem,
+                expectedExceptionMessage: "Test exception",
+                expectedExceptionTypeName: "System.Exception",
+                expectedTraceId: traceId,
+                expectedSpanId: spanId);
+        }
+
         [Theory]
         [InlineData(LogLevel.Information, "Information")]
         [InlineData(LogLevel.Warning, "Warning")]
