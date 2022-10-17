@@ -18,9 +18,7 @@ namespace Azure
 #pragma warning restore AZC0012 // Avoid single word type names
 #pragma warning restore SA1649 // File name should match first type name
     {
-        /// <summary>
-        /// Gets the value returned by the service.
-        /// </summary>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool HasValue => true;
 

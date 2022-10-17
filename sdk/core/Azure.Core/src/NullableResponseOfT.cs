@@ -1,4 +1,5 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿using System.Collections;
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.ComponentModel;
@@ -13,6 +14,8 @@ namespace Azure
     public abstract class NullableResponse<T>
 #pragma warning restore SA1649 // File name should match first type name
     {
+        private const string NoValue = "The Response has no value";
+
         /// <summary>
         /// Gets a value indicating whether the current instance has a valid value of its underlying type.
         /// </summary>
@@ -38,9 +41,6 @@ namespace Azure
         public override int GetHashCode() => base.GetHashCode();
 
         /// <inheritdoc />
-        public override string ToString()
-        {
-            return $"Status: {GetRawResponse().Status}, Value: {Value}";
-        }
+        public override string ToString() => $"Status: {GetRawResponse()?.Status}, Value: {(HasValue ? Value : NoValue)}";
     }
 }
