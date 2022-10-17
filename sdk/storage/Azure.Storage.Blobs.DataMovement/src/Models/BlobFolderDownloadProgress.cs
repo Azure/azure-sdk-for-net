@@ -8,7 +8,7 @@ namespace Azure.Storage.Blobs.DataMovement.Models
     /// <summary>
     /// Blob Upload Progress Handler to track how many files and bytes were transferred, along with blobs that failed or were skipped in transfer
     /// </summary>
-    public class BlobFolderDownloadProgress
+    internal class BlobFolderDownloadProgress
     {
         private long _totalDownloadsCompleted;
         private long _totalDownloadsSkipped;

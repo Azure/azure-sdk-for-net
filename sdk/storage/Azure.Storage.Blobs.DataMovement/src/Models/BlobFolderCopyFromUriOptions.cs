@@ -14,7 +14,7 @@ namespace Azure.Storage.Blobs.DataMovement.Models
     ///
     /// TODO: Reassess which options can be applied from the original BlobCopyFromUriOptions
     /// </summary>
-    public class BlobFolderCopyFromUriOptions
+    internal class BlobFolderCopyFromUriOptions
     {
         /// <summary>
         /// Optional <see cref="AccessTier"/>

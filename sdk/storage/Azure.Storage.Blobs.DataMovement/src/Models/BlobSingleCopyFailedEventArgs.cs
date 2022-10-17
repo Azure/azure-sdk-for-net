@@ -13,7 +13,7 @@ namespace Azure.Storage.Blobs.DataMovement.Models
     /// <summary>
     /// Event Argument for Failed Single Blob Transfers
     /// </summary>
-    public class BlobSingleCopyFailedEventArgs : StorageTransferEventArgs
+    internal class BlobSingleCopyFailedEventArgs : StorageTransferEventArgs
     {
         /// <summary>
         /// Gets the <see cref="Uri"/> that was the destination blob for the upload.

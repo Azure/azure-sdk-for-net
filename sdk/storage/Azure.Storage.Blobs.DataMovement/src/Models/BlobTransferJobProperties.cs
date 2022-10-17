@@ -11,7 +11,7 @@ namespace Azure.Storage.Blobs.DataMovement.Models
     /// <summary>
     /// Defines the properties of the Blob Transfer Job
     /// </summary>
-    public class BlobTransferJobProperties
+    internal class BlobTransferJobProperties
     {
         /// <summary>
         /// Constructor internal.

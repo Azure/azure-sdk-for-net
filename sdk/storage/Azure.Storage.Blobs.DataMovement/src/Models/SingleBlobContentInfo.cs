@@ -12,7 +12,7 @@ namespace Azure.Storage.Blobs.DataMovement.Models
     ///
     /// See <see cref="BlobContentInfo"/> for more details.
     /// </summary>
-    public class SingleBlobContentInfo
+    internal class SingleBlobContentInfo
     {
         /// <summary>
         /// The Blob Uri for the blob that was uploaded.

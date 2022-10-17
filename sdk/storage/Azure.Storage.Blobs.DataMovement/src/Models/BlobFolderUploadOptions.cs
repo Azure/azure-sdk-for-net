@@ -10,7 +10,7 @@ namespace Azure.Storage.Blobs.DataMovement.Models
     /// <summary>
     /// Optional parameters for uploading to a Blob Virtual Directory.
     /// </summary>
-    public class BlobFolderUploadOptions
+    internal class BlobFolderUploadOptions
     {
         /// <summary>
         /// Optional <see cref="AccessTier"/> to set on each blob uploaded.

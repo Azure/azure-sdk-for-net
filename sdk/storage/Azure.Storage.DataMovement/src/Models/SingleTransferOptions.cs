@@ -31,6 +31,11 @@ namespace Azure.Storage.DataMovement.Models
         public long? InitialTransferSize { get; set; }
 
         /// <summary>
+        /// Optional. Defines the checkpoint id that the transfer should continue from.
+        /// </summary>
+        public string CheckpointTransferId { get; set; }
+
+        /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
@@ -79,6 +84,12 @@ namespace Azure.Storage.DataMovement.Models
             => MaximumTransferChunkSize == obj?.MaximumTransferChunkSize
             && InitialTransferSize == obj?.InitialTransferSize
             ;
+
+        /// <summary>
+        /// Optional <see cref="StorageResourceCreateMode"/> to configure overwrite
+        /// behavior. Will default to <see cref="StorageResourceCreateMode.Overwrite"/>.
+        /// </summary>
+        public StorageResourceCreateMode OverwriteOptions { get; set; }
 
         /// <summary>
         /// If the transfer status of the job changes then the event will get added to this handler.

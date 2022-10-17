@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs.DataMovement
     /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-namespace">
     /// Azure Data Lake Storage Gen2 Hierarchical Namespace</see>.
     /// </summary>
-    public class BlobFolderClient
+    internal class BlobFolderClient
     {
         /// <summary>
         /// The virtual blob directory's primary <see cref="Uri"/> endpoint.
@@ -1438,42 +1438,5 @@ namespace Azure.Storage.Blobs.DataMovement
             return GetParentBlobContainerClient().GetBlobsByHierarchyAsync(traits, states, delimiter, additionalPrefix, cancellationToken);
         }
         #endregion GetBlobsByHierarchy
-    }
-
-    /// <summary>
-    /// Add easy to discover methods to <see cref="BlobServiceClient"/> for
-    /// creating <see cref="BlobFolderClient"/> instances.
-    /// </summary>
-    public static partial class SpecializedBlobExtensions
-    {
-        /// <summary>
-        /// Create a new <see cref="BlobFolderClient"/> object for the same
-        /// account as the <see cref="BlobServiceClient"/>.  The new
-        /// <see cref="BlobFolderClient"/> uses the same request policy pipeline
-        /// as the <see cref="BlobServiceClient"/>.
-        /// </summary>
-        /// <param name="client">The <see cref="BlobServiceClient"/>.</param>
-        /// <param name="containerName">The name of the container containing the Blob Virtual Directory</param>
-        /// <param name="directoryPath">The full directory path of the Blob Virtual Directory</param>
-        /// <returns>A new <see cref="BlobFolderClient"/> instance.</returns>
-        public static BlobFolderClient GetBlobFolderClient(
-            this BlobServiceClient client,
-            string containerName,
-            string directoryPath)
-                => new BlobFolderClient(client, containerName, directoryPath);
-
-    /// <summary>
-    /// Create a new <see cref="BlobFolderClient"/> object for the
-    /// container associated with the  <see cref="BlobContainerClient"/>.  The new
-    /// <see cref="BlobFolderClient"/> uses the same request policy pipeline
-    /// as the <see cref="BlobContainerClient"/>.
-    /// </summary>
-    /// <param name="client">The <see cref="BlobContainerClient"/>.</param>
-    /// <param name="directoryPath">The full directory path of the Blob Virtual Directory</param>
-    /// <returns>A new <see cref="BlobFolderClient"/> instance.</returns>
-    public static BlobFolderClient GetBlobFolderClient(
-        this BlobContainerClient client,
-        string directoryPath)
-            => new BlobFolderClient(client, directoryPath);
     }
 }

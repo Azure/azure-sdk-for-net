@@ -10,7 +10,7 @@ namespace Azure.Storage.Blobs.DataMovement.Models
     /// <summary>
     /// Event Argument for Failed Blob Directory Upload Transfers
     /// </summary>
-    public class BlobFolderUploadFailedEventArgs : StorageTransferEventArgs
+    internal class BlobFolderUploadFailedEventArgs : StorageTransferEventArgs
     {
         /// <summary>
         /// Gets the source path to the contents to upload to the destination.

@@ -41,13 +41,13 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Can produce URL
+        /// Cannot produce URL
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         public override ProduceUriType CanProduceUri()
         {
-            return ProduceUriType.ProducesUri;
+            return ProduceUriType.NoUri;
         }
 
         /// <summary>

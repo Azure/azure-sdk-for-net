@@ -10,7 +10,7 @@ namespace Azure.Storage.Blobs.DataMovement.Models
     /// <summary>
     /// Optional parameters for downloading to a Blob Directory.
     /// </summary>
-    public class BlobFolderDownloadOptions
+    internal class BlobFolderDownloadOptions
     {
         /// <summary>
         /// Optional <see cref="IProgress{BlobDownloadDirectoryProgress}"/> to provide

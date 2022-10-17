@@ -9,7 +9,7 @@ namespace Azure.Storage.Blobs.DataMovement.Models
     /// <summary>
     /// Blob SIngle Download Options
     /// </summary>
-    public class BlobSingleDownloadOptions : BlobDownloadToOptions
+    internal class BlobSingleDownloadOptions : BlobDownloadToOptions
     {
         /// <summary>
         /// If the transfer status of the job changes then the event will get added to this handler.

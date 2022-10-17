@@ -10,7 +10,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Checkpoint for paused or ongoing transfers
     /// </summary>
-    public class DataMovementCheckpointer
+    internal class DataMovementCheckpointer
     {
         /// <summary>
         /// For mocking

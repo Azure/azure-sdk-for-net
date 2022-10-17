@@ -15,11 +15,11 @@ namespace Azure.Storage.DataMovement.Models
         /// <summary>
         /// Specifies trait options for shaping the storage resources.
         /// </summary>
-        public StorageResourceTraits traits { get; internal set; }
+        public StorageResourceListTraits Traits { get; internal set; }
 
         /// <summary>
         /// Specifies state options for filtering the storage resources.
         /// </summary>
-        public StorageResourceListStates states { get; internal set; }
+        public StorageResourceListStates States { get; internal set; }
     }
 }

@@ -11,7 +11,7 @@ namespace Azure.Storage.Blobs.DataMovement.Models
     /// <summary>
     /// Options bag for the single copy
     /// </summary>
-    public class BlobSingleCopyOptions : BlobCopyFromUriOptions
+    internal class BlobSingleCopyOptions : BlobCopyFromUriOptions
     {
         /// <summary>
         /// Optional <see cref="StorageTransferOptions"/> to configure

@@ -10,7 +10,7 @@ namespace Azure.Storage.Blobs.DataMovement.Models
     /// Defines the type of transfer the job is performing.
     /// This is used in the <see cref="BlobTransferJobProperties"/>.
     /// </summary>
-    public class BlobTransferType
+    internal class BlobTransferType
     {
         /// <summary>
         /// Resource Type to transfer

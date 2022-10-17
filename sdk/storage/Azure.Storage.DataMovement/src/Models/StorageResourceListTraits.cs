@@ -12,7 +12,7 @@ namespace Azure.Storage.DataMovement.Models
     /// operations.
     /// </summary>
     [Flags]
-    public enum StorageResourceTraits
+    public enum StorageResourceListTraits
     {
         /// <summary>
         /// Flag specifying only the default information for blobs

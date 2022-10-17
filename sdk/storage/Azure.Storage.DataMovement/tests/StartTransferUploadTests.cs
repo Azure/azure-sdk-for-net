@@ -200,8 +200,8 @@ namespace Azure.Storage.DataMovement.Tests
                         completedStatusWait));
 
                     // Act
-                    StorageResource resource = LocalStorageResourceFactory.GetFile(localSourceFile);
-                    await BlobDataController.StartTransferAsync(resource, destinationResource, options[i]).ConfigureAwait(false);
+                    StorageResource sourceResource = LocalStorageResourceFactory.GetFile(localSourceFile);
+                    await BlobDataController.StartTransferAsync(sourceResource, destinationResource, options[i]).ConfigureAwait(false);
                 }
 
                 for (int i = 0; i < blobCount; i++)

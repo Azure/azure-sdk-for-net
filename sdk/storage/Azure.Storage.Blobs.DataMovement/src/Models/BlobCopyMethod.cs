@@ -11,7 +11,7 @@ namespace Azure.Storage.Blobs.DataMovement.Models
     /// Copy Method.
     /// Users can specify what type copy to occur.
     /// </summary>
-    public enum BlobCopyMethod
+    internal enum BlobCopyMethod
     {
         /// <summary>
         /// For Blobs sends <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob">Copy Blob</see>

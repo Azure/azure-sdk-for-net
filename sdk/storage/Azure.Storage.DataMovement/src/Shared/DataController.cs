@@ -197,15 +197,38 @@ namespace Azure.Storage.DataMovement
         }
         #endregion Job Chunk Management
 
+        #region Transfer Job Management
+        /// <summary>
+        /// Attempts to pause the transfer of the respective id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public Task<bool> TryPauseTransferAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Attempts to pause the transfer of the respective id.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public Task<bool> TryPauseAllTransfersAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Attempts to remove the transfer of the respective id. Will remove it does exist and has not completed.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public bool TryRemoveTransfer(string id)
+        public Task<bool> TryRemoveTransferAsync(string id)
         {
             throw new NotImplementedException();
         }
+        #endregion Transfer Job Management
     }
 }

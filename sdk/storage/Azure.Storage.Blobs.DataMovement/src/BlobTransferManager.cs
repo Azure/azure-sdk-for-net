@@ -25,7 +25,7 @@ namespace Azure.Storage.Blobs.DataMovement
     /// TODO: update description to include page blobs, append blobs, SMB Files
     /// and DataLake Files once added.
     /// </summary>
-    public class BlobTransferManager
+    internal class BlobTransferManager
     {
         // Indicates whether the current thread is processing Jobs.
         private static Task _currentTaskIsProcessingJob;
