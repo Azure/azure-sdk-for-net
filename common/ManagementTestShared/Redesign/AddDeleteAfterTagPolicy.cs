@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Castle.Components.DictionaryAdapter;
 using System;
 using System.Globalization;
 using System.IO;
@@ -13,7 +14,13 @@ namespace Azure.ResourceManager.TestFramework
 {
     public class AddDeleteAfterTagPolicy : HttpPipelineSynchronousPolicy
     {
+        private DateTime RemoveDate { get; set; }
         private Regex _resourceGroupPattern = new Regex(@"/subscriptions/[^/]+/resourcegroups/([^?/]+)\?api-version");
+
+        public AddDeleteAfterTagPolicy(DateTimeOffset dateTimeOffset)
+        {
+            RemoveDate = dateTimeOffset.DateTime;
+        }
 
         public override void OnSendingRequest(HttpMessage message)
         {
@@ -32,19 +39,18 @@ namespace Azure.ResourceManager.TestFramework
                         using (JsonDocument jsonDocument = JsonDocument.Parse(stream))
                         {
                             utf8JsonWriter.WriteStartObject();
-                            var addFlag = new JsonElement();
-                            if (jsonDocument.RootElement.TryGetProperty("tags", out addFlag))
+                            if (jsonDocument.RootElement.TryGetProperty("tags", out _))
                             {
                                 foreach (var element in jsonDocument.RootElement.EnumerateObject())
                                 {
                                     if (element.Name == "tags")
                                     {
-                                        if (!element.Value.TryGetProperty("DeleteAfter", out addFlag))
+                                        if (!element.Value.TryGetProperty("DeleteAfter", out _))
                                         {
                                             utf8JsonWriter.WritePropertyName(element.Name);
                                             utf8JsonWriter.WriteStartObject();
                                             utf8JsonWriter.WritePropertyName("DeleteAfter");
-                                            utf8JsonWriter.WriteStringValue(DateTime.UtcNow.AddDays(1).ToString("o", CultureInfo.InvariantCulture));
+                                            utf8JsonWriter.WriteStringValue(RemoveDate.AddHours(8).ToString("o", CultureInfo.InvariantCulture));
 
                                             foreach (var testDataElement in element.Value.EnumerateObject())
                                             {
@@ -72,7 +78,7 @@ namespace Azure.ResourceManager.TestFramework
                                 utf8JsonWriter.WritePropertyName("tags");
                                 utf8JsonWriter.WriteStartObject();
                                 utf8JsonWriter.WritePropertyName("DeleteAfter");
-                                utf8JsonWriter.WriteStringValue(DateTime.UtcNow.AddDays(1).ToString("o", CultureInfo.InvariantCulture));
+                                utf8JsonWriter.WriteStringValue(RemoveDate.AddHours(8).ToString("o", CultureInfo.InvariantCulture));
                                 utf8JsonWriter.WriteEndObject();
                             }
                             utf8JsonWriter.WriteEndObject();
