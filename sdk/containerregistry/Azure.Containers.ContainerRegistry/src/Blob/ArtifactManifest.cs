@@ -9,7 +9,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary>
     /// </summary>
-    public class ArtifactManifest
+    public abstract class ArtifactManifest
     {
         /// <summary> Schema version. </summary>
         public int? SchemaVersion { get; set; }

@@ -278,6 +278,11 @@ namespace Azure.Containers.ContainerRegistry
 }
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
+    public abstract partial class ArtifactManifest
+    {
+        protected ArtifactManifest() { }
+        public int? SchemaVersion { get { throw null; } set { } }
+    }
     public partial class ContainerRegistryBlobClient
     {
         protected ContainerRegistryBlobClient() { }
@@ -348,7 +353,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     {
         internal DownloadManifestResult() { }
         public string Digest { get { throw null; } }
-        public Azure.Containers.ContainerRegistry.Specialized.OciManifest Manifest { get { throw null; } }
+        public Azure.Containers.ContainerRegistry.Specialized.ArtifactManifest Manifest { get { throw null; } }
         public System.IO.Stream ManifestStream { get { throw null; } }
         public void Dispose() { }
     }
@@ -377,13 +382,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public string MediaType { get { throw null; } set { } }
         public long? Size { get { throw null; } set { } }
     }
-    public partial class OciManifest
+    public partial class OciManifest : Azure.Containers.ContainerRegistry.Specialized.ArtifactManifest
     {
         public OciManifest() { }
         public Azure.Containers.ContainerRegistry.Specialized.OciAnnotations Annotations { get { throw null; } }
         public Azure.Containers.ContainerRegistry.Specialized.OciBlobDescriptor Config { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Containers.ContainerRegistry.Specialized.OciBlobDescriptor> Layers { get { throw null; } }
-        public int? SchemaVersion { get { throw null; } set { } }
     }
     public partial class UploadBlobResult
     {
