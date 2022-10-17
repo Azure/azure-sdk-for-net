@@ -491,7 +491,7 @@ namespace Azure.Communication.PhoneNumbers
         {
             async Task<Page<PhoneNumberLocality>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableCountries)}");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableLocalities)}");
                 scope.Start();
                 try
                 {
@@ -506,7 +506,7 @@ namespace Azure.Communication.PhoneNumbers
             }
             async Task<Page<PhoneNumberLocality>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableLocalities)}");
                 scope.Start();
                 try
                 {
@@ -530,7 +530,7 @@ namespace Azure.Communication.PhoneNumbers
         {
             Page<PhoneNumberLocality> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableCountries)}");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableLocalities)}");
                 scope.Start();
                 try
                 {
@@ -545,7 +545,7 @@ namespace Azure.Communication.PhoneNumbers
             }
             Page<PhoneNumberLocality> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableLocalities)}");
                 scope.Start();
                 try
                 {
@@ -608,7 +608,7 @@ namespace Azure.Communication.PhoneNumbers
         {
             async Task<Page<PhoneNumberOffering>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableCountries)}");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableOfferings)}");
                 scope.Start();
                 try
                 {
@@ -623,7 +623,7 @@ namespace Azure.Communication.PhoneNumbers
             }
             async Task<Page<PhoneNumberOffering>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableCountries)}");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableOfferings)}");
                 scope.Start();
                 try
                 {
@@ -648,7 +648,7 @@ namespace Azure.Communication.PhoneNumbers
         {
             Page<PhoneNumberOffering> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableCountries)}");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableOfferings)}");
                 scope.Start();
                 try
                 {
@@ -663,7 +663,7 @@ namespace Azure.Communication.PhoneNumbers
             }
             Page<PhoneNumberOffering> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableCountries)}");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableOfferings)}");
                 scope.Start();
                 try
                 {
@@ -690,7 +690,16 @@ namespace Azure.Communication.PhoneNumbers
         {
             async Task<Page<AreaCodeItem>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableCountries)}");
+                var operationName = "";
+                if (phoneNumberType == "geographic")
+                {
+                    operationName = "GetAvailableAreaCodesGeographic";
+                }
+                else if (phoneNumberType == "tollFree")
+                {
+                    operationName = "GetAvailableAreaCodesTollFree";
+                }
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{operationName}");
                 scope.Start();
                 try
                 {
@@ -705,7 +714,16 @@ namespace Azure.Communication.PhoneNumbers
             }
             async Task<Page<AreaCodeItem>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
+                var operationName = "";
+                if (phoneNumberType == "geographic")
+                {
+                    operationName = "GetAvailableAreaCodesGeographic";
+                }
+                else if (phoneNumberType == "tollFree")
+                {
+                    operationName = "GetAvailableAreaCodesTollFree";
+                }
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{operationName}");
                 scope.Start();
                 try
                 {
@@ -732,7 +750,16 @@ namespace Azure.Communication.PhoneNumbers
         {
             Page<AreaCodeItem> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableCountries)}");
+                var operationName = "";
+                if (phoneNumberType == "geographic")
+                {
+                    operationName = "GetAvailableAreaCodesGeographic";
+                }
+                else if (phoneNumberType == "tollFree")
+                {
+                    operationName = "GetAvailableAreaCodesTollFree";
+                }
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{operationName}");
                 scope.Start();
                 try
                 {
@@ -747,7 +774,16 @@ namespace Azure.Communication.PhoneNumbers
             }
             Page<AreaCodeItem> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
+                var operationName = "";
+                if (phoneNumberType == "geographic")
+                {
+                    operationName = "GetAvailableAreaCodesGeographic";
+                }
+                else if (phoneNumberType == "tollFree")
+                {
+                    operationName = "GetAvailableAreaCodesTollFree";
+                }
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{operationName}");
                 scope.Start();
                 try
                 {

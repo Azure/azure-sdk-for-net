@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
@@ -300,6 +301,111 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsNotNull(updateOperation.Value);
             Assert.AreEqual(number, updateOperation.Value.PhoneNumber);
             Assert.AreEqual(200, updateOperation.GetRawResponse().Status);
+        }
+
+        [Test]
+        public async Task GetTollFreeAreaCodes()
+        {
+            if (SkipPhoneNumberLiveTests)
+                Assert.Ignore("Skip phone number live tests flag is on.");
+
+            string[] expectedAreaCodes = { "888", "877", "866", "855", "844", "800", "833", "88" };
+            var client = CreateClient();
+
+            var areaCodes = client.GetAvailableAreaCodesTollFreeAsync("US");
+            await foreach (AreaCodeItem areaCode in areaCodes)
+            {
+                Assert.Contains(areaCode.AreaCode, expectedAreaCodes);
+            }
+            Assert.IsNotNull(areaCodes);
+        }
+
+        [Test]
+        public async Task GetGeographicAreaCodes()
+        {
+            if (SkipPhoneNumberLiveTests)
+                Assert.Ignore("Skip phone number live tests flag is on.");
+
+            var client = CreateClient();
+
+            var areaCodes = client.GetAvailableAreaCodesGeographicAsync("US", "person", "Seattle");
+            await foreach (AreaCodeItem areaCode in areaCodes)
+            {
+                Console.WriteLine("Area Code " + areaCode.AreaCode);
+            }
+            Assert.IsNotNull(areaCodes);
+        }
+
+        [Test]
+        public async Task GetCountries()
+        {
+            if (SkipPhoneNumberLiveTests)
+                Assert.Ignore("Skip phone number live tests flag is on.");
+
+            List<string> countriesResponse = new List<string>();
+            string[] expectedCountries = { "US", "CA" };
+            var client = CreateClient();
+
+            var countries = client.GetAvailableCountriesAsync();
+            await foreach (PhoneNumberCountry country in countries)
+            {
+                countriesResponse.Add(country.CountryCode);
+            }
+
+            foreach (string country in expectedCountries)
+            {
+                Assert.Contains(country, countriesResponse);
+            }
+            Assert.IsNotNull(countries);
+        }
+
+        [Test]
+        public async Task GetLocalities()
+        {
+            if (SkipPhoneNumberLiveTests)
+                Assert.Ignore("Skip phone number live tests flag is on.");
+
+            var client = CreateClient();
+
+            var localities = client.GetAvailableLocalitiesAsync("US");
+            await foreach (PhoneNumberLocality locality in localities)
+            {
+                Console.WriteLine("Locality " + locality.LocalizedName);
+            }
+            Assert.IsNotNull(localities);
+        }
+
+        [Test]
+        public async Task GetLocalitiesWithAdministrativeDivision()
+        {
+            if (SkipPhoneNumberLiveTests)
+                Assert.Ignore("Skip phone number live tests flag is on.");
+
+            var client = CreateClient();
+
+            var localities = client.GetAvailableLocalitiesAsync("US", "WA");
+            await foreach (PhoneNumberLocality locality in localities)
+            {
+                Console.WriteLine("Locality " + locality.LocalizedName);
+                Assert.Equals(locality.AdministrativeDivision.AbbreviatedName, "WA");
+            }
+            Assert.IsNotNull(localities);
+        }
+
+        [Test]
+        public async Task GetOfferings()
+        {
+            if (SkipPhoneNumberLiveTests)
+                Assert.Ignore("Skip phone number live tests flag is on.");
+
+            var client = CreateClient();
+
+            var offerings = client.GetAvailableOfferingsAsync("US");
+            await foreach (PhoneNumberOffering offering in offerings)
+            {
+                Console.WriteLine("Offering " + offering.ToString());
+            }
+            Assert.IsNotNull(offerings);
         }
     }
 }
