@@ -219,7 +219,7 @@ namespace Azure.AI.TextAnalytics
         public static DetectedLanguage DetectedLanguage(string name, string iso6391Name, double confidenceScore, IList<TextAnalyticsWarning> warnings = default)
         {
             warnings ??= new List<TextAnalyticsWarning>();
-            return new DetectedLanguage(new DetectedLanguageInternal(name, iso6391Name, confidenceScore), warnings);
+            return new DetectedLanguage(new DetectedLanguageInternal(name, iso6391Name, confidenceScore, default), warnings);
         }
 
         /// <summary>

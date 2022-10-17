@@ -7,7 +7,6 @@ azure-arm: true
 library-name: WebPubSub
 namespace: Azure.ResourceManager.WebPubSub
 require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/47b551f58ee1b24f4783c2e927b1673b39d87348/specification/webpubsub/resource-manager/readme.md
-tag: package-2021-10-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

@@ -46,8 +46,14 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="entities"> Healthcare entities. </param>
         /// <param name="relations"> Healthcare entity relations. </param>
-        internal HealthcareResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<HealthcareEntityInternal> entities, IList<HealthcareRelationInternal> relations) : base(id, warnings, statistics, entities, relations)
+        /// <param name="fhirBundle"> JSON bundle containing a FHIR compatible object for consumption in other Healthcare tools. For additional information see https://www.hl7.org/fhir/overview.html. </param>
+        /// <param name="detectedLanguage"> If &apos;language&apos; is set to &apos;auto&apos; for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
+        internal HealthcareResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<HealthcareEntityInternal> entities, IList<HealthcareRelationInternal> relations, IDictionary<string, object> fhirBundle, DetectedLanguageInternal? detectedLanguage) : base(id, warnings, statistics, entities, relations, fhirBundle)
         {
+            DetectedLanguage = detectedLanguage;
         }
+
+        /// <summary> If &apos;language&apos; is set to &apos;auto&apos; for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </summary>
+        public DetectedLanguageInternal? DetectedLanguage { get; set; }
     }
 }

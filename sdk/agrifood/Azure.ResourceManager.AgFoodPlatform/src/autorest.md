@@ -9,14 +9,13 @@ csharp: true
 library-name: AgFoodPlatform
 namespace: Azure.ResourceManager.AgFoodPlatform
 require: https://github.com/Azure/azure-rest-api-specs/tree/e31e3938529269e0e6a81f60b2fdc6d2aec5b9df/specification/agrifood/resource-manager/readme.md
-tag: package-preview-2021-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+
 
 format-by-name-rules:
   'tenantId': 'uuid'

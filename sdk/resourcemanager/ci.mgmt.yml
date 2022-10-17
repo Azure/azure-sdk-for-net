@@ -15,6 +15,7 @@ trigger:
     - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
     - sdk/apimanagement/Azure.ResourceManager.ApiManagement
+    - sdk/appcomplianceautomation/Azure.ResourceManager.AppComplianceAutomation
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration
     - sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights
     - sdk/appplatform/Azure.ResourceManager.AppPlatform
@@ -52,6 +53,7 @@ trigger:
     - sdk/datalake-analytics/Azure.ResourceManager.DataLakeAnalytics
     - sdk/datalake-store/Azure.ResourceManager.DataLakeStore
     - sdk/datamigration/Azure.ResourceManager.DataMigration
+    - sdk/dataprotection/Azure.ResourceManager.DataProtectionBackup
     - sdk/datashare/Azure.ResourceManager.DataShare
     - sdk/deploymentmanager/Azure.ResourceManager.DeploymentManager
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
@@ -129,6 +131,7 @@ trigger:
     - sdk/resources/Azure.ResourceManager.Resources
     - sdk/search/Azure.ResourceManager.Search
     - sdk/securitycenter/Azure.ResourceManager.SecurityCenter
+    - sdk/securitydevops/Azure.ResourceManager.SecurityDevOps
     - sdk/securityinsights/Azure.ResourceManager.SecurityInsights
     - sdk/servicebus/Azure.ResourceManager.ServiceBus
     - sdk/servicefabric/Azure.ResourceManager.ServiceFabric
@@ -167,6 +170,7 @@ pr:
     - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
     - sdk/apimanagement/Azure.ResourceManager.ApiManagement
+    - sdk/appcomplianceautomation/Azure.ResourceManager.AppComplianceAutomation
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration
     - sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights
     - sdk/appplatform/Azure.ResourceManager.AppPlatform
@@ -204,6 +208,7 @@ pr:
     - sdk/datalake-analytics/Azure.ResourceManager.DataLakeAnalytics
     - sdk/datalake-store/Azure.ResourceManager.DataLakeStore
     - sdk/datamigration/Azure.ResourceManager.DataMigration
+    - sdk/dataprotection/Azure.ResourceManager.DataProtectionBackup
     - sdk/datashare/Azure.ResourceManager.DataShare
     - sdk/deploymentmanager/Azure.ResourceManager.DeploymentManager
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
@@ -281,6 +286,7 @@ pr:
     - sdk/resources/Azure.ResourceManager.Resources
     - sdk/search/Azure.ResourceManager.Search
     - sdk/securitycenter/Azure.ResourceManager.SecurityCenter
+    - sdk/securitydevops/Azure.ResourceManager.SecurityDevOps
     - sdk/securityinsights/Azure.ResourceManager.SecurityInsights
     - sdk/servicebus/Azure.ResourceManager.ServiceBus
     - sdk/servicefabric/Azure.ResourceManager.ServiceFabric
