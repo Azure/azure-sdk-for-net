@@ -61,6 +61,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
+                #region Snippet:ServiceBusAuthSasKey
 #if SNIPPET
                 string keyName = "<key_name>";
                 string key = "<key>";
@@ -72,7 +73,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string queueName = scope.QueueName;
 #endif
-                #region Snippet:ServiceBusAuthSasKey
                 using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(key));
                 var builder = new UriBuilder(fullyQualifiedNamespace)
                 {

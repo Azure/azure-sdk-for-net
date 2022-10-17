@@ -36,6 +36,10 @@ await using var client = new ServiceBusClient("yournamespace.servicebus.windows.
 Shared access signatures (SAS) are recommended over shared access keys when [RBAC](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-role-based-access-control) cannot be used. A shared access signature allows for granular and time-limited access to Service Bus resources. The authoritative documentation on generating Service Bus SAS tokens can be found [here](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#generate-a-shared-access-signature-token).
 
 ```C# Snippet:ServiceBusAuthSasKey
+string keyName = "<key_name>";
+string key = "<key>";
+string fullyQualifiedNamespace = "<yournamespace.servicebus.windows.net>";
+string queueName = "<queue_name>";
 using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(key));
 var builder = new UriBuilder(fullyQualifiedNamespace)
 {
