@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
     /// from an instance of <see cref="ArmClient" /> using the GetResourceGuardUpdateProtectionPolicyRequestResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGuardResource" /> using the GetResourceGuardUpdateProtectionPolicyRequest method.
     /// </summary>
-    public partial class ResourceGuardUpdateProtectionPolicyRequestResource : ArmResource
+    public partial class ResourceGuardUpdateProtectionPolicyRequestResource : DppBaseResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceGuardUpdateProtectionPolicyRequestResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         private readonly ClientDiagnostics _resourceGuardUpdateProtectionPolicyRequestResourceGuardsClientDiagnostics;
         private readonly ResourceGuardsRestOperations _resourceGuardUpdateProtectionPolicyRequestResourceGuardsRestClient;
-        private readonly DppBaseResourceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGuardUpdateProtectionPolicyRequestResource"/> class for mocking. </summary>
         protected ResourceGuardUpdateProtectionPolicyRequestResource()
@@ -43,10 +42,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Initializes a new instance of the <see cref = "ResourceGuardUpdateProtectionPolicyRequestResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ResourceGuardUpdateProtectionPolicyRequestResource(ArmClient client, DppBaseResourceData data) : this(client, new ResourceIdentifier(data.Id))
+        internal ResourceGuardUpdateProtectionPolicyRequestResource(ArmClient client, DppBaseResourceData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _resourceGuardUpdateProtectionPolicyRequestResourceGuardsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string resourceGuardUpdateProtectionPolicyRequestResourceGuardsApiVersion);
+            _resourceGuardUpdateProtectionPolicyRequestResourceGuardsRestClient = new ResourceGuardsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGuardUpdateProtectionPolicyRequestResourceGuardsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGuardUpdateProtectionPolicyRequestResource"/> class. </summary>
@@ -65,21 +68,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataProtection/resourceGuards/updateProtectionPolicyRequests";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DppBaseResourceData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -92,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Operation Id: ResourceGuards_GetDefaultUpdateProtectionPolicyRequestsObject
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ResourceGuardUpdateProtectionPolicyRequestResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<DppBaseResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _resourceGuardUpdateProtectionPolicyRequestResourceGuardsClientDiagnostics.CreateScope("ResourceGuardUpdateProtectionPolicyRequestResource.Get");
             scope.Start();
@@ -101,7 +89,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 var response = await _resourceGuardUpdateProtectionPolicyRequestResourceGuardsRestClient.GetDefaultUpdateProtectionPolicyRequestsObjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceGuardUpdateProtectionPolicyRequestResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +104,20 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Operation Id: ResourceGuards_GetDefaultUpdateProtectionPolicyRequestsObject
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ResourceGuardUpdateProtectionPolicyRequestResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<ResourceGuardUpdateProtectionPolicyRequestResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ResourceGuardUpdateProtectionPolicyRequestResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests/{requestName}
+        /// Operation Id: ResourceGuards_GetDefaultUpdateProtectionPolicyRequestsObject
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<DppBaseResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _resourceGuardUpdateProtectionPolicyRequestResourceGuardsClientDiagnostics.CreateScope("ResourceGuardUpdateProtectionPolicyRequestResource.Get");
             scope.Start();
@@ -125,13 +126,26 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 var response = _resourceGuardUpdateProtectionPolicyRequestResourceGuardsRestClient.GetDefaultUpdateProtectionPolicyRequestsObject(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceGuardUpdateProtectionPolicyRequestResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests/{requestName}
+        /// Operation Id: ResourceGuards_GetDefaultUpdateProtectionPolicyRequestsObject
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new Response<ResourceGuardUpdateProtectionPolicyRequestResource> Get(CancellationToken cancellationToken = default)
+        {
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((ResourceGuardUpdateProtectionPolicyRequestResource)result.Value, result.GetRawResponse());
         }
     }
 }
