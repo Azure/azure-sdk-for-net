@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3919658b-68ae-4509-8c17-6a2238340ae7/resourceGroups/RedisGetList3786/providers/Microsoft.Cache/redis/RedisGetList9254/listKeys?api-version=2022-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzkxOTY1OGItNjhhZS00NTA5LThjMTctNmEyMjM4MzQwYWU3L3Jlc291cmNlR3JvdXBzL1JlZGlzR2V0TGlzdDM3ODYvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9yZWRpcy9SZWRpc0dldExpc3Q5MjU0L2xpc3RLZXlzP2FwaS12ZXJzaW9uPTIwMjItMDYtMDE=",
+      "RequestUri": "/subscriptions/3919658b-68ae-4509-8c17-6a2238340ae7/resourceGroups/RedisGetList8057/providers/Microsoft.Cache/redis/RedisGetList961/listKeys?api-version=2022-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzkxOTY1OGItNjhhZS00NTA5LThjMTctNmEyMjM4MzQwYWU3L3Jlc291cmNlR3JvdXBzL1JlZGlzR2V0TGlzdDgwNTcvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9yZWRpcy9SZWRpc0dldExpc3Q5NjEvbGlzdEtleXM/YXBpLXZlcnNpb249MjAyMi0wNi0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c09091d6-64be-46bc-99bf-2ca88d8b26ff"
+          "66c2b439-754d-4b6f-b1cb-fe770d7be21a"
         ],
         "Accept-Language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.700.22.47601",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22621",
-          "Microsoft.Azure.Management.Redis.RedisManagementClient/8.0.0.0"
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/9.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -27,7 +27,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "f1342210-4fb5-48eb-b7f1-e301355f3b1c"
+          "2f7f7587-d99a-489d-8221-1eb47f440bd0"
         ],
         "x-rp-server-mvid": [
           "833439e0-b740-4cd3-bb1d-5515649d1e5a"
@@ -45,13 +45,13 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "121fa886-f0bb-48e6-b11e-21afcdeda698"
+          "1f84f757-67e7-4f99-bb96-1643fcbd1e25"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20221012T194416Z:121fa886-f0bb-48e6-b11e-21afcdeda698"
+          "WESTUS2:20221017T194238Z:1f84f757-67e7-4f99-bb96-1643fcbd1e25"
         ],
         "Date": [
-          "Wed, 12 Oct 2022 19:44:15 GMT"
+          "Mon, 17 Oct 2022 19:42:38 GMT"
         ],
         "Content-Length": [
           "123"
@@ -63,17 +63,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"sanitizedpkey1\",\r\n  \"secondaryKey\": \"sanitizedskey2\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"Sanitized\",\r\n  \"secondaryKey\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3919658b-68ae-4509-8c17-6a2238340ae7/resourceGroups/RedisGetList3786/providers/Microsoft.Cache/redis/RedisGetList9254/regenerateKey?api-version=2022-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzkxOTY1OGItNjhhZS00NTA5LThjMTctNmEyMjM4MzQwYWU3L3Jlc291cmNlR3JvdXBzL1JlZGlzR2V0TGlzdDM3ODYvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9yZWRpcy9SZWRpc0dldExpc3Q5MjU0L3JlZ2VuZXJhdGVLZXk/YXBpLXZlcnNpb249MjAyMi0wNi0wMQ==",
+      "RequestUri": "/subscriptions/3919658b-68ae-4509-8c17-6a2238340ae7/resourceGroups/RedisGetList8057/providers/Microsoft.Cache/redis/RedisGetList961/regenerateKey?api-version=2022-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzkxOTY1OGItNjhhZS00NTA5LThjMTctNmEyMjM4MzQwYWU3L3Jlc291cmNlR3JvdXBzL1JlZGlzR2V0TGlzdDgwNTcvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9yZWRpcy9SZWRpc0dldExpc3Q5NjEvcmVnZW5lcmF0ZUtleT9hcGktdmVyc2lvbj0yMDIyLTA2LTAx",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"keyType\": \"Primary\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "158db6e1-029e-48fa-ac75-4bde58cdc552"
+          "eb7ceea1-e238-4bc3-aa8c-c3eb3b69c994"
         ],
         "Accept-Language": [
           "en-US"
@@ -82,7 +82,7 @@
           "FxVersion/4.700.22.47601",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22621",
-          "Microsoft.Azure.Management.Redis.RedisManagementClient/8.0.0.0"
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/9.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -99,7 +99,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "981857a7-ee7d-4d84-bf1c-cfeac7f001c8"
+          "073cc6fd-9100-4bb9-bfc2-882fd25dc0a4"
         ],
         "x-rp-server-mvid": [
           "833439e0-b740-4cd3-bb1d-5515649d1e5a"
@@ -117,13 +117,13 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "ade1a63b-1b57-4307-8abe-f2899ce4a966"
+          "381f0da8-0b39-480f-bb74-2eb2fb8bb96a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20221012T194418Z:ade1a63b-1b57-4307-8abe-f2899ce4a966"
+          "WESTUS2:20221017T194239Z:381f0da8-0b39-480f-bb74-2eb2fb8bb96a"
         ],
         "Date": [
-          "Wed, 12 Oct 2022 19:44:17 GMT"
+          "Mon, 17 Oct 2022 19:42:39 GMT"
         ],
         "Content-Length": [
           "123"
@@ -135,7 +135,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"sanitizedpkey2\",\r\n  \"secondaryKey\": \"sanitizedskey2\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"Sanitized\",\r\n  \"secondaryKey\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     }
   ],

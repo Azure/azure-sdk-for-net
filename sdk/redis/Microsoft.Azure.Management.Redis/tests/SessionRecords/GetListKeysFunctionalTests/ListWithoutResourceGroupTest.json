@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d9e200da-a109-4866-b91d-7b972a8e8057"
+          "922167f0-fa10-4d86-81c1-1a52cf39b09a"
         ],
         "Accept-Language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.700.22.47601",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22621",
-          "Microsoft.Azure.Management.Redis.RedisManagementClient/8.0.0.0"
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/9.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -27,7 +27,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "fc019906-0bc0-4f85-9c8e-3bf7d9d9765a"
+          "00af6bca-93f6-4c45-9df7-88fc691e380c"
         ],
         "x-rp-server-mvid": [
           "833439e0-b740-4cd3-bb1d-5515649d1e5a"
@@ -42,19 +42,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11992"
         ],
         "x-ms-correlation-request-id": [
-          "c801d179-3ade-432e-8b5d-127e5c592b77"
+          "2d582474-14be-4b27-8ffa-97f42d75d6ed"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20221012T194418Z:c801d179-3ade-432e-8b5d-127e5c592b77"
+          "WESTUS2:20221017T194239Z:2d582474-14be-4b27-8ffa-97f42d75d6ed"
         ],
         "Date": [
-          "Wed, 12 Oct 2022 19:44:18 GMT"
+          "Mon, 17 Oct 2022 19:42:39 GMT"
         ],
         "Content-Length": [
-          "728"
+          "725"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,7 +63,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/3919658b-68ae-4509-8c17-6a2238340ae7/resourceGroups/RedisGetList3786/providers/Microsoft.Cache/Redis/RedisGetList9254\",\r\n      \"location\": \"West US\",\r\n      \"name\": \"RedisGetList9254\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"redisVersion\": \"6.0\",\r\n        \"sku\": {\r\n          \"name\": \"Basic\",\r\n          \"family\": \"C\",\r\n          \"capacity\": 0\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"instances\": [\r\n          {\r\n            \"sslPort\": 15000,\r\n            \"isMaster\": true,\r\n            \"isPrimary\": true\r\n          }\r\n        ],\r\n        \"publicNetworkAccess\": \"Enabled\",\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"256\",\r\n          \"maxmemory-reserved\": \"30\",\r\n          \"maxfragmentationmemory-reserved\": \"30\",\r\n          \"maxmemory-delta\": \"30\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"RedisGetList9254.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380,\r\n        \"linkedServers\": []\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/3919658b-68ae-4509-8c17-6a2238340ae7/resourceGroups/RedisGetList8057/providers/Microsoft.Cache/Redis/RedisGetList961\",\r\n      \"location\": \"West US\",\r\n      \"name\": \"RedisGetList961\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"redisVersion\": \"6.0\",\r\n        \"sku\": {\r\n          \"name\": \"Basic\",\r\n          \"family\": \"C\",\r\n          \"capacity\": 0\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"instances\": [\r\n          {\r\n            \"sslPort\": 15000,\r\n            \"isMaster\": true,\r\n            \"isPrimary\": true\r\n          }\r\n        ],\r\n        \"publicNetworkAccess\": \"Enabled\",\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"256\",\r\n          \"maxmemory-reserved\": \"30\",\r\n          \"maxfragmentationmemory-reserved\": \"30\",\r\n          \"maxmemory-delta\": \"30\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"RedisGetList961.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380,\r\n        \"linkedServers\": []\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

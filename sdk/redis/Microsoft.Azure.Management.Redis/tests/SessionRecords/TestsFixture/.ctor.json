@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "89b638c8-1c7e-4623-b584-51f1e14d156a"
+          "5889b8d9-a81d-4064-b1c9-1312234e0379"
         ],
         "Accept-Language": [
           "en-US"
@@ -30,13 +30,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "2e3c5660-8ffc-498d-adea-d705742a433d"
+          "e51a1b17-040f-4f6d-b9ac-22bd0ab9e2c9"
         ],
         "x-ms-correlation-request-id": [
-          "2e3c5660-8ffc-498d-adea-d705742a433d"
+          "e51a1b17-040f-4f6d-b9ac-22bd0ab9e2c9"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20221011T200242Z:2e3c5660-8ffc-498d-adea-d705742a433d"
+          "WESTUS2:20221017T174057Z:e51a1b17-040f-4f6d-b9ac-22bd0ab9e2c9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,7 +45,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 Oct 2022 20:02:41 GMT"
+          "Mon, 17 Oct 2022 17:40:57 GMT"
         ],
         "Content-Length": [
           "14731"
@@ -67,7 +67,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "21113e42-3d48-4aaa-8f7a-d5d1e4de8c9e"
+          "cd3fb106-b4df-4779-a129-acd464b26a91"
         ],
         "Accept-Language": [
           "en-US"
@@ -90,13 +90,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "d7e0221a-977c-4716-acc0-384e392df633"
+          "ca31fb8c-5b06-4e4c-9d2a-ce7cb18ed0c0"
         ],
         "x-ms-correlation-request-id": [
-          "d7e0221a-977c-4716-acc0-384e392df633"
+          "ca31fb8c-5b06-4e4c-9d2a-ce7cb18ed0c0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20221011T200242Z:d7e0221a-977c-4716-acc0-384e392df633"
+          "WESTUS2:20221017T174057Z:ca31fb8c-5b06-4e4c-9d2a-ce7cb18ed0c0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -105,7 +105,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 Oct 2022 20:02:41 GMT"
+          "Mon, 17 Oct 2022 17:40:57 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -121,13 +121,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3919658b-68ae-4509-8c17-6a2238340ae7/resourcegroups/RedisCreateUpdate8046?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzkxOTY1OGItNjhhZS00NTA5LThjMTctNmEyMjM4MzQwYWU3L3Jlc291cmNlZ3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlODA0Nj9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestUri": "/subscriptions/3919658b-68ae-4509-8c17-6a2238340ae7/resourcegroups/RedisCreateUpdate6218?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzkxOTY1OGItNjhhZS00NTA5LThjMTctNmEyMjM4MzQwYWU3L3Jlc291cmNlZ3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlNjIxOD9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a3991ac5-f4fa-4eb0-874b-a21a13004308"
+          "4bde2bd9-5707-42ba-875c-f45914f8ba47"
         ],
         "Accept-Language": [
           "en-US"
@@ -156,13 +156,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "a2b585a0-f034-4320-9d18-ee9d5ccbed9b"
+          "74ca7f0e-8b27-4332-b664-856e9b388a46"
         ],
         "x-ms-correlation-request-id": [
-          "a2b585a0-f034-4320-9d18-ee9d5ccbed9b"
+          "74ca7f0e-8b27-4332-b664-856e9b388a46"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20221011T200243Z:a2b585a0-f034-4320-9d18-ee9d5ccbed9b"
+          "WESTUS2:20221017T174058Z:74ca7f0e-8b27-4332-b664-856e9b388a46"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -171,7 +171,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 Oct 2022 20:02:42 GMT"
+          "Mon, 17 Oct 2022 17:40:58 GMT"
         ],
         "Content-Length": [
           "195"
@@ -183,17 +183,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3919658b-68ae-4509-8c17-6a2238340ae7/resourceGroups/RedisCreateUpdate8046\",\r\n  \"name\": \"RedisCreateUpdate8046\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3919658b-68ae-4509-8c17-6a2238340ae7/resourceGroups/RedisCreateUpdate6218\",\r\n  \"name\": \"RedisCreateUpdate6218\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3919658b-68ae-4509-8c17-6a2238340ae7/resourcegroups/RedisCreateUpdate8046?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzkxOTY1OGItNjhhZS00NTA5LThjMTctNmEyMjM4MzQwYWU3L3Jlc291cmNlZ3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlODA0Nj9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestUri": "/subscriptions/3919658b-68ae-4509-8c17-6a2238340ae7/resourcegroups/RedisCreateUpdate6218?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzkxOTY1OGItNjhhZS00NTA5LThjMTctNmEyMjM4MzQwYWU3L3Jlc291cmNlZ3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlNjIxOD9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8d4879c2-447e-4135-8a85-12b5c1adf20e"
+          "263e8151-5c7e-4584-b965-09821d595f3e"
         ],
         "Accept-Language": [
           "en-US"
@@ -216,13 +216,13 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "6b35c3af-8251-41ad-be20-71966475bdce"
+          "27afae29-37b1-40a6-bcb7-b9a669cb7bc7"
         ],
         "x-ms-correlation-request-id": [
-          "6b35c3af-8251-41ad-be20-71966475bdce"
+          "27afae29-37b1-40a6-bcb7-b9a669cb7bc7"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20221011T200243Z:6b35c3af-8251-41ad-be20-71966475bdce"
+          "WESTUS2:20221017T174058Z:27afae29-37b1-40a6-bcb7-b9a669cb7bc7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -231,7 +231,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 Oct 2022 20:02:42 GMT"
+          "Mon, 17 Oct 2022 17:40:58 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -243,14 +243,14 @@
           "195"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3919658b-68ae-4509-8c17-6a2238340ae7/resourceGroups/RedisCreateUpdate8046\",\r\n  \"name\": \"RedisCreateUpdate8046\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3919658b-68ae-4509-8c17-6a2238340ae7/resourceGroups/RedisCreateUpdate6218\",\r\n  \"name\": \"RedisCreateUpdate6218\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {
     ".ctor": [
-      "RedisCreateUpdate8046",
-      "RedisCreateUpdate4026"
+      "RedisCreateUpdate6218",
+      "RedisCreateUpdate6042"
     ]
   },
   "Variables": {
