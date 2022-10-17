@@ -63,7 +63,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"Sanitized\",\r\n  \"secondaryKey\": \"Sanitized\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"SanitizedPkey1\",\r\n  \"secondaryKey\": \"SanitizedSkey\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -135,7 +135,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"Sanitized\",\r\n  \"secondaryKey\": \"Sanitized\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"SanitizedPkey2\",\r\n  \"secondaryKey\": \"SanitizedSkey\"\r\n}",
       "StatusCode": 200
     }
   ],
