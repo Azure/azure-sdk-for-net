@@ -11,7 +11,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     /// </summary>
     public class DownloadManifestResult : IDisposable
     {
-        internal DownloadManifestResult(string digest, OciManifest manifest, Stream manifestStream)
+        internal DownloadManifestResult(string digest, ArtifactManifest manifest, Stream manifestStream)
         {
             Digest = digest;
             Manifest = manifest;
@@ -24,9 +24,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public string Digest { get; }
 
         /// <summary>
-        /// The OCI manifest that was downloaded.
+        /// The manifest that was downloaded.
         /// </summary>
-        public OciManifest Manifest { get; }
+        public ArtifactManifest Manifest { get; }
 
         /// <summary>
         /// The manifest stream that was downloaded.
