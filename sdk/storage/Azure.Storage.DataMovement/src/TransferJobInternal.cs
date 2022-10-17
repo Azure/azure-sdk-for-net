@@ -137,7 +137,6 @@ namespace Azure.Storage.DataMovement
             }
 
             _cancellationTokenSource = new CancellationTokenSource();
-            PlanJobWriter = new PlanJobWriter(_dataTransfer.Id, CheckPointFolderPath);
             _arrayPool = arrayPool;
         }
 

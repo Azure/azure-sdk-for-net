@@ -137,7 +137,7 @@ namespace Azure.Storage.DataMovement.Tests
 
                     // Set up event handler for the respective blob
                     AutoResetEvent completedStatusWait = new AutoResetEvent(false);
-                    options[i].TransferStatusEventHandler += (StorageTransferStatusEventArgs args) =>
+                    options[i].TransferStatusEventHandler += (TransferStatusEventArgs args) =>
                     {
                         // Assert
                         if (args.StorageTransferStatus == StorageTransferStatus.Completed)
@@ -253,7 +253,7 @@ namespace Azure.Storage.DataMovement.Tests
             int waitTimeInSec = 10;
             AutoResetEvent InProgressWait = new AutoResetEvent(false);
             SingleTransferOptions options = new SingleTransferOptions();
-            options.TransferStatusEventHandler += (StorageTransferStatusEventArgs args) =>
+            options.TransferStatusEventHandler += (TransferStatusEventArgs args) =>
             {
                 // Assert
                 if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
@@ -296,7 +296,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             AutoResetEvent InProgressWait = new AutoResetEvent(false);
             SingleTransferOptions options = new SingleTransferOptions();
-            options.TransferStatusEventHandler += (StorageTransferStatusEventArgs args) =>
+            options.TransferStatusEventHandler += (TransferStatusEventArgs args) =>
             {
                 // Assert
                 if (args.StorageTransferStatus == StorageTransferStatus.InProgress)

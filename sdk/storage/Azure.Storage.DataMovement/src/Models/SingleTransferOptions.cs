@@ -89,13 +89,13 @@ namespace Azure.Storage.DataMovement.Models
         /// Optional <see cref="StorageResourceCreateMode"/> to configure overwrite
         /// behavior. Will default to <see cref="StorageResourceCreateMode.Overwrite"/>.
         /// </summary>
-        public StorageResourceCreateMode OverwriteOptions { get; set; }
+        public StorageResourceCreateMode CreateMode { get; set; }
 
         /// <summary>
         /// If the transfer status of the job changes then the event will get added to this handler.
         /// </summary>
-        public event SyncAsyncEventHandler<StorageTransferStatusEventArgs> TransferStatusEventHandler;
-        internal SyncAsyncEventHandler<StorageTransferStatusEventArgs> GetTransferStatus() => TransferStatusEventHandler;
+        public event SyncAsyncEventHandler<TransferStatusEventArgs> TransferStatusEventHandler;
+        internal SyncAsyncEventHandler<TransferStatusEventArgs> GetTransferStatus() => TransferStatusEventHandler;
 
         /// <summary>
         /// If the transfer has any failed events that occur the event will get added to this handler.

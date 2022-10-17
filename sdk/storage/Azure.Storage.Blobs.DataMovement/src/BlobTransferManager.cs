@@ -323,7 +323,7 @@ namespace Azure.Storage.Blobs.DataMovement
             Task.WhenAll(fileUploadTasks).Wait();
 #pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
             await options.GetTransferStatus().RaiseAsync(
-                new StorageTransferStatusEventArgs(
+                new TransferStatusEventArgs(
                     transferId,
                     StorageTransferStatus.Completed,
                     true,

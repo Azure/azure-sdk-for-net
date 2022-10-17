@@ -91,19 +91,34 @@ namespace Azure.Storage.DataMovement.Models
         /// Optional <see cref="StorageResourceCreateMode"/> to configure overwrite
         /// behavior. Will default to <see cref="StorageResourceCreateMode.Overwrite"/>.
         /// </summary>
-        public StorageResourceCreateMode OverwriteOptions { get; set; }
+        public StorageResourceCreateMode CreateMode { get; set; }
 
         /// <summary>
         /// If the transfer status of the job changes then the event will get added to this handler.
         /// </summary>
-        public event SyncAsyncEventHandler<StorageTransferStatusEventArgs> TransferStatusEventHandler;
-        internal SyncAsyncEventHandler<StorageTransferStatusEventArgs> GetTransferStatus() => TransferStatusEventHandler;
+        public event SyncAsyncEventHandler<TransferStatusEventArgs> TransferStatusEventHandler;
+        internal SyncAsyncEventHandler<TransferStatusEventArgs> GetTransferStatus() => TransferStatusEventHandler;
 
         /// <summary>
-        /// If the transfer has any failed events that occur the event will get added to this handler.
+        /// If any single transfer has any failed events that occur the event will get added to this handler.
         /// </summary>
         public event SyncAsyncEventHandler<TransferFailedEventArgs> TransferFailedEventHandler;
 
         internal SyncAsyncEventHandler<TransferFailedEventArgs> GetFailed() => TransferFailedEventHandler;
+
+        /// <summary>
+        /// If a single transfer within the resource contianer gets transferred successfully the event
+        /// will get added to this handler
+        /// </summary>
+        public event SyncAsyncEventHandler<SingleTransferCompletedEventArgs> SingleTransferCompletedEventHandler;
+        internal SyncAsyncEventHandler<SingleTransferCompletedEventArgs> GetCompleted() => SingleTransferCompletedEventHandler;
+
+        /// <summary>
+        /// Number of single transfers skipped during Transfer due to no overwrite allowed as specified in
+        /// <see cref="CreateMode"/>
+        /// </summary>
+        public event SyncAsyncEventHandler<TransferSkippedEventArgs> TransferSkippedEventHandler;
+
+        internal SyncAsyncEventHandler<TransferSkippedEventArgs> GetSkipped() => TransferSkippedEventHandler;
     }
 }

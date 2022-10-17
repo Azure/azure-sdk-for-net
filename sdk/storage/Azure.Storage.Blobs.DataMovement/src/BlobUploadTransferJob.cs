@@ -294,7 +294,7 @@ namespace Azure.Storage.Blobs.DataMovement
                         (UploadOptions?.GetTransferStatus() != null))
                     {
                         await UploadOptions.GetTransferStatus().Invoke(
-                                new StorageTransferStatusEventArgs(
+                                new TransferStatusEventArgs(
                                     TransferId,
                                     transferStatus,
                                     true,
@@ -306,7 +306,7 @@ namespace Azure.Storage.Blobs.DataMovement
                     if ((UploadOptions != null) &&
                         (UploadOptions?.GetTransferStatus() != null))
                     {
-                        UploadOptions.GetTransferStatus()?.Invoke(new StorageTransferStatusEventArgs(
+                        UploadOptions.GetTransferStatus()?.Invoke(new TransferStatusEventArgs(
                                     TransferId,
                                     transferStatus,
                                     true,

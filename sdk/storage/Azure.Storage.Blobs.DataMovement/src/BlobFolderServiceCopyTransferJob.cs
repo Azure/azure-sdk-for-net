@@ -441,7 +441,7 @@ namespace Azure.Storage.Blobs.DataMovement
                         (CopyFromUriOptions?.GetTransferStatus() != null))
                     {
                         await CopyFromUriOptions.GetTransferStatus().RaiseAsync(
-                            new StorageTransferStatusEventArgs(
+                            new TransferStatusEventArgs(
                                 TransferId,
                                 transferStatus,
                                 true,
@@ -456,7 +456,7 @@ namespace Azure.Storage.Blobs.DataMovement
                     if ((CopyFromUriOptions != null) &&
                         (CopyFromUriOptions?.GetTransferStatus() != null))
                     {
-                        CopyFromUriOptions.GetTransferStatus()?.Invoke(new StorageTransferStatusEventArgs(
+                        CopyFromUriOptions.GetTransferStatus()?.Invoke(new TransferStatusEventArgs(
                                 TransferId,
                                 transferStatus,
                                 true,

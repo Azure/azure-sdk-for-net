@@ -133,7 +133,7 @@ namespace Azure.Storage.DataMovement
         internal async Task OnTransferStatusChanged(StorageTransferStatus transferStatus)
         {
             _dataTransfer._state.SetTransferStatus(transferStatus);
-            await _events.InvokeTransferStatus(new StorageTransferStatusEventArgs(
+            await _events.InvokeTransferStatus(new TransferStatusEventArgs(
                 _dataTransfer.Id,
                 transferStatus,
                 false,
@@ -162,7 +162,10 @@ namespace Azure.Storage.DataMovement
                 false,
                 _cancellationTokenSource.Token)).ConfigureAwait(false);
             // Trigger job cancellation if the failed handler is enabled
-            TriggerCancellation();
+            if (_errorHandling == ErrorHandlingOptions.PauseOnAllFailures)
+            {
+                TriggerCancellation();
+            }
         }
     }
 }

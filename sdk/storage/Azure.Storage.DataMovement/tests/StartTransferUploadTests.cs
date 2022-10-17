@@ -173,7 +173,7 @@ namespace Azure.Storage.DataMovement.Tests
                     StorageResource destinationResource = BlobStorageResourceFactory.GetBlockBlob(destClient);
 
                     AutoResetEvent completedStatusWait = new AutoResetEvent(false);
-                    options[i].TransferStatusEventHandler += async (StorageTransferStatusEventArgs args) =>
+                    options[i].TransferStatusEventHandler += async (TransferStatusEventArgs args) =>
                     {
                         // Assert
                         if (args.StorageTransferStatus == StorageTransferStatus.Completed)
@@ -218,7 +218,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
             catch (Exception ex)
             {
-                Assert.Fail(ex.Message);
+                Assert.Fail(ex.StackTrace);
             }
             finally
             {
@@ -266,7 +266,7 @@ namespace Azure.Storage.DataMovement.Tests
             AutoResetEvent InProgressWait = new AutoResetEvent(false);
 
             SingleTransferOptions options = new SingleTransferOptions();
-            options.TransferStatusEventHandler += (StorageTransferStatusEventArgs args) =>
+            options.TransferStatusEventHandler += (TransferStatusEventArgs args) =>
             {
                 // Assert
                 if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
@@ -315,7 +315,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
             BlockBlobClient destClient = testContainer.Container.GetBlockBlobClient(blobName);
 
-            options.TransferStatusEventHandler += (StorageTransferStatusEventArgs args) =>
+            options.TransferStatusEventHandler += (TransferStatusEventArgs args) =>
             {
                 // Assert
                 if (args.StorageTransferStatus == StorageTransferStatus.InProgress)

@@ -11,7 +11,7 @@ namespace Azure.Storage.DataMovement.Models
 {
     internal class TransferEventsInternal
     {
-        public delegate Task InvokeTransferStatusEvent(StorageTransferStatusEventArgs arg);
+        public delegate Task InvokeTransferStatusEvent(TransferStatusEventArgs arg);
         public delegate Task InvokeFailedEvent(TransferFailedEventArgs arg);
 
         /// <summary>

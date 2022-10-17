@@ -85,10 +85,11 @@ namespace Azure.Storage.DataMovement
             {
                 // TODO: logging when given the event handler
                 TriggerCancellation();
-                // STOP here
+                return;
             }
 
             string operationName = $"{nameof(BlobDataController.StartTransferAsync)}";
+            await OnTransferStatusChanged(StorageTransferStatus.InProgress).ConfigureAwait(false);
             if (fileLength.HasValue)
             {
                 // Determine whether the upload will be a single put blob or not
@@ -131,10 +132,7 @@ namespace Azure.Storage.DataMovement
                 else
                 {
                     // Single Put Blob Request
-                    await QueueChunk( async () => await _destinationResource.ConsumeReadableStream(
-                        _sourceResource.GetConsumableStream(),
-                        default,
-                        _cancellationTokenSource.Token).ConfigureAwait(false)).ConfigureAwait(false);
+                    await QueueChunk( async () => await SingleUploadCall().ConfigureAwait(false)).ConfigureAwait(false);
                 }
             }
             else
@@ -172,6 +170,24 @@ namespace Azure.Storage.DataMovement
             };
         }
         #endregion
+
+        internal async Task SingleUploadCall()
+        {
+            try
+            {
+                await _destinationResource.ConsumeReadableStream(
+                        _sourceResource.GetConsumableStream(),
+                        default,
+                        _cancellationTokenSource.Token).ConfigureAwait(false);
+
+                // Set completion status to completed
+                await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                await InvokeFailedArg(ex).ConfigureAwait(false);
+            }
+        }
 
         internal async Task StageBlockInternal(
             long offset,
