@@ -13,9 +13,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    // Data plane generated client. The ImageProcessing service client.
-    /// <summary> The ImageProcessing service client. </summary>
-    public partial class ImageProcessingClient
+    // Data plane generated sub-client. The Farm sub-client.
+    /// <summary> The Farm sub-client. </summary>
+    public partial class Farm
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -29,59 +29,49 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ImageProcessingClient for mocking. </summary>
-        protected ImageProcessingClient()
+        /// <summary> Initializes a new instance of Farm for mocking. </summary>
+        protected Farm()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageProcessingClient. </summary>
+        /// <summary> Initializes a new instance of Farm. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ImageProcessingClient(TokenCredential credential, Uri endpoint) : this(credential, endpoint, new FarmBeatsClientOptions())
+        /// <param name="apiVersion"> Api Version. </param>
+        internal Farm(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
-        }
-
-        /// <summary> Initializes a new instance of ImageProcessingClient. </summary>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="endpoint"/> is null. </exception>
-        public ImageProcessingClient(TokenCredential credential, Uri endpoint, FarmBeatsClientOptions options)
-        {
-            Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            options ??= new FarmBeatsClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
             _endpoint = endpoint;
-            _apiVersion = options.Version;
+            _apiVersion = apiVersion;
         }
 
-        /// <summary> Get ImageProcessing Rasterize job&apos;s details. </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <summary> Get a farm operation data ingestion job. </summary>
+        /// <param name="jobId"> ID of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
 <<<<<<< HEAD
-        /// <include file="Docs/ImageProcessingClient.xml" path="doc/members/member[@name='GetRasterizeJobAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/FarmClient.xml" path="doc/members/member[@name='GetDataIngestionJobDetailsAsync(String,RequestContext)']/*" />
 =======
         /// <example>
-        /// This sample shows how to call GetRasterizeJobAsync with required parameters and parse the result.
+        /// This sample shows how to call GetDataIngestionJobDetailsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ImageProcessingClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetFarmClient(null, <2021-03-31-preview>);
         /// 
-        /// Response response = await client.GetRasterizeJobAsync("<jobId>");
+        /// Response response = await client.GetDataIngestionJobDetailsAsync("<jobId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
-        /// Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
+        /// Console.WriteLine(result.GetProperty("operations")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("startYear").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
@@ -100,11 +90,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ImageProcessingRasterizeJob</c>:
+        /// Schema for <c>FarmOperationDataIngestionJob</c>:
         /// <code>{
-        ///   farmerId: string, # Required. Farmer Id.
-        ///   shapefileAttachmentId: string, # Required. Shapefile attachment Id.
-        ///   shapefileColumnNames: [string], # Required. List of shapefile column names to create raster attachments.
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   authProviderId: string, # Required. Authentication provider ID.
+        ///   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
+        ///   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
         ///   id: string, # Optional. Unique job id.
         ///   status: string, # Optional. Status of the job.
         /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
@@ -116,25 +107,24 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
         /// </remarks>
 >>>>>>> Updating clients for 2021-07-31-preview API version
-        public virtual async Task<Response> GetRasterizeJobAsync(string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetDataIngestionJobDetailsAsync(string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ImageProcessingClient.GetRasterizeJob");
+            using var scope = ClientDiagnostics.CreateScope("Farm.GetDataIngestionJobDetails");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRasterizeJobRequest(jobId, context);
+                using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -144,28 +134,29 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Get ImageProcessing Rasterize job&apos;s details. </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <summary> Get a farm operation data ingestion job. </summary>
+        /// <param name="jobId"> ID of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
 <<<<<<< HEAD
-        /// <include file="Docs/ImageProcessingClient.xml" path="doc/members/member[@name='GetRasterizeJob(String,RequestContext)']/*" />
+        /// <include file="Docs/FarmClient.xml" path="doc/members/member[@name='GetDataIngestionJobDetails(String,RequestContext)']/*" />
 =======
         /// <example>
-        /// This sample shows how to call GetRasterizeJob with required parameters and parse the result.
+        /// This sample shows how to call GetDataIngestionJobDetails with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ImageProcessingClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetFarmClient(null, <2021-03-31-preview>);
         /// 
-        /// Response response = client.GetRasterizeJob("<jobId>");
+        /// Response response = client.GetDataIngestionJobDetails("<jobId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
-        /// Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
+        /// Console.WriteLine(result.GetProperty("operations")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("startYear").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
@@ -184,11 +175,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ImageProcessingRasterizeJob</c>:
+        /// Schema for <c>FarmOperationDataIngestionJob</c>:
         /// <code>{
-        ///   farmerId: string, # Required. Farmer Id.
-        ///   shapefileAttachmentId: string, # Required. Shapefile attachment Id.
-        ///   shapefileColumnNames: [string], # Required. List of shapefile column names to create raster attachments.
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   authProviderId: string, # Required. Authentication provider ID.
+        ///   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
+        ///   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
         ///   id: string, # Optional. Unique job id.
         ///   status: string, # Optional. Status of the job.
         /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
@@ -200,25 +192,24 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
         /// </remarks>
 >>>>>>> Updating clients for 2021-07-31-preview API version
-        public virtual Response GetRasterizeJob(string jobId, RequestContext context = null)
+        public virtual Response GetDataIngestionJobDetails(string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ImageProcessingClient.GetRasterizeJob");
+            using var scope = ClientDiagnostics.CreateScope("Farm.GetDataIngestionJobDetails");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRasterizeJobRequest(jobId, context);
+                using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -228,51 +219,50 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create a ImageProcessing Rasterize job. </summary>
+        /// <summary> Create a farm operation data ingestion job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="jobId"> JobId provided by user. </param>
+        /// <param name="jobId"> Job ID supplied by user. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
 <<<<<<< HEAD
-        /// <include file="Docs/ImageProcessingClient.xml" path="doc/members/member[@name='CreateRasterizeJobAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/FarmClient.xml" path="doc/members/member[@name='CreateDataIngestionJobAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
 =======
         /// <example>
-        /// This sample shows how to call CreateRasterizeJobAsync with required parameters and request content, and how to parse the result.
+        /// This sample shows how to call CreateDataIngestionJobAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ImageProcessingClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetFarmClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {
         ///     farmerId = "<farmerId>",
-        ///     shapefileAttachmentId = "<shapefileAttachmentId>",
-        ///     shapefileColumnNames = new[] {
-        ///         "<String>"
-        ///     },
+        ///     authProviderId = "<authProviderId>",
+        ///     startYear = 1234,
         /// };
         /// 
-        /// var operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
-        /// Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
+        /// Console.WriteLine(result.GetProperty("startYear").ToString());
         /// ]]></code>
-        /// This sample shows how to call CreateRasterizeJobAsync with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call CreateDataIngestionJobAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ImageProcessingClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetFarmClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {
         ///     farmerId = "<farmerId>",
-        ///     shapefileAttachmentId = "<shapefileAttachmentId>",
-        ///     shapefileColumnNames = new[] {
+        ///     authProviderId = "<authProviderId>",
+        ///     operations = new[] {
         ///         "<String>"
         ///     },
+        ///     startYear = 1234,
         ///     name = "<name>",
         ///     description = "<description>",
         ///     properties = new {
@@ -280,13 +270,14 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// var operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
-        /// Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
+        /// Console.WriteLine(result.GetProperty("operations")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("startYear").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
@@ -305,11 +296,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ImageProcessingRasterizeJob</c>:
+        /// Schema for <c>FarmOperationDataIngestionJob</c>:
         /// <code>{
-        ///   farmerId: string, # Required. Farmer Id.
-        ///   shapefileAttachmentId: string, # Required. Shapefile attachment Id.
-        ///   shapefileColumnNames: [string], # Required. List of shapefile column names to create raster attachments.
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   authProviderId: string, # Required. Authentication provider ID.
+        ///   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
+        ///   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
         ///   id: string, # Optional. Unique job id.
         ///   status: string, # Optional. Status of the job.
         /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
@@ -321,21 +313,21 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ImageProcessingRasterizeJob</c>:
+        /// Schema for <c>FarmOperationDataIngestionJob</c>:
         /// <code>{
-        ///   farmerId: string, # Required. Farmer Id.
-        ///   shapefileAttachmentId: string, # Required. Shapefile attachment Id.
-        ///   shapefileColumnNames: [string], # Required. List of shapefile column names to create raster attachments.
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   authProviderId: string, # Required. Authentication provider ID.
+        ///   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
+        ///   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
         ///   id: string, # Optional. Unique job id.
         ///   status: string, # Optional. Status of the job.
         /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
@@ -347,27 +339,25 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
         /// </remarks>
 >>>>>>> Updating clients for 2021-07-31-preview API version
-        public virtual async Task<Operation<BinaryData>> CreateRasterizeJobAsync(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> CreateDataIngestionJobAsync(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ImageProcessingClient.CreateRasterizeJob");
+            using var scope = ClientDiagnostics.CreateScope("Farm.CreateDataIngestionJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRasterizeJobRequest(jobId, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ImageProcessingClient.CreateRasterizeJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "Farm.CreateDataIngestionJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -376,51 +366,50 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create a ImageProcessing Rasterize job. </summary>
+        /// <summary> Create a farm operation data ingestion job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="jobId"> JobId provided by user. </param>
+        /// <param name="jobId"> Job ID supplied by user. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
 <<<<<<< HEAD
-        /// <include file="Docs/ImageProcessingClient.xml" path="doc/members/member[@name='CreateRasterizeJob(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/FarmClient.xml" path="doc/members/member[@name='CreateDataIngestionJob(WaitUntil,String,RequestContent,RequestContext)']/*" />
 =======
         /// <example>
-        /// This sample shows how to call CreateRasterizeJob with required parameters and request content, and how to parse the result.
+        /// This sample shows how to call CreateDataIngestionJob with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ImageProcessingClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetFarmClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {
         ///     farmerId = "<farmerId>",
-        ///     shapefileAttachmentId = "<shapefileAttachmentId>",
-        ///     shapefileColumnNames = new[] {
-        ///         "<String>"
-        ///     },
+        ///     authProviderId = "<authProviderId>",
+        ///     startYear = 1234,
         /// };
         /// 
-        /// var operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
-        /// Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
+        /// Console.WriteLine(result.GetProperty("startYear").ToString());
         /// ]]></code>
-        /// This sample shows how to call CreateRasterizeJob with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call CreateDataIngestionJob with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ImageProcessingClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetFarmClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {
         ///     farmerId = "<farmerId>",
-        ///     shapefileAttachmentId = "<shapefileAttachmentId>",
-        ///     shapefileColumnNames = new[] {
+        ///     authProviderId = "<authProviderId>",
+        ///     operations = new[] {
         ///         "<String>"
         ///     },
+        ///     startYear = 1234,
         ///     name = "<name>",
         ///     description = "<description>",
         ///     properties = new {
@@ -428,13 +417,14 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// var operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
-        /// Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
+        /// Console.WriteLine(result.GetProperty("operations")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("startYear").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
@@ -453,11 +443,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ImageProcessingRasterizeJob</c>:
+        /// Schema for <c>FarmOperationDataIngestionJob</c>:
         /// <code>{
-        ///   farmerId: string, # Required. Farmer Id.
-        ///   shapefileAttachmentId: string, # Required. Shapefile attachment Id.
-        ///   shapefileColumnNames: [string], # Required. List of shapefile column names to create raster attachments.
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   authProviderId: string, # Required. Authentication provider ID.
+        ///   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
+        ///   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
         ///   id: string, # Optional. Unique job id.
         ///   status: string, # Optional. Status of the job.
         /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
@@ -469,21 +460,21 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ImageProcessingRasterizeJob</c>:
+        /// Schema for <c>FarmOperationDataIngestionJob</c>:
         /// <code>{
-        ///   farmerId: string, # Required. Farmer Id.
-        ///   shapefileAttachmentId: string, # Required. Shapefile attachment Id.
-        ///   shapefileColumnNames: [string], # Required. List of shapefile column names to create raster attachments.
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   authProviderId: string, # Required. Authentication provider ID.
+        ///   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
+        ///   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
         ///   id: string, # Optional. Unique job id.
         ///   status: string, # Optional. Status of the job.
         /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
@@ -495,27 +486,25 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
         /// </remarks>
 >>>>>>> Updating clients for 2021-07-31-preview API version
-        public virtual Operation<BinaryData> CreateRasterizeJob(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
+        public virtual Operation<BinaryData> CreateDataIngestionJob(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ImageProcessingClient.CreateRasterizeJob");
+            using var scope = ClientDiagnostics.CreateScope("Farm.CreateDataIngestionJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRasterizeJobRequest(jobId, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ImageProcessingClient.CreateRasterizeJob", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "Farm.CreateDataIngestionJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -524,14 +513,14 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateCreateRasterizeJobRequest(string jobId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateDataIngestionJobRequest(string jobId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/image-processing/rasterize/", false);
+            uri.AppendPath("/farm-operations/ingest-data/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -541,14 +530,14 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetRasterizeJobRequest(string jobId, RequestContext context)
+        internal HttpMessage CreateGetDataIngestionJobDetailsRequest(string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/image-processing/rasterize/", false);
+            uri.AppendPath("/farm-operations/ingest-data/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

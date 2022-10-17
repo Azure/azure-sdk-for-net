@@ -16,9 +16,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    // Data plane generated client. The CropVarieties service client.
-    /// <summary> The CropVarieties service client. </summary>
-    public partial class CropVarietiesClient
+    // Data plane generated sub-client. The CropVarieties sub-client.
+    /// <summary> The CropVarieties sub-client. </summary>
+    public partial class CropVarieties
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -32,42 +32,32 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of CropVarietiesClient for mocking. </summary>
-        protected CropVarietiesClient()
+        /// <summary> Initializes a new instance of CropVarieties for mocking. </summary>
+        protected CropVarieties()
         {
         }
 
-        /// <summary> Initializes a new instance of CropVarietiesClient. </summary>
+        /// <summary> Initializes a new instance of CropVarieties. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public CropVarietiesClient(TokenCredential credential, Uri endpoint) : this(credential, endpoint, new FarmBeatsClientOptions())
+        /// <param name="apiVersion"> Api Version. </param>
+        internal CropVarieties(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
-        }
-
-        /// <summary> Initializes a new instance of CropVarietiesClient. </summary>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="endpoint"/> is null. </exception>
-        public CropVarietiesClient(TokenCredential credential, Uri endpoint, FarmBeatsClientOptions options)
-        {
-            Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            options ??= new FarmBeatsClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
             _endpoint = endpoint;
-            _apiVersion = options.Version;
+            _apiVersion = apiVersion;
         }
 
-        /// <summary> Gets a specified crop variety resource. </summary>
-        /// <param name="cropVarietyId"> Id of the crop variety. </param>
+        /// <summary> Gets a specified crop variety resource under a particular crop. </summary>
+        /// <param name="cropId"> ID of the associated crop. </param>
+        /// <param name="cropVarietyId"> ID of the crop variety. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cropVarietyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
 <<<<<<< HEAD
@@ -78,12 +68,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetCropVarietyAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropVarietiesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetCropVarietiesClient(null, <2021-03-31-preview>);
         /// 
-        /// Response response = await client.GetCropVarietyAsync("<cropVarietyId>");
+        /// Response response = await client.GetCropVarietyAsync("<cropId>", "<cropVarietyId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("cropIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("cropId").ToString());
         /// Console.WriteLine(result.GetProperty("brand").ToString());
         /// Console.WriteLine(result.GetProperty("product").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -91,7 +81,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -104,8 +93,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>CropVariety</c>:
         /// <code>{
-        ///   cropIds: [string], # Optional. Ids of the crops it belongs to.
-        /// Note: A maximum of 25 crops can be associated with a cropVariety.
+        ///   cropId: string, # Optional. ID of the crop it belongs to.
         ///   brand: string, # Optional. CropVariety Brand.
         ///   product: string, # Optional. CropVariety product.
         ///   id: string, # Optional. Unique resource ID.
@@ -113,28 +101,31 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
         /// </remarks>
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarietiesClient.cs
         public virtual async Task<Response> GetCropVarietyAsync(string cropVarietyId, RequestContext context = null)
 >>>>>>> Updating clients for 2021-07-31-preview API version
+=======
+        public virtual async Task<Response> GetCropVarietyAsync(string cropId, string cropVarietyId, RequestContext context = null)
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarieties.cs
         {
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
             Argument.AssertNotNullOrEmpty(cropVarietyId, nameof(cropVarietyId));
 
-            using var scope = ClientDiagnostics.CreateScope("CropVarietiesClient.GetCropVariety");
+            using var scope = ClientDiagnostics.CreateScope("CropVarieties.GetCropVariety");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCropVarietyRequest(cropVarietyId, context);
+                using HttpMessage message = CreateGetCropVarietyRequest(cropId, cropVarietyId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -144,11 +135,12 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Gets a specified crop variety resource. </summary>
-        /// <param name="cropVarietyId"> Id of the crop variety. </param>
+        /// <summary> Gets a specified crop variety resource under a particular crop. </summary>
+        /// <param name="cropId"> ID of the associated crop. </param>
+        /// <param name="cropVarietyId"> ID of the crop variety. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cropVarietyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
 <<<<<<< HEAD
@@ -159,12 +151,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetCropVariety with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropVarietiesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetCropVarietiesClient(null, <2021-03-31-preview>);
         /// 
-        /// Response response = client.GetCropVariety("<cropVarietyId>");
+        /// Response response = client.GetCropVariety("<cropId>", "<cropVarietyId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("cropIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("cropId").ToString());
         /// Console.WriteLine(result.GetProperty("brand").ToString());
         /// Console.WriteLine(result.GetProperty("product").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -172,7 +164,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -185,8 +176,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>CropVariety</c>:
         /// <code>{
-        ///   cropIds: [string], # Optional. Ids of the crops it belongs to.
-        /// Note: A maximum of 25 crops can be associated with a cropVariety.
+        ///   cropId: string, # Optional. ID of the crop it belongs to.
         ///   brand: string, # Optional. CropVariety Brand.
         ///   product: string, # Optional. CropVariety product.
         ///   id: string, # Optional. Unique resource ID.
@@ -194,28 +184,31 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
         /// </remarks>
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarietiesClient.cs
         public virtual Response GetCropVariety(string cropVarietyId, RequestContext context = null)
 >>>>>>> Updating clients for 2021-07-31-preview API version
+=======
+        public virtual Response GetCropVariety(string cropId, string cropVarietyId, RequestContext context = null)
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarieties.cs
         {
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
             Argument.AssertNotNullOrEmpty(cropVarietyId, nameof(cropVarietyId));
 
-            using var scope = ClientDiagnostics.CreateScope("CropVarietiesClient.GetCropVariety");
+            using var scope = ClientDiagnostics.CreateScope("CropVarieties.GetCropVariety");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCropVarietyRequest(cropVarietyId, context);
+                using HttpMessage message = CreateGetCropVarietyRequest(cropId, cropVarietyId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -226,11 +219,12 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Creates or updates a crop variety resource. </summary>
-        /// <param name="cropVarietyId"> Id of the crop variety resource. </param>
+        /// <param name="cropId"> ID of the crop resource. </param>
+        /// <param name="cropVarietyId"> ID of the crop variety resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cropVarietyId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
 <<<<<<< HEAD
@@ -241,11 +235,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropVarietiesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetCropVarietiesClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {};
         /// 
-        /// Response response = await client.CreateOrUpdateAsync("<cropVarietyId>", RequestContent.Create(data));
+        /// Response response = await client.CreateOrUpdateAsync("<cropId>", "<cropVarietyId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
@@ -253,16 +247,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropVarietiesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetCropVarietiesClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {
-        ///     cropIds = new[] {
-        ///         "<String>"
-        ///     },
         ///     brand = "<brand>",
         ///     product = "<product>",
         ///     status = "<status>",
-        ///     source = "<source>",
         ///     name = "<name>",
         ///     description = "<description>",
         ///     properties = new {
@@ -270,10 +260,10 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateOrUpdateAsync("<cropVarietyId>", RequestContent.Create(data));
+        /// Response response = await client.CreateOrUpdateAsync("<cropId>", "<cropVarietyId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("cropIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("cropId").ToString());
         /// Console.WriteLine(result.GetProperty("brand").ToString());
         /// Console.WriteLine(result.GetProperty("product").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -281,7 +271,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -294,8 +283,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>CropVariety</c>:
         /// <code>{
-        ///   cropIds: [string], # Optional. Ids of the crops it belongs to.
-        /// Note: A maximum of 25 crops can be associated with a cropVariety.
+        ///   cropId: string, # Optional. ID of the crop it belongs to.
         ///   brand: string, # Optional. CropVariety Brand.
         ///   product: string, # Optional. CropVariety product.
         ///   id: string, # Optional. Unique resource ID.
@@ -303,14 +291,12 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -318,8 +304,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>CropVariety</c>:
         /// <code>{
-        ///   cropIds: [string], # Optional. Ids of the crops it belongs to.
-        /// Note: A maximum of 25 crops can be associated with a cropVariety.
+        ///   cropId: string, # Optional. ID of the crop it belongs to.
         ///   brand: string, # Optional. CropVariety Brand.
         ///   product: string, # Optional. CropVariety product.
         ///   id: string, # Optional. Unique resource ID.
@@ -327,29 +312,31 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
         /// </remarks>
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarietiesClient.cs
         public virtual async Task<Response> CreateOrUpdateAsync(string cropVarietyId, RequestContent content, RequestContext context = null)
 >>>>>>> Updating clients for 2021-07-31-preview API version
+=======
+        public virtual async Task<Response> CreateOrUpdateAsync(string cropId, string cropVarietyId, RequestContent content, RequestContext context = null)
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarieties.cs
         {
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
             Argument.AssertNotNullOrEmpty(cropVarietyId, nameof(cropVarietyId));
-            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("CropVarietiesClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("CropVarieties.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(cropVarietyId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(cropId, cropVarietyId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -360,11 +347,12 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Creates or updates a crop variety resource. </summary>
-        /// <param name="cropVarietyId"> Id of the crop variety resource. </param>
+        /// <param name="cropId"> ID of the crop resource. </param>
+        /// <param name="cropVarietyId"> ID of the crop variety resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cropVarietyId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
 <<<<<<< HEAD
@@ -375,11 +363,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropVarietiesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetCropVarietiesClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {};
         /// 
-        /// Response response = client.CreateOrUpdate("<cropVarietyId>", RequestContent.Create(data));
+        /// Response response = client.CreateOrUpdate("<cropId>", "<cropVarietyId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
@@ -387,16 +375,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropVarietiesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetCropVarietiesClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {
-        ///     cropIds = new[] {
-        ///         "<String>"
-        ///     },
         ///     brand = "<brand>",
         ///     product = "<product>",
         ///     status = "<status>",
-        ///     source = "<source>",
         ///     name = "<name>",
         ///     description = "<description>",
         ///     properties = new {
@@ -404,10 +388,10 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateOrUpdate("<cropVarietyId>", RequestContent.Create(data));
+        /// Response response = client.CreateOrUpdate("<cropId>", "<cropVarietyId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("cropIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("cropId").ToString());
         /// Console.WriteLine(result.GetProperty("brand").ToString());
         /// Console.WriteLine(result.GetProperty("product").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -415,7 +399,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -428,8 +411,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>CropVariety</c>:
         /// <code>{
-        ///   cropIds: [string], # Optional. Ids of the crops it belongs to.
-        /// Note: A maximum of 25 crops can be associated with a cropVariety.
+        ///   cropId: string, # Optional. ID of the crop it belongs to.
         ///   brand: string, # Optional. CropVariety Brand.
         ///   product: string, # Optional. CropVariety product.
         ///   id: string, # Optional. Unique resource ID.
@@ -437,14 +419,12 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -452,8 +432,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>CropVariety</c>:
         /// <code>{
-        ///   cropIds: [string], # Optional. Ids of the crops it belongs to.
-        /// Note: A maximum of 25 crops can be associated with a cropVariety.
+        ///   cropId: string, # Optional. ID of the crop it belongs to.
         ///   brand: string, # Optional. CropVariety Brand.
         ///   product: string, # Optional. CropVariety product.
         ///   id: string, # Optional. Unique resource ID.
@@ -461,29 +440,31 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
         /// </remarks>
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarietiesClient.cs
         public virtual Response CreateOrUpdate(string cropVarietyId, RequestContent content, RequestContext context = null)
 >>>>>>> Updating clients for 2021-07-31-preview API version
+=======
+        public virtual Response CreateOrUpdate(string cropId, string cropVarietyId, RequestContent content, RequestContext context = null)
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarieties.cs
         {
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
             Argument.AssertNotNullOrEmpty(cropVarietyId, nameof(cropVarietyId));
-            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("CropVarietiesClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("CropVarieties.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(cropVarietyId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(cropId, cropVarietyId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -493,11 +474,12 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Deletes a specified crop variety resource. </summary>
-        /// <param name="cropVarietyId"> Id of the crop variety. </param>
+        /// <summary> Deletes a specified crop variety resource under a particular crop. </summary>
+        /// <param name="cropId"> ID of the crop. </param>
+        /// <param name="cropVarietyId"> ID of the crop variety. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cropVarietyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
 <<<<<<< HEAD
@@ -508,22 +490,27 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call DeleteAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropVarietiesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetCropVarietiesClient(null, <2021-03-31-preview>);
         /// 
-        /// Response response = await client.DeleteAsync("<cropVarietyId>");
+        /// Response response = await client.DeleteAsync("<cropId>", "<cropVarietyId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarietiesClient.cs
         public virtual async Task<Response> DeleteAsync(string cropVarietyId, RequestContext context = null)
 >>>>>>> Updating clients for 2021-07-31-preview API version
+=======
+        public virtual async Task<Response> DeleteAsync(string cropId, string cropVarietyId, RequestContext context = null)
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarieties.cs
         {
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
             Argument.AssertNotNullOrEmpty(cropVarietyId, nameof(cropVarietyId));
 
-            using var scope = ClientDiagnostics.CreateScope("CropVarietiesClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("CropVarieties.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(cropVarietyId, context);
+                using HttpMessage message = CreateDeleteRequest(cropId, cropVarietyId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -533,11 +520,12 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Deletes a specified crop variety resource. </summary>
-        /// <param name="cropVarietyId"> Id of the crop variety. </param>
+        /// <summary> Deletes a specified crop variety resource under a particular crop. </summary>
+        /// <param name="cropId"> ID of the crop. </param>
+        /// <param name="cropVarietyId"> ID of the crop variety. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cropVarietyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropId"/> or <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
 <<<<<<< HEAD
@@ -548,22 +536,27 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call Delete with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropVarietiesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetCropVarietiesClient(null, <2021-03-31-preview>);
         /// 
-        /// Response response = client.Delete("<cropVarietyId>");
+        /// Response response = client.Delete("<cropId>", "<cropVarietyId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarietiesClient.cs
         public virtual Response Delete(string cropVarietyId, RequestContext context = null)
 >>>>>>> Updating clients for 2021-07-31-preview API version
+=======
+        public virtual Response Delete(string cropId, string cropVarietyId, RequestContext context = null)
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarieties.cs
         {
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
             Argument.AssertNotNullOrEmpty(cropVarietyId, nameof(cropVarietyId));
 
-            using var scope = ClientDiagnostics.CreateScope("CropVarietiesClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("CropVarieties.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(cropVarietyId, context);
+                using HttpMessage message = CreateDeleteRequest(cropId, cropVarietyId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -573,7 +566,10 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarietiesClient.cs
 <<<<<<< HEAD
+=======
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarieties.cs
         /// <summary> Returns a paginated list of crop variety resources under a particular crop. </summary>
         /// <param name="cropId"> ID of the associated crop. </param>
         /// <param name="cropIds"> CropIds of the resource. </param>
@@ -600,12 +596,78 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarietiesClient.cs
         /// <include file="Docs/CropVarietiesClient.xml" path="doc/members/member[@name='GetCropVarietiesByCropIdAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call GetCropVarietiesByCropIdAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new FarmBeatsClient(credential).GetCropVarietiesClient(null, <2021-03-31-preview>);
+        /// 
+        /// await foreach (var data in client.GetCropVarietiesByCropIdAsync("<cropId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetCropVarietiesByCropIdAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new FarmBeatsClient(credential).GetCropVarietiesClient(null, <2021-03-31-preview>);
+        /// 
+        /// await foreach (var data in client.GetCropVarietiesByCropIdAsync("<cropId>", new String[]{"<cropIds>"}, new String[]{"<brands>"}, new String[]{"<products>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("cropId").ToString());
+        ///     Console.WriteLine(result.GetProperty("brand").ToString());
+        ///     Console.WriteLine(result.GetProperty("product").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CropVarietyListResponseValue</c>:
+        /// <code>{
+        ///   cropId: string, # Optional. ID of the crop it belongs to.
+        ///   brand: string, # Optional. CropVariety Brand.
+        ///   product: string, # Optional. CropVariety product.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarieties.cs
         public virtual AsyncPageable<BinaryData> GetCropVarietiesByCropIdAsync(string cropId, IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarietiesClient.cs
             return GetCropVarietiesByCropIdImplementationAsync("CropVarietiesClient.GetCropVarietiesByCropId", cropId, cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+=======
+            return GetCropVarietiesByCropIdImplementationAsync("CropVarieties.GetCropVarietiesByCropId", cropId, cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarieties.cs
         }
 
         private AsyncPageable<BinaryData> GetCropVarietiesByCropIdImplementationAsync(string diagnosticsScopeName, string cropId, IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
@@ -651,12 +713,78 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarietiesClient.cs
         /// <include file="Docs/CropVarietiesClient.xml" path="doc/members/member[@name='GetCropVarietiesByCropId(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+=======
+        /// <example>
+        /// This sample shows how to call GetCropVarietiesByCropId with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new FarmBeatsClient(credential).GetCropVarietiesClient(null, <2021-03-31-preview>);
+        /// 
+        /// foreach (var data in client.GetCropVarietiesByCropId("<cropId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetCropVarietiesByCropId with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new FarmBeatsClient(credential).GetCropVarietiesClient(null, <2021-03-31-preview>);
+        /// 
+        /// foreach (var data in client.GetCropVarietiesByCropId("<cropId>", new String[]{"<cropIds>"}, new String[]{"<brands>"}, new String[]{"<products>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("cropId").ToString());
+        ///     Console.WriteLine(result.GetProperty("brand").ToString());
+        ///     Console.WriteLine(result.GetProperty("product").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CropVarietyListResponseValue</c>:
+        /// <code>{
+        ///   cropId: string, # Optional. ID of the crop it belongs to.
+        ///   brand: string, # Optional. CropVariety Brand.
+        ///   product: string, # Optional. CropVariety product.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarieties.cs
         public virtual Pageable<BinaryData> GetCropVarietiesByCropId(string cropId, IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarietiesClient.cs
             return GetCropVarietiesByCropIdImplementation("CropVarietiesClient.GetCropVarietiesByCropId", cropId, cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+=======
+            return GetCropVarietiesByCropIdImplementation("CropVarieties.GetCropVarietiesByCropId", cropId, cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarieties.cs
         }
 
         private Pageable<BinaryData> GetCropVarietiesByCropIdImplementation(string diagnosticsScopeName, string cropId, IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
@@ -677,9 +805,12 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of crop variety resources across all crops. </summary>
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarietiesClient.cs
 =======
         /// <summary> Returns a paginated list of crop variety resources. </summary>
 >>>>>>> Updating clients for 2021-07-31-preview API version
+=======
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/CropVarieties.cs
         /// <param name="cropIds"> CropIds of the resource. </param>
         /// <param name="brands"> Brands of the resource. </param>
         /// <param name="products"> Products of the resource. </param>
@@ -709,7 +840,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetCropVarietiesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropVarietiesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetCropVarietiesClient(null, <2021-03-31-preview>);
         /// 
         /// await foreach (var data in client.GetCropVarietiesAsync())
         /// {
@@ -720,12 +851,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetCropVarietiesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropVarietiesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetCropVarietiesClient(null, <2021-03-31-preview>);
         /// 
         /// await foreach (var data in client.GetCropVarietiesAsync(new String[]{"<cropIds>"}, new String[]{"<brands>"}, new String[]{"<products>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("cropIds")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("cropId").ToString());
         ///     Console.WriteLine(result.GetProperty("brand").ToString());
         ///     Console.WriteLine(result.GetProperty("product").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
@@ -733,7 +864,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     Console.WriteLine(result.GetProperty("status").ToString());
         ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("description").ToString());
         ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -747,8 +877,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>CropVarietyListResponseValue</c>:
         /// <code>{
-        ///   cropIds: [string], # Optional. Ids of the crops it belongs to.
-        /// Note: A maximum of 25 crops can be associated with a cropVariety.
+        ///   cropId: string, # Optional. ID of the crop it belongs to.
         ///   brand: string, # Optional. CropVariety Brand.
         ///   product: string, # Optional. CropVariety product.
         ///   id: string, # Optional. Unique resource ID.
@@ -756,14 +885,12 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -771,7 +898,7 @@ namespace Azure.Verticals.AgriFood.Farming
 >>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual AsyncPageable<BinaryData> GetCropVarietiesAsync(IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetCropVarietiesImplementationAsync("CropVarietiesClient.GetCropVarieties", cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetCropVarietiesImplementationAsync("CropVarieties.GetCropVarieties", cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
         private AsyncPageable<BinaryData> GetCropVarietiesImplementationAsync(string diagnosticsScopeName, IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
@@ -791,7 +918,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a paginated list of crop variety resources. </summary>
+        /// <summary> Returns a paginated list of crop variety resources across all crops. </summary>
         /// <param name="cropIds"> CropIds of the resource. </param>
         /// <param name="brands"> Brands of the resource. </param>
         /// <param name="products"> Products of the resource. </param>
@@ -821,7 +948,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetCropVarieties and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropVarietiesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetCropVarietiesClient(null, <2021-03-31-preview>);
         /// 
         /// foreach (var data in client.GetCropVarieties())
         /// {
@@ -832,12 +959,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetCropVarieties with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new CropVarietiesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetCropVarietiesClient(null, <2021-03-31-preview>);
         /// 
         /// foreach (var data in client.GetCropVarieties(new String[]{"<cropIds>"}, new String[]{"<brands>"}, new String[]{"<products>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("cropIds")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("cropId").ToString());
         ///     Console.WriteLine(result.GetProperty("brand").ToString());
         ///     Console.WriteLine(result.GetProperty("product").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
@@ -845,7 +972,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     Console.WriteLine(result.GetProperty("status").ToString());
         ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("description").ToString());
         ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -859,8 +985,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>CropVarietyListResponseValue</c>:
         /// <code>{
-        ///   cropIds: [string], # Optional. Ids of the crops it belongs to.
-        /// Note: A maximum of 25 crops can be associated with a cropVariety.
+        ///   cropId: string, # Optional. ID of the crop it belongs to.
         ///   brand: string, # Optional. CropVariety Brand.
         ///   product: string, # Optional. CropVariety product.
         ///   id: string, # Optional. Unique resource ID.
@@ -868,14 +993,12 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -883,7 +1006,7 @@ namespace Azure.Verticals.AgriFood.Farming
 >>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual Pageable<BinaryData> GetCropVarieties(IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetCropVarietiesImplementation("CropVarietiesClient.GetCropVarieties", cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetCropVarietiesImplementation("CropVarieties.GetCropVarieties", cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
         private Pageable<BinaryData> GetCropVarietiesImplementation(string diagnosticsScopeName, IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
@@ -901,6 +1024,95 @@ namespace Azure.Verticals.AgriFood.Farming
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
+        }
+
+        internal HttpMessage CreateGetCropVarietiesByCropIdRequest(string cropId, IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/crops/", false);
+            uri.AppendPath(cropId, true);
+            uri.AppendPath("/crop-varieties", false);
+            if (cropIds != null)
+            {
+                foreach (var param in cropIds)
+                {
+                    uri.AppendQuery("cropIds", param, true);
+                }
+            }
+            if (brands != null)
+            {
+                foreach (var param in brands)
+                {
+                    uri.AppendQuery("brands", param, true);
+                }
+            }
+            if (products != null)
+            {
+                foreach (var param in products)
+                {
+                    uri.AppendQuery("products", param, true);
+                }
+            }
+            if (ids != null)
+            {
+                foreach (var param in ids)
+                {
+                    uri.AppendQuery("ids", param, true);
+                }
+            }
+            if (names != null)
+            {
+                foreach (var param in names)
+                {
+                    uri.AppendQuery("names", param, true);
+                }
+            }
+            if (propertyFilters != null)
+            {
+                foreach (var param in propertyFilters)
+                {
+                    uri.AppendQuery("propertyFilters", param, true);
+                }
+            }
+            if (statuses != null)
+            {
+                foreach (var param in statuses)
+                {
+                    uri.AppendQuery("statuses", param, true);
+                }
+            }
+            if (minCreatedDateTime != null)
+            {
+                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
+            }
+            if (maxCreatedDateTime != null)
+            {
+                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
+            }
+            if (minLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
 
         internal HttpMessage CreateGetCropVarietiesRequest(IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
@@ -990,13 +1202,15 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetCropVarietyRequest(string cropVarietyId, RequestContext context)
+        internal HttpMessage CreateGetCropVarietyRequest(string cropId, string cropVarietyId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
+            uri.AppendPath("/crops/", false);
+            uri.AppendPath(cropId, true);
             uri.AppendPath("/crop-varieties/", false);
             uri.AppendPath(cropVarietyId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1005,13 +1219,15 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string cropVarietyId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string cropId, string cropVarietyId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
+            uri.AppendPath("/crops/", false);
+            uri.AppendPath(cropId, true);
             uri.AppendPath("/crop-varieties/", false);
             uri.AppendPath(cropVarietyId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1022,16 +1238,31 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string cropVarietyId, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string cropId, string cropVarietyId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
+            uri.AppendPath("/crops/", false);
+            uri.AppendPath(cropId, true);
             uri.AppendPath("/crop-varieties/", false);
             uri.AppendPath(cropVarietyId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCropVarietiesByCropIdNextPageRequest(string nextLink, string cropId, IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

@@ -16,9 +16,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    // Data plane generated client. The Boundaries service client.
-    /// <summary> The Boundaries service client. </summary>
-    public partial class BoundariesClient
+    // Data plane generated sub-client. The Boundaries sub-client.
+    /// <summary> The Boundaries sub-client. </summary>
+    public partial class Boundaries
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -32,39 +32,28 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of BoundariesClient for mocking. </summary>
-        protected BoundariesClient()
+        /// <summary> Initializes a new instance of Boundaries for mocking. </summary>
+        protected Boundaries()
         {
         }
 
-        /// <summary> Initializes a new instance of BoundariesClient. </summary>
+        /// <summary> Initializes a new instance of Boundaries. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public BoundariesClient(TokenCredential credential, Uri endpoint) : this(credential, endpoint, new FarmBeatsClientOptions())
+        /// <param name="apiVersion"> Api Version. </param>
+        internal Boundaries(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
-        }
-
-        /// <summary> Initializes a new instance of BoundariesClient. </summary>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="endpoint"/> is null. </exception>
-        public BoundariesClient(TokenCredential credential, Uri endpoint, FarmBeatsClientOptions options)
-        {
-            Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            options ??= new FarmBeatsClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
             _endpoint = endpoint;
-            _apiVersion = options.Version;
+            _apiVersion = apiVersion;
         }
 
         /// <summary> Get cascade delete job for specified boundary. </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="jobId"> ID of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -77,7 +66,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
         /// 
@@ -93,6 +82,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("startTime").ToString());
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -102,11 +94,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>CascadeDeleteJob</c>:
         /// <code>{
-        ///   farmerId: string, # Required. Farmer Id.
+        ///   farmerId: string, # Required. Farmer ID.
         ///   resourceId: string, # Required. The id of the resource.
         ///   resourceType: string, # Required. The type of the resource.
         ///   id: string, # Optional. Unique job id.
-        ///   status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
+        ///   status: string, # Optional. Status of the job.
         /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
         ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
         ///   message: string, # Optional. Status message to capture more details of the job.
@@ -114,6 +106,12 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -123,7 +121,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("BoundariesClient.GetCascadeDeleteJobDetails");
+            using var scope = ClientDiagnostics.CreateScope("Boundaries.GetCascadeDeleteJobDetails");
             scope.Start();
             try
             {
@@ -138,7 +136,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Get cascade delete job for specified boundary. </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="jobId"> ID of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -151,7 +149,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// Response response = client.GetCascadeDeleteJobDetails("<jobId>");
         /// 
@@ -167,6 +165,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("startTime").ToString());
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -176,11 +177,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>CascadeDeleteJob</c>:
         /// <code>{
-        ///   farmerId: string, # Required. Farmer Id.
+        ///   farmerId: string, # Required. Farmer ID.
         ///   resourceId: string, # Required. The id of the resource.
         ///   resourceType: string, # Required. The type of the resource.
         ///   id: string, # Optional. Unique job id.
-        ///   status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
+        ///   status: string, # Optional. Status of the job.
         /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
         ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
         ///   message: string, # Optional. Status message to capture more details of the job.
@@ -188,6 +189,12 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -197,7 +204,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("BoundariesClient.GetCascadeDeleteJobDetails");
+            using var scope = ClientDiagnostics.CreateScope("Boundaries.GetCascadeDeleteJobDetails");
             scope.Start();
             try
             {
@@ -211,12 +218,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Creates or updates a boundary resource. </summary>
-        /// <param name="farmerId"> Id of the farmer resource. </param>
-        /// <param name="boundaryId"> Id of the boundary resource. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary> Gets a specified boundary resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="boundaryId"> ID of the boundary. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -253,10 +259,184 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetBoundary(string farmerId, string boundaryId, RequestContext context = null)
 =======
         /// <example>
+        /// This sample shows how to call GetBoundaryAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
+        /// 
+        /// Response response = await client.GetBoundaryAsync("<farmerId>", "<boundaryId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("isPrimary").ToString());
+        /// Console.WriteLine(result.GetProperty("acreage").ToString());
+        /// Console.WriteLine(result.GetProperty("parentType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Boundary</c>:
+        /// <code>{
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetBoundaryAsync(string farmerId, string boundaryId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(boundaryId, nameof(boundaryId));
+
+            using var scope = ClientDiagnostics.CreateScope("Boundaries.GetBoundary");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetBoundaryRequest(farmerId, boundaryId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a specified boundary resource under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="boundaryId"> ID of the boundary. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetBoundary with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
+        /// 
+        /// Response response = client.GetBoundary("<farmerId>", "<boundaryId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("isPrimary").ToString());
+        /// Console.WriteLine(result.GetProperty("acreage").ToString());
+        /// Console.WriteLine(result.GetProperty("parentType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Boundary</c>:
+        /// <code>{
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
+        public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string boundaryId, RequestContent content, RequestContext context = null)
+>>>>>>> Updating clients for 2021-07-31-preview API version
+=======
+        public virtual Response GetBoundary(string farmerId, string boundaryId, RequestContext context = null)
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
+        {
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(boundaryId, nameof(boundaryId));
+
+            using var scope = ClientDiagnostics.CreateScope("Boundaries.GetBoundary");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetBoundaryRequest(farmerId, boundaryId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates a boundary resource. </summary>
+        /// <param name="farmerId"> ID of the farmer resource. </param>
+        /// <param name="boundaryId"> ID of the boundary resource. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+<<<<<<< HEAD
+        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string boundaryId, RequestContent content, RequestContext context = null)
+=======
+        /// <example>
         /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {};
         /// 
@@ -268,17 +448,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {
+        ///     parentId = "<parentId>",
         ///     geometry = new {
         ///         type = "MultiPolygon",
         ///     },
-        ///     parentId = "<parentId>",
         ///     isPrimary = true,
-        ///     parentType = "Field",
         ///     status = "<status>",
-        ///     source = "<source>",
         ///     name = "<name>",
         ///     description = "<description>",
         ///     properties = new {
@@ -289,9 +467,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<boundaryId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("isPrimary").ToString());
         /// Console.WriteLine(result.GetProperty("acreage").ToString());
         /// Console.WriteLine(result.GetProperty("parentType").ToString());
@@ -300,7 +478,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -313,28 +490,25 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>Boundary</c>:
         /// <code>{
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
         ///   geometry: {
         ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
-        ///   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
-        ///   farmerId: string, # Optional. Farmer Id.
-        ///   parentId: string, # Optional. Id of the parent it belongs to.
+        ///   }, # Optional. GeoJSON abstract class.
         ///   isPrimary: boolean, # Optional. Is the boundary primary.
         ///   acreage: number, # Optional. Boundary area in acres.
-        ///   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
-        /// i.e. Field, SeasonalField, Zone, Prescription, PlantTissueAnalysis, ApplicationData, HarvestData, TillageData, PlantingData.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
         ///   id: string, # Optional. Unique resource ID.
         ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -342,40 +516,40 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>Boundary</c>:
         /// <code>{
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
         ///   geometry: {
         ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
-        ///   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
-        ///   farmerId: string, # Optional. Farmer Id.
-        ///   parentId: string, # Optional. Id of the parent it belongs to.
+        ///   }, # Optional. GeoJSON abstract class.
         ///   isPrimary: boolean, # Optional. Is the boundary primary.
         ///   acreage: number, # Optional. Boundary area in acres.
-        ///   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
-        /// i.e. Field, SeasonalField, Zone, Prescription, PlantTissueAnalysis, ApplicationData, HarvestData, TillageData, PlantingData.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
         ///   id: string, # Optional. Unique resource ID.
         ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string boundaryId, RequestContent content, RequestContext context = null)
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
+        public virtual Response CreateOrUpdate(string farmerId, string boundaryId, RequestContent content, RequestContext context = null)
 >>>>>>> Updating clients for 2021-07-31-preview API version
+=======
+        public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string boundaryId, RequestContent content, RequestContext context = null)
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
             Argument.AssertNotNullOrEmpty(boundaryId, nameof(boundaryId));
-            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("BoundariesClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("Boundaries.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -390,23 +564,23 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Creates or updates a boundary resource. </summary>
-        /// <param name="farmerId"> Id of the farmer resource. </param>
-        /// <param name="boundaryId"> Id of the boundary resource. </param>
+        /// <param name="farmerId"> ID of the farmer resource. </param>
+        /// <param name="boundaryId"> ID of the boundary resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
 <<<<<<< HEAD
-        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string boundaryId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
+        public virtual Response CreateOrUpdate(string farmerId, string boundaryId, RequestContent content, RequestContext context = null)
 =======
         /// <example>
         /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {};
         /// 
@@ -418,17 +592,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {
+        ///     parentId = "<parentId>",
         ///     geometry = new {
         ///         type = "MultiPolygon",
         ///     },
-        ///     parentId = "<parentId>",
         ///     isPrimary = true,
-        ///     parentType = "Field",
         ///     status = "<status>",
-        ///     source = "<source>",
         ///     name = "<name>",
         ///     description = "<description>",
         ///     properties = new {
@@ -439,9 +611,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Response response = client.CreateOrUpdate("<farmerId>", "<boundaryId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("isPrimary").ToString());
         /// Console.WriteLine(result.GetProperty("acreage").ToString());
         /// Console.WriteLine(result.GetProperty("parentType").ToString());
@@ -450,7 +622,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -463,28 +634,25 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>Boundary</c>:
         /// <code>{
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
         ///   geometry: {
         ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
-        ///   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
-        ///   farmerId: string, # Optional. Farmer Id.
-        ///   parentId: string, # Optional. Id of the parent it belongs to.
+        ///   }, # Optional. GeoJSON abstract class.
         ///   isPrimary: boolean, # Optional. Is the boundary primary.
         ///   acreage: number, # Optional. Boundary area in acres.
-        ///   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
-        /// i.e. Field, SeasonalField, Zone, Prescription, PlantTissueAnalysis, ApplicationData, HarvestData, TillageData, PlantingData.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
         ///   id: string, # Optional. Unique resource ID.
         ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -492,40 +660,40 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>Boundary</c>:
         /// <code>{
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
         ///   geometry: {
         ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
-        ///   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
-        ///   farmerId: string, # Optional. Farmer Id.
-        ///   parentId: string, # Optional. Id of the parent it belongs to.
+        ///   }, # Optional. GeoJSON abstract class.
         ///   isPrimary: boolean, # Optional. Is the boundary primary.
         ///   acreage: number, # Optional. Boundary area in acres.
-        ///   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
-        /// i.e. Field, SeasonalField, Zone, Prescription, PlantTissueAnalysis, ApplicationData, HarvestData, TillageData, PlantingData.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
         ///   id: string, # Optional. Unique resource ID.
         ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response CreateOrUpdate(string farmerId, string boundaryId, RequestContent content, RequestContext context = null)
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
+        public virtual Response GetBoundary(string farmerId, string boundaryId, RequestContext context = null)
 >>>>>>> Updating clients for 2021-07-31-preview API version
+=======
+        public virtual Response CreateOrUpdate(string farmerId, string boundaryId, RequestContent content, RequestContext context = null)
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
             Argument.AssertNotNullOrEmpty(boundaryId, nameof(boundaryId));
-            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("BoundariesClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("Boundaries.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -539,186 +707,9 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Gets a specified boundary resource under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
-        /// <param name="boundaryId"> Id of the boundary. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-<<<<<<< HEAD
-        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrUpdate(string farmerId, string boundaryId, RequestContent content, RequestContext context = null)
-=======
-        /// <example>
-        /// This sample shows how to call GetBoundaryAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
-        /// 
-        /// Response response = await client.GetBoundaryAsync("<farmerId>", "<boundaryId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("parentId").ToString());
-        /// Console.WriteLine(result.GetProperty("isPrimary").ToString());
-        /// Console.WriteLine(result.GetProperty("acreage").ToString());
-        /// Console.WriteLine(result.GetProperty("parentType").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Boundary</c>:
-        /// <code>{
-        ///   geometry: {
-        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
-        ///   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
-        ///   farmerId: string, # Optional. Farmer Id.
-        ///   parentId: string, # Optional. Id of the parent it belongs to.
-        ///   isPrimary: boolean, # Optional. Is the boundary primary.
-        ///   acreage: number, # Optional. Boundary area in acres.
-        ///   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
-        /// i.e. Field, SeasonalField, Zone, Prescription, PlantTissueAnalysis, ApplicationData, HarvestData, TillageData, PlantingData.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetBoundaryAsync(string farmerId, string boundaryId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(boundaryId, nameof(boundaryId));
-
-            using var scope = ClientDiagnostics.CreateScope("BoundariesClient.GetBoundary");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetBoundaryRequest(farmerId, boundaryId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a specified boundary resource under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
-        /// <param name="boundaryId"> Id of the boundary. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetBoundary with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
-        /// 
-        /// Response response = client.GetBoundary("<farmerId>", "<boundaryId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("parentId").ToString());
-        /// Console.WriteLine(result.GetProperty("isPrimary").ToString());
-        /// Console.WriteLine(result.GetProperty("acreage").ToString());
-        /// Console.WriteLine(result.GetProperty("parentType").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Boundary</c>:
-        /// <code>{
-        ///   geometry: {
-        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
-        ///   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
-        ///   farmerId: string, # Optional. Farmer Id.
-        ///   parentId: string, # Optional. Id of the parent it belongs to.
-        ///   isPrimary: boolean, # Optional. Is the boundary primary.
-        ///   acreage: number, # Optional. Boundary area in acres.
-        ///   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
-        /// i.e. Field, SeasonalField, Zone, Prescription, PlantTissueAnalysis, ApplicationData, HarvestData, TillageData, PlantingData.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetBoundary(string farmerId, string boundaryId, RequestContext context = null)
->>>>>>> Updating clients for 2021-07-31-preview API version
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(boundaryId, nameof(boundaryId));
-
-            using var scope = ClientDiagnostics.CreateScope("BoundariesClient.GetBoundary");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetBoundaryRequest(farmerId, boundaryId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Deletes a specified boundary resource under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the farmer. </param>
-        /// <param name="boundaryId"> Id of the boundary. </param>
+        /// <param name="farmerId"> ID of the farmer. </param>
+        /// <param name="boundaryId"> ID of the boundary. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -731,7 +722,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call DeleteAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// Response response = await client.DeleteAsync("<farmerId>", "<boundaryId>");
         /// Console.WriteLine(response.Status);
@@ -743,7 +734,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
             Argument.AssertNotNullOrEmpty(boundaryId, nameof(boundaryId));
 
-            using var scope = ClientDiagnostics.CreateScope("BoundariesClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("Boundaries.Delete");
             scope.Start();
             try
             {
@@ -758,8 +749,8 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified boundary resource under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the farmer. </param>
-        /// <param name="boundaryId"> Id of the boundary. </param>
+        /// <param name="farmerId"> ID of the farmer. </param>
+        /// <param name="boundaryId"> ID of the boundary. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -772,7 +763,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call Delete with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// Response response = client.Delete("<farmerId>", "<boundaryId>");
         /// Console.WriteLine(response.Status);
@@ -784,7 +775,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
             Argument.AssertNotNullOrEmpty(boundaryId, nameof(boundaryId));
 
-            using var scope = ClientDiagnostics.CreateScope("BoundariesClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("Boundaries.Delete");
             scope.Start();
             try
             {
@@ -799,10 +790,10 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns overlapping acreage between two boundary Ids. </summary>
-        /// <param name="farmerId"> Id of the farmer. </param>
-        /// <param name="boundaryId"> Id of the boundary. </param>
+        /// <param name="farmerId"> ID of the farmer. </param>
+        /// <param name="boundaryId"> ID of the boundary. </param>
         /// <param name="otherFarmerId"> FarmerId of the other field. </param>
-        /// <param name="otherBoundaryId"> Id of the other boundary. </param>
+        /// <param name="otherBoundaryId"> ID of the other boundary. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="otherFarmerId"/> or <paramref name="otherBoundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -815,7 +806,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetOverlapAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// Response response = await client.GetOverlapAsync("<farmerId>", "<boundaryId>", "<otherFarmerId>", "<otherBoundaryId>");
         /// 
@@ -847,7 +838,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(otherFarmerId, nameof(otherFarmerId));
             Argument.AssertNotNull(otherBoundaryId, nameof(otherBoundaryId));
 
-            using var scope = ClientDiagnostics.CreateScope("BoundariesClient.GetOverlap");
+            using var scope = ClientDiagnostics.CreateScope("Boundaries.GetOverlap");
             scope.Start();
             try
             {
@@ -862,10 +853,10 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns overlapping acreage between two boundary Ids. </summary>
-        /// <param name="farmerId"> Id of the farmer. </param>
-        /// <param name="boundaryId"> Id of the boundary. </param>
+        /// <param name="farmerId"> ID of the farmer. </param>
+        /// <param name="boundaryId"> ID of the boundary. </param>
         /// <param name="otherFarmerId"> FarmerId of the other field. </param>
-        /// <param name="otherBoundaryId"> Id of the other boundary. </param>
+        /// <param name="otherBoundaryId"> ID of the other boundary. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="otherFarmerId"/> or <paramref name="otherBoundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -878,7 +869,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetOverlap with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// Response response = client.GetOverlap("<farmerId>", "<boundaryId>", "<otherFarmerId>", "<otherBoundaryId>");
         /// 
@@ -910,7 +901,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(otherFarmerId, nameof(otherFarmerId));
             Argument.AssertNotNull(otherBoundaryId, nameof(otherBoundaryId));
 
-            using var scope = ClientDiagnostics.CreateScope("BoundariesClient.GetOverlap");
+            using var scope = ClientDiagnostics.CreateScope("Boundaries.GetOverlap");
             scope.Start();
             try
             {
@@ -921,6 +912,598 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 scope.Failed(e);
                 throw;
+            }
+        }
+
+        /// <summary> Returns a paginated list of boundary resources under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="isPrimary"> Is the boundary primary. </param>
+        /// <param name="parentType"> Type of the parent it belongs to. </param>
+        /// <param name="parentIds"> Parent Ids of the resource. </param>
+        /// <param name="minAcreage"> Minimum acreage of the boundary (inclusive). </param>
+        /// <param name="maxAcreage"> Maximum acreage of the boundary (inclusive). </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+<<<<<<< HEAD
+        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='GetBoundariesByFarmerIdAsync(String,Boolean,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetBoundariesByFarmerIdAsync(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+=======
+        /// <example>
+        /// This sample shows how to call GetBoundariesByFarmerIdAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
+        /// 
+        /// await foreach (var data in client.GetBoundariesByFarmerIdAsync("<farmerId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetBoundariesByFarmerIdAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
+        /// 
+        /// await foreach (var data in client.GetBoundariesByFarmerIdAsync("<farmerId>", true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("parentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("isPrimary").ToString());
+        ///     Console.WriteLine(result.GetProperty("acreage").ToString());
+        ///     Console.WriteLine(result.GetProperty("parentType").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BoundaryListResponseValue</c>:
+        /// <code>{
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
+        public virtual AsyncPageable<BinaryData> GetBoundariesAsync(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+>>>>>>> Updating clients for 2021-07-31-preview API version
+=======
+        public virtual AsyncPageable<BinaryData> GetBoundariesByFarmerIdAsync(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
+        {
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+
+            return GetBoundariesByFarmerIdImplementationAsync("Boundaries.GetBoundariesByFarmerId", farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+        }
+
+        private AsyncPageable<BinaryData> GetBoundariesByFarmerIdImplementationAsync(string diagnosticsScopeName, string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetBoundariesByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetBoundariesByFarmerIdNextPageRequest(nextLink, farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Returns a paginated list of boundary resources under a particular farmer. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="isPrimary"> Is the boundary primary. </param>
+        /// <param name="parentType"> Type of the parent it belongs to. </param>
+        /// <param name="parentIds"> Parent Ids of the resource. </param>
+        /// <param name="minAcreage"> Minimum acreage of the boundary (inclusive). </param>
+        /// <param name="maxAcreage"> Maximum acreage of the boundary (inclusive). </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+<<<<<<< HEAD
+        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='GetBoundariesByFarmerId(String,Boolean,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetBoundariesByFarmerId(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+=======
+        /// <example>
+        /// This sample shows how to call GetBoundariesByFarmerId with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
+        /// 
+        /// foreach (var data in client.GetBoundariesByFarmerId("<farmerId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetBoundariesByFarmerId with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
+        /// 
+        /// foreach (var data in client.GetBoundariesByFarmerId("<farmerId>", true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("parentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("isPrimary").ToString());
+        ///     Console.WriteLine(result.GetProperty("acreage").ToString());
+        ///     Console.WriteLine(result.GetProperty("parentType").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BoundaryListResponseValue</c>:
+        /// <code>{
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
+        public virtual Pageable<BinaryData> GetBoundaries(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+>>>>>>> Updating clients for 2021-07-31-preview API version
+=======
+        public virtual Pageable<BinaryData> GetBoundariesByFarmerId(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
+        {
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+
+            return GetBoundariesByFarmerIdImplementation("Boundaries.GetBoundariesByFarmerId", farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+        }
+
+        private Pageable<BinaryData> GetBoundariesByFarmerIdImplementation(string diagnosticsScopeName, string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetBoundariesByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetBoundariesByFarmerIdNextPageRequest(nextLink, farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Search for boundaries by fields and intersecting geometry. </summary>
+        /// <param name="farmerId"> ID of the farmer. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+<<<<<<< HEAD
+        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='SearchByFarmerIdAsync(String,RequestContent,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> SearchByFarmerIdAsync(string farmerId, RequestContent content, RequestContext context = null)
+=======
+        /// <example>
+        /// This sample shows how to call SearchByFarmerIdAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
+        /// 
+        /// var data = new {};
+        /// 
+        /// await foreach (var data in client.SearchByFarmerIdAsync("<farmerId>", RequestContent.Create(data)))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call SearchByFarmerIdAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
+        /// 
+        /// var data = new {
+        ///     ids = new[] {
+        ///         "<String>"
+        ///     },
+        ///     names = new[] {
+        ///         "<String>"
+        ///     },
+        ///     propertyFilters = new[] {
+        ///         "<String>"
+        ///     },
+        ///     statuses = new[] {
+        ///         "<String>"
+        ///     },
+        ///     minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     $maxPageSize = 1234,
+        ///     $skipToken = "<$skipToken>",
+        ///     isPrimary = true,
+        ///     parentType = "<parentType>",
+        ///     parentIds = new[] {
+        ///         "<String>"
+        ///     },
+        ///     minAcreage = 123.45d,
+        ///     maxAcreage = 123.45d,
+        ///     intersectsWithGeometry = new {
+        ///         type = "MultiPolygon",
+        ///     },
+        /// };
+        /// 
+        /// await foreach (var data in client.SearchByFarmerIdAsync("<farmerId>", RequestContent.Create(data)))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("parentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("isPrimary").ToString());
+        ///     Console.WriteLine(result.GetProperty("acreage").ToString());
+        ///     Console.WriteLine(result.GetProperty("parentType").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the request payload and one item in the pageable response.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SearchBoundaryQuery</c>:
+        /// <code>{
+        ///   ids: [string], # Optional. Ids of the resource.
+        ///   names: [string], # Optional. Names of the resource.
+        ///   propertyFilters: [string], # Optional. Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        ///   statuses: [string], # Optional. Statuses of the resource.
+        ///   minCreatedDateTime: string (ISO 8601 Format), # Optional. Minimum creation date of resource (inclusive).
+        ///   maxCreatedDateTime: string (ISO 8601 Format), # Optional. Maximum creation date of resource (inclusive).
+        ///   minLastModifiedDateTime: string (ISO 8601 Format), # Optional. Minimum last modified date of resource (inclusive).
+        ///   maxLastModifiedDateTime: string (ISO 8601 Format), # Optional. Maximum last modified date of resource (inclusive).
+        ///   $maxPageSize: number, # Optional. Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        ///   $skipToken: string, # Optional. Skip token for getting next set of results.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   parentIds: [string], # Optional. Parent Ids of the resource.
+        ///   minAcreage: number, # Optional. Minimum acreage of the boundary (inclusive).
+        ///   maxAcreage: number, # Optional. Maximum acreage of the boundary (inclusive).
+        ///   intersectsWithGeometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        /// }
+        /// </code>
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BoundaryListResponseValue</c>:
+        /// <code>{
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
+        public virtual AsyncPageable<BinaryData> SearchAsync(RequestContent content, RequestContext context = null)
+>>>>>>> Updating clients for 2021-07-31-preview API version
+=======
+        public virtual AsyncPageable<BinaryData> SearchByFarmerIdAsync(string farmerId, RequestContent content, RequestContext context = null)
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
+        {
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+
+            return SearchByFarmerIdImplementationAsync("Boundaries.SearchByFarmerId", farmerId, content, context);
+        }
+
+        private AsyncPageable<BinaryData> SearchByFarmerIdImplementationAsync(string diagnosticsScopeName, string farmerId, RequestContent content, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateSearchByFarmerIdRequest(farmerId, content, context)
+                        : CreateSearchByFarmerIdNextPageRequest(nextLink, farmerId, content, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Search for boundaries by fields and intersecting geometry. </summary>
+        /// <param name="farmerId"> ID of the farmer. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+<<<<<<< HEAD
+        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='SearchByFarmerId(String,RequestContent,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> SearchByFarmerId(string farmerId, RequestContent content, RequestContext context = null)
+=======
+        /// <example>
+        /// This sample shows how to call SearchByFarmerId with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
+        /// 
+        /// var data = new {};
+        /// 
+        /// foreach (var data in client.SearchByFarmerId("<farmerId>", RequestContent.Create(data)))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call SearchByFarmerId with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
+        /// 
+        /// var data = new {
+        ///     ids = new[] {
+        ///         "<String>"
+        ///     },
+        ///     names = new[] {
+        ///         "<String>"
+        ///     },
+        ///     propertyFilters = new[] {
+        ///         "<String>"
+        ///     },
+        ///     statuses = new[] {
+        ///         "<String>"
+        ///     },
+        ///     minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     $maxPageSize = 1234,
+        ///     $skipToken = "<$skipToken>",
+        ///     isPrimary = true,
+        ///     parentType = "<parentType>",
+        ///     parentIds = new[] {
+        ///         "<String>"
+        ///     },
+        ///     minAcreage = 123.45d,
+        ///     maxAcreage = 123.45d,
+        ///     intersectsWithGeometry = new {
+        ///         type = "MultiPolygon",
+        ///     },
+        /// };
+        /// 
+        /// foreach (var data in client.SearchByFarmerId("<farmerId>", RequestContent.Create(data)))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("parentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("isPrimary").ToString());
+        ///     Console.WriteLine(result.GetProperty("acreage").ToString());
+        ///     Console.WriteLine(result.GetProperty("parentType").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the request payload and one item in the pageable response.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SearchBoundaryQuery</c>:
+        /// <code>{
+        ///   ids: [string], # Optional. Ids of the resource.
+        ///   names: [string], # Optional. Names of the resource.
+        ///   propertyFilters: [string], # Optional. Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        ///   statuses: [string], # Optional. Statuses of the resource.
+        ///   minCreatedDateTime: string (ISO 8601 Format), # Optional. Minimum creation date of resource (inclusive).
+        ///   maxCreatedDateTime: string (ISO 8601 Format), # Optional. Maximum creation date of resource (inclusive).
+        ///   minLastModifiedDateTime: string (ISO 8601 Format), # Optional. Minimum last modified date of resource (inclusive).
+        ///   maxLastModifiedDateTime: string (ISO 8601 Format), # Optional. Maximum last modified date of resource (inclusive).
+        ///   $maxPageSize: number, # Optional. Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        ///   $skipToken: string, # Optional. Skip token for getting next set of results.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   parentIds: [string], # Optional. Parent Ids of the resource.
+        ///   minAcreage: number, # Optional. Minimum acreage of the boundary (inclusive).
+        ///   maxAcreage: number, # Optional. Maximum acreage of the boundary (inclusive).
+        ///   intersectsWithGeometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        /// }
+        /// </code>
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BoundaryListResponseValue</c>:
+        /// <code>{
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
+        public virtual Pageable<BinaryData> Search(RequestContent content, RequestContext context = null)
+>>>>>>> Updating clients for 2021-07-31-preview API version
+=======
+        public virtual Pageable<BinaryData> SearchByFarmerId(string farmerId, RequestContent content, RequestContext context = null)
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
+        {
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+
+            return SearchByFarmerIdImplementation("Boundaries.SearchByFarmerId", farmerId, content, context);
+        }
+
+        private Pageable<BinaryData> SearchByFarmerIdImplementation(string diagnosticsScopeName, string farmerId, RequestContent content, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateSearchByFarmerIdRequest(farmerId, content, context)
+                        : CreateSearchByFarmerIdNextPageRequest(nextLink, farmerId, content, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
             }
         }
 
@@ -950,14 +1533,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
 <<<<<<< HEAD
-        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='GetBoundariesByFarmerIdAsync(String,Boolean,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetBoundariesByFarmerIdAsync(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='GetBoundariesAsync(Boolean,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetBoundariesAsync(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 =======
         /// <example>
         /// This sample shows how to call GetBoundariesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// await foreach (var data in client.GetBoundariesAsync())
         /// {
@@ -968,13 +1551,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundariesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// await foreach (var data in client.GetBoundariesAsync(true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
         ///     Console.WriteLine(result.GetProperty("parentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
         ///     Console.WriteLine(result.GetProperty("isPrimary").ToString());
         ///     Console.WriteLine(result.GetProperty("acreage").ToString());
         ///     Console.WriteLine(result.GetProperty("parentType").ToString());
@@ -983,7 +1567,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     Console.WriteLine(result.GetProperty("status").ToString());
         ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("description").ToString());
         ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -995,34 +1578,39 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>BoundaryMetadataListResponseValue</c>:
+        /// Schema for <c>BoundaryListResponseValue</c>:
         /// <code>{
-        ///   farmerId: string, # Optional. Farmer Id.
-        ///   parentId: string, # Optional. Id of the parent it belongs to.
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
         ///   isPrimary: boolean, # Optional. Is the boundary primary.
         ///   acreage: number, # Optional. Boundary area in acres.
-        ///   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
         ///   id: string, # Optional. Unique resource ID.
         ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetBoundariesAsync(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
+        public virtual AsyncPageable<BinaryData> GetBoundariesByFarmerIdAsync(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 >>>>>>> Updating clients for 2021-07-31-preview API version
+=======
+        public virtual AsyncPageable<BinaryData> GetBoundariesAsync(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
         {
-            return GetBoundariesImplementationAsync("BoundariesClient.GetBoundaries", isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetBoundariesImplementationAsync("Boundaries.GetBoundaries", isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
         private AsyncPageable<BinaryData> GetBoundariesImplementationAsync(string diagnosticsScopeName, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
@@ -1068,14 +1656,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
 <<<<<<< HEAD
-        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='GetBoundariesByFarmerId(String,Boolean,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetBoundariesByFarmerId(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='GetBoundaries(Boolean,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetBoundaries(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 =======
         /// <example>
         /// This sample shows how to call GetBoundaries and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// foreach (var data in client.GetBoundaries())
         /// {
@@ -1086,13 +1674,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundaries with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// foreach (var data in client.GetBoundaries(true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
         ///     Console.WriteLine(result.GetProperty("parentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
         ///     Console.WriteLine(result.GetProperty("isPrimary").ToString());
         ///     Console.WriteLine(result.GetProperty("acreage").ToString());
         ///     Console.WriteLine(result.GetProperty("parentType").ToString());
@@ -1101,7 +1690,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     Console.WriteLine(result.GetProperty("status").ToString());
         ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("description").ToString());
         ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -1113,34 +1701,39 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>BoundaryMetadataListResponseValue</c>:
+        /// Schema for <c>BoundaryListResponseValue</c>:
         /// <code>{
-        ///   farmerId: string, # Optional. Farmer Id.
-        ///   parentId: string, # Optional. Id of the parent it belongs to.
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
         ///   isPrimary: boolean, # Optional. Is the boundary primary.
         ///   acreage: number, # Optional. Boundary area in acres.
-        ///   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
         ///   id: string, # Optional. Unique resource ID.
         ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetBoundaries(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
+        public virtual Pageable<BinaryData> GetBoundariesByFarmerId(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 >>>>>>> Updating clients for 2021-07-31-preview API version
+=======
+        public virtual Pageable<BinaryData> GetBoundaries(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
         {
-            return GetBoundariesImplementation("BoundariesClient.GetBoundaries", isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetBoundariesImplementation("Boundaries.GetBoundaries", isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
         private Pageable<BinaryData> GetBoundariesImplementation(string diagnosticsScopeName, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
@@ -1163,18 +1756,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Search for boundaries across all farmers by fields and intersecting geometry. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
 <<<<<<< HEAD
-        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='SearchByFarmerIdAsync(String,RequestContent,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> SearchByFarmerIdAsync(string farmerId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='SearchAsync(RequestContent,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> SearchAsync(RequestContent content, RequestContext context = null)
 =======
         /// <example>
         /// This sample shows how to call SearchAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {};
         /// 
@@ -1187,7 +1779,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call SearchAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {
         ///     ids = new[] {
@@ -1209,7 +1801,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     $maxPageSize = 1234,
         ///     $skipToken = "<$skipToken>",
         ///     isPrimary = true,
-        ///     parentType = "Field",
+        ///     parentType = "<parentType>",
         ///     parentIds = new[] {
         ///         "<String>"
         ///     },
@@ -1225,6 +1817,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
         ///     Console.WriteLine(result.GetProperty("parentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
         ///     Console.WriteLine(result.GetProperty("isPrimary").ToString());
         ///     Console.WriteLine(result.GetProperty("acreage").ToString());
         ///     Console.WriteLine(result.GetProperty("parentType").ToString());
@@ -1233,7 +1826,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     Console.WriteLine(result.GetProperty("status").ToString());
         ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("description").ToString());
         ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -1250,7 +1842,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   ids: [string], # Optional. Ids of the resource.
         ///   names: [string], # Optional. Names of the resource.
         ///   propertyFilters: [string], # Optional. Filters on key-value pairs within the Properties object.
-        /// e.g. &quot;{testKey} eq {testValue}&quot;.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
         ///   statuses: [string], # Optional. Statuses of the resource.
         ///   minCreatedDateTime: string (ISO 8601 Format), # Optional. Minimum creation date of resource (inclusive).
         ///   maxCreatedDateTime: string (ISO 8601 Format), # Optional. Maximum creation date of resource (inclusive).
@@ -1260,48 +1852,51 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         ///   $skipToken: string, # Optional. Skip token for getting next set of results.
         ///   isPrimary: boolean, # Optional. Is the boundary primary.
-        ///   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
         ///   parentIds: [string], # Optional. Parent Ids of the resource.
         ///   minAcreage: number, # Optional. Minimum acreage of the boundary (inclusive).
         ///   maxAcreage: number, # Optional. Maximum acreage of the boundary (inclusive).
         ///   intersectsWithGeometry: {
         ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
-        ///   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
+        ///   }, # Optional. GeoJSON abstract class.
         /// }
         /// </code>
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>BoundaryMetadataListResponseValue</c>:
+        /// Schema for <c>BoundaryListResponseValue</c>:
         /// <code>{
-        ///   farmerId: string, # Optional. Farmer Id.
-        ///   parentId: string, # Optional. Id of the parent it belongs to.
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
         ///   isPrimary: boolean, # Optional. Is the boundary primary.
         ///   acreage: number, # Optional. Boundary area in acres.
-        ///   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
         ///   id: string, # Optional. Unique resource ID.
         ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> SearchAsync(RequestContent content, RequestContext context = null)
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
+        public virtual AsyncPageable<BinaryData> SearchByFarmerIdAsync(string farmerId, RequestContent content, RequestContext context = null)
 >>>>>>> Updating clients for 2021-07-31-preview API version
+=======
+        public virtual AsyncPageable<BinaryData> SearchAsync(RequestContent content, RequestContext context = null)
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return SearchImplementationAsync("BoundariesClient.Search", content, context);
+            return SearchImplementationAsync("Boundaries.Search", content, context);
         }
 
         private AsyncPageable<BinaryData> SearchImplementationAsync(string diagnosticsScopeName, RequestContent content, RequestContext context)
@@ -1324,18 +1919,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Search for boundaries across all farmers by fields and intersecting geometry. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
 <<<<<<< HEAD
-        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='SearchByFarmerId(String,RequestContent,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> SearchByFarmerId(string farmerId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='Search(RequestContent,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> Search(RequestContent content, RequestContext context = null)
 =======
         /// <example>
         /// This sample shows how to call Search and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {};
         /// 
@@ -1348,7 +1942,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call Search with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {
         ///     ids = new[] {
@@ -1370,7 +1964,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     $maxPageSize = 1234,
         ///     $skipToken = "<$skipToken>",
         ///     isPrimary = true,
-        ///     parentType = "Field",
+        ///     parentType = "<parentType>",
         ///     parentIds = new[] {
         ///         "<String>"
         ///     },
@@ -1386,6 +1980,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
         ///     Console.WriteLine(result.GetProperty("parentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
         ///     Console.WriteLine(result.GetProperty("isPrimary").ToString());
         ///     Console.WriteLine(result.GetProperty("acreage").ToString());
         ///     Console.WriteLine(result.GetProperty("parentType").ToString());
@@ -1394,7 +1989,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     Console.WriteLine(result.GetProperty("status").ToString());
         ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("description").ToString());
         ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -1411,7 +2005,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   ids: [string], # Optional. Ids of the resource.
         ///   names: [string], # Optional. Names of the resource.
         ///   propertyFilters: [string], # Optional. Filters on key-value pairs within the Properties object.
-        /// e.g. &quot;{testKey} eq {testValue}&quot;.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
         ///   statuses: [string], # Optional. Statuses of the resource.
         ///   minCreatedDateTime: string (ISO 8601 Format), # Optional. Minimum creation date of resource (inclusive).
         ///   maxCreatedDateTime: string (ISO 8601 Format), # Optional. Maximum creation date of resource (inclusive).
@@ -1421,48 +2015,51 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         ///   $skipToken: string, # Optional. Skip token for getting next set of results.
         ///   isPrimary: boolean, # Optional. Is the boundary primary.
-        ///   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
         ///   parentIds: [string], # Optional. Parent Ids of the resource.
         ///   minAcreage: number, # Optional. Minimum acreage of the boundary (inclusive).
         ///   maxAcreage: number, # Optional. Maximum acreage of the boundary (inclusive).
         ///   intersectsWithGeometry: {
         ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
-        ///   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
+        ///   }, # Optional. GeoJSON abstract class.
         /// }
         /// </code>
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>BoundaryMetadataListResponseValue</c>:
+        /// Schema for <c>BoundaryListResponseValue</c>:
         /// <code>{
-        ///   farmerId: string, # Optional. Farmer Id.
-        ///   parentId: string, # Optional. Id of the parent it belongs to.
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
         ///   isPrimary: boolean, # Optional. Is the boundary primary.
         ///   acreage: number, # Optional. Boundary area in acres.
-        ///   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
         ///   id: string, # Optional. Unique resource ID.
         ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> Search(RequestContent content, RequestContext context = null)
+<<<<<<< HEAD:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/BoundariesClient.cs
+        public virtual Pageable<BinaryData> SearchByFarmerId(string farmerId, RequestContent content, RequestContext context = null)
 >>>>>>> Updating clients for 2021-07-31-preview API version
+=======
+        public virtual Pageable<BinaryData> Search(RequestContent content, RequestContext context = null)
+>>>>>>> Updating client hierarchy:sdk/agrifood/Azure.Verticals.AgriFood.Farming/src/Generated/Boundaries.cs
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return SearchImplementation("BoundariesClient.Search", content, context);
+            return SearchImplementation("Boundaries.Search", content, context);
         }
 
         private Pageable<BinaryData> SearchImplementation(string diagnosticsScopeName, RequestContent content, RequestContext context)
@@ -1475,580 +2072,6 @@ namespace Azure.Verticals.AgriFood.Farming
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateSearchRequest(content, context)
                         : CreateSearchNextPageRequest(nextLink, content, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
-        }
-
-        /// <summary> Returns a paginated list of boundary resources under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
-        /// <param name="isPrimary"> Is the boundary primary. </param>
-        /// <param name="parentType"> Type of the parent it belongs to. </param>
-        /// <param name="parentIds"> Parent Ids of the resource. </param>
-        /// <param name="minAcreage"> Minimum acreage of the boundary (inclusive). </param>
-        /// <param name="maxAcreage"> Maximum acreage of the boundary (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-<<<<<<< HEAD
-        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='GetBoundariesAsync(Boolean,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetBoundariesAsync(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
-=======
-        /// <example>
-        /// This sample shows how to call GetBoundariesByFarmerIdAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
-        /// 
-        /// await foreach (var data in client.GetBoundariesByFarmerIdAsync("<farmerId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetBoundariesByFarmerIdAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
-        /// 
-        /// await foreach (var data in client.GetBoundariesByFarmerIdAsync("<farmerId>", true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("parentId").ToString());
-        ///     Console.WriteLine(result.GetProperty("isPrimary").ToString());
-        ///     Console.WriteLine(result.GetProperty("acreage").ToString());
-        ///     Console.WriteLine(result.GetProperty("parentType").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>BoundaryMetadataListResponseValue</c>:
-        /// <code>{
-        ///   farmerId: string, # Optional. Farmer Id.
-        ///   parentId: string, # Optional. Id of the parent it belongs to.
-        ///   isPrimary: boolean, # Optional. Is the boundary primary.
-        ///   acreage: number, # Optional. Boundary area in acres.
-        ///   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetBoundariesByFarmerIdAsync(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
->>>>>>> Updating clients for 2021-07-31-preview API version
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-
-            return GetBoundariesByFarmerIdImplementationAsync("BoundariesClient.GetBoundariesByFarmerId", farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private AsyncPageable<BinaryData> GetBoundariesByFarmerIdImplementationAsync(string diagnosticsScopeName, string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetBoundariesByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetBoundariesByFarmerIdNextPageRequest(nextLink, farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
-        }
-
-        /// <summary> Returns a paginated list of boundary resources under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
-        /// <param name="isPrimary"> Is the boundary primary. </param>
-        /// <param name="parentType"> Type of the parent it belongs to. </param>
-        /// <param name="parentIds"> Parent Ids of the resource. </param>
-        /// <param name="minAcreage"> Minimum acreage of the boundary (inclusive). </param>
-        /// <param name="maxAcreage"> Maximum acreage of the boundary (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-<<<<<<< HEAD
-        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='GetBoundaries(Boolean,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetBoundaries(bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
-=======
-        /// <example>
-        /// This sample shows how to call GetBoundariesByFarmerId with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
-        /// 
-        /// foreach (var data in client.GetBoundariesByFarmerId("<farmerId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetBoundariesByFarmerId with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
-        /// 
-        /// foreach (var data in client.GetBoundariesByFarmerId("<farmerId>", true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("parentId").ToString());
-        ///     Console.WriteLine(result.GetProperty("isPrimary").ToString());
-        ///     Console.WriteLine(result.GetProperty("acreage").ToString());
-        ///     Console.WriteLine(result.GetProperty("parentType").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>BoundaryMetadataListResponseValue</c>:
-        /// <code>{
-        ///   farmerId: string, # Optional. Farmer Id.
-        ///   parentId: string, # Optional. Id of the parent it belongs to.
-        ///   isPrimary: boolean, # Optional. Is the boundary primary.
-        ///   acreage: number, # Optional. Boundary area in acres.
-        ///   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Pageable<BinaryData> GetBoundariesByFarmerId(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
->>>>>>> Updating clients for 2021-07-31-preview API version
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-
-            return GetBoundariesByFarmerIdImplementation("BoundariesClient.GetBoundariesByFarmerId", farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private Pageable<BinaryData> GetBoundariesByFarmerIdImplementation(string diagnosticsScopeName, string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetBoundariesByFarmerIdRequest(farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetBoundariesByFarmerIdNextPageRequest(nextLink, farmerId, isPrimary, parentType, parentIds, minAcreage, maxAcreage, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
-        }
-
-        /// <summary> Search for boundaries by fields and intersecting geometry. </summary>
-        /// <param name="farmerId"> Id of the farmer. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-<<<<<<< HEAD
-        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='SearchAsync(RequestContent,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> SearchAsync(RequestContent content, RequestContext context = null)
-=======
-        /// <example>
-        /// This sample shows how to call SearchByFarmerIdAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// await foreach (var data in client.SearchByFarmerIdAsync("<farmerId>", RequestContent.Create(data)))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call SearchByFarmerIdAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
-        /// 
-        /// var data = new {
-        ///     ids = new[] {
-        ///         "<String>"
-        ///     },
-        ///     names = new[] {
-        ///         "<String>"
-        ///     },
-        ///     propertyFilters = new[] {
-        ///         "<String>"
-        ///     },
-        ///     statuses = new[] {
-        ///         "<String>"
-        ///     },
-        ///     minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     maxLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     $maxPageSize = 1234,
-        ///     $skipToken = "<$skipToken>",
-        ///     isPrimary = true,
-        ///     parentType = "Field",
-        ///     parentIds = new[] {
-        ///         "<String>"
-        ///     },
-        ///     minAcreage = 123.45d,
-        ///     maxAcreage = 123.45d,
-        ///     intersectsWithGeometry = new {
-        ///         type = "MultiPolygon",
-        ///     },
-        /// };
-        /// 
-        /// await foreach (var data in client.SearchByFarmerIdAsync("<farmerId>", RequestContent.Create(data)))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("parentId").ToString());
-        ///     Console.WriteLine(result.GetProperty("isPrimary").ToString());
-        ///     Console.WriteLine(result.GetProperty("acreage").ToString());
-        ///     Console.WriteLine(result.GetProperty("parentType").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload and one item in the pageable response.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>SearchBoundaryQuery</c>:
-        /// <code>{
-        ///   ids: [string], # Optional. Ids of the resource.
-        ///   names: [string], # Optional. Names of the resource.
-        ///   propertyFilters: [string], # Optional. Filters on key-value pairs within the Properties object.
-        /// e.g. &quot;{testKey} eq {testValue}&quot;.
-        ///   statuses: [string], # Optional. Statuses of the resource.
-        ///   minCreatedDateTime: string (ISO 8601 Format), # Optional. Minimum creation date of resource (inclusive).
-        ///   maxCreatedDateTime: string (ISO 8601 Format), # Optional. Maximum creation date of resource (inclusive).
-        ///   minLastModifiedDateTime: string (ISO 8601 Format), # Optional. Minimum last modified date of resource (inclusive).
-        ///   maxLastModifiedDateTime: string (ISO 8601 Format), # Optional. Maximum last modified date of resource (inclusive).
-        ///   $maxPageSize: number, # Optional. Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        ///   $skipToken: string, # Optional. Skip token for getting next set of results.
-        ///   isPrimary: boolean, # Optional. Is the boundary primary.
-        ///   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
-        ///   parentIds: [string], # Optional. Parent Ids of the resource.
-        ///   minAcreage: number, # Optional. Minimum acreage of the boundary (inclusive).
-        ///   maxAcreage: number, # Optional. Maximum acreage of the boundary (inclusive).
-        ///   intersectsWithGeometry: {
-        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
-        ///   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>BoundaryMetadataListResponseValue</c>:
-        /// <code>{
-        ///   farmerId: string, # Optional. Farmer Id.
-        ///   parentId: string, # Optional. Id of the parent it belongs to.
-        ///   isPrimary: boolean, # Optional. Is the boundary primary.
-        ///   acreage: number, # Optional. Boundary area in acres.
-        ///   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual AsyncPageable<BinaryData> SearchByFarmerIdAsync(string farmerId, RequestContent content, RequestContext context = null)
->>>>>>> Updating clients for 2021-07-31-preview API version
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            return SearchByFarmerIdImplementationAsync("BoundariesClient.SearchByFarmerId", farmerId, content, context);
-        }
-
-        private AsyncPageable<BinaryData> SearchByFarmerIdImplementationAsync(string diagnosticsScopeName, string farmerId, RequestContent content, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateSearchByFarmerIdRequest(farmerId, content, context)
-                        : CreateSearchByFarmerIdNextPageRequest(nextLink, farmerId, content, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
-        }
-
-        /// <summary> Search for boundaries by fields and intersecting geometry. </summary>
-        /// <param name="farmerId"> Id of the farmer. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-<<<<<<< HEAD
-        /// <include file="Docs/BoundariesClient.xml" path="doc/members/member[@name='Search(RequestContent,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> Search(RequestContent content, RequestContext context = null)
-=======
-        /// <example>
-        /// This sample shows how to call SearchByFarmerId with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// foreach (var data in client.SearchByFarmerId("<farmerId>", RequestContent.Create(data)))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call SearchByFarmerId with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
-        /// 
-        /// var data = new {
-        ///     ids = new[] {
-        ///         "<String>"
-        ///     },
-        ///     names = new[] {
-        ///         "<String>"
-        ///     },
-        ///     propertyFilters = new[] {
-        ///         "<String>"
-        ///     },
-        ///     statuses = new[] {
-        ///         "<String>"
-        ///     },
-        ///     minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     maxLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     $maxPageSize = 1234,
-        ///     $skipToken = "<$skipToken>",
-        ///     isPrimary = true,
-        ///     parentType = "Field",
-        ///     parentIds = new[] {
-        ///         "<String>"
-        ///     },
-        ///     minAcreage = 123.45d,
-        ///     maxAcreage = 123.45d,
-        ///     intersectsWithGeometry = new {
-        ///         type = "MultiPolygon",
-        ///     },
-        /// };
-        /// 
-        /// foreach (var data in client.SearchByFarmerId("<farmerId>", RequestContent.Create(data)))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("parentId").ToString());
-        ///     Console.WriteLine(result.GetProperty("isPrimary").ToString());
-        ///     Console.WriteLine(result.GetProperty("acreage").ToString());
-        ///     Console.WriteLine(result.GetProperty("parentType").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload and one item in the pageable response.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>SearchBoundaryQuery</c>:
-        /// <code>{
-        ///   ids: [string], # Optional. Ids of the resource.
-        ///   names: [string], # Optional. Names of the resource.
-        ///   propertyFilters: [string], # Optional. Filters on key-value pairs within the Properties object.
-        /// e.g. &quot;{testKey} eq {testValue}&quot;.
-        ///   statuses: [string], # Optional. Statuses of the resource.
-        ///   minCreatedDateTime: string (ISO 8601 Format), # Optional. Minimum creation date of resource (inclusive).
-        ///   maxCreatedDateTime: string (ISO 8601 Format), # Optional. Maximum creation date of resource (inclusive).
-        ///   minLastModifiedDateTime: string (ISO 8601 Format), # Optional. Minimum last modified date of resource (inclusive).
-        ///   maxLastModifiedDateTime: string (ISO 8601 Format), # Optional. Maximum last modified date of resource (inclusive).
-        ///   $maxPageSize: number, # Optional. Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        ///   $skipToken: string, # Optional. Skip token for getting next set of results.
-        ///   isPrimary: boolean, # Optional. Is the boundary primary.
-        ///   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
-        ///   parentIds: [string], # Optional. Parent Ids of the resource.
-        ///   minAcreage: number, # Optional. Minimum acreage of the boundary (inclusive).
-        ///   maxAcreage: number, # Optional. Maximum acreage of the boundary (inclusive).
-        ///   intersectsWithGeometry: {
-        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
-        ///   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>BoundaryMetadataListResponseValue</c>:
-        /// <code>{
-        ///   farmerId: string, # Optional. Farmer Id.
-        ///   parentId: string, # Optional. Id of the parent it belongs to.
-        ///   isPrimary: boolean, # Optional. Is the boundary primary.
-        ///   acreage: number, # Optional. Boundary area in acres.
-        ///   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Pageable<BinaryData> SearchByFarmerId(string farmerId, RequestContent content, RequestContext context = null)
->>>>>>> Updating clients for 2021-07-31-preview API version
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            return SearchByFarmerIdImplementation("BoundariesClient.SearchByFarmerId", farmerId, content, context);
-        }
-
-        private Pageable<BinaryData> SearchByFarmerIdImplementation(string diagnosticsScopeName, string farmerId, RequestContent content, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateSearchByFarmerIdRequest(farmerId, content, context)
-                        : CreateSearchByFarmerIdNextPageRequest(nextLink, farmerId, content, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2073,7 +2096,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<boundaryId>");
         /// 
@@ -2090,6 +2113,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("startTime").ToString());
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2099,11 +2125,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>CascadeDeleteJob</c>:
         /// <code>{
-        ///   farmerId: string, # Required. Farmer Id.
+        ///   farmerId: string, # Required. Farmer ID.
         ///   resourceId: string, # Required. The id of the resource.
         ///   resourceType: string, # Required. The type of the resource.
         ///   id: string, # Optional. Unique job id.
-        ///   status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
+        ///   status: string, # Optional. Status of the job.
         /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
         ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
         ///   message: string, # Optional. Status message to capture more details of the job.
@@ -2111,6 +2137,12 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -2122,12 +2154,12 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(farmerId, nameof(farmerId));
             Argument.AssertNotNull(boundaryId, nameof(boundaryId));
 
-            using var scope = ClientDiagnostics.CreateScope("BoundariesClient.CreateCascadeDeleteJob");
+            using var scope = ClientDiagnostics.CreateScope("Boundaries.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, boundaryId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "BoundariesClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "Boundaries.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2153,7 +2185,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new BoundariesClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetBoundariesClient(null, <2021-03-31-preview>);
         /// 
         /// var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<boundaryId>");
         /// 
@@ -2170,6 +2202,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("startTime").ToString());
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2179,11 +2214,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Schema for <c>CascadeDeleteJob</c>:
         /// <code>{
-        ///   farmerId: string, # Required. Farmer Id.
+        ///   farmerId: string, # Required. Farmer ID.
         ///   resourceId: string, # Required. The id of the resource.
         ///   resourceType: string, # Required. The type of the resource.
         ///   id: string, # Optional. Unique job id.
-        ///   status: &quot;Waiting&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Cancelled&quot;, # Optional. Status of the job.
+        ///   status: string, # Optional. Status of the job.
         /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
         ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
         ///   message: string, # Optional. Status message to capture more details of the job.
@@ -2191,6 +2226,12 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -2202,155 +2243,18 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(farmerId, nameof(farmerId));
             Argument.AssertNotNull(boundaryId, nameof(boundaryId));
 
-            using var scope = ClientDiagnostics.CreateScope("BoundariesClient.CreateCascadeDeleteJob");
+            using var scope = ClientDiagnostics.CreateScope("Boundaries.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, boundaryId, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "BoundariesClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "Boundaries.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        internal HttpMessage CreateGetBoundariesRequest(bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/boundaries", false);
-            if (isPrimary != null)
-            {
-                uri.AppendQuery("isPrimary", isPrimary.Value, true);
-            }
-            if (parentType != null)
-            {
-                uri.AppendQuery("parentType", parentType, true);
-            }
-            if (parentIds != null)
-            {
-                foreach (var param in parentIds)
-                {
-                    uri.AppendQuery("parentIds", param, true);
-                }
-            }
-            if (minAcreage != null)
-            {
-                uri.AppendQuery("minAcreage", minAcreage.Value, true);
-            }
-            if (maxAcreage != null)
-            {
-                uri.AppendQuery("maxAcreage", maxAcreage.Value, true);
-            }
-            if (ids != null)
-            {
-                foreach (var param in ids)
-                {
-                    uri.AppendQuery("ids", param, true);
-                }
-            }
-            if (names != null)
-            {
-                foreach (var param in names)
-                {
-                    uri.AppendQuery("names", param, true);
-                }
-            }
-            if (propertyFilters != null)
-            {
-                foreach (var param in propertyFilters)
-                {
-                    uri.AppendQuery("propertyFilters", param, true);
-                }
-            }
-            if (statuses != null)
-            {
-                foreach (var param in statuses)
-                {
-                    uri.AppendQuery("statuses", param, true);
-                }
-            }
-            if (minCreatedDateTime != null)
-            {
-                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
-            }
-            if (maxCreatedDateTime != null)
-            {
-                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
-            }
-            if (minLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxPageSize != null)
-            {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
-            }
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateSearchRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/boundaries", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, string boundaryId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/boundaries/cascade-delete/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendQuery("farmerId", farmerId, true);
-            uri.AppendQuery("boundaryId", boundaryId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/boundaries/cascade-delete/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
         }
 
         internal HttpMessage CreateGetBoundariesByFarmerIdRequest(string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
@@ -2462,22 +2366,140 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string farmerId, string boundaryId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetBoundariesRequest(bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
-            request.Method = RequestMethod.Patch;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/boundaries/", false);
-            uri.AppendPath(boundaryId, true);
+            uri.AppendPath("/boundaries", false);
+            if (isPrimary != null)
+            {
+                uri.AppendQuery("isPrimary", isPrimary.Value, true);
+            }
+            if (parentType != null)
+            {
+                uri.AppendQuery("parentType", parentType, true);
+            }
+            if (parentIds != null)
+            {
+                foreach (var param in parentIds)
+                {
+                    uri.AppendQuery("parentIds", param, true);
+                }
+            }
+            if (minAcreage != null)
+            {
+                uri.AppendQuery("minAcreage", minAcreage.Value, true);
+            }
+            if (maxAcreage != null)
+            {
+                uri.AppendQuery("maxAcreage", maxAcreage.Value, true);
+            }
+            if (ids != null)
+            {
+                foreach (var param in ids)
+                {
+                    uri.AppendQuery("ids", param, true);
+                }
+            }
+            if (names != null)
+            {
+                foreach (var param in names)
+                {
+                    uri.AppendQuery("names", param, true);
+                }
+            }
+            if (propertyFilters != null)
+            {
+                foreach (var param in propertyFilters)
+                {
+                    uri.AppendQuery("propertyFilters", param, true);
+                }
+            }
+            if (statuses != null)
+            {
+                foreach (var param in statuses)
+                {
+                    uri.AppendQuery("statuses", param, true);
+                }
+            }
+            if (minCreatedDateTime != null)
+            {
+                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
+            }
+            if (maxCreatedDateTime != null)
+            {
+                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
+            }
+            if (minLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            return message;
+        }
+
+        internal HttpMessage CreateSearchRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/boundaries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/boundaries/cascade-delete/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, string boundaryId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/boundaries/cascade-delete/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("farmerId", farmerId, true);
+            uri.AppendQuery("boundaryId", boundaryId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2495,6 +2517,25 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string farmerId, string boundaryId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/farmers/", false);
+            uri.AppendPath(farmerId, true);
+            uri.AppendPath("/boundaries/", false);
+            uri.AppendPath(boundaryId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            request.Content = content;
             return message;
         }
 
@@ -2535,32 +2576,6 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetBoundariesNextPageRequest(string nextLink, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateSearchNextPageRequest(string nextLink, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         internal HttpMessage CreateGetBoundariesByFarmerIdNextPageRequest(string nextLink, string farmerId, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2575,6 +2590,32 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         internal HttpMessage CreateSearchByFarmerIdNextPageRequest(string nextLink, string farmerId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetBoundariesNextPageRequest(string nextLink, bool? isPrimary, string parentType, IEnumerable<string> parentIds, double? minAcreage, double? maxAcreage, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateSearchNextPageRequest(string nextLink, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

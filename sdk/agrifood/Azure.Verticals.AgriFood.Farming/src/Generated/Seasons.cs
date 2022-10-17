@@ -16,9 +16,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    // Data plane generated client. The Seasons service client.
-    /// <summary> The Seasons service client. </summary>
-    public partial class SeasonsClient
+    // Data plane generated sub-client. The Seasons sub-client.
+    /// <summary> The Seasons sub-client. </summary>
+    public partial class Seasons
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -32,39 +32,28 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of SeasonsClient for mocking. </summary>
-        protected SeasonsClient()
+        /// <summary> Initializes a new instance of Seasons for mocking. </summary>
+        protected Seasons()
         {
         }
 
-        /// <summary> Initializes a new instance of SeasonsClient. </summary>
+        /// <summary> Initializes a new instance of Seasons. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public SeasonsClient(TokenCredential credential, Uri endpoint) : this(credential, endpoint, new FarmBeatsClientOptions())
+        /// <param name="apiVersion"> Api Version. </param>
+        internal Seasons(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
-        }
-
-        /// <summary> Initializes a new instance of SeasonsClient. </summary>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="endpoint"/> is null. </exception>
-        public SeasonsClient(TokenCredential credential, Uri endpoint, FarmBeatsClientOptions options)
-        {
-            Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            options ??= new FarmBeatsClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
             _endpoint = endpoint;
-            _apiVersion = options.Version;
+            _apiVersion = apiVersion;
         }
 
         /// <summary> Gets a specified season resource. </summary>
-        /// <param name="seasonId"> Id of the season. </param>
+        /// <param name="seasonId"> ID of the season. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="seasonId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="seasonId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -77,7 +66,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetSeasonAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new SeasonsClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetSeasonsClient(null, <2021-03-31-preview>);
         /// 
         /// Response response = await client.GetSeasonAsync("<seasonId>");
         /// 
@@ -90,7 +79,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -111,14 +99,12 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -128,7 +114,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNullOrEmpty(seasonId, nameof(seasonId));
 
-            using var scope = ClientDiagnostics.CreateScope("SeasonsClient.GetSeason");
+            using var scope = ClientDiagnostics.CreateScope("Seasons.GetSeason");
             scope.Start();
             try
             {
@@ -143,7 +129,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Gets a specified season resource. </summary>
-        /// <param name="seasonId"> Id of the season. </param>
+        /// <param name="seasonId"> ID of the season. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="seasonId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="seasonId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -156,7 +142,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetSeason with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new SeasonsClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetSeasonsClient(null, <2021-03-31-preview>);
         /// 
         /// Response response = client.GetSeason("<seasonId>");
         /// 
@@ -169,7 +155,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -190,14 +175,12 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -207,7 +190,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNullOrEmpty(seasonId, nameof(seasonId));
 
-            using var scope = ClientDiagnostics.CreateScope("SeasonsClient.GetSeason");
+            using var scope = ClientDiagnostics.CreateScope("Seasons.GetSeason");
             scope.Start();
             try
             {
@@ -222,10 +205,10 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Creates or updates a season resource. </summary>
-        /// <param name="seasonId"> Id of the season resource. </param>
+        /// <param name="seasonId"> ID of the season resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="seasonId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="seasonId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="seasonId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -236,7 +219,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new SeasonsClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetSeasonsClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {};
         /// 
@@ -248,14 +231,13 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new SeasonsClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetSeasonsClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {
         ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
         ///     endDateTime = "2022-05-10T18:57:31.2311892Z",
         ///     year = 1234,
         ///     status = "<status>",
-        ///     source = "<source>",
         ///     name = "<name>",
         ///     description = "<description>",
         ///     properties = new {
@@ -274,7 +256,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -295,14 +276,12 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -318,14 +297,12 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -334,9 +311,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> CreateOrUpdateAsync(string seasonId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(seasonId, nameof(seasonId));
-            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("SeasonsClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("Seasons.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -351,10 +327,10 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Creates or updates a season resource. </summary>
-        /// <param name="seasonId"> Id of the season resource. </param>
+        /// <param name="seasonId"> ID of the season resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="seasonId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="seasonId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="seasonId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
@@ -365,7 +341,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new SeasonsClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetSeasonsClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {};
         /// 
@@ -377,14 +353,13 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new SeasonsClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetSeasonsClient(null, <2021-03-31-preview>);
         /// 
         /// var data = new {
         ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
         ///     endDateTime = "2022-05-10T18:57:31.2311892Z",
         ///     year = 1234,
         ///     status = "<status>",
-        ///     source = "<source>",
         ///     name = "<name>",
         ///     description = "<description>",
         ///     properties = new {
@@ -403,7 +378,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -424,14 +398,12 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -447,14 +419,12 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -463,9 +433,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response CreateOrUpdate(string seasonId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(seasonId, nameof(seasonId));
-            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("SeasonsClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("Seasons.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -480,7 +449,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified season resource. </summary>
-        /// <param name="seasonId"> Id of the season. </param>
+        /// <param name="seasonId"> ID of the season. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="seasonId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="seasonId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -493,7 +462,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call DeleteAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new SeasonsClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetSeasonsClient(null, <2021-03-31-preview>);
         /// 
         /// Response response = await client.DeleteAsync("<seasonId>");
         /// Console.WriteLine(response.Status);
@@ -504,7 +473,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNullOrEmpty(seasonId, nameof(seasonId));
 
-            using var scope = ClientDiagnostics.CreateScope("SeasonsClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("Seasons.Delete");
             scope.Start();
             try
             {
@@ -519,7 +488,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Deletes a specified season resource. </summary>
-        /// <param name="seasonId"> Id of the season. </param>
+        /// <param name="seasonId"> ID of the season. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="seasonId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="seasonId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -532,7 +501,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call Delete with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new SeasonsClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetSeasonsClient(null, <2021-03-31-preview>);
         /// 
         /// Response response = client.Delete("<seasonId>");
         /// Console.WriteLine(response.Status);
@@ -543,7 +512,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNullOrEmpty(seasonId, nameof(seasonId));
 
-            using var scope = ClientDiagnostics.CreateScope("SeasonsClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("Seasons.Delete");
             scope.Start();
             try
             {
@@ -589,7 +558,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetSeasonsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new SeasonsClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetSeasonsClient(null, <2021-03-31-preview>);
         /// 
         /// await foreach (var data in client.GetSeasonsAsync())
         /// {
@@ -600,7 +569,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetSeasonsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new SeasonsClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetSeasonsClient(null, <2021-03-31-preview>);
         /// 
         /// await foreach (var data in client.GetSeasonsAsync(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new Int32[]{1234}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
@@ -613,7 +582,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     Console.WriteLine(result.GetProperty("status").ToString());
         ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("description").ToString());
         ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -635,14 +603,12 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -650,7 +616,7 @@ namespace Azure.Verticals.AgriFood.Farming
 >>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual AsyncPageable<BinaryData> GetSeasonsAsync(DateTimeOffset? minStartDateTime = null, DateTimeOffset? maxStartDateTime = null, DateTimeOffset? minEndDateTime = null, DateTimeOffset? maxEndDateTime = null, IEnumerable<int> years = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetSeasonsImplementationAsync("SeasonsClient.GetSeasons", minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, years, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetSeasonsImplementationAsync("Seasons.GetSeasons", minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, years, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
         private AsyncPageable<BinaryData> GetSeasonsImplementationAsync(string diagnosticsScopeName, DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, IEnumerable<int> years, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
@@ -702,7 +668,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetSeasons and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new SeasonsClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetSeasonsClient(null, <2021-03-31-preview>);
         /// 
         /// foreach (var data in client.GetSeasons())
         /// {
@@ -713,7 +679,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetSeasons with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new SeasonsClient(credential);
+        /// var client = new FarmBeatsClient(credential).GetSeasonsClient(null, <2021-03-31-preview>);
         /// 
         /// foreach (var data in client.GetSeasons(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new Int32[]{1234}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
@@ -726,7 +692,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     Console.WriteLine(result.GetProperty("status").ToString());
         ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("description").ToString());
         ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
@@ -748,14 +713,12 @@ namespace Azure.Verticals.AgriFood.Farming
         ///   status: string, # Optional. Status of the resource.
         ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   source: string, # Optional. Source of the resource.
         ///   name: string, # Optional. Name to identify resource.
         ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-        /// numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -763,7 +726,7 @@ namespace Azure.Verticals.AgriFood.Farming
 >>>>>>> Updating clients for 2021-07-31-preview API version
         public virtual Pageable<BinaryData> GetSeasons(DateTimeOffset? minStartDateTime = null, DateTimeOffset? maxStartDateTime = null, DateTimeOffset? minEndDateTime = null, DateTimeOffset? maxEndDateTime = null, IEnumerable<int> years = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetSeasonsImplementation("SeasonsClient.GetSeasons", minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, years, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetSeasonsImplementation("Seasons.GetSeasons", minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, years, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
         private Pageable<BinaryData> GetSeasonsImplementation(string diagnosticsScopeName, DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, IEnumerable<int> years, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)

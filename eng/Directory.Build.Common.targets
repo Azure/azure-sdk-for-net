@@ -29,7 +29,7 @@
   <!-- Validates that there is a release note entry for the current package version -->
   <Target Name="ValidateReleaseNotes" BeforeTargets="SetPackageProjectUrlandReleaseNotes" Condition="'$(IsShippingLibrary)' == 'true'" >
     <PropertyGroup>
-      <ValidateReleaseNotesScriptPath Condition=" '$(ValidateReleaseNotesScriptPath)'=='' ">$(MSBuildThisFileDirectory)common/scripts/Verify-ChangeLog.ps1</ValidateReleaseNotesScriptPath>
+      <ValidateReleaseNotesScriptPath Condition=" '$(ValidateReleaseNotesScriptPath)'=='' ">$(MSBuildThisFileDirectory)common\scripts\Verify-ChangeLog.ps1</ValidateReleaseNotesScriptPath>
       <ChangeLogPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))CHANGELOG.md</ChangeLogPath>
     </PropertyGroup>
     <Exec ContinueOnError="true" ConsoleToMSBuild="true" StandardOutputImportance="High" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(ValidateReleaseNotesScriptPath) -ChangeLogLocation $(ChangeLogPath) -VersionString $(_VersionInProject)">
