@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
         {
             AvsSku sku = null;
             return await GetExtensionClient(subscriptionResource).CheckAvsTrialAvailabilityAsync(location, sku, cancellationToken).ConfigureAwait(false);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
         {
             AvsSku sku = null;
             return GetExtensionClient(subscriptionResource).CheckAvsTrialAvailability(location, sku, cancellationToken);
