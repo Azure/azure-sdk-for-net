@@ -13,7 +13,7 @@ namespace Azure
     public abstract class NullableResponse<T>
 #pragma warning restore SA1649 // File name should match first type name
     {
-        private const string NoValue = "The Response has no value";
+        private const string NoValue = "<null>";
 
         /// <summary>
         /// Gets a value indicating whether the current instance has a valid value of its underlying type.

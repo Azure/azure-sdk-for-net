@@ -672,7 +672,10 @@ namespace Azure.Data.Tables
         /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
         public virtual Response<T> GetEntity<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
             where T : class, ITableEntity, new()
-            => GetEntityInternalAsync<T>(false, partitionKey, rowKey, false, select, cancellationToken).EnsureCompleted();
+        {
+            NullableResponse<T> response = GetEntityInternalAsync<T>(false, partitionKey, rowKey, false, select, cancellationToken).EnsureCompleted();
+            return Response.FromValue(response.Value, response.GetRawResponse());
+        }
 
         /// <summary>
         /// Gets the specified table entity of type <typeparamref name="T"/>.
@@ -685,12 +688,12 @@ namespace Azure.Data.Tables
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
-        public virtual async Task<Response<T>> GetEntityAsync<T>(
-            string partitionKey,
-            string rowKey,
-            IEnumerable<string> select = null,
-            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
-            => await GetEntityInternalAsync<T>(true, partitionKey, rowKey, false, select, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response<T>> GetEntityAsync<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+                where T : class, ITableEntity, new()
+        {
+            NullableResponse<T> response = await GetEntityInternalAsync<T>(true, partitionKey, rowKey, false, select, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value, response.GetRawResponse());
+        }
 
         /// <summary>
         /// Gets the specified table entity of type <typeparamref name="T"/>.
@@ -726,7 +729,7 @@ namespace Azure.Data.Tables
             where T : class, ITableEntity, new()
             => await GetEntityInternalAsync<T>(true, partitionKey, rowKey, true, select, cancellationToken).ConfigureAwait(false);
 
-        internal virtual async Task<Response<T>> GetEntityInternalAsync<T>(
+        internal virtual async Task<NullableResponse<T>> GetEntityInternalAsync<T>(
             bool async,
             string partitionKey,
             string rowKey,
@@ -786,7 +789,7 @@ namespace Azure.Data.Tables
                     context);
                 if (response.Status == (int)HttpStatusCode.NotFound)
                 {
-                    return new NoBodyResponse<T>(response);
+                    return new NoValueResponse<T>(response);
                 }
                 else
                 {
