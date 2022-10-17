@@ -70,8 +70,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 var exp = DateTimeOffset.Now.AddHours(1).ToUnixTimeSeconds();
                 var sig = WebUtility.UrlEncode(Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(url + "\n" + exp))));
 
-                // See https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#generate-a-shared-access-signature-token for the authoritative documentation
-                // on generating Service Bus SAS tokens.
                 var sasToken = $"SharedAccessSignature sr={url}&sig={sig}&se={exp}&skn={keyName}";
 
                 var credential = new AzureSasCredential(sasToken);

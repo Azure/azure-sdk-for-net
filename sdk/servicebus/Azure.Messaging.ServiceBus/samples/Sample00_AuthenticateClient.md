@@ -4,7 +4,7 @@ This sample demonstrates how to authenticate the `ServiceBusClient`, which is th
 
 ## Authenticate with a connection string
 
-The simplest way to authenticate with the Service Bus is to use a connection string, which is created automatically when creating a Service Bus namespace. If you aren't familiar with connection strings in Service Bus, you may wish to follow the step-by-step guide to [get a Service Bus connection string](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-quickstart-topics-subscriptions-portal#get-the-connection-string). For production scenarios, we recommend using Azure.Identity authentication as it provides [role-based access control](https://docs.microsoft.com/azure/role-based-access-control/overview) without the need to manage connection strings or shared access keys.
+The simplest way to authenticate with Service Bus is to use a connection string, which is created automatically when creating a Service Bus namespace. If you aren't familiar with connection strings in Service Bus, you may wish to follow the step-by-step guide to [get a Service Bus connection string](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-quickstart-topics-subscriptions-portal#get-the-connection-string). For production scenarios, we recommend using Azure.Identity authentication as it provides [role-based access control](https://docs.microsoft.com/azure/role-based-access-control/overview) without the need to manage connection strings or shared access keys.
 
 ```C# Snippet:ServiceBusAuthConnString
 // Create a ServiceBusClient that will authenticate using a connection string
@@ -33,7 +33,7 @@ await using var client = new ServiceBusClient("yournamespace.servicebus.windows.
 
 ## Authenticate with a Shared Access Signature Credential
 
-Shared access signatures (SAS) are recommended over shared access keys, when RBAC cannot be used. A shared access signature allows for granular and time-limited access to Service Bus resources. 
+Shared access signatures (SAS) are recommended over shared access keys when [RBAC](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-role-based-access-control) cannot be used. A shared access signature allows for granular and time-limited access to Service Bus resources. The authoritative documentation on generating Service Bus SAS tokens can be found [here](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#generate-a-shared-access-signature-token).
 
 ```C# Snippet:ServiceBusAuthSasKey
 using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(key));
@@ -41,8 +41,6 @@ var url = WebUtility.UrlEncode(fullyQualifiedNamespace);
 var exp = DateTimeOffset.Now.AddHours(1).ToUnixTimeSeconds();
 var sig = WebUtility.UrlEncode(Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(url + "\n" + exp))));
 
-// See https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#generate-a-shared-access-signature-token for the authoritative documentation
-// on generating Service Bus SAS tokens.
 var sasToken = $"SharedAccessSignature sr={url}&sig={sig}&se={exp}&skn={keyName}";
 
 var credential = new AzureSasCredential(sasToken);
