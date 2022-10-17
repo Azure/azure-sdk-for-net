@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Azure.Core;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {

@@ -196,5 +196,16 @@ namespace Azure.Storage.DataMovement
             }
         }
         #endregion Job Chunk Management
+
+        /// <summary>
+        /// Attempts to remove the transfer of the respective id. Will remove it does exist and has not completed.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public bool TryRemoveTransfer(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

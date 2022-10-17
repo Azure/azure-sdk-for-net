@@ -397,18 +397,18 @@ namespace Azure.Storage.DataMovement.Tests
         }
         #endregion SingleUpload
 
-        /*
         #region DirectoryUploadTests
         [RecordedTest]
-        public async Task ScheduleFolderUploadAsync()
+        public async Task StartTransferAsync()
         {
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer client = test.Container.GetStorageResourceContainer(dirName);
-
+            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
             string folder = CreateRandomDirectory(Path.GetTempPath());
+            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
+
             string openChild = await CreateRandomFileAsync(folder).ConfigureAwait(false);
             string lockedChild = await CreateRandomFileAsync(folder).ConfigureAwait(false);
 
@@ -418,17 +418,17 @@ namespace Azure.Storage.DataMovement.Tests
             string lockedSubfolder = CreateRandomDirectory(folder);
             string lockedSubchild = await CreateRandomFileAsync(lockedSubfolder).ConfigureAwait(false);
 
-            TransferContainerOptions options = new TransferContainerOptions();
+            ContainerTransferOptions options = new ContainerTransferOptions();
 
             // Act
-            StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
+            DataControllerOptions managerOptions = new DataControllerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
 
-            await BlobDataController.ScheduleFolderUploadAsync(folder, client).ConfigureAwait(false);
+            await BlobDataController.StartTransferAsync(sourceResource, destinationResource).ConfigureAwait(false);
 
             // Assert - Check List Call
             List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
@@ -452,16 +452,17 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task ScheduleFolderUpload_EmptyFolder()
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             // Set up directory to upload
             var dirName = GetNewBlobDirectoryName();
             string folder = CreateRandomDirectory(Path.GetTempPath());
 
             // Set up destination client
-            StorageResourceContainer destClient = testContainer.Container.GetStorageResourceContainer(dirName);
+            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
+            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
 
-            StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
+            DataControllerOptions managerOptions = new DataControllerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
@@ -469,10 +470,10 @@ namespace Azure.Storage.DataMovement.Tests
             BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
 
             // Act
-            await BlobDataController.ScheduleFolderUploadAsync(folder, destClient).ConfigureAwait(false);
+            await BlobDataController.StartTransferAsync(sourceResource, destinationResource).ConfigureAwait(false);
 
             // Assert
-            List<string> blobs = ((List<BlobItem>)await testContainer.Container.GetBlobsAsync().ToListAsync())
+            List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
                 .Select((BlobItem blob) => blob.Name).ToList();
             // Assert
             Assert.IsEmpty(blobs);
@@ -488,14 +489,15 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer client = test.Container.GetStorageResourceContainer(dirName);
+            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
+            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
             string openChild = await CreateRandomFileAsync(folder).ConfigureAwait(false);
 
-            TransferContainerOptions options = new TransferContainerOptions();
+            ContainerTransferOptions options = new ContainerTransferOptions();
 
-            StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
+            DataControllerOptions managerOptions = new DataControllerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
@@ -503,7 +505,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
 
             // Act
-            await BlobDataController.ScheduleFolderUploadAsync(LocalStorageResourceFactory.GetDirectory(folder), client, false, options).ConfigureAwait(false);
+            await BlobDataController.StartTransferAsync(sourceResource, destinationResource, options).ConfigureAwait(false);
 
             // Assert - Check Response
             List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
@@ -524,17 +526,18 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer client = test.Container.GetStorageResourceContainer(dirName);
+            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
+            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
 
             string openSubfolder = CreateRandomDirectory(folder);
             string openSubchild = await CreateRandomFileAsync(openSubfolder).ConfigureAwait(false);
             string openSubchild2 = await CreateRandomFileAsync(openSubfolder).ConfigureAwait(false);
             string openSubchild3 = await CreateRandomFileAsync(openSubfolder).ConfigureAwait(false);
 
-            TransferContainerOptions options = new TransferContainerOptions();
-            StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
+            ContainerTransferOptions options = new ContainerTransferOptions();
+            DataControllerOptions managerOptions = new DataControllerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
@@ -542,7 +545,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
 
             // Act
-            await BlobDataController.ScheduleFolderUploadAsync(folder, client, false, options).ConfigureAwait(false);
+            await BlobDataController.StartTransferAsync(sourceResource, destinationResource, options).ConfigureAwait(false);
 
             List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
                 .Select((BlobItem blob) => blob.Name).ToList();
@@ -567,9 +570,10 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer client = test.Container.GetStorageResourceContainer(dirName);
+            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
+            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
 
             string openSubfolder = CreateRandomDirectory(folder);
             string openSubchild = await CreateRandomFileAsync(openSubfolder).ConfigureAwait(false);
@@ -589,8 +593,8 @@ namespace Azure.Storage.DataMovement.Tests
             string openSubChild4_2 = await CreateRandomFileAsync(openSubfolder2).ConfigureAwait(false);
             string openSubChild4_3 = await CreateRandomFileAsync(openSubfolder2).ConfigureAwait(false);
 
-            TransferContainerOptions options = new TransferContainerOptions();
-            StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
+            ContainerTransferOptions options = new ContainerTransferOptions();
+            DataControllerOptions managerOptions = new DataControllerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
@@ -598,7 +602,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
 
             // Act
-            await BlobDataController.ScheduleFolderUploadAsync(folder, client, false, options).ConfigureAwait(false);
+            await BlobDataController.StartTransferAsync(sourceResource, destinationResource, options).ConfigureAwait(false);
 
             List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
                 .Select((BlobItem blob) => blob.Name).ToList();
@@ -633,9 +637,10 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer client = test.Container.GetStorageResourceContainer(dirName);
+            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
+            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
 
             string subfolderName = folder;
             for (int i = 0; i < level; i++)
@@ -645,8 +650,8 @@ namespace Azure.Storage.DataMovement.Tests
                 subfolderName = openSubfolder;
             }
 
-            TransferContainerOptions options = new TransferContainerOptions();
-            StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
+            ContainerTransferOptions options = new ContainerTransferOptions();
+            DataControllerOptions managerOptions = new DataControllerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
@@ -654,7 +659,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
 
             // Act
-            await BlobDataController.ScheduleFolderUploadAsync(folder, client, false, options).ConfigureAwait(false);
+            await BlobDataController.StartTransferAsync(sourceResource, destinationResource, options).ConfigureAwait(false);
 
             List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
                 .Select((BlobItem blob) => blob.Name).ToList();
@@ -673,9 +678,10 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer client = test.Container.GetStorageResourceContainer(dirName);
+            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
+            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
 
             string openSubfolder = CreateRandomDirectory(folder);
             string openSubchild = await CreateRandomFileAsync(openSubfolder).ConfigureAwait(false);
@@ -691,8 +697,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             string openSubfolder4 = CreateRandomDirectory(folder);
 
-            TransferContainerOptions options = new TransferContainerOptions();
-            StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
+            ContainerTransferOptions options = new ContainerTransferOptions();
+            DataControllerOptions managerOptions = new DataControllerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
@@ -700,7 +706,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
 
             // Act
-            await BlobDataController.ScheduleFolderUploadAsync(folder, client, false, options).ConfigureAwait(false);
+            await BlobDataController.StartTransferAsync(sourceResource, destinationResource, options).ConfigureAwait(false);
 
             // Assert - Check Response
 
@@ -731,9 +737,11 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer client = test.Container.GetStorageResourceContainer(dirName);
+            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
+            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
+
             string openChild = await CreateRandomFileAsync(folder).ConfigureAwait(false);
             string lockedChild = await CreateRandomFileAsync(folder).ConfigureAwait(false);
 
@@ -752,14 +760,12 @@ namespace Azure.Storage.DataMovement.Tests
             // The service rounds Immutability Policy Expiry to the nearest second.
             DateTimeOffset expectedImmutabilityPolicyExpiry = RoundToNearestSecond(immutabilityPolicy.ExpiresOn.Value);
 
-            TransferContainerOptions options = new TransferContainerOptions()
+            ContainerTransferOptions options = new ContainerTransferOptions()
             {
-                ImmutabilityPolicy = immutabilityPolicy,
-                LegalHold = true,
             };
 
             // Act
-            StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
+            DataControllerOptions managerOptions = new DataControllerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
@@ -767,7 +773,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
 
             // Act
-            await BlobDataController.ScheduleFolderUploadAsync(folder, client, false, options).ConfigureAwait(false);
+            await BlobDataController.StartTransferAsync(sourceResource, destinationResource, options).ConfigureAwait(false);
 
             // Assert - Check Response
             IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
@@ -791,9 +797,11 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer client = test.Container.GetStorageResourceContainer(dirName);
+            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
+            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
+
             string openChild = await CreateRandomFileAsync(folder).ConfigureAwait(false);
             string lockedChild = await CreateRandomFileAsync(folder).ConfigureAwait(false);
 
@@ -803,18 +811,18 @@ namespace Azure.Storage.DataMovement.Tests
             string lockedSubfolder = CreateRandomDirectory(folder);
             string lockedSubchild = await CreateRandomFileAsync(lockedSubfolder).ConfigureAwait(false);
 
-            TransferContainerOptions options = new TransferContainerOptions();
+            ContainerTransferOptions options = new ContainerTransferOptions();
             BlobClient blobClient = test.Container.GetBlobClient(dirName + "/" + openChild.Substring(folder.Length + 1).Replace('\\', '/'));
             await blobClient.UploadAsync(openChild);
 
             // Act
-            StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
+            DataControllerOptions managerOptions = new DataControllerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
-            await BlobDataController.ScheduleFolderUploadAsync(folder, client, false, options).ConfigureAwait(false);
+            await BlobDataController.StartTransferAsync(sourceResource, destinationResource, options).ConfigureAwait(false);
 
             // Assert - Check Response
             List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
@@ -833,9 +841,11 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer client = test.Container.GetStorageResourceContainer(dirName);
+            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
+            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
+
             string openChild = await CreateRandomFileAsync(folder).ConfigureAwait(false);
             string lockedChild = await CreateRandomFileAsync(folder).ConfigureAwait(false);
 
@@ -848,16 +858,16 @@ namespace Azure.Storage.DataMovement.Tests
             BlobClient blobClient = test.Container.GetBlobClient(dirName + "/" + openChild.Substring(folder.Length + 1).Replace('\\', '/'));
             await blobClient.UploadAsync(openChild);
 
-            TransferContainerOptions options = new TransferContainerOptions();
+            ContainerTransferOptions options = new ContainerTransferOptions();
 
             // Act
-            StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
+            DataControllerOptions managerOptions = new DataControllerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
-            await BlobDataController.ScheduleFolderUploadAsync(folder, client, false, options).ConfigureAwait(false);
+            await BlobDataController.StartTransferAsync(sourceResource, destinationResource, options).ConfigureAwait(false);
 
             // Assert - Check Response
 
@@ -877,20 +887,21 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer client = test.Container.GetStorageResourceContainer(dirName);
+            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
+            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
 
-            TransferContainerOptions options = new TransferContainerOptions();
+            ContainerTransferOptions options = new ContainerTransferOptions();
 
             // Act
-            StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
+            DataControllerOptions controllerOptions = new DataControllerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
-            BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
-            await BlobDataController.ScheduleFolderUploadAsync(folder, client, false, options).ConfigureAwait(false);
+            BlobDataController BlobDataController = InstrumentClient(new BlobDataController(controllerOptions));
+            await BlobDataController.StartTransferAsync(sourceResource, destinationResource, options).ConfigureAwait(false);
 
             List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
                 .Select((BlobItem blob) => blob.Name).ToList();
@@ -902,6 +913,5 @@ namespace Azure.Storage.DataMovement.Tests
             Directory.Delete(folder, true);
         }
         #endregion DirectoryUploadTests
-        */
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.Storage.DataMovement
         public int? MaximumConcurrency { get; set; }
 
         /// <summary>
-        /// Optional. Can specify where the job plan files will live
+        /// Optional. Can specify where the job plan files will live.
         /// </summary>
         public string CheckPointFolderPath { get; set; }
     }

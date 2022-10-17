@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.Storage.DataMovement
 {
@@ -24,7 +24,7 @@ namespace Azure.Storage.DataMovement
             VerifyTaskCompleted(dataTransfer.IsCompleted);
 #endif
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-            //dataTransfer.GetAwaiter().GetResult();
+            dataTransfer.AwaitCompletion(CancellationToken.None);
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
         }
 
@@ -47,16 +47,17 @@ namespace Azure.Storage.DataMovement
         /// Waits until the data transfer itself has completed
         /// </summary>
         /// <param name="dataTransfer"></param>
-        public static Task AwaitCompletion(this DataTransfer dataTransfer)
+        /// <param name="cancellationToken"></param>
+        public static Task AwaitCompletion(this DataTransfer dataTransfer, CancellationToken cancellationToken)
         {
+            while (!dataTransfer.IsCompleted)
+            {
 #if DEBUG
-            VerifyTaskCompleted(dataTransfer.IsCompleted);
+                VerifyTaskCompleted(dataTransfer.IsCompleted);
 #endif
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-            //dataTransfer.GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+                CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            }
 
-            // TODO: Stub
             return Task.CompletedTask;
         }
     }

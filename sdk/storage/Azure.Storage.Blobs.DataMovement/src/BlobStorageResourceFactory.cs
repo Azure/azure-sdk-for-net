@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <param name="containerClient">Container CLient</param>
         /// <param name="encodedPath">Encoded Directory Path</param>
         /// <returns></returns>
-        public static StorageResourceContainer GetBlobVirtualDirectory(BlobContainerClient containerClient, List<string> encodedPath)
+        public static StorageResourceContainer GetBlobVirtualDirectory(BlobContainerClient containerClient, string encodedPath)
         {
             return new BlobDirectoryStorageResourceContainer(containerClient, encodedPath);
         }
