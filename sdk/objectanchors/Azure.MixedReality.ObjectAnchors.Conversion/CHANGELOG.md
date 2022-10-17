@@ -4,11 +4,7 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added DisableDetectScaleUnits to AssetConversionOptions
 
 ## 0.3.0-beta.5 (2022-09-12)
 

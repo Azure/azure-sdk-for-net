@@ -5,6 +5,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         internal AssetConversionConfiguration() { }
         public System.Numerics.Vector3? AssetDimensions { get { throw null; } }
         public System.Numerics.Vector3? BoundingBoxCenter { get { throw null; } }
+        public bool? DisableDetectScaleUnits { get { throw null; } }
         public System.Numerics.Vector3 Gravity { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.MixedReality.ObjectAnchors.Conversion.TrajectoryPose> GroundTruthTrajectoryCameraPoses { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<int> KeyFrameIndexes { get { throw null; } }
@@ -30,8 +31,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     }
     public partial class AssetConversionOptions
     {
-        public AssetConversionOptions(System.Uri inputAssetUri, Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType inputAssetFileType, System.Numerics.Vector3 assetGravity, Azure.MixedReality.ObjectAnchors.Conversion.AssetLengthUnit unit) { }
-        public AssetConversionOptions(System.Uri inputAssetUri, Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType inputAssetFileType, System.Numerics.Vector3 assetGravity, float assetScale) { }
+        public AssetConversionOptions(System.Uri inputAssetUri, Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType inputAssetFileType, System.Numerics.Vector3 assetGravity, Azure.MixedReality.ObjectAnchors.Conversion.AssetLengthUnit unit, bool disableDetectScaleUnits = false) { }
+        public AssetConversionOptions(System.Uri inputAssetUri, Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType inputAssetFileType, System.Numerics.Vector3 assetGravity, float assetScale, bool disableDetectScaleUnits = false) { }
+        public bool? DisableDetectScaleUnits { get { throw null; } }
         public System.Numerics.Vector3 Gravity { get { throw null; } }
         public Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType InputAssetFileType { get { throw null; } }
         public System.Uri InputAssetUri { get { throw null; } }
@@ -167,7 +169,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     }
     public static partial class ObjectAnchorsConversionModelFactory
     {
-        public static Azure.MixedReality.ObjectAnchors.Conversion.AssetConversionConfiguration AssetConversionConfiguration(System.Numerics.Vector3 assetDimensions, System.Numerics.Vector3 boundingBoxCenter, System.Numerics.Vector3 gravity, System.Collections.Generic.IReadOnlyList<int> keyFrameIndexes, System.Collections.Generic.IReadOnlyList<Azure.MixedReality.ObjectAnchors.Conversion.TrajectoryPose> groundTruthTrajectoryCameraPoses, System.Numerics.Quaternion principalAxis, float scale, System.Numerics.Vector4 supportingPlane, System.Collections.Generic.IReadOnlyList<Azure.MixedReality.ObjectAnchors.Conversion.TrajectoryPose> testTrajectoryCameraPoses) { throw null; }
+        public static Azure.MixedReality.ObjectAnchors.Conversion.AssetConversionConfiguration AssetConversionConfiguration(System.Numerics.Vector3 assetDimensions, System.Numerics.Vector3 boundingBoxCenter, System.Numerics.Vector3 gravity, System.Collections.Generic.IReadOnlyList<int> keyFrameIndexes, System.Collections.Generic.IReadOnlyList<Azure.MixedReality.ObjectAnchors.Conversion.TrajectoryPose> groundTruthTrajectoryCameraPoses, System.Numerics.Quaternion principalAxis, float scale, bool disableDetectScaleUnits, System.Numerics.Vector4 supportingPlane, System.Collections.Generic.IReadOnlyList<Azure.MixedReality.ObjectAnchors.Conversion.TrajectoryPose> testTrajectoryCameraPoses) { throw null; }
         public static Azure.MixedReality.ObjectAnchors.Conversion.AssetConversionProperties AssetConversionProperties(string clientErrorDetails, string serverErrorDetails, Azure.MixedReality.ObjectAnchors.Conversion.ConversionErrorCode conversionErrorCode, System.Guid? jobId, System.Uri outputModelUri, Azure.MixedReality.ObjectAnchors.Conversion.AssetConversionStatus? assetConversionStatus, Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType assetFileType, System.Uri uploadedInputAssetUri, System.Guid? accountId, Azure.MixedReality.ObjectAnchors.Conversion.AssetConversionConfiguration assetConversionConfiguration, System.Numerics.Vector3 scaledAssetDimensions) { throw null; }
         public static Azure.MixedReality.ObjectAnchors.Conversion.AssetUploadUriResult GetAssetUploadUriResult(System.Uri uploadedInputAssetUri) { throw null; }
         public static Azure.MixedReality.ObjectAnchors.Conversion.TrajectoryPose TrajectoryPose(System.Numerics.Quaternion rotation, System.Numerics.Vector3 translation) { throw null; }
