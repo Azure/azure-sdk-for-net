@@ -37,7 +37,14 @@ Shared access signatures (SAS) are recommended over shared access keys when [RBA
 
 ```C# Snippet:ServiceBusAuthSasKey
 using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(key));
-var url = WebUtility.UrlEncode(fullyQualifiedNamespace);
+var builder = new UriBuilder(fullyQualifiedNamespace)
+{
+    Scheme = "amqps",
+    // scope our SAS token to the queue that is being used to adhere to the principle of least privilege
+    Path = queueName
+};
+
+var url = WebUtility.UrlEncode(builder.Uri.AbsoluteUri);
 var exp = DateTimeOffset.Now.AddHours(1).ToUnixTimeSeconds();
 var sig = WebUtility.UrlEncode(Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(url + "\n" + exp))));
 

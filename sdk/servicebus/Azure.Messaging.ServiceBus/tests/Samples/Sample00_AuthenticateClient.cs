@@ -61,12 +61,27 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var keyName = TestEnvironment.SharedAccessKeyName;
-                var key = TestEnvironment.SharedAccessKey;
-                var fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
+#if SNIPPET
+                string keyName = "<key_name>";
+                string key = "<key>";
+                string fullyQualifiedNamespace = "<yournamespace.servicebus.windows.net>";
+                string queueName = "<queue_name>";
+#else
+                string keyName = TestEnvironment.SharedAccessKeyName;
+                string key = TestEnvironment.SharedAccessKey;
+                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
+                string queueName = scope.QueueName;
+#endif
                 #region Snippet:ServiceBusAuthSasKey
                 using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(key));
-                var url = WebUtility.UrlEncode(fullyQualifiedNamespace);
+                var builder = new UriBuilder(fullyQualifiedNamespace)
+                {
+                    Scheme = "amqps",
+                    // scope our SAS token to the queue that is being used to adhere to the principle of least privilege
+                    Path = queueName
+                };
+
+                var url = WebUtility.UrlEncode(builder.Uri.AbsoluteUri);
                 var exp = DateTimeOffset.Now.AddHours(1).ToUnixTimeSeconds();
                 var sig = WebUtility.UrlEncode(Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(url + "\n" + exp))));
 
