@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- `EventDataBatch` will now make a defensive copy of the data body of an `EventData` when accepted into the batch, using a shared buffer that has been rented. When the batch is disposed, the buffer is returned.  This corrects an edge case where an event batch could be mutated by changing the underlying `ReadOnlyMemory<byte>` buffer passed to the `EventData`.   _([issue #31395](https://github.com/Azure/azure-sdk-for-net/issues/31395))_
+
 ### Other Changes
 
 - Adjusted the frequency that a warning logged when the processor owns more partitions than a basic heuristic believes is ideal.  Warnings will no longer log on each load balancing cycle, only when the number of partitions owned changes.
