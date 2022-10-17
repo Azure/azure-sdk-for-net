@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new DeliveryRuleAction(name);
+            return new UnknownDeliveryRuleAction(name);
         }
     }
 }

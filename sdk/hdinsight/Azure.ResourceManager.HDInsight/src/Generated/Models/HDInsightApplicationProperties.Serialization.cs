@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> applicationType = default;
             Optional<string> applicationState = default;
             Optional<IList<ResponseError>> errors = default;
-            Optional<string> createdDate = default;
+            Optional<DateTimeOffset> createdDate = default;
             Optional<string> marketplaceIdentifier = default;
             Optional<IList<HDInsightPrivateLinkConfiguration>> privateLinkConfigurations = default;
             foreach (var property in element.EnumerateObject())
@@ -208,7 +209,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (property.NameEquals("createdDate"))
                 {
-                    createdDate = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    createdDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("marketplaceIdentifier"))
@@ -232,7 +238,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightApplicationProperties(computeProfile.Value, Optional.ToList(installScriptActions), Optional.ToList(uninstallScriptActions), Optional.ToList(httpsEndpoints), Optional.ToList(sshEndpoints), provisioningState.Value, applicationType.Value, applicationState.Value, Optional.ToList(errors), createdDate.Value, marketplaceIdentifier.Value, Optional.ToList(privateLinkConfigurations));
+            return new HDInsightApplicationProperties(computeProfile.Value, Optional.ToList(installScriptActions), Optional.ToList(uninstallScriptActions), Optional.ToList(httpsEndpoints), Optional.ToList(sshEndpoints), provisioningState.Value, applicationType.Value, applicationState.Value, Optional.ToList(errors), Optional.ToNullable(createdDate), marketplaceIdentifier.Value, Optional.ToList(privateLinkConfigurations));
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         /// <param name="oldValue"> The value of the property before the change. </param>
         /// <param name="newValue"> The value of the property after the change. </param>
         /// <param name="isDataMasked"> The boolean indicating whether the oldValue and newValue are masked. The values are masked if it contains sensitive information that the user doesn&apos;t have access to. </param>
-        internal PropertyChange(ChangeType? changeType, ChangeCategory? changeCategory, string jsonPath, string displayName, Level? level, string description, string oldValue, string newValue, bool? isDataMasked)
+        internal PropertyChange(ChangeType? changeType, ChangeCategory? changeCategory, string jsonPath, string displayName, PropertyChangeLevel? level, string description, string oldValue, string newValue, bool? isDataMasked)
         {
             ChangeType = changeType;
             ChangeCategory = changeCategory;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         /// <summary> The enhanced display name of the json path. E.g., the json path value[0].properties will be translated to something meaningful like slots[&quot;Staging&quot;].properties. </summary>
         public string DisplayName { get; }
         /// <summary> Gets the level. </summary>
-        public Level? Level { get; }
+        public PropertyChangeLevel? Level { get; }
         /// <summary> The description of the changed property. </summary>
         public string Description { get; }
         /// <summary> The value of the property before the change. </summary>

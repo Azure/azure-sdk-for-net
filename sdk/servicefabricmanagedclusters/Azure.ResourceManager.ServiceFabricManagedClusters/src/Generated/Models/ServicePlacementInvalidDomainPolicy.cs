@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Describes the policy to be used for placement of a Service Fabric service where a particular fault or upgrade domain should not be used for placement of the instances or replicas of that service. </summary>
-    public partial class ServicePlacementInvalidDomainPolicy : ServicePlacementPolicy
+    public partial class ServicePlacementInvalidDomainPolicy : ManagedServicePlacementPolicy
     {
         /// <summary> Initializes a new instance of ServicePlacementInvalidDomainPolicy. </summary>
         /// <param name="domainName"> The name of the domain that should not be used for placement. </param>
@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             DomainName = domainName;
-            PolicyType = ServicePlacementPolicyType.InvalidDomain;
+            ServicePlacementPolicyType = ServicePlacementPolicyType.InvalidDomain;
         }
 
         /// <summary> Initializes a new instance of ServicePlacementInvalidDomainPolicy. </summary>
-        /// <param name="policyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
+        /// <param name="servicePlacementPolicyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
         /// <param name="domainName"> The name of the domain that should not be used for placement. </param>
-        internal ServicePlacementInvalidDomainPolicy(ServicePlacementPolicyType policyType, string domainName) : base(policyType)
+        internal ServicePlacementInvalidDomainPolicy(ServicePlacementPolicyType servicePlacementPolicyType, string domainName) : base(servicePlacementPolicyType)
         {
             DomainName = domainName;
-            PolicyType = policyType;
+            ServicePlacementPolicyType = servicePlacementPolicyType;
         }
 
         /// <summary> The name of the domain that should not be used for placement. </summary>

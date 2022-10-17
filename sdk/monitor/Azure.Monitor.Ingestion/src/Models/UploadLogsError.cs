@@ -8,11 +8,11 @@ using Azure.Core;
 namespace Azure.Monitor.Ingestion
 {
     /// <summary>
-    /// test
+    /// The model representing the error and the associated logs that failed when uploading a subset of logs to Azure Monitor.
     /// </summary>
     public class UploadLogsError
     {
-        internal UploadLogsError(ResponseError error, IEnumerable<Object> failedLogs)
+        internal UploadLogsError(ResponseError error, IReadOnlyList<BinaryData> failedLogs)
         {
             Argument.AssertNotNull(failedLogs, nameof(failedLogs));
             Error = error;
@@ -20,12 +20,12 @@ namespace Azure.Monitor.Ingestion
         }
 
         /// <summary>
-        /// test
+        ///  List of logs that failed to upload.
         /// </summary>
-        public IEnumerable<Object> FailedLogs { get; }
+        public IReadOnlyList<BinaryData> FailedLogs { get; }
 
         /// <summary>
-        /// test
+        /// The response error containing the error details returned by the service.
         /// </summary>
         public ResponseError Error { get; }
     }

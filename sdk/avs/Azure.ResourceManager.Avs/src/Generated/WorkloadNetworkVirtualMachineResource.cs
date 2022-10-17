@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Avs
     /// A Class representing a WorkloadNetworkVirtualMachine along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkloadNetworkVirtualMachineResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetWorkloadNetworkVirtualMachineResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateCloudResource" /> using the GetWorkloadNetworkVirtualMachine method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetWorkloadNetworkVirtualMachine method.
     /// </summary>
     public partial class WorkloadNetworkVirtualMachineResource : ArmResource
     {

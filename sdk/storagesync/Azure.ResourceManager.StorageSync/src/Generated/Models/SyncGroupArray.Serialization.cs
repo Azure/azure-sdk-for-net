@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static SyncGroupArray DeserializeSyncGroupArray(JsonElement element)
         {
-            Optional<IReadOnlyList<SyncGroupData>> value = default;
+            Optional<IReadOnlyList<StorageSyncGroupData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.StorageSync.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SyncGroupData> array = new List<SyncGroupData>();
+                    List<StorageSyncGroupData> array = new List<StorageSyncGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncGroupData.DeserializeSyncGroupData(item));
+                        array.Add(StorageSyncGroupData.DeserializeStorageSyncGroupData(item));
                     }
                     value = array;
                     continue;

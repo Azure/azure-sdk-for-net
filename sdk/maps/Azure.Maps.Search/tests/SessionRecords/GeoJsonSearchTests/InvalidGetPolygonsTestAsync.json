@@ -1,0 +1,41 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/polygon/json?api-version=1.0\u0026geometries=",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-464256a4a74e24ad0b10f405130c44a1-a3d0b9258d65cf13-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220908.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
+        "x-ms-client-request-id": "0b33e9825d29ffa3acc1694c4080b4bf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Length": "78",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 08 Sep 2022 18:56:20 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: D2B81AB340864848BED162DE0C75EFC1 Ref B: PAOEDGE0610 Ref C: 2022-09-08T18:56:21Z"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "400 BadRequest",
+          "message": "geometries is missing or empty"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "847964317"
+  }
+}

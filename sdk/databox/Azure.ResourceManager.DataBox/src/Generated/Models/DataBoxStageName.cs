@@ -27,21 +27,21 @@ namespace Azure.ResourceManager.DataBox.Models
         private const string DispatchedValue = "Dispatched";
         private const string DeliveredValue = "Delivered";
         private const string PickedUpValue = "PickedUp";
-        private const string AtAzureDCValue = "AtAzureDC";
+        private const string AtAzureDataCenterValue = "AtAzureDC";
         private const string DataCopyValue = "DataCopy";
         private const string CompletedValue = "Completed";
         private const string CompletedWithErrorsValue = "CompletedWithErrors";
         private const string CancelledValue = "Cancelled";
         private const string FailedIssueReportedAtCustomerValue = "Failed_IssueReportedAtCustomer";
-        private const string FailedIssueDetectedAtAzureDCValue = "Failed_IssueDetectedAtAzureDC";
+        private const string FailedIssueDetectedAtAzureDataCenterValue = "Failed_IssueDetectedAtAzureDC";
         private const string AbortedValue = "Aborted";
         private const string CompletedWithWarningsValue = "CompletedWithWarnings";
-        private const string ReadyToDispatchFromAzureDCValue = "ReadyToDispatchFromAzureDC";
-        private const string ReadyToReceiveAtAzureDCValue = "ReadyToReceiveAtAzureDC";
+        private const string ReadyToDispatchFromAzureDataCenterValue = "ReadyToDispatchFromAzureDC";
+        private const string ReadyToReceiveAtAzureDataCenterValue = "ReadyToReceiveAtAzureDC";
         private const string CreatedValue = "Created";
-        private const string ShippedToAzureDCValue = "ShippedToAzureDC";
+        private const string ShippedToAzureDataCenterValue = "ShippedToAzureDC";
         private const string AwaitingShipmentDetailsValue = "AwaitingShipmentDetails";
-        private const string PreparingToShipFromAzureDCValue = "PreparingToShipFromAzureDC";
+        private const string PreparingToShipFromAzureDataCenterValue = "PreparingToShipFromAzureDC";
         private const string ShippedToCustomerValue = "ShippedToCustomer";
 
         /// <summary> An order has been created. </summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Device has been picked up from user and in transit to Azure datacenter. </summary>
         public static DataBoxStageName PickedUp { get; } = new DataBoxStageName(PickedUpValue);
         /// <summary> Device has been received at Azure datacenter from the user. </summary>
-        public static DataBoxStageName AtAzureDC { get; } = new DataBoxStageName(AtAzureDCValue);
+        public static DataBoxStageName AtAzureDataCenter { get; } = new DataBoxStageName(AtAzureDataCenterValue);
         /// <summary> Data copy from the device at Azure datacenter. </summary>
         public static DataBoxStageName DataCopy { get; } = new DataBoxStageName(DataCopyValue);
         /// <summary> Order has completed. </summary>
@@ -67,23 +67,23 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Order has failed due to issue reported by user. </summary>
         public static DataBoxStageName FailedIssueReportedAtCustomer { get; } = new DataBoxStageName(FailedIssueReportedAtCustomerValue);
         /// <summary> Order has failed due to issue detected at Azure datacenter. </summary>
-        public static DataBoxStageName FailedIssueDetectedAtAzureDC { get; } = new DataBoxStageName(FailedIssueDetectedAtAzureDCValue);
+        public static DataBoxStageName FailedIssueDetectedAtAzureDataCenter { get; } = new DataBoxStageName(FailedIssueDetectedAtAzureDataCenterValue);
         /// <summary> Order has been aborted. </summary>
         public static DataBoxStageName Aborted { get; } = new DataBoxStageName(AbortedValue);
         /// <summary> Order has completed with warnings. </summary>
         public static DataBoxStageName CompletedWithWarnings { get; } = new DataBoxStageName(CompletedWithWarningsValue);
         /// <summary> Device is ready to be handed to customer from Azure DC. </summary>
-        public static DataBoxStageName ReadyToDispatchFromAzureDC { get; } = new DataBoxStageName(ReadyToDispatchFromAzureDCValue);
+        public static DataBoxStageName ReadyToDispatchFromAzureDataCenter { get; } = new DataBoxStageName(ReadyToDispatchFromAzureDataCenterValue);
         /// <summary> Device can be dropped off at Azure DC. </summary>
-        public static DataBoxStageName ReadyToReceiveAtAzureDC { get; } = new DataBoxStageName(ReadyToReceiveAtAzureDCValue);
+        public static DataBoxStageName ReadyToReceiveAtAzureDataCenter { get; } = new DataBoxStageName(ReadyToReceiveAtAzureDataCenterValue);
         /// <summary> Job created by the customer. </summary>
         public static DataBoxStageName Created { get; } = new DataBoxStageName(CreatedValue);
         /// <summary> User shipped the device to AzureDC. </summary>
-        public static DataBoxStageName ShippedToAzureDC { get; } = new DataBoxStageName(ShippedToAzureDCValue);
+        public static DataBoxStageName ShippedToAzureDataCenter { get; } = new DataBoxStageName(ShippedToAzureDataCenterValue);
         /// <summary> Awaiting shipment details of device from customer. </summary>
         public static DataBoxStageName AwaitingShipmentDetails { get; } = new DataBoxStageName(AwaitingShipmentDetailsValue);
         /// <summary> Preparing the device to ship to customer. </summary>
-        public static DataBoxStageName PreparingToShipFromAzureDC { get; } = new DataBoxStageName(PreparingToShipFromAzureDCValue);
+        public static DataBoxStageName PreparingToShipFromAzureDataCenter { get; } = new DataBoxStageName(PreparingToShipFromAzureDataCenterValue);
         /// <summary> Shipped the device to customer. </summary>
         public static DataBoxStageName ShippedToCustomer { get; } = new DataBoxStageName(ShippedToCustomerValue);
         /// <summary> Determines if two <see cref="DataBoxStageName"/> values are the same. </summary>

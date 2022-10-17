@@ -68,7 +68,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "258",
+        "Content-Length": "256",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 12 Sep 2022 09:18:05 GMT",
         "Expires": "-1",

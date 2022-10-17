@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<DetectorDefinition> detectorDefinition = default;
             Optional<IList<DiagnosticMetricSet>> metrics = default;
             Optional<IList<DetectorAbnormalTimePeriod>> abnormalTimePeriods = default;
-            Optional<IList<IList<NameValuePair>>> data = default;
-            Optional<ResponseMetaData> responseMetaData = default;
+            Optional<IList<IList<AppServiceNameValuePair>>> data = default;
+            Optional<DetectorMetadata> responseMetaData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -222,13 +222,13 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IList<NameValuePair>> array = new List<IList<NameValuePair>>();
+                            List<IList<AppServiceNameValuePair>> array = new List<IList<AppServiceNameValuePair>>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                List<NameValuePair> array0 = new List<NameValuePair>();
+                                List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                                 foreach (var item0 in item.EnumerateArray())
                                 {
-                                    array0.Add(NameValuePair.DeserializeNameValuePair(item0));
+                                    array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
                                 }
                                 array.Add(array0);
                             }
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            responseMetaData = ResponseMetaData.DeserializeResponseMetaData(property0.Value);
+                            responseMetaData = DetectorMetadata.DeserializeDetectorMetadata(property0.Value);
                             continue;
                         }
                     }

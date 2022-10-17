@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             Optional<ChangeCategory> changeCategory = default;
             Optional<string> jsonPath = default;
             Optional<string> displayName = default;
-            Optional<Level> level = default;
+            Optional<PropertyChangeLevel> level = default;
             Optional<string> description = default;
             Optional<string> oldValue = default;
             Optional<string> newValue = default;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    level = new Level(property.Value.GetString());
+                    level = new PropertyChangeLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))

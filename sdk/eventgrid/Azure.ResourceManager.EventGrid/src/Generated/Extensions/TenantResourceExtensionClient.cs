@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.EventGrid
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of TopicTypeInfoResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of TopicTypeInfoResources and their operations over a TopicTypeInfoResource. </returns>
-        public virtual TopicTypeInfoCollection GetTopicTypeInfos()
+        /// <summary> Gets a collection of TopicTypeResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of TopicTypeResources and their operations over a TopicTypeResource. </returns>
+        public virtual TopicTypeCollection GetTopicTypes()
         {
-            return GetCachedClient(Client => new TopicTypeInfoCollection(Client, Id));
+            return GetCachedClient(Client => new TopicTypeCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VerifiedPartnerResources in the TenantResource. </summary>

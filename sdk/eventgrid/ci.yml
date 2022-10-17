@@ -9,6 +9,8 @@ trigger:
   paths:
     include:
     - sdk/eventgrid/
+    exclude:
+    - sdk/eventgrid/Azure.ResourceManager.EventGrid/
 
 pr:
   branches:
@@ -20,6 +22,8 @@ pr:
   paths:
     include:
     - sdk/eventgrid/
+    exclude:
+    - sdk/eventgrid/Azure.ResourceManager.EventGrid/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -35,5 +39,3 @@ extends:
       safeName: MicrosoftAzureWebJobsExtensionsEventGrid
     - name: Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
       safeName: MicrosoftAzureMessagingEventGridCloudNativeCloudEvents
-    - name: Azure.ResourceManager.EventGrid
-      safeName: AzureResourceManagerEventGrid

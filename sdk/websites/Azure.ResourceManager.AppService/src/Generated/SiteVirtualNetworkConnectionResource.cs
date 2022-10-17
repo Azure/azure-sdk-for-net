@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _siteVirtualNetworkConnectionWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteVirtualNetworkConnectionWebAppsRestClient;
-        private readonly VnetInfoResourceData _data;
+        private readonly AppServiceVirtualNetworkData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteVirtualNetworkConnectionResource"/> class for mocking. </summary>
         protected SiteVirtualNetworkConnectionResource()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "SiteVirtualNetworkConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteVirtualNetworkConnectionResource(ArmClient client, VnetInfoResourceData data) : this(client, data.Id)
+        internal SiteVirtualNetworkConnectionResource(ArmClient client, AppServiceVirtualNetworkData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual VnetInfoResourceData Data
+        public virtual AppServiceVirtualNetworkData Data
         {
             get
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<SiteVirtualNetworkConnectionResource>> UpdateAsync(VnetInfoResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteVirtualNetworkConnectionResource>> UpdateAsync(AppServiceVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<SiteVirtualNetworkConnectionResource> Update(VnetInfoResourceData data, CancellationToken cancellationToken = default)
+        public virtual Response<SiteVirtualNetworkConnectionResource> Update(AppServiceVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

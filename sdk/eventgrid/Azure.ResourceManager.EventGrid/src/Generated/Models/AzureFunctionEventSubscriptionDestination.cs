@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
         /// </param>
-        internal AzureFunctionEventSubscriptionDestination(EndpointType endpointType, string resourceId, int? maxEventsPerBatch, int? preferredBatchSizeInKilobytes, IList<DeliveryAttributeMapping> deliveryAttributeMappings) : base(endpointType)
+        internal AzureFunctionEventSubscriptionDestination(EndpointType endpointType, ResourceIdentifier resourceId, int? maxEventsPerBatch, int? preferredBatchSizeInKilobytes, IList<DeliveryAttributeMapping> deliveryAttributeMappings) : base(endpointType)
         {
             ResourceId = resourceId;
             MaxEventsPerBatch = maxEventsPerBatch;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The Azure Resource Id that represents the endpoint of the Azure Function destination of an event subscription. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Maximum number of events per batch. </summary>
         public int? MaxEventsPerBatch { get; set; }
         /// <summary> Preferred batch size in Kilobytes. </summary>

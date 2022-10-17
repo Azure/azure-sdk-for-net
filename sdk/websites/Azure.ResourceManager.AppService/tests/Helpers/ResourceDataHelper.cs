@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
                     IsLocalMySqlEnabled = false,
                     IsHttp20Enabled = true
                 },
-                ScmSiteAlsoStopped = false,
+                IsScmSiteAlsoStopped = false,
             };
             return data;
         }
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
                 },
                 IPSecurityRestrictions =
                 {
-                    new IPSecurityRestriction
+                    new AppServiceIPSecurityRestriction
                     {
-                        IPAddress = "Any",
+                        IPAddressOrCidr = "Any",
                         Action = "Allow",
                         Priority = 1,
                         Name =  "Allow all",
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
                 },
                 ScmIPSecurityRestrictions =
                 {
-                    new IPSecurityRestriction
+                    new AppServiceIPSecurityRestriction
                     {
-                        IPAddress = "Any",
+                        IPAddressOrCidr = "Any",
                         Action = "Allow",
                         Priority = 1,
                         Name =  "Allow all",

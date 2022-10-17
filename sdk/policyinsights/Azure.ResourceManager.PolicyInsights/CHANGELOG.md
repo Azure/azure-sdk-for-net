@@ -1,6 +1,42 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0 (2022-09-29)
+
+This is the first stable release of the Policy Insights Management library.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Prepended `Policy` prefix to all single / simple model names.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `AzureLocation` type properties / parameters.
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Optimized the name of some models and functions.
+- Corrected the extended types of extension methods related to `PolicyAssignmentResource`, `SubscriptionPolicyDefinitionResource` and `SubscriptionPolicySetDefinitionResource`.
+
+### Other Changes
+
+- Upgraded dependent Azure.ResourceManager to 1.3.1.
+
+## 1.0.0-beta.1 (2022-08-29)
+
+### Breaking Changes
+
+New design of track 2 initial commit.
+
+### Package Name
+
+The package name has been changed from `Microsoft.Azure.Management.PolicyInsights` to `Azure.ResourceManager.PolicyInsights`.
 
 ### General New Features
 

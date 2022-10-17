@@ -131,6 +131,32 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
+        /// Provides storage to network proximity and logical zone mapping information.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/regionInfo
+        /// Operation Id: NetAppResource_QueryRegionInfo
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static async Task<Response<NetAppRegionInfo>> QueryRegionInfoNetAppResourceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return await GetExtensionClient(subscriptionResource).QueryRegionInfoNetAppResourceAsync(location, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Provides storage to network proximity and logical zone mapping information.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/regionInfo
+        /// Operation Id: NetAppResource_QueryRegionInfo
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Response<NetAppRegionInfo> QueryRegionInfoNetAppResource(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).QueryRegionInfoNetAppResource(location, cancellationToken);
+        }
+
+        /// <summary>
         /// Get the default and current limits for quotas
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits
         /// Operation Id: NetAppResourceQuotaLimits_List
@@ -459,20 +485,20 @@ namespace Azure.ResourceManager.NetApp
         }
         #endregion
 
-        #region NetAppSubvolumeResource
+        #region NetAppSubvolumeInfoResource
         /// <summary>
-        /// Gets an object representing a <see cref="NetAppSubvolumeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetAppSubvolumeResource.CreateResourceIdentifier" /> to create a <see cref="NetAppSubvolumeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetAppSubvolumeInfoResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppSubvolumeInfoResource.CreateResourceIdentifier" /> to create a <see cref="NetAppSubvolumeInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppSubvolumeResource" /> object. </returns>
-        public static NetAppSubvolumeResource GetNetAppSubvolumeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppSubvolumeInfoResource" /> object. </returns>
+        public static NetAppSubvolumeInfoResource GetNetAppSubvolumeInfoResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NetAppSubvolumeResource.ValidateResourceId(id);
-                return new NetAppSubvolumeResource(client, id);
+                NetAppSubvolumeInfoResource.ValidateResourceId(id);
+                return new NetAppSubvolumeInfoResource(client, id);
             }
             );
         }

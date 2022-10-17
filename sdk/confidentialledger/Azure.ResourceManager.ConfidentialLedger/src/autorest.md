@@ -9,7 +9,6 @@ csharp: true
 library-name: ConfidentialLedger
 namespace: Azure.ResourceManager.ConfidentialLedger
 require: https://github.com/Azure/azure-rest-api-specs/blob/e7bcafa885ef773c6309d6a8f3a65c5019df413d/specification/confidentialledger/resource-manager/readme.md
-tag: package-2022-05-13
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -17,7 +16,7 @@ modelerfour:
   flatten-payloads: false
 
 override-operation-name:
-  CheckNameAvailability: CheckLedgerNameAvailability
+  CheckNameAvailability: CheckConfidentialLedgerNameAvailability
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -51,11 +50,14 @@ rename-rules:
   AAD: Aad
 
 rename-mapping:
-  ProvisioningState: LedgerProvisioningState
-  CheckNameAvailabilityRequest: LedgerNameAvailabilityContent
+  CheckNameAvailabilityRequest: ConfidentialLedgerNameAvailabilityContent
   CheckNameAvailabilityRequest.type: -|resource-type
-  CheckNameAvailabilityResponse: LedgerNameAvailabilityResult
+  CheckNameAvailabilityResponse: ConfidentialLedgerNameAvailabilityResult
   CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
-  CheckNameAvailabilityReason: LegerNameUnavailableReason
+  CheckNameAvailabilityReason: ConfidentialLedgerNameUnavailableReason
+  LedgerProperties: ConfidentialLedgerProperties
+  LedgerRoleName: ConfidentialLedgerRoleName
+  LedgerType: ConfidentialLedgerType
+  ProvisioningState: ConfidentialLedgerProvisioningState
 
 ```

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="status"> Segment status. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
-        internal WorkloadNetworkSegmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string connectedGateway, WorkloadNetworkSegmentSubnet subnet, IReadOnlyList<WorkloadNetworkSegmentPortVif> portVif, SegmentStatusEnum? status, WorkloadNetworkSegmentProvisioningState? provisioningState, long? revision) : base(id, name, resourceType, systemData)
+        internal WorkloadNetworkSegmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string connectedGateway, WorkloadNetworkSegmentSubnet subnet, IReadOnlyList<WorkloadNetworkSegmentPortVif> portVif, WorkloadNetworkSegmentStatus? status, WorkloadNetworkSegmentProvisioningState? provisioningState, long? revision) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             ConnectedGateway = connectedGateway;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Port Vif which segment is associated with. </summary>
         public IReadOnlyList<WorkloadNetworkSegmentPortVif> PortVif { get; }
         /// <summary> Segment status. </summary>
-        public SegmentStatusEnum? Status { get; }
+        public WorkloadNetworkSegmentStatus? Status { get; }
         /// <summary> The provisioning state. </summary>
         public WorkloadNetworkSegmentProvisioningState? ProvisioningState { get; }
         /// <summary> NSX revision number. </summary>

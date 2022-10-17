@@ -21,6 +21,11 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("callerId");
                 writer.WriteObjectValue(CallerId);
             }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName");
+                writer.WriteStringValue(DisplayName);
+            }
             writer.WritePropertyName("identifier");
             writer.WriteObjectValue(Identifier);
             writer.WriteEndObject();
@@ -29,6 +34,7 @@ namespace Azure.Communication.CallingServer
         internal static CallSourceInternal DeserializeCallSourceInternal(JsonElement element)
         {
             Optional<PhoneNumberIdentifierModel> callerId = default;
+            Optional<string> displayName = default;
             CommunicationIdentifierModel identifier = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,13 +48,18 @@ namespace Azure.Communication.CallingServer
                     callerId = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
                     continue;
                 }
+                if (property.NameEquals("displayName"))
+                {
+                    displayName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("identifier"))
                 {
                     identifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
             }
-            return new CallSourceInternal(callerId.Value, identifier);
+            return new CallSourceInternal(callerId.Value, displayName.Value, identifier);
         }
     }
 }

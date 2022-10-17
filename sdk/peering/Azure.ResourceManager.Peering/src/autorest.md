@@ -9,7 +9,6 @@ csharp: true
 library-name: Peering
 namespace: Azure.ResourceManager.Peering
 require: https://github.com/Azure/azure-rest-api-specs/blob/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/peering/resource-manager/readme.md
-tag: package-2022-06-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -46,4 +45,78 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+prepend-rp-prefix:
+- ProvisioningState
+- Family
+- Size
+- Tier
+- Role
+
+override-operation-name:
+  CheckServiceProviderAvailability: CheckPeeringServiceProviderAvailability
+  PeeringServices_InitializeConnectionMonitor: InitializePeeringServiceConnectionMonitor
+  LookingGlass_Invoke: InvokeLookingGlass
+
+rename-mapping:
+  ValidationState: PeerAsnValidationState
+  ContactDetail: PeerAsnContactDetail
+  PrefixValidationState: PeeringPrefixValidationState
+  LearnedType: PeeringLearnedType
+  CheckServiceProviderAvailabilityInput: CheckPeeringServiceProviderAvailabilityContent
+  Command: LookingGlassCommand
+  DirectConnection: PeeringDirectConnection
+  ExchangeConnection: PeeringExchangeConnection
+  PeeringPropertiesDirect: DirectPeeringProperties
+  PeeringPropertiesExchange: ExchangePeeringProperties
+  BgpSession: PeeringBgpSession
+  ConnectionState: PeeringConnectionState
+  SessionAddressProvider: PeeringSessionAddressProvider
+  PeeringLocationPropertiesDirect: DirectPeeringLocationProperties
+  ResourceTags: PeeringResourceTagsPatch
+  SessionStateV4: PeeringSessionStateV4
+  SessionStateV6: PeeringSessionStateV6
+  LogAnalyticsWorkspaceProperties: PeeringLogAnalyticsWorkspaceProperties
+  PeeringLocation.properties.azureRegion: -|azure-location
+  ExchangeConnection.connectionIdentifier: -|uuid
+  ExchangePeeringFacility.microsoftIPv4Address: -|ip-address
+  ExchangePeeringFacility.microsoftIPv6Address: -|ip-address
+  BgpSession.microsoftSessionIPv4Address: -|ip-address
+  BgpSession.microsoftSessionIPv6Address: -|ip-address
+  BgpSession.peerSessionIPv4Address: -|ip-address
+  BgpSession.peerSessionIPv6Address: -|ip-address
+  CdnPeeringPrefix.properties.azureRegion: -|azure-location
+  PeeringServiceLocation.properties.azureRegion: -|azure-location
+
+directive:
+  - from: swagger-document
+    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Peering/checkServiceProviderAvailability"].post.responses.200.schema
+    transform: >
+      $["x-ms-enum"] = {
+        "name": "PeeringServiceProviderAvailability",
+        "modelAsString": true
+      }
+# there are multiple patch operations using the same definition of body parameter schema. This is very likely to be a source of future breaking changes.
+# here we add some directive to decouple them
+  - from: swagger-document
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}"].patch.parameters[2].schema
+    transform: >
+      return {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/ResourceTags"
+          }
+        ]
+      }
+  - from: swagger-document
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}"].patch.parameters[2].schema
+    transform: >
+      return {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/ResourceTags"
+          }
+        ]
+      }
 ```
