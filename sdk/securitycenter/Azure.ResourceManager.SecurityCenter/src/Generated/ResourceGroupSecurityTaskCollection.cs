@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         private readonly ClientDiagnostics _resourceGroupSecurityTaskTasksClientDiagnostics;
         private readonly TasksRestOperations _resourceGroupSecurityTaskTasksRestClient;
-        private readonly string _ascLocation;
+        private readonly AzureLocation _ascLocation;
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupSecurityTaskCollection"/> class for mocking. </summary>
         protected ResourceGroupSecurityTaskCollection()
@@ -40,9 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        internal ResourceGroupSecurityTaskCollection(ArmClient client, ResourceIdentifier id, string ascLocation) : base(client, id)
+        internal ResourceGroupSecurityTaskCollection(ArmClient client, ResourceIdentifier id, AzureLocation ascLocation) : base(client, id)
         {
             _ascLocation = ascLocation;
             _resourceGroupSecurityTaskTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceGroupSecurityTaskResource.ResourceType.Namespace, Diagnostics);
@@ -76,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _resourceGroupSecurityTaskTasksRestClient.GetResourceGroupLevelTaskAsync(Id.SubscriptionId, Id.ResourceGroupName, _ascLocation, taskName, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceGroupSecurityTaskTasksRestClient.GetResourceGroupLevelTaskAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), taskName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ResourceGroupSecurityTaskResource(Client, response.Value), response.GetRawResponse());
@@ -105,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _resourceGroupSecurityTaskTasksRestClient.GetResourceGroupLevelTask(Id.SubscriptionId, Id.ResourceGroupName, _ascLocation, taskName, cancellationToken);
+                var response = _resourceGroupSecurityTaskTasksRestClient.GetResourceGroupLevelTask(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), taskName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ResourceGroupSecurityTaskResource(Client, response.Value), response.GetRawResponse());
@@ -133,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 scope.Start();
                 try
                 {
-                    var response = await _resourceGroupSecurityTaskTasksRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, _ascLocation, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _resourceGroupSecurityTaskTasksRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupSecurityTaskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -148,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 scope.Start();
                 try
                 {
-                    var response = await _resourceGroupSecurityTaskTasksRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _ascLocation, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _resourceGroupSecurityTaskTasksRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupSecurityTaskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -176,7 +174,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 scope.Start();
                 try
                 {
-                    var response = _resourceGroupSecurityTaskTasksRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, _ascLocation, filter, cancellationToken: cancellationToken);
+                    var response = _resourceGroupSecurityTaskTasksRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupSecurityTaskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -191,7 +189,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 scope.Start();
                 try
                 {
-                    var response = _resourceGroupSecurityTaskTasksRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _ascLocation, filter, cancellationToken: cancellationToken);
+                    var response = _resourceGroupSecurityTaskTasksRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupSecurityTaskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -220,7 +218,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _resourceGroupSecurityTaskTasksRestClient.GetResourceGroupLevelTaskAsync(Id.SubscriptionId, Id.ResourceGroupName, _ascLocation, taskName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _resourceGroupSecurityTaskTasksRestClient.GetResourceGroupLevelTaskAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), taskName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,7 +245,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _resourceGroupSecurityTaskTasksRestClient.GetResourceGroupLevelTask(Id.SubscriptionId, Id.ResourceGroupName, _ascLocation, taskName, cancellationToken: cancellationToken);
+                var response = _resourceGroupSecurityTaskTasksRestClient.GetResourceGroupLevelTask(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), taskName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

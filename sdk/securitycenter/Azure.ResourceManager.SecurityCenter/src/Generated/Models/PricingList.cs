@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of PricingList. </summary>
         /// <param name="value"> List of pricing configurations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PricingList(IEnumerable<SecurityPricingData> value)
+        internal PricingList(IEnumerable<SecurityCenterPricingData> value)
         {
             if (value == null)
             {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of PricingList. </summary>
         /// <param name="value"> List of pricing configurations. </param>
-        internal PricingList(IReadOnlyList<SecurityPricingData> value)
+        internal PricingList(IReadOnlyList<SecurityCenterPricingData> value)
         {
             Value = value;
         }
 
         /// <summary> List of pricing configurations. </summary>
-        public IReadOnlyList<SecurityPricingData> Value { get; }
+        public IReadOnlyList<SecurityCenterPricingData> Value { get; }
     }
 }

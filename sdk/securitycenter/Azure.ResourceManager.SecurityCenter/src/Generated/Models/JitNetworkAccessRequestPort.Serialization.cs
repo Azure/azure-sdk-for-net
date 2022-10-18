@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("endTimeUtc");
-            writer.WriteStringValue(EndTimeUtc, "O");
+            writer.WriteStringValue(EndOn, "O");
             writer.WritePropertyName("status");
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("statusReason");

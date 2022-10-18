@@ -119,18 +119,18 @@ namespace Azure.ResourceManager.SecurityCenter
             return new MdeOnboardingResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Security/mdeOnboardings/default"));
         }
 
-        /// <summary> Gets a collection of SecurityPricingResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of SecurityPricingResources and their operations over a SecurityPricingResource. </returns>
-        public virtual SecurityPricingCollection GetSecurityPricings()
+        /// <summary> Gets a collection of SecurityCenterPricingResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of SecurityCenterPricingResources and their operations over a SecurityCenterPricingResource. </returns>
+        public virtual SecurityCenterPricingCollection GetSecurityCenterPricings()
         {
-            return GetCachedClient(Client => new SecurityPricingCollection(Client, Id));
+            return GetCachedClient(Client => new SecurityCenterPricingCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of AscLocationResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of AscLocationResources and their operations over a AscLocationResource. </returns>
-        public virtual AscLocationCollection GetAscLocations()
+        /// <summary> Gets a collection of SecurityCenterLocationResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of SecurityCenterLocationResources and their operations over a SecurityCenterLocationResource. </returns>
+        public virtual SecurityCenterLocationCollection GetSecurityCenterLocations()
         {
-            return GetCachedClient(Client => new AscLocationCollection(Client, Id));
+            return GetCachedClient(Client => new SecurityCenterLocationCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of AutoProvisioningSettingResources in the SubscriptionResource. </summary>
@@ -175,11 +175,11 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetCachedClient(Client => new SubscriptionAssessmentMetadataCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of SecureScoreItemResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of SecureScoreItemResources and their operations over a SecureScoreItemResource. </returns>
-        public virtual SecureScoreItemCollection GetSecureScoreItems()
+        /// <summary> Gets a collection of SecureScoreResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of SecureScoreResources and their operations over a SecureScoreResource. </returns>
+        public virtual SecureScoreCollection GetSecureScores()
         {
-            return GetCachedClient(Client => new SecureScoreItemCollection(Client, Id));
+            return GetCachedClient(Client => new SecureScoreCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ConnectorSettingResources in the SubscriptionResource. </summary>

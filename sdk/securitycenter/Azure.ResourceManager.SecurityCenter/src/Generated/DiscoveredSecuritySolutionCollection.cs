@@ -59,11 +59,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="discoveredSecuritySolutionName"> Name of a discovered security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> or <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> or <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
-        public virtual async Task<Response<DiscoveredSecuritySolutionResource>> GetAsync(string ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
+        public virtual async Task<Response<DiscoveredSecuritySolutionResource>> GetAsync(AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(discoveredSecuritySolutionName, nameof(discoveredSecuritySolutionName));
 
             using var scope = _discoveredSecuritySolutionClientDiagnostics.CreateScope("DiscoveredSecuritySolutionCollection.Get");
@@ -90,11 +89,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="discoveredSecuritySolutionName"> Name of a discovered security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> or <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> or <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
-        public virtual Response<DiscoveredSecuritySolutionResource> Get(string ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
+        public virtual Response<DiscoveredSecuritySolutionResource> Get(AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(discoveredSecuritySolutionName, nameof(discoveredSecuritySolutionName));
 
             using var scope = _discoveredSecuritySolutionClientDiagnostics.CreateScope("DiscoveredSecuritySolutionCollection.Get");
@@ -121,11 +119,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="discoveredSecuritySolutionName"> Name of a discovered security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> or <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> or <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(discoveredSecuritySolutionName, nameof(discoveredSecuritySolutionName));
 
             using var scope = _discoveredSecuritySolutionClientDiagnostics.CreateScope("DiscoveredSecuritySolutionCollection.Exists");
@@ -150,11 +147,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="discoveredSecuritySolutionName"> Name of a discovered security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> or <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> or <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
-        public virtual Response<bool> Exists(string ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
+        public virtual Response<bool> Exists(AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(discoveredSecuritySolutionName, nameof(discoveredSecuritySolutionName));
 
             using var scope = _discoveredSecuritySolutionClientDiagnostics.CreateScope("DiscoveredSecuritySolutionCollection.Exists");

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> calculatedDateTime = default;
-            Optional<IReadOnlyList<ConnectableResource>> connectableResources = default;
+            Optional<IReadOnlyList<ConnectableResourceInfo>> connectableResources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ConnectableResource> array = new List<ConnectableResource>();
+                            List<ConnectableResourceInfo> array = new List<ConnectableResourceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectableResource.DeserializeConnectableResource(item));
+                                array.Add(ConnectableResourceInfo.DeserializeConnectableResourceInfo(item));
                             }
                             connectableResources = array;
                             continue;

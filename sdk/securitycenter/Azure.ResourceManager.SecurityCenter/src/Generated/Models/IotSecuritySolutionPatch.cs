@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The IotSecuritySolutionPatch. </summary>
-    public partial class IotSecuritySolutionPatch : TagsResource
+    public partial class IotSecuritySolutionPatch : TagsResourceInfo
     {
         /// <summary> Initializes a new instance of IotSecuritySolutionPatch. </summary>
         public IotSecuritySolutionPatch()

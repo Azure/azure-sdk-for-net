@@ -59,11 +59,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="topologyResourceName"> Name of a topology resources collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> or <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> or <paramref name="topologyResourceName"/> is null. </exception>
-        public virtual async Task<Response<SecurityTopologyResource>> GetAsync(string ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topologyResourceName"/> is null. </exception>
+        public virtual async Task<Response<SecurityTopologyResource>> GetAsync(AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(topologyResourceName, nameof(topologyResourceName));
 
             using var scope = _securityTopologyResourceTopologyClientDiagnostics.CreateScope("SecurityTopologyResourceCollection.Get");
@@ -90,11 +89,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="topologyResourceName"> Name of a topology resources collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> or <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> or <paramref name="topologyResourceName"/> is null. </exception>
-        public virtual Response<SecurityTopologyResource> Get(string ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topologyResourceName"/> is null. </exception>
+        public virtual Response<SecurityTopologyResource> Get(AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(topologyResourceName, nameof(topologyResourceName));
 
             using var scope = _securityTopologyResourceTopologyClientDiagnostics.CreateScope("SecurityTopologyResourceCollection.Get");
@@ -121,11 +119,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="topologyResourceName"> Name of a topology resources collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> or <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> or <paramref name="topologyResourceName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topologyResourceName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(topologyResourceName, nameof(topologyResourceName));
 
             using var scope = _securityTopologyResourceTopologyClientDiagnostics.CreateScope("SecurityTopologyResourceCollection.Exists");
@@ -150,11 +147,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="topologyResourceName"> Name of a topology resources collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> or <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> or <paramref name="topologyResourceName"/> is null. </exception>
-        public virtual Response<bool> Exists(string ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topologyResourceName"/> is null. </exception>
+        public virtual Response<bool> Exists(AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(topologyResourceName, nameof(topologyResourceName));
 
             using var scope = _securityTopologyResourceTopologyClientDiagnostics.CreateScope("SecurityTopologyResourceCollection.Exists");

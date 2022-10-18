@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetCachedClient(Client => new SecurityComplianceCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of SecurityAssessmentResponseResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of SecurityAssessmentResponseResources and their operations over a SecurityAssessmentResponseResource. </returns>
-        public virtual SecurityAssessmentResponseCollection GetSecurityAssessmentResponses()
+        /// <summary> Gets a collection of SecurityAssessmentResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of SecurityAssessmentResources and their operations over a SecurityAssessmentResource. </returns>
+        public virtual SecurityAssessmentCollection GetSecurityAssessments()
         {
-            return GetCachedClient(Client => new SecurityAssessmentResponseCollection(Client, Id));
+            return GetCachedClient(Client => new SecurityAssessmentCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of SqlVulnerabilityAssessmentScanResources in the ArmResource. </summary>
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetCachedClient(Client => new SqlVulnerabilityAssessmentScanCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of RuleResultResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of RuleResultResources and their operations over a RuleResultResource. </returns>
-        public virtual RuleResultCollection GetRuleResults()
+        /// <summary> Gets a collection of SqlVulnerabilityAssessmentBaselineRuleResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of SqlVulnerabilityAssessmentBaselineRuleResources and their operations over a SqlVulnerabilityAssessmentBaselineRuleResource. </returns>
+        public virtual SqlVulnerabilityAssessmentBaselineRuleCollection GetSqlVulnerabilityAssessmentBaselineRules()
         {
-            return GetCachedClient(Client => new RuleResultCollection(Client, Id));
+            return GetCachedClient(Client => new SqlVulnerabilityAssessmentBaselineRuleCollection(Client, Id));
         }
     }
 }

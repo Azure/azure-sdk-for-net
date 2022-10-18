@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="SubscriptionSecurityAlertResource" /> and their operations.
-    /// Each <see cref="SubscriptionSecurityAlertResource" /> in the collection will belong to the same instance of <see cref="AscLocationResource" />.
-    /// To get a <see cref="SubscriptionSecurityAlertCollection" /> instance call the GetSubscriptionSecurityAlerts method from an instance of <see cref="AscLocationResource" />.
+    /// Each <see cref="SubscriptionSecurityAlertResource" /> in the collection will belong to the same instance of <see cref="SecurityCenterLocationResource" />.
+    /// To get a <see cref="SubscriptionSecurityAlertCollection" /> instance call the GetSubscriptionSecurityAlerts method from an instance of <see cref="SecurityCenterLocationResource" />.
     /// </summary>
     public partial class SubscriptionSecurityAlertCollection : ArmCollection, IEnumerable<SubscriptionSecurityAlertResource>, IAsyncEnumerable<SubscriptionSecurityAlertResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AscLocationResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AscLocationResource.ResourceType), nameof(id));
+            if (id.ResourceType != SecurityCenterLocationResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SecurityCenterLocationResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _subscriptionSecurityAlertAlertsRestClient.GetSubscriptionLevelAsync(Id.SubscriptionId, Id.Name, alertName, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionSecurityAlertAlertsRestClient.GetSubscriptionLevelAsync(Id.SubscriptionId, new AzureLocation(Id.Name), alertName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionSecurityAlertResource(Client, response.Value), response.GetRawResponse());
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _subscriptionSecurityAlertAlertsRestClient.GetSubscriptionLevel(Id.SubscriptionId, Id.Name, alertName, cancellationToken);
+                var response = _subscriptionSecurityAlertAlertsRestClient.GetSubscriptionLevel(Id.SubscriptionId, new AzureLocation(Id.Name), alertName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionSecurityAlertResource(Client, response.Value), response.GetRawResponse());
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 scope.Start();
                 try
                 {
-                    var response = await _subscriptionSecurityAlertAlertsRestClient.ListSubscriptionLevelByRegionAsync(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _subscriptionSecurityAlertAlertsRestClient.ListSubscriptionLevelByRegionAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SubscriptionSecurityAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 scope.Start();
                 try
                 {
-                    var response = await _subscriptionSecurityAlertAlertsRestClient.ListSubscriptionLevelByRegionNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _subscriptionSecurityAlertAlertsRestClient.ListSubscriptionLevelByRegionNextPageAsync(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SubscriptionSecurityAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 scope.Start();
                 try
                 {
-                    var response = _subscriptionSecurityAlertAlertsRestClient.ListSubscriptionLevelByRegion(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken);
+                    var response = _subscriptionSecurityAlertAlertsRestClient.ListSubscriptionLevelByRegion(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SubscriptionSecurityAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 scope.Start();
                 try
                 {
-                    var response = _subscriptionSecurityAlertAlertsRestClient.ListSubscriptionLevelByRegionNextPage(nextLink, Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken);
+                    var response = _subscriptionSecurityAlertAlertsRestClient.ListSubscriptionLevelByRegionNextPage(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SubscriptionSecurityAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _subscriptionSecurityAlertAlertsRestClient.GetSubscriptionLevelAsync(Id.SubscriptionId, Id.Name, alertName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionSecurityAlertAlertsRestClient.GetSubscriptionLevelAsync(Id.SubscriptionId, new AzureLocation(Id.Name), alertName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _subscriptionSecurityAlertAlertsRestClient.GetSubscriptionLevel(Id.SubscriptionId, Id.Name, alertName, cancellationToken: cancellationToken);
+                var response = _subscriptionSecurityAlertAlertsRestClient.GetSubscriptionLevel(Id.SubscriptionId, new AzureLocation(Id.Name), alertName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

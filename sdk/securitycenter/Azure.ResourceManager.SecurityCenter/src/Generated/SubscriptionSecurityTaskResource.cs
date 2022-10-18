@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.SecurityCenter
     /// A Class representing a SubscriptionSecurityTask along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionSecurityTaskResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionSecurityTaskResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AscLocationResource" /> using the GetSubscriptionSecurityTask method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityCenterLocationResource" /> using the GetSubscriptionSecurityTask method.
     /// </summary>
     public partial class SubscriptionSecurityTaskResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionSecurityTaskResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string ascLocation, string taskName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation ascLocation, string taskName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}";
             return new ResourceIdentifier(resourceId);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _subscriptionSecurityTaskTasksRestClient.GetSubscriptionLevelTaskAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionSecurityTaskTasksRestClient.GetSubscriptionLevelTaskAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionSecurityTaskResource(Client, response.Value), response.GetRawResponse());
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _subscriptionSecurityTaskTasksRestClient.GetSubscriptionLevelTask(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _subscriptionSecurityTaskTasksRestClient.GetSubscriptionLevelTask(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionSecurityTaskResource(Client, response.Value), response.GetRawResponse());

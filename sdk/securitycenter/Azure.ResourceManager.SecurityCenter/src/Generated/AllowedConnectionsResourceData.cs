@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of AllowedConnectionsResourceData. </summary>
         public AllowedConnectionsResourceData()
         {
-            ConnectableResources = new ChangeTrackingList<ConnectableResource>();
+            ConnectableResources = new ChangeTrackingList<ConnectableResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of AllowedConnectionsResourceData. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="calculatedOn"> The UTC time on which the allowed connections resource was calculated. </param>
         /// <param name="connectableResources"> List of connectable resources. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal AllowedConnectionsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? calculatedOn, IReadOnlyList<ConnectableResource> connectableResources, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal AllowedConnectionsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? calculatedOn, IReadOnlyList<ConnectableResourceInfo> connectableResources, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             CalculatedOn = calculatedOn;
             ConnectableResources = connectableResources;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> The UTC time on which the allowed connections resource was calculated. </summary>
         public DateTimeOffset? CalculatedOn { get; }
         /// <summary> List of connectable resources. </summary>
-        public IReadOnlyList<ConnectableResource> ConnectableResources { get; }
+        public IReadOnlyList<ConnectableResourceInfo> ConnectableResources { get; }
         /// <summary> Location where the resource is stored. </summary>
         public AzureLocation? Location { get; }
     }

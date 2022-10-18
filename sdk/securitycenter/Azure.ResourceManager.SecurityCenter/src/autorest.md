@@ -29,8 +29,8 @@ rename-mapping:
   Application: SecurityApplication
   Automation: SecurityAutomation
   Compliance: SecurityCompliance
-  Pricing: SecurityPricing
-  PricingTier: SecurityPricingTier
+  Pricing: SecurityCenterPricing
+  PricingTier: SecurityCenterPricingTier
   Scan: SqlVulnerabilityAssessmentScan
   ScanResult: SqlVulnerabilityAssessmentScanResult
   ScanResultProperties: SqlVulnerabilityAssessmentScanResultProperties
@@ -109,6 +109,7 @@ rename-mapping:
   AwAssumeRoleAuthenticationDetailsProperties: AwsAssumeRoleAuthenticationDetailsProperties
   ContainerRegistryVulnerabilityProperties.patchable: IsPatchable
   CVE: SecurityCve
+  CVSS: SecurityCvss
   DataExportSettings.properties.enabled: IsEnabled
   DefenderFoDatabasesAwsOfferingArcAutoProvisioning: DefenderForDatabasesAwsOfferingArcAutoProvisioning
   DefenderFoDatabasesAwsOfferingArcAutoProvisioning.enabled: IsEnabled
@@ -155,17 +156,29 @@ rename-mapping:
   JitNetworkAccessPolicyInitiatePort.endTimeUtc: EndOn
   JitNetworkAccessRequest.startTimeUtc: StartOn
   JitNetworkAccessRequest: JitNetworkAccessRequestInfo
+  JitNetworkAccessRequestPort.endTimeUtc: EndOn
   Operator: AutomationTriggeringRuleOperator
   PropertyType: AutomationTriggeringRulePropertyType
   PathRecommendation.common: IsCommon
   Protocol: JitNetworkAccessPortProtocol
   ProvisioningState: SecurityFamilyProvisioningState
   SecurityAssessmentMetadataResponse.properties.preview: IsPreview
+  ConnectableResource: ConnectableResourceInfo
+  ConnectedResource: ConnectedResourceInfo
+  TagsResource: TagsResourceInfo
+  SecureScoreItem: SecureScore
+  SecurityAssessment: SecurityAssessmentInfo
+  SecurityAssessmentResponse: SecurityAssessment
+  SecurityAssessmentMetadata: SecurityAssessmentMetadataInfo
+  SecurityAssessmentMetadataResponse: SecurityAssessmentMetadata
+  RuleResults: SqlVulnerabilityAssessmentBaselineRule
+  AscLocation: SecurityCenterLocation
 
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'ascLocation': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   'azureResourceId': 'arm-id'
@@ -226,6 +239,8 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/providers/Microsoft.Security/applications/{applicationId}: SubscriptionSecurityApplication
   /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}: SubscriptionSecurityTask
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}: ResourceGroupSecurityTask
+#   /{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/baselineRules/{ruleId}: SqlVulnerabilityAssessmentBaselineRule
+#   /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}: SecureScore
 
 request-path-is-non-resource:
   - /{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/scans/{scanId}/scanResults/{scanResultId}

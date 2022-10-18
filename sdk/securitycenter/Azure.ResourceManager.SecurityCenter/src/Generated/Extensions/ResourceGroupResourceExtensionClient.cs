@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Gets a collection of ResourceGroupSecurityTaskResources in the ResourceGroupResource. </summary>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <returns> An object representing collection of ResourceGroupSecurityTaskResources and their operations over a ResourceGroupSecurityTaskResource. </returns>
-        public virtual ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(string ascLocation)
+        public virtual ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(AzureLocation ascLocation)
         {
             return new ResourceGroupSecurityTaskCollection(Client, Id, ascLocation);
         }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Gets a collection of JitNetworkAccessPolicyResources in the ResourceGroupResource. </summary>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <returns> An object representing collection of JitNetworkAccessPolicyResources and their operations over a JitNetworkAccessPolicyResource. </returns>
-        public virtual JitNetworkAccessPolicyCollection GetJitNetworkAccessPolicies(string ascLocation)
+        public virtual JitNetworkAccessPolicyCollection GetJitNetworkAccessPolicies(AzureLocation ascLocation)
         {
             return new JitNetworkAccessPolicyCollection(Client, Id, ascLocation);
         }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Gets a collection of ResourceGroupSecurityAlertResources in the ResourceGroupResource. </summary>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <returns> An object representing collection of ResourceGroupSecurityAlertResources and their operations over a ResourceGroupSecurityAlertResource. </returns>
-        public virtual ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(string ascLocation)
+        public virtual ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(AzureLocation ascLocation)
         {
             return new ResourceGroupSecurityAlertCollection(Client, Id, ascLocation);
         }

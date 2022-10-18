@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         private readonly ClientDiagnostics _resourceGroupSecurityAlertAlertsClientDiagnostics;
         private readonly AlertsRestOperations _resourceGroupSecurityAlertAlertsRestClient;
-        private readonly string _ascLocation;
+        private readonly AzureLocation _ascLocation;
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupSecurityAlertCollection"/> class for mocking. </summary>
         protected ResourceGroupSecurityAlertCollection()
@@ -40,9 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        internal ResourceGroupSecurityAlertCollection(ArmClient client, ResourceIdentifier id, string ascLocation) : base(client, id)
+        internal ResourceGroupSecurityAlertCollection(ArmClient client, ResourceIdentifier id, AzureLocation ascLocation) : base(client, id)
         {
             _ascLocation = ascLocation;
             _resourceGroupSecurityAlertAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceGroupSecurityAlertResource.ResourceType.Namespace, Diagnostics);
@@ -76,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _resourceGroupSecurityAlertAlertsRestClient.GetResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, _ascLocation, alertName, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceGroupSecurityAlertAlertsRestClient.GetResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), alertName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ResourceGroupSecurityAlertResource(Client, response.Value), response.GetRawResponse());
@@ -105,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _resourceGroupSecurityAlertAlertsRestClient.GetResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, _ascLocation, alertName, cancellationToken);
+                var response = _resourceGroupSecurityAlertAlertsRestClient.GetResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), alertName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ResourceGroupSecurityAlertResource(Client, response.Value), response.GetRawResponse());
@@ -132,7 +130,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 scope.Start();
                 try
                 {
-                    var response = await _resourceGroupSecurityAlertAlertsRestClient.ListResourceGroupLevelByRegionAsync(Id.SubscriptionId, Id.ResourceGroupName, _ascLocation, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _resourceGroupSecurityAlertAlertsRestClient.ListResourceGroupLevelByRegionAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupSecurityAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -147,7 +145,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 scope.Start();
                 try
                 {
-                    var response = await _resourceGroupSecurityAlertAlertsRestClient.ListResourceGroupLevelByRegionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _ascLocation, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _resourceGroupSecurityAlertAlertsRestClient.ListResourceGroupLevelByRegionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupSecurityAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -174,7 +172,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 scope.Start();
                 try
                 {
-                    var response = _resourceGroupSecurityAlertAlertsRestClient.ListResourceGroupLevelByRegion(Id.SubscriptionId, Id.ResourceGroupName, _ascLocation, cancellationToken: cancellationToken);
+                    var response = _resourceGroupSecurityAlertAlertsRestClient.ListResourceGroupLevelByRegion(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupSecurityAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -189,7 +187,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 scope.Start();
                 try
                 {
-                    var response = _resourceGroupSecurityAlertAlertsRestClient.ListResourceGroupLevelByRegionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _ascLocation, cancellationToken: cancellationToken);
+                    var response = _resourceGroupSecurityAlertAlertsRestClient.ListResourceGroupLevelByRegionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupSecurityAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -218,7 +216,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _resourceGroupSecurityAlertAlertsRestClient.GetResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, _ascLocation, alertName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _resourceGroupSecurityAlertAlertsRestClient.GetResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), alertName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -245,7 +243,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _resourceGroupSecurityAlertAlertsRestClient.GetResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, _ascLocation, alertName, cancellationToken: cancellationToken);
+                var response = _resourceGroupSecurityAlertAlertsRestClient.GetResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), alertName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

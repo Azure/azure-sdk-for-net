@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.SecurityCenter
     /// A Class representing a SubscriptionSecurityAlert along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionSecurityAlertResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionSecurityAlertResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AscLocationResource" /> using the GetSubscriptionSecurityAlert method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityCenterLocationResource" /> using the GetSubscriptionSecurityAlert method.
     /// </summary>
     public partial class SubscriptionSecurityAlertResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionSecurityAlertResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string ascLocation, string alertName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation ascLocation, string alertName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}";
             return new ResourceIdentifier(resourceId);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _subscriptionSecurityAlertAlertsRestClient.GetSubscriptionLevelAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionSecurityAlertAlertsRestClient.GetSubscriptionLevelAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionSecurityAlertResource(Client, response.Value), response.GetRawResponse());
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _subscriptionSecurityAlertAlertsRestClient.GetSubscriptionLevel(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _subscriptionSecurityAlertAlertsRestClient.GetSubscriptionLevel(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionSecurityAlertResource(Client, response.Value), response.GetRawResponse());
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _subscriptionSecurityAlertAlertsRestClient.UpdateSubscriptionLevelStateToDismissAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionSecurityAlertAlertsRestClient.UpdateSubscriptionLevelStateToDismissAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _subscriptionSecurityAlertAlertsRestClient.UpdateSubscriptionLevelStateToDismiss(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _subscriptionSecurityAlertAlertsRestClient.UpdateSubscriptionLevelStateToDismiss(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _subscriptionSecurityAlertAlertsRestClient.UpdateSubscriptionLevelStateToResolveAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionSecurityAlertAlertsRestClient.UpdateSubscriptionLevelStateToResolveAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _subscriptionSecurityAlertAlertsRestClient.UpdateSubscriptionLevelStateToResolve(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _subscriptionSecurityAlertAlertsRestClient.UpdateSubscriptionLevelStateToResolve(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _subscriptionSecurityAlertAlertsRestClient.UpdateSubscriptionLevelStateToActivateAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionSecurityAlertAlertsRestClient.UpdateSubscriptionLevelStateToActivateAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _subscriptionSecurityAlertAlertsRestClient.UpdateSubscriptionLevelStateToActivate(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _subscriptionSecurityAlertAlertsRestClient.UpdateSubscriptionLevelStateToActivate(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _subscriptionSecurityAlertAlertsRestClient.UpdateSubscriptionLevelStateToInProgressAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionSecurityAlertAlertsRestClient.UpdateSubscriptionLevelStateToInProgressAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _subscriptionSecurityAlertAlertsRestClient.UpdateSubscriptionLevelStateToInProgress(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _subscriptionSecurityAlertAlertsRestClient.UpdateSubscriptionLevelStateToInProgress(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
