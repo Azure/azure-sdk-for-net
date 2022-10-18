@@ -37,9 +37,11 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
 
             // provide unique app component id
             string appComponentId = "my-app-component-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
 
-            string appComponentConnectionString = "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo";
-            // all other data to be sent to AppCompoent
+            string appComponentConnectionString = "/subscriptions/" + subscriptionId + "/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo"
+
+            // all other data to be sent to AppComponent
             var data = new
             {
                 testid = testId,
@@ -51,7 +53,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
                         resourceId = appComponentConnectionString,
                         resourceName = "App-Service-Sample-Demo",
                         resourceType = "Microsoft.Web/sites",
-                        subscriptionId = "7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a"
+                        subscriptionId = subscriptionId
                     }
                 }
             };
