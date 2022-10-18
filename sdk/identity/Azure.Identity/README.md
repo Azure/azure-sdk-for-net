@@ -147,15 +147,15 @@ These examples demonstrate authenticating the `SecretClient` from the [Azure.Sec
 
 #### Authenticate with a user-assigned managed identity
 
-```c#
-var credential = new ManagedIdentityCredential(clientId: "<USER ASSIGNED MANAGED IDENTITY CLIENTID>");
+```C# Snippet:AuthenticatingWithManagedIdentityCredentialUserAssigned
+var credential = new ManagedIdentityCredential(clientId: userAssignedClientId);
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
 ```
 
 #### Authenticate with a system-assigned managed identity
 
-```c#
-var credential = new ManagedIdentityCredential()
+```C# Snippet:AuthenticatingWithManagedIdentityCredentialSystemAssigned
+var credential = new ManagedIdentityCredential();
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
 ```
 
@@ -164,9 +164,10 @@ var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), crede
 Credentials default to authenticating to the Azure AD endpoint for
 Azure Public Cloud. To access resources in other clouds, such as Azure Government
 or a private cloud, configure credentials with the `authority` argument.
-[AzureAuthorityHosts](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.azureauthorityhosts?view=azure-dotnet)
+[AzureAuthorityHosts](https://learn.microsoft.com/dotnet/api/azure.identity.azureauthorityhosts?view=azure-dotnet)
 defines authorities for well-known clouds:
-```c#
+
+```C# Snippet:AuthenticatingWithAuthorityHost
 var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { AuthorityHost = AzureAuthorityHosts.AzureGovernment });
 ```
 Not all credentials require this configuration. Credentials which authenticate
@@ -208,7 +209,7 @@ configuration.
 |-|-|-
 |[`AzureCliCredential`][ref_AzureCliCredential]|Authenticates in a development environment with the Azure CLI. | [Azure CLI authentication](https://learn.microsoft.com/cli/azure/authenticate-azure-cli)
 |[`AzurePowerShellCredential`][ref_AzurePowerShellCredential]|Authenticates in a development environment with the Azure PowerShell. | [Azure PowerShell authentication](https://learn.microsoft.com/powershell/azure/authenticate-azureps)
-|[`VisualStudioCredential`][ref_VisualStudioCredential]|Authenticates in a development environment with Visual Studio. | [Visual Studio configuration](https://learn.microsoft.com/en-us/dotnet/azure/configure-visual-studio)
+|[`VisualStudioCredential`][ref_VisualStudioCredential]|Authenticates in a development environment with Visual Studio. | [Visual Studio configuration](https://learn.microsoft.com/dotnet/azure/configure-visual-studio)
 |[`VisualStudioCodeCredential`][ref_VisualStudioCodeCredential]| Authenticates as the user signed in to the Visual Studio Code Azure Account extension. | [VS Code Azure Account extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account)
 
 > __Note:__ All credential implementations in the Azure Identity library are threadsafe, and a single credential instance can be used by multiple service clients.
