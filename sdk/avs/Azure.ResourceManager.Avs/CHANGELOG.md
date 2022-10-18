@@ -2,15 +2,9 @@
 
 ## 1.1.0 (Unreleased)
 
-Updated to [API version 2022-05-01](https://github.com/Azure/azure-rest-api-specs/pull/20873).
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
+
+- Upgraded API version to 2022-05-01
 
 ## 1.0.0 (2022-09-13)
 
