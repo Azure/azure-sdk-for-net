@@ -37,9 +37,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(uri.Host, uriBuilder.Host);
             Assert.AreEqual(uri.Port, uriBuilder.Port);
             Assert.AreEqual(uri.AbsolutePath, uriBuilder.Path);
-            Assert.AreEqual(uri.AbsolutePath.Length > 0, uriBuilder.PathLength > 0);
             Assert.AreEqual(uri.Query, uriBuilder.Query);
-            Assert.AreEqual(uri.Query.Length > 0, uriBuilder.QueryLength > 0);
             Assert.AreEqual(uri, uriBuilder.ToUri());
             Assert.AreSame(uri, uriBuilder.ToUri());
         }
@@ -181,7 +179,6 @@ namespace Azure.Core.Tests
             uriBuilder.AppendQuery("c", "d");
 
             Assert.AreEqual(expectedResult, uriBuilder.ToUri().ToString());
-            Assert.IsTrue(uriBuilder.QueryLength > 0);
         }
 
         [TestCase(null, new[] {""}, "q", "http://localhost/?q")]
