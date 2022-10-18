@@ -44,7 +44,6 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns></returns>
         public abstract IAsyncEnumerable<StorageResource> ListStorageResources(
-            ListStorageResourceOptions options = default,
             CancellationToken cancellationToken = default);
 
         /// <summary>

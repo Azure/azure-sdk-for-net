@@ -23,6 +23,7 @@ namespace Azure.Storage.Blobs.DataMovement
     {
         private BlobContainerClient _blobContainerClient;
         private List<string> _directoryPrefix;
+        private BlobDirectoryStorageResourceContainerOptions _options;
 
         /// <summary>
         /// Constructor for directory client.
@@ -37,12 +38,17 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <param name="directoryPrefix">
         /// The directory path of the blob virtual directory
         /// </param>
-        public BlobDirectoryStorageResourceContainer(BlobContainerClient containerClient, string directoryPrefix)
+        /// <param name="options"></param>
+        public BlobDirectoryStorageResourceContainer(
+            BlobContainerClient containerClient,
+            string directoryPrefix,
+            BlobDirectoryStorageResourceContainerOptions options = default)
         {
             Argument.AssertNotNull(containerClient, nameof(BlobContainerClient));
             Argument.AssertNotNullOrEmpty(directoryPrefix, nameof(directoryPrefix));
             _blobContainerClient = containerClient;
             _directoryPrefix = directoryPrefix.Split('/').ToList();
+            _options = options;
         }
 
         /// <summary>
@@ -132,11 +138,9 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <summary>
         /// Lists the child paths in the resource
         /// </summary>
-        /// <param name="options"></param>
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns>List of the child resources in the storage container</returns>
         public override async IAsyncEnumerable<StorageResource> ListStorageResources(
-            ListStorageResourceOptions options = default,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             AsyncPageable<BlobItem> pages = _blobContainerClient.GetBlobsAsync(

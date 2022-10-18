@@ -89,10 +89,7 @@ namespace Azure.Storage.Blobs.DataMovement
         ///
         /// Because blobs is a flat namespace, virtual directories will not be returned.
         /// </summary>
-        /// <returns>
-        /// <see cref="RequestFailedException"/> will be returned if a storage service request fails.</returns>
         public override async IAsyncEnumerable<StorageResource> ListStorageResources(
-            ListStorageResourceOptions options = default,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             AsyncPageable<BlobItem> pages = _blobContainerClient.GetBlobsAsync(

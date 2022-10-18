@@ -95,12 +95,10 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Lists storage resource in the filesystem.
         /// </summary>
-        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public override async IAsyncEnumerable<StorageResource> ListStorageResources(
-            ListStorageResourceOptions options = default,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {

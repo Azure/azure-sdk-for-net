@@ -43,12 +43,10 @@ namespace Azure.Storage.DataMovement
         /// Consumes the readable stream to upload
         /// </summary>
         /// <param name="stream"></param>
-        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public abstract Task ConsumeReadableStream(
             Stream stream,
-            ConsumeReadableStreamOptions options,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -64,7 +62,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task ConsumePartialOffsetReadableStream(
+        public abstract Task ConsumePartialReadableStream(
             long offset,
             long length,
             Stream stream,

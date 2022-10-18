@@ -10,7 +10,7 @@ using System.Threading;
 namespace Azure.Storage.DataMovement.Models
 {
     /// <summary>
-    /// Options for <see cref="StorageResource.ConsumePartialOffsetReadableStream(long, long, Stream, ConsumePartialReadableStreamOptions, CancellationToken)"/>
+    /// Options for <see cref="StorageResource.ConsumePartialReadableStream(long, long, Stream, ConsumePartialReadableStreamOptions, CancellationToken)"/>
     /// </summary>
     public class ConsumePartialReadableStreamOptions
     {

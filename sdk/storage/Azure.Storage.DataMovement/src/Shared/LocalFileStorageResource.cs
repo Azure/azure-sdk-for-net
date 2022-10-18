@@ -66,12 +66,10 @@ namespace Azure.Storage.DataMovement
         /// Will create file if it doesn't already exist.
         /// </summary>
         /// <param name="stream">Stream to append to the local file</param>
-        /// <param name="options"></param>
         /// <param name="token">Cancellation Token</param>
         /// <returns></returns>
         public override async Task ConsumeReadableStream(
             Stream stream,
-            ConsumeReadableStreamOptions options,
             CancellationToken token = default)
         {
             // Appends incoming stream to the local file resource
@@ -97,7 +95,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task ConsumePartialOffsetReadableStream(
+        public override async Task ConsumePartialReadableStream(
             long offset,
             long length,
             Stream stream,

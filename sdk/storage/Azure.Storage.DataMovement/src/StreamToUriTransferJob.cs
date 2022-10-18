@@ -107,7 +107,6 @@ namespace Azure.Storage.DataMovement
                 // Call listing operation on the source container
                 await foreach (StorageResource resource
                     in _sourceResourceContainer.ListStorageResources(
-                        options: default,
                         cancellationToken:_cancellationTokenSource.Token).ConfigureAwait(false))
                 {
                     // Pass each storage resource found in each list call

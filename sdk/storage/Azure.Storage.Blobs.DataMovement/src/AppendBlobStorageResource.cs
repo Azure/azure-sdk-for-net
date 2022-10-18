@@ -54,12 +54,10 @@ namespace Azure.Storage.Blobs.DataMovement
         /// Consumes stream to upload
         /// </summary>
         /// <param name="stream"></param>
-        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override async Task ConsumeReadableStream(
             Stream stream,
-            ConsumeReadableStreamOptions options,
             CancellationToken cancellationToken)
         {
             // TODO: change depending on type of blob and type single shot or parallel transfer
@@ -75,7 +73,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task ConsumePartialOffsetReadableStream(
+        public override async Task ConsumePartialReadableStream(
             long offset,
             long length,
             Stream stream,

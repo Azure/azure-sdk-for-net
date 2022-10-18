@@ -176,7 +176,6 @@ namespace Azure.Storage.DataMovement
             {
                 await _destinationResource.ConsumeReadableStream(
                         _sourceResource.GetConsumableStream(),
-                        default,
                         _cancellationTokenSource.Token).ConfigureAwait(false);
 
                 // Set completion status to completed
@@ -206,7 +205,7 @@ namespace Azure.Storage.DataMovement
                         _arrayPool,
                         _cancellationTokenSource.Token).ConfigureAwait(false);
                 }
-                await _destinationResource.ConsumePartialOffsetReadableStream(
+                await _destinationResource.ConsumePartialReadableStream(
                         offset,
                         blockLength,
                         slicedStream,

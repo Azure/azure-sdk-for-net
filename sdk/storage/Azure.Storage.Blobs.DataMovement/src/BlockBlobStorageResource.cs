@@ -22,15 +22,20 @@ namespace Azure.Storage.Blobs.DataMovement
     /// </summary>
     public class BlockBlobStorageResource : StorageResource
     {
-        private BlockBlobClient blobClient;
+        private BlockBlobClient _blobClient;
+        private BlockBlobStorageResourceOptions _options;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="blobClient"></param>
-        public BlockBlobStorageResource(BlockBlobClient blobClient)
+        /// <param name="options"></param>
+        public BlockBlobStorageResource(
+            BlockBlobClient blobClient,
+            BlockBlobStorageResourceOptions options = default)
         {
-            this.blobClient = blobClient;
+            _blobClient = blobClient;
+            _options = options;
         }
 
         /// <summary>
@@ -39,7 +44,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <returns></returns>
         public override Stream GetReadableInputStream()
         {
-            return blobClient.OpenRead();
+            return _blobClient.OpenRead();
         }
 
         /// <summary>
@@ -49,7 +54,7 @@ namespace Azure.Storage.Blobs.DataMovement
         public override Stream GetConsumableStream()
         {
             // TODO: check for proper conversion
-            return blobClient.OpenWrite(overwrite: false);
+            return _blobClient.OpenWrite(overwrite: false);
         }
 
         /// <summary>
@@ -65,16 +70,14 @@ namespace Azure.Storage.Blobs.DataMovement
         /// Consumes stream to upload
         /// </summary>
         /// <param name="stream"></param>
-        /// <param name="options"> </param>
         /// <param name="token"></param>
         /// <returns></returns>
         public override async Task ConsumeReadableStream(
             Stream stream,
-            ConsumeReadableStreamOptions options,
             CancellationToken token = default)
         {
             // TODO: change depending on type of blob and type single shot or parallel transfer
-            await blobClient.UploadAsync(stream, default, cancellationToken:token).ConfigureAwait(false);
+            await _blobClient.UploadAsync(stream, default, cancellationToken:token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -86,14 +89,14 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task ConsumePartialOffsetReadableStream(
+        public override async Task ConsumePartialReadableStream(
             long offset,
             long length,
             Stream stream,
             ConsumePartialReadableStreamOptions options,
             CancellationToken cancellationToken = default)
         {
-            await blobClient.StageBlockAsync(
+            await _blobClient.StageBlockAsync(
                 Shared.StorageExtensions.GenerateBlockId(offset),
                 stream,
                 // TODO #27253
@@ -125,7 +128,7 @@ namespace Azure.Storage.Blobs.DataMovement
         public override Uri GetUri()
         {
             // TODO: remove need to set all permissions and 7 days is how long the staged blocks live on the service
-            return blobClient.GenerateSasUri(Sas.BlobSasPermissions.All, DateTimeOffset.UtcNow.AddDays(7));
+            return _blobClient.GenerateSasUri(Sas.BlobSasPermissions.All, DateTimeOffset.UtcNow.AddDays(7));
         }
 
         /// <summary>
@@ -136,7 +139,7 @@ namespace Azure.Storage.Blobs.DataMovement
         public override async Task ConsumeUri(Uri uri)
         {
             // Change depending on type of copy
-            await blobClient.SyncUploadFromUriAsync(uri).ConfigureAwait(false);
+            await _blobClient.SyncUploadFromUriAsync(uri).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -145,7 +148,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <returns></returns>
         public override List<string> GetPath()
         {
-            return blobClient.Name.Split('/').ToList();
+            return _blobClient.Name.Split('/').ToList();
         }
 
         /// <summary>
@@ -154,7 +157,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// <returns>Returns the length of the storage resource</returns>
         public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken)
         {
-            BlobProperties properties = await blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            BlobProperties properties = await _blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             return properties.ToStorageResourceProperties();
         }
 
@@ -172,7 +175,7 @@ namespace Azure.Storage.Blobs.DataMovement
         /// </summary>
         public override async Task CommitBlockList(IEnumerable<string> base64BlockIds, CancellationToken cancellationToken)
         {
-            await blobClient.CommitBlockListAsync(
+            await _blobClient.CommitBlockListAsync(
                         base64BlockIds,
                         default,
                         cancellationToken).ConfigureAwait(false);

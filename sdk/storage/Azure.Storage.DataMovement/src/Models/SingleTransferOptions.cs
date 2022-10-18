@@ -26,13 +26,13 @@ namespace Azure.Storage.DataMovement.Models
         /// Transfers larger than this limit will continue being downloaded or uploaded
         /// in chunks of size <see cref="MaximumTransferChunkSize"/>.
         ///
-        /// On Uploads, if the value is not set, it will set at 256 MB.
+        /// On Uploads, if the value is not set, it will set at 256 MB. (TODO: We should lower to 32 MB)
         /// </summary>
         public long? InitialTransferSize { get; set; }
 
         /// <summary>
         /// Optional. Defines the checkpoint id that the transfer should continue from and will
-        /// grab transfer information from <see cref="TransferManagerOptions.Checkpointer"/>
+        /// grab transfer information from <see cref="TransferManagerOptions.Checkpointer"/>.
         /// </summary>
         public string ResumeFromCheckpointId { get; set; }
 
