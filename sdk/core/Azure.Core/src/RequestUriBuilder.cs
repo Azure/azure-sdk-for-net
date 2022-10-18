@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 
 namespace Azure.Core
@@ -116,7 +117,11 @@ namespace Azure.Core
             }
         }
 
-        private bool HasQuery => _queryIndex != -1;
+        /// <summary> Gets whether or not this instance of <see cref="RequestUriBuilder"/> has path. </summary>
+        public bool HasPath => _pathAndQuery.Length > 0;
+
+        /// <summary> Gets whether or not this instance of <see cref="RequestUriBuilder"/> has any query information. </summary>
+        public bool HasQuery => _queryIndex != -1;
 
         private int QueryLength => HasQuery ? _pathAndQuery.Length - _queryIndex : 0;
 
@@ -175,6 +180,17 @@ namespace Azure.Core
         /// <param name="escapeValue">Whether value should be escaped.</param>
         public void AppendQuery(string name, string value, bool escapeValue)
         {
+            AppendQuery(name.AsSpan(), value.AsSpan(), escapeValue);
+        }
+
+        /// <summary>
+        /// Appends a query parameter adding separator if required.
+        /// </summary>
+        /// <param name="name">The name of parameter.</param>
+        /// <param name="value">The value of parameter.</param>
+        /// <param name="escapeValue">Whether value should be escaped.</param>
+        public void AppendQuery(ReadOnlySpan<char> name, ReadOnlySpan<char> value, bool escapeValue)
+        {
             ResetUri();
             if (!HasQuery)
             {
@@ -185,15 +201,21 @@ namespace Azure.Core
             {
                 _pathAndQuery.Append('&');
             }
-
+#if NETCOREAPP2_1_OR_GREATER
             _pathAndQuery.Append(name);
+#else
+            _pathAndQuery.Append(name.ToString());
+#endif
             _pathAndQuery.Append('=');
-            if (escapeValue && !string.IsNullOrEmpty(value))
+            if (escapeValue && !value.IsEmpty)
             {
-                value = Uri.EscapeDataString(value);
+                value = Uri.EscapeDataString(value.ToString()).AsSpan();
             }
+#if NETCOREAPP2_1_OR_GREATER
             _pathAndQuery.Append(value);
-
+#else
+            _pathAndQuery.Append(value.ToString());
+#endif
             Debug.Assert(_pathAndQuery[_queryIndex] == QuerySeparator);
         }
 
@@ -220,34 +242,53 @@ namespace Azure.Core
                 return;
             }
 
+            AppendPath(value.AsSpan(), escape);
+        }
+
+        /// <summary>
+        /// Optionally escapes and appends the <paramref name="value"/> to <see cref="Path"/> without adding path separator.
+        /// If <paramref name="escape"/> is true, path segments and any other characters will be escaped, e.g. ":" will be escaped as "%3a".
+        /// </summary>
+        /// <param name="value">The value to optionally escape and append.</param>
+        /// <param name="escape">Whether value should be escaped.</param>
+        public void AppendPath(ReadOnlySpan<char> value, bool escape)
+        {
+            if (value.IsEmpty)
+            {
+                return;
+            }
+
             ResetUri();
             int startIndex = 0;
             if (PathLength == 1 && _pathAndQuery[0] == PathSeparator && value[0] == PathSeparator)
             {
                 startIndex = 1;
             }
+
+            var path = value.Slice(startIndex, value.Length - startIndex);
+            if (escape)
+            {
+                var stringPath = path.ToString();
+                stringPath = Uri.EscapeDataString(stringPath);
+                path = stringPath.AsSpan();
+            }
+
             if (HasQuery)
             {
-                string substring = value.Substring(startIndex, value.Length - startIndex);
-                if (escape)
-                {
-                    substring = Uri.EscapeDataString(substring);
-                }
-                _pathAndQuery.Insert(_queryIndex, substring);
-                _queryIndex += substring.Length;
+#if NETCOREAPP2_1_OR_GREATER
+                _pathAndQuery.Insert(_queryIndex, path);
+#else
+                _pathAndQuery.Insert(_queryIndex, path.ToString());
+#endif
+                _queryIndex += path.Length;
             }
             else
             {
-                if (escape)
-                {
-                    string substring = value.Substring(startIndex, value.Length - startIndex);
-                    substring = Uri.EscapeDataString(substring);
-                    _pathAndQuery.Append(substring);
-                }
-                else
-                {
-                    _pathAndQuery.Append(value, startIndex, value.Length - startIndex);
-                }
+#if NETCOREAPP2_1_OR_GREATER
+                _pathAndQuery.Append(path);
+#else
+                _pathAndQuery.Append(path.ToString());
+#endif
             }
         }
 
