@@ -5,6 +5,9 @@ using System;
 
 namespace Azure
 {
+    ///
+    /// NOTE: This type should not be used going forward. Use NoValueResponse<T> instead
+    ///
 #pragma warning disable SA1649 // File name should match first type name
     internal class NoBodyResponse<T> : Response<T>
 #pragma warning restore SA1649 // File name should match first type name
