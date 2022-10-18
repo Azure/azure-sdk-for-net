@@ -39,7 +39,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             string appComponentId = "my-app-component-id";
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
 
-            string appComponentConnectionString = "/subscriptions/" + subscriptionId + "/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo"
+            string appComponentConnectionString = "/subscriptions/" + subscriptionId + "/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo";
 
             // all other data to be sent to AppComponent
             var data = new
