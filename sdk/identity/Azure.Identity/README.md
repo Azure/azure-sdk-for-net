@@ -59,9 +59,9 @@ For systems without a default web browser, the `Connect-AzAccount` command will 
 ## Key concepts
 ### Credentials
 
-A credential is a class which contains or can obtain the data needed for a service client to authenticate requests. Service clients across Azure SDK accept credentials when they are constructed, and service clients use those credentials to authenticate requests to the service.
+A credential is a class which contains or can obtain the data needed for a service client to authenticate requests. Service clients across the Azure SDK accept credentials when they're constructed. Service clients use those credentials to authenticate requests to the service.
 
-The Azure Identity library focuses on OAuth authentication with Azure AD, and it offers a variety of credential classes capable of acquiring an AAD token to authenticate service requests. All of the credential classes in this library are implementations of the `TokenCredential` abstract class in [Azure.Core][azure_core_library], and any of them can be used to construct service clients capable of authenticating with a `TokenCredential`.
+The Azure Identity library focuses on OAuth authentication with Azure AD, and it offers a variety of credential classes capable of acquiring an Azure AD token to authenticate service requests. All of the credential classes in this library are implementations of the `TokenCredential` abstract class in [Azure.Core][azure_core_library], and any of them can be used to construct service clients capable of authenticating with a `TokenCredential`.
 
 See [Credential Classes](#credential-classes) for a complete listing of available credential types.
 
@@ -104,8 +104,8 @@ var credential = new DefaultAzureCredential(includeInteractiveCredentials: true)
 var eventHubClient = new EventHubProducerClient("myeventhub.eventhubs.windows.net", "myhubpath", credential);
 ```
 
-### Specify a user assigned managed identity with `DefaultAzureCredential`
-Many Azure hosts allow the assignment of a user assigned managed identity. This example demonstrates configuring the `DefaultAzureCredential` to authenticate a user assigned identity when deployed to an azure host. It then authenticates a `BlobClient` from the [Azure.Storage.Blobs][blobs_client_library] client library with credential.
+### Specify a user-assigned managed identity with `DefaultAzureCredential`
+Many Azure hosts allow the assignment of a user-assigned managed identity. This example demonstrates configuring the `DefaultAzureCredential` to authenticate a user-assigned identity when deployed to an Azure host. It then authenticates a `BlobClient` from the [Azure.Storage.Blobs][blobs_client_library] client library with credential.
 
 ```C# Snippet:UserAssignedManagedIdentity
 // When deployed to an azure host, the default azure credential will authenticate the specified user assigned managed identity.
@@ -131,7 +131,7 @@ var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.wi
 
 ## Managed identity support
 
-The [Managed identity authentication](https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview) is supported via either the `DefaultAzureCredential` or the `ManagedIdentityCredential` directly for the following Azure Services:
+The [Managed identity authentication](https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview) is supported via either the `DefaultAzureCredential` or the `ManagedIdentityCredential` directly for the following Azure services:
 
 * [Azure App Service and Azure Functions](https://learn.microsoft.com/azure/app-service/overview-managed-identity?tabs=dotnet)
 * [Azure Arc](https://learn.microsoft.com/azure/azure-arc/servers/managed-identity-authentication)
@@ -267,7 +267,7 @@ catch (AuthenticationFailedException e)
 }
 ```
 
-For more details on dealing with errors arising from failed requests to Azure AD, or managed identity endpoints please refer to the Azure AD [documentation on authorization error codes][aad_err_doc].
+For more information on dealing with errors arising from failed requests to Azure AD or managed identity endpoints, see the Azure AD [documentation on authorization error codes][aad_err_doc].
 
 ### Logging
 
