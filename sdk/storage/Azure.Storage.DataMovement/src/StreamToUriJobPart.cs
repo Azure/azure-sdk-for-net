@@ -118,7 +118,7 @@ namespace Azure.Storage.DataMovement
                         blockSize,
                         fileLength.Value).ConfigureAwait(false);
 
-                    if (CanCommitListType.CanCommitBlockList == _sourceResource.CanCommitBlockListType())
+                    if (RequiresCommitListType.RequiresCommitListCall == _sourceResource.CanCommitBlockListType())
                     {
                         _commitBlockHandler = GetCommitController(
                             expectedLength: fileLength.Value,

@@ -31,7 +31,7 @@ namespace Azure.Storage.DataMovement
     public partial class LocalFileStorageResource : Azure.Storage.DataMovement.StorageResource
     {
         public LocalFileStorageResource(string path) { }
-        public override Azure.Storage.DataMovement.Models.CanCommitListType CanCommitBlockListType() { throw null; }
+        public override Azure.Storage.DataMovement.Models.RequiresCommitListType CanCommitBlockListType() { throw null; }
         public override Azure.Storage.DataMovement.StreamConsumableType CanConsumeReadableStream() { throw null; }
         public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri() { throw null; }
         public override System.Threading.Tasks.Task CommitBlockList(System.Collections.Generic.IEnumerable<string> base64BlockIds, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -60,7 +60,7 @@ namespace Azure.Storage.DataMovement
     public abstract partial class StorageResource
     {
         protected StorageResource() { }
-        public abstract Azure.Storage.DataMovement.Models.CanCommitListType CanCommitBlockListType();
+        public abstract Azure.Storage.DataMovement.Models.RequiresCommitListType CanCommitBlockListType();
         public abstract Azure.Storage.DataMovement.StreamConsumableType CanConsumeReadableStream();
         public abstract Azure.Storage.DataMovement.ProduceUriType CanProduceUri();
         public abstract System.Threading.Tasks.Task CommitBlockList(System.Collections.Generic.IEnumerable<string> base64BlockIds, System.Threading.CancellationToken cancellationToken);
@@ -134,11 +134,6 @@ namespace Azure.Storage.DataMovement
 }
 namespace Azure.Storage.DataMovement.Models
 {
-    public enum CanCommitListType
-    {
-        None = -1,
-        CanCommitBlockList = 0,
-    }
     public partial class ConsumePartialReadableStreamOptions
     {
         public ConsumePartialReadableStreamOptions() { }
@@ -170,6 +165,11 @@ namespace Azure.Storage.DataMovement.Models
         public static bool operator ==(Azure.Storage.DataMovement.Models.ContainerTransferOptions left, Azure.Storage.DataMovement.Models.ContainerTransferOptions right) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static bool operator !=(Azure.Storage.DataMovement.Models.ContainerTransferOptions left, Azure.Storage.DataMovement.Models.ContainerTransferOptions right) { throw null; }
+    }
+    public enum RequiresCommitListType
+    {
+        None = 0,
+        RequiresCommitListCall = 1,
     }
     public enum ServiceCopyStatus
     {

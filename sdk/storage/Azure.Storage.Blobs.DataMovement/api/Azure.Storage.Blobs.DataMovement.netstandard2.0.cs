@@ -21,7 +21,7 @@ namespace Azure.Storage.Blobs.DataMovement
     public partial class BlockBlobStorageResource : Azure.Storage.DataMovement.StorageResource
     {
         public BlockBlobStorageResource(Azure.Storage.Blobs.Specialized.BlockBlobClient blobClient, Azure.Storage.Blobs.DataMovement.BlockBlobStorageResourceOptions options = null) { }
-        public override Azure.Storage.DataMovement.Models.CanCommitListType CanCommitBlockListType() { throw null; }
+        public override Azure.Storage.DataMovement.Models.RequiresCommitListType CanCommitBlockListType() { throw null; }
         public override Azure.Storage.DataMovement.StreamConsumableType CanConsumeReadableStream() { throw null; }
         public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri() { throw null; }
         public override System.Threading.Tasks.Task CommitBlockList(System.Collections.Generic.IEnumerable<string> base64BlockIds, System.Threading.CancellationToken cancellationToken) { throw null; }

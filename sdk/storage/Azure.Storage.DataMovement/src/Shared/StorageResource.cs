@@ -104,8 +104,8 @@ namespace Azure.Storage.DataMovement
         /// Determines whether or not the resource requires a commit block list (e.g. Commit Block List)
         /// to determine which blocks will make up the resource.
         /// </summary>
-        /// <returns><see cref="CanCommitListType"/></returns>
-        public abstract CanCommitListType CanCommitBlockListType();
+        /// <returns><see cref="RequiresCommitListType"/></returns>
+        public abstract RequiresCommitListType CanCommitBlockListType();
 
         /// <summary>
         /// Commits the block list given.

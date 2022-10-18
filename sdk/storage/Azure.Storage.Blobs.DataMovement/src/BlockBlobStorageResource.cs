@@ -165,9 +165,9 @@ namespace Azure.Storage.Blobs.DataMovement
         /// Does not require Commit List operation.
         /// </summary>
         /// <returns></returns>
-        public override CanCommitListType CanCommitBlockListType()
+        public override RequiresCommitListType CanCommitBlockListType()
         {
-            return CanCommitListType.CanCommitBlockList;
+            return RequiresCommitListType.RequiresCommitListCall;
         }
 
         /// <summary>
