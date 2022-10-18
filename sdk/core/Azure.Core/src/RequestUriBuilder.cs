@@ -117,15 +117,13 @@ namespace Azure.Core
             }
         }
 
-        /// <summary> Gets whether or not this instance of <see cref="RequestUriBuilder"/> has path. </summary>
-        public bool HasPath => _pathAndQuery.Length > 0;
+        private bool HasQuery => _queryIndex != -1;
 
-        /// <summary> Gets whether or not this instance of <see cref="RequestUriBuilder"/> has any query information. </summary>
-        public bool HasQuery => _queryIndex != -1;
+        /// <summary> Gets the length of the path in this instance of <see cref="RequestUriBuilder"/>. </summary>
+        protected int PathLength => HasQuery ? _queryIndex : _pathAndQuery.Length;
 
-        private int QueryLength => HasQuery ? _pathAndQuery.Length - _queryIndex : 0;
-
-        private int PathLength => HasQuery ? _queryIndex : _pathAndQuery.Length;
+        /// <summary> Gets the length of the query in this instance of <see cref="RequestUriBuilder"/>. </summary>
+        protected int QueryLength => HasQuery ? _pathAndQuery.Length - _queryIndex : 0;
 
         /// <summary>
         /// Gets the path and query string to the resource referenced by the URI.
@@ -180,7 +178,13 @@ namespace Azure.Core
         /// <param name="escapeValue">Whether value should be escaped.</param>
         public void AppendQuery(string name, string value, bool escapeValue)
         {
-            AppendQuery(name.AsSpan(), value.AsSpan(), escapeValue);
+            if (escapeValue && !string.IsNullOrEmpty(value))
+            {
+                // This can be optimized when https://github.com/dotnet/runtime/issues/32606 is implemented
+                value = Uri.EscapeDataString(value);
+            }
+
+            AppendQuery(name.AsSpan(), value.AsSpan(), false);
         }
 
         /// <summary>
@@ -209,13 +213,17 @@ namespace Azure.Core
             _pathAndQuery.Append('=');
             if (escapeValue && !value.IsEmpty)
             {
-                value = Uri.EscapeDataString(value.ToString()).AsSpan();
+                _pathAndQuery.Append(Uri.EscapeDataString(value.ToString()));
             }
+            else
+            {
 #if NETCOREAPP2_1_OR_GREATER
-            _pathAndQuery.Append(value);
+                _pathAndQuery.Append(value);
 #else
-            _pathAndQuery.Append(value.ToString());
+                _pathAndQuery.Append(value.ToString());
 #endif
+            }
+
             Debug.Assert(_pathAndQuery[_queryIndex] == QuerySeparator);
         }
 
@@ -265,29 +273,38 @@ namespace Azure.Core
                 startIndex = 1;
             }
 
-            var path = value.Slice(startIndex, value.Length - startIndex);
+#if NETCOREAPP2_1_OR_GREATER
+            var path = value.Slice(startIndex);
+#else
+            var stringPath = value.Slice(startIndex).ToString();
+#endif
+
             if (escape)
             {
-                var stringPath = path.ToString();
+                // This can be optimized when https://github.com/dotnet/runtime/issues/32606 is implemented
+#if NETCOREAPP2_1_OR_GREATER
+                path = Uri.EscapeDataString(path.ToString()).AsSpan();
+#else
                 stringPath = Uri.EscapeDataString(stringPath);
-                path = stringPath.AsSpan();
+#endif
             }
 
             if (HasQuery)
             {
 #if NETCOREAPP2_1_OR_GREATER
                 _pathAndQuery.Insert(_queryIndex, path);
-#else
-                _pathAndQuery.Insert(_queryIndex, path.ToString());
-#endif
                 _queryIndex += path.Length;
+#else
+                _pathAndQuery.Insert(_queryIndex, stringPath);
+                _queryIndex += stringPath.Length;
+#endif
             }
             else
             {
 #if NETCOREAPP2_1_OR_GREATER
                 _pathAndQuery.Append(path);
 #else
-                _pathAndQuery.Append(path.ToString());
+                _pathAndQuery.Append(stringPath);
 #endif
             }
         }
