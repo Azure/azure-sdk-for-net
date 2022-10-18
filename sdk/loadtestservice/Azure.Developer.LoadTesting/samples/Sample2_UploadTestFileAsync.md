@@ -31,7 +31,7 @@ try
         Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "sample.jmx")
         ));
 
-    // if the test is created successfully, printing response
+    // if the file is uploaded successfully, printing response
     Console.WriteLine(response.Content);
 }
 catch (Exception e)

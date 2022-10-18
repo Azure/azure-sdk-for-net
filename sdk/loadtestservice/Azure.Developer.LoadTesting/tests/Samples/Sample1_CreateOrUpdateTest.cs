@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.Developer.LoadTesting.Tests.Samples
@@ -46,11 +47,41 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
                     engineInstances = 1,
                     splitAllCSVs = false,
                 },
-                secrets = new { },
-                enviornmentVariables = new { },
+                secrets = new {
+                    secret1 = new
+                    {
+                        value = "https://sdk-testing-keyvault.vault.azure.net/secrets/sdk-secret",
+                        type = "AKV_SECRET_URI"
+                    }
+                },
+                enviornmentVariables = new {
+                    myVariable = "my-value"
+                },
                 passFailCriteria = new
                 {
-                    passFailMetrics = new { },
+                    passFailMetrics = new {
+                        condition1 = new {
+                            clientmetric = "response_time_ms",
+                            aggregate = "avg",
+                            condition = ">",
+                            value = 300
+                        },
+                        condition2 = new
+                        {
+                            clientmetric = "error",
+                            aggregate = "percentage",
+                            condition = ">",
+                            value = 50
+                        },
+                        condition3 = new
+                        {
+                            clientmetric = "latency",
+                            aggregate = "avg",
+                            condition = ">",
+                            value = 200,
+                            requestName = "GetCustomerDetails"
+                        }
+                    },
                 }
             };
 

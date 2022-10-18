@@ -44,9 +44,10 @@ var data = new
 
 try
 {
-    // uploading file
+    // create or update app component
     Response response = loadTestAdministrationClient.CreateOrUpdateAppComponents(appComponentId, RequestContent.Create(data));
-    // if the test is created successfully, printing response
+
+    // if successfully, printing response
     Console.WriteLine(response.Content);
 }
 catch (Exception e)

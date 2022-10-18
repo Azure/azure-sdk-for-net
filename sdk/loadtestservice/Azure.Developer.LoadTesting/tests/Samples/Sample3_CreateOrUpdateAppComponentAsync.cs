@@ -58,9 +58,10 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
 
             try
             {
-                // uploading file
+                // create or update app component
                 Response response = await loadTestAdministrationClient.CreateOrUpdateAppComponentsAsync(appComponentId, RequestContent.Create(data));
-                // if the test is created successfully, printing response
+
+                // if successfully, printing response
                 Console.WriteLine(response.Content);
             }
             catch (Exception e)

@@ -51,9 +51,10 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
 
             try
             {
-                // uploading file
+                // starting test run
                 Response response = testRunClient.CreateAndUpdateTest(testRunId, RequestContent.Create(data));
-                // if the test is created successfully, printing response
+
+                // if successfully, printing response
                 Console.WriteLine(response.Content);
             }
             catch (Exception e)
