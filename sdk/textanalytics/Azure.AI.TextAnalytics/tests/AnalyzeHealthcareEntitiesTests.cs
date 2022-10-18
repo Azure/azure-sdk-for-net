@@ -445,6 +445,7 @@ namespace Azure.AI.TextAnalytics.Tests
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
             {
                 FhirVersion = WellKnownFhirVersion.V4_0_1,
+                DocumentType = HealthcareDocumentType.DischargeSummary
             });
 
             await operation.WaitForCompletionAsync();

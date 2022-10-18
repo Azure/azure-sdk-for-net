@@ -37,12 +37,23 @@ namespace Azure.AI.TextAnalytics
         /// </remarks>
         public WellKnownFhirVersion? FhirVersion { get; set; }
 
+        /// <summary>
+        /// The document type, which can be provided as a hint to improve the production of the <see cref="AnalyzeHealthcareEntitiesResult.FhirBundle"/> when
+        /// the <see cref="AnalyzeHealthcareEntitiesOptions.FhirVersion"/> property is specified. The default behavior is equivalent to using
+        /// <see cref="HealthcareDocumentType.None"/>.
+        /// </summary>
+        /// <remarks>
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// </remarks>
+        public HealthcareDocumentType? DocumentType { get; set; }
+
         /// <inheritdoc/>
         internal override void CheckSupported(TextAnalyticsClientOptions.ServiceVersion current)
         {
             base.CheckSupported(current);
             Validation.SupportsProperty(this, DisplayName, nameof(DisplayName), TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, current);
             Validation.SupportsProperty(this, FhirVersion, nameof(FhirVersion), TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, current);
+            Validation.SupportsProperty(this, DocumentType, nameof(DocumentType), TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, current);
         }
     }
 }
