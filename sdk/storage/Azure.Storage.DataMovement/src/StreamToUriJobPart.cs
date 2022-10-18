@@ -40,7 +40,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="maximumTransferChunkSize"></param>
         /// <param name="initialTransferSize"></param>
         /// <param name="errorHandling"></param>
-        /// <param name="writer"></param>
+        /// <param name="checkpointer"></param>
         /// <param name="uploadPool"></param>
         /// <param name="events"></param>
         /// <param name="cancellationTokenSource"></param>
@@ -51,7 +51,7 @@ namespace Azure.Storage.DataMovement
             long? maximumTransferChunkSize,
             long initialTransferSize,
             ErrorHandlingOptions errorHandling,
-            PlanJobWriter writer,
+            TransferCheckpointer checkpointer,
             ArrayPool<byte> uploadPool,
             TransferEventsInternal events,
             CancellationTokenSource cancellationTokenSource)
@@ -61,7 +61,7 @@ namespace Azure.Storage.DataMovement
                   maximumTransferChunkSize,
                   initialTransferSize,
                   errorHandling,
-                  writer,
+                  checkpointer,
                   uploadPool,
                   events,
                   cancellationTokenSource)

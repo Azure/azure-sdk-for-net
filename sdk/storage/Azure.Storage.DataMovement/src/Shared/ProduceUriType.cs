@@ -21,6 +21,6 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Cannot produce Uri
         /// </summary>
-        NoUri = ~0,
+        NoUri = 0,
     }
 }

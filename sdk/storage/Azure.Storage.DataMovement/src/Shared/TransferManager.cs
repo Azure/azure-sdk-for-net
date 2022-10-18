@@ -70,8 +70,8 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Array pools for reading from streams to upload
         /// </summary>
-        public ArrayPool<byte> UploadArrayPool => _arrayPool;
-        internal ArrayPool<byte> _arrayPool;
+        internal ArrayPool<byte> UploadArrayPool => _arrayPool;
+        private ArrayPool<byte> _arrayPool;
 
         /// <summary>
         /// Constructor
@@ -276,7 +276,7 @@ namespace Azure.Storage.DataMovement
                         destinationResource: destinationResource,
                         transferOptions: transferOptions,
                         queueChunkTask: QueueJobChunkAsync,
-                        CheckPointFolderPath: Options.CheckPointFolderPath,
+                        CheckPointFolderPath: Options?.Checkpointer,
                         errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
                         arrayPool: _arrayPool);
                     // Queue Job
@@ -344,7 +344,7 @@ namespace Azure.Storage.DataMovement
                         destinationResource: destinationResource,
                         transferOptions: transferOptions,
                         queueChunkTask: QueueJobChunkAsync,
-                        CheckPointFolderPath: Options.CheckPointFolderPath,
+                        checkpointer:Options?.Checkpointer,
                         errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
                         arrayPool: _arrayPool);
                     // Queue Job

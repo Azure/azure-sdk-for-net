@@ -33,7 +33,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Plan file writer for hte respective job
         /// </summary>
-        internal PlanJobWriter _planJobWriter { get; set; }
+        internal TransferCheckpointer _checkpointer { get; set; }
 
         /// <summary>
         /// Source resource
@@ -88,7 +88,7 @@ namespace Azure.Storage.DataMovement
             long? maximumTransferChunkSize,
             long initialTransferSize,
             ErrorHandlingOptions errorHandling,
-            PlanJobWriter writer,
+            TransferCheckpointer checkpointer,
             ArrayPool<byte> arrayPool,
             TransferEventsInternal events,
             CancellationTokenSource cancellationToken)
@@ -97,7 +97,7 @@ namespace Azure.Storage.DataMovement
             _sourceResource = sourceResource;
             _destinationResource = destinationResource;
             _errorHandling = errorHandling;
-            _planJobWriter = writer;
+            _checkpointer = checkpointer;
             _cancellationTokenSource = cancellationToken;
             _maximumTransferChunkSize = maximumTransferChunkSize;
             _initialTransferSize = initialTransferSize;

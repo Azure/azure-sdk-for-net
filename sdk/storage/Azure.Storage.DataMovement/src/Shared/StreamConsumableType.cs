@@ -21,6 +21,6 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Defines that the readable stream is not consumable.
         /// </summary>
-        NotConsumable = ~0
+        NotConsumable = 0
     }
 }

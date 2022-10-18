@@ -26,6 +26,6 @@ namespace Azure.Storage.DataMovement
         /// quickly on encountering failures from the storage service
         /// and filesystem failures.
         /// </summary>
-        PauseOnAllFailures = ~0,
+        PauseOnAllFailures = 0,
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.Storage.DataMovement
     [System.FlagsAttribute]
     public enum ErrorHandlingOptions
     {
-        PauseOnAllFailures = -1,
+        PauseOnAllFailures = 0,
         ContinueOnFailure = 1,
     }
     public partial class LocalDirectoryStorageResourceContainer : Azure.Storage.DataMovement.StorageResourceContainer
@@ -44,10 +44,17 @@ namespace Azure.Storage.DataMovement
         public override System.IO.Stream GetReadableInputStream() { throw null; }
         public override System.Uri GetUri() { throw null; }
     }
+    public partial class LocalTransferCheckpointer : Azure.Storage.DataMovement.TransferCheckpointer
+    {
+        public LocalTransferCheckpointer(string folderPath) { }
+        public override System.Threading.Tasks.Task<System.IO.Stream> ReadCheckPointStreamAsync(string id) { throw null; }
+        public override System.Threading.Tasks.Task<bool> TryRemoveTransfer(string id) { throw null; }
+        public override System.Threading.Tasks.Task WriteToCheckpoint(string id, long offset, byte[] buffer) { throw null; }
+    }
     [System.FlagsAttribute]
     public enum ProduceUriType
     {
-        NoUri = -1,
+        NoUri = 0,
         ProducesUri = 1,
     }
     public abstract partial class StorageResource
@@ -89,22 +96,28 @@ namespace Azure.Storage.DataMovement
     }
     public enum StorageTransferStatus
     {
-        Queued = 1,
-        InProgress = 2,
-        Paused = 3,
-        Completed = 4,
+        Queued = 0,
+        InProgress = 1,
+        Paused = 2,
+        Completed = 3,
     }
     [System.FlagsAttribute]
     public enum StreamConsumableType
     {
-        NotConsumable = -1,
+        NotConsumable = 0,
         Consumable = 1,
+    }
+    public abstract partial class TransferCheckpointer
+    {
+        protected TransferCheckpointer() { }
+        public abstract System.Threading.Tasks.Task<System.IO.Stream> ReadCheckPointStreamAsync(string id);
+        public abstract System.Threading.Tasks.Task<bool> TryRemoveTransfer(string id);
+        public abstract System.Threading.Tasks.Task WriteToCheckpoint(string id, long offset, byte[] buffer);
     }
     public partial class TransferManager
     {
         protected TransferManager() { }
         public TransferManager(Azure.Storage.DataMovement.TransferManagerOptions options) { }
-        public System.Buffers.ArrayPool<byte> UploadArrayPool { get { throw null; } }
         public System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartTransferAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.Storage.DataMovement.StorageResource destinationResource, Azure.Storage.DataMovement.Models.SingleTransferOptions transferOptions = null) { throw null; }
         public System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartTransferAsync(Azure.Storage.DataMovement.StorageResourceContainer sourceResource, Azure.Storage.DataMovement.StorageResourceContainer destinationResource, Azure.Storage.DataMovement.Models.ContainerTransferOptions transferOptions = null) { throw null; }
         public System.Threading.Tasks.Task<bool> TryPauseAllTransfersAsync() { throw null; }
@@ -114,7 +127,7 @@ namespace Azure.Storage.DataMovement
     public partial class TransferManagerOptions
     {
         public TransferManagerOptions() { }
-        public string CheckPointFolderPath { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.TransferCheckpointer Checkpointer { get { throw null; } set { } }
         public Azure.Storage.DataMovement.ErrorHandlingOptions ErrorHandling { get { throw null; } set { } }
         public int? MaximumConcurrency { get { throw null; } set { } }
     }
@@ -139,10 +152,10 @@ namespace Azure.Storage.DataMovement.Models
     public partial class ContainerTransferOptions : System.IEquatable<Azure.Storage.DataMovement.Models.ContainerTransferOptions>
     {
         public ContainerTransferOptions() { }
-        public string CheckpointTransferId { get { throw null; } set { } }
         public Azure.Storage.DataMovement.StorageResourceCreateMode CreateMode { get { throw null; } set { } }
         public long? InitialTransferSize { get { throw null; } set { } }
         public long? MaximumTransferChunkSize { get { throw null; } set { } }
+        public string ResumeFromCheckpointId { get { throw null; } set { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.SingleTransferCompletedEventArgs> SingleTransferCompletedEventHandler { add { } remove { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferFailedEventArgs> TransferFailedEventHandler { add { } remove { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferSkippedEventArgs> TransferSkippedEventHandler { add { } remove { } }
@@ -180,10 +193,10 @@ namespace Azure.Storage.DataMovement.Models
     public partial class SingleTransferOptions : System.IEquatable<Azure.Storage.DataMovement.Models.SingleTransferOptions>
     {
         public SingleTransferOptions() { }
-        public string CheckpointTransferId { get { throw null; } set { } }
         public Azure.Storage.DataMovement.StorageResourceCreateMode CreateMode { get { throw null; } set { } }
         public long? InitialTransferSize { get { throw null; } set { } }
         public long? MaximumTransferChunkSize { get { throw null; } set { } }
+        public string ResumeFromCheckpointId { get { throw null; } set { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferFailedEventArgs> TransferFailedEventHandler { add { } remove { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferStatusEventArgs> TransferStatusEventHandler { add { } remove { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

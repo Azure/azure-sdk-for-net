@@ -15,21 +15,21 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The Job has been queued up but has not yet begun any transfers.
         /// </summary>
-        Queued = 1,
+        Queued = 0,
 
         /// <summary>
         /// The Job has started, but has not yet completed.
         /// </summary>
-        InProgress = 2,
+        InProgress = 1,
 
         /// <summary>
         /// Paused jobs
         /// </summary>
-        Paused = 3,
+        Paused = 2,
 
         /// <summary>
         /// The Job has completed.
         /// </summary>
-        Completed = 4
+        Completed = 3
     };
 }

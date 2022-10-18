@@ -38,7 +38,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Plan file writer for the respective job
         /// </summary>
-        internal PlanJobWriter PlanJobWriter { get; set; }
+        internal TransferCheckpointer _checkpointer { get; set; }
 
         /// <summary>
         /// Source resource
@@ -112,13 +112,13 @@ namespace Azure.Storage.DataMovement
             long? maximumTransferChunkSize,
             long? initialTransferSize,
             QueueChunkTaskInternal queueChunkTask,
-            string CheckPointFolderPath,
+            TransferCheckpointer checkPointer,
             ErrorHandlingOptions errorHandling,
             ArrayPool<byte> arrayPool)
         {
             _dataTransfer = dataTransfer ?? throw Errors.ArgumentNull(nameof(dataTransfer));
             _errorHandling = errorHandling;
-            PlanJobWriter = new PlanJobWriter(_dataTransfer.Id, CheckPointFolderPath);
+            _checkpointer = checkPointer;
             QueueChunkTask = queueChunkTask;
             _isSingleResource = true;
 
@@ -149,14 +149,14 @@ namespace Azure.Storage.DataMovement
             StorageResource destinationResource,
             SingleTransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
-            string CheckPointFolderPath,
+            TransferCheckpointer checkpointer,
             ErrorHandlingOptions errorHandling,
             ArrayPool<byte> arrayPool)
             : this(dataTransfer,
                   transferOptions.MaximumTransferChunkSize,
                   transferOptions.InitialTransferSize,
                   queueChunkTask,
-                  CheckPointFolderPath,
+                  checkpointer,
                   errorHandling,
                   arrayPool)
         {
@@ -177,14 +177,14 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer destinationResource,
             ContainerTransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
-            string CheckPointFolderPath,
+            TransferCheckpointer checkpointer,
             ErrorHandlingOptions errorHandling,
             ArrayPool<byte> arrayPool)
             : this(dataTransfer,
                   transferOptions.MaximumTransferChunkSize,
                   transferOptions.InitialTransferSize,
                   queueChunkTask,
-                  CheckPointFolderPath,
+                  checkpointer,
                   errorHandling,
                   arrayPool)
         {

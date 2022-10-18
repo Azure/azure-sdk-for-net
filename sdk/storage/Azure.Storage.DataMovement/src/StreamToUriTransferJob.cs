@@ -23,7 +23,7 @@ namespace Azure.Storage.DataMovement
             StorageResource destinationResource,
             SingleTransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
-            string CheckPointFolderPath,
+            TransferCheckpointer CheckPointFolderPath,
             ErrorHandlingOptions errorHandling,
             ArrayPool<byte> arrayPool)
             : base(dataTransfer,
@@ -46,7 +46,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer destinationResource,
             ContainerTransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
-            string CheckPointFolderPath,
+            TransferCheckpointer checkpointer,
             ErrorHandlingOptions errorHandling,
             ArrayPool<byte> arrayPool)
             : base(dataTransfer,
@@ -54,7 +54,7 @@ namespace Azure.Storage.DataMovement
                   destinationResource,
                   transferOptions,
                   queueChunkTask,
-                  CheckPointFolderPath,
+                  checkpointer,
                   errorHandling,
                   arrayPool)
         {
@@ -97,7 +97,7 @@ namespace Azure.Storage.DataMovement
                     maximumTransferChunkSize: _maximumTransferChunkSize,
                     initialTransferSize: _initialTransferSize,
                     errorHandling: _errorHandling,
-                    writer: PlanJobWriter,
+                    checkpointer: _checkpointer,
                     uploadPool: _arrayPool,
                     events: _events,
                     cancellationTokenSource: _cancellationTokenSource);
@@ -118,7 +118,7 @@ namespace Azure.Storage.DataMovement
                         maximumTransferChunkSize: _maximumTransferChunkSize,
                         initialTransferSize: _initialTransferSize,
                         errorHandling: _errorHandling,
-                        writer: PlanJobWriter,
+                        checkpointer: _checkpointer,
                         uploadPool: _arrayPool,
                         events: _events,
                         cancellationTokenSource: _cancellationTokenSource);

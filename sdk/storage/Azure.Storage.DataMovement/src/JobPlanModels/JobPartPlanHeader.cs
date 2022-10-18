@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
@@ -164,7 +165,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Whether to preserve SMB info
         /// </summary>
-        public bool PreserveSMBInf;
+        public bool PreserveSMBInfo;
 
         /// <summary>
         /// S2SGetPropertiesInBackend represents whether to enable get S3 objects' or Azure files' properties during s2s copy in backend.
@@ -196,9 +197,15 @@ namespace Azure.Storage.DataMovement
         // jobStatus_doNotUse should not be directly accessed anywhere except by the Status and SetJobStatus
         public uint atomicJobStatus;
 
+        public uint atomicPartStatus;
+
         /// <summary>
         /// For delete operation specify what to do with snapshots
         /// </summary>
         public byte DeleteSnapshotsOption;
+
+        public byte PermanentDeleteOption;
+
+        public JobPartPlanRehydratePriorityType RehydratePriorityType;
 }
 }

@@ -756,7 +756,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
 
                 ContainerTransferOptions resumeOptions = new ContainerTransferOptions()
                 {
-                    CheckpointTransferId = jobProperties2.Id,
+                    ResumeFromCheckpointId = jobProperties2.Id,
                 };
 
                 //  When they decide to allow the transferManager to resume
@@ -869,7 +869,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                     ContainerTransferOptions resumeOptions = new ContainerTransferOptions()
                     {
                         // Specify job id to resume from.
-                        CheckpointTransferId = dataTransferInfo2.Id
+                        ResumeFromCheckpointId = dataTransferInfo2.Id
                     };
                     // We need to reprovide the crendentials / resources
                     await dataController.StartTransferAsync(

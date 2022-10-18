@@ -32,8 +32,8 @@ namespace Azure.Storage.DataMovement
         public int? MaximumConcurrency { get; set; }
 
         /// <summary>
-        /// Optional. Can specify where the job plan files will live.
+        /// Optional. Defines the checkpoint id that the transfer should continue from.
         /// </summary>
-        public string CheckPointFolderPath { get; set; }
+        public TransferCheckpointer Checkpointer { get; set; }
     }
 }
