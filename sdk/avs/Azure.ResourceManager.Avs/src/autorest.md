@@ -108,6 +108,9 @@ rename-mapping:
   EncryptionState: AvsEncryptionState
   EncryptionVersionType: AvsEncryptionVersionType
   ManagementCluster: AvsManagementCluster
+  NsxPublicIPQuotaRaisedEnum: NsxPublicIPQuotaRaisedStatus
+  AffinityStrength: VmHostPlacementPolicyAffinityStrength
+  ClusterZone: AvsClusterZone
 
 prepend-rp-prefix:
 - CloudLink
@@ -128,5 +131,12 @@ directive:
       $.VmHostPlacementPolicyProperties.properties.vmMembers.items['x-ms-format'] = 'arm-id';
       $.VmVmPlacementPolicyProperties.properties.vmMembers.items['x-ms-format'] = 'arm-id';
       $.ScriptCmdletProperties.properties.timeout['format'] = 'duration';
-
+  - from: vmware.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/listZones'].post
+    transform: >
+      $['x-ms-pageable'] = {
+          'nextLinkName': null,
+          'itemName': 'zones'
+      }
+    reason: add this directive so that the return type could become pageable with flattening the item inside ClusterZoneList.
 ```

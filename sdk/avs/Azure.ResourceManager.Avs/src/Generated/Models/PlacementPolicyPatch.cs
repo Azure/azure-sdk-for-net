@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Host members list. </summary>
         public IList<string> HostMembers { get; }
         /// <summary> vm-host placement policy affinity strength (should/must). </summary>
-        public AffinityStrength? AffinityStrength { get; set; }
+        public VmHostPlacementPolicyAffinityStrength? AffinityStrength { get; set; }
         /// <summary> placement policy azure hybrid benefit opt-in type. </summary>
         public AzureHybridBenefitType? AzureHybridBenefitType { get; set; }
     }

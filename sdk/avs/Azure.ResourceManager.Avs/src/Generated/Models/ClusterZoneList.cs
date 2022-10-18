@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> List of all zones and associated hosts for a cluster. </summary>
-    public partial class ClusterZoneList
+    internal partial class ClusterZoneList
     {
         /// <summary> Initializes a new instance of ClusterZoneList. </summary>
         internal ClusterZoneList()
         {
-            Zones = new ChangeTrackingList<ClusterZone>();
+            Zones = new ChangeTrackingList<AvsClusterZone>();
         }
 
         /// <summary> Initializes a new instance of ClusterZoneList. </summary>
         /// <param name="zones"> Zone and associated hosts info. </param>
-        internal ClusterZoneList(IReadOnlyList<ClusterZone> zones)
+        internal ClusterZoneList(IReadOnlyList<AvsClusterZone> zones)
         {
             Zones = zones;
         }
 
         /// <summary> Zone and associated hosts info. </summary>
-        public IReadOnlyList<ClusterZone> Zones { get; }
+        public IReadOnlyList<AvsClusterZone> Zones { get; }
     }
 }

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class ClusterZone
+    public partial class AvsClusterZone
     {
-        internal static ClusterZone DeserializeClusterZone(JsonElement element)
+        internal static AvsClusterZone DeserializeAvsClusterZone(JsonElement element)
         {
             Optional<IReadOnlyList<string>> hosts = default;
             Optional<string> zone = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new ClusterZone(Optional.ToList(hosts), zone.Value);
+            return new AvsClusterZone(Optional.ToList(hosts), zone.Value);
         }
     }
 }

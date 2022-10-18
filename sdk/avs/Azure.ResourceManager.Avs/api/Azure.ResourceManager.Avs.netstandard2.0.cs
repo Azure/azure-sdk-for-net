@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.Avs
         public virtual Azure.ResourceManager.Avs.PlacementPolicyCollection GetPlacementPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Avs.PlacementPolicyResource> GetPlacementPolicy(string placementPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.PlacementPolicyResource>> GetPlacementPolicyAsync(string placementPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Avs.Models.ClusterZoneList> GetZones(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.Models.ClusterZoneList>> GetZonesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Avs.Models.AvsClusterZone> GetZones(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Avs.Models.AvsClusterZone> GetZonesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Avs.AvsPrivateCloudClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Avs.AvsPrivateCloudClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1014,24 +1014,6 @@ namespace Azure.ResourceManager.Avs.Models
         public string VCenterUsername { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AffinityStrength : System.IEquatable<Azure.ResourceManager.Avs.Models.AffinityStrength>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AffinityStrength(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.AffinityStrength Must { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.AffinityStrength Should { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.AffinityStrength other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.AffinityStrength left, Azure.ResourceManager.Avs.Models.AffinityStrength right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.AffinityStrength (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.AffinityStrength left, Azure.ResourceManager.Avs.Models.AffinityStrength right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AvailabilityStrategy : System.IEquatable<Azure.ResourceManager.Avs.Models.AvailabilityStrategy>
     {
         private readonly object _dummy;
@@ -1069,6 +1051,12 @@ namespace Azure.ResourceManager.Avs.Models
         public static implicit operator Azure.ResourceManager.Avs.Models.AvsCloudLinkStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsCloudLinkStatus left, Azure.ResourceManager.Avs.Models.AvsCloudLinkStatus right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class AvsClusterZone
+    {
+        internal AvsClusterZone() { }
+        public System.Collections.Generic.IReadOnlyList<string> Hosts { get { throw null; } }
+        public string Zone { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AvsEncryptionKeyStatus : System.IEquatable<Azure.ResourceManager.Avs.Models.AvsEncryptionKeyStatus>
@@ -1331,17 +1319,6 @@ namespace Azure.ResourceManager.Avs.Models
         public static implicit operator Azure.ResourceManager.Avs.Models.AzureHybridBenefitType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Avs.Models.AzureHybridBenefitType left, Azure.ResourceManager.Avs.Models.AzureHybridBenefitType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ClusterZone
-    {
-        internal ClusterZone() { }
-        public System.Collections.Generic.IReadOnlyList<string> Hosts { get { throw null; } }
-        public string Zone { get { throw null; } }
-    }
-    public partial class ClusterZoneList
-    {
-        internal ClusterZoneList() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Avs.Models.ClusterZone> Zones { get { throw null; } }
     }
     public partial class CommonClusterProperties
     {
@@ -1607,7 +1584,7 @@ namespace Azure.ResourceManager.Avs.Models
     public partial class PlacementPolicyPatch
     {
         public PlacementPolicyPatch() { }
-        public Azure.ResourceManager.Avs.Models.AffinityStrength? AffinityStrength { get { throw null; } set { } }
+        public Azure.ResourceManager.Avs.Models.VmHostPlacementPolicyAffinityStrength? AffinityStrength { get { throw null; } set { } }
         public Azure.ResourceManager.Avs.Models.AzureHybridBenefitType? AzureHybridBenefitType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> HostMembers { get { throw null; } }
         public Azure.ResourceManager.Avs.Models.PlacementPolicyState? State { get { throw null; } set { } }
@@ -1850,10 +1827,28 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator !=(Azure.ResourceManager.Avs.Models.VirtualMachineRestrictMovementState left, Azure.ResourceManager.Avs.Models.VirtualMachineRestrictMovementState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VmHostPlacementPolicyAffinityStrength : System.IEquatable<Azure.ResourceManager.Avs.Models.VmHostPlacementPolicyAffinityStrength>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VmHostPlacementPolicyAffinityStrength(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.VmHostPlacementPolicyAffinityStrength Must { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.VmHostPlacementPolicyAffinityStrength Should { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.VmHostPlacementPolicyAffinityStrength other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.VmHostPlacementPolicyAffinityStrength left, Azure.ResourceManager.Avs.Models.VmHostPlacementPolicyAffinityStrength right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.VmHostPlacementPolicyAffinityStrength (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.VmHostPlacementPolicyAffinityStrength left, Azure.ResourceManager.Avs.Models.VmHostPlacementPolicyAffinityStrength right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class VmHostPlacementPolicyProperties : Azure.ResourceManager.Avs.Models.PlacementPolicyProperties
     {
         public VmHostPlacementPolicyProperties(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> vmMembers, System.Collections.Generic.IEnumerable<string> hostMembers, Azure.ResourceManager.Avs.Models.AvsPlacementPolicyAffinityType affinityType) { }
-        public Azure.ResourceManager.Avs.Models.AffinityStrength? AffinityStrength { get { throw null; } set { } }
+        public Azure.ResourceManager.Avs.Models.VmHostPlacementPolicyAffinityStrength? AffinityStrength { get { throw null; } set { } }
         public Azure.ResourceManager.Avs.Models.AvsPlacementPolicyAffinityType AffinityType { get { throw null; } set { } }
         public Azure.ResourceManager.Avs.Models.AzureHybridBenefitType? AzureHybridBenefitType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> HostMembers { get { throw null; } }

@@ -364,20 +364,25 @@ namespace Azure.ResourceManager.Avs
         /// Operation Id: Clusters_ListZones
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ClusterZoneList>> GetZonesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AvsClusterZone" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AvsClusterZone> GetZonesAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPrivateCloudClusterClustersClientDiagnostics.CreateScope("AvsPrivateCloudClusterResource.GetZones");
-            scope.Start();
-            try
+            async Task<Page<AvsClusterZone>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _avsPrivateCloudClusterClustersRestClient.ListZonesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
+                using var scope = _avsPrivateCloudClusterClustersClientDiagnostics.CreateScope("AvsPrivateCloudClusterResource.GetZones");
+                scope.Start();
+                try
+                {
+                    var response = await _avsPrivateCloudClusterClustersRestClient.ListZonesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Zones, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -386,20 +391,25 @@ namespace Azure.ResourceManager.Avs
         /// Operation Id: Clusters_ListZones
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ClusterZoneList> GetZones(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AvsClusterZone" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AvsClusterZone> GetZones(CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPrivateCloudClusterClustersClientDiagnostics.CreateScope("AvsPrivateCloudClusterResource.GetZones");
-            scope.Start();
-            try
+            Page<AvsClusterZone> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _avsPrivateCloudClusterClustersRestClient.ListZones(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
+                using var scope = _avsPrivateCloudClusterClustersClientDiagnostics.CreateScope("AvsPrivateCloudClusterResource.GetZones");
+                scope.Start();
+                try
+                {
+                    var response = _avsPrivateCloudClusterClustersRestClient.ListZones(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Zones, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
     }
 }

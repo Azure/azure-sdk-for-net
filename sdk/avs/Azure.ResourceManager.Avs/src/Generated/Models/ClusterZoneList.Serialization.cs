@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class ClusterZoneList
+    internal partial class ClusterZoneList
     {
         internal static ClusterZoneList DeserializeClusterZoneList(JsonElement element)
         {
-            Optional<IReadOnlyList<ClusterZone>> zones = default;
+            Optional<IReadOnlyList<AvsClusterZone>> zones = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Avs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ClusterZone> array = new List<ClusterZone>();
+                    List<AvsClusterZone> array = new List<AvsClusterZone>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterZone.DeserializeClusterZone(item));
+                        array.Add(AvsClusterZone.DeserializeAvsClusterZone(item));
                     }
                     zones = array;
                     continue;
