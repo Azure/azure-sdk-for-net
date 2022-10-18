@@ -108,26 +108,12 @@ namespace Azure.Communication.CallAutomation
         /// Answer an incoming call.
         /// <param name="incomingCallContext"> The incoming call context </param>
         /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="repeatabilityRequestId"/> <paramref name="repeatabilityFirstSent"/> Repeatability headers are set incorrectly.</exception>
-        public virtual async Task<Response<AnswerCallResult>> AnswerCallAsync(string incomingCallContext, Uri callbackUri, Guid? repeatabilityRequestId = null, String repeatabilityFirstSent = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnswerCallResult>> AnswerCallAsync(string incomingCallContext, Uri callbackUri, CancellationToken cancellationToken = default)
         {
-            var repeatabilityHeaders = new RepeatabilityHeaders
-            {
-                RepeatabilityRequestId = repeatabilityRequestId,
-                RepeatabilityFirstSent = repeatabilityFirstSent
-            };
-            if (!repeatabilityHeaders.IsValidRepeatabilityHeaders())
-                throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
-
-            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext, callbackUri) {
-                RepeatabilityRequestId = repeatabilityRequestId,
-                RepeatabilityFirstSent = repeatabilityFirstSent
-            };
+            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext, callbackUri);
 
             return await AnswerCallAsync(options, cancellationToken).ConfigureAwait(false);
         }
@@ -148,11 +134,12 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 if (options == null) throw new ArgumentNullException(nameof(options));
-                if (!options.IsValidRepeatabilityHeaders()) throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
+                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
+                    throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
                 AnswerCallRequestInternal request = CreateAnswerCallRequest(options);
 
-                var answerResponse = await ServerCallingRestClient.AnswerCallAsync(request, options.RepeatabilityRequestId, options.RepeatabilityFirstSent, cancellationToken).ConfigureAwait(false);
+                var answerResponse = await ServerCallingRestClient.AnswerCallAsync(request, options.RepeatabilityHeaders.RepeatabilityRequestId, options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(), cancellationToken).ConfigureAwait(false);
 
                 return Response.FromValue(new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value)),
                     answerResponse.GetRawResponse());
@@ -167,26 +154,12 @@ namespace Azure.Communication.CallAutomation
         /// Answer an incoming call.
         /// <param name="incomingCallContext"> The incoming call context </param>
         /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="repeatabilityRequestId"/> <paramref name="repeatabilityFirstSent"/> Repeatability headers are set incorrectly.</exception>
-        public virtual Response<AnswerCallResult> AnswerCall(string incomingCallContext, Uri callbackUri, Guid? repeatabilityRequestId = null, String repeatabilityFirstSent = default, CancellationToken cancellationToken = default)
+        public virtual Response<AnswerCallResult> AnswerCall(string incomingCallContext, Uri callbackUri, CancellationToken cancellationToken = default)
         {
-            var repeatabilityHeaders = new RepeatabilityHeaders
-            {
-                RepeatabilityRequestId = repeatabilityRequestId,
-                RepeatabilityFirstSent = repeatabilityFirstSent
-            };
-            if (!repeatabilityHeaders.IsValidRepeatabilityHeaders())
-                throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
-
-            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext, callbackUri) {
-                RepeatabilityRequestId = repeatabilityRequestId,
-                RepeatabilityFirstSent = repeatabilityFirstSent
-            };
+            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext, callbackUri);
 
             return AnswerCall(options, cancellationToken);
         }
@@ -207,12 +180,12 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 if (options == null) throw new ArgumentNullException(nameof(options));
-                if (!options.IsValidRepeatabilityHeaders())
+                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
                     throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
                 AnswerCallRequestInternal request = CreateAnswerCallRequest(options);
 
-                var answerResponse = ServerCallingRestClient.AnswerCall(request, cancellationToken: cancellationToken);
+                var answerResponse = ServerCallingRestClient.AnswerCall(request, options.RepeatabilityHeaders.RepeatabilityRequestId, options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(), cancellationToken);
 
                 return Response.FromValue(new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value)),
                     answerResponse.GetRawResponse());
@@ -232,35 +205,43 @@ namespace Azure.Communication.CallAutomation
             return request;
         }
 
-        /// Redirect an incoming call to the target identities.
+        /// Redirect an incoming call to the target identity.
         /// <param name="incomingCallContext"> The incoming call context </param>
-        /// <param name="target"> The target identities. </param>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.</param>
+        /// <param name="target"> The target identity. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="repeatabilityRequestId"/> <paramref name="repeatabilityFirstSent"/> Repeatability headers are set incorrectly.</exception>
-        public virtual async Task<Response> RedirectCallAsync(string incomingCallContext, CommunicationIdentifier target, Guid? repeatabilityRequestId = null, string repeatabilityFirstSent = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RedirectCallAsync(string incomingCallContext, CommunicationIdentifier target, CancellationToken cancellationToken = default)
+        {
+            RedirectCallOptions options = new RedirectCallOptions(incomingCallContext, target);
+
+            return await RedirectCallAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// Redirect an incoming call to the target identity.
+        /// <param name="options">Options for the Redirect operations.</param>
+        /// <param name="cancellationToken">The cancellation token</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
+        public virtual async Task<Response> RedirectCallAsync(RedirectCallOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(RedirectCall)}");
             scope.Start();
             try
             {
-                var repeatabilityHeaders = new RepeatabilityHeaders {
-                    RepeatabilityRequestId = repeatabilityRequestId,
-                    RepeatabilityFirstSent = repeatabilityFirstSent
-                };
-                if (!repeatabilityHeaders.IsValidRepeatabilityHeaders())
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
                     throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
-                RedirectCallRequestInternal request = new RedirectCallRequestInternal(incomingCallContext, CommunicationIdentifierSerializer.Serialize(target));
+                RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.Target));
 
                 return await ServerCallingRestClient.RedirectCallAsync(
                     request,
-                    repeatabilityRequestId,
-                    repeatabilityFirstSent,
+                    options.RepeatabilityHeaders.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -274,35 +255,41 @@ namespace Azure.Communication.CallAutomation
         /// Redirect an incoming call to the target identities.
         /// <param name="incomingCallContext"> The incoming call context </param>
         /// <param name="target"> The target identities. </param>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="repeatabilityRequestId"/> <paramref name="repeatabilityFirstSent"/> Repeatability headers are set incorrectly.</exception>
-        public virtual Response RedirectCall(string incomingCallContext, CommunicationIdentifier target, Guid? repeatabilityRequestId = null, string repeatabilityFirstSent = default, CancellationToken cancellationToken = default)
+        public virtual Response RedirectCall(string incomingCallContext, CommunicationIdentifier target, CancellationToken cancellationToken = default)
+        {
+            RedirectCallOptions options = new RedirectCallOptions(incomingCallContext, target);
+
+            return RedirectCall(options, cancellationToken);
+        }
+
+        /// Redirect an incoming call to the target identity.
+        /// <param name="options">Options for the Redirect operations.</param>
+        /// <param name="cancellationToken">The cancellation token</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
+        public virtual Response RedirectCall(RedirectCallOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(RedirectCall)}");
             scope.Start();
             try
             {
-                var repeatabilityHeaders = new RepeatabilityHeaders
-                {
-                    RepeatabilityRequestId = repeatabilityRequestId,
-                    RepeatabilityFirstSent = repeatabilityFirstSent
-                };
-                if (!repeatabilityHeaders.IsValidRepeatabilityHeaders())
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
                     throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
-                RedirectCallRequestInternal request = new RedirectCallRequestInternal(incomingCallContext, CommunicationIdentifierSerializer.Serialize(target));
+                RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.Target));
 
                 return ServerCallingRestClient.RedirectCall(
                     request,
-                    repeatabilityRequestId,
-                    repeatabilityFirstSent,
-                    cancellationToken
-                    );
+                    options.RepeatabilityHeaders.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    cancellationToken);
             }
             catch (Exception ex)
             {
@@ -313,34 +300,40 @@ namespace Azure.Communication.CallAutomation
 
         /// Reject an incoming call.
         /// <param name="incomingCallContext"> The incoming call context </param>
-        /// <param name="callRejectReason"> The reason for rejecting call. </param>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="repeatabilityRequestId"/> <paramref name="repeatabilityFirstSent"/> Repeatability headers are set incorrectly.</exception>
-        public virtual async Task<Response> RejectCallAsync(string incomingCallContext, CallRejectReason callRejectReason, Guid? repeatabilityRequestId = null, string repeatabilityFirstSent = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RejectCallAsync(string incomingCallContext, CancellationToken cancellationToken = default)
+        {
+            RejectCallOptions options = new RejectCallOptions(incomingCallContext);
+
+            return await RejectCallAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// Reject an incoming call.
+        /// <param name="options">Options for the Reject operations.</param>
+        /// <param name="cancellationToken">The cancellation token</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
+        public virtual async Task<Response> RejectCallAsync(RejectCallOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(RejectCall)}");
             scope.Start();
             try
             {
-                var repeatabilityHeaders = new RepeatabilityHeaders
-                {
-                    RepeatabilityRequestId = repeatabilityRequestId,
-                    RepeatabilityFirstSent = repeatabilityFirstSent
-                };
-                if (!repeatabilityHeaders.IsValidRepeatabilityHeaders())
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
                     throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
-                RejectCallRequestInternal request = new RejectCallRequestInternal(incomingCallContext);
-                request.CallRejectReason = callRejectReason.ToString();
+                RejectCallRequestInternal request = new RejectCallRequestInternal(options.IncomingCallContext);
+                request.CallRejectReason = options.CallRejectReason.ToString();
 
                 return await ServerCallingRestClient.RejectCallAsync(
                     request,
-                    repeatabilityRequestId,
-                    repeatabilityFirstSent,
+                    options.RepeatabilityHeaders.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -353,34 +346,40 @@ namespace Azure.Communication.CallAutomation
 
         /// Reject an incoming call.
         /// <param name="incomingCallContext"> The incoming call context </param>
-        /// <param name="callRejectReason"> The reason for rejecting call. </param>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="repeatabilityRequestId"/> <paramref name="repeatabilityFirstSent"/> Repeatability headers are set incorrectly.</exception>
-        public virtual Response RejectCall(string incomingCallContext, CallRejectReason callRejectReason, Guid? repeatabilityRequestId = null, string repeatabilityFirstSent = default, CancellationToken cancellationToken = default)
+        public virtual Response RejectCall(string incomingCallContext, CancellationToken cancellationToken = default)
+        {
+            RejectCallOptions options = new RejectCallOptions(incomingCallContext);
+
+            return RejectCall(options, cancellationToken);
+        }
+
+        /// Reject an incoming call.
+        /// <param name="options">Options for the Reject operations.</param>
+        /// <param name="cancellationToken">The cancellation token</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
+        public virtual Response RejectCall(RejectCallOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(RejectCall)}");
             scope.Start();
             try
             {
-                var repeatabilityHeaders = new RepeatabilityHeaders
-                {
-                    RepeatabilityRequestId = repeatabilityRequestId,
-                    RepeatabilityFirstSent = repeatabilityFirstSent
-                };
-                if (!repeatabilityHeaders.IsValidRepeatabilityHeaders())
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
                     throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
-                RejectCallRequestInternal request = new RejectCallRequestInternal(incomingCallContext);
-                request.CallRejectReason = callRejectReason.ToString();
+                RejectCallRequestInternal request = new RejectCallRequestInternal(options.IncomingCallContext);
+                request.CallRejectReason = options.CallRejectReason.ToString();
 
                 return ServerCallingRestClient.RejectCall(
                     request,
-                    repeatabilityRequestId,
-                    repeatabilityFirstSent,
+                    options.RepeatabilityHeaders.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken
                     );
             }
@@ -408,15 +407,15 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                if (!options.IsValidRepeatabilityHeaders())
+                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
                     throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
                 CreateCallRequestInternal request = CreateCallRequest(options);
 
                 var createCallResponse = await ServerCallingRestClient.CreateCallAsync(
                     request,
-                    options.RepeatabilityRequestId,
-                    options.RepeatabilityFirstSent,
+                    options.RepeatabilityHeaders.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken
                     ).ConfigureAwait(false);
 
@@ -447,18 +446,15 @@ namespace Azure.Communication.CallAutomation
             {
                 if (options == null) throw new ArgumentNullException(nameof(options));
 
-                if (!options.IsValidRepeatabilityHeaders())
+                if (options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders())
                     throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
-
-                CallSourceInternal sourceDto = new CallSourceInternal(CommunicationIdentifierSerializer.Serialize(options.CallSource.Identifier));
-                sourceDto.CallerId = options.CallSource.CallerId == null ? null : new PhoneNumberIdentifierModel(options.CallSource.CallerId.PhoneNumber);
 
                 CreateCallRequestInternal request = CreateCallRequest(options);
 
                 var createCallResponse = ServerCallingRestClient.CreateCall(
                     request,
-                    options.RepeatabilityRequestId,
-                    options.RepeatabilityFirstSent,
+                    options.RepeatabilityHeaders.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken
                     );
 
@@ -476,12 +472,13 @@ namespace Azure.Communication.CallAutomation
         {
             CallSourceInternal sourceDto = new CallSourceInternal(CommunicationIdentifierSerializer.Serialize(options.CallSource.Identifier));
             sourceDto.CallerId = options.CallSource.CallerId == null ? null : new PhoneNumberIdentifierModel(options.CallSource.CallerId.PhoneNumber);
+            sourceDto.DisplayName = options.CallSource.DisplayName;
 
             CreateCallRequestInternal request = new CreateCallRequestInternal(
                 options.Targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
                 sourceDto,
                 options.CallbackUri.AbsoluteUri);
-            request.Subject = options.Subject;
+            request.OperationContext = options.OperationContext;
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
 
             return request;

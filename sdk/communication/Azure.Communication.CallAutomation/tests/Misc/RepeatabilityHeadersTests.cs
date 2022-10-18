@@ -9,80 +9,150 @@ namespace Azure.Communication.CallAutomation.Tests.Misc
     public class RepeatabilityHeadersTests
     {
         [Test]
-        public void RepeatablityHeaders_IsValid_BothHeadersAreNull()
+        public void RepeatablityHeaders_IsInvalid_False()
         {
             // arrange
-            var headers = new RepeatabilityHeaders();
+            var headers = new RepeatabilityHeaders(Guid.NewGuid(), DateTime.UtcNow);
 
             // act & assert
-            Assert.IsTrue(headers.IsValidRepeatabilityHeaders());
+            Assert.IsFalse(headers.IsInvalidRepeatabilityHeaders());
         }
 
         [Test]
-        public void RepeatablityHeaders_IsValid_BothHeadersAreEmpty()
+        public void RepeatablityHeaders_IsInvalid_RepeatabilityRequestIdIsDefaultValue()
         {
             // arrange
-            var headers = new RepeatabilityHeaders {
-                RepeatabilityRequestId = Guid.Empty,
-                RepeatabilityFirstSent = ""
+            var headers = new RepeatabilityHeaders(Guid.Empty, DateTimeOffset.UtcNow);
+
+            // act & assert
+            Assert.IsTrue(headers.IsInvalidRepeatabilityHeaders());
+        }
+
+        [Test]
+        public void RepeatablityHeaders_IsInvalid_RepeatabilityFirstSentIsDefaultValueMin()
+        {
+            // arrange
+            var headers = new RepeatabilityHeaders(Guid.NewGuid(), new DateTimeOffset());
+
+            // act & assert
+            Assert.IsTrue(headers.IsInvalidRepeatabilityHeaders());
+        }
+
+        [Test]
+        public void RepeatablityHeaders_IsInvalid_RepeatabilityFirstSentIsDefaultValueMax()
+        {
+            // arrange
+            var headers = new RepeatabilityHeaders(Guid.NewGuid(), DateTimeOffset.MaxValue);
+
+            // act & assert
+            Assert.IsTrue(headers.IsInvalidRepeatabilityHeaders());
+        }
+
+        [Test]
+        public void RepeatablityHeaders_IsSetByDefault_AnswerCallOptions()
+        {
+            // arrange
+            var options = new AnswerCallOptions("context", new Uri("https://contoso.com/callback"));
+
+            // act & assert
+            Assert.IsNotNull(options.RepeatabilityHeaders);
+            Assert.IsFalse(options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders());
+        }
+
+        [Test]
+        public void RepeatablityHeaders_IsSetByDefault_RedirectCallOptions()
+        {
+            // arrange
+            var options = new RedirectCallOptions("context", new CommunicationUserIdentifier("user1"));
+
+            // act & assert
+            Assert.IsNotNull(options.RepeatabilityHeaders);
+            Assert.IsFalse(options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders());
+        }
+
+        [Test]
+        public void RepeatablityHeaders_IsSetByDefault_RejectCallOptions()
+        {
+            // arrange
+            var options = new RejectCallOptions("context");
+            options.CallRejectReason = CallRejectReason.Busy;
+
+            // act & assert
+            Assert.IsNotNull(options.RepeatabilityHeaders);
+            Assert.IsFalse(options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders());
+        }
+
+        [Test]
+        public void RepeatablityHeaders_IsSetByDefault_CreateCallOptions()
+        {
+            // arrange
+            var options = new CreateCallOptions(new CallSource(new CommunicationUserIdentifier("8:acs:blahblahblah")), new CommunicationIdentifier[] { new CommunicationUserIdentifier("8:acs:lalala") }, new Uri("https://contoso.com/callback"));
+
+            // act & assert
+            Assert.IsNotNull(options.RepeatabilityHeaders);
+            Assert.IsFalse(options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders());
+        }
+
+        [Test]
+        public void RepeatablityHeaders_IsSetByDefault_HangUpOptions()
+        {
+            // arrange
+            var options = new HangUpOptions(true);
+
+            // act & assert
+            Assert.IsNotNull(options.RepeatabilityHeaders);
+            Assert.IsFalse(options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders());
+        }
+
+        [Test]
+        public void RepeatablityHeaders_IsSetByDefault_TransferCallOptions()
+        {
+            // arrange
+            var options = new TransferToParticipantOptions(new CommunicationUserIdentifier("8:acs:blahblahblah"));
+
+            // act & assert
+            Assert.IsNotNull(options.RepeatabilityHeaders);
+            Assert.IsFalse(options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders());
+        }
+
+        [Test]
+        public void RepeatablityHeaders_IsSetByDefault_AddParticipantsOptions()
+        {
+            // arrange
+            var options = new AddParticipantsOptions(new CommunicationIdentifier[] { new CommunicationUserIdentifier("8:acs:blahblahblah") });
+
+            // act & assert
+            Assert.IsNotNull(options.RepeatabilityHeaders);
+            Assert.IsFalse(options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders());
+        }
+
+        [Test]
+        public void RepeatablityHeaders_IsSetByDefault_RemoveParticipantsOptions()
+        {
+            // arrange
+            var options = new RemoveParticipantsOptions(new CommunicationIdentifier[] { new CommunicationUserIdentifier("8:acs:blahblahblah") });
+
+            // act & assert
+            Assert.IsNotNull(options.RepeatabilityHeaders);
+            Assert.IsFalse(options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders());
+        }
+
+        [Test]
+        public void RepeatablityHeaders_IsNotOverwrittenByDefaultIfSet()
+        {
+            // arrange
+            var repeatablityRequestId = Guid.NewGuid();
+            var repeatabilityFirstSent = DateTime.UtcNow;
+            // arrange
+            var options = new AnswerCallOptions("context", new Uri("https://contoso.com/callback"))
+            {
+                RepeatabilityHeaders = new RepeatabilityHeaders(repeatablityRequestId, repeatabilityFirstSent)
             };
 
             // act & assert
-            Assert.IsTrue(headers.IsValidRepeatabilityHeaders());
-        }
-
-        [Test]
-        public void RepeatablityHeaders_IsValid_BothHeadersAreSet()
-        {
-            // arrange
-            var headers = new RepeatabilityHeaders
-            {
-                RepeatabilityRequestId = Guid.NewGuid(),
-                RepeatabilityFirstSent = DateTimeOffset.Now.ToString("R")
-            };
-
-            // act & assert
-            Assert.IsTrue(headers.IsValidRepeatabilityHeaders());
-        }
-
-        [Test]
-        public void RepeatablityHeaders_IsInvalid_RequestIdIsEmptyAndFirstSentIsNot()
-        {
-            // arrange
-            var headers = new RepeatabilityHeaders
-            {
-                RepeatabilityRequestId = Guid.Empty,
-                RepeatabilityFirstSent = DateTimeOffset.Now.ToString("R")
-        };
-
-            // act & assert
-            Assert.IsFalse(headers.IsValidRepeatabilityHeaders());
-        }
-
-        [Test]
-        public void RepeatablityHeaders_IsInvalid_RequestIdIsSetAndFirstSentIsNot()
-        {
-            // arrange
-            var headers = new RepeatabilityHeaders
-            {
-                RepeatabilityRequestId = Guid.NewGuid()
-            };
-
-            // act & assert
-            Assert.IsFalse(headers.IsValidRepeatabilityHeaders());
-        }
-
-        [Test]
-        public void RepeatablityHeaders_IsInvalid_FirstSentIsSetAndRequestIdIsNot()
-        {
-            // arrange
-            var headers = new RepeatabilityHeaders
-            {
-                RepeatabilityFirstSent = DateTimeOffset.Now.ToString("R")
-            };
-
-            // act & assert
-            Assert.IsFalse(headers.IsValidRepeatabilityHeaders());
+            Assert.IsFalse(options.RepeatabilityHeaders.IsInvalidRepeatabilityHeaders());
+            Assert.AreEqual(repeatablityRequestId, options.RepeatabilityHeaders.RepeatabilityRequestId);
+            Assert.AreEqual(repeatabilityFirstSent.ToString("R"), options.RepeatabilityHeaders.GetRepeatabilityFirstSentString());
         }
     }
 }

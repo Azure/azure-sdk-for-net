@@ -32,6 +32,16 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteEndArray();
             writer.WritePropertyName("affinityType");
             writer.WriteStringValue(AffinityType.ToString());
+            if (Optional.IsDefined(AffinityStrength))
+            {
+                writer.WritePropertyName("affinityStrength");
+                writer.WriteStringValue(AffinityStrength.Value.ToString());
+            }
+            if (Optional.IsDefined(AzureHybridBenefitType))
+            {
+                writer.WritePropertyName("azureHybridBenefitType");
+                writer.WriteStringValue(AzureHybridBenefitType.Value.ToString());
+            }
             writer.WritePropertyName("type");
             writer.WriteStringValue(PolicyType.ToString());
             if (Optional.IsDefined(State))
@@ -52,6 +62,8 @@ namespace Azure.ResourceManager.Avs.Models
             IList<ResourceIdentifier> vmMembers = default;
             IList<string> hostMembers = default;
             AvsPlacementPolicyAffinityType affinityType = default;
+            Optional<VmHostPlacementPolicyAffinityStrength> affinityStrength = default;
+            Optional<AzureHybridBenefitType> azureHybridBenefitType = default;
             PlacementPolicyType type = default;
             Optional<PlacementPolicyState> state = default;
             Optional<string> displayName = default;
@@ -81,6 +93,26 @@ namespace Azure.ResourceManager.Avs.Models
                 if (property.NameEquals("affinityType"))
                 {
                     affinityType = new AvsPlacementPolicyAffinityType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("affinityStrength"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    affinityStrength = new VmHostPlacementPolicyAffinityStrength(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("azureHybridBenefitType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    azureHybridBenefitType = new AzureHybridBenefitType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -114,7 +146,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new VmHostPlacementPolicyProperties(type, Optional.ToNullable(state), displayName.Value, Optional.ToNullable(provisioningState), vmMembers, hostMembers, affinityType);
+            return new VmHostPlacementPolicyProperties(type, Optional.ToNullable(state), displayName.Value, Optional.ToNullable(provisioningState), vmMembers, hostMembers, affinityType, Optional.ToNullable(affinityStrength), Optional.ToNullable(azureHybridBenefitType));
         }
     }
 }

@@ -9,7 +9,6 @@ csharp: true
 library-name: ApiManagement
 namespace: Azure.ResourceManager.ApiManagement
 require: https://github.com/Azure/azure-rest-api-specs/blob/2f28b5026a4b44adefd0237087acb0c48cfe31a6/specification/apimanagement/resource-manager/readme.md
-tag: package-2021-08
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -104,6 +103,7 @@ override-operation-name:
   ContentType_ListByService: GetContentTypes
   ContentItem_ListByService: GetContentItems
   ContentItem_GetEntityTag: GetContentItemEntityTag
+  ProductSubscriptions_List: GetAllProductSubscriptionData # temporary - to be removed once the polymorphic resource change is merged.
 
 prepend-rp-prefix:
 - ResourceSkuCapacity
@@ -544,6 +544,6 @@ directive:
     reason: Modify the original swagger since the id in the real response is slightly different from the ApiManagementGroupResource.
   - from: swagger-document
     where: $..[?(@.name=='$orderby')]
-    transform: $['x-ms-client-name'] = 'orderBy' 
+    transform: $['x-ms-client-name'] = 'orderBy'
 
 ```

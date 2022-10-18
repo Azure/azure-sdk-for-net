@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             Optional<string> keyName = default;
             Optional<string> keyVersion = default;
+            Optional<string> autoDetectedKeyVersion = default;
             Optional<Uri> keyVaultUrl = default;
             Optional<AvsEncryptionKeyStatus> keyState = default;
             Optional<AvsEncryptionVersionType> versionType = default;
@@ -51,6 +52,11 @@ namespace Azure.ResourceManager.Avs.Models
                 if (property.NameEquals("keyVersion"))
                 {
                     keyVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("autoDetectedKeyVersion"))
+                {
+                    autoDetectedKeyVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyVaultUrl"))
@@ -84,7 +90,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new AvsEncryptionKeyVaultProperties(keyName.Value, keyVersion.Value, keyVaultUrl.Value, Optional.ToNullable(keyState), Optional.ToNullable(versionType));
+            return new AvsEncryptionKeyVaultProperties(keyName.Value, keyVersion.Value, autoDetectedKeyVersion.Value, keyVaultUrl.Value, Optional.ToNullable(keyState), Optional.ToNullable(versionType));
         }
     }
 }
