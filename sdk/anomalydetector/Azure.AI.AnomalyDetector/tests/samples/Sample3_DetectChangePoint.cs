@@ -22,7 +22,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         [Test]
         public void DetectChangePoint()
         {
-            #region Snippet:CreateAnomalyDetectorClient
+            #region Snippet:CreateAnomalyDetectorClientChangePoint
             //read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;

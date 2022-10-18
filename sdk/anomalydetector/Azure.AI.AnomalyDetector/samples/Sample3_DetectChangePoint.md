@@ -9,7 +9,7 @@ To create a new `AnomalyDetectorClient` you need the endpoint and credentials fr
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
-```C# Snippet:CreateAnomalyDetectorClient
+```C# Snippet:CreateAnomalyDetectorClientChangePoint
 //read endpoint and apiKey
 string endpoint = TestEnvironment.Endpoint;
 string apiKey = TestEnvironment.ApiKey;

@@ -22,7 +22,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         [Test]
         public void DetectLastPointAnomaly()
         {
-            #region Snippet:CreateAnomalyDetectorClient
+            #region Snippet:CreateAnomalyDetectorClientLast
             //read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
