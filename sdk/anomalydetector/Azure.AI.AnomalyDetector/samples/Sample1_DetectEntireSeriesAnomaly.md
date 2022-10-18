@@ -24,11 +24,7 @@ AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion
 
 ## Load time series and create DetectRequest
 
-You could download our [sample data][SampleData], read in the time series data and add it to a `DetectRequest` object.
-
-Call `File.ReadAllLines` with the file path and create a list of `TimeSeriesPoint` objects, and strip any new line characters. Extract the values and separate the timestamp from its numerical value, and add them to a new `TimeSeriesPoint` object.
-
-Make a `DetectRequest` object with the series of points, and `TimeGranularity.Daily` for the granularity (or periodicity) of the data points.
+You could download our [sample data][SampleData], read in the time series data and construct a list of JsonElement.
 
 ```C# Snippet:ReadSeriesDataEntire
 //read data
@@ -50,7 +46,7 @@ using (StreamReader reader = new StreamReader("./samples/data/request-data.csv")
 ```
 
 ## Detect anomalies of the entire series
-Call the client's `DetectEntireSeriesAsync` method with the `DetectRequest` object and await the response as an `EntireDetectResponse` object. Iterate through the response's `IsAnomaly` values and print any that are true. These values correspond to the index of anomalous data points, if any were found.
+Call the client's `DetectEntireSeries` method with the data and get the response. Iterate through the response's `isAnomaly` values and print any that are true. These values correspond to the index of anomalous data points, if any were found.
 
 ```C# Snippet:DetectEntireSeriesAnomaly
 //detect

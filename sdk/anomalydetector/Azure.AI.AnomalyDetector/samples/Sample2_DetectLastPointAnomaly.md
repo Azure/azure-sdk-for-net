@@ -24,11 +24,7 @@ AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion
 
 ## Load time series and create DetectRequest
 
-You could download our [sample data][SampleData], read in the time series data and add it to a `DetectRequest` object.
-
-Call `File.ReadAllLines` with the file path and create a list of `TimeSeriesPoint` objects, and strip any new line characters. Extract the values and separate the timestamp from its numerical value, and add them to a new `TimeSeriesPoint` object.
-
-Make a `DetectRequest` object with the series of points, and `TimeGranularity.Daily` for the granularity (or periodicity) of the data points.
+You could download our [sample data][SampleData], read in the time series data and construct a list of JsonElement.
 
 ```C# Snippet:ReadSeriesDataLast
 //read data
@@ -50,7 +46,7 @@ using (StreamReader reader = new StreamReader("./samples/data/request-data.csv")
 ```
 
 ## Detect anomaly status of the latest data point
-Call the client's `DetectLastPointAsync` method with the `DetectRequest` object and await the response as a `LastDetectResponse` object. Check the response's `IsAnomaly` attribute to determine if the latest data point sent was an anomaly or not.
+Call the client's `DetectLastPoint` method with the data and get the response. Check the response's `isAnomaly` attribute to determine if the latest data point sent was an anomaly or not.
 
 ```C# Snippet:DetectLastPointAnomaly
 //detect

@@ -24,11 +24,7 @@ AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion
 
 ## Load time series and create ChangePointDetectRequest
 
-You could download our [sample data][SampleData], read in the time series data and add it to a `ChangePointDetectRequest` object.
-
-Call `File.ReadAllLines` with the file path and create a list of `TimeSeriesPoint` objects, and strip any new line characters. Extract the values and separate the timestamp from its numerical value, and add them to a new `TimeSeriesPoint` object.
-
-Make a `ChangePointDetectRequest` object with the series of points, and `TimeGranularity.Daily` for the granularity (or periodicity) of the data points.
+You could download our [sample data][SampleData], read in the time series data and construct a list of JsonElement.
 
 ```C# Snippet:ReadSeriesDataForChangePoint
 //read data
@@ -50,7 +46,7 @@ using (StreamReader reader = new StreamReader("./samples/data/request-data.csv")
 ```
 
 ## Detect change point
-Call the client's `DetectChangePointAsync` method with the `ChangePointDetectRequest` object and await the response as a `ChangePointDetectResponse` object. Iterate through the response's `IsChangePoint` values and print any that are true. These values correspond to the index of change points, if any were found.
+Call the client's `DetectChangePoint` method with the data and get the response. Iterate through the response's `isChangePoint` values and print any that are true. These values correspond to the index of change points, if any were found.
 
 ```C# Snippet:DetectChangePoint
 //detect
