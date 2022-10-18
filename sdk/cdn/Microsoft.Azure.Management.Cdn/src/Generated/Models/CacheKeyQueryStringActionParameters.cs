@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static CacheKeyQueryStringActionParameters()
         {
-            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters";
+            TypeName = "DeliveryRuleCacheKeyQueryStringBehaviorActionParameters";
         }
 
         /// <summary>
@@ -72,8 +72,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "@odata.type")]
-        public static string Odatatype { get; private set; }
+        [JsonProperty(PropertyName = "typeName")]
+        public static string TypeName { get; private set; }
 
         /// <summary>
         /// Validate the object.

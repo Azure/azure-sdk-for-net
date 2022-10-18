@@ -27,16 +27,12 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='secretSource'>
-            /// The secret source.
+            /// <param name='validateSecretInput'>
+            /// The Secret source.
             /// </param>
-            /// <param name='secretType'>
-            /// The secret type. Possible values include: 'UrlSigningKey',
-            /// 'ManagedCertificate', 'CustomerCertificate'
-            /// </param>
-            public static ValidateSecretOutput SecretMethod(this IValidateOperations operations, ResourceReference secretSource, string secretType)
+            public static ValidateSecretOutput SecretMethod(this IValidateOperations operations, ValidateSecretInput validateSecretInput)
             {
-                return operations.SecretMethodAsync(secretSource, secretType).GetAwaiter().GetResult();
+                return operations.SecretMethodAsync(validateSecretInput).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -45,19 +41,15 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='secretSource'>
-            /// The secret source.
-            /// </param>
-            /// <param name='secretType'>
-            /// The secret type. Possible values include: 'UrlSigningKey',
-            /// 'ManagedCertificate', 'CustomerCertificate'
+            /// <param name='validateSecretInput'>
+            /// The Secret source.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ValidateSecretOutput> SecretMethodAsync(this IValidateOperations operations, ResourceReference secretSource, string secretType, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ValidateSecretOutput> SecretMethodAsync(this IValidateOperations operations, ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.SecretMethodWithHttpMessagesAsync(secretSource, secretType, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.SecretMethodWithHttpMessagesAsync(validateSecretInput, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

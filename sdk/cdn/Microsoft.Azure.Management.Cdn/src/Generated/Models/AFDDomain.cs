@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -38,12 +40,17 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="profileName">The name of the profile which holds the
+        /// domain.</param>
         /// <param name="tlsSettings">The configuration specifying how to
         /// enable HTTPS for the domain - using AzureFrontDoor managed
         /// certificate or user's own certificate. If not specified, enabling
         /// ssl uses AzureFrontDoor managed certificate by default.</param>
         /// <param name="azureDnsZone">Resource reference to the Azure DNS
         /// zone</param>
+        /// <param name="preValidatedCustomDomainResourceId">Resource reference
+        /// to the Azure resource where custom domain ownership was
+        /// prevalidated</param>
         /// <param name="provisioningState">Provisioning status. Possible
         /// values include: 'Succeeded', 'Failed', 'Updating', 'Deleting',
         /// 'Creating'</param>
@@ -52,19 +59,25 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="domainValidationState">Provisioning substate shows the
         /// progress of custom HTTPS enabling/disabling process step by step.
         /// DCV stands for DomainControlValidation. Possible values include:
-        /// 'Unknown', 'Submitting', 'Pending', 'TimedOut',
-        /// 'PendingRevalidation', 'Approved'</param>
+        /// 'Unknown', 'Submitting', 'Pending', 'Rejected', 'TimedOut',
+        /// 'PendingRevalidation', 'Approved', 'RefreshingValidationToken',
+        /// 'InternalError'</param>
+        /// <param name="extendedProperties">Key-Value pair representing
+        /// migration properties for domains.</param>
         /// <param name="validationProperties">Values the customer needs to
         /// validate domain ownership</param>
-        public AFDDomain(string hostName, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), AFDDomainHttpsParameters tlsSettings = default(AFDDomainHttpsParameters), ResourceReference azureDnsZone = default(ResourceReference), string provisioningState = default(string), string deploymentStatus = default(string), string domainValidationState = default(string), DomainValidationProperties validationProperties = default(DomainValidationProperties))
+        public AFDDomain(string hostName, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string profileName = default(string), AFDDomainHttpsParameters tlsSettings = default(AFDDomainHttpsParameters), ResourceReference azureDnsZone = default(ResourceReference), ResourceReference preValidatedCustomDomainResourceId = default(ResourceReference), string provisioningState = default(string), string deploymentStatus = default(string), string domainValidationState = default(string), IDictionary<string, string> extendedProperties = default(IDictionary<string, string>), DomainValidationProperties validationProperties = default(DomainValidationProperties))
             : base(id, name, type, systemData)
         {
+            ProfileName = profileName;
             TlsSettings = tlsSettings;
             AzureDnsZone = azureDnsZone;
+            PreValidatedCustomDomainResourceId = preValidatedCustomDomainResourceId;
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
             DomainValidationState = domainValidationState;
             HostName = hostName;
+            ExtendedProperties = extendedProperties;
             ValidationProperties = validationProperties;
             CustomInit();
         }
@@ -73,6 +86,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the name of the profile which holds the domain.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.profileName")]
+        public string ProfileName { get; private set; }
 
         /// <summary>
         /// Gets or sets the configuration specifying how to enable HTTPS for
@@ -88,6 +107,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.azureDnsZone")]
         public ResourceReference AzureDnsZone { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource reference to the Azure resource where custom
+        /// domain ownership was prevalidated
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.preValidatedCustomDomainResourceId")]
+        public ResourceReference PreValidatedCustomDomainResourceId { get; set; }
 
         /// <summary>
         /// Gets provisioning status. Possible values include: 'Succeeded',
@@ -107,8 +133,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Gets provisioning substate shows the progress of custom HTTPS
         /// enabling/disabling process step by step. DCV stands for
         /// DomainControlValidation. Possible values include: 'Unknown',
-        /// 'Submitting', 'Pending', 'TimedOut', 'PendingRevalidation',
-        /// 'Approved'
+        /// 'Submitting', 'Pending', 'Rejected', 'TimedOut',
+        /// 'PendingRevalidation', 'Approved', 'RefreshingValidationToken',
+        /// 'InternalError'
         /// </summary>
         [JsonProperty(PropertyName = "properties.domainValidationState")]
         public string DomainValidationState { get; private set; }
@@ -118,6 +145,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostName")]
         public string HostName { get; set; }
+
+        /// <summary>
+        /// Gets or sets key-Value pair representing migration properties for
+        /// domains.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.extendedProperties")]
+        public IDictionary<string, string> ExtendedProperties { get; set; }
 
         /// <summary>
         /// Gets values the customer needs to validate domain ownership

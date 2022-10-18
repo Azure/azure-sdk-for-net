@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Cdn
 
         /// <summary>
         /// Version of the API to be used with the client request. Current version is
-        /// 2020-09-01.
+        /// 2022-05-01-preview.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -76,46 +76,6 @@ namespace Microsoft.Azure.Management.Cdn
         /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
-
-        /// <summary>
-        /// Gets the IProfilesOperations.
-        /// </summary>
-        public virtual IProfilesOperations Profiles { get; private set; }
-
-        /// <summary>
-        /// Gets the IEndpointsOperations.
-        /// </summary>
-        public virtual IEndpointsOperations Endpoints { get; private set; }
-
-        /// <summary>
-        /// Gets the IOriginsOperations.
-        /// </summary>
-        public virtual IOriginsOperations Origins { get; private set; }
-
-        /// <summary>
-        /// Gets the IOriginGroupsOperations.
-        /// </summary>
-        public virtual IOriginGroupsOperations OriginGroups { get; private set; }
-
-        /// <summary>
-        /// Gets the ICustomDomainsOperations.
-        /// </summary>
-        public virtual ICustomDomainsOperations CustomDomains { get; private set; }
-
-        /// <summary>
-        /// Gets the IResourceUsageOperations.
-        /// </summary>
-        public virtual IResourceUsageOperations ResourceUsage { get; private set; }
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        public virtual IOperations Operations { get; private set; }
-
-        /// <summary>
-        /// Gets the IEdgeNodesOperations.
-        /// </summary>
-        public virtual IEdgeNodesOperations EdgeNodes { get; private set; }
 
         /// <summary>
         /// Gets the IAFDProfilesOperations.
@@ -176,6 +136,46 @@ namespace Microsoft.Azure.Management.Cdn
         /// Gets the ILogAnalyticsOperations.
         /// </summary>
         public virtual ILogAnalyticsOperations LogAnalytics { get; private set; }
+
+        /// <summary>
+        /// Gets the IProfilesOperations.
+        /// </summary>
+        public virtual IProfilesOperations Profiles { get; private set; }
+
+        /// <summary>
+        /// Gets the IEndpointsOperations.
+        /// </summary>
+        public virtual IEndpointsOperations Endpoints { get; private set; }
+
+        /// <summary>
+        /// Gets the IOriginsOperations.
+        /// </summary>
+        public virtual IOriginsOperations Origins { get; private set; }
+
+        /// <summary>
+        /// Gets the IOriginGroupsOperations.
+        /// </summary>
+        public virtual IOriginGroupsOperations OriginGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the ICustomDomainsOperations.
+        /// </summary>
+        public virtual ICustomDomainsOperations CustomDomains { get; private set; }
+
+        /// <summary>
+        /// Gets the IResourceUsageOperations.
+        /// </summary>
+        public virtual IResourceUsageOperations ResourceUsage { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IEdgeNodesOperations.
+        /// </summary>
+        public virtual IEdgeNodesOperations EdgeNodes { get; private set; }
 
         /// <summary>
         /// Gets the IPoliciesOperations.
@@ -428,14 +428,6 @@ namespace Microsoft.Azure.Management.Cdn
         /// </summary>
         private void Initialize()
         {
-            Profiles = new ProfilesOperations(this);
-            Endpoints = new EndpointsOperations(this);
-            Origins = new OriginsOperations(this);
-            OriginGroups = new OriginGroupsOperations(this);
-            CustomDomains = new CustomDomainsOperations(this);
-            ResourceUsage = new ResourceUsageOperations(this);
-            Operations = new Operations(this);
-            EdgeNodes = new EdgeNodesOperations(this);
             AFDProfiles = new AFDProfilesOperations(this);
             AFDCustomDomains = new AFDCustomDomainsOperations(this);
             AFDEndpoints = new AFDEndpointsOperations(this);
@@ -448,10 +440,18 @@ namespace Microsoft.Azure.Management.Cdn
             Secrets = new SecretsOperations(this);
             Validate = new ValidateOperations(this);
             LogAnalytics = new LogAnalyticsOperations(this);
+            Profiles = new ProfilesOperations(this);
+            Endpoints = new EndpointsOperations(this);
+            Origins = new OriginsOperations(this);
+            OriginGroups = new OriginGroupsOperations(this);
+            CustomDomains = new CustomDomainsOperations(this);
+            ResourceUsage = new ResourceUsageOperations(this);
+            Operations = new Operations(this);
+            EdgeNodes = new EdgeNodesOperations(this);
             Policies = new PoliciesOperations(this);
             ManagedRuleSets = new ManagedRuleSetsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-09-01";
+            ApiVersion = "2022-05-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -481,26 +481,247 @@ namespace Microsoft.Azure.Management.Cdn
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SecurityPolicyPropertiesParameters>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SecurityPolicyPropertiesParameters>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SecretParameters>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SecretParameters>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DeliveryRuleCondition>("name"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DeliveryRuleCondition>("name"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DeliveryRuleAction>("name"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DeliveryRuleAction>("name"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CustomDomainHttpsParameters>("certificateSource"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CustomDomainHttpsParameters>("certificateSource"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SecurityPolicyParameters>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SecurityPolicyParameters>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SecretParameters>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SecretParameters>("type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
         /// <summary>
         /// Check the availability of a resource name. This is needed for resources
+        /// where name is globally unique, such as a afdx endpoint.
+        /// </summary>
+        /// <param name='checkEndpointNameAvailabilityInput'>
+        /// Input to check.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="AfdErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<CheckEndpointNameAvailabilityOutput>> CheckEndpointNameAvailabilityWithHttpMessagesAsync(CheckEndpointNameAvailabilityInput checkEndpointNameAvailabilityInput, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (checkEndpointNameAvailabilityInput == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "checkEndpointNameAvailabilityInput");
+            }
+            if (checkEndpointNameAvailabilityInput != null)
+            {
+                checkEndpointNameAvailabilityInput.Validate();
+            }
+            if (SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("checkEndpointNameAvailabilityInput", checkEndpointNameAvailabilityInput);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "CheckEndpointNameAvailability", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/checkEndpointNameAvailability").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            List<string> _queryParameters = new List<string>();
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(checkEndpointNameAvailabilityInput != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(checkEndpointNameAvailabilityInput, SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new AfdErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    AfdErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<AfdErrorResponse>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<CheckEndpointNameAvailabilityOutput>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<CheckEndpointNameAvailabilityOutput>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Check the availability of a resource name. This is needed for resources
         /// where name is globally unique, such as a CDN endpoint.
         /// </summary>
         /// <param name='name'>
         /// The resource name to validate.
+        /// </param>
+        /// <param name='type'>
+        /// The type of the resource whose name is to be validated. Possible values
+        /// include: 'Microsoft.Cdn/Profiles/Endpoints',
+        /// 'Microsoft.Cdn/Profiles/AfdEndpoints'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -523,7 +744,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CheckNameAvailabilityOutput>> CheckNameAvailabilityWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CheckNameAvailabilityOutput>> CheckNameAvailabilityWithHttpMessagesAsync(string name, string type, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (ApiVersion == null)
             {
@@ -533,10 +754,15 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
+            if (type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "type");
+            }
             CheckNameAvailabilityInput checkNameAvailabilityInput = new CheckNameAvailabilityInput();
-            if (name != null)
+            if (name != null || type != null)
             {
                 checkNameAvailabilityInput.Name = name;
+                checkNameAvailabilityInput.Type = type;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -690,6 +916,11 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='name'>
         /// The resource name to validate.
         /// </param>
+        /// <param name='type'>
+        /// The type of the resource whose name is to be validated. Possible values
+        /// include: 'Microsoft.Cdn/Profiles/Endpoints',
+        /// 'Microsoft.Cdn/Profiles/AfdEndpoints'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -711,7 +942,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CheckNameAvailabilityOutput>> CheckNameAvailabilityWithSubscriptionWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CheckNameAvailabilityOutput>> CheckNameAvailabilityWithSubscriptionWithHttpMessagesAsync(string name, string type, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (SubscriptionId == null)
             {
@@ -725,10 +956,15 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
+            if (type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "type");
+            }
             CheckNameAvailabilityInput checkNameAvailabilityInput = new CheckNameAvailabilityInput();
-            if (name != null)
+            if (name != null || type != null)
             {
                 checkNameAvailabilityInput.Name = name;
+                checkNameAvailabilityInput.Type = type;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

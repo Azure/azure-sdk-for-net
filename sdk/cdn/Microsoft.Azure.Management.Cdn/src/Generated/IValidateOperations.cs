@@ -26,12 +26,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// <summary>
         /// Validate a Secret in the profile.
         /// </summary>
-        /// <param name='secretSource'>
-        /// The secret source.
-        /// </param>
-        /// <param name='secretType'>
-        /// The secret type. Possible values include: 'UrlSigningKey',
-        /// 'ManagedCertificate', 'CustomerCertificate'
+        /// <param name='validateSecretInput'>
+        /// The Secret source.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -48,6 +44,6 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ValidateSecretOutput>> SecretMethodWithHttpMessagesAsync(ResourceReference secretSource, string secretType, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ValidateSecretOutput>> SecretMethodWithHttpMessagesAsync(ValidateSecretInput validateSecretInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

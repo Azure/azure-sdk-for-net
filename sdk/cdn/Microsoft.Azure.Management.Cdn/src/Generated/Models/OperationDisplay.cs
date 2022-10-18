@@ -34,11 +34,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// performed: Profile, endpoint, etc.</param>
         /// <param name="operation">Operation type: Read, write, delete,
         /// etc.</param>
-        public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string))
+        /// <param name="description">Description of operation.</param>
+        public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
         {
             Provider = provider;
             Resource = resource;
             Operation = operation;
+            Description = description;
             CustomInit();
         }
 
@@ -65,6 +67,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
         public string Operation { get; private set; }
+
+        /// <summary>
+        /// Gets description of operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "description")]
+        public string Description { get; private set; }
 
     }
 }

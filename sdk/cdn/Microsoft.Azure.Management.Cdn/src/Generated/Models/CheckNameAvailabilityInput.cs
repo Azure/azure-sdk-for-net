@@ -31,17 +31,15 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Initializes a new instance of the CheckNameAvailabilityInput class.
         /// </summary>
         /// <param name="name">The resource name to validate.</param>
-        public CheckNameAvailabilityInput(string name)
+        /// <param name="type">The type of the resource whose name is to be
+        /// validated. Possible values include:
+        /// 'Microsoft.Cdn/Profiles/Endpoints',
+        /// 'Microsoft.Cdn/Profiles/AfdEndpoints'</param>
+        public CheckNameAvailabilityInput(string name, string type)
         {
             Name = name;
+            Type = type;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for CheckNameAvailabilityInput class.
-        /// </summary>
-        static CheckNameAvailabilityInput()
-        {
-            Type = "Microsoft.Cdn/Profiles/Endpoints";
         }
 
         /// <summary>
@@ -56,10 +54,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// The type of the resource whose name is to be validated.
+        /// Gets or sets the type of the resource whose name is to be
+        /// validated. Possible values include:
+        /// 'Microsoft.Cdn/Profiles/Endpoints',
+        /// 'Microsoft.Cdn/Profiles/AfdEndpoints'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public static string Type { get; private set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -72,6 +73,10 @@ namespace Microsoft.Azure.Management.Cdn.Models
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
             }
         }
     }

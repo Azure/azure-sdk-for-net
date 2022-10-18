@@ -24,7 +24,8 @@ namespace Microsoft.Azure.Management.Cdn
     public static partial class ProfilesOperationsExtensions
     {
             /// <summary>
-            /// Lists all of the CDN profiles within an Azure subscription.
+            /// Lists all of the Azure Front Door Standard, Azure Front Door Premium, and
+            /// CDN profiles within an Azure subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -35,7 +36,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists all of the CDN profiles within an Azure subscription.
+            /// Lists all of the Azure Front Door Standard, Azure Front Door Premium, and
+            /// CDN profiles within an Azure subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -52,7 +54,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists all of the CDN profiles within a resource group.
+            /// Lists all of the Azure Front Door Standard, Azure Front Door Premium, and
+            /// CDN profiles within a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -66,7 +69,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists all of the CDN profiles within a resource group.
+            /// Lists all of the Azure Front Door Standard, Azure Front Door Premium, and
+            /// CDN profiles within a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -86,8 +90,9 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Gets a CDN profile with the specified profile name under the specified
-            /// subscription and resource group.
+            /// Gets an Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile with the specified profile name under the specified subscription
+            /// and resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -96,7 +101,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             public static Profile Get(this IProfilesOperations operations, string resourceGroupName, string profileName)
             {
@@ -104,8 +110,9 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Gets a CDN profile with the specified profile name under the specified
-            /// subscription and resource group.
+            /// Gets an Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile with the specified profile name under the specified subscription
+            /// and resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -114,7 +121,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -128,8 +136,9 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN profile with a profile name under the specified
-            /// subscription and resource group.
+            /// Creates a new Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile with a profile name under the specified subscription and resource
+            /// group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -138,7 +147,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             /// <param name='profile'>
             /// Profile properties needed to create a new profile.
@@ -149,8 +159,9 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN profile with a profile name under the specified
-            /// subscription and resource group.
+            /// Creates a new Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile with a profile name under the specified subscription and resource
+            /// group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -159,7 +170,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             /// <param name='profile'>
             /// Profile properties needed to create a new profile.
@@ -176,8 +188,9 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Updates an existing CDN profile with the specified profile name under the
-            /// specified subscription and resource group.
+            /// Updates an existing Azure Front Door Standard or Azure Front Door Premium
+            /// or CDN profile with the specified profile name under the specified
+            /// subscription and resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -186,19 +199,25 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             /// <param name='tags'>
             /// Profile tags
             /// </param>
-            public static Profile Update(this IProfilesOperations operations, string resourceGroupName, string profileName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            /// <param name='originResponseTimeoutSeconds'>
+            /// Send and receive timeout on forwarding request to the origin. When timeout
+            /// is reached, the request fails and returns.
+            /// </param>
+            public static Profile Update(this IProfilesOperations operations, string resourceGroupName, string profileName, IDictionary<string, string> tags = default(IDictionary<string, string>), int? originResponseTimeoutSeconds = default(int?))
             {
-                return operations.UpdateAsync(resourceGroupName, profileName, tags).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, profileName, tags, originResponseTimeoutSeconds).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates an existing CDN profile with the specified profile name under the
-            /// specified subscription and resource group.
+            /// Updates an existing Azure Front Door Standard or Azure Front Door Premium
+            /// or CDN profile with the specified profile name under the specified
+            /// subscription and resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -207,26 +226,32 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             /// <param name='tags'>
             /// Profile tags
+            /// </param>
+            /// <param name='originResponseTimeoutSeconds'>
+            /// Send and receive timeout on forwarding request to the origin. When timeout
+            /// is reached, the request fails and returns.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Profile> UpdateAsync(this IProfilesOperations operations, string resourceGroupName, string profileName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Profile> UpdateAsync(this IProfilesOperations operations, string resourceGroupName, string profileName, IDictionary<string, string> tags = default(IDictionary<string, string>), int? originResponseTimeoutSeconds = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, profileName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, profileName, tags, originResponseTimeoutSeconds, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes an existing CDN profile with the specified parameters. Deleting a
-            /// profile will result in the deletion of all of the sub-resources including
-            /// endpoints, origins and custom domains.
+            /// Deletes an existing  Azure Front Door Standard or Azure Front Door Premium
+            /// or CDN profile with the specified parameters. Deleting a profile will
+            /// result in the deletion of all of the sub-resources including endpoints,
+            /// origins and custom domains.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -235,7 +260,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             public static void Delete(this IProfilesOperations operations, string resourceGroupName, string profileName)
             {
@@ -243,9 +269,134 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN profile with the specified parameters. Deleting a
-            /// profile will result in the deletion of all of the sub-resources including
-            /// endpoints, origins and custom domains.
+            /// Deletes an existing  Azure Front Door Standard or Azure Front Door Premium
+            /// or CDN profile with the specified parameters. Deleting a profile will
+            /// result in the deletion of all of the sub-resources including endpoints,
+            /// origins and custom domains.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IProfilesOperations operations, string resourceGroupName, string profileName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, profileName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Checks if CDN profile can be migrated to Azure Frontdoor(Standard/Premium)
+            /// profile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='classicResourceReference'>
+            /// Resource reference of the classic cdn profile or classic frontdoor that
+            /// need to be migrated.
+            /// </param>
+            public static CanMigrateResult CanMigrate(this IProfilesOperations operations, string resourceGroupName, ResourceReference classicResourceReference)
+            {
+                return operations.CanMigrateAsync(resourceGroupName, classicResourceReference).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks if CDN profile can be migrated to Azure Frontdoor(Standard/Premium)
+            /// profile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='classicResourceReference'>
+            /// Resource reference of the classic cdn profile or classic frontdoor that
+            /// need to be migrated.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CanMigrateResult> CanMigrateAsync(this IProfilesOperations operations, string resourceGroupName, ResourceReference classicResourceReference, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CanMigrateWithHttpMessagesAsync(resourceGroupName, classicResourceReference, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate the CDN profile to Azure Frontdoor(Standard/Premium) profile. The
+            /// change need to be committed after this.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='migrationParameters'>
+            /// Properties needed to migrate the profile.
+            /// </param>
+            public static MigrateResult Migrate(this IProfilesOperations operations, string resourceGroupName, MigrationParameters migrationParameters)
+            {
+                return operations.MigrateAsync(resourceGroupName, migrationParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate the CDN profile to Azure Frontdoor(Standard/Premium) profile. The
+            /// change need to be committed after this.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='migrationParameters'>
+            /// Properties needed to migrate the profile.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<MigrateResult> MigrateAsync(this IProfilesOperations operations, string resourceGroupName, MigrationParameters migrationParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MigrateWithHttpMessagesAsync(resourceGroupName, migrationParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Commit the migrated Azure Frontdoor(Standard/Premium) profile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile which is unique within the resource group.
+            /// </param>
+            public static ProfilesMigrationCommitHeaders MigrationCommit(this IProfilesOperations operations, string resourceGroupName, string profileName)
+            {
+                return operations.MigrationCommitAsync(resourceGroupName, profileName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Commit the migrated Azure Frontdoor(Standard/Premium) profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -259,9 +410,12 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IProfilesOperations operations, string resourceGroupName, string profileName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ProfilesMigrationCommitHeaders> MigrationCommitAsync(this IProfilesOperations operations, string resourceGroupName, string profileName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, profileName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.MigrationCommitWithHttpMessagesAsync(resourceGroupName, profileName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -325,7 +479,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             public static SupportedOptimizationTypesListResult ListSupportedOptimizationTypes(this IProfilesOperations operations, string resourceGroupName, string profileName)
             {
@@ -343,7 +498,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -357,7 +513,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Checks the quota and actual usage of endpoints under the given CDN profile.
+            /// Checks the quota and actual usage of endpoints under the given Azure Front
+            /// Door Standard or Azure Front Door Premium or CDN profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -366,7 +523,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             public static IPage<ResourceUsage> ListResourceUsage(this IProfilesOperations operations, string resourceGroupName, string profileName)
             {
@@ -374,7 +532,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Checks the quota and actual usage of endpoints under the given CDN profile.
+            /// Checks the quota and actual usage of endpoints under the given Azure Front
+            /// Door Standard or Azure Front Door Premium or CDN profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -383,7 +542,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -397,8 +557,9 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN profile with a profile name under the specified
-            /// subscription and resource group.
+            /// Creates a new Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile with a profile name under the specified subscription and resource
+            /// group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -407,7 +568,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             /// <param name='profile'>
             /// Profile properties needed to create a new profile.
@@ -418,8 +580,9 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN profile with a profile name under the specified
-            /// subscription and resource group.
+            /// Creates a new Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile with a profile name under the specified subscription and resource
+            /// group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -428,7 +591,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             /// <param name='profile'>
             /// Profile properties needed to create a new profile.
@@ -445,8 +609,9 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Updates an existing CDN profile with the specified profile name under the
-            /// specified subscription and resource group.
+            /// Updates an existing Azure Front Door Standard or Azure Front Door Premium
+            /// or CDN profile with the specified profile name under the specified
+            /// subscription and resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -455,19 +620,25 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             /// <param name='tags'>
             /// Profile tags
             /// </param>
-            public static Profile BeginUpdate(this IProfilesOperations operations, string resourceGroupName, string profileName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            /// <param name='originResponseTimeoutSeconds'>
+            /// Send and receive timeout on forwarding request to the origin. When timeout
+            /// is reached, the request fails and returns.
+            /// </param>
+            public static Profile BeginUpdate(this IProfilesOperations operations, string resourceGroupName, string profileName, IDictionary<string, string> tags = default(IDictionary<string, string>), int? originResponseTimeoutSeconds = default(int?))
             {
-                return operations.BeginUpdateAsync(resourceGroupName, profileName, tags).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, profileName, tags, originResponseTimeoutSeconds).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates an existing CDN profile with the specified profile name under the
-            /// specified subscription and resource group.
+            /// Updates an existing Azure Front Door Standard or Azure Front Door Premium
+            /// or CDN profile with the specified profile name under the specified
+            /// subscription and resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -476,26 +647,32 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             /// <param name='tags'>
             /// Profile tags
+            /// </param>
+            /// <param name='originResponseTimeoutSeconds'>
+            /// Send and receive timeout on forwarding request to the origin. When timeout
+            /// is reached, the request fails and returns.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Profile> BeginUpdateAsync(this IProfilesOperations operations, string resourceGroupName, string profileName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Profile> BeginUpdateAsync(this IProfilesOperations operations, string resourceGroupName, string profileName, IDictionary<string, string> tags = default(IDictionary<string, string>), int? originResponseTimeoutSeconds = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, profileName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, profileName, tags, originResponseTimeoutSeconds, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes an existing CDN profile with the specified parameters. Deleting a
-            /// profile will result in the deletion of all of the sub-resources including
-            /// endpoints, origins and custom domains.
+            /// Deletes an existing  Azure Front Door Standard or Azure Front Door Premium
+            /// or CDN profile with the specified parameters. Deleting a profile will
+            /// result in the deletion of all of the sub-resources including endpoints,
+            /// origins and custom domains.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -504,7 +681,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             public static void BeginDelete(this IProfilesOperations operations, string resourceGroupName, string profileName)
             {
@@ -512,9 +690,10 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN profile with the specified parameters. Deleting a
-            /// profile will result in the deletion of all of the sub-resources including
-            /// endpoints, origins and custom domains.
+            /// Deletes an existing  Azure Front Door Standard or Azure Front Door Premium
+            /// or CDN profile with the specified parameters. Deleting a profile will
+            /// result in the deletion of all of the sub-resources including endpoints,
+            /// origins and custom domains.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -523,7 +702,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -534,7 +714,90 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists all of the CDN profiles within an Azure subscription.
+            /// Migrate the CDN profile to Azure Frontdoor(Standard/Premium) profile. The
+            /// change need to be committed after this.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='migrationParameters'>
+            /// Properties needed to migrate the profile.
+            /// </param>
+            public static MigrateResult BeginMigrate(this IProfilesOperations operations, string resourceGroupName, MigrationParameters migrationParameters)
+            {
+                return operations.BeginMigrateAsync(resourceGroupName, migrationParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate the CDN profile to Azure Frontdoor(Standard/Premium) profile. The
+            /// change need to be committed after this.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='migrationParameters'>
+            /// Properties needed to migrate the profile.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<MigrateResult> BeginMigrateAsync(this IProfilesOperations operations, string resourceGroupName, MigrationParameters migrationParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginMigrateWithHttpMessagesAsync(resourceGroupName, migrationParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Commit the migrated Azure Frontdoor(Standard/Premium) profile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile which is unique within the resource group.
+            /// </param>
+            public static ProfilesMigrationCommitHeaders BeginMigrationCommit(this IProfilesOperations operations, string resourceGroupName, string profileName)
+            {
+                return operations.BeginMigrationCommitAsync(resourceGroupName, profileName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Commit the migrated Azure Frontdoor(Standard/Premium) profile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile which is unique within the resource group.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ProfilesMigrationCommitHeaders> BeginMigrationCommitAsync(this IProfilesOperations operations, string resourceGroupName, string profileName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginMigrationCommitWithHttpMessagesAsync(resourceGroupName, profileName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Lists all of the Azure Front Door Standard, Azure Front Door Premium, and
+            /// CDN profiles within an Azure subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -548,7 +811,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists all of the CDN profiles within an Azure subscription.
+            /// Lists all of the Azure Front Door Standard, Azure Front Door Premium, and
+            /// CDN profiles within an Azure subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -568,7 +832,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists all of the CDN profiles within a resource group.
+            /// Lists all of the Azure Front Door Standard, Azure Front Door Premium, and
+            /// CDN profiles within a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -582,7 +847,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists all of the CDN profiles within a resource group.
+            /// Lists all of the Azure Front Door Standard, Azure Front Door Premium, and
+            /// CDN profiles within a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -602,7 +868,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Checks the quota and actual usage of endpoints under the given CDN profile.
+            /// Checks the quota and actual usage of endpoints under the given Azure Front
+            /// Door Standard or Azure Front Door Premium or CDN profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -616,7 +883,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Checks the quota and actual usage of endpoints under the given CDN profile.
+            /// Checks the quota and actual usage of endpoints under the given Azure Front
+            /// Door Standard or Azure Front Door Premium or CDN profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -57,7 +57,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -264,7 +265,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='endpointName'>
         /// Name of the endpoint under the profile which is unique globally.
@@ -480,7 +482,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='endpointName'>
         /// Name of the endpoint under the profile which is unique globally.
@@ -512,13 +515,18 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='endpointName'>
         /// Name of the endpoint under the profile which is unique globally.
         /// </param>
-        /// <param name='endpointUpdateProperties'>
-        /// Endpoint update properties
+        /// <param name='tags'>
+        /// Endpoint tags.
+        /// </param>
+        /// <param name='enabledState'>
+        /// Whether to enable use of this rule. Permitted values are 'Enabled' or
+        /// 'Disabled'. Possible values include: 'Enabled', 'Disabled'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -526,10 +534,10 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<AFDEndpoint>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, AFDEndpointUpdateParameters endpointUpdateProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AFDEndpoint>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, IDictionary<string, string> tags = default(IDictionary<string, string>), string enabledState = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<AFDEndpoint> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, endpointUpdateProperties, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<AFDEndpoint> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, tags, enabledState, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -541,7 +549,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='endpointName'>
         /// Name of the endpoint under the profile which is unique globally.
@@ -566,7 +575,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='endpointName'>
         /// Name of the endpoint under the profile which is unique globally.
@@ -598,7 +608,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='endpointName'>
         /// Name of the endpoint under the profile which is unique globally.
@@ -814,7 +825,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='endpointName'>
         /// Name of the endpoint under the profile which is unique globally.
@@ -1049,7 +1061,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='endpointName'>
         /// Name of the endpoint under the profile which is unique globally.
@@ -1322,13 +1335,18 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='endpointName'>
         /// Name of the endpoint under the profile which is unique globally.
         /// </param>
-        /// <param name='endpointUpdateProperties'>
-        /// Endpoint update properties
+        /// <param name='tags'>
+        /// Endpoint tags.
+        /// </param>
+        /// <param name='enabledState'>
+        /// Whether to enable use of this rule. Permitted values are 'Enabled' or
+        /// 'Disabled'. Possible values include: 'Enabled', 'Disabled'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1351,7 +1369,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AFDEndpoint>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, AFDEndpointUpdateParameters endpointUpdateProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AFDEndpoint>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, IDictionary<string, string> tags = default(IDictionary<string, string>), string enabledState = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1380,10 +1398,6 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "endpointName");
             }
-            if (endpointUpdateProperties == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "endpointUpdateProperties");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -1391,6 +1405,12 @@ namespace Microsoft.Azure.Management.Cdn
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            AFDEndpointUpdateParameters endpointUpdateProperties = new AFDEndpointUpdateParameters();
+            if (tags != null || enabledState != null)
+            {
+                endpointUpdateProperties.Tags = tags;
+                endpointUpdateProperties.EnabledState = enabledState;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1570,7 +1590,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='endpointName'>
         /// Name of the endpoint under the profile which is unique globally.
@@ -1764,7 +1785,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='endpointName'>
         /// Name of the endpoint under the profile which is unique globally.

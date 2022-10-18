@@ -103,12 +103,15 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="originGroups">The origin groups comprising of origins
         /// that are used for load balancing the traffic based on
         /// availability.</param>
+        /// <param name="customDomains">The custom domains under the
+        /// endpoint.</param>
         /// <param name="resourceState">Resource status of the endpoint.
         /// Possible values include: 'Creating', 'Deleting', 'Running',
         /// 'Starting', 'Stopped', 'Stopping'</param>
         /// <param name="provisioningState">Provisioning status of the
-        /// endpoint.</param>
-        public Endpoint(string location, IList<DeepCreatedOrigin> origins, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), string originPath = default(string), IList<string> contentTypesToCompress = default(IList<string>), string originHostHeader = default(string), bool? isCompressionEnabled = default(bool?), bool? isHttpAllowed = default(bool?), bool? isHttpsAllowed = default(bool?), QueryStringCachingBehavior? queryStringCachingBehavior = default(QueryStringCachingBehavior?), string optimizationType = default(string), string probePath = default(string), IList<GeoFilter> geoFilters = default(IList<GeoFilter>), ResourceReference defaultOriginGroup = default(ResourceReference), IList<UrlSigningKey> urlSigningKeys = default(IList<UrlSigningKey>), EndpointPropertiesUpdateParametersDeliveryPolicy deliveryPolicy = default(EndpointPropertiesUpdateParametersDeliveryPolicy), EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink = default(EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink), string hostName = default(string), IList<DeepCreatedOriginGroup> originGroups = default(IList<DeepCreatedOriginGroup>), string resourceState = default(string), string provisioningState = default(string))
+        /// endpoint. Possible values include: 'Succeeded', 'Failed',
+        /// 'Updating', 'Deleting', 'Creating'</param>
+        public Endpoint(string location, IList<DeepCreatedOrigin> origins, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), string originPath = default(string), IList<string> contentTypesToCompress = default(IList<string>), string originHostHeader = default(string), bool? isCompressionEnabled = default(bool?), bool? isHttpAllowed = default(bool?), bool? isHttpsAllowed = default(bool?), QueryStringCachingBehavior? queryStringCachingBehavior = default(QueryStringCachingBehavior?), string optimizationType = default(string), string probePath = default(string), IList<GeoFilter> geoFilters = default(IList<GeoFilter>), ResourceReference defaultOriginGroup = default(ResourceReference), IList<UrlSigningKey> urlSigningKeys = default(IList<UrlSigningKey>), EndpointPropertiesUpdateParametersDeliveryPolicy deliveryPolicy = default(EndpointPropertiesUpdateParametersDeliveryPolicy), EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink = default(EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink), string hostName = default(string), IList<DeepCreatedOriginGroup> originGroups = default(IList<DeepCreatedOriginGroup>), IList<DeepCreatedCustomDomain> customDomains = default(IList<DeepCreatedCustomDomain>), string resourceState = default(string), string provisioningState = default(string))
             : base(location, id, name, type, systemData, tags)
         {
             OriginPath = originPath;
@@ -128,6 +131,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
             HostName = hostName;
             Origins = origins;
             OriginGroups = originGroups;
+            CustomDomains = customDomains;
             ResourceState = resourceState;
             ProvisioningState = provisioningState;
             CustomInit();
@@ -276,6 +280,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public IList<DeepCreatedOriginGroup> OriginGroups { get; set; }
 
         /// <summary>
+        /// Gets the custom domains under the endpoint.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customDomains")]
+        public IList<DeepCreatedCustomDomain> CustomDomains { get; private set; }
+
+        /// <summary>
         /// Gets resource status of the endpoint. Possible values include:
         /// 'Creating', 'Deleting', 'Running', 'Starting', 'Stopped',
         /// 'Stopping'
@@ -284,7 +294,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public string ResourceState { get; private set; }
 
         /// <summary>
-        /// Gets provisioning status of the endpoint.
+        /// Gets provisioning status of the endpoint. Possible values include:
+        /// 'Succeeded', 'Failed', 'Updating', 'Deleting', 'Creating'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -343,6 +354,16 @@ namespace Microsoft.Azure.Management.Cdn.Models
                     if (element3 != null)
                     {
                         element3.Validate();
+                    }
+                }
+            }
+            if (CustomDomains != null)
+            {
+                foreach (var element4 in CustomDomains)
+                {
+                    if (element4 != null)
+                    {
+                        element4.Validate();
                     }
                 }
             }

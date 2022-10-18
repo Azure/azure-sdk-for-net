@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     /// The json object containing security policy waf parameters
     /// </summary>
     [Newtonsoft.Json.JsonObject("WebApplicationFirewall")]
-    public partial class SecurityPolicyWebApplicationFirewallParameters : SecurityPolicyParameters
+    public partial class SecurityPolicyWebApplicationFirewallParameters : SecurityPolicyPropertiesParameters
     {
         /// <summary>
         /// Initializes a new instance of the

@@ -24,7 +24,8 @@ namespace Microsoft.Azure.Management.Cdn
     public partial interface IProfilesOperations
     {
         /// <summary>
-        /// Lists all of the CDN profiles within an Azure subscription.
+        /// Lists all of the Azure Front Door Standard, Azure Front Door
+        /// Premium, and CDN profiles within an Azure subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -43,7 +44,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         Task<AzureOperationResponse<IPage<Profile>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all of the CDN profiles within a resource group.
+        /// Lists all of the Azure Front Door Standard, Azure Front Door
+        /// Premium, and CDN profiles within a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -65,14 +67,16 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         Task<AzureOperationResponse<IPage<Profile>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a CDN profile with the specified profile name under the
-        /// specified subscription and resource group.
+        /// Gets an Azure Front Door Standard or Azure Front Door Premium or
+        /// CDN profile with the specified profile name under the specified
+        /// subscription and resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// or CDN profile which is unique within the resource group.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -91,14 +95,16 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         Task<AzureOperationResponse<Profile>> GetWithHttpMessagesAsync(string resourceGroupName, string profileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new CDN profile with a profile name under the specified
-        /// subscription and resource group.
+        /// Creates a new Azure Front Door Standard or Azure Front Door Premium
+        /// or CDN profile with a profile name under the specified subscription
+        /// and resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// or CDN profile which is unique within the resource group.
         /// </param>
         /// <param name='profile'>
         /// Profile properties needed to create a new profile.
@@ -120,17 +126,23 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         Task<AzureOperationResponse<Profile>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, Profile profile, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates an existing CDN profile with the specified profile name
-        /// under the specified subscription and resource group.
+        /// Updates an existing Azure Front Door Standard or Azure Front Door
+        /// Premium or CDN profile with the specified profile name under the
+        /// specified subscription and resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// or CDN profile which is unique within the resource group.
         /// </param>
         /// <param name='tags'>
         /// Profile tags
+        /// </param>
+        /// <param name='originResponseTimeoutSeconds'>
+        /// Send and receive timeout on forwarding request to the origin. When
+        /// timeout is reached, the request fails and returns.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -147,11 +159,88 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Profile>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Profile>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, IDictionary<string, string> tags = default(IDictionary<string, string>), int? originResponseTimeoutSeconds = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an existing CDN profile with the specified parameters.
-        /// Deleting a profile will result in the deletion of all of the
-        /// sub-resources including endpoints, origins and custom domains.
+        /// Deletes an existing  Azure Front Door Standard or Azure Front Door
+        /// Premium or CDN profile with the specified parameters. Deleting a
+        /// profile will result in the deletion of all of the sub-resources
+        /// including endpoints, origins and custom domains.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='profileName'>
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// or CDN profile which is unique within the resource group.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string profileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Checks if CDN profile can be migrated to Azure
+        /// Frontdoor(Standard/Premium) profile.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='classicResourceReference'>
+        /// Resource reference of the classic cdn profile or classic frontdoor
+        /// that need to be migrated.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<CanMigrateResult>> CanMigrateWithHttpMessagesAsync(string resourceGroupName, ResourceReference classicResourceReference, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Migrate the CDN profile to Azure Frontdoor(Standard/Premium)
+        /// profile. The change need to be committed after this.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='migrationParameters'>
+        /// Properties needed to migrate the profile.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<MigrateResult,ProfilesMigrateHeaders>> MigrateWithHttpMessagesAsync(string resourceGroupName, MigrationParameters migrationParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Commit the migrated Azure Frontdoor(Standard/Premium) profile.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -171,7 +260,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string profileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<ProfilesMigrationCommitHeaders>> MigrationCommitWithHttpMessagesAsync(string resourceGroupName, string profileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Generates a dynamic SSO URI used to sign in to the CDN supplemental
         /// portal. Supplemental portal is used to configure advanced feature
@@ -211,7 +300,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// or CDN profile which is unique within the resource group.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -230,14 +320,16 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         Task<AzureOperationResponse<SupportedOptimizationTypesListResult>> ListSupportedOptimizationTypesWithHttpMessagesAsync(string resourceGroupName, string profileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given CDN
+        /// Checks the quota and actual usage of endpoints under the given
+        /// Azure Front Door Standard or Azure Front Door Premium or CDN
         /// profile.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// or CDN profile which is unique within the resource group.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -256,14 +348,16 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         Task<AzureOperationResponse<IPage<ResourceUsage>>> ListResourceUsageWithHttpMessagesAsync(string resourceGroupName, string profileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new CDN profile with a profile name under the specified
-        /// subscription and resource group.
+        /// Creates a new Azure Front Door Standard or Azure Front Door Premium
+        /// or CDN profile with a profile name under the specified subscription
+        /// and resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// or CDN profile which is unique within the resource group.
         /// </param>
         /// <param name='profile'>
         /// Profile properties needed to create a new profile.
@@ -285,17 +379,23 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         Task<AzureOperationResponse<Profile>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, Profile profile, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates an existing CDN profile with the specified profile name
-        /// under the specified subscription and resource group.
+        /// Updates an existing Azure Front Door Standard or Azure Front Door
+        /// Premium or CDN profile with the specified profile name under the
+        /// specified subscription and resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// or CDN profile which is unique within the resource group.
         /// </param>
         /// <param name='tags'>
         /// Profile tags
+        /// </param>
+        /// <param name='originResponseTimeoutSeconds'>
+        /// Send and receive timeout on forwarding request to the origin. When
+        /// timeout is reached, the request fails and returns.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -312,11 +412,61 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Profile>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Profile>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, IDictionary<string, string> tags = default(IDictionary<string, string>), int? originResponseTimeoutSeconds = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an existing CDN profile with the specified parameters.
-        /// Deleting a profile will result in the deletion of all of the
-        /// sub-resources including endpoints, origins and custom domains.
+        /// Deletes an existing  Azure Front Door Standard or Azure Front Door
+        /// Premium or CDN profile with the specified parameters. Deleting a
+        /// profile will result in the deletion of all of the sub-resources
+        /// including endpoints, origins and custom domains.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='profileName'>
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// or CDN profile which is unique within the resource group.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string profileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Migrate the CDN profile to Azure Frontdoor(Standard/Premium)
+        /// profile. The change need to be committed after this.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='migrationParameters'>
+        /// Properties needed to migrate the profile.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<MigrateResult,ProfilesMigrateHeaders>> BeginMigrateWithHttpMessagesAsync(string resourceGroupName, MigrationParameters migrationParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Commit the migrated Azure Frontdoor(Standard/Premium) profile.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -336,9 +486,10 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string profileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<ProfilesMigrationCommitHeaders>> BeginMigrationCommitWithHttpMessagesAsync(string resourceGroupName, string profileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all of the CDN profiles within an Azure subscription.
+        /// Lists all of the Azure Front Door Standard, Azure Front Door
+        /// Premium, and CDN profiles within an Azure subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -360,7 +511,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         Task<AzureOperationResponse<IPage<Profile>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all of the CDN profiles within a resource group.
+        /// Lists all of the Azure Front Door Standard, Azure Front Door
+        /// Premium, and CDN profiles within a resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -382,7 +534,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         Task<AzureOperationResponse<IPage<Profile>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given CDN
+        /// Checks the quota and actual usage of endpoints under the given
+        /// Azure Front Door Standard or Azure Front Door Premium or CDN
         /// profile.
         /// </summary>
         /// <param name='nextPageLink'>

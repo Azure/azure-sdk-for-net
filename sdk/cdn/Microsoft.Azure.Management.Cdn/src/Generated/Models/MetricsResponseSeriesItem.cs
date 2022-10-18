@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Initializes a new instance of the MetricsResponseSeriesItem class.
         /// </summary>
         /// <param name="unit">Possible values include: 'count', 'bytes',
-        /// 'bitsPerSecond'</param>
+        /// 'bitsPerSecond', 'milliSeconds'</param>
         public MetricsResponseSeriesItem(string metric = default(string), string unit = default(string), IList<MetricsResponseSeriesItemGroupsItem> groups = default(IList<MetricsResponseSeriesItemGroupsItem>), IList<MetricsResponseSeriesItemDataItem> data = default(IList<MetricsResponseSeriesItemDataItem>))
         {
             Metric = metric;
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
         /// <summary>
         /// Gets or sets possible values include: 'count', 'bytes',
-        /// 'bitsPerSecond'
+        /// 'bitsPerSecond', 'milliSeconds'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
         public string Unit { get; set; }

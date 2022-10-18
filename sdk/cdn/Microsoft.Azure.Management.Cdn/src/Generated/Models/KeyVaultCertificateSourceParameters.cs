@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static KeyVaultCertificateSourceParameters()
         {
-            Odatatype = "#Microsoft.Azure.Cdn.Models.KeyVaultCertificateSourceParameters";
+            TypeName = "KeyVaultCertificateSourceParameters";
             UpdateRule = "NoAction";
             DeleteRule = "NoAction";
         }
@@ -103,8 +103,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "@odata.type")]
-        public static string Odatatype { get; private set; }
+        [JsonProperty(PropertyName = "typeName")]
+        public static string TypeName { get; private set; }
 
         /// <summary>
         /// Describes the action that shall be taken when the certificate is

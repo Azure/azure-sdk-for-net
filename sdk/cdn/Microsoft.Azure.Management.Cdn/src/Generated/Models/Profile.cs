@@ -18,8 +18,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System.Linq;
 
     /// <summary>
-    /// CDN profile is a logical grouping of endpoints that share the same
-    /// settings, such as CDN provider and pricing tier.
+    /// A profile is a logical grouping of endpoints that share the same
+    /// settings.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class Profile : TrackedResource
@@ -36,25 +36,38 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Initializes a new instance of the Profile class.
         /// </summary>
         /// <param name="location">Resource location.</param>
-        /// <param name="sku">The pricing tier (defines a CDN provider, feature
-        /// list and rate) of the CDN profile.</param>
+        /// <param name="sku">The pricing tier (defines Azure Front Door
+        /// Standard or Premium or a CDN provider, feature list and rate) of
+        /// the profile.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags.</param>
+        /// <param name="kind">Kind of the profile. Used by portal to
+        /// differentiate traditional CDN profile and new AFD profile.</param>
         /// <param name="resourceState">Resource status of the profile.
         /// Possible values include: 'Creating', 'Active', 'Deleting',
-        /// 'Disabled'</param>
-        /// <param name="provisioningState">Provisioning status of the
-        /// profile.</param>
-        /// <param name="frontdoorId">The Id of the frontdoor.</param>
-        public Profile(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), string resourceState = default(string), string provisioningState = default(string), string frontdoorId = default(string))
+        /// 'Disabled', 'Migrating', 'Migrated', 'PendingMigrationCommit',
+        /// 'CommittingMigration', 'AbortingMigration'</param>
+        /// <param name="provisioningState">Provisioning status of the profile.
+        /// Possible values include: 'Succeeded', 'Failed', 'Updating',
+        /// 'Deleting', 'Creating'</param>
+        /// <param name="extendedProperties">Key-Value pair representing
+        /// additional properties for profiles.</param>
+        /// <param name="frontDoorId">The Id of the frontdoor.</param>
+        /// <param name="originResponseTimeoutSeconds">Send and receive timeout
+        /// on forwarding request to the origin. When timeout is reached, the
+        /// request fails and returns.</param>
+        public Profile(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), string resourceState = default(string), string provisioningState = default(string), IDictionary<string, string> extendedProperties = default(IDictionary<string, string>), string frontDoorId = default(string), int? originResponseTimeoutSeconds = default(int?))
             : base(location, id, name, type, systemData, tags)
         {
             Sku = sku;
+            Kind = kind;
             ResourceState = resourceState;
             ProvisioningState = provisioningState;
-            FrontdoorId = frontdoorId;
+            ExtendedProperties = extendedProperties;
+            FrontDoorId = frontDoorId;
+            OriginResponseTimeoutSeconds = originResponseTimeoutSeconds;
             CustomInit();
         }
 
@@ -64,30 +77,54 @@ namespace Microsoft.Azure.Management.Cdn.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the pricing tier (defines a CDN provider, feature list
-        /// and rate) of the CDN profile.
+        /// Gets or sets the pricing tier (defines Azure Front Door Standard or
+        /// Premium or a CDN provider, feature list and rate) of the profile.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
 
         /// <summary>
+        /// Gets kind of the profile. Used by portal to differentiate
+        /// traditional CDN profile and new AFD profile.
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public string Kind { get; private set; }
+
+        /// <summary>
         /// Gets resource status of the profile. Possible values include:
-        /// 'Creating', 'Active', 'Deleting', 'Disabled'
+        /// 'Creating', 'Active', 'Deleting', 'Disabled', 'Migrating',
+        /// 'Migrated', 'PendingMigrationCommit', 'CommittingMigration',
+        /// 'AbortingMigration'
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceState")]
         public string ResourceState { get; private set; }
 
         /// <summary>
-        /// Gets provisioning status of the profile.
+        /// Gets provisioning status of the profile. Possible values include:
+        /// 'Succeeded', 'Failed', 'Updating', 'Deleting', 'Creating'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
+        /// Gets or sets key-Value pair representing additional properties for
+        /// profiles.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.extendedProperties")]
+        public IDictionary<string, string> ExtendedProperties { get; set; }
+
+        /// <summary>
         /// Gets the Id of the frontdoor.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.frontdoorId")]
-        public string FrontdoorId { get; private set; }
+        [JsonProperty(PropertyName = "properties.frontDoorId")]
+        public string FrontDoorId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets send and receive timeout on forwarding request to the
+        /// origin. When timeout is reached, the request fails and returns.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.originResponseTimeoutSeconds")]
+        public int? OriginResponseTimeoutSeconds { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -101,6 +138,10 @@ namespace Microsoft.Azure.Management.Cdn.Models
             if (Sku == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
+            }
+            if (OriginResponseTimeoutSeconds < 16)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "OriginResponseTimeoutSeconds", 16);
             }
         }
     }

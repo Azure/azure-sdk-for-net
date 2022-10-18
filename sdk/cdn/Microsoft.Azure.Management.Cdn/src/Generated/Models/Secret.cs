@@ -41,13 +41,16 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// 'Creating'</param>
         /// <param name="deploymentStatus">Possible values include:
         /// 'NotStarted', 'InProgress', 'Succeeded', 'Failed'</param>
+        /// <param name="profileName">The name of the profile which holds the
+        /// secret.</param>
         /// <param name="parameters">object which contains secret
         /// parameters</param>
-        public Secret(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string provisioningState = default(string), string deploymentStatus = default(string), SecretParameters parameters = default(SecretParameters))
+        public Secret(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string provisioningState = default(string), string deploymentStatus = default(string), string profileName = default(string), SecretParameters parameters = default(SecretParameters))
             : base(id, name, type, systemData)
         {
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
+            ProfileName = profileName;
             Parameters = parameters;
             CustomInit();
         }
@@ -70,6 +73,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.deploymentStatus")]
         public string DeploymentStatus { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the profile which holds the secret.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.profileName")]
+        public string ProfileName { get; private set; }
 
         /// <summary>
         /// Gets or sets object which contains secret parameters

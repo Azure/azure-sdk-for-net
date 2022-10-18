@@ -53,12 +53,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// <summary>
         /// Validate a Secret in the profile.
         /// </summary>
-        /// <param name='secretSource'>
-        /// The secret source.
-        /// </param>
-        /// <param name='secretType'>
-        /// The secret type. Possible values include: 'UrlSigningKey',
-        /// 'ManagedCertificate', 'CustomerCertificate'
+        /// <param name='validateSecretInput'>
+        /// The Secret source.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -81,8 +77,16 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ValidateSecretOutput>> SecretMethodWithHttpMessagesAsync(ResourceReference secretSource, string secretType, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ValidateSecretOutput>> SecretMethodWithHttpMessagesAsync(ValidateSecretInput validateSecretInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (validateSecretInput == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "validateSecretInput");
+            }
+            if (validateSecretInput != null)
+            {
+                validateSecretInput.Validate();
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -90,20 +94,6 @@ namespace Microsoft.Azure.Management.Cdn
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (secretSource == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "secretSource");
-            }
-            if (secretType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "secretType");
-            }
-            ValidateSecretInput validateSecretInput = new ValidateSecretInput();
-            if (secretSource != null || secretType != null)
-            {
-                validateSecretInput.SecretSource = secretSource;
-                validateSecretInput.SecretType = secretType;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

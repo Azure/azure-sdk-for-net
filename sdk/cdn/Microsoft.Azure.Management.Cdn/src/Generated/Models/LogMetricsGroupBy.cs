@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public const string HttpStatusCode = "httpStatusCode";
         public const string Protocol = "protocol";
         public const string CacheStatus = "cacheStatus";
-        public const string Country = "country";
+        public const string CountryOrRegion = "countryOrRegion";
         public const string CustomDomain = "customDomain";
     }
 }

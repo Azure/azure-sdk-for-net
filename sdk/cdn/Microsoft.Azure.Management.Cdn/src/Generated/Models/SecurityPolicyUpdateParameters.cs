@@ -10,35 +10,33 @@
 
 namespace Microsoft.Azure.Management.Cdn.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The json object that contains properties required to create a security
-    /// policy
+    /// The JSON object containing security policy update parameters.
     /// </summary>
-    public partial class SecurityPolicyProperties : AFDStateProperties
+    [Rest.Serialization.JsonTransformation]
+    public partial class SecurityPolicyUpdateParameters
     {
         /// <summary>
-        /// Initializes a new instance of the SecurityPolicyProperties class.
+        /// Initializes a new instance of the SecurityPolicyUpdateParameters
+        /// class.
         /// </summary>
-        public SecurityPolicyProperties()
+        public SecurityPolicyUpdateParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SecurityPolicyProperties class.
+        /// Initializes a new instance of the SecurityPolicyUpdateParameters
+        /// class.
         /// </summary>
-        /// <param name="provisioningState">Provisioning status. Possible
-        /// values include: 'Succeeded', 'Failed', 'Updating', 'Deleting',
-        /// 'Creating'</param>
-        /// <param name="deploymentStatus">Possible values include:
-        /// 'NotStarted', 'InProgress', 'Succeeded', 'Failed'</param>
         /// <param name="parameters">object which contains security policy
         /// parameters</param>
-        public SecurityPolicyProperties(string provisioningState = default(string), string deploymentStatus = default(string), SecurityPolicyParameters parameters = default(SecurityPolicyParameters))
-            : base(provisioningState, deploymentStatus)
+        public SecurityPolicyUpdateParameters(SecurityPolicyPropertiesParameters parameters = default(SecurityPolicyPropertiesParameters))
         {
             Parameters = parameters;
             CustomInit();
@@ -52,8 +50,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Gets or sets object which contains security policy parameters
         /// </summary>
-        [JsonProperty(PropertyName = "parameters")]
-        public SecurityPolicyParameters Parameters { get; set; }
+        [JsonProperty(PropertyName = "properties.parameters")]
+        public SecurityPolicyPropertiesParameters Parameters { get; set; }
 
     }
 }

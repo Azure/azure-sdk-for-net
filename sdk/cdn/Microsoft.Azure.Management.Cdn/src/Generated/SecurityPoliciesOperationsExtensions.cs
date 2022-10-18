@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             public static IPage<SecurityPolicy> ListByProfile(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName)
             {
@@ -48,7 +49,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -71,7 +73,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='securityPolicyName'>
             /// Name of the security policy under the profile.
@@ -91,7 +94,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='securityPolicyName'>
             /// Name of the security policy under the profile.
@@ -117,7 +121,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='securityPolicyName'>
             /// Name of the security policy under the profile.
@@ -125,7 +130,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='parameters'>
             /// object which contains security policy parameters
             /// </param>
-            public static SecurityPolicy Create(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters))
+            public static SecurityPolicy Create(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyPropertiesParameters parameters = default(SecurityPolicyPropertiesParameters))
             {
                 return operations.CreateAsync(resourceGroupName, profileName, securityPolicyName, parameters).GetAwaiter().GetResult();
             }
@@ -140,7 +145,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='securityPolicyName'>
             /// Name of the security policy under the profile.
@@ -151,7 +157,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecurityPolicy> CreateAsync(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecurityPolicy> CreateAsync(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyPropertiesParameters parameters = default(SecurityPolicyPropertiesParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, profileName, securityPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -160,7 +166,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Updates an existing Secret within a profile.
+            /// Updates an existing security policy within a profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -169,7 +175,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='securityPolicyName'>
             /// Name of the security policy under the profile.
@@ -177,13 +184,13 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='parameters'>
             /// object which contains security policy parameters
             /// </param>
-            public static SecurityPolicy Patch(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters))
+            public static SecurityPolicy Patch(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyPropertiesParameters parameters = default(SecurityPolicyPropertiesParameters))
             {
                 return operations.PatchAsync(resourceGroupName, profileName, securityPolicyName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates an existing Secret within a profile.
+            /// Updates an existing security policy within a profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -192,7 +199,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='securityPolicyName'>
             /// Name of the security policy under the profile.
@@ -203,7 +211,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecurityPolicy> PatchAsync(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecurityPolicy> PatchAsync(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyPropertiesParameters parameters = default(SecurityPolicyPropertiesParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, profileName, securityPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -221,10 +229,11 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='securityPolicyName'>
-            /// Name of the Secret under the profile.
+            /// Name of the security policy under the profile.
             /// </param>
             public static void Delete(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName)
             {
@@ -241,10 +250,11 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='securityPolicyName'>
-            /// Name of the Secret under the profile.
+            /// Name of the security policy under the profile.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -264,7 +274,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='securityPolicyName'>
             /// Name of the security policy under the profile.
@@ -272,7 +283,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='parameters'>
             /// object which contains security policy parameters
             /// </param>
-            public static SecurityPolicy BeginCreate(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters))
+            public static SecurityPolicy BeginCreate(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyPropertiesParameters parameters = default(SecurityPolicyPropertiesParameters))
             {
                 return operations.BeginCreateAsync(resourceGroupName, profileName, securityPolicyName, parameters).GetAwaiter().GetResult();
             }
@@ -287,7 +298,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='securityPolicyName'>
             /// Name of the security policy under the profile.
@@ -298,7 +310,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecurityPolicy> BeginCreateAsync(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecurityPolicy> BeginCreateAsync(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyPropertiesParameters parameters = default(SecurityPolicyPropertiesParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, profileName, securityPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -307,7 +319,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Updates an existing Secret within a profile.
+            /// Updates an existing security policy within a profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -316,7 +328,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='securityPolicyName'>
             /// Name of the security policy under the profile.
@@ -324,13 +337,13 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='parameters'>
             /// object which contains security policy parameters
             /// </param>
-            public static SecurityPolicy BeginPatch(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters))
+            public static SecurityPolicy BeginPatch(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyPropertiesParameters parameters = default(SecurityPolicyPropertiesParameters))
             {
                 return operations.BeginPatchAsync(resourceGroupName, profileName, securityPolicyName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates an existing Secret within a profile.
+            /// Updates an existing security policy within a profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -339,7 +352,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='securityPolicyName'>
             /// Name of the security policy under the profile.
@@ -350,7 +364,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecurityPolicy> BeginPatchAsync(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecurityPolicy> BeginPatchAsync(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyPropertiesParameters parameters = default(SecurityPolicyPropertiesParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginPatchWithHttpMessagesAsync(resourceGroupName, profileName, securityPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -368,10 +382,11 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='securityPolicyName'>
-            /// Name of the Secret under the profile.
+            /// Name of the security policy under the profile.
             /// </param>
             public static void BeginDelete(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName)
             {
@@ -388,10 +403,11 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='securityPolicyName'>
-            /// Name of the Secret under the profile.
+            /// Name of the security policy under the profile.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

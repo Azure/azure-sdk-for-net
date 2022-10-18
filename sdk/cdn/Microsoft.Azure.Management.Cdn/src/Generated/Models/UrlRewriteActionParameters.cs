@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static UrlRewriteActionParameters()
         {
-            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlRewriteActionParameters";
+            TypeName = "DeliveryRuleUrlRewriteActionParameters";
         }
 
         /// <summary>
@@ -81,8 +81,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "@odata.type")]
-        public static string Odatatype { get; private set; }
+        [JsonProperty(PropertyName = "typeName")]
+        public static string TypeName { get; private set; }
 
         /// <summary>
         /// Validate the object.

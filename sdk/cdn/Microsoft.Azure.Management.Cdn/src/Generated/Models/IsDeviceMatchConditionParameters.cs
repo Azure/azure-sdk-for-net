@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static IsDeviceMatchConditionParameters()
         {
-            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRuleIsDeviceConditionParameters";
+            TypeName = "DeliveryRuleIsDeviceConditionParameters";
             OperatorProperty = "Equal";
         }
 
@@ -79,8 +79,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "@odata.type")]
-        public static string Odatatype { get; private set; }
+        [JsonProperty(PropertyName = "typeName")]
+        public static string TypeName { get; private set; }
 
         /// <summary>
         /// Describes operator to be matched

@@ -18,5 +18,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
     {
         public const string Lowercase = "Lowercase";
         public const string Uppercase = "Uppercase";
+        public const string Trim = "Trim";
+        public const string UrlDecode = "UrlDecode";
+        public const string UrlEncode = "UrlEncode";
+        public const string RemoveNulls = "RemoveNulls";
     }
 }

@@ -30,7 +30,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -55,7 +56,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='originGroupName'>
         /// Name of the origin group which is unique within the endpoint.
@@ -83,7 +85,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='originGroupName'>
         /// Name of the origin group which is unique within the endpoint.
@@ -114,7 +117,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='originGroupName'>
         /// Name of the origin group which is unique within the profile.
@@ -145,7 +149,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='originGroupName'>
         /// Name of the origin group which is unique within the profile.
@@ -171,7 +176,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='originGroupName'>
         /// Name of the origin group which is unique within the endpoint.
@@ -199,7 +205,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='originGroupName'>
         /// Name of the origin group which is unique within the endpoint.
@@ -230,7 +237,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='originGroupName'>
         /// Name of the origin group which is unique within the profile.
@@ -261,7 +269,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='originGroupName'>
         /// Name of the origin group which is unique within the profile.

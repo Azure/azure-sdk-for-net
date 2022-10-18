@@ -15,12 +15,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
     /// <summary>
     /// The json object containing security policy parameters
     /// </summary>
-    public partial class SecurityPolicyParameters
+    public partial class SecurityPolicyPropertiesParameters
     {
         /// <summary>
-        /// Initializes a new instance of the SecurityPolicyParameters class.
+        /// Initializes a new instance of the
+        /// SecurityPolicyPropertiesParameters class.
         /// </summary>
-        public SecurityPolicyParameters()
+        public SecurityPolicyPropertiesParameters()
         {
             CustomInit();
         }

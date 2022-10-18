@@ -68,7 +68,10 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="privateLinkApprovalMessage">A custom message to be
         /// included in the approval request to connect to the Private
         /// Link.</param>
-        public DeepCreatedOrigin(string name, string hostName, int? httpPort = default(int?), int? httpsPort = default(int?), string originHostHeader = default(string), int? priority = default(int?), int? weight = default(int?), bool? enabled = default(bool?), string privateLinkAlias = default(string), string privateLinkResourceId = default(string), string privateLinkLocation = default(string), string privateLinkApprovalMessage = default(string))
+        /// <param name="privateEndpointStatus">The approval status for the
+        /// connection to the Private Link. Possible values include: 'Pending',
+        /// 'Approved', 'Rejected', 'Disconnected', 'Timeout'</param>
+        public DeepCreatedOrigin(string name, string hostName, int? httpPort = default(int?), int? httpsPort = default(int?), string originHostHeader = default(string), int? priority = default(int?), int? weight = default(int?), bool? enabled = default(bool?), string privateLinkAlias = default(string), string privateLinkResourceId = default(string), string privateLinkLocation = default(string), string privateLinkApprovalMessage = default(string), string privateEndpointStatus = default(string))
         {
             Name = name;
             HostName = hostName;
@@ -82,6 +85,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
             PrivateLinkResourceId = privateLinkResourceId;
             PrivateLinkLocation = privateLinkLocation;
             PrivateLinkApprovalMessage = privateLinkApprovalMessage;
+            PrivateEndpointStatus = privateEndpointStatus;
             CustomInit();
         }
 
@@ -178,6 +182,14 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateLinkApprovalMessage")]
         public string PrivateLinkApprovalMessage { get; set; }
+
+        /// <summary>
+        /// Gets the approval status for the connection to the Private Link.
+        /// Possible values include: 'Pending', 'Approved', 'Rejected',
+        /// 'Disconnected', 'Timeout'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointStatus")]
+        public string PrivateEndpointStatus { get; private set; }
 
         /// <summary>
         /// Validate the object.

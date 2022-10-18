@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
     {
         public const string CustomerCertificate = "CustomerCertificate";
         public const string ManagedCertificate = "ManagedCertificate";
+        public const string AzureFirstPartyManagedCertificate = "AzureFirstPartyManagedCertificate";
     }
 }

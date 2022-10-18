@@ -20,5 +20,10 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public const string Active = "Active";
         public const string Deleting = "Deleting";
         public const string Disabled = "Disabled";
+        public const string Migrating = "Migrating";
+        public const string Migrated = "Migrated";
+        public const string PendingMigrationCommit = "PendingMigrationCommit";
+        public const string CommittingMigration = "CommittingMigration";
+        public const string AbortingMigration = "AbortingMigration";
     }
 }

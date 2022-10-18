@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Initializes a new instance of the AfdErrorResponse class.
         /// </summary>
         /// <param name="error">The error object.</param>
-        public AfdErrorResponse(ErrorResponse error = default(ErrorResponse))
+        public AfdErrorResponse(ErrorDetail error = default(ErrorDetail))
         {
             Error = error;
             CustomInit();
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Gets or sets the error object.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
-        public ErrorResponse Error { get; set; }
+        public ErrorDetail Error { get; set; }
 
     }
 }

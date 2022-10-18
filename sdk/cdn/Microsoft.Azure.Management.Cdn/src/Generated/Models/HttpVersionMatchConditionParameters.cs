@@ -37,10 +37,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// or not</param>
         /// <param name="matchValues">The match value for the condition of the
         /// delivery rule</param>
-        public HttpVersionMatchConditionParameters(bool? negateCondition = default(bool?), IList<string> matchValues = default(IList<string>))
+        /// <param name="transforms">List of transforms</param>
+        public HttpVersionMatchConditionParameters(bool? negateCondition = default(bool?), IList<string> matchValues = default(IList<string>), IList<string> transforms = default(IList<string>))
         {
             NegateCondition = negateCondition;
             MatchValues = matchValues;
+            Transforms = transforms;
             CustomInit();
         }
         /// <summary>
@@ -48,7 +50,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static HttpVersionMatchConditionParameters()
         {
-            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRuleHttpVersionConditionParameters";
+            TypeName = "DeliveryRuleHttpVersionConditionParameters";
             OperatorProperty = "Equal";
         }
 
@@ -70,9 +72,15 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public IList<string> MatchValues { get; set; }
 
         /// <summary>
+        /// Gets or sets list of transforms
         /// </summary>
-        [JsonProperty(PropertyName = "@odata.type")]
-        public static string Odatatype { get; private set; }
+        [JsonProperty(PropertyName = "transforms")]
+        public IList<string> Transforms { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "typeName")]
+        public static string TypeName { get; private set; }
 
         /// <summary>
         /// Describes operator to be matched

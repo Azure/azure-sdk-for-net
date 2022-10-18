@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// or CDN profile which is unique within the resource group.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -57,10 +58,11 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// or CDN profile which is unique within the resource group.
         /// </param>
         /// <param name='hostName'>
-        /// The host name of the custom domain. Must be a domain name.
+        /// The host name to validate.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -77,7 +79,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ValidateCustomDomainOutput>> CheckHostNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string profileName, string hostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CheckNameAvailabilityOutput>> CheckHostNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string profileName, string hostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Checks the quota and actual usage of endpoints under the given CDN
         /// profile.

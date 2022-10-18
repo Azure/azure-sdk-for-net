@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         /// <param name="resourceType">Resource type for which the usage is
         /// provided.</param>
-        /// <param name="unit">Unit of the usage. e.g. Count.</param>
+        /// <param name="unit">Unit of the usage. e.g. count. Possible values
+        /// include: 'count'</param>
         /// <param name="currentValue">Actual value of usage on the specified
         /// resource type.</param>
         /// <param name="limit">Quota of the specified resource type.</param>
@@ -56,7 +57,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public string ResourceType { get; private set; }
 
         /// <summary>
-        /// Gets unit of the usage. e.g. Count.
+        /// Gets unit of the usage. e.g. count. Possible values include:
+        /// 'count'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
         public string Unit { get; private set; }

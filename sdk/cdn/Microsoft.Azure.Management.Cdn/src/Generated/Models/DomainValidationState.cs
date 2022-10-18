@@ -19,8 +19,11 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public const string Unknown = "Unknown";
         public const string Submitting = "Submitting";
         public const string Pending = "Pending";
+        public const string Rejected = "Rejected";
         public const string TimedOut = "TimedOut";
         public const string PendingRevalidation = "PendingRevalidation";
         public const string Approved = "Approved";
+        public const string RefreshingValidationToken = "RefreshingValidationToken";
+        public const string InternalError = "InternalError";
     }
 }

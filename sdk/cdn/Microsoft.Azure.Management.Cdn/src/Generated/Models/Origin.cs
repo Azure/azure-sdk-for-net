@@ -73,8 +73,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Link.</param>
         /// <param name="resourceState">Resource status of the origin. Possible
         /// values include: 'Creating', 'Active', 'Deleting'</param>
-        /// <param name="provisioningState">Provisioning status of the
-        /// origin.</param>
+        /// <param name="provisioningState">Provisioning status of the origin.
+        /// Possible values include: 'Succeeded', 'Failed', 'Updating',
+        /// 'Deleting', 'Creating'</param>
         /// <param name="privateEndpointStatus">The approval status for the
         /// connection to the Private Link. Possible values include: 'Pending',
         /// 'Approved', 'Rejected', 'Disconnected', 'Timeout'</param>
@@ -194,7 +195,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public string ResourceState { get; private set; }
 
         /// <summary>
-        /// Gets provisioning status of the origin.
+        /// Gets provisioning status of the origin. Possible values include:
+        /// 'Succeeded', 'Failed', 'Updating', 'Deleting', 'Creating'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

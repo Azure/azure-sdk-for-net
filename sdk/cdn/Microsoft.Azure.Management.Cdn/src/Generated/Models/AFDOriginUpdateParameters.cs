@@ -33,6 +33,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Initializes a new instance of the AFDOriginUpdateParameters class.
         /// </summary>
+        /// <param name="originGroupName">The name of the origin group which
+        /// contains this origin.</param>
         /// <param name="azureOrigin">Resource reference to the Azure origin
         /// resource.</param>
         /// <param name="hostName">The address of the origin. Domain names,
@@ -61,8 +63,11 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// only be disabled if there is a single enabled backend in single
         /// enabled backend pool. Possible values include: 'Enabled',
         /// 'Disabled'</param>
-        public AFDOriginUpdateParameters(ResourceReference azureOrigin = default(ResourceReference), string hostName = default(string), int? httpPort = default(int?), int? httpsPort = default(int?), string originHostHeader = default(string), int? priority = default(int?), int? weight = default(int?), object sharedPrivateLinkResource = default(object), string enabledState = default(string))
+        /// <param name="enforceCertificateNameCheck">Whether to enable
+        /// certificate name check at origin level</param>
+        public AFDOriginUpdateParameters(string originGroupName = default(string), ResourceReference azureOrigin = default(ResourceReference), string hostName = default(string), int? httpPort = default(int?), int? httpsPort = default(int?), string originHostHeader = default(string), int? priority = default(int?), int? weight = default(int?), SharedPrivateLinkResourceProperties sharedPrivateLinkResource = default(SharedPrivateLinkResourceProperties), string enabledState = default(string), bool? enforceCertificateNameCheck = default(bool?))
         {
+            OriginGroupName = originGroupName;
             AzureOrigin = azureOrigin;
             HostName = hostName;
             HttpPort = httpPort;
@@ -72,6 +77,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
             Weight = weight;
             SharedPrivateLinkResource = sharedPrivateLinkResource;
             EnabledState = enabledState;
+            EnforceCertificateNameCheck = enforceCertificateNameCheck;
             CustomInit();
         }
 
@@ -79,6 +85,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the name of the origin group which contains this origin.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.originGroupName")]
+        public string OriginGroupName { get; private set; }
 
         /// <summary>
         /// Gets or sets resource reference to the Azure origin resource.
@@ -139,7 +151,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// private origin.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sharedPrivateLinkResource")]
-        public object SharedPrivateLinkResource { get; set; }
+        public SharedPrivateLinkResourceProperties SharedPrivateLinkResource { get; set; }
 
         /// <summary>
         /// Gets or sets whether to enable health probes to be made against
@@ -149,6 +161,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enabledState")]
         public string EnabledState { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to enable certificate name check at origin
+        /// level
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enforceCertificateNameCheck")]
+        public bool? EnforceCertificateNameCheck { get; set; }
 
         /// <summary>
         /// Validate the object.

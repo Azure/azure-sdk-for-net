@@ -34,8 +34,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="keyId">Defines the customer defined key Id. This id
         /// will exist in the incoming request to indicate the key used to form
         /// the hash.</param>
-        /// <param name="secretSource">Resource reference to the KV
-        /// secret</param>
+        /// <param name="secretSource">Resource reference to the Azure Key
+        /// Vault secret. Expected to be in format of
+        /// /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​</param>
         /// <param name="secretVersion">Version of the secret to be
         /// used</param>
         public UrlSigningKeyParameters(string keyId, ResourceReference secretSource, string secretVersion = default(string))
@@ -60,7 +61,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public string KeyId { get; set; }
 
         /// <summary>
-        /// Gets or sets resource reference to the KV secret
+        /// Gets or sets resource reference to the Azure Key Vault secret.
+        /// Expected to be in format of
+        /// /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
         /// </summary>
         [JsonProperty(PropertyName = "secretSource")]
         public ResourceReference SecretSource { get; set; }

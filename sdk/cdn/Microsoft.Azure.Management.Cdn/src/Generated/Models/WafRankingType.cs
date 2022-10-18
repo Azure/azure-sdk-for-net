@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public const string UserAgent = "userAgent";
         public const string ClientIp = "clientIp";
         public const string Url = "url";
-        public const string Country = "country";
+        public const string CountryOrRegion = "countryOrRegion";
         public const string RuleType = "ruleType";
     }
 }

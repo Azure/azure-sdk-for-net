@@ -34,6 +34,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Initializes a new instance of the RuleUpdateParameters class.
         /// </summary>
+        /// <param name="ruleSetName">The name of the rule set containing the
+        /// rule.</param>
         /// <param name="order">The order in which the rules are applied for
         /// the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser
         /// order will be applied before a rule with a greater order. Rule with
@@ -47,8 +49,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// should the rules engine continue running the remaining rules or
         /// stop. If not present, defaults to Continue. Possible values
         /// include: 'Continue', 'Stop'</param>
-        public RuleUpdateParameters(int? order = default(int?), IList<DeliveryRuleCondition> conditions = default(IList<DeliveryRuleCondition>), IList<DeliveryRuleAction> actions = default(IList<DeliveryRuleAction>), string matchProcessingBehavior = default(string))
+        public RuleUpdateParameters(string ruleSetName = default(string), int? order = default(int?), IList<DeliveryRuleCondition> conditions = default(IList<DeliveryRuleCondition>), IList<DeliveryRuleAction> actions = default(IList<DeliveryRuleAction>), string matchProcessingBehavior = default(string))
         {
+            RuleSetName = ruleSetName;
             Order = order;
             Conditions = conditions;
             Actions = actions;
@@ -60,6 +63,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the name of the rule set containing the rule.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ruleSetName")]
+        public string RuleSetName { get; private set; }
 
         /// <summary>
         /// Gets or sets the order in which the rules are applied for the

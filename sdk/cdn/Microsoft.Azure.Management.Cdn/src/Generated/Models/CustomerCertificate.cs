@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Cdn.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -32,25 +31,30 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Initializes a new instance of the CustomerCertificate class.
         /// </summary>
-        /// <param name="certificateUrl">Complete Url to the
-        /// certificate</param>
+        /// <param name="type">Possible values include: 'UrlSigningKey',
+        /// 'CustomerCertificate', 'ManagedCertificate',
+        /// 'AzureFirstPartyManagedCertificate'</param>
         /// <param name="subject">Subject name in the certificate.</param>
         /// <param name="expirationDate">Certificate expiration date.</param>
-        /// <param name="thumbprint">Certificate thumbprint.</param>
-        /// <param name="version">Certificate version.</param>
+        /// <param name="secretSource">Resource reference to the Azure Key
+        /// Vault certificate. Expected to be in format of
+        /// /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​</param>
+        /// <param name="secretVersion">Certificate version.</param>
         /// <param name="certificateAuthority">Certificate issuing
         /// authority.</param>
         /// <param name="useLatestVersion">Whether to use the latest version
         /// for the certificate</param>
         /// <param name="subjectAlternativeNames">The list of SANs.</param>
-        public CustomerCertificate(string certificateUrl, string subject = default(string), string expirationDate = default(string), string thumbprint = default(string), string version = default(string), string certificateAuthority = default(string), bool? useLatestVersion = default(bool?), IList<string> subjectAlternativeNames = default(IList<string>))
-            : base(subject, expirationDate, thumbprint)
+        /// <param name="thumbprint">Certificate thumbprint.</param>
+        public CustomerCertificate(string type = default(string), string subject = default(string), string expirationDate = default(string), ResourceReference secretSource = default(ResourceReference), string secretVersion = default(string), string certificateAuthority = default(string), bool? useLatestVersion = default(bool?), IList<string> subjectAlternativeNames = default(IList<string>), string thumbprint = default(string))
+            : base(type, subject, expirationDate)
         {
-            Version = version;
+            SecretSource = secretSource;
+            SecretVersion = secretVersion;
             CertificateAuthority = certificateAuthority;
-            CertificateUrl = certificateUrl;
             UseLatestVersion = useLatestVersion;
             SubjectAlternativeNames = subjectAlternativeNames;
+            Thumbprint = thumbprint;
             CustomInit();
         }
 
@@ -60,22 +64,24 @@ namespace Microsoft.Azure.Management.Cdn.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets resource reference to the Azure Key Vault certificate.
+        /// Expected to be in format of
+        /// /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+        /// </summary>
+        [JsonProperty(PropertyName = "secretSource")]
+        public ResourceReference SecretSource { get; set; }
+
+        /// <summary>
         /// Gets or sets certificate version.
         /// </summary>
-        [JsonProperty(PropertyName = "version")]
-        public string Version { get; set; }
+        [JsonProperty(PropertyName = "secretVersion")]
+        public string SecretVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets certificate issuing authority.
+        /// Gets certificate issuing authority.
         /// </summary>
         [JsonProperty(PropertyName = "certificateAuthority")]
-        public string CertificateAuthority { get; set; }
-
-        /// <summary>
-        /// Gets or sets complete Url to the certificate
-        /// </summary>
-        [JsonProperty(PropertyName = "certificateUrl")]
-        public string CertificateUrl { get; set; }
+        public string CertificateAuthority { get; private set; }
 
         /// <summary>
         /// Gets or sets whether to use the latest version for the certificate
@@ -90,17 +96,10 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public IList<string> SubjectAlternativeNames { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets certificate thumbprint.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (CertificateUrl == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "CertificateUrl");
-            }
-        }
+        [JsonProperty(PropertyName = "thumbprint")]
+        public string Thumbprint { get; private set; }
+
     }
 }

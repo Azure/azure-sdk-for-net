@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             public static IPage<Secret> ListByProfile(this ISecretsOperations operations, string resourceGroupName, string profileName)
             {
@@ -48,7 +49,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -71,7 +73,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='secretName'>
             /// Name of the Secret under the profile.
@@ -91,7 +94,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='secretName'>
             /// Name of the Secret under the profile.
@@ -117,7 +121,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='secretName'>
             /// Name of the Secret under the profile.
@@ -140,7 +145,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='secretName'>
             /// Name of the Secret under the profile.
@@ -160,58 +166,6 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Updates an existing Secret within a profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='secretName'>
-            /// Name of the Secret under the profile.
-            /// </param>
-            /// <param name='parameters'>
-            /// object which contains secret parameters
-            /// </param>
-            public static Secret Update(this ISecretsOperations operations, string resourceGroupName, string profileName, string secretName, SecretParameters parameters = default(SecretParameters))
-            {
-                return operations.UpdateAsync(resourceGroupName, profileName, secretName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates an existing Secret within a profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='secretName'>
-            /// Name of the Secret under the profile.
-            /// </param>
-            /// <param name='parameters'>
-            /// object which contains secret parameters
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Secret> UpdateAsync(this ISecretsOperations operations, string resourceGroupName, string profileName, string secretName, SecretParameters parameters = default(SecretParameters), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, profileName, secretName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Deletes an existing Secret within profile.
             /// </summary>
             /// <param name='operations'>
@@ -221,7 +175,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='secretName'>
             /// Name of the Secret under the profile.
@@ -241,7 +196,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='secretName'>
             /// Name of the Secret under the profile.
@@ -264,7 +220,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='secretName'>
             /// Name of the Secret under the profile.
@@ -287,7 +244,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='secretName'>
             /// Name of the Secret under the profile.
@@ -307,58 +265,6 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Updates an existing Secret within a profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='secretName'>
-            /// Name of the Secret under the profile.
-            /// </param>
-            /// <param name='parameters'>
-            /// object which contains secret parameters
-            /// </param>
-            public static Secret BeginUpdate(this ISecretsOperations operations, string resourceGroupName, string profileName, string secretName, SecretParameters parameters = default(SecretParameters))
-            {
-                return operations.BeginUpdateAsync(resourceGroupName, profileName, secretName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates an existing Secret within a profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='secretName'>
-            /// Name of the Secret under the profile.
-            /// </param>
-            /// <param name='parameters'>
-            /// object which contains secret parameters
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Secret> BeginUpdateAsync(this ISecretsOperations operations, string resourceGroupName, string profileName, string secretName, SecretParameters parameters = default(SecretParameters), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, profileName, secretName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Deletes an existing Secret within profile.
             /// </summary>
             /// <param name='operations'>
@@ -368,7 +274,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='secretName'>
             /// Name of the Secret under the profile.
@@ -388,7 +295,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+            /// which is unique within the resource group.
             /// </param>
             /// <param name='secretName'>
             /// Name of the Secret under the profile.

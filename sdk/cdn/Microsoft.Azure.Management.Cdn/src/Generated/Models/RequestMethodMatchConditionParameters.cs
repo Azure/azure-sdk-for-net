@@ -35,11 +35,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         /// <param name="negateCondition">Describes if this is negate condition
         /// or not</param>
+        /// <param name="transforms">List of transforms</param>
         /// <param name="matchValues">The match value for the condition of the
         /// delivery rule</param>
-        public RequestMethodMatchConditionParameters(bool? negateCondition = default(bool?), IList<string> matchValues = default(IList<string>))
+        public RequestMethodMatchConditionParameters(bool? negateCondition = default(bool?), IList<string> transforms = default(IList<string>), IList<string> matchValues = default(IList<string>))
         {
             NegateCondition = negateCondition;
+            Transforms = transforms;
             MatchValues = matchValues;
             CustomInit();
         }
@@ -48,7 +50,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static RequestMethodMatchConditionParameters()
         {
-            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestMethodConditionParameters";
+            TypeName = "DeliveryRuleRequestMethodConditionParameters";
             OperatorProperty = "Equal";
         }
 
@@ -64,6 +66,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public bool? NegateCondition { get; set; }
 
         /// <summary>
+        /// Gets or sets list of transforms
+        /// </summary>
+        [JsonProperty(PropertyName = "transforms")]
+        public IList<string> Transforms { get; set; }
+
+        /// <summary>
         /// Gets or sets the match value for the condition of the delivery rule
         /// </summary>
         [JsonProperty(PropertyName = "matchValues")]
@@ -71,8 +79,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "@odata.type")]
-        public static string Odatatype { get; private set; }
+        [JsonProperty(PropertyName = "typeName")]
+        public static string TypeName { get; private set; }
 
         /// <summary>
         /// Describes operator to be matched

@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static UrlFileExtensionMatchConditionParameters()
         {
-            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlFileExtensionMatchConditionParameters";
+            TypeName = "DeliveryRuleUrlFileExtensionMatchConditionParameters";
         }
 
         /// <summary>
@@ -94,8 +94,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "@odata.type")]
-        public static string Odatatype { get; private set; }
+        [JsonProperty(PropertyName = "typeName")]
+        public static string TypeName { get; private set; }
 
         /// <summary>
         /// Validate the object.

@@ -35,22 +35,29 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Initializes a new instance of the CustomerCertificateParameters
         /// class.
         /// </summary>
-        /// <param name="secretSource">Resource reference to the KV
-        /// secret</param>
+        /// <param name="secretSource">Resource reference to the Azure Key
+        /// Vault certificate. Expected to be in format of
+        /// /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​</param>
         /// <param name="secretVersion">Version of the secret to be
         /// used</param>
-        /// <param name="certificateAuthority">Certificate issuing
-        /// authority.</param>
         /// <param name="useLatestVersion">Whether to use the latest version
         /// for the certificate</param>
+        /// <param name="subject">Subject name in the certificate.</param>
+        /// <param name="expirationDate">Certificate expiration date.</param>
+        /// <param name="certificateAuthority">Certificate issuing
+        /// authority.</param>
         /// <param name="subjectAlternativeNames">The list of SANs.</param>
-        public CustomerCertificateParameters(ResourceReference secretSource, string secretVersion = default(string), string certificateAuthority = default(string), bool? useLatestVersion = default(bool?), IList<string> subjectAlternativeNames = default(IList<string>))
+        /// <param name="thumbprint">Certificate thumbprint.</param>
+        public CustomerCertificateParameters(ResourceReference secretSource, string secretVersion = default(string), bool? useLatestVersion = default(bool?), string subject = default(string), string expirationDate = default(string), string certificateAuthority = default(string), IList<string> subjectAlternativeNames = default(IList<string>), string thumbprint = default(string))
         {
             SecretSource = secretSource;
             SecretVersion = secretVersion;
-            CertificateAuthority = certificateAuthority;
             UseLatestVersion = useLatestVersion;
+            Subject = subject;
+            ExpirationDate = expirationDate;
+            CertificateAuthority = certificateAuthority;
             SubjectAlternativeNames = subjectAlternativeNames;
+            Thumbprint = thumbprint;
             CustomInit();
         }
 
@@ -60,7 +67,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource reference to the KV secret
+        /// Gets or sets resource reference to the Azure Key Vault certificate.
+        /// Expected to be in format of
+        /// /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
         /// </summary>
         [JsonProperty(PropertyName = "secretSource")]
         public ResourceReference SecretSource { get; set; }
@@ -72,22 +81,40 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public string SecretVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets certificate issuing authority.
-        /// </summary>
-        [JsonProperty(PropertyName = "certificateAuthority")]
-        public string CertificateAuthority { get; set; }
-
-        /// <summary>
         /// Gets or sets whether to use the latest version for the certificate
         /// </summary>
         [JsonProperty(PropertyName = "useLatestVersion")]
         public bool? UseLatestVersion { get; set; }
 
         /// <summary>
+        /// Gets subject name in the certificate.
+        /// </summary>
+        [JsonProperty(PropertyName = "subject")]
+        public string Subject { get; private set; }
+
+        /// <summary>
+        /// Gets certificate expiration date.
+        /// </summary>
+        [JsonProperty(PropertyName = "expirationDate")]
+        public string ExpirationDate { get; private set; }
+
+        /// <summary>
+        /// Gets certificate issuing authority.
+        /// </summary>
+        [JsonProperty(PropertyName = "certificateAuthority")]
+        public string CertificateAuthority { get; private set; }
+
+        /// <summary>
         /// Gets or sets the list of SANs.
         /// </summary>
         [JsonProperty(PropertyName = "subjectAlternativeNames")]
         public IList<string> SubjectAlternativeNames { get; set; }
+
+        /// <summary>
+        /// Gets certificate thumbprint.
+        /// </summary>
+        [JsonProperty(PropertyName = "thumbprint")]
+        public string Thumbprint { get; private set; }
 
         /// <summary>
         /// Validate the object.

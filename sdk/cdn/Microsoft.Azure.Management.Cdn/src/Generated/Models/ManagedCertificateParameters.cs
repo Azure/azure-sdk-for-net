@@ -28,11 +28,35 @@ namespace Microsoft.Azure.Management.Cdn.Models
             CustomInit();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the ManagedCertificateParameters
+        /// class.
+        /// </summary>
+        /// <param name="subject">Subject name in the certificate.</param>
+        /// <param name="expirationDate">Certificate expiration date.</param>
+        public ManagedCertificateParameters(string subject = default(string), string expirationDate = default(string))
+        {
+            Subject = subject;
+            ExpirationDate = expirationDate;
+            CustomInit();
+        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets subject name in the certificate.
+        /// </summary>
+        [JsonProperty(PropertyName = "subject")]
+        public string Subject { get; private set; }
+
+        /// <summary>
+        /// Gets certificate expiration date.
+        /// </summary>
+        [JsonProperty(PropertyName = "expirationDate")]
+        public string ExpirationDate { get; private set; }
 
     }
 }

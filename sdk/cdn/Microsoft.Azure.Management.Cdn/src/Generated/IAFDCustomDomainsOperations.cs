@@ -30,7 +30,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile or CDN profile which is unique within the resource group.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -56,7 +57,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='customDomainName'>
         /// Name of the domain under the profile which is unique globally.
@@ -84,7 +86,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='customDomainName'>
         /// Name of the domain under the profile which is unique globally
@@ -115,19 +118,14 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='customDomainName'>
         /// Name of the domain under the profile which is unique globally
         /// </param>
-        /// <param name='tlsSettings'>
-        /// The configuration specifying how to enable HTTPS for the domain -
-        /// using AzureFrontDoor managed certificate or user's own certificate.
-        /// If not specified, enabling ssl uses AzureFrontDoor managed
-        /// certificate by default.
-        /// </param>
-        /// <param name='azureDnsZone'>
-        /// Resource reference to the Azure DNS zone
+        /// <param name='customDomainUpdateProperties'>
+        /// Domain properties
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -144,7 +142,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AFDDomain>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string customDomainName, AFDDomainHttpsParameters tlsSettings = default(AFDDomainHttpsParameters), ResourceReference azureDnsZone = default(ResourceReference), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AFDDomain>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string customDomainName, AFDDomainUpdateParameters customDomainUpdateProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an existing AzureFrontDoor domain with the specified domain
         /// name under the specified subscription, resource group and profile.
@@ -153,7 +151,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='customDomainName'>
         /// Name of the domain under the profile which is unique globally.
@@ -178,7 +177,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='customDomainName'>
         /// Name of the domain under the profile which is unique globally.
@@ -192,13 +192,10 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="AfdErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ValidationToken>> RefreshValidationTokenWithHttpMessagesAsync(string resourceGroupName, string profileName, string customDomainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> RefreshValidationTokenWithHttpMessagesAsync(string resourceGroupName, string profileName, string customDomainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new domain within the specified profile.
         /// </summary>
@@ -206,7 +203,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='customDomainName'>
         /// Name of the domain under the profile which is unique globally
@@ -237,19 +235,14 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='customDomainName'>
         /// Name of the domain under the profile which is unique globally
         /// </param>
-        /// <param name='tlsSettings'>
-        /// The configuration specifying how to enable HTTPS for the domain -
-        /// using AzureFrontDoor managed certificate or user's own certificate.
-        /// If not specified, enabling ssl uses AzureFrontDoor managed
-        /// certificate by default.
-        /// </param>
-        /// <param name='azureDnsZone'>
-        /// Resource reference to the Azure DNS zone
+        /// <param name='customDomainUpdateProperties'>
+        /// Domain properties
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -266,7 +259,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AFDDomain>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string customDomainName, AFDDomainHttpsParameters tlsSettings = default(AFDDomainHttpsParameters), ResourceReference azureDnsZone = default(ResourceReference), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AFDDomain>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string customDomainName, AFDDomainUpdateParameters customDomainUpdateProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an existing AzureFrontDoor domain with the specified domain
         /// name under the specified subscription, resource group and profile.
@@ -275,7 +268,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='customDomainName'>
         /// Name of the domain under the profile which is unique globally.
@@ -300,7 +294,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='customDomainName'>
         /// Name of the domain under the profile which is unique globally.
@@ -314,13 +309,10 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="AfdErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ValidationToken>> BeginRefreshValidationTokenWithHttpMessagesAsync(string resourceGroupName, string profileName, string customDomainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginRefreshValidationTokenWithHttpMessagesAsync(string resourceGroupName, string profileName, string customDomainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists existing AzureFrontDoor domains.
         /// </summary>

@@ -10,45 +10,13 @@
 
 namespace Microsoft.Azure.Management.Cdn.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ResourceType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ResourceType
+    public static class ResourceType
     {
-        [EnumMember(Value = "Microsoft.Cdn/Profiles/Endpoints")]
-        MicrosoftCdnProfilesEndpoints
-    }
-    internal static class ResourceTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this ResourceType? value)
-        {
-            return value == null ? null : ((ResourceType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this ResourceType value)
-        {
-            switch( value )
-            {
-                case ResourceType.MicrosoftCdnProfilesEndpoints:
-                    return "Microsoft.Cdn/Profiles/Endpoints";
-            }
-            return null;
-        }
-
-        internal static ResourceType? ParseResourceType(this string value)
-        {
-            switch( value )
-            {
-                case "Microsoft.Cdn/Profiles/Endpoints":
-                    return ResourceType.MicrosoftCdnProfilesEndpoints;
-            }
-            return null;
-        }
+        public const string MicrosoftCdnProfilesEndpoints = "Microsoft.Cdn/Profiles/Endpoints";
+        public const string MicrosoftCdnProfilesAfdEndpoints = "Microsoft.Cdn/Profiles/AfdEndpoints";
     }
 }

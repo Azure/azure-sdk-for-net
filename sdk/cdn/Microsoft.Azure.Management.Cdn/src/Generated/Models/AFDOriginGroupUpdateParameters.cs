@@ -35,6 +35,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Initializes a new instance of the AFDOriginGroupUpdateParameters
         /// class.
         /// </summary>
+        /// <param name="profileName">The name of the profile which holds the
+        /// origin group.</param>
         /// <param name="loadBalancingSettings">Load balancing settings for a
         /// backend pool</param>
         /// <param name="healthProbeSettings">Health probe settings to the
@@ -45,19 +47,15 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// unhealthy endpoint comes healthy or a new endpoint is added.
         /// Default is 10 mins. This property is currently not
         /// supported.</param>
-        /// <param name="responseBasedAfdOriginErrorDetectionSettings">The JSON
-        /// object that contains the properties to determine origin health
-        /// using real requests/responses. This property is currently not
-        /// supported.</param>
         /// <param name="sessionAffinityState">Whether to allow session
         /// affinity on this host. Valid options are 'Enabled' or 'Disabled'.
         /// Possible values include: 'Enabled', 'Disabled'</param>
-        public AFDOriginGroupUpdateParameters(LoadBalancingSettingsParameters loadBalancingSettings = default(LoadBalancingSettingsParameters), HealthProbeParameters healthProbeSettings = default(HealthProbeParameters), int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default(int?), ResponseBasedOriginErrorDetectionParameters responseBasedAfdOriginErrorDetectionSettings = default(ResponseBasedOriginErrorDetectionParameters), string sessionAffinityState = default(string))
+        public AFDOriginGroupUpdateParameters(string profileName = default(string), LoadBalancingSettingsParameters loadBalancingSettings = default(LoadBalancingSettingsParameters), HealthProbeParameters healthProbeSettings = default(HealthProbeParameters), int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default(int?), string sessionAffinityState = default(string))
         {
+            ProfileName = profileName;
             LoadBalancingSettings = loadBalancingSettings;
             HealthProbeSettings = healthProbeSettings;
             TrafficRestorationTimeToHealedOrNewEndpointsInMinutes = trafficRestorationTimeToHealedOrNewEndpointsInMinutes;
-            ResponseBasedAfdOriginErrorDetectionSettings = responseBasedAfdOriginErrorDetectionSettings;
             SessionAffinityState = sessionAffinityState;
             CustomInit();
         }
@@ -66,6 +64,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the name of the profile which holds the origin group.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.profileName")]
+        public string ProfileName { get; private set; }
 
         /// <summary>
         /// Gets or sets load balancing settings for a backend pool
@@ -88,14 +92,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes")]
         public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes { get; set; }
-
-        /// <summary>
-        /// Gets or sets the JSON object that contains the properties to
-        /// determine origin health using real requests/responses. This
-        /// property is currently not supported.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.responseBasedAfdOriginErrorDetectionSettings")]
-        public ResponseBasedOriginErrorDetectionParameters ResponseBasedAfdOriginErrorDetectionSettings { get; set; }
 
         /// <summary>
         /// Gets or sets whether to allow session affinity on this host. Valid
@@ -124,10 +120,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
             if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "TrafficRestorationTimeToHealedOrNewEndpointsInMinutes", 0);
-            }
-            if (ResponseBasedAfdOriginErrorDetectionSettings != null)
-            {
-                ResponseBasedAfdOriginErrorDetectionSettings.Validate();
             }
         }
     }

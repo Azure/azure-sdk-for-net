@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         /// <param name="certificateType">Defines the source of the SSL
         /// certificate. Possible values include: 'CustomerCertificate',
-        /// 'ManagedCertificate'</param>
+        /// 'ManagedCertificate', 'AzureFirstPartyManagedCertificate'</param>
         /// <param name="minimumTlsVersion">TLS protocol version that will be
         /// used for Https. Possible values include: 'TLS10', 'TLS12'</param>
         /// <param name="secret">Resource reference to the secret. ie.
@@ -52,7 +52,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
         /// <summary>
         /// Gets or sets defines the source of the SSL certificate. Possible
-        /// values include: 'CustomerCertificate', 'ManagedCertificate'
+        /// values include: 'CustomerCertificate', 'ManagedCertificate',
+        /// 'AzureFirstPartyManagedCertificate'
         /// </summary>
         [JsonProperty(PropertyName = "certificateType")]
         public string CertificateType { get; set; }

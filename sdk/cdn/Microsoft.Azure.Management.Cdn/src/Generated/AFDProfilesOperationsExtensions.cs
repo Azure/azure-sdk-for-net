@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             public static IPage<Usage> ListResourceUsage(this IAFDProfilesOperations operations, string resourceGroupName, string profileName)
             {
@@ -48,7 +49,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -72,12 +74,13 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             /// <param name='hostName'>
-            /// The host name of the custom domain. Must be a domain name.
+            /// The host name to validate.
             /// </param>
-            public static ValidateCustomDomainOutput CheckHostNameAvailability(this IAFDProfilesOperations operations, string resourceGroupName, string profileName, string hostName)
+            public static CheckNameAvailabilityOutput CheckHostNameAvailability(this IAFDProfilesOperations operations, string resourceGroupName, string profileName, string hostName)
             {
                 return operations.CheckHostNameAvailabilityAsync(resourceGroupName, profileName, hostName).GetAwaiter().GetResult();
             }
@@ -93,15 +96,16 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
+            /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+            /// profile which is unique within the resource group.
             /// </param>
             /// <param name='hostName'>
-            /// The host name of the custom domain. Must be a domain name.
+            /// The host name to validate.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ValidateCustomDomainOutput> CheckHostNameAvailabilityAsync(this IAFDProfilesOperations operations, string resourceGroupName, string profileName, string hostName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CheckNameAvailabilityOutput> CheckHostNameAvailabilityAsync(this IAFDProfilesOperations operations, string resourceGroupName, string profileName, string hostName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CheckHostNameAvailabilityWithHttpMessagesAsync(resourceGroupName, profileName, hostName, null, cancellationToken).ConfigureAwait(false))
                 {

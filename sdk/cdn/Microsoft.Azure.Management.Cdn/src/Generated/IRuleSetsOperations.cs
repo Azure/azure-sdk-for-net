@@ -30,7 +30,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -57,7 +58,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='ruleSetName'>
         /// Name of the rule set under the profile which is unique globally.
@@ -85,7 +87,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='ruleSetName'>
         /// Name of the rule set under the profile which is unique globally
@@ -115,7 +118,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='ruleSetName'>
         /// Name of the rule set under the profile which is unique globally.
@@ -141,7 +145,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='ruleSetName'>
         /// Name of the rule set under the profile which is unique globally.
@@ -163,34 +168,6 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         Task<AzureOperationResponse<IPage<Usage>>> ListResourceUsageWithHttpMessagesAsync(string resourceGroupName, string profileName, string ruleSetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new rule set within the specified profile.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the Resource group within the Azure subscription.
-        /// </param>
-        /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
-        /// </param>
-        /// <param name='ruleSetName'>
-        /// Name of the rule set under the profile which is unique globally
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="AfdErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<RuleSet>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string ruleSetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Deletes an existing AzureFrontDoor rule set with the specified rule
         /// set name under the specified subscription, resource group and
         /// profile.
@@ -199,7 +176,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='ruleSetName'>
         /// Name of the rule set under the profile which is unique globally.

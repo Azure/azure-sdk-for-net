@@ -36,8 +36,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// (e.g. '/mypictures', '/mypicture/kitty.jpg', and etc.)</param>
         /// <param name="action">Action of the geo filter, i.e. allow or block
         /// access. Possible values include: 'Block', 'Allow'</param>
-        /// <param name="countryCodes">Two letter country codes defining user
-        /// country access in a geo filter, e.g. AU, MX, US.</param>
+        /// <param name="countryCodes">Two letter country or region codes
+        /// defining user country or region access in a geo filter, e.g. AU,
+        /// MX, US.</param>
         public GeoFilter(string relativePath, GeoFilterActions action, IList<string> countryCodes)
         {
             RelativePath = relativePath;
@@ -66,8 +67,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public GeoFilterActions Action { get; set; }
 
         /// <summary>
-        /// Gets or sets two letter country codes defining user country access
-        /// in a geo filter, e.g. AU, MX, US.
+        /// Gets or sets two letter country or region codes defining user
+        /// country or region access in a geo filter, e.g. AU, MX, US.
         /// </summary>
         [JsonProperty(PropertyName = "countryCodes")]
         public IList<string> CountryCodes { get; set; }

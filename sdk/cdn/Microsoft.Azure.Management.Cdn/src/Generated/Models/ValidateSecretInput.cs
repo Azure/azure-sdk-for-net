@@ -30,14 +30,19 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Initializes a new instance of the ValidateSecretInput class.
         /// </summary>
-        /// <param name="secretSource">The secret source.</param>
         /// <param name="secretType">The secret type. Possible values include:
-        /// 'UrlSigningKey', 'ManagedCertificate',
-        /// 'CustomerCertificate'</param>
-        public ValidateSecretInput(ResourceReference secretSource, string secretType)
+        /// 'UrlSigningKey', 'CustomerCertificate', 'ManagedCertificate',
+        /// 'AzureFirstPartyManagedCertificate'</param>
+        /// <param name="secretSource">Resource reference to the Azure Key
+        /// Vault secret. Expected to be in format of
+        /// /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​��​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​</param>
+        /// <param name="secretVersion">Secret version, if customer is using a
+        /// specific version.</param>
+        public ValidateSecretInput(string secretType, ResourceReference secretSource, string secretVersion = default(string))
         {
-            SecretSource = secretSource;
             SecretType = secretType;
+            SecretSource = secretSource;
+            SecretVersion = secretVersion;
             CustomInit();
         }
 
@@ -47,17 +52,27 @@ namespace Microsoft.Azure.Management.Cdn.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the secret source.
+        /// Gets or sets the secret type. Possible values include:
+        /// 'UrlSigningKey', 'CustomerCertificate', 'ManagedCertificate',
+        /// 'AzureFirstPartyManagedCertificate'
+        /// </summary>
+        [JsonProperty(PropertyName = "secretType")]
+        public string SecretType { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource reference to the Azure Key Vault secret.
+        /// Expected to be in format of
+        /// /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​��​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
         /// </summary>
         [JsonProperty(PropertyName = "secretSource")]
         public ResourceReference SecretSource { get; set; }
 
         /// <summary>
-        /// Gets or sets the secret type. Possible values include:
-        /// 'UrlSigningKey', 'ManagedCertificate', 'CustomerCertificate'
+        /// Gets or sets secret version, if customer is using a specific
+        /// version.
         /// </summary>
-        [JsonProperty(PropertyName = "secretType")]
-        public string SecretType { get; set; }
+        [JsonProperty(PropertyName = "secretVersion")]
+        public string SecretVersion { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -67,13 +82,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (SecretSource == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "SecretSource");
-            }
             if (SecretType == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "SecretType");
+            }
+            if (SecretSource == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SecretSource");
             }
         }
     }

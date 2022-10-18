@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
 {
 
     /// <summary>
-    /// Defines values for MatchVariable.
+    /// Defines values for WafMatchVariable.
     /// </summary>
-    public static class MatchVariable
+    public static class WafMatchVariable
     {
         public const string RemoteAddr = "RemoteAddr";
         public const string SocketAddr = "SocketAddr";

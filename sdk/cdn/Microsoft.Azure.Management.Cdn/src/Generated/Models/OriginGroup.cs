@@ -55,7 +55,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="resourceState">Resource status of the origin group.
         /// Possible values include: 'Creating', 'Active', 'Deleting'</param>
         /// <param name="provisioningState">Provisioning status of the origin
-        /// group.</param>
+        /// group. Possible values include: 'Succeeded', 'Failed', 'Updating',
+        /// 'Deleting', 'Creating'</param>
         public OriginGroup(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), HealthProbeParameters healthProbeSettings = default(HealthProbeParameters), IList<ResourceReference> origins = default(IList<ResourceReference>), int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default(int?), ResponseBasedOriginErrorDetectionParameters responseBasedOriginErrorDetectionSettings = default(ResponseBasedOriginErrorDetectionParameters), string resourceState = default(string), string provisioningState = default(string))
             : base(id, name, type, systemData)
         {
@@ -112,7 +113,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public string ResourceState { get; private set; }
 
         /// <summary>
-        /// Gets provisioning status of the origin group.
+        /// Gets provisioning status of the origin group. Possible values
+        /// include: 'Succeeded', 'Failed', 'Updating', 'Deleting', 'Creating'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

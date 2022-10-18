@@ -41,11 +41,14 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// 'Creating'</param>
         /// <param name="deploymentStatus">Possible values include:
         /// 'NotStarted', 'InProgress', 'Succeeded', 'Failed'</param>
-        public RuleSet(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string provisioningState = default(string), string deploymentStatus = default(string))
+        /// <param name="profileName">The name of the profile which holds the
+        /// rule set.</param>
+        public RuleSet(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string provisioningState = default(string), string deploymentStatus = default(string), string profileName = default(string))
             : base(id, name, type, systemData)
         {
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
+            ProfileName = profileName;
             CustomInit();
         }
 
@@ -67,6 +70,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.deploymentStatus")]
         public string DeploymentStatus { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the profile which holds the rule set.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.profileName")]
+        public string ProfileName { get; private set; }
 
     }
 }

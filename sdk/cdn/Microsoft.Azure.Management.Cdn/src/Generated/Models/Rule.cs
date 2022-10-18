@@ -45,6 +45,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="ruleSetName">The name of the rule set containing the
+        /// rule.</param>
         /// <param name="conditions">A list of conditions that must be matched
         /// for the actions to be executed</param>
         /// <param name="matchProcessingBehavior">If this rule is a match
@@ -56,9 +58,10 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// 'Creating'</param>
         /// <param name="deploymentStatus">Possible values include:
         /// 'NotStarted', 'InProgress', 'Succeeded', 'Failed'</param>
-        public Rule(int order, IList<DeliveryRuleAction> actions, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IList<DeliveryRuleCondition> conditions = default(IList<DeliveryRuleCondition>), string matchProcessingBehavior = default(string), string provisioningState = default(string), string deploymentStatus = default(string))
+        public Rule(int order, IList<DeliveryRuleAction> actions, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string ruleSetName = default(string), IList<DeliveryRuleCondition> conditions = default(IList<DeliveryRuleCondition>), string matchProcessingBehavior = default(string), string provisioningState = default(string), string deploymentStatus = default(string))
             : base(id, name, type, systemData)
         {
+            RuleSetName = ruleSetName;
             Order = order;
             Conditions = conditions;
             Actions = actions;
@@ -72,6 +75,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the name of the rule set containing the rule.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ruleSetName")]
+        public string RuleSetName { get; private set; }
 
         /// <summary>
         /// Gets or sets the order in which the rules are applied for the

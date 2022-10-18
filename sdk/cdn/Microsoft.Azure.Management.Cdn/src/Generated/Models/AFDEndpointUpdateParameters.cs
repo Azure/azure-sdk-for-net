@@ -38,16 +38,15 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// class.
         /// </summary>
         /// <param name="tags">Endpoint tags.</param>
-        /// <param name="originResponseTimeoutSeconds">Send and receive timeout
-        /// on forwarding request to the origin. When timeout is reached, the
-        /// request fails and returns.</param>
+        /// <param name="profileName">The name of the profile which holds the
+        /// endpoint.</param>
         /// <param name="enabledState">Whether to enable use of this rule.
         /// Permitted values are 'Enabled' or 'Disabled'. Possible values
         /// include: 'Enabled', 'Disabled'</param>
-        public AFDEndpointUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), int? originResponseTimeoutSeconds = default(int?), string enabledState = default(string))
+        public AFDEndpointUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string profileName = default(string), string enabledState = default(string))
         {
             Tags = tags;
-            OriginResponseTimeoutSeconds = originResponseTimeoutSeconds;
+            ProfileName = profileName;
             EnabledState = enabledState;
             CustomInit();
         }
@@ -64,11 +63,10 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets send and receive timeout on forwarding request to the
-        /// origin. When timeout is reached, the request fails and returns.
+        /// Gets the name of the profile which holds the endpoint.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.originResponseTimeoutSeconds")]
-        public int? OriginResponseTimeoutSeconds { get; set; }
+        [JsonProperty(PropertyName = "properties.profileName")]
+        public string ProfileName { get; private set; }
 
         /// <summary>
         /// Gets or sets whether to enable use of this rule. Permitted values
@@ -78,18 +76,5 @@ namespace Microsoft.Azure.Management.Cdn.Models
         [JsonProperty(PropertyName = "properties.enabledState")]
         public string EnabledState { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (OriginResponseTimeoutSeconds < 16)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "OriginResponseTimeoutSeconds", 16);
-            }
-        }
     }
 }

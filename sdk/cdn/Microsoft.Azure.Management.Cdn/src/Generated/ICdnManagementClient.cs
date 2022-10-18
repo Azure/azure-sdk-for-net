@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Cdn
 
         /// <summary>
         /// Version of the API to be used with the client request. Current
-        /// version is 2020-09-01.
+        /// version is 2022-05-01-preview.
         /// </summary>
         string ApiVersion { get; }
 
@@ -73,46 +73,6 @@ namespace Microsoft.Azure.Management.Cdn
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
-
-        /// <summary>
-        /// Gets the IProfilesOperations.
-        /// </summary>
-        IProfilesOperations Profiles { get; }
-
-        /// <summary>
-        /// Gets the IEndpointsOperations.
-        /// </summary>
-        IEndpointsOperations Endpoints { get; }
-
-        /// <summary>
-        /// Gets the IOriginsOperations.
-        /// </summary>
-        IOriginsOperations Origins { get; }
-
-        /// <summary>
-        /// Gets the IOriginGroupsOperations.
-        /// </summary>
-        IOriginGroupsOperations OriginGroups { get; }
-
-        /// <summary>
-        /// Gets the ICustomDomainsOperations.
-        /// </summary>
-        ICustomDomainsOperations CustomDomains { get; }
-
-        /// <summary>
-        /// Gets the IResourceUsageOperations.
-        /// </summary>
-        IResourceUsageOperations ResourceUsage { get; }
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
-
-        /// <summary>
-        /// Gets the IEdgeNodesOperations.
-        /// </summary>
-        IEdgeNodesOperations EdgeNodes { get; }
 
         /// <summary>
         /// Gets the IAFDProfilesOperations.
@@ -175,6 +135,46 @@ namespace Microsoft.Azure.Management.Cdn
         ILogAnalyticsOperations LogAnalytics { get; }
 
         /// <summary>
+        /// Gets the IProfilesOperations.
+        /// </summary>
+        IProfilesOperations Profiles { get; }
+
+        /// <summary>
+        /// Gets the IEndpointsOperations.
+        /// </summary>
+        IEndpointsOperations Endpoints { get; }
+
+        /// <summary>
+        /// Gets the IOriginsOperations.
+        /// </summary>
+        IOriginsOperations Origins { get; }
+
+        /// <summary>
+        /// Gets the IOriginGroupsOperations.
+        /// </summary>
+        IOriginGroupsOperations OriginGroups { get; }
+
+        /// <summary>
+        /// Gets the ICustomDomainsOperations.
+        /// </summary>
+        ICustomDomainsOperations CustomDomains { get; }
+
+        /// <summary>
+        /// Gets the IResourceUsageOperations.
+        /// </summary>
+        IResourceUsageOperations ResourceUsage { get; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IEdgeNodesOperations.
+        /// </summary>
+        IEdgeNodesOperations EdgeNodes { get; }
+
+        /// <summary>
         /// Gets the IPoliciesOperations.
         /// </summary>
         IPoliciesOperations Policies { get; }
@@ -186,10 +186,13 @@ namespace Microsoft.Azure.Management.Cdn
 
         /// <summary>
         /// Check the availability of a resource name. This is needed for
-        /// resources where name is globally unique, such as a CDN endpoint.
+        /// resources where name is globally unique, such as a afdx endpoint.
         /// </summary>
-        /// <param name='name'>
-        /// The resource name to validate.
+        /// <param name='checkEndpointNameAvailabilityInput'>
+        /// Input to check.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -197,7 +200,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<CheckNameAvailabilityOutput>> CheckNameAvailabilityWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CheckEndpointNameAvailabilityOutput>> CheckEndpointNameAvailabilityWithHttpMessagesAsync(CheckEndpointNameAvailabilityInput checkEndpointNameAvailabilityInput, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Check the availability of a resource name. This is needed for
@@ -206,13 +209,38 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='name'>
         /// The resource name to validate.
         /// </param>
+        /// <param name='type'>
+        /// The type of the resource whose name is to be validated. Possible
+        /// values include: 'Microsoft.Cdn/Profiles/Endpoints',
+        /// 'Microsoft.Cdn/Profiles/AfdEndpoints'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<CheckNameAvailabilityOutput>> CheckNameAvailabilityWithSubscriptionWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CheckNameAvailabilityOutput>> CheckNameAvailabilityWithHttpMessagesAsync(string name, string type, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Check the availability of a resource name. This is needed for
+        /// resources where name is globally unique, such as a CDN endpoint.
+        /// </summary>
+        /// <param name='name'>
+        /// The resource name to validate.
+        /// </param>
+        /// <param name='type'>
+        /// The type of the resource whose name is to be validated. Possible
+        /// values include: 'Microsoft.Cdn/Profiles/Endpoints',
+        /// 'Microsoft.Cdn/Profiles/AfdEndpoints'
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CheckNameAvailabilityOutput>> CheckNameAvailabilityWithSubscriptionWithHttpMessagesAsync(string name, string type, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Check if the probe path is a valid path and the file can be

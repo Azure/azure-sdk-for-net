@@ -40,13 +40,16 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// 'Creating'</param>
         /// <param name="deploymentStatus">Possible values include:
         /// 'NotStarted', 'InProgress', 'Succeeded', 'Failed'</param>
+        /// <param name="profileName">The name of the profile which holds the
+        /// security policy.</param>
         /// <param name="parameters">object which contains security policy
         /// parameters</param>
-        public SecurityPolicy(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string provisioningState = default(string), string deploymentStatus = default(string), SecurityPolicyParameters parameters = default(SecurityPolicyParameters))
+        public SecurityPolicy(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string provisioningState = default(string), string deploymentStatus = default(string), string profileName = default(string), SecurityPolicyPropertiesParameters parameters = default(SecurityPolicyPropertiesParameters))
             : base(id, name, type, systemData)
         {
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
+            ProfileName = profileName;
             Parameters = parameters;
             CustomInit();
         }
@@ -71,10 +74,16 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public string DeploymentStatus { get; private set; }
 
         /// <summary>
+        /// Gets the name of the profile which holds the security policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.profileName")]
+        public string ProfileName { get; private set; }
+
+        /// <summary>
         /// Gets or sets object which contains security policy parameters
         /// </summary>
         [JsonProperty(PropertyName = "properties.parameters")]
-        public SecurityPolicyParameters Parameters { get; set; }
+        public SecurityPolicyPropertiesParameters Parameters { get; set; }
 
     }
 }

@@ -57,7 +57,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -263,7 +264,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='securityPolicyName'>
         /// Name of the security policy under the profile.
@@ -478,7 +480,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='securityPolicyName'>
         /// Name of the security policy under the profile.
@@ -492,7 +495,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SecurityPolicy>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SecurityPolicy>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyPropertiesParameters parameters = default(SecurityPolicyPropertiesParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<SecurityPolicy> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, profileName, securityPolicyName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -500,13 +503,14 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Updates an existing Secret within a profile.
+        /// Updates an existing security policy within a profile.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='securityPolicyName'>
         /// Name of the security policy under the profile.
@@ -520,7 +524,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SecurityPolicy>> PatchWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SecurityPolicy>> PatchWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyPropertiesParameters parameters = default(SecurityPolicyPropertiesParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<SecurityPolicy> _response = await BeginPatchWithHttpMessagesAsync(resourceGroupName, profileName, securityPolicyName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -534,10 +538,11 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='securityPolicyName'>
-        /// Name of the Secret under the profile.
+        /// Name of the security policy under the profile.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -559,7 +564,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='securityPolicyName'>
         /// Name of the security policy under the profile.
@@ -588,7 +594,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SecurityPolicy>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SecurityPolicy>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyPropertiesParameters parameters = default(SecurityPolicyPropertiesParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -819,13 +825,14 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Updates an existing Secret within a profile.
+        /// Updates an existing security policy within a profile.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='securityPolicyName'>
         /// Name of the security policy under the profile.
@@ -854,7 +861,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SecurityPolicy>> BeginPatchWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SecurityPolicy>> BeginPatchWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyPropertiesParameters parameters = default(SecurityPolicyPropertiesParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -891,10 +898,10 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            SecurityPolicyProperties securityPolicyProperties = new SecurityPolicyProperties();
+            SecurityPolicyUpdateParameters securityPolicyUpdateProperties = new SecurityPolicyUpdateParameters();
             if (parameters != null)
             {
-                securityPolicyProperties.Parameters = parameters;
+                securityPolicyUpdateProperties.Parameters = parameters;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -906,7 +913,7 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("securityPolicyName", securityPolicyName);
-                tracingParameters.Add("securityPolicyProperties", securityPolicyProperties);
+                tracingParameters.Add("securityPolicyUpdateProperties", securityPolicyUpdateProperties);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginPatch", tracingParameters);
             }
@@ -960,9 +967,9 @@ namespace Microsoft.Azure.Management.Cdn
 
             // Serialize Request
             string _requestContent = null;
-            if(securityPolicyProperties != null)
+            if(securityPolicyUpdateProperties != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(securityPolicyProperties, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(securityPolicyUpdateProperties, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -1073,10 +1080,11 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='securityPolicyName'>
-        /// Name of the Secret under the profile.
+        /// Name of the security policy under the profile.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

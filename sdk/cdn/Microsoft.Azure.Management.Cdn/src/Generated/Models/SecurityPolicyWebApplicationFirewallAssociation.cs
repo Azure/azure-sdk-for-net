@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         /// <param name="domains">List of domains.</param>
         /// <param name="patternsToMatch">List of paths</param>
-        public SecurityPolicyWebApplicationFirewallAssociation(IList<ResourceReference> domains = default(IList<ResourceReference>), IList<string> patternsToMatch = default(IList<string>))
+        public SecurityPolicyWebApplicationFirewallAssociation(IList<ActivatedResourceReference> domains = default(IList<ActivatedResourceReference>), IList<string> patternsToMatch = default(IList<string>))
         {
             Domains = domains;
             PatternsToMatch = patternsToMatch;
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Gets or sets list of domains.
         /// </summary>
         [JsonProperty(PropertyName = "domains")]
-        public IList<ResourceReference> Domains { get; set; }
+        public IList<ActivatedResourceReference> Domains { get; set; }
 
         /// <summary>
         /// Gets or sets list of paths

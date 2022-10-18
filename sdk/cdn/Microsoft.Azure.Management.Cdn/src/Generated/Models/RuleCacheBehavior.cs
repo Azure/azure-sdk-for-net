@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
 {
 
     /// <summary>
-    /// Defines values for ValidateSecretType.
+    /// Defines values for RuleCacheBehavior.
     /// </summary>
-    public static class ValidateSecretType
+    public static class RuleCacheBehavior
     {
-        public const string UrlSigningKey = "UrlSigningKey";
-        public const string ManagedCertificate = "ManagedCertificate";
-        public const string CustomerCertificate = "CustomerCertificate";
+        public const string HonorOrigin = "HonorOrigin";
+        public const string OverrideAlways = "OverrideAlways";
+        public const string OverrideIfOriginMissing = "OverrideIfOriginMissing";
     }
 }

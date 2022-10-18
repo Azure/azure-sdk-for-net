@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="endpointName">The name of the endpoint which holds the
+        /// route.</param>
         /// <param name="customDomains">Domains referenced by this
         /// endpoint.</param>
         /// <param name="originPath">A directory path on the origin that
@@ -50,13 +52,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// this route.</param>
         /// <param name="patternsToMatch">The route patterns of the
         /// rule.</param>
-        /// <param name="compressionSettings">compression settings.</param>
-        /// <param name="queryStringCachingBehavior">Defines how CDN caches
-        /// requests that include query strings. You can ignore any query
-        /// strings when caching, bypass caching to prevent requests that
-        /// contain query strings from being cached, or cache every request
-        /// with a unique URL. Possible values include: 'IgnoreQueryString',
-        /// 'UseQueryString', 'NotSet'</param>
+        /// <param name="cacheConfiguration">The caching configuration for this
+        /// route. To disable caching, do not provide a cacheConfiguration
+        /// object.</param>
         /// <param name="forwardingProtocol">Protocol this rule will use when
         /// forwarding traffic to backends. Possible values include:
         /// 'HttpOnly', 'HttpsOnly', 'MatchRequest'</param>
@@ -75,17 +73,17 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// 'Creating'</param>
         /// <param name="deploymentStatus">Possible values include:
         /// 'NotStarted', 'InProgress', 'Succeeded', 'Failed'</param>
-        public Route(ResourceReference originGroup, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IList<ResourceReference> customDomains = default(IList<ResourceReference>), string originPath = default(string), IList<ResourceReference> ruleSets = default(IList<ResourceReference>), IList<string> supportedProtocols = default(IList<string>), IList<string> patternsToMatch = default(IList<string>), object compressionSettings = default(object), AfdQueryStringCachingBehavior? queryStringCachingBehavior = default(AfdQueryStringCachingBehavior?), string forwardingProtocol = default(string), string linkToDefaultDomain = default(string), string httpsRedirect = default(string), string enabledState = default(string), string provisioningState = default(string), string deploymentStatus = default(string))
+        public Route(ResourceReference originGroup, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string endpointName = default(string), IList<ActivatedResourceReference> customDomains = default(IList<ActivatedResourceReference>), string originPath = default(string), IList<ResourceReference> ruleSets = default(IList<ResourceReference>), IList<string> supportedProtocols = default(IList<string>), IList<string> patternsToMatch = default(IList<string>), AfdRouteCacheConfiguration cacheConfiguration = default(AfdRouteCacheConfiguration), string forwardingProtocol = default(string), string linkToDefaultDomain = default(string), string httpsRedirect = default(string), string enabledState = default(string), string provisioningState = default(string), string deploymentStatus = default(string))
             : base(id, name, type, systemData)
         {
+            EndpointName = endpointName;
             CustomDomains = customDomains;
             OriginGroup = originGroup;
             OriginPath = originPath;
             RuleSets = ruleSets;
             SupportedProtocols = supportedProtocols;
             PatternsToMatch = patternsToMatch;
-            CompressionSettings = compressionSettings;
-            QueryStringCachingBehavior = queryStringCachingBehavior;
+            CacheConfiguration = cacheConfiguration;
             ForwardingProtocol = forwardingProtocol;
             LinkToDefaultDomain = linkToDefaultDomain;
             HttpsRedirect = httpsRedirect;
@@ -101,10 +99,16 @@ namespace Microsoft.Azure.Management.Cdn.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets the name of the endpoint which holds the route.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.endpointName")]
+        public string EndpointName { get; private set; }
+
+        /// <summary>
         /// Gets or sets domains referenced by this endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "properties.customDomains")]
-        public IList<ResourceReference> CustomDomains { get; set; }
+        public IList<ActivatedResourceReference> CustomDomains { get; set; }
 
         /// <summary>
         /// Gets or sets a reference to the origin group.
@@ -138,20 +142,11 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public IList<string> PatternsToMatch { get; set; }
 
         /// <summary>
-        /// Gets or sets compression settings.
+        /// Gets or sets the caching configuration for this route. To disable
+        /// caching, do not provide a cacheConfiguration object.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.compressionSettings")]
-        public object CompressionSettings { get; set; }
-
-        /// <summary>
-        /// Gets or sets defines how CDN caches requests that include query
-        /// strings. You can ignore any query strings when caching, bypass
-        /// caching to prevent requests that contain query strings from being
-        /// cached, or cache every request with a unique URL. Possible values
-        /// include: 'IgnoreQueryString', 'UseQueryString', 'NotSet'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.queryStringCachingBehavior")]
-        public AfdQueryStringCachingBehavior? QueryStringCachingBehavior { get; set; }
+        [JsonProperty(PropertyName = "properties.cacheConfiguration")]
+        public AfdRouteCacheConfiguration CacheConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets protocol this rule will use when forwarding traffic to

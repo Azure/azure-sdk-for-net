@@ -29,14 +29,16 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Initializes a new instance of the Certificate class.
         /// </summary>
+        /// <param name="type">Possible values include: 'UrlSigningKey',
+        /// 'CustomerCertificate', 'ManagedCertificate',
+        /// 'AzureFirstPartyManagedCertificate'</param>
         /// <param name="subject">Subject name in the certificate.</param>
         /// <param name="expirationDate">Certificate expiration date.</param>
-        /// <param name="thumbprint">Certificate thumbprint.</param>
-        public Certificate(string subject = default(string), string expirationDate = default(string), string thumbprint = default(string))
+        public Certificate(string type = default(string), string subject = default(string), string expirationDate = default(string))
         {
+            Type = type;
             Subject = subject;
             ExpirationDate = expirationDate;
-            Thumbprint = thumbprint;
             CustomInit();
         }
 
@@ -46,22 +48,24 @@ namespace Microsoft.Azure.Management.Cdn.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets subject name in the certificate.
+        /// Gets or sets possible values include: 'UrlSigningKey',
+        /// 'CustomerCertificate', 'ManagedCertificate',
+        /// 'AzureFirstPartyManagedCertificate'
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// Gets subject name in the certificate.
         /// </summary>
         [JsonProperty(PropertyName = "subject")]
-        public string Subject { get; set; }
+        public string Subject { get; private set; }
 
         /// <summary>
-        /// Gets or sets certificate expiration date.
+        /// Gets certificate expiration date.
         /// </summary>
         [JsonProperty(PropertyName = "expirationDate")]
-        public string ExpirationDate { get; set; }
-
-        /// <summary>
-        /// Gets or sets certificate thumbprint.
-        /// </summary>
-        [JsonProperty(PropertyName = "thumbprint")]
-        public string Thumbprint { get; set; }
+        public string ExpirationDate { get; private set; }
 
     }
 }

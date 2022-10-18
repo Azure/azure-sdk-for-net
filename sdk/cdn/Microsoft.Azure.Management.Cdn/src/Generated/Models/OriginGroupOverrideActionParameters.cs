@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static OriginGroupOverrideActionParameters()
         {
-            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRuleOriginGroupOverrideActionParameters";
+            TypeName = "DeliveryRuleOriginGroupOverrideActionParameters";
         }
 
         /// <summary>
@@ -61,8 +61,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "@odata.type")]
-        public static string Odatatype { get; private set; }
+        [JsonProperty(PropertyName = "typeName")]
+        public static string TypeName { get; private set; }
 
         /// <summary>
         /// Validate the object.

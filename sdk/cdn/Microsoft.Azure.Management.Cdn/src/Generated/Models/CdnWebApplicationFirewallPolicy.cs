@@ -53,13 +53,15 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// policy.</param>
         /// <param name="endpointLinks">Describes Azure CDN endpoints
         /// associated with this Web Application Firewall policy.</param>
+        /// <param name="extendedProperties">Key-Value pair representing
+        /// additional properties for Web Application Firewall policy.</param>
         /// <param name="provisioningState">Provisioning state of the
         /// WebApplicationFirewallPolicy. Possible values include: 'Creating',
         /// 'Succeeded', 'Failed'</param>
         /// <param name="resourceState">Resource status of the policy.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public CdnWebApplicationFirewallPolicy(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), PolicySettings policySettings = default(PolicySettings), RateLimitRuleList rateLimitRules = default(RateLimitRuleList), CustomRuleList customRules = default(CustomRuleList), ManagedRuleSetList managedRules = default(ManagedRuleSetList), IList<CdnEndpoint> endpointLinks = default(IList<CdnEndpoint>), string provisioningState = default(string), string resourceState = default(string), string etag = default(string))
+        public CdnWebApplicationFirewallPolicy(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), PolicySettings policySettings = default(PolicySettings), RateLimitRuleList rateLimitRules = default(RateLimitRuleList), CustomRuleList customRules = default(CustomRuleList), ManagedRuleSetList managedRules = default(ManagedRuleSetList), IList<CdnEndpoint> endpointLinks = default(IList<CdnEndpoint>), IDictionary<string, string> extendedProperties = default(IDictionary<string, string>), string provisioningState = default(string), string resourceState = default(string), string etag = default(string))
             : base(location, id, name, type, systemData, tags)
         {
             PolicySettings = policySettings;
@@ -67,6 +69,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
             CustomRules = customRules;
             ManagedRules = managedRules;
             EndpointLinks = endpointLinks;
+            ExtendedProperties = extendedProperties;
             ProvisioningState = provisioningState;
             ResourceState = resourceState;
             Etag = etag;
@@ -109,6 +112,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.endpointLinks")]
         public IList<CdnEndpoint> EndpointLinks { get; private set; }
+
+        /// <summary>
+        /// Gets or sets key-Value pair representing additional properties for
+        /// Web Application Firewall policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.extendedProperties")]
+        public IDictionary<string, string> ExtendedProperties { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the WebApplicationFirewallPolicy.

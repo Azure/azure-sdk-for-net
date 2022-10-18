@@ -57,7 +57,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// or CDN profile which is unique within the resource group.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -264,7 +265,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='customDomainName'>
         /// Name of the domain under the profile which is unique globally.
@@ -479,7 +481,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='customDomainName'>
         /// Name of the domain under the profile which is unique globally
@@ -507,18 +510,14 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='customDomainName'>
         /// Name of the domain under the profile which is unique globally
         /// </param>
-        /// <param name='tlsSettings'>
-        /// The configuration specifying how to enable HTTPS for the domain - using
-        /// AzureFrontDoor managed certificate or user's own certificate. If not
-        /// specified, enabling ssl uses AzureFrontDoor managed certificate by default.
-        /// </param>
-        /// <param name='azureDnsZone'>
-        /// Resource reference to the Azure DNS zone
+        /// <param name='customDomainUpdateProperties'>
+        /// Domain properties
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -526,10 +525,10 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<AFDDomain>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string customDomainName, AFDDomainHttpsParameters tlsSettings = default(AFDDomainHttpsParameters), ResourceReference azureDnsZone = default(ResourceReference), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AFDDomain>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string customDomainName, AFDDomainUpdateParameters customDomainUpdateProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<AFDDomain> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, profileName, customDomainName, tlsSettings, azureDnsZone, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<AFDDomain> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, profileName, customDomainName, customDomainUpdateProperties, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -541,7 +540,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='customDomainName'>
         /// Name of the domain under the profile which is unique globally.
@@ -566,7 +566,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='customDomainName'>
         /// Name of the domain under the profile which is unique globally.
@@ -577,10 +578,10 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ValidationToken>> RefreshValidationTokenWithHttpMessagesAsync(string resourceGroupName, string profileName, string customDomainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> RefreshValidationTokenWithHttpMessagesAsync(string resourceGroupName, string profileName, string customDomainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<ValidationToken> _response = await BeginRefreshValidationTokenWithHttpMessagesAsync(resourceGroupName, profileName, customDomainName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginRefreshValidationTokenWithHttpMessagesAsync(resourceGroupName, profileName, customDomainName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -591,7 +592,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='customDomainName'>
         /// Name of the domain under the profile which is unique globally
@@ -860,18 +862,14 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='customDomainName'>
         /// Name of the domain under the profile which is unique globally
         /// </param>
-        /// <param name='tlsSettings'>
-        /// The configuration specifying how to enable HTTPS for the domain - using
-        /// AzureFrontDoor managed certificate or user's own certificate. If not
-        /// specified, enabling ssl uses AzureFrontDoor managed certificate by default.
-        /// </param>
-        /// <param name='azureDnsZone'>
-        /// Resource reference to the Azure DNS zone
+        /// <param name='customDomainUpdateProperties'>
+        /// Domain properties
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -894,7 +892,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AFDDomain>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string customDomainName, AFDDomainHttpsParameters tlsSettings = default(AFDDomainHttpsParameters), ResourceReference azureDnsZone = default(ResourceReference), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AFDDomain>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string customDomainName, AFDDomainUpdateParameters customDomainUpdateProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -923,6 +921,10 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "customDomainName");
             }
+            if (customDomainUpdateProperties == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "customDomainUpdateProperties");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -930,16 +932,6 @@ namespace Microsoft.Azure.Management.Cdn
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (tlsSettings != null)
-            {
-                tlsSettings.Validate();
-            }
-            AFDDomainUpdateParameters customDomainUpdateProperties = new AFDDomainUpdateParameters();
-            if (tlsSettings != null || azureDnsZone != null)
-            {
-                customDomainUpdateProperties.TlsSettings = tlsSettings;
-                customDomainUpdateProperties.AzureDnsZone = azureDnsZone;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1119,7 +1111,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='customDomainName'>
         /// Name of the domain under the profile which is unique globally.
@@ -1313,7 +1306,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium profile
+        /// which is unique within the resource group.
         /// </param>
         /// <param name='customDomainName'>
         /// Name of the domain under the profile which is unique globally.
@@ -1327,9 +1321,6 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="AfdErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -1339,7 +1330,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ValidationToken>> BeginRefreshValidationTokenWithHttpMessagesAsync(string resourceGroupName, string profileName, string customDomainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginRefreshValidationTokenWithHttpMessagesAsync(string resourceGroupName, string profileName, string customDomainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1459,7 +1450,7 @@ namespace Microsoft.Azure.Management.Cdn
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new AfdErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1489,30 +1480,12 @@ namespace Microsoft.Azure.Management.Cdn
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ValidationToken>();
+            var _result = new AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ValidationToken>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
             }
             if (_shouldTrace)
             {

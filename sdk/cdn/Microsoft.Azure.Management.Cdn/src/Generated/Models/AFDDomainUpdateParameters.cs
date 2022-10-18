@@ -32,16 +32,23 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Initializes a new instance of the AFDDomainUpdateParameters class.
         /// </summary>
+        /// <param name="profileName">The name of the profile which holds the
+        /// domain.</param>
         /// <param name="tlsSettings">The configuration specifying how to
         /// enable HTTPS for the domain - using AzureFrontDoor managed
         /// certificate or user's own certificate. If not specified, enabling
         /// ssl uses AzureFrontDoor managed certificate by default.</param>
         /// <param name="azureDnsZone">Resource reference to the Azure DNS
         /// zone</param>
-        public AFDDomainUpdateParameters(AFDDomainHttpsParameters tlsSettings = default(AFDDomainHttpsParameters), ResourceReference azureDnsZone = default(ResourceReference))
+        /// <param name="preValidatedCustomDomainResourceId">Resource reference
+        /// to the Azure resource where custom domain ownership was
+        /// prevalidated</param>
+        public AFDDomainUpdateParameters(string profileName = default(string), AFDDomainHttpsParameters tlsSettings = default(AFDDomainHttpsParameters), ResourceReference azureDnsZone = default(ResourceReference), ResourceReference preValidatedCustomDomainResourceId = default(ResourceReference))
         {
+            ProfileName = profileName;
             TlsSettings = tlsSettings;
             AzureDnsZone = azureDnsZone;
+            PreValidatedCustomDomainResourceId = preValidatedCustomDomainResourceId;
             CustomInit();
         }
 
@@ -49,6 +56,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the name of the profile which holds the domain.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.profileName")]
+        public string ProfileName { get; private set; }
 
         /// <summary>
         /// Gets or sets the configuration specifying how to enable HTTPS for
@@ -64,6 +77,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.azureDnsZone")]
         public ResourceReference AzureDnsZone { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource reference to the Azure resource where custom
+        /// domain ownership was prevalidated
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.preValidatedCustomDomainResourceId")]
+        public ResourceReference PreValidatedCustomDomainResourceId { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         /// <param name="ruleGroupName">Describes the managed rule group within
         /// the rule set to override</param>
-        /// <param name="rules">List of rules that will be disabled. If none
+        /// <param name="rules">List of rules that will be enabled. If none
         /// specified, all rules in the group will be disabled.</param>
         public ManagedRuleGroupOverride(string ruleGroupName, IList<ManagedRuleOverride> rules = default(IList<ManagedRuleOverride>))
         {
@@ -56,8 +56,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public string RuleGroupName { get; set; }
 
         /// <summary>
-        /// Gets or sets list of rules that will be disabled. If none
-        /// specified, all rules in the group will be disabled.
+        /// Gets or sets list of rules that will be enabled. If none specified,
+        /// all rules in the group will be disabled.
         /// </summary>
         [JsonProperty(PropertyName = "rules")]
         public IList<ManagedRuleOverride> Rules { get; set; }

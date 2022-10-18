@@ -23,35 +23,41 @@ namespace Microsoft.Azure.Management.Cdn
     {
             /// <summary>
             /// Check the availability of a resource name. This is needed for resources
-            /// where name is globally unique, such as a CDN endpoint.
+            /// where name is globally unique, such as a afdx endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='name'>
-            /// The resource name to validate.
+            /// <param name='checkEndpointNameAvailabilityInput'>
+            /// Input to check.
             /// </param>
-            public static CheckNameAvailabilityOutput CheckNameAvailability(this ICdnManagementClient operations, string name)
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            public static CheckEndpointNameAvailabilityOutput CheckEndpointNameAvailability(this ICdnManagementClient operations, CheckEndpointNameAvailabilityInput checkEndpointNameAvailabilityInput, string resourceGroupName)
             {
-                return operations.CheckNameAvailabilityAsync(name).GetAwaiter().GetResult();
+                return operations.CheckEndpointNameAvailabilityAsync(checkEndpointNameAvailabilityInput, resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Check the availability of a resource name. This is needed for resources
-            /// where name is globally unique, such as a CDN endpoint.
+            /// where name is globally unique, such as a afdx endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='name'>
-            /// The resource name to validate.
+            /// <param name='checkEndpointNameAvailabilityInput'>
+            /// Input to check.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckNameAvailabilityOutput> CheckNameAvailabilityAsync(this ICdnManagementClient operations, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CheckEndpointNameAvailabilityOutput> CheckEndpointNameAvailabilityAsync(this ICdnManagementClient operations, CheckEndpointNameAvailabilityInput checkEndpointNameAvailabilityInput, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckEndpointNameAvailabilityWithHttpMessagesAsync(checkEndpointNameAvailabilityInput, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -67,9 +73,14 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='name'>
             /// The resource name to validate.
             /// </param>
-            public static CheckNameAvailabilityOutput CheckNameAvailabilityWithSubscription(this ICdnManagementClient operations, string name)
+            /// <param name='type'>
+            /// The type of the resource whose name is to be validated. Possible values
+            /// include: 'Microsoft.Cdn/Profiles/Endpoints',
+            /// 'Microsoft.Cdn/Profiles/AfdEndpoints'
+            /// </param>
+            public static CheckNameAvailabilityOutput CheckNameAvailability(this ICdnManagementClient operations, string name, string type)
             {
-                return operations.CheckNameAvailabilityWithSubscriptionAsync(name).GetAwaiter().GetResult();
+                return operations.CheckNameAvailabilityAsync(name, type).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -82,12 +93,63 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='name'>
             /// The resource name to validate.
             /// </param>
+            /// <param name='type'>
+            /// The type of the resource whose name is to be validated. Possible values
+            /// include: 'Microsoft.Cdn/Profiles/Endpoints',
+            /// 'Microsoft.Cdn/Profiles/AfdEndpoints'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckNameAvailabilityOutput> CheckNameAvailabilityWithSubscriptionAsync(this ICdnManagementClient operations, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CheckNameAvailabilityOutput> CheckNameAvailabilityAsync(this ICdnManagementClient operations, string name, string type, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckNameAvailabilityWithSubscriptionWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(name, type, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Check the availability of a resource name. This is needed for resources
+            /// where name is globally unique, such as a CDN endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// The resource name to validate.
+            /// </param>
+            /// <param name='type'>
+            /// The type of the resource whose name is to be validated. Possible values
+            /// include: 'Microsoft.Cdn/Profiles/Endpoints',
+            /// 'Microsoft.Cdn/Profiles/AfdEndpoints'
+            /// </param>
+            public static CheckNameAvailabilityOutput CheckNameAvailabilityWithSubscription(this ICdnManagementClient operations, string name, string type)
+            {
+                return operations.CheckNameAvailabilityWithSubscriptionAsync(name, type).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Check the availability of a resource name. This is needed for resources
+            /// where name is globally unique, such as a CDN endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// The resource name to validate.
+            /// </param>
+            /// <param name='type'>
+            /// The type of the resource whose name is to be validated. Possible values
+            /// include: 'Microsoft.Cdn/Profiles/Endpoints',
+            /// 'Microsoft.Cdn/Profiles/AfdEndpoints'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CheckNameAvailabilityOutput> CheckNameAvailabilityWithSubscriptionAsync(this ICdnManagementClient operations, string name, string type, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckNameAvailabilityWithSubscriptionWithHttpMessagesAsync(name, type, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

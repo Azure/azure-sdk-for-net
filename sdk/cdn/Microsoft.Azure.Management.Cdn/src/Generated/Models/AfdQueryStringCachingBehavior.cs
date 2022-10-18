@@ -10,57 +10,15 @@
 
 namespace Microsoft.Azure.Management.Cdn.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for AfdQueryStringCachingBehavior.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum AfdQueryStringCachingBehavior
+    public static class AfdQueryStringCachingBehavior
     {
-        [EnumMember(Value = "IgnoreQueryString")]
-        IgnoreQueryString,
-        [EnumMember(Value = "UseQueryString")]
-        UseQueryString,
-        [EnumMember(Value = "NotSet")]
-        NotSet
-    }
-    internal static class AfdQueryStringCachingBehaviorEnumExtension
-    {
-        internal static string ToSerializedValue(this AfdQueryStringCachingBehavior? value)
-        {
-            return value == null ? null : ((AfdQueryStringCachingBehavior)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this AfdQueryStringCachingBehavior value)
-        {
-            switch( value )
-            {
-                case AfdQueryStringCachingBehavior.IgnoreQueryString:
-                    return "IgnoreQueryString";
-                case AfdQueryStringCachingBehavior.UseQueryString:
-                    return "UseQueryString";
-                case AfdQueryStringCachingBehavior.NotSet:
-                    return "NotSet";
-            }
-            return null;
-        }
-
-        internal static AfdQueryStringCachingBehavior? ParseAfdQueryStringCachingBehavior(this string value)
-        {
-            switch( value )
-            {
-                case "IgnoreQueryString":
-                    return AfdQueryStringCachingBehavior.IgnoreQueryString;
-                case "UseQueryString":
-                    return AfdQueryStringCachingBehavior.UseQueryString;
-                case "NotSet":
-                    return AfdQueryStringCachingBehavior.NotSet;
-            }
-            return null;
-        }
+        public const string IgnoreQueryString = "IgnoreQueryString";
+        public const string UseQueryString = "UseQueryString";
+        public const string IgnoreSpecifiedQueryStrings = "IgnoreSpecifiedQueryStrings";
+        public const string IncludeSpecifiedQueryStrings = "IncludeSpecifiedQueryStrings";
     }
 }

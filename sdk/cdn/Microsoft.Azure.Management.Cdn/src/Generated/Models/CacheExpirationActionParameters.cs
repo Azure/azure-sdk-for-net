@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static CacheExpirationActionParameters()
         {
-            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRuleCacheExpirationActionParameters";
+            TypeName = "DeliveryRuleCacheExpirationActionParameters";
             CacheType = "All";
         }
 
@@ -73,8 +73,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "@odata.type")]
-        public static string Odatatype { get; private set; }
+        [JsonProperty(PropertyName = "typeName")]
+        public static string TypeName { get; private set; }
 
         /// <summary>
         /// The level at which the content needs to be cached.

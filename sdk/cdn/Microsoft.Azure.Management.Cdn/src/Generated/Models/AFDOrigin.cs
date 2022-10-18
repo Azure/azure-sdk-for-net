@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="originGroupName">The name of the origin group which
+        /// contains this origin.</param>
         /// <param name="azureOrigin">Resource reference to the Azure origin
         /// resource.</param>
         /// <param name="httpPort">The value of the HTTP port. Must be between
@@ -66,14 +68,17 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// only be disabled if there is a single enabled backend in single
         /// enabled backend pool. Possible values include: 'Enabled',
         /// 'Disabled'</param>
+        /// <param name="enforceCertificateNameCheck">Whether to enable
+        /// certificate name check at origin level</param>
         /// <param name="provisioningState">Provisioning status. Possible
         /// values include: 'Succeeded', 'Failed', 'Updating', 'Deleting',
         /// 'Creating'</param>
         /// <param name="deploymentStatus">Possible values include:
         /// 'NotStarted', 'InProgress', 'Succeeded', 'Failed'</param>
-        public AFDOrigin(string hostName, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), ResourceReference azureOrigin = default(ResourceReference), int? httpPort = default(int?), int? httpsPort = default(int?), string originHostHeader = default(string), int? priority = default(int?), int? weight = default(int?), object sharedPrivateLinkResource = default(object), string enabledState = default(string), string provisioningState = default(string), string deploymentStatus = default(string))
+        public AFDOrigin(string hostName, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string originGroupName = default(string), ResourceReference azureOrigin = default(ResourceReference), int? httpPort = default(int?), int? httpsPort = default(int?), string originHostHeader = default(string), int? priority = default(int?), int? weight = default(int?), SharedPrivateLinkResourceProperties sharedPrivateLinkResource = default(SharedPrivateLinkResourceProperties), string enabledState = default(string), bool? enforceCertificateNameCheck = default(bool?), string provisioningState = default(string), string deploymentStatus = default(string))
             : base(id, name, type, systemData)
         {
+            OriginGroupName = originGroupName;
             AzureOrigin = azureOrigin;
             HostName = hostName;
             HttpPort = httpPort;
@@ -83,6 +88,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
             Weight = weight;
             SharedPrivateLinkResource = sharedPrivateLinkResource;
             EnabledState = enabledState;
+            EnforceCertificateNameCheck = enforceCertificateNameCheck;
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
             CustomInit();
@@ -92,6 +98,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the name of the origin group which contains this origin.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.originGroupName")]
+        public string OriginGroupName { get; private set; }
 
         /// <summary>
         /// Gets or sets resource reference to the Azure origin resource.
@@ -152,7 +164,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// private origin.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sharedPrivateLinkResource")]
-        public object SharedPrivateLinkResource { get; set; }
+        public SharedPrivateLinkResourceProperties SharedPrivateLinkResource { get; set; }
 
         /// <summary>
         /// Gets or sets whether to enable health probes to be made against
@@ -162,6 +174,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enabledState")]
         public string EnabledState { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to enable certificate name check at origin
+        /// level
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enforceCertificateNameCheck")]
+        public bool? EnforceCertificateNameCheck { get; set; }
 
         /// <summary>
         /// Gets provisioning status. Possible values include: 'Succeeded',

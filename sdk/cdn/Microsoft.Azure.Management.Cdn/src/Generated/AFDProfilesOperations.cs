@@ -57,7 +57,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -264,10 +265,11 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN
+        /// profile which is unique within the resource group.
         /// </param>
         /// <param name='hostName'>
-        /// The host name of the custom domain. Must be a domain name.
+        /// The host name to validate.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -290,7 +292,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ValidateCustomDomainOutput>> CheckHostNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string profileName, string hostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CheckNameAvailabilityOutput>> CheckHostNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string profileName, string hostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -327,7 +329,7 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "hostName");
             }
-            ValidateCustomDomainInput checkHostNameAvailabilityInput = new ValidateCustomDomainInput();
+            CheckHostNameAvailabilityInput checkHostNameAvailabilityInput = new CheckHostNameAvailabilityInput();
             if (hostName != null)
             {
                 checkHostNameAvailabilityInput.HostName = hostName;
@@ -450,7 +452,7 @@ namespace Microsoft.Azure.Management.Cdn
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ValidateCustomDomainOutput>();
+            var _result = new AzureOperationResponse<CheckNameAvailabilityOutput>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -463,7 +465,7 @@ namespace Microsoft.Azure.Management.Cdn
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ValidateCustomDomainOutput>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<CheckNameAvailabilityOutput>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

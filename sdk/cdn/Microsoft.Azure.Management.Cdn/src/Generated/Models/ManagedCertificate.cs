@@ -28,11 +28,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Initializes a new instance of the ManagedCertificate class.
         /// </summary>
+        /// <param name="type">Possible values include: 'UrlSigningKey',
+        /// 'CustomerCertificate', 'ManagedCertificate',
+        /// 'AzureFirstPartyManagedCertificate'</param>
         /// <param name="subject">Subject name in the certificate.</param>
         /// <param name="expirationDate">Certificate expiration date.</param>
-        /// <param name="thumbprint">Certificate thumbprint.</param>
-        public ManagedCertificate(string subject = default(string), string expirationDate = default(string), string thumbprint = default(string))
-            : base(subject, expirationDate, thumbprint)
+        public ManagedCertificate(string type = default(string), string subject = default(string), string expirationDate = default(string))
+            : base(type, subject, expirationDate)
         {
             CustomInit();
         }
