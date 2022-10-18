@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Tests
     public partial class EventProcessorTests
     {
         /// <summary>An empty event batch to use for mocking.</summary>
-        private readonly IReadOnlyList<EventData> EmptyBatch = new List<EventData>(0);
+        private static readonly IReadOnlyList<EventData> EmptyBatch = new List<EventData>(0);
 
         /// <summary>
         ///   Retrieves the load balancer for an event processor instance, using its private accessor.

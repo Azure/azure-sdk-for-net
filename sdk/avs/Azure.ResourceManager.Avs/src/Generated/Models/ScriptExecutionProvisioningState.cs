@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.Avs.Models
         private const string CancellingValue = "Cancelling";
         private const string CancelledValue = "Cancelled";
         private const string DeletingValue = "Deleting";
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Pending. </summary>
         public static ScriptExecutionProvisioningState Pending { get; } = new ScriptExecutionProvisioningState(PendingValue);
@@ -44,6 +45,8 @@ namespace Azure.ResourceManager.Avs.Models
         public static ScriptExecutionProvisioningState Cancelled { get; } = new ScriptExecutionProvisioningState(CancelledValue);
         /// <summary> Deleting. </summary>
         public static ScriptExecutionProvisioningState Deleting { get; } = new ScriptExecutionProvisioningState(DeletingValue);
+        /// <summary> Canceled. </summary>
+        public static ScriptExecutionProvisioningState Canceled { get; } = new ScriptExecutionProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="ScriptExecutionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ScriptExecutionProvisioningState left, ScriptExecutionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptExecutionProvisioningState"/> values are not the same. </summary>

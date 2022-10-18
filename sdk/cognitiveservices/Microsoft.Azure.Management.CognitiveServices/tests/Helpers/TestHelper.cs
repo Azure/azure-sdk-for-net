@@ -16,7 +16,7 @@ namespace CognitiveServices.Tests.Helpers
     public static class TestHelper
     {
         // These are used to create default accounts
-        public const string DefaultLocation = "CENTRALUSEUAP";
+        public const string DefaultLocation = "CENTRALUS";
         public const string DefaultSkuName = "S0";
         public const string DefaultKind = "Face";
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>

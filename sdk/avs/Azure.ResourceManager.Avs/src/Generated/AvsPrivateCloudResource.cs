@@ -237,6 +237,39 @@ namespace Azure.ResourceManager.Avs
             return GetGlobalReachConnections().Get(globalReachConnectionName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of WorkloadNetworkResources in the AvsPrivateCloud. </summary>
+        /// <returns> An object representing collection of WorkloadNetworkResources and their operations over a WorkloadNetworkResource. </returns>
+        public virtual WorkloadNetworkCollection GetWorkloadNetworks()
+        {
+            return GetCachedClient(Client => new WorkloadNetworkCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get a private cloud workload network.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/{workloadNetworkName}
+        /// Operation Id: WorkloadNetworks_Get
+        /// </summary>
+        /// <param name="workloadNetworkName"> Name for the workload network in the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WorkloadNetworkResource>> GetWorkloadNetworkAsync(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
+        {
+            return await GetWorkloadNetworks().GetAsync(workloadNetworkName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a private cloud workload network.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/{workloadNetworkName}
+        /// Operation Id: WorkloadNetworks_Get
+        /// </summary>
+        /// <param name="workloadNetworkName"> Name for the workload network in the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<WorkloadNetworkResource> GetWorkloadNetwork(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
+        {
+            return GetWorkloadNetworks().Get(workloadNetworkName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of WorkloadNetworkSegmentResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of WorkloadNetworkSegmentResources and their operations over a WorkloadNetworkSegmentResource. </returns>
         public virtual WorkloadNetworkSegmentCollection GetWorkloadNetworkSegments()

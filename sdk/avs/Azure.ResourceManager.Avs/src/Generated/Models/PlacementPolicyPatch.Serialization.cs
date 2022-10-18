@@ -42,6 +42,16 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(AffinityStrength))
+            {
+                writer.WritePropertyName("affinityStrength");
+                writer.WriteStringValue(AffinityStrength.Value.ToString());
+            }
+            if (Optional.IsDefined(AzureHybridBenefitType))
+            {
+                writer.WritePropertyName("azureHybridBenefitType");
+                writer.WriteStringValue(AzureHybridBenefitType.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

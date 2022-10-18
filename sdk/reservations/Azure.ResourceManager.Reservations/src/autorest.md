@@ -8,7 +8,6 @@ csharp: true
 library-name: Reservations
 namespace: Azure.ResourceManager.Reservations
 require: https://github.com/Azure/azure-rest-api-specs/blob/04efa7dde730c9eaa35bdab1681117d639522edb/specification/reservations/resource-manager/readme.md
-tag: package-2022-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
