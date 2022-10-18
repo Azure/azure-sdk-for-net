@@ -180,7 +180,7 @@
                         "$ref": "./examples/DeleteManifest.json"
                     }
                 },
-                "operationId": "RegistryArtifact_Delete",
+                "operationId": "ContainerRegistryBlob_DeleteManifest",
                 "parameters": [
                     {
                         "$ref": "#/parameters/ImageName"

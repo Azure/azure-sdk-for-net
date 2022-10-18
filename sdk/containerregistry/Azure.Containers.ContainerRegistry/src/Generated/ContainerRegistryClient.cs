@@ -209,19 +209,19 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        private RegistryArtifact _cachedRegistryArtifact;
         private ContainerRepository _cachedContainerRepository;
-
-        /// <summary> Initializes a new instance of RegistryArtifact. </summary>
-        public virtual RegistryArtifact GetRegistryArtifactClient()
-        {
-            return Volatile.Read(ref _cachedRegistryArtifact) ?? Interlocked.CompareExchange(ref _cachedRegistryArtifact, new RegistryArtifact(ClientDiagnostics, _pipeline, _url, _apiVersion), null) ?? _cachedRegistryArtifact;
-        }
+        private RegistryArtifact _cachedRegistryArtifact;
 
         /// <summary> Initializes a new instance of ContainerRepository. </summary>
         public virtual ContainerRepository GetContainerRepositoryClient()
         {
             return Volatile.Read(ref _cachedContainerRepository) ?? Interlocked.CompareExchange(ref _cachedContainerRepository, new ContainerRepository(ClientDiagnostics, _pipeline, _url, _apiVersion), null) ?? _cachedContainerRepository;
+        }
+
+        /// <summary> Initializes a new instance of RegistryArtifact. </summary>
+        public virtual RegistryArtifact GetRegistryArtifactClient()
+        {
+            return Volatile.Read(ref _cachedRegistryArtifact) ?? Interlocked.CompareExchange(ref _cachedRegistryArtifact, new RegistryArtifact(ClientDiagnostics, _pipeline, _url, _apiVersion), null) ?? _cachedRegistryArtifact;
         }
 
         internal HttpMessage CreateCheckDockerV2SupportRequest(RequestContext context)

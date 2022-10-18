@@ -23,9 +23,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         //private readonly HttpPipeline _pipeline;
         private readonly HttpPipeline _acrAuthPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
-        //private readonly ContainerRegistryRestClient _restClient;
         //private readonly IContainerRegistryAuthenticationClient _acrAuthClient;
-        //private readonly ContainerRegistryBlobRestClient _blobRestClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryBlobClient"/> for managing container images and artifacts,
@@ -580,20 +578,20 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual Response DeleteManifest(string digest, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
-            //Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(digest, nameof(digest));
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteManifest)}");
-            //scope.Start();
-            //try
-            //{
-            //    return _restClient.DeleteManifest(_repositoryName, digest, cancellationToken);
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteManifest)}");
+            scope.Start();
+            try
+            {
+                RequestContext context = FromCancellationToken(cancellationToken);
+                return DeleteManifest(_repositoryName, digest, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -602,24 +600,22 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="digest">The digest of the manifest to delete.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public virtual async Task<Response> DeleteManifestAsync(string digest, CancellationToken cancellationToken = default)
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            throw new NotImplementedException();
-            //Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(digest, nameof(digest));
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteManifest)}");
-            //scope.Start();
-            //try
-            //{
-            //    return await _restClient.DeleteManifestAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteManifest)}");
+            scope.Start();
+            try
+            {
+                RequestContext context = FromCancellationToken(cancellationToken);
+                return await DeleteManifestAsync(_repositoryName, digest, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         private static RequestContext DefaultRequestContext = new RequestContext();

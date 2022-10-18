@@ -43,78 +43,6 @@ namespace Azure.Containers.ContainerRegistry
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Delete the manifest identified by `name` and `reference`. Note that a manifest can _only_ be deleted by `digest`. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
-        /// <param name="reference"> Digest of a BLOB. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteAsync with required parameters.
-        /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
-        /// 
-        /// Response response = await client.DeleteAsync("<name>", "<reference>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
-        public virtual async Task<Response> DeleteAsync(string name, string reference, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(reference, nameof(reference));
-
-            using var scope = ClientDiagnostics.CreateScope("RegistryArtifact.Delete");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteRequest(name, reference, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete the manifest identified by `name` and `reference`. Note that a manifest can _only_ be deleted by `digest`. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
-        /// <param name="reference"> Digest of a BLOB. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call Delete with required parameters.
-        /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
-        /// 
-        /// Response response = client.Delete("<name>", "<reference>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
-        public virtual Response Delete(string name, string reference, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(reference, nameof(reference));
-
-            using var scope = ClientDiagnostics.CreateScope("RegistryArtifact.Delete");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteRequest(name, reference, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Get tag attributes by tag. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Tag name. </param>
@@ -1099,22 +1027,6 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string name, string reference, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202404);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendPath("/v2/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/manifests/", false);
-            uri.AppendPath(reference, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         internal HttpMessage CreateGetAllTagPropertiesRequest(string name, string last, int? n, string orderby, string digest, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1267,9 +1179,9 @@ namespace Azure.Containers.ContainerRegistry
             return message;
         }
 
-        private static ResponseClassifier _responseClassifier202404;
-        private static ResponseClassifier ResponseClassifier202404 => _responseClassifier202404 ??= new StatusCodeClassifier(stackalloc ushort[] { 202, 404 });
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier202404;
+        private static ResponseClassifier ResponseClassifier202404 => _responseClassifier202404 ??= new StatusCodeClassifier(stackalloc ushort[] { 202, 404 });
     }
 }
