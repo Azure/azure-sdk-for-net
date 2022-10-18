@@ -51,17 +51,17 @@ namespace Microsoft.Azure.Management.ManagedServices
         public ManagedServicesClient Client { get; private set; }
 
         /// <summary>
-        /// Gets the details of specified registration assignment.
+        /// Gets the details of the specified registration assignment.
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the resource.
+        /// The scope of the resource.
         /// </param>
         /// <param name='registrationAssignmentId'>
-        /// Guid of the registration assignment.
+        /// The GUID of the registration assignment.
         /// </param>
         /// <param name='expandRegistrationDefinition'>
-        /// Tells whether to return registration definition details also along with
-        /// registration assignment details.
+        /// The flag indicating whether to return the registration definition details
+        /// along with the registration assignment details.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -249,10 +249,10 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Deletes the specified registration assignment.
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the resource.
+        /// The scope of the resource.
         /// </param>
         /// <param name='registrationAssignmentId'>
-        /// Guid of the registration assignment.
+        /// The GUID of the registration assignment.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -271,10 +271,10 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Creates or updates a registration assignment.
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the resource.
+        /// The scope of the resource.
         /// </param>
         /// <param name='registrationAssignmentId'>
-        /// Guid of the registration assignment.
+        /// The GUID of the registration assignment.
         /// </param>
         /// <param name='requestBody'>
         /// The parameters required to create new registration assignment.
@@ -296,11 +296,14 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Gets a list of the registration assignments.
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the resource.
+        /// The scope of the resource.
         /// </param>
         /// <param name='expandRegistrationDefinition'>
-        /// Tells whether to return registration definition details also along with
-        /// registration assignment details.
+        /// The flag indicating whether to return the registration definition details
+        /// along with the registration assignment details.
+        /// </param>
+        /// <param name='filter'>
+        /// The filter query parameter to filter managed services resources by.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -323,7 +326,7 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<RegistrationAssignment>>> ListWithHttpMessagesAsync(string scope, bool? expandRegistrationDefinition = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<RegistrationAssignment>>> ListWithHttpMessagesAsync(string scope, bool? expandRegistrationDefinition = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (scope == null)
             {
@@ -342,6 +345,7 @@ namespace Microsoft.Azure.Management.ManagedServices
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("scope", scope);
                 tracingParameters.Add("expandRegistrationDefinition", expandRegistrationDefinition);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -357,6 +361,10 @@ namespace Microsoft.Azure.Management.ManagedServices
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -482,10 +490,10 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Deletes the specified registration assignment.
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the resource.
+        /// The scope of the resource.
         /// </param>
         /// <param name='registrationAssignmentId'>
-        /// Guid of the registration assignment.
+        /// The GUID of the registration assignment.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -647,10 +655,10 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Creates or updates a registration assignment.
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the resource.
+        /// The scope of the resource.
         /// </param>
         /// <param name='registrationAssignmentId'>
-        /// Guid of the registration assignment.
+        /// The GUID of the registration assignment.
         /// </param>
         /// <param name='requestBody'>
         /// The parameters required to create new registration assignment.

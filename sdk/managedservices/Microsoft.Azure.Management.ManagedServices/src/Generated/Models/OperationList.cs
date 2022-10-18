@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
     using System.Linq;
 
     /// <summary>
-    /// List of the operations.
+    /// The list of the operations.
     /// </summary>
     public partial class OperationList
     {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         /// <summary>
         /// Initializes a new instance of the OperationList class.
         /// </summary>
-        /// <param name="value">List of Microsoft.ManagedServices
+        /// <param name="value">The list of Microsoft.ManagedServices
         /// operations.</param>
         public OperationList(IList<Operation> value = default(IList<Operation>))
         {
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets list of Microsoft.ManagedServices operations.
+        /// Gets the list of Microsoft.ManagedServices operations.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<Operation> Value { get; private set; }

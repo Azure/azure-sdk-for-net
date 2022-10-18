@@ -12,27 +12,26 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The Azure Active Directory principal identifier and Azure built-in role
-    /// that describes the access the principal will receive on the delegated
-    /// resource in the managed tenant.
+    /// The Azure Active Directory principal identifier, Azure built-in role,
+    /// and just-in-time access policy that describes the just-in-time access
+    /// the principal will receive on the delegated resource in the managed
+    /// tenant.
     /// </summary>
-    public partial class Authorization
+    public partial class EligibleAuthorization
     {
         /// <summary>
-        /// Initializes a new instance of the Authorization class.
+        /// Initializes a new instance of the EligibleAuthorization class.
         /// </summary>
-        public Authorization()
+        public EligibleAuthorization()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Authorization class.
+        /// Initializes a new instance of the EligibleAuthorization class.
         /// </summary>
         /// <param name="principalId">The identifier of the Azure Active
         /// Directory principal.</param>
@@ -41,18 +40,14 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         /// principal will have on the projected scope.</param>
         /// <param name="principalIdDisplayName">The display name of the Azure
         /// Active Directory principal.</param>
-        /// <param name="delegatedRoleDefinitionIds">The
-        /// delegatedRoleDefinitionIds field is required when the
-        /// roleDefinitionId refers to the User Access Administrator Role. It
-        /// is the list of role definition ids which define all the permissions
-        /// that the user in the authorization can assign to other
-        /// principals.</param>
-        public Authorization(string principalId, string roleDefinitionId, string principalIdDisplayName = default(string), IList<System.Guid?> delegatedRoleDefinitionIds = default(IList<System.Guid?>))
+        /// <param name="justInTimeAccessPolicy">The just-in-time access policy
+        /// setting.</param>
+        public EligibleAuthorization(string principalId, string roleDefinitionId, string principalIdDisplayName = default(string), JustInTimeAccessPolicy justInTimeAccessPolicy = default(JustInTimeAccessPolicy))
         {
             PrincipalId = principalId;
             PrincipalIdDisplayName = principalIdDisplayName;
             RoleDefinitionId = roleDefinitionId;
-            DelegatedRoleDefinitionIds = delegatedRoleDefinitionIds;
+            JustInTimeAccessPolicy = justInTimeAccessPolicy;
             CustomInit();
         }
 
@@ -84,14 +79,10 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         public string RoleDefinitionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the delegatedRoleDefinitionIds field is required when
-        /// the roleDefinitionId refers to the User Access Administrator Role.
-        /// It is the list of role definition ids which define all the
-        /// permissions that the user in the authorization can assign to other
-        /// principals.
+        /// Gets or sets the just-in-time access policy setting.
         /// </summary>
-        [JsonProperty(PropertyName = "delegatedRoleDefinitionIds")]
-        public IList<System.Guid?> DelegatedRoleDefinitionIds { get; set; }
+        [JsonProperty(PropertyName = "justInTimeAccessPolicy")]
+        public JustInTimeAccessPolicy JustInTimeAccessPolicy { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -108,6 +99,10 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
             if (RoleDefinitionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "RoleDefinitionId");
+            }
+            if (JustInTimeAccessPolicy != null)
+            {
+                JustInTimeAccessPolicy.Validate();
             }
         }
     }

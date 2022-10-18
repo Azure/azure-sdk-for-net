@@ -19,9 +19,12 @@ namespace Microsoft.Azure.Management.ManagedServices
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("ManagedServices", "Operations", "2019-06-01"),
-                new Tuple<string, string, string>("ManagedServices", "RegistrationAssignments", "2019-06-01"),
-                new Tuple<string, string, string>("ManagedServices", "RegistrationDefinitions", "2019-06-01"),
+                new Tuple<string, string, string>("ManagedServices", "MarketplaceRegistrationDefinitions", "2022-10-01"),
+                new Tuple<string, string, string>("ManagedServices", "MarketplaceRegistrationDefinitionsWithoutScope", "2022-10-01"),
+                new Tuple<string, string, string>("ManagedServices", "Operations", "2022-10-01"),
+                new Tuple<string, string, string>("ManagedServices", "OperationsWithScope", "2022-10-01"),
+                new Tuple<string, string, string>("ManagedServices", "RegistrationAssignments", "2022-10-01"),
+                new Tuple<string, string, string>("ManagedServices", "RegistrationDefinitions", "2022-10-01"),
               }.AsEnumerable();
           }
       }

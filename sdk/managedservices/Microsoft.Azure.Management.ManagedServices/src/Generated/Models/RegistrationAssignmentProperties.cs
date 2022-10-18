@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties of a registration assignment.
+    /// The properties of the registration assignment.
     /// </summary>
     public partial class RegistrationAssignmentProperties
     {
@@ -32,14 +32,15 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         /// Initializes a new instance of the RegistrationAssignmentProperties
         /// class.
         /// </summary>
-        /// <param name="registrationDefinitionId">Fully qualified path of the
-        /// registration definition.</param>
-        /// <param name="provisioningState">Current state of the registration
-        /// assignment. Possible values include: 'NotSpecified', 'Accepted',
-        /// 'Running', 'Ready', 'Creating', 'Created', 'Deleting', 'Deleted',
-        /// 'Canceled', 'Failed', 'Succeeded', 'Updating'</param>
-        /// <param name="registrationDefinition">Registration definition inside
-        /// registration assignment.</param>
+        /// <param name="registrationDefinitionId">The fully qualified path of
+        /// the registration definition.</param>
+        /// <param name="provisioningState">The current provisioning state of
+        /// the registration assignment. Possible values include:
+        /// 'NotSpecified', 'Accepted', 'Running', 'Ready', 'Creating',
+        /// 'Created', 'Deleting', 'Deleted', 'Canceled', 'Failed',
+        /// 'Succeeded', 'Updating'</param>
+        /// <param name="registrationDefinition">The registration definition
+        /// associated with the registration assignment.</param>
         public RegistrationAssignmentProperties(string registrationDefinitionId, string provisioningState = default(string), RegistrationAssignmentPropertiesRegistrationDefinition registrationDefinition = default(RegistrationAssignmentPropertiesRegistrationDefinition))
         {
             RegistrationDefinitionId = registrationDefinitionId;
@@ -54,22 +55,24 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets fully qualified path of the registration definition.
+        /// Gets or sets the fully qualified path of the registration
+        /// definition.
         /// </summary>
         [JsonProperty(PropertyName = "registrationDefinitionId")]
         public string RegistrationDefinitionId { get; set; }
 
         /// <summary>
-        /// Gets current state of the registration assignment. Possible values
-        /// include: 'NotSpecified', 'Accepted', 'Running', 'Ready',
-        /// 'Creating', 'Created', 'Deleting', 'Deleted', 'Canceled', 'Failed',
-        /// 'Succeeded', 'Updating'
+        /// Gets the current provisioning state of the registration assignment.
+        /// Possible values include: 'NotSpecified', 'Accepted', 'Running',
+        /// 'Ready', 'Creating', 'Created', 'Deleting', 'Deleted', 'Canceled',
+        /// 'Failed', 'Succeeded', 'Updating'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets registration definition inside registration assignment.
+        /// Gets the registration definition associated with the registration
+        /// assignment.
         /// </summary>
         [JsonProperty(PropertyName = "registrationDefinition")]
         public RegistrationAssignmentPropertiesRegistrationDefinition RegistrationDefinition { get; private set; }

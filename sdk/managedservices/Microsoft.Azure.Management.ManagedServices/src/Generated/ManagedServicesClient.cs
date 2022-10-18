@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.ManagedServices
     using System.Net.Http;
 
     /// <summary>
-    /// Specification for ManagedServices.
+    /// The specification for ManagedServices.
     /// </summary>
     public partial class ManagedServicesClient : ServiceClient<ManagedServicesClient>, IManagedServicesClient, IAzureClient
     {
@@ -80,9 +80,24 @@ namespace Microsoft.Azure.Management.ManagedServices
         public virtual IRegistrationAssignmentsOperations RegistrationAssignments { get; private set; }
 
         /// <summary>
+        /// Gets the IMarketplaceRegistrationDefinitionsOperations.
+        /// </summary>
+        public virtual IMarketplaceRegistrationDefinitionsOperations MarketplaceRegistrationDefinitions { get; private set; }
+
+        /// <summary>
+        /// Gets the IMarketplaceRegistrationDefinitionsWithoutScopeOperations.
+        /// </summary>
+        public virtual IMarketplaceRegistrationDefinitionsWithoutScopeOperations MarketplaceRegistrationDefinitionsWithoutScope { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperationsWithScope.
+        /// </summary>
+        public virtual IOperationsWithScope OperationsWithScope { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ManagedServicesClient class.
@@ -327,9 +342,12 @@ namespace Microsoft.Azure.Management.ManagedServices
         {
             RegistrationDefinitions = new RegistrationDefinitionsOperations(this);
             RegistrationAssignments = new RegistrationAssignmentsOperations(this);
+            MarketplaceRegistrationDefinitions = new MarketplaceRegistrationDefinitionsOperations(this);
+            MarketplaceRegistrationDefinitionsWithoutScope = new MarketplaceRegistrationDefinitionsWithoutScopeOperations(this);
             Operations = new Operations(this);
+            OperationsWithScope = new OperationsWithScope(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-06-01";
+            ApiVersion = "2022-10-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -15,38 +15,38 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// The registration assignment.
-    /// </summary>
-    public partial class RegistrationAssignment : IResource
+    public partial class MarketplaceRegistrationDefinition : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the RegistrationAssignment class.
+        /// Initializes a new instance of the MarketplaceRegistrationDefinition
+        /// class.
         /// </summary>
-        public RegistrationAssignment()
+        public MarketplaceRegistrationDefinition()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RegistrationAssignment class.
+        /// Initializes a new instance of the MarketplaceRegistrationDefinition
+        /// class.
         /// </summary>
-        /// <param name="properties">The properties of a registration
-        /// assignment.</param>
-        /// <param name="id">The fully qualified path of the registration
-        /// assignment.</param>
+        /// <param name="properties">The properties of the marketplace
+        /// registration definition.</param>
+        /// <param name="plan">The details for the Managed Services offer’s
+        /// plan in Azure Marketplace.</param>
+        /// <param name="id">The fully qualified path of the marketplace
+        /// registration definition.</param>
         /// <param name="type">The type of the Azure resource
-        /// (Microsoft.ManagedServices/registrationAssignments).</param>
-        /// <param name="name">The name of the registration assignment.</param>
-        /// <param name="systemData">The metadata for the registration
-        /// assignment resource.</param>
-        public RegistrationAssignment(RegistrationAssignmentProperties properties = default(RegistrationAssignmentProperties), string id = default(string), string type = default(string), string name = default(string), SystemData systemData = default(SystemData))
+        /// (Microsoft.ManagedServices/marketplaceRegistrationDefinitions).</param>
+        /// <param name="name">The name of the marketplace registration
+        /// definition.</param>
+        public MarketplaceRegistrationDefinition(MarketplaceRegistrationDefinitionProperties properties = default(MarketplaceRegistrationDefinitionProperties), Plan plan = default(Plan), string id = default(string), string type = default(string), string name = default(string))
         {
             Properties = properties;
+            Plan = plan;
             Id = id;
             Type = type;
             Name = name;
-            SystemData = systemData;
             CustomInit();
         }
 
@@ -56,35 +56,38 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the properties of a registration assignment.
+        /// Gets or sets the properties of the marketplace registration
+        /// definition.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public RegistrationAssignmentProperties Properties { get; set; }
+        public MarketplaceRegistrationDefinitionProperties Properties { get; set; }
 
         /// <summary>
-        /// Gets the fully qualified path of the registration assignment.
+        /// Gets or sets the details for the Managed Services offer’s plan in
+        /// Azure Marketplace.
+        /// </summary>
+        [JsonProperty(PropertyName = "plan")]
+        public Plan Plan { get; set; }
+
+        /// <summary>
+        /// Gets the fully qualified path of the marketplace registration
+        /// definition.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
         /// Gets the type of the Azure resource
-        /// (Microsoft.ManagedServices/registrationAssignments).
+        /// (Microsoft.ManagedServices/marketplaceRegistrationDefinitions).
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets the name of the registration assignment.
+        /// Gets the name of the marketplace registration definition.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets the metadata for the registration assignment resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -97,6 +100,10 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
             if (Properties != null)
             {
                 Properties.Validate();
+            }
+            if (Plan != null)
+            {
+                Plan.Validate();
             }
         }
     }

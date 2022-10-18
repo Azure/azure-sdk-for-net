@@ -29,14 +29,11 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         /// <summary>
         /// Initializes a new instance of the OperationDisplay class.
         /// </summary>
-        /// <param name="provider">Service provider:
-        /// Microsoft.ManagedServices</param>
-        /// <param name="resource">Resource on which the operation is
-        /// performed: Registration definition, registration assignment
-        /// etc.</param>
-        /// <param name="operation">Operation type: Read, write, delete,
-        /// etc.</param>
-        /// <param name="description">Description of the operation.</param>
+        /// <param name="provider">The service provider.</param>
+        /// <param name="resource">The resource on which the operation is
+        /// performed.</param>
+        /// <param name="operation">The operation type.</param>
+        /// <param name="description">The description of the operation.</param>
         public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
         {
             Provider = provider;
@@ -52,26 +49,25 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets service provider: Microsoft.ManagedServices
+        /// Gets or sets the service provider.
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
         public string Provider { get; set; }
 
         /// <summary>
-        /// Gets or sets resource on which the operation is performed:
-        /// Registration definition, registration assignment etc.
+        /// Gets or sets the resource on which the operation is performed.
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
         public string Resource { get; set; }
 
         /// <summary>
-        /// Gets or sets operation type: Read, write, delete, etc.
+        /// Gets or sets the operation type.
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
         public string Operation { get; set; }
 
         /// <summary>
-        /// Gets or sets description of the operation.
+        /// Gets or sets the description of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }

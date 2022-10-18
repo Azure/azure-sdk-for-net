@@ -28,10 +28,10 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the resource.
+            /// The scope of the resource.
             /// </param>
             /// <param name='registrationDefinitionId'>
-            /// Guid of the registration definition.
+            /// The GUID of the registration definition.
             /// </param>
             public static RegistrationDefinition Get(this IRegistrationDefinitionsOperations operations, string scope, string registrationDefinitionId)
             {
@@ -45,10 +45,10 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the resource.
+            /// The scope of the resource.
             /// </param>
             /// <param name='registrationDefinitionId'>
-            /// Guid of the registration definition.
+            /// The GUID of the registration definition.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -68,10 +68,10 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='registrationDefinitionId'>
-            /// Guid of the registration definition.
+            /// The GUID of the registration definition.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the resource.
+            /// The scope of the resource.
             /// </param>
             public static void Delete(this IRegistrationDefinitionsOperations operations, string registrationDefinitionId, string scope)
             {
@@ -85,10 +85,10 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='registrationDefinitionId'>
-            /// Guid of the registration definition.
+            /// The GUID of the registration definition.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the resource.
+            /// The scope of the resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -105,13 +105,13 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='registrationDefinitionId'>
-            /// Guid of the registration definition.
+            /// The GUID of the registration definition.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the resource.
+            /// The scope of the resource.
             /// </param>
             /// <param name='requestBody'>
-            /// The parameters required to create new registration definition.
+            /// The parameters required to create a new registration definition.
             /// </param>
             public static RegistrationDefinition CreateOrUpdate(this IRegistrationDefinitionsOperations operations, string registrationDefinitionId, string scope, RegistrationDefinition requestBody)
             {
@@ -125,13 +125,13 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='registrationDefinitionId'>
-            /// Guid of the registration definition.
+            /// The GUID of the registration definition.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the resource.
+            /// The scope of the resource.
             /// </param>
             /// <param name='requestBody'>
-            /// The parameters required to create new registration definition.
+            /// The parameters required to create a new registration definition.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -151,11 +151,14 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the resource.
+            /// The scope of the resource.
             /// </param>
-            public static IPage<RegistrationDefinition> List(this IRegistrationDefinitionsOperations operations, string scope)
+            /// <param name='filter'>
+            /// The filter query parameter to filter managed services resources by.
+            /// </param>
+            public static IPage<RegistrationDefinition> List(this IRegistrationDefinitionsOperations operations, string scope, string filter = default(string))
             {
-                return operations.ListAsync(scope).GetAwaiter().GetResult();
+                return operations.ListAsync(scope, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -165,14 +168,17 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the resource.
+            /// The scope of the resource.
+            /// </param>
+            /// <param name='filter'>
+            /// The filter query parameter to filter managed services resources by.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RegistrationDefinition>> ListAsync(this IRegistrationDefinitionsOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RegistrationDefinition>> ListAsync(this IRegistrationDefinitionsOperations operations, string scope, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(scope, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(scope, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -185,13 +191,13 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='registrationDefinitionId'>
-            /// Guid of the registration definition.
+            /// The GUID of the registration definition.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the resource.
+            /// The scope of the resource.
             /// </param>
             /// <param name='requestBody'>
-            /// The parameters required to create new registration definition.
+            /// The parameters required to create a new registration definition.
             /// </param>
             public static RegistrationDefinition BeginCreateOrUpdate(this IRegistrationDefinitionsOperations operations, string registrationDefinitionId, string scope, RegistrationDefinition requestBody)
             {
@@ -205,13 +211,13 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='registrationDefinitionId'>
-            /// Guid of the registration definition.
+            /// The GUID of the registration definition.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the resource.
+            /// The scope of the resource.
             /// </param>
             /// <param name='requestBody'>
-            /// The parameters required to create new registration definition.
+            /// The parameters required to create a new registration definition.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

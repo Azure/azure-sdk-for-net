@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Plan details for the managed services.
+    /// The details for the Managed Services offer’s plan in Azure Marketplace.
     /// </summary>
     public partial class Plan
     {
@@ -30,10 +30,10 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         /// <summary>
         /// Initializes a new instance of the Plan class.
         /// </summary>
-        /// <param name="name">The plan name.</param>
-        /// <param name="publisher">The publisher ID.</param>
-        /// <param name="product">The product code.</param>
-        /// <param name="version">The plan's version.</param>
+        /// <param name="name">Azure Marketplace plan name.</param>
+        /// <param name="publisher">Azure Marketplace publisher ID.</param>
+        /// <param name="product">Azure Marketplace product code.</param>
+        /// <param name="version">Azure Marketplace plan's version.</param>
         public Plan(string name, string publisher, string product, string version)
         {
             Name = name;
@@ -49,25 +49,25 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the plan name.
+        /// Gets or sets azure Marketplace plan name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the publisher ID.
+        /// Gets or sets azure Marketplace publisher ID.
         /// </summary>
         [JsonProperty(PropertyName = "publisher")]
         public string Publisher { get; set; }
 
         /// <summary>
-        /// Gets or sets the product code.
+        /// Gets or sets azure Marketplace product code.
         /// </summary>
         [JsonProperty(PropertyName = "product")]
         public string Product { get; set; }
 
         /// <summary>
-        /// Gets or sets the plan's version.
+        /// Gets or sets azure Marketplace plan's version.
         /// </summary>
         [JsonProperty(PropertyName = "version")]
         public string Version { get; set; }
