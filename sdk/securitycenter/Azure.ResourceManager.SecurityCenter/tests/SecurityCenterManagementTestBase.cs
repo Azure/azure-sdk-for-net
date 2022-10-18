@@ -16,6 +16,9 @@ using Azure.ResourceManager.Logic.Models;
 using Azure.ResourceManager.Logic;
 using System;
 using System.IO;
+using Azure.ResourceManager.IotHub.Models;
+using Azure.ResourceManager.IotHub;
+using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Tests
 {
@@ -192,6 +195,39 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             };
             var workflow = await resourceGroup.GetLogicWorkflows().CreateOrUpdateAsync(WaitUntil.Completed, logicWorkflowName, logicWorkflowData);
             return workflow.Value;
+        }
+
+        protected async Task<IotHubDescriptionResource> CreateIotHub(ResourceGroupResource resourceGroup, string iotHubName)
+        {
+            var sku = new IotHubSkuInfo("S1")
+            {
+                Name = "S1",
+                Capacity = 1
+            };
+            IotHubDescriptionData data = new IotHubDescriptionData(resourceGroup.Data.Location, sku) { };
+            var iotHub = await resourceGroup.GetIotHubDescriptions().CreateOrUpdateAsync(WaitUntil.Completed, iotHubName, data);
+            return iotHub.Value;
+        }
+
+        protected async Task<IotSecuritySolutionModelResource> CreateIotSecuritySolutionModel(ResourceGroupResource resourceGroup, string iotHubId, string solutionModelName)
+        {
+            IotSecuritySolutionModelData data = new IotSecuritySolutionModelData(resourceGroup.Data.Location)
+            {
+                Status = SecuritySolutionStatus.Enabled,
+                UnmaskedIPLoggingStatus = UnmaskedIPLoggingStatus.Enabled,
+                DisplayName = solutionModelName,
+                IotHubs =
+                {
+                    iotHubId
+                },
+                RecommendationsConfiguration =
+                {
+                    new RecommendationConfigurationProperties(RecommendationType.IotOpenPorts,RecommendationConfigStatus.Disabled),
+                    new RecommendationConfigurationProperties(RecommendationType.IotSharedCredentials,RecommendationConfigStatus.Disabled),
+                }
+            };
+            var iotSecuritySolutionModel = await resourceGroup.GetIotSecuritySolutionModels().CreateOrUpdateAsync(WaitUntil.Completed, solutionModelName, data);
+            return iotSecuritySolutionModel.Value;
         }
     }
 }
