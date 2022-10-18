@@ -4,70 +4,213 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Azure.AI.AnomalyDetector.Models;
+using Newtonsoft.Json.Linq;
+//using Azure.AI.AnomalyDetector.Models;
 
 namespace Azure.AI.AnomalyDetector.Tests.Infrastructure
 {
     internal static class TestData
     {
-        public static DetectRequest TestPointSeries = new DetectRequest(
-            new List<TimeSeriesPoint>{
-                new TimeSeriesPoint(826){ Timestamp = DateTime.Parse("1972-01-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(799){ Timestamp = DateTime.Parse("1972-02-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(890){ Timestamp = DateTime.Parse("1972-03-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(900){ Timestamp = DateTime.Parse("1972-04-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(961){ Timestamp = DateTime.Parse("1972-05-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(935){ Timestamp = DateTime.Parse("1972-06-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(894){ Timestamp = DateTime.Parse("1972-07-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(855){ Timestamp = DateTime.Parse("1972-08-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(809){ Timestamp = DateTime.Parse("1972-09-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(810){ Timestamp = DateTime.Parse("1972-10-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(766){ Timestamp = DateTime.Parse("1972-11-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(805){ Timestamp = DateTime.Parse("1972-12-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(821){ Timestamp = DateTime.Parse("1973-01-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(773){ Timestamp = DateTime.Parse("1973-02-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(883){ Timestamp = DateTime.Parse("1973-03-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(898){ Timestamp = DateTime.Parse("1973-04-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(957){ Timestamp = DateTime.Parse("1973-05-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(924){ Timestamp = DateTime.Parse("1973-06-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(881){ Timestamp = DateTime.Parse("1973-07-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(837){ Timestamp = DateTime.Parse("1973-08-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(784){ Timestamp = DateTime.Parse("1973-09-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(791){ Timestamp = DateTime.Parse("1973-10-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(760){ Timestamp = DateTime.Parse("1973-11-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(802){ Timestamp = DateTime.Parse("1973-12-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(828){ Timestamp = DateTime.Parse("1974-01-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(1030){ Timestamp = DateTime.Parse("1974-02-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(889){ Timestamp = DateTime.Parse("1974-03-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(902){ Timestamp = DateTime.Parse("1974-04-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(969){ Timestamp = DateTime.Parse("1974-05-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(947){ Timestamp = DateTime.Parse("1974-06-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(908){ Timestamp = DateTime.Parse("1974-07-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(867){ Timestamp = DateTime.Parse("1974-08-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(815){ Timestamp = DateTime.Parse("1974-09-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(812){ Timestamp = DateTime.Parse("1974-10-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(773){ Timestamp = DateTime.Parse("1974-11-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(813){ Timestamp = DateTime.Parse("1974-12-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(834){ Timestamp = DateTime.Parse("1975-01-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(782){ Timestamp = DateTime.Parse("1975-02-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(892){ Timestamp = DateTime.Parse("1975-03-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(903){ Timestamp = DateTime.Parse("1975-04-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(966){ Timestamp = DateTime.Parse("1975-05-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(937){ Timestamp = DateTime.Parse("1975-06-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(896){ Timestamp = DateTime.Parse("1975-07-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(858){ Timestamp = DateTime.Parse("1975-08-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(817){ Timestamp = DateTime.Parse("1975-09-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(827){ Timestamp = DateTime.Parse("1975-10-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(797){ Timestamp = DateTime.Parse("1975-11-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-                new TimeSeriesPoint(843){ Timestamp = DateTime.Parse("1975-12-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)}
-            })
-        {
-            Granularity = TimeGranularity.Monthly
+        public static JObject request = new JObject {
+            new JProperty("series", new JObject[] {
+                new JObject {
+                    new JProperty("value", 826),
+                    new JProperty("timestamp", DateTime.Parse("1972-01-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 826),
+                    new JProperty("timestamp", DateTime.Parse("1972-02-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 890),
+                    new JProperty("timestamp", DateTime.Parse("1972-03-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 900),
+                    new JProperty("timestamp", DateTime.Parse("1972-04-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 961),
+                    new JProperty("timestamp", DateTime.Parse("1972-05-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 935),
+                    new JProperty("timestamp", DateTime.Parse("1972-06-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 894),
+                    new JProperty("timestamp", DateTime.Parse("1972-07-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 855),
+                    new JProperty("timestamp", DateTime.Parse("1972-08-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 809),
+                    new JProperty("timestamp", DateTime.Parse("1972-09-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 810),
+                    new JProperty("timestamp", DateTime.Parse("1972-10-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 766),
+                    new JProperty("timestamp", DateTime.Parse("1972-11-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 805),
+                    new JProperty("timestamp", DateTime.Parse("1972-12-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 821),
+                    new JProperty("timestamp", DateTime.Parse("1973-01-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 773),
+                    new JProperty("timestamp", DateTime.Parse("1973-02-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 883),
+                    new JProperty("timestamp", DateTime.Parse("1973-03-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 898),
+                    new JProperty("timestamp", DateTime.Parse("1973-04-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 957),
+                    new JProperty("timestamp", DateTime.Parse("1973-05-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 924),
+                    new JProperty("timestamp", DateTime.Parse("1973-06-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 881),
+                    new JProperty("timestamp", DateTime.Parse("1973-07-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 837),
+                    new JProperty("timestamp", DateTime.Parse("1973-08-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 784),
+                    new JProperty("timestamp", DateTime.Parse("1973-09-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 791),
+                    new JProperty("timestamp", DateTime.Parse("1973-10-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 760),
+                    new JProperty("timestamp", DateTime.Parse("1973-11-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 802),
+                    new JProperty("timestamp", DateTime.Parse("1973-12-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 828),
+                    new JProperty("timestamp", DateTime.Parse("1974-01-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 1030),
+                    new JProperty("timestamp", DateTime.Parse("1974-02-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 889),
+                    new JProperty("timestamp", DateTime.Parse("1974-03-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 902),
+                    new JProperty("timestamp", DateTime.Parse("1974-04-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 969),
+                    new JProperty("timestamp", DateTime.Parse("1974-05-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 947),
+                    new JProperty("timestamp", DateTime.Parse("1974-06-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 908),
+                    new JProperty("timestamp", DateTime.Parse("1974-07-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 867),
+                    new JProperty("timestamp", DateTime.Parse("1974-08-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 815),
+                    new JProperty("timestamp", DateTime.Parse("1974-09-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 812),
+                    new JProperty("timestamp", DateTime.Parse("1974-10-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 773),
+                    new JProperty("timestamp", DateTime.Parse("1974-11-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 813),
+                    new JProperty("timestamp", DateTime.Parse("1974-12-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 834),
+                    new JProperty("timestamp", DateTime.Parse("1975-01-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 782),
+                    new JProperty("timestamp", DateTime.Parse("1975-02-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 892),
+                    new JProperty("timestamp", DateTime.Parse("1975-03-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 903),
+                    new JProperty("timestamp", DateTime.Parse("1975-04-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 966),
+                    new JProperty("timestamp", DateTime.Parse("1975-05-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 937),
+                    new JProperty("timestamp", DateTime.Parse("1975-06-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 896),
+                    new JProperty("timestamp", DateTime.Parse("1975-07-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 858),
+                    new JProperty("timestamp", DateTime.Parse("1975-08-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 817),
+                    new JProperty("timestamp", DateTime.Parse("1975-09-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 827),
+                    new JProperty("timestamp", DateTime.Parse("1975-10-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 797),
+                    new JProperty("timestamp", DateTime.Parse("1975-11-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    },
+                new JObject {
+                    new JProperty("value", 843),
+                    new JProperty("timestamp", DateTime.Parse("1975-12-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                    }
+            }),
+            new JProperty("granularity", "monthly")
         };
-
-        public static EntireDetectResponse ExpectedEntireDetectResult = new EntireDetectResponse(
-            12,
-            new List<float>
+        public static JObject ExpectedEntireDetectResult = new JObject {
+            new JProperty("period", 12),
+            new JProperty("expectedValues", new float[]
             {
                 827.7940908243968F,
                 798.9133774671927F,
@@ -117,8 +260,8 @@ namespace Azure.AI.AnomalyDetector.Tests.Infrastructure
                 812.0830500344802F,
                 769.4635044927919F,
                 809.7433654589817F
-            },
-            new List<float>
+            }),
+            new JProperty("upperMargins", new float[]
             {
                 41.389704541219885F,
                 39.94566887335964F,
@@ -168,8 +311,8 @@ namespace Azure.AI.AnomalyDetector.Tests.Infrastructure
                 40.604152501724F,
                 38.47317522463959F,
                 40.487168272949134F
-            },
-            new List<float>
+            }),
+            new JProperty("lowerMargins", new float[]
             {
                 41.389704541219885F,
                 38.91337746719273F,
@@ -219,8 +362,8 @@ namespace Azure.AI.AnomalyDetector.Tests.Infrastructure
                 40.604152501724F,
                 9.463504492791913F,
                 40.487168272949134F
-            },
-            new List<bool>
+            }),
+            new JProperty("isAnomaly", new bool[]
             {
                false,
                false,
@@ -270,8 +413,8 @@ namespace Azure.AI.AnomalyDetector.Tests.Infrastructure
                false,
                false,
                false
-            },
-            new List<bool>
+            }),
+            new JProperty("isNegativeAnomaly", new bool[]
             {
                false,
                false,
@@ -321,8 +464,8 @@ namespace Azure.AI.AnomalyDetector.Tests.Infrastructure
                false,
                false,
                false
-            },
-            new List<bool>
+            }),
+            new JProperty("isPositiveAnomaly", new bool[]
             {
                 false,
                false,
@@ -372,8 +515,8 @@ namespace Azure.AI.AnomalyDetector.Tests.Infrastructure
                false,
                false,
                false
-            },
-            new List<float>
+            }),
+            new JProperty("Severity", new float[]
             {
                 0.0f,
                 0.0f,
@@ -423,274 +566,1046 @@ namespace Azure.AI.AnomalyDetector.Tests.Infrastructure
                 0.0f,
                 0.0f,
                 0.0f
-            }
-            );
+            })
+        };
 
-        public static ChangePointDetectRequest TestChangePointSeries = new ChangePointDetectRequest(
-            new List<TimeSeriesPoint>{
-               new TimeSeriesPoint(1639196){ Timestamp = DateTime.Parse("2017-01-01T06:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1639290){ Timestamp = DateTime.Parse("2017-01-01T06:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1667293){ Timestamp = DateTime.Parse("2017-01-01T06:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1703130){ Timestamp = DateTime.Parse("2017-01-01T07:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1650912){ Timestamp = DateTime.Parse("2017-01-01T07:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1653596){ Timestamp = DateTime.Parse("2017-01-01T07:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1653793){ Timestamp = DateTime.Parse("2017-01-01T07:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1653795){ Timestamp = DateTime.Parse("2017-01-01T07:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1663471){ Timestamp = DateTime.Parse("2017-01-01T07:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1662358){ Timestamp = DateTime.Parse("2017-01-01T07:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1664320){ Timestamp = DateTime.Parse("2017-01-01T07:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1664942){ Timestamp = DateTime.Parse("2017-01-01T07:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1664966){ Timestamp = DateTime.Parse("2017-01-01T07:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1724271){ Timestamp = DateTime.Parse("2017-01-01T07:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1678720){ Timestamp = DateTime.Parse("2017-01-01T07:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1672536){ Timestamp = DateTime.Parse("2017-01-01T08:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1672544){ Timestamp = DateTime.Parse("2017-01-01T08:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1672364){ Timestamp = DateTime.Parse("2017-01-01T08:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1672912){ Timestamp = DateTime.Parse("2017-01-01T08:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1672736){ Timestamp = DateTime.Parse("2017-01-01T08:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1672725){ Timestamp = DateTime.Parse("2017-01-01T08:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1673247){ Timestamp = DateTime.Parse("2017-01-01T08:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1673109){ Timestamp = DateTime.Parse("2017-01-01T08:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1690088){ Timestamp = DateTime.Parse("2017-01-01T08:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1703865){ Timestamp = DateTime.Parse("2017-01-01T08:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1703865){ Timestamp = DateTime.Parse("2017-01-01T08:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1786581){ Timestamp = DateTime.Parse("2017-01-01T08:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1800945){ Timestamp = DateTime.Parse("2017-01-01T09:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1800957){ Timestamp = DateTime.Parse("2017-01-01T09:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1801191){ Timestamp = DateTime.Parse("2017-01-01T09:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1801412){ Timestamp = DateTime.Parse("2017-01-01T09:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1801621){ Timestamp = DateTime.Parse("2017-01-01T09:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1801621){ Timestamp = DateTime.Parse("2017-01-01T09:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1801654){ Timestamp = DateTime.Parse("2017-01-01T09:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1802105){ Timestamp = DateTime.Parse("2017-01-01T09:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1801800){ Timestamp = DateTime.Parse("2017-01-01T09:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1803040){ Timestamp = DateTime.Parse("2017-01-01T09:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1803672){ Timestamp = DateTime.Parse("2017-01-01T09:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1803535){ Timestamp = DateTime.Parse("2017-01-01T09:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1803541){ Timestamp = DateTime.Parse("2017-01-01T10:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1803545){ Timestamp = DateTime.Parse("2017-01-01T10:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1803599){ Timestamp = DateTime.Parse("2017-01-01T10:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1803616){ Timestamp = DateTime.Parse("2017-01-01T10:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1803619){ Timestamp = DateTime.Parse("2017-01-01T10:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1809942){ Timestamp = DateTime.Parse("2017-01-01T10:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1802720){ Timestamp = DateTime.Parse("2017-01-01T10:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1802720){ Timestamp = DateTime.Parse("2017-01-01T10:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1802888){ Timestamp = DateTime.Parse("2017-01-01T10:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1809574){ Timestamp = DateTime.Parse("2017-01-01T10:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1803896){ Timestamp = DateTime.Parse("2017-01-01T10:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1803850){ Timestamp = DateTime.Parse("2017-01-01T10:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1803854){ Timestamp = DateTime.Parse("2017-01-01T11:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1803854){ Timestamp = DateTime.Parse("2017-01-01T11:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1803797){ Timestamp = DateTime.Parse("2017-01-01T11:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1803921){ Timestamp = DateTime.Parse("2017-01-01T11:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1803933){ Timestamp = DateTime.Parse("2017-01-01T11:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804040){ Timestamp = DateTime.Parse("2017-01-01T11:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804044){ Timestamp = DateTime.Parse("2017-01-01T11:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804070){ Timestamp = DateTime.Parse("2017-01-01T11:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804070){ Timestamp = DateTime.Parse("2017-01-01T11:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804068){ Timestamp = DateTime.Parse("2017-01-01T11:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804073){ Timestamp = DateTime.Parse("2017-01-01T11:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804101){ Timestamp = DateTime.Parse("2017-01-01T11:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804674){ Timestamp = DateTime.Parse("2017-01-01T12:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804714){ Timestamp = DateTime.Parse("2017-01-01T12:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804730){ Timestamp = DateTime.Parse("2017-01-01T12:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804816){ Timestamp = DateTime.Parse("2017-01-01T12:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1803996){ Timestamp = DateTime.Parse("2017-01-01T12:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1803998){ Timestamp = DateTime.Parse("2017-01-01T12:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804015){ Timestamp = DateTime.Parse("2017-01-01T12:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804047){ Timestamp = DateTime.Parse("2017-01-01T12:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804050){ Timestamp = DateTime.Parse("2017-01-01T12:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804218){ Timestamp = DateTime.Parse("2017-01-01T12:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804217){ Timestamp = DateTime.Parse("2017-01-01T12:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804217){ Timestamp = DateTime.Parse("2017-01-01T12:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804205){ Timestamp = DateTime.Parse("2017-01-01T13:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804728){ Timestamp = DateTime.Parse("2017-01-01T13:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1804748){ Timestamp = DateTime.Parse("2017-01-01T13:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1805232){ Timestamp = DateTime.Parse("2017-01-01T13:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1814121){ Timestamp = DateTime.Parse("2017-01-01T13:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1806789){ Timestamp = DateTime.Parse("2017-01-01T13:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1806119){ Timestamp = DateTime.Parse("2017-01-01T13:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1806329){ Timestamp = DateTime.Parse("2017-01-01T13:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1806454){ Timestamp = DateTime.Parse("2017-01-01T13:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1806852){ Timestamp = DateTime.Parse("2017-01-01T13:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1807347){ Timestamp = DateTime.Parse("2017-01-01T13:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1812144){ Timestamp = DateTime.Parse("2017-01-01T13:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1807418){ Timestamp = DateTime.Parse("2017-01-01T14:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1807418){ Timestamp = DateTime.Parse("2017-01-01T14:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1807432){ Timestamp = DateTime.Parse("2017-01-01T14:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1808540){ Timestamp = DateTime.Parse("2017-01-01T14:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1808541){ Timestamp = DateTime.Parse("2017-01-01T14:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1807831){ Timestamp = DateTime.Parse("2017-01-01T14:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1807852){ Timestamp = DateTime.Parse("2017-01-01T14:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1807811){ Timestamp = DateTime.Parse("2017-01-01T14:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2214285){ Timestamp = DateTime.Parse("2017-01-01T14:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2215019){ Timestamp = DateTime.Parse("2017-01-01T14:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2215329){ Timestamp = DateTime.Parse("2017-01-01T14:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2215097){ Timestamp = DateTime.Parse("2017-01-01T14:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2215129){ Timestamp = DateTime.Parse("2017-01-01T15:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2215120){ Timestamp = DateTime.Parse("2017-01-01T15:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2217056){ Timestamp = DateTime.Parse("2017-01-01T15:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2217056){ Timestamp = DateTime.Parse("2017-01-01T15:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2222126){ Timestamp = DateTime.Parse("2017-01-01T15:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2226472){ Timestamp = DateTime.Parse("2017-01-01T15:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2226722){ Timestamp = DateTime.Parse("2017-01-01T15:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2226729){ Timestamp = DateTime.Parse("2017-01-01T15:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2226735){ Timestamp = DateTime.Parse("2017-01-01T15:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2226735){ Timestamp = DateTime.Parse("2017-01-01T15:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2226735){ Timestamp = DateTime.Parse("2017-01-01T15:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2226952){ Timestamp = DateTime.Parse("2017-01-01T15:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2226962){ Timestamp = DateTime.Parse("2017-01-01T16:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2649337){ Timestamp = DateTime.Parse("2017-01-01T16:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2092796){ Timestamp = DateTime.Parse("2017-01-01T16:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2092839){ Timestamp = DateTime.Parse("2017-01-01T16:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2092940){ Timestamp = DateTime.Parse("2017-01-01T16:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2092940){ Timestamp = DateTime.Parse("2017-01-01T16:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2092965){ Timestamp = DateTime.Parse("2017-01-01T16:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2092979){ Timestamp = DateTime.Parse("2017-01-01T16:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2095588){ Timestamp = DateTime.Parse("2017-01-01T16:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2099586){ Timestamp = DateTime.Parse("2017-01-01T16:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2102981){ Timestamp = DateTime.Parse("2017-01-01T16:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2108053){ Timestamp = DateTime.Parse("2017-01-01T16:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2107907){ Timestamp = DateTime.Parse("2017-01-01T17:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2108241){ Timestamp = DateTime.Parse("2017-01-01T17:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2100321){ Timestamp = DateTime.Parse("2017-01-01T17:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2100448){ Timestamp = DateTime.Parse("2017-01-01T17:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2100483){ Timestamp = DateTime.Parse("2017-01-01T17:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2103042){ Timestamp = DateTime.Parse("2017-01-01T17:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2103037){ Timestamp = DateTime.Parse("2017-01-01T17:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2103040){ Timestamp = DateTime.Parse("2017-01-01T17:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2103054){ Timestamp = DateTime.Parse("2017-01-01T17:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2103058){ Timestamp = DateTime.Parse("2017-01-01T17:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1830757){ Timestamp = DateTime.Parse("2017-01-01T17:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1830855){ Timestamp = DateTime.Parse("2017-01-01T17:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1831495){ Timestamp = DateTime.Parse("2017-01-01T18:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1831463){ Timestamp = DateTime.Parse("2017-01-01T18:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1831963){ Timestamp = DateTime.Parse("2017-01-01T18:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1832046){ Timestamp = DateTime.Parse("2017-01-01T18:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1832070){ Timestamp = DateTime.Parse("2017-01-01T18:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1835511){ Timestamp = DateTime.Parse("2017-01-01T18:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1835265){ Timestamp = DateTime.Parse("2017-01-01T18:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1835481){ Timestamp = DateTime.Parse("2017-01-01T18:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1835578){ Timestamp = DateTime.Parse("2017-01-01T18:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1835611){ Timestamp = DateTime.Parse("2017-01-01T18:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1836314){ Timestamp = DateTime.Parse("2017-01-01T18:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1836369){ Timestamp = DateTime.Parse("2017-01-01T18:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1837280){ Timestamp = DateTime.Parse("2017-01-01T19:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1842939){ Timestamp = DateTime.Parse("2017-01-01T19:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1843126){ Timestamp = DateTime.Parse("2017-01-01T19:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1845840){ Timestamp = DateTime.Parse("2017-01-01T19:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1842444){ Timestamp = DateTime.Parse("2017-01-01T19:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1839891){ Timestamp = DateTime.Parse("2017-01-01T19:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1839875){ Timestamp = DateTime.Parse("2017-01-01T19:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1839870){ Timestamp = DateTime.Parse("2017-01-01T19:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1840090){ Timestamp = DateTime.Parse("2017-01-01T19:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1840479){ Timestamp = DateTime.Parse("2017-01-01T19:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1840479){ Timestamp = DateTime.Parse("2017-01-01T19:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1840482){ Timestamp = DateTime.Parse("2017-01-01T19:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1841522){ Timestamp = DateTime.Parse("2017-01-01T20:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1841836){ Timestamp = DateTime.Parse("2017-01-01T20:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1842377){ Timestamp = DateTime.Parse("2017-01-01T20:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1842388){ Timestamp = DateTime.Parse("2017-01-01T20:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1842489){ Timestamp = DateTime.Parse("2017-01-01T20:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1842489){ Timestamp = DateTime.Parse("2017-01-01T20:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1842489){ Timestamp = DateTime.Parse("2017-01-01T20:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1842496){ Timestamp = DateTime.Parse("2017-01-01T20:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1842689){ Timestamp = DateTime.Parse("2017-01-01T20:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1843117){ Timestamp = DateTime.Parse("2017-01-01T20:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1843116){ Timestamp = DateTime.Parse("2017-01-01T20:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1843227){ Timestamp = DateTime.Parse("2017-01-01T20:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1843138){ Timestamp = DateTime.Parse("2017-01-01T21:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1843141){ Timestamp = DateTime.Parse("2017-01-01T21:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1843310){ Timestamp = DateTime.Parse("2017-01-01T21:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1843310){ Timestamp = DateTime.Parse("2017-01-01T21:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1843507){ Timestamp = DateTime.Parse("2017-01-01T21:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1843953){ Timestamp = DateTime.Parse("2017-01-01T21:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1844778){ Timestamp = DateTime.Parse("2017-01-01T21:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1843918){ Timestamp = DateTime.Parse("2017-01-01T21:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1882692){ Timestamp = DateTime.Parse("2017-01-01T21:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(1974888){ Timestamp = DateTime.Parse("2017-01-01T21:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2157136){ Timestamp = DateTime.Parse("2017-01-01T21:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2154987){ Timestamp = DateTime.Parse("2017-01-01T21:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2155664){ Timestamp = DateTime.Parse("2017-01-01T22:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2155660){ Timestamp = DateTime.Parse("2017-01-01T22:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2155824){ Timestamp = DateTime.Parse("2017-01-01T22:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2155824){ Timestamp = DateTime.Parse("2017-01-01T22:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2156329){ Timestamp = DateTime.Parse("2017-01-01T22:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2156479){ Timestamp = DateTime.Parse("2017-01-01T22:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2165269){ Timestamp = DateTime.Parse("2017-01-01T22:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2165433){ Timestamp = DateTime.Parse("2017-01-01T22:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2165739){ Timestamp = DateTime.Parse("2017-01-01T22:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2165931){ Timestamp = DateTime.Parse("2017-01-01T22:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2165928){ Timestamp = DateTime.Parse("2017-01-01T22:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2165989){ Timestamp = DateTime.Parse("2017-01-01T22:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2228961){ Timestamp = DateTime.Parse("2017-01-01T23:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2228961){ Timestamp = DateTime.Parse("2017-01-01T23:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2228961){ Timestamp = DateTime.Parse("2017-01-01T23:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2485802){ Timestamp = DateTime.Parse("2017-01-01T23:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2485802){ Timestamp = DateTime.Parse("2017-01-01T23:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2486021){ Timestamp = DateTime.Parse("2017-01-01T23:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2485293){ Timestamp = DateTime.Parse("2017-01-01T23:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2485293){ Timestamp = DateTime.Parse("2017-01-01T23:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2485324){ Timestamp = DateTime.Parse("2017-01-01T23:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2489142){ Timestamp = DateTime.Parse("2017-01-01T23:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2526312){ Timestamp = DateTime.Parse("2017-01-01T23:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2526313){ Timestamp = DateTime.Parse("2017-01-01T23:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2526314){ Timestamp = DateTime.Parse("2017-01-02T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2526324){ Timestamp = DateTime.Parse("2017-01-02T00:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2526325){ Timestamp = DateTime.Parse("2017-01-02T00:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2526205){ Timestamp = DateTime.Parse("2017-01-02T00:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2526226){ Timestamp = DateTime.Parse("2017-01-02T00:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2526475){ Timestamp = DateTime.Parse("2017-01-02T00:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2526471){ Timestamp = DateTime.Parse("2017-01-02T00:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2526471){ Timestamp = DateTime.Parse("2017-01-02T00:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2526534){ Timestamp = DateTime.Parse("2017-01-02T00:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2526646){ Timestamp = DateTime.Parse("2017-01-02T00:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2526646){ Timestamp = DateTime.Parse("2017-01-02T00:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2526648){ Timestamp = DateTime.Parse("2017-01-02T00:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2526658){ Timestamp = DateTime.Parse("2017-01-02T01:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2526771){ Timestamp = DateTime.Parse("2017-01-02T01:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2526773){ Timestamp = DateTime.Parse("2017-01-02T01:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2526793){ Timestamp = DateTime.Parse("2017-01-02T01:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2527010){ Timestamp = DateTime.Parse("2017-01-02T01:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(2527031){ Timestamp = DateTime.Parse("2017-01-02T01:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3178096){ Timestamp = DateTime.Parse("2017-01-02T01:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3196305){ Timestamp = DateTime.Parse("2017-01-02T01:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3196202){ Timestamp = DateTime.Parse("2017-01-02T01:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3196202){ Timestamp = DateTime.Parse("2017-01-02T01:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3196205){ Timestamp = DateTime.Parse("2017-01-02T01:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3229232){ Timestamp = DateTime.Parse("2017-01-02T01:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3230463){ Timestamp = DateTime.Parse("2017-01-02T02:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3230468){ Timestamp = DateTime.Parse("2017-01-02T02:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3230468){ Timestamp = DateTime.Parse("2017-01-02T02:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3230468){ Timestamp = DateTime.Parse("2017-01-02T02:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3230470){ Timestamp = DateTime.Parse("2017-01-02T02:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3230467){ Timestamp = DateTime.Parse("2017-01-02T02:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3230506){ Timestamp = DateTime.Parse("2017-01-02T02:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3231536){ Timestamp = DateTime.Parse("2017-01-02T02:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3230723){ Timestamp = DateTime.Parse("2017-01-02T02:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3230727){ Timestamp = DateTime.Parse("2017-01-02T02:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3230727){ Timestamp = DateTime.Parse("2017-01-02T02:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3230727){ Timestamp = DateTime.Parse("2017-01-02T02:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3231880){ Timestamp = DateTime.Parse("2017-01-02T03:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3232283){ Timestamp = DateTime.Parse("2017-01-02T03:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3232283){ Timestamp = DateTime.Parse("2017-01-02T03:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3232283){ Timestamp = DateTime.Parse("2017-01-02T03:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3232325){ Timestamp = DateTime.Parse("2017-01-02T03:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3232323){ Timestamp = DateTime.Parse("2017-01-02T03:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3232327){ Timestamp = DateTime.Parse("2017-01-02T03:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3232340){ Timestamp = DateTime.Parse("2017-01-02T03:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3232713){ Timestamp = DateTime.Parse("2017-01-02T03:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3232729){ Timestamp = DateTime.Parse("2017-01-02T03:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3232756){ Timestamp = DateTime.Parse("2017-01-02T03:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3233500){ Timestamp = DateTime.Parse("2017-01-02T03:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3233500){ Timestamp = DateTime.Parse("2017-01-02T04:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-               new TimeSeriesPoint(3233500){ Timestamp = DateTime.Parse("2017-01-02T04:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
-            },
-            TimeGranularity.PerMinute);
+        public static JObject changePointRequest = new JObject {
+            new JProperty("series", new JObject[] {
+                new JObject {
+                    new JProperty("value", 1639196),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T06:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1639290),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T06:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1667293),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T06:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1703130),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T07:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1650912),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T07:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1653596),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T07:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1653793),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T07:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1653795),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T07:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1663471),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T07:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1662358),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T07:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1664320),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T07:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1664942),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T07:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1664966),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T07:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1724271),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T07:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1678720),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T07:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1672536),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T08:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1672544),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T08:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1672364),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T08:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1672912),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T08:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1672736),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T08:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1672725),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T08:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1673247),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T08:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1673109),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T08:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1690088),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T08:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1703865),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T08:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1703865),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T08:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1786581),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T08:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1800945),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T09:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1800957),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T09:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1801191),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T09:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1801412),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T09:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1801621),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T09:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1801621),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T09:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1801654),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T09:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1802105),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T09:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1801800),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T09:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1803040),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T09:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1803672),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T09:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1803535),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T09:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1803541),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T10:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1803545),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T10:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1803599),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T10:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1803616),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T10:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1803619),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T10:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1809942),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T10:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1802720),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T10:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1802720),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T10:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1802888),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T10:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1809574),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T10:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1803896),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T10:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1803850),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T10:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1803854),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T11:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1803854),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T11:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1803797),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T11:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1803921),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T11:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1803933),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T11:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804040),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T11:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804044),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T11:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804070),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T11:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804070),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T11:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804068),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T11:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804073),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T11:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804101),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T11:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804674),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T12:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804714),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T12:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804730),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T12:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804816),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T12:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1803996),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T12:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1803998),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T12:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804015),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T12:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804047),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T12:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804050),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T12:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804218),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T12:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804217),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T12:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804217),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T12:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804205),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T13:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804728),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T13:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1804748),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T13:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1805232),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T13:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1814121),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T13:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1806789),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T13:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1806119),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T13:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1806329),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T13:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1806454),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T13:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1806852),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T13:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1807347),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T13:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1812144),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T13:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1807418),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T14:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1807418),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T14:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1807432),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T14:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1808540),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T14:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1808541),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T14:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1807831),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T14:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1807852),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T14:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1807811),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T14:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2214285),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T14:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2215019),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T14:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2215329),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T14:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2215097),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T14:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2215129),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T15:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2215120),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T15:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2217056),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T15:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2217056),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T15:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2222126),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T15:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2226472),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T15:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2226722),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T15:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2226729),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T15:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2226735),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T15:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2226735),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T15:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2226735),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T15:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2226952),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T15:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2226962),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T16:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2649337),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T16:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2092796),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T16:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2092839),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T16:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2092940),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T16:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2092940),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T16:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2092965),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T16:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2092979),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T16:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2095588),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T16:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2099586),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T16:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2102981),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T16:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2108053),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T16:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2107907),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T17:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2108241),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T17:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2100321),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T17:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2100448),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T17:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2100483),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T17:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2103042),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T17:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2103037),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T17:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2103040),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T17:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2103054),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T17:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2103058),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T17:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1830757),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T17:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1830855),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T17:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1831495),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T18:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1831463),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T18:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1831963),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T18:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1832046),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T18:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1832070),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T18:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1835511),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T18:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1835265),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T18:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1835481),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T18:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1835578),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T18:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1835611),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T18:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1836314),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T18:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1836369),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T18:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1837280),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T19:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1842939),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T19:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1843126),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T19:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1845840),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T19:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1842444),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T19:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1839891),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T19:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1839875),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T19:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1839870),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T19:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1840090),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T19:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1840479),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T19:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1840479),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T19:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1840482),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T19:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1841522),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T20:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1841836),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T20:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1842377),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T20:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1842388),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T20:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1842489),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T20:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1842489),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T20:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1842489),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T20:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1842496),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T20:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1842689),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T20:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1843117),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T20:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1843116),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T20:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1843227),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T20:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1843138),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T21:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1843141),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T21:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1843310),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T21:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1843310),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T21:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1843507),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T21:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1843953),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T21:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1844778),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T21:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1843918),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T21:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1882692),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T21:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 1974888),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T21:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2157136),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T21:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2154987),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T21:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2155664),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T22:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2155660),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T22:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2155824),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T22:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2155824),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T22:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2156329),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T22:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2156479),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T22:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2165269),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T22:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2165433),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T22:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2165739),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T22:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2165931),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T22:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2165928),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T22:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2165989),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T22:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2228961),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T23:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2228961),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T23:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2228961),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T23:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2485802),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T23:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2485802),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T23:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2486021),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T23:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2485293),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T23:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2485293),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T23:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2485324),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T23:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2489142),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T23:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2526312),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T23:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2526313),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-01T23:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2526314),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2526324),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T00:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2526325),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T00:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2526205),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T00:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2526226),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T00:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2526475),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T00:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2526471),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T00:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2526471),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T00:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2526534),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T00:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2526646),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T00:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2526646),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T00:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2526648),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T00:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2526658),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T01:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2526771),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T01:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2526773),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T01:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2526793),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T01:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2527010),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T01:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 2527031),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T01:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3178096),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T01:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3196305),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T01:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3196202),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T01:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3196202),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T01:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3196205),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T01:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3229232),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T01:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3230463),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T02:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3230468),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T02:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3230468),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T02:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3230468),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T02:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3230470),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T02:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3230467),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T02:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3230506),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T02:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3231536),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T02:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3230723),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T02:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3230727),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T02:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3230727),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T02:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3230727),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T02:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3231880),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T03:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3232283),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T03:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3232283),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T03:10:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3232283),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T03:15:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3232325),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T03:20:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3232323),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T03:25:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3232327),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T03:30:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3232340),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T03:35:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3232713),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T03:40:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3232729),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T03:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3232756),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T03:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3233500),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T03:55:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3233500),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T04:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+                new JObject {
+                    new JProperty("value", 3233500),
+                    new JProperty("timestamp", DateTime.Parse("2017-01-02T04:05:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))
+                },
+            }),
+            new JProperty("granularity", "minutely")
+        };
 
-        public static ChangePointDetectResponse ExpectedChangePointResult = new ChangePointDetectResponse(
-            0,
-            new List<bool>
+        public static JObject ExpectedChangePointResult = new JObject(
+            new JProperty("period", 0),
+            new JProperty("isChangePoint", new bool[]
             {
                 false,
                 false,
@@ -949,8 +1864,8 @@ namespace Azure.AI.AnomalyDetector.Tests.Infrastructure
                 false,
                 false,
                 false
-            },
-            new List<float>
+            }),
+            new JProperty("confidenceScores", new float[]
             {
                 0F,
                 2.920781E-16F,
@@ -1209,6 +2124,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Infrastructure
                 0.005365143F,
                 0.00535262655F,
                 0.005331466F,
-            });
+            })
+    );
     }
 }
