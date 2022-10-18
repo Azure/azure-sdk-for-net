@@ -53,6 +53,11 @@ foreach (var assembly in LoadAssemblies(Assembly.GetEntryAssembly(), AssemblyFil
             ProcessType(type);
         }
     }
+    catch (ReflectionTypeLoadException ex) when (ex.Message.Contains("does not have an implementation"))
+    {
+        // Expected for some assemblies that serve as runtime shims or type-forwarding
+        // assemblies.
+    }
     catch (ReflectionTypeLoadException) when (assembly.FullName.StartsWith("System."))
     {
         // Not expected, but not impactful.  System assemblies aren't indicative of
