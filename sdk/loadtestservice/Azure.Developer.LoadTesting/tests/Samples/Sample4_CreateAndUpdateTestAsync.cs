@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -27,7 +27,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             // creating LoadTesting Client
             LoadTestingClient loadTestingClient = new LoadTestingClient(endpoint, credential);
 
-            // getting appropirate Subclient
+            // getting appropriate Subclient
             TestRunClient testRunClient = loadTestingClient.getLoadTestRun();
 
             #region Snippet:Azure_Developer_LoadTesting_CreateAndUpdateTestAsync

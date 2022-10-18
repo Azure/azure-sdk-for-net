@@ -48,7 +48,7 @@ The following components make up the Azure Load Testing service. The Azure Load 
 
 - `TestRunClient`
 
-These sub-clients are used for managing and using different components of the service. For each method in both of these sub-clients there is a corresponding Async method in the same class, with Async with same implimentation howeven enabling async functionalities, example, if there is a method, `CreateOrUpdateTest` as a part of `LoadTestAdministrationClient` then there always exists one more function `CreateOrUpdateTestAsync` in the same client class. 
+These sub-clients are used for managing and using different components of the service. For each method in both of these sub-clients there is a corresponding Async method in the same class, with the same implementation however enabling async functionalities. For example, if there is a method, `CreateOrUpdateTest` as a part of `LoadTestAdministrationClient` then there always exists one more function `CreateOrUpdateTestAsync` in the same client class.
 
 ### Load Test Administration Client
 
@@ -113,7 +113,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Next steps
 
-Get started with our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.LoadTesting/samples):
+Get started with our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.LoadTesting/samples).
 
 ## Contributing
 

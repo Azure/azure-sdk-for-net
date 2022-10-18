@@ -12,7 +12,7 @@ TokenCredential credential = TestEnvironment.Credential;
 // creating LoadTesting Client
 LoadTestingClient loadTestingClient = new LoadTestingClient(endpoint, credential);
 
-// getting appropirate Subclient
+// getting appropriate Subclient
 LoadTestAdministrationClient loadTestAdministrationClient = loadTestingClient.getLoadTestAdministration();
 ```
 

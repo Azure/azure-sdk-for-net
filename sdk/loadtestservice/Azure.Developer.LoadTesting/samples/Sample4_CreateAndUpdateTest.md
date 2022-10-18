@@ -1,4 +1,4 @@
-# Create And Update Test
+# Create And Update Test Run
 
 To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/README.md#getting-started) for details.
 
@@ -12,7 +12,7 @@ TokenCredential credential = TestEnvironment.Credential;
 // creating LoadTesting Client
 LoadTestingClient loadTestingClient = new LoadTestingClient(endpoint, credential);
 
-// getting appropirate Subclient
+// getting appropriate Subclient
 TestRunClient testRunClient = loadTestingClient.getLoadTestRun();
 ```
 
