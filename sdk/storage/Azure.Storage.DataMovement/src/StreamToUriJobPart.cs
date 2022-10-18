@@ -132,14 +132,13 @@ namespace Azure.Storage.DataMovement
                 else
                 {
                     // Single Put Blob Request
-                    await QueueChunk( async () => await SingleUploadCall().ConfigureAwait(false)).ConfigureAwait(false);
+                    await QueueChunk( async () => await SingleUploadCall(fileLength.Value).ConfigureAwait(false)).ConfigureAwait(false);
                 }
             }
             else
             {
                 // TODO: logging when given the event handler
                 TriggerCancellation();
-                // Exit
             }
         }
 
@@ -171,7 +170,7 @@ namespace Azure.Storage.DataMovement
         }
         #endregion
 
-        internal async Task SingleUploadCall()
+        internal async Task SingleUploadCall(long length)
         {
             try
             {
@@ -181,6 +180,7 @@ namespace Azure.Storage.DataMovement
                         _cancellationTokenSource.Token).ConfigureAwait(false);
 
                 // Set completion status to completed
+                ReportBytesWritten(length);
                 await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
             }
             catch (Exception ex)

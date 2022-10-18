@@ -69,12 +69,12 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 BlobDataController dataController = new BlobDataController(default);
 
                 // Create simple transfer single blob upload job
-                StorageResource sourceResource = LocalStorageResourceFactory.GetFile(originalPath);
-                StorageResource destinationResource = BlobStorageResourceFactory.GetBlockBlob(destinationBlob);
+                StorageResource sourceResource = new LocalFileStorageResource(originalPath);
+                StorageResource destinationResource = new BlockBlobStorageResource(destinationBlob);
                 DataTransfer jobId = await dataController.StartTransferAsync(sourceResource, destinationResource).ConfigureAwait(false);
 
                 // Add another transfer job.
-                StorageResource destinationResource2 = BlobStorageResourceFactory.GetBlockBlob(destinationBlob2);
+                StorageResource destinationResource2 = new BlockBlobStorageResource(destinationBlob2);
 
                 Progress<long> blob2Progress = new Progress<long>();
                 await dataController.StartTransferAsync(
@@ -144,12 +144,12 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 BlobDataController dataController = new BlobDataController(options);
 
                 // Simple Download Single Blob Job
-                StorageResource sourceResource = BlobStorageResourceFactory.GetBlockBlob(sourceBlob);
-                StorageResource destinationResource = LocalStorageResourceFactory.GetFile(downloadPath);
+                StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
+                StorageResource destinationResource = new LocalFileStorageResource(downloadPath);
                 await dataController.StartTransferAsync(sourceResource, destinationResource).ConfigureAwait(false);
 
-                StorageResource sourceResource2 = BlobStorageResourceFactory.GetBlockBlob(sourceBlob);
-                StorageResource destinationResource2 = LocalStorageResourceFactory.GetFile(downloadPath2);
+                StorageResource sourceResource2 = new BlockBlobStorageResource(sourceBlob);
+                StorageResource destinationResource2 = new LocalFileStorageResource(downloadPath2);
 
                 await dataController.StartTransferAsync(
                     sourceResource2,
@@ -218,8 +218,8 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
             try
             {
                 // Get a reference to a destination blobs
-                StorageResourceContainer directoryDestination = BlobStorageResourceFactory.GetBlobVirtualDirectory(container, Randomize("sample-blob-directory"));
-                StorageResourceContainer directoryDestination2 = BlobStorageResourceFactory.GetBlobVirtualDirectory(container, Randomize("sample-blob-directory"));
+                StorageResourceContainer directoryDestination = new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory"));
+                StorageResourceContainer directoryDestination2 = new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory"));
 
                 // Create BlobDataController with event handler in Options bag
                 DataControllerOptions options = new DataControllerOptions();
@@ -234,18 +234,18 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
 
                 // Create simple transfer directory upload job which uploads the directory and the contents of that directory
                 DataTransfer uploadDirectoryJobId = await transferManager.StartTransferAsync(
-                    LocalStorageResourceFactory.GetDirectory(sourcePath),
+                    new LocalDirectoryStorageResourceContainer(sourcePath),
                     directoryDestination).ConfigureAwait(false);
 
                 // Create simple transfer directory upload job which the contents of that directory
                 DataTransfer uploadDirectoryJobId2 = await transferManager.StartTransferAsync(
-                    LocalStorageResourceFactory.GetDirectory(sourcePath2),
+                    new LocalDirectoryStorageResourceContainer(sourcePath2),
                     directoryDestination,
                     uploadOptions).ConfigureAwait(false);
 
                 // Create transfer directory upload job where we specify a progress handler and concurrency
                 DataTransfer uploadDirectoryJobId3 = await transferManager.StartTransferAsync(
-                    LocalStorageResourceFactory.GetDirectory(sourcePath2),
+                    new LocalDirectoryStorageResourceContainer(sourcePath2),
                     directoryDestination2,
                     uploadOptions).ConfigureAwait(false);
             }
@@ -297,10 +297,10 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
             try
             {
                 // Get a reference to a source blobs and upload sample content to download
-                StorageResourceContainer sourceDirectory = BlobStorageResourceFactory.GetBlobVirtualDirectory(container, Randomize("sample-blob-directory"));
-                StorageResourceContainer sourceDirectory2 = BlobStorageResourceFactory.GetBlobVirtualDirectory(container, Randomize("sample-blob-directory"));
-                StorageResourceContainer destinationDirectory = LocalStorageResourceFactory.GetDirectory(downloadPath);
-                StorageResourceContainer destinationDirectory2 = LocalStorageResourceFactory.GetDirectory(downloadPath2);
+                StorageResourceContainer sourceDirectory = new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory"));
+                StorageResourceContainer sourceDirectory2 = new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory"));
+                StorageResourceContainer destinationDirectory = new LocalDirectoryStorageResourceContainer(downloadPath);
+                StorageResourceContainer destinationDirectory2 = new LocalDirectoryStorageResourceContainer(downloadPath2);
 
                 // Upload a couple of blobs so we have something to list
                 await container.UploadBlobAsync("first", File.OpenRead(CreateTempFile()));
@@ -373,10 +373,10 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
             {
                 // Get a reference to a destination blobs
                 BlockBlobClient sourceBlob = container.GetBlockBlobClient(Randomize("sample-blob"));
-                StorageResource sourceResource = BlobStorageResourceFactory.GetBlockBlob(sourceBlob);
+                StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
 
                 BlockBlobClient destinationBlob = container.GetBlockBlobClient(Randomize("sample-blob2"));
-                StorageResource destinationResource = BlobStorageResourceFactory.GetBlockBlob(sourceBlob);
+                StorageResource destinationResource = new BlockBlobStorageResource(sourceBlob);
 
                 // Upload file data
                 BlobDataController transferManager = new BlobDataController(default);
@@ -433,12 +433,12 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 string sourceDirectoryName2 = Randomize("sample-blob-directory");
 
                 // Get a reference to a source blobs and upload sample content to download
-                StorageResourceContainer sourceDirectory1 = BlobStorageResourceFactory.GetBlobVirtualDirectory(container, sourceDirectoryName);
-                StorageResourceContainer sourceDirectory2 = BlobStorageResourceFactory.GetBlobVirtualDirectory(container, sourceDirectoryName2);
+                StorageResourceContainer sourceDirectory1 = new BlobDirectoryStorageResourceContainer(container, sourceDirectoryName);
+                StorageResourceContainer sourceDirectory2 = new BlobDirectoryStorageResourceContainer(container, sourceDirectoryName2);
 
                 // Create destination paths
-                StorageResourceContainer destinationDirectory1 = LocalStorageResourceFactory.GetDirectory(downloadPath);
-                StorageResourceContainer destinationDirectory2 = LocalStorageResourceFactory.GetDirectory(downloadPath2);
+                StorageResourceContainer destinationDirectory1 = new LocalDirectoryStorageResourceContainer(downloadPath);
+                StorageResourceContainer destinationDirectory2 = new LocalDirectoryStorageResourceContainer(downloadPath2);
 
                 // Upload a couple of blobs so we have something to list
                 await container.UploadBlobAsync($"{sourceDirectoryName}/fourth", File.OpenRead(originalPath));
@@ -512,12 +512,12 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 string sourceDirectoryName2 = Randomize("sample-blob-directory");
 
                 // Get a reference to a source blobs and upload sample content to download
-                StorageResourceContainer sourceDirectory1 = BlobStorageResourceFactory.GetBlobVirtualDirectory(container, sourceDirectoryName);
-                StorageResourceContainer sourceDirectory2 = BlobStorageResourceFactory.GetBlobVirtualDirectory(container, sourceDirectoryName2);
+                StorageResourceContainer sourceDirectory1 = new BlobDirectoryStorageResourceContainer(container, sourceDirectoryName);
+                StorageResourceContainer sourceDirectory2 = new BlobDirectoryStorageResourceContainer(container, sourceDirectoryName2);
 
                 // Create destination paths
-                StorageResourceContainer destinationDirectory1 = LocalStorageResourceFactory.GetDirectory(downloadPath);
-                StorageResourceContainer destinationDirectory2 = LocalStorageResourceFactory.GetDirectory(downloadPath2);
+                StorageResourceContainer destinationDirectory1 = new LocalDirectoryStorageResourceContainer(downloadPath);
+                StorageResourceContainer destinationDirectory2 = new LocalDirectoryStorageResourceContainer(downloadPath2);
 
                 // Upload a couple of blobs so we have something to list
                 await container.UploadBlobAsync($"{sourceDirectoryName}/fourth", File.OpenRead(originalPath));
@@ -606,12 +606,12 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 string sourceDirectoryName2 = Randomize("sample-blob-directory");
 
                 // Get a reference to a source blobs and upload sample content to download
-                StorageResourceContainer sourceDirectory1 = BlobStorageResourceFactory.GetBlobVirtualDirectory(container, sourceDirectoryName);
-                StorageResourceContainer sourceDirectory2 = BlobStorageResourceFactory.GetBlobVirtualDirectory(container, sourceDirectoryName2);
+                StorageResourceContainer sourceDirectory1 = new BlobDirectoryStorageResourceContainer(container, sourceDirectoryName);
+                StorageResourceContainer sourceDirectory2 = new BlobDirectoryStorageResourceContainer(container, sourceDirectoryName2);
 
                 // Create destination paths
-                StorageResourceContainer destinationDirectory1 = LocalStorageResourceFactory.GetDirectory(downloadPath);
-                StorageResourceContainer destinationDirectory2 = LocalStorageResourceFactory.GetDirectory(downloadPath2);
+                StorageResourceContainer destinationDirectory1 = new LocalDirectoryStorageResourceContainer(downloadPath);
+                StorageResourceContainer destinationDirectory2 = new LocalDirectoryStorageResourceContainer(downloadPath2);
 
                 // Upload a couple of blobs so we have something to list
                 await container.UploadBlobAsync($"{sourceDirectoryName}/fourth", File.OpenRead(originalPath));
@@ -702,14 +702,14 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 string sourceDirectoryName3 = Randomize("sample-blob-directory");
 
                 // Get a reference to a source blobs and upload sample content to download
-                StorageResourceContainer sourceDirectory1 = BlobStorageResourceFactory.GetBlobVirtualDirectory(container, sourceDirectoryName);
-                StorageResourceContainer sourceDirectory2 = BlobStorageResourceFactory.GetBlobVirtualDirectory(container, sourceDirectoryName2);
-                StorageResourceContainer sourceDirectory3 = BlobStorageResourceFactory.GetBlobVirtualDirectory(container, sourceDirectoryName3);
+                StorageResourceContainer sourceDirectory1 = new BlobDirectoryStorageResourceContainer(container, sourceDirectoryName);
+                StorageResourceContainer sourceDirectory2 = new BlobDirectoryStorageResourceContainer(container, sourceDirectoryName2);
+                StorageResourceContainer sourceDirectory3 = new BlobDirectoryStorageResourceContainer(container, sourceDirectoryName3);
 
                 // Create destination paths
-                StorageResourceContainer destinationDirectory1 = LocalStorageResourceFactory.GetDirectory(downloadPath);
-                StorageResourceContainer destinationDirectory2 = LocalStorageResourceFactory.GetDirectory(downloadPath2);
-                StorageResourceContainer destinationDirectory3 = LocalStorageResourceFactory.GetDirectory(downloadPath2);
+                StorageResourceContainer destinationDirectory1 = new LocalDirectoryStorageResourceContainer(downloadPath);
+                StorageResourceContainer destinationDirectory2 = new LocalDirectoryStorageResourceContainer(downloadPath2);
+                StorageResourceContainer destinationDirectory3 = new LocalDirectoryStorageResourceContainer(downloadPath2);
 
                 // Upload a couple of blobs so we have something to list
                 await container.UploadBlobAsync($"{sourceDirectoryName}/fourth", File.OpenRead(originalPath));
@@ -813,14 +813,14 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 string sourceDirectoryName3 = Randomize("sample-blob-directory");
 
                 // Get a reference to a source blobs and upload sample content to download
-                StorageResourceContainer sourceDirectory1 = BlobStorageResourceFactory.GetBlobVirtualDirectory(container, sourceDirectoryName);
-                StorageResourceContainer sourceDirectory2 = BlobStorageResourceFactory.GetBlobVirtualDirectory(container, sourceDirectoryName2);
-                StorageResourceContainer sourceDirectory3 = BlobStorageResourceFactory.GetBlobVirtualDirectory(container, sourceDirectoryName3);
+                StorageResourceContainer sourceDirectory1 = new BlobDirectoryStorageResourceContainer(container, sourceDirectoryName);
+                StorageResourceContainer sourceDirectory2 = new BlobDirectoryStorageResourceContainer(container, sourceDirectoryName2);
+                StorageResourceContainer sourceDirectory3 = new BlobDirectoryStorageResourceContainer(container, sourceDirectoryName3);
 
                 // Create destination paths
-                StorageResourceContainer destinationDirectory1 = LocalStorageResourceFactory.GetDirectory(downloadPath);
-                StorageResourceContainer destinationDirectory2 = LocalStorageResourceFactory.GetDirectory(downloadPath2);
-                StorageResourceContainer destinationDirectory3 = LocalStorageResourceFactory.GetDirectory(downloadPath2);
+                StorageResourceContainer destinationDirectory1 = new LocalDirectoryStorageResourceContainer(downloadPath);
+                StorageResourceContainer destinationDirectory2 = new LocalDirectoryStorageResourceContainer(downloadPath2);
+                StorageResourceContainer destinationDirectory3 = new LocalDirectoryStorageResourceContainer(downloadPath2);
 
                 // Upload a couple of blobs so we have something to list
                 await container.UploadBlobAsync($"{sourceDirectoryName}/fourth", File.OpenRead(originalPath));

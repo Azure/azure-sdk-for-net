@@ -19,7 +19,7 @@ namespace Azure.Storage.Blobs.DataMovement
     /// <summary>
     /// Storage Resource class for the a Blob Virtual Directory Client
     /// </summary>
-    internal class BlobDirectoryStorageResourceContainer : StorageResourceContainer
+    public class BlobDirectoryStorageResourceContainer : StorageResourceContainer
     {
         private BlobContainerClient _blobContainerClient;
         private List<string> _directoryPrefix;

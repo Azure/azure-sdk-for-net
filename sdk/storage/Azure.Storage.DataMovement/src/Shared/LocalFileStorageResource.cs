@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Local File Storage Resource
     /// </summary>
-    internal class LocalFileStorageResource : StorageResource
+    public class LocalFileStorageResource : StorageResource
     {
         private List<string> _path;
         private string _originalPath;

@@ -163,11 +163,9 @@ namespace Azure.Storage.DataMovement
             _sourceResource = sourceResource;
             _destinationResource = destinationResource;
             _isSingleResource = true;
-            if (transferOptions != default)
-            {
-                _events.InvokeTransferStatus = (args) => transferOptions.GetTransferStatus().Invoke(args);
-                _events.InvokeFailedArg = (args) => transferOptions.GetFailed().Invoke(args);
-            }
+            _events = new TransferEventsInternal();
+            _events.InvokeTransferStatus += (args) => transferOptions?.GetTransferStatus().Invoke(args);
+            _events.InvokeFailedArg += (args) => transferOptions?.GetFailed().Invoke(args);
         }
 
         /// <summary>
@@ -193,6 +191,7 @@ namespace Azure.Storage.DataMovement
             _sourceResourceContainer = sourceResource;
             _destinationResourceContainer = destinationResource;
             _isSingleResource = false;
+            _events = new TransferEventsInternal();
             if (transferOptions != default)
             {
                 _events.InvokeTransferStatus = (args) => transferOptions.GetTransferStatus().Invoke(args);

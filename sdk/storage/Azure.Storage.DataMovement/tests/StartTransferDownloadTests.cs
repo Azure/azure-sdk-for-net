@@ -219,8 +219,8 @@ namespace Azure.Storage.DataMovement.Tests
                         BlobName = blobNames[i]
                     };
                     BlockBlobClient sourceBlobClient = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), credential, GetOptions(true)));
-                    StorageResource sourceResource = BlobStorageResourceFactory.GetBlockBlob(sourceBlobClient);
-                    StorageResource destinationResource = LocalStorageResourceFactory.GetFile(downloadedBlobInfo[i].DestinationLocalPath);
+                    StorageResource sourceResource = new BlockBlobStorageResource(sourceBlobClient);
+                    StorageResource destinationResource = new LocalFileStorageResource(downloadedBlobInfo[i].DestinationLocalPath);
 
                     // Act
                     await BlobDataController.StartTransferAsync(

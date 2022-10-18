@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs.DataMovement
     /// <summary>
     /// Blob Storage Resource
     /// </summary>
-    internal class BlockBlobStorageResource : StorageResource
+    public class BlockBlobStorageResource : StorageResource
     {
         private BlockBlobClient blobClient;
 

@@ -170,7 +170,7 @@ namespace Azure.Storage.DataMovement.Tests
 
                     // Set up destination client
                     BlockBlobClient destClient = container.GetBlockBlobClient(blobNames[i]);
-                    StorageResource destinationResource = BlobStorageResourceFactory.GetBlockBlob(destClient);
+                    StorageResource destinationResource = new BlockBlobStorageResource(destClient);
 
                     AutoResetEvent completedStatusWait = new AutoResetEvent(false);
                     options[i].TransferStatusEventHandler += async (TransferStatusEventArgs args) =>
@@ -405,9 +405,9 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
+            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName);
             string folder = CreateRandomDirectory(Path.GetTempPath());
-            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
+            StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(folder);
 
             string openChild = await CreateRandomFileAsync(folder).ConfigureAwait(false);
             string lockedChild = await CreateRandomFileAsync(folder).ConfigureAwait(false);
@@ -459,8 +459,8 @@ namespace Azure.Storage.DataMovement.Tests
             string folder = CreateRandomDirectory(Path.GetTempPath());
 
             // Set up destination client
-            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
-            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
+            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName);
+            StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(folder);
 
             DataControllerOptions managerOptions = new DataControllerOptions()
             {
@@ -489,10 +489,10 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
+            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
-            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
+            StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(folder);
             string openChild = await CreateRandomFileAsync(folder).ConfigureAwait(false);
 
             ContainerTransferOptions options = new ContainerTransferOptions();
@@ -526,10 +526,10 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
+            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
-            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
+            StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(folder);
 
             string openSubfolder = CreateRandomDirectory(folder);
             string openSubchild = await CreateRandomFileAsync(openSubfolder).ConfigureAwait(false);
@@ -570,10 +570,10 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
+            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
-            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
+            StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(folder);
 
             string openSubfolder = CreateRandomDirectory(folder);
             string openSubchild = await CreateRandomFileAsync(openSubfolder).ConfigureAwait(false);
@@ -637,10 +637,10 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
+            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
-            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
+            StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(folder);
 
             string subfolderName = folder;
             for (int i = 0; i < level; i++)
@@ -678,10 +678,10 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
+            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
-            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
+            StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(folder);
 
             string openSubfolder = CreateRandomDirectory(folder);
             string openSubchild = await CreateRandomFileAsync(openSubfolder).ConfigureAwait(false);
@@ -737,10 +737,10 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
+            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
-            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
+            StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(folder);
 
             string openChild = await CreateRandomFileAsync(folder).ConfigureAwait(false);
             string lockedChild = await CreateRandomFileAsync(folder).ConfigureAwait(false);
@@ -797,10 +797,10 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
+            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
-            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
+            StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(folder);
 
             string openChild = await CreateRandomFileAsync(folder).ConfigureAwait(false);
             string lockedChild = await CreateRandomFileAsync(folder).ConfigureAwait(false);
@@ -841,10 +841,10 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
+            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
-            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
+            StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(folder);
 
             string openChild = await CreateRandomFileAsync(folder).ConfigureAwait(false);
             string lockedChild = await CreateRandomFileAsync(folder).ConfigureAwait(false);
@@ -887,10 +887,10 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer destinationResource = BlobStorageResourceFactory.GetBlobVirtualDirectory(test.Container, dirName);
+            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
-            StorageResourceContainer sourceResource = LocalStorageResourceFactory.GetDirectory(folder);
+            StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(folder);
 
             ContainerTransferOptions options = new ContainerTransferOptions();
 

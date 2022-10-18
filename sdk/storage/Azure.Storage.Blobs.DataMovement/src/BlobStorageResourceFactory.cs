@@ -12,16 +12,36 @@ namespace Azure.Storage.Blobs.DataMovement
     /// <summary>
     /// Factory to create blob storage resources
     /// </summary>
-    public static class BlobStorageResourceFactory
+    internal static class BlobStorageResourceFactory
     {
         /// <summary>
-        /// Generate blob resource
+        /// Generate block blob resource
         /// </summary>
         /// <param name="blobClient"></param>
         /// <returns></returns>
         public static StorageResource GetBlockBlob(BlockBlobClient blobClient)
         {
             return new BlockBlobStorageResource(blobClient);
+        }
+
+        /// <summary>
+        /// Generate page blob resource. Currently not supported
+        /// </summary>
+        /// <param name="blobClient"></param>
+        /// <returns></returns>
+        internal static StorageResource GetPageBlob(PageBlobClient blobClient)
+        {
+            return new PageBlobStorageResource(blobClient);
+        }
+
+        /// <summary>
+        /// Generate append blob resource. Currently not supported
+        /// </summary>
+        /// <param name="blobClient"></param>
+        /// <returns></returns>
+        internal static StorageResource GetPageBlob(AppendBlobClient blobClient)
+        {
+            return new AppendBlobStorageResource(blobClient);
         }
 
         /// <summary>

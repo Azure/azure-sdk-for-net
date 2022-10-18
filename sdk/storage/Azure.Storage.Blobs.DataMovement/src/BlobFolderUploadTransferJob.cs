@@ -411,7 +411,7 @@ namespace Azure.Storage.Blobs.DataMovement
                                cancellationToken).ConfigureAwait(false);
                             args?.GetUploadCompleted()?.Invoke(new BlobUploadSuccessEventArgs(
                                 job.TransferId,
-                                LocalStorageResourceFactory.GetFile(sourcePath),
+                                new LocalFileStorageResource(sourcePath),
                                 destinationClient,
                                 contentInfo.GetRawResponse(),
                                 false,
@@ -429,7 +429,7 @@ namespace Azure.Storage.Blobs.DataMovement
                                cancellationToken);
                             args?.GetUploadCompleted()?.Invoke(new BlobUploadSuccessEventArgs(
                                 job.TransferId,
-                                LocalStorageResourceFactory.GetFile(sourcePath),
+                                new LocalFileStorageResource(sourcePath),
                                 destinationClient,
                                 contentInfo.GetRawResponse(),
                                 false,
@@ -442,7 +442,7 @@ namespace Azure.Storage.Blobs.DataMovement
                     {
                         args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                         job.TransferId,
-                                        LocalStorageResourceFactory.GetFile(sourcePath),
+                                        new LocalFileStorageResource(sourcePath),
                                         destinationClient,
                                         ex,
                                         false,
@@ -452,7 +452,7 @@ namespace Azure.Storage.Blobs.DataMovement
                     {
                         args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                         job.TransferId,
-                                        LocalStorageResourceFactory.GetFile(sourcePath),
+                                        new LocalFileStorageResource(sourcePath),
                                         destinationClient,
                                         ex,
                                         false,
@@ -467,7 +467,7 @@ namespace Azure.Storage.Blobs.DataMovement
                         // Unexpected exception
                         args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                         job.TransferId,
-                                        LocalStorageResourceFactory.GetFile(sourcePath),
+                                        new LocalFileStorageResource(sourcePath),
                                         destinationClient,
                                         ex,
                                         false,
@@ -532,7 +532,7 @@ namespace Azure.Storage.Blobs.DataMovement
                     {
                         args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                         job.TransferId,
-                                        LocalStorageResourceFactory.GetFile(sourcePath),
+                                        new LocalFileStorageResource(sourcePath),
                                         destinationClient,
                                         ex,
                                         false,
@@ -542,7 +542,7 @@ namespace Azure.Storage.Blobs.DataMovement
                     {
                         args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                         job.TransferId,
-                                        LocalStorageResourceFactory.GetFile(sourcePath),
+                                        new LocalFileStorageResource(sourcePath),
                                         destinationClient,
                                         ex,
                                         false,
@@ -557,7 +557,7 @@ namespace Azure.Storage.Blobs.DataMovement
                         // Unexpected exception
                         args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                         job.TransferId,
-                                        LocalStorageResourceFactory.GetFile(sourcePath),
+                                        new LocalFileStorageResource(sourcePath),
                                         destinationClient,
                                         ex,
                                         false,
@@ -595,7 +595,7 @@ namespace Azure.Storage.Blobs.DataMovement
                     {
                         args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                         job.TransferId,
-                                        LocalStorageResourceFactory.GetFile(sourcePath),
+                                        new LocalFileStorageResource(sourcePath),
                                         destinationClient,
                                         ex,
                                         false,
@@ -605,7 +605,7 @@ namespace Azure.Storage.Blobs.DataMovement
                     {
                         args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                         job.TransferId,
-                                        LocalStorageResourceFactory.GetFile(sourcePath),
+                                        new LocalFileStorageResource(sourcePath),
                                         destinationClient,
                                         ex,
                                         false,
@@ -620,7 +620,7 @@ namespace Azure.Storage.Blobs.DataMovement
                         // Unexpected exception
                         args?.GetUploadFailed()?.Invoke(new BlobUploadFailedEventArgs(
                                         job.TransferId,
-                                        LocalStorageResourceFactory.GetFile(sourcePath),
+                                        new LocalFileStorageResource(sourcePath),
                                         destinationClient,
                                         ex,
                                         false,

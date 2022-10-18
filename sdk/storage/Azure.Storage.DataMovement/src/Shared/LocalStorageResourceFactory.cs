@@ -10,7 +10,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Produces local file sytem storage resources
     /// </summary>
-    public static class LocalStorageResourceFactory
+    internal static class LocalStorageResourceFactory
     {
         /// <summary>
         /// Gets the file path resource
