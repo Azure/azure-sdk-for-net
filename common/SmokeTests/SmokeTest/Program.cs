@@ -247,7 +247,7 @@ IEnumerable<Assembly> LoadAssemblies(Assembly rootAssembly, string assemblyFileM
     {
         var assembly = assembliesToProcess.Pop();
 
-        if ((!assembly.FullName.StartsWith("System.")) && (!processedAssemblies.Contains(assembly.FullName)))
+        if ((ShouldLoadAssembly(assembly)) && (!processedAssemblies.Contains(assembly.FullName)))
         {
             processedAssemblies.Add(assembly.FullName);
             yield return assembly;
@@ -290,4 +290,11 @@ bool ShouldIgnoreFileLoadException(FileLoadException ex) => ex switch
 
     // By default, do not ignore.
     _ => false
+};
+
+bool ShouldLoadAssembly(Assembly assembly) => assembly.FullName switch
+{
+    string name when name.StartsWith("System.") => false,
+    string name when name.Contains("NativeInterop") => false,
+    _ => true
 };
