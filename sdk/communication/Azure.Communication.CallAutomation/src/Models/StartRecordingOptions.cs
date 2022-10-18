@@ -48,6 +48,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Channel affinity for a participant.
         /// </summary>
-        public IEnumerable<ChannelAffinity> ChannelAffinity { get; set; }
+        public IList<CommunicationIdentifier> AudioChannelParticipantOrdering { get; } =
+            new List<CommunicationIdentifier>();
     }
 }

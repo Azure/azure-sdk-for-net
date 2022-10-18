@@ -167,19 +167,17 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                 Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
 
                 // try start recording unmixed audio with channel affinity
-                var startRecordingResponse = await client.GetCallRecording().StartRecordingAsync(
+                var startRecordingOptions =
                     new StartRecordingOptions(new ServerCallLocator(properties.Value.ServerCallId))
                     {
                         RecordingChannel = RecordingChannel.Unmixed,
                         RecordingContent = RecordingContent.Audio,
                         RecordingFormat = RecordingFormat.Wav,
                         RecordingStateCallbackEndpoint = new Uri(TestEnvironment.DispatcherCallback),
-                        ChannelAffinity = new List<ChannelAffinity>
-                        {
-                            new ChannelAffinity { Channel = 0, Participant = user },
-                            new ChannelAffinity { Channel = 1, Participant = target }
-                        }
-                    });
+                    };
+                startRecordingOptions.AudioChannelParticipantOrdering.Add(user);
+                startRecordingOptions.AudioChannelParticipantOrdering.Add(target);
+                var startRecordingResponse = await client.GetCallRecording().StartRecordingAsync(startRecordingOptions);
                 Assert.AreEqual(StatusCodes.Status200OK, startRecordingResponse.GetRawResponse().Status);
                 Assert.NotNull(startRecordingResponse.Value.RecordingId);
 

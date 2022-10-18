@@ -67,15 +67,17 @@ namespace Azure.Communication.CallAutomation
                     RecordingFormatType = options.RecordingFormat
                 };
 
-                if (options.ChannelAffinity != null)
+                if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
                 {
-                    foreach (var c in options.ChannelAffinity)
+                    int participantCounter = 0;
+                    foreach (var c in options.AudioChannelParticipantOrdering)
                     {
                         request.ChannelAffinity.Add(new ChannelAffinityInternal
                         {
-                            Channel = c.Channel,
-                            Participant = CommunicationIdentifierSerializer.Serialize(c.Participant)
+                            Channel = participantCounter,
+                            Participant = CommunicationIdentifierSerializer.Serialize(c)
                         });
+                        participantCounter++;
                     }
                 };
 
@@ -109,15 +111,17 @@ namespace Azure.Communication.CallAutomation
                     RecordingFormatType = options.RecordingFormat
                 };
 
-                if (options.ChannelAffinity != null)
+                if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
                 {
-                    foreach (var c in options.ChannelAffinity)
+                    int participantCounter = 0;
+                    foreach (var c in options.AudioChannelParticipantOrdering)
                     {
                         request.ChannelAffinity.Add(new ChannelAffinityInternal
                         {
-                            Channel = c.Channel,
-                            Participant = CommunicationIdentifierSerializer.Serialize(c.Participant)
+                            Channel = participantCounter,
+                            Participant = CommunicationIdentifierSerializer.Serialize(c)
                         });
+                        participantCounter++;
                     }
                 };
 
