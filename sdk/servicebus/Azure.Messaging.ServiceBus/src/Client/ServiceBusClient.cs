@@ -385,8 +385,8 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Creates a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving
         /// and settling messages from a session-enabled queue by accepting the next unlocked session that contains Active messages. If there
-        /// are no unlocked sessions with Active messages, then the call will timeout after the configured <see cref="RetryOptions.TryTimeout"/> value and throw
-        /// a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.FailureReason"/> set to <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
+        /// are no unlocked sessions with Active messages, then the call will timeout after the configured <see cref="ServiceBusRetryOptions.TryTimeout"/> value and throw
+        /// a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> set to <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
         /// The <see cref="ServiceBusReceiveMode"/> can be specified in the <see cref="ServiceBusReceiverOptions"/> to configure how messages are received.
         /// The default value is <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// </summary>
@@ -424,8 +424,8 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Creates a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving
         /// and settling messages from a session-enabled subscription by accepting the next unlocked session that contains Active messages. If there
-        /// are no unlocked sessions with Active messages, then the call will timeout after the configured <see cref="RetryOptions.TryTimeout"/> value and throw
-        /// a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.FailureReason"/> set to <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
+        /// are no unlocked sessions with Active messages, then the call will timeout after the configured <see cref="ServiceBusRetryOptions.TryTimeout"/> value and throw
+        /// a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> set to <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
         /// The <see cref="ServiceBusReceiveMode"/> can be specified in the <see cref="ServiceBusReceiverOptions"/> to configure how messages are received.
         /// The default value is <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// </summary>
