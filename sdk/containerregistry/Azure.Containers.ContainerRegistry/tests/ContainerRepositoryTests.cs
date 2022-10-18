@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -50,7 +51,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [Test]
         public void ServiceMethodsValidateArguments()
         {
-            Assert.That(async () => await repository.UpdatePropertiesAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `value` is not null.");
+            Assert.That(async () => await repository.UpdatePropertiesAsync(null, cancellationToken: CancellationToken.None), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `value` is not null.");
         }
     }
 }

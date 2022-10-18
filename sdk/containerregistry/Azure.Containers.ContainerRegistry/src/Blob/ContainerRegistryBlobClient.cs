@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,9 +20,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         private readonly string _registryName;
         private readonly string _repository;
         private readonly HttpPipeline _pipeline;
-        private readonly HttpPipeline _acrAuthPipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
-        //private readonly IContainerRegistryAuthenticationClient _acrAuthClient;
+        private readonly ClientDiagnostics ClientDiagnostics;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryBlobClient"/> for managing container images and artifacts,
@@ -85,9 +82,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Uri endpoint,
             TokenCredential credential,
             string repository,
-#pragma warning disable CA1801 // Review unused parameters
             IContainerRegistryAuthenticationClient authenticationClient,
-#pragma warning restore CA1801 // Review unused parameters
             ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -102,18 +97,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             _endpoint = endpoint;
             _registryName = endpoint.Host.Split('.')[0];
             _repository = repository;
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
 
-            // temp
-            _pipeline = HttpPipelineBuilder.Build(options);
-
-            _acrAuthPipeline = HttpPipelineBuilder.Build(options);
-            //_acrAuthClient = authenticationClient ?? new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
-
-            //string defaultScope = options.Audience + "/.default";
-            //_pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
-            //_restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
-            //_blobRestClient = new ContainerRegistryBlobRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
+            string defaultScope = options.Audience + "/.default";
+            var authClient = authenticationClient ?? new AuthenticationClient(endpoint, options);
+            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, authClient));
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryBlobClient for mocking. </summary>
@@ -144,7 +132,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
             options ??= new UploadManifestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
             scope.Start();
             try
             {
@@ -160,7 +148,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (!manifestDigest.Equals(responseDigest, StringComparison.Ordinal))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(response,
+                    throw ClientDiagnostics.CreateRequestFailedException(response,
                         new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
                 }
 
@@ -186,7 +174,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
             options ??= new UploadManifestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
             scope.Start();
             try
             {
@@ -203,7 +191,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (!ValidateDigest(stream, responseDigest))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(response,
+                    throw ClientDiagnostics.CreateRequestFailedException(response,
                         new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
                 }
 
@@ -229,7 +217,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
             options ??= new UploadManifestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
             scope.Start();
             try
             {
@@ -245,7 +233,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (!manifestDigest.Equals(responseDigest, StringComparison.Ordinal))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(response,
+                    throw ClientDiagnostics.CreateRequestFailedException(response,
                         new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
                 }
 
@@ -271,7 +259,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
             options ??= new UploadManifestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
             scope.Start();
             try
             {
@@ -288,7 +276,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (!ValidateDigest(stream, responseDigest))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(response,
+                    throw ClientDiagnostics.CreateRequestFailedException(response,
                         new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
                 }
 
@@ -311,7 +299,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadBlob)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadBlob)}");
             scope.Start();
             try
             {
@@ -347,7 +335,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadBlob)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadBlob)}");
             scope.Start();
             try
             {
@@ -383,7 +371,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadManifest)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadManifest)}");
             scope.Start();
             try
             {
@@ -394,7 +382,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (!ValidateDigest(response.ContentStream, digest))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(response,
+                    throw ClientDiagnostics.CreateRequestFailedException(response,
                         new ResponseError(null, "The requested digest does not match the digest of the received manifest."));
                 }
 
@@ -422,7 +410,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadManifest)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadManifest)}");
             scope.Start();
             try
             {
@@ -433,7 +421,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (!ValidateDigest(response.ContentStream, digest))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(response,
+                    throw ClientDiagnostics.CreateRequestFailedException(response,
                         new ResponseError(null, "The requested digest does not match the digest of the received manifest."));
                 }
 
@@ -471,7 +459,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlob)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlob)}");
             scope.Start();
             try
             {
@@ -480,7 +468,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (!ValidateDigest(response.ContentStream, digest))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(response,
+                    throw ClientDiagnostics.CreateRequestFailedException(response,
                         new ResponseError(null, "The requested digest does not match the digest of the received manifest."));
                 }
 
@@ -503,7 +491,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlob)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadBlob)}");
             scope.Start();
             try
             {
@@ -512,7 +500,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 if (!ValidateDigest(response.ContentStream, digest))
                 {
-                    throw _clientDiagnostics.CreateRequestFailedException(response,
+                    throw ClientDiagnostics.CreateRequestFailedException(response,
                         new ResponseError(null, "The requested digest does not match the digest of the received manifest."));
                 }
 
@@ -535,7 +523,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteBlob)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteBlob)}");
             scope.Start();
             try
             {
@@ -559,7 +547,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteBlob)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteBlob)}");
             scope.Start();
             try
             {
@@ -583,7 +571,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteManifest)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteManifest)}");
             scope.Start();
             try
             {
@@ -607,7 +595,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteManifest)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DeleteManifest)}");
             scope.Start();
             try
             {

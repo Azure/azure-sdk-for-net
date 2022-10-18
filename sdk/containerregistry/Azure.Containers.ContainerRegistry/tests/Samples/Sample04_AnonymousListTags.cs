@@ -7,6 +7,7 @@ using Azure.Core.TestFramework;
 using Azure.Containers.ContainerRegistry;
 using Azure.Identity;
 using NUnit.Framework;
+using System.Threading;
 
 namespace Azure.Containers.ContainerRegistry.Tests.Samples
 {
@@ -32,7 +33,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
             // List the set of tags on the hello_world image tagged as "latest"
-            Pageable<ArtifactTagProperties> tags = image.GetAllTagProperties();
+            Pageable<ArtifactTagProperties> tags = image.GetAllTagProperties(cancellationToken: CancellationToken.None);
 
             // Iterate through the image's tags, listing the tagged alias for the image
             Console.WriteLine($"{image.FullyQualifiedReference} has the following aliases:");
@@ -63,7 +64,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
             // List the set of tags on the hello_world image tagged as "latest"
-            AsyncPageable<ArtifactTagProperties> tags = image.GetAllTagPropertiesAsync();
+            AsyncPageable<ArtifactTagProperties> tags = image.GetAllTagPropertiesAsync(cancellationToken: CancellationToken.None);
 
             // Iterate through the image's tags, listing the tagged alias for the image
             Console.WriteLine($"{image.FullyQualifiedReference} has the following aliases:");

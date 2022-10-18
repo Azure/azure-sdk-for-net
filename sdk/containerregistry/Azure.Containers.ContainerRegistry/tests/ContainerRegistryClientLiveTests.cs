@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Threading;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Task = System.Threading.Tasks.Task;
@@ -23,7 +24,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var client = CreateClient(anonymous);
 
             // Act
-            AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
+            AsyncPageable<string> repositories = client.GetRepositoryNamesAsync(cancellationToken: CancellationToken.None);
 
             bool gotHelloWorld = false;
             await foreach (string repository in repositories)
@@ -50,7 +51,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int minExpectedPages = 2;
 
             // Act
-            AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
+            AsyncPageable<string> repositories = client.GetRepositoryNamesAsync(cancellationToken: CancellationToken.None);
             var pages = repositories.AsPages(pageSizeHint: pageSize);
 
             int pageCount = 0;
@@ -75,7 +76,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int minExpectedPages = 2;
 
             // Act
-            AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
+            AsyncPageable<string> repositories = client.GetRepositoryNamesAsync(cancellationToken: CancellationToken.None);
             var pages = repositories.AsPages($"</acr/v1/_catalog?last=library/alpine&n={pageSize}>");
 
             int pageCount = 0;
@@ -123,7 +124,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 // Act
                 await client.DeleteRepositoryAsync(repository);
 
-                var repositories = client.GetRepositoryNamesAsync();
+                var repositories = client.GetRepositoryNamesAsync(cancellationToken: CancellationToken.None);
 
                 await foreach (var item in repositories)
                 {

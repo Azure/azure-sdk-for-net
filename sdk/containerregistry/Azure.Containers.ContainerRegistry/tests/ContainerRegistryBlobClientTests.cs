@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -52,8 +53,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [Test]
         public void ServiceMethodsValidateArguments()
         {
-            Assert.That(async () => await client.DeleteBlobAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
-            Assert.That(async () => await client.DeleteManifestAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
+            Assert.That(async () => await client.DeleteBlobAsync(null, cancellationToken: CancellationToken.None), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
+            Assert.That(async () => await client.DeleteManifestAsync(null, cancellationToken: CancellationToken.None), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
             Assert.That(async () => await client.DownloadBlobAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
             Assert.That(async () => await client.DownloadManifestAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `digest` is not null.");
             Assert.That(async () => await client.UploadManifestAsync(manifest: null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `manifest` is not null.");

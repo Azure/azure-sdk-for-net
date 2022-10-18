@@ -12,12 +12,10 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> The Azure Container Registry service client. </summary>
     public partial class ContainerRegistryClient
     {
-        private readonly Uri _endpoint = new(string.Empty);
-        private readonly string _registryName = string.Empty;
+        private readonly Uri _endpoint;
+        private readonly string _registryName;
         private readonly HttpPipeline _pipeline;
-        //private readonly HttpPipeline _acrAuthPipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
-        //private readonly AuthenticationClient _acrAuthClient;
+        private readonly ClientDiagnostics ClientDiagnostics;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryClient"/> for managing container images and artifacts,
@@ -77,19 +75,13 @@ namespace Azure.Containers.ContainerRegistry
             }
 
             _endpoint = endpoint;
-            _registryName = endpoint.Host.Split('.')[0];
-            _clientDiagnostics = new ClientDiagnostics(options);
-
-            // temp
-            _pipeline = HttpPipelineBuilder.Build(options);
             _apiVersion = options.Version;
+            _registryName = endpoint.Host.Split('.')[0];
+            ClientDiagnostics = new ClientDiagnostics(options);
 
-            //_acrAuthPipeline = HttpPipelineBuilder.Build(options);
-            //_acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
-
-            //string defaultScope = options.Audience + "/.default";
-            //_pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
-            //_restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
+            string defaultScope = options.Audience + "/.default";
+            var authClient = new AuthenticationClient(endpoint, options);
+            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, authClient));
         }
 
         /// <summary> Initializes a new instance of RepositoryClient for mocking. </summary>

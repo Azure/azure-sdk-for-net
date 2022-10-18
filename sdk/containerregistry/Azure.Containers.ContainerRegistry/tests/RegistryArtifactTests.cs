@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -54,12 +55,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             Assert.That(async () => await artifact.UpdateManifestPropertiesAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `value` is not null.");
 
-            Assert.That(async () => await artifact.GetTagPropertiesAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `tag` is not null.");
+            Assert.That(async () => await artifact.GetTagPropertiesAsync(null, cancellationToken: CancellationToken.None), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `tag` is not null.");
 
             Assert.That(async () => await artifact.UpdateTagPropertiesAsync(null, new ArtifactTagProperties()), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `tag` is not null.");
-            Assert.That(async () => await artifact.UpdateTagPropertiesAsync("tag", null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `value` is not null.");
+            Assert.That(async () => await artifact.UpdateTagPropertiesAsync("tag", null, cancellationToken: CancellationToken.None), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `value` is not null.");
 
-            Assert.That(async () => await artifact.DeleteTagAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `tag` is not null.");
+            Assert.That(async () => await artifact.DeleteTagAsync(null, cancellationToken: CancellationToken.None), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `tag` is not null.");
         }
     }
 }

@@ -8,6 +8,7 @@ using Azure.Core.TestFramework;
 using Azure.Containers.ContainerRegistry;
 using Azure.Identity;
 using NUnit.Framework;
+using System.Threading;
 
 namespace Azure.Containers.ContainerRegistry.Tests.Samples
 {
@@ -31,7 +32,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 });
 
             // Iterate through repositories
-            Pageable<string> repositoryNames = client.GetRepositoryNames();
+            Pageable<string> repositoryNames = client.GetRepositoryNames(cancellationToken: CancellationToken.None);
             foreach (string repositoryName in repositoryNames)
             {
                 ContainerRepository repository = client.GetRepository(repositoryName);
@@ -49,7 +50,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                     foreach (var tagName in imageManifest.Tags)
                     {
                         Console.WriteLine($"        {imageManifest.RepositoryName}:{tagName}");
-                        image.DeleteTag(tagName);
+                        image.DeleteTag(tagName, cancellationToken: CancellationToken.None);
                     }
                     image.Delete();
                 }
@@ -75,7 +76,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 });
 
             // Iterate through repositories
-            AsyncPageable<string> repositoryNames = client.GetRepositoryNamesAsync();
+            AsyncPageable<string> repositoryNames = client.GetRepositoryNamesAsync(cancellationToken: CancellationToken.None);
             await foreach (string repositoryName in repositoryNames)
             {
                 ContainerRepository repository = client.GetRepository(repositoryName);
@@ -93,7 +94,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                     foreach (var tagName in imageManifest.Tags)
                     {
                         Console.WriteLine($"        {imageManifest.RepositoryName}:{tagName}");
-                        await image.DeleteTagAsync(tagName);
+                        await image.DeleteTagAsync(tagName, cancellationToken: CancellationToken.None);
                     }
                     await image.DeleteAsync();
                 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Linq;
+using System.Threading;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Task = System.Threading.Tasks.Task;
@@ -161,7 +162,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var artifact = client.GetArtifact(_repositoryName, tagName);
 
             // Act
-            AsyncPageable<ArtifactTagProperties> tags = artifact.GetAllTagPropertiesAsync();
+            AsyncPageable<ArtifactTagProperties> tags = artifact.GetAllTagPropertiesAsync(cancellationToken: CancellationToken.None);
 
             bool gotV1Tag = false;
             await foreach (ArtifactTagProperties tag in tags)
@@ -189,7 +190,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int minExpectedPages = 2;
 
             // Act
-            AsyncPageable<ArtifactTagProperties> tags = artifact.GetAllTagPropertiesAsync();
+            AsyncPageable<ArtifactTagProperties> tags = artifact.GetAllTagPropertiesAsync(cancellationToken: CancellationToken.None);
             var pages = tags.AsPages(pageSizeHint: pageSize);
 
             int pageCount = 0;
@@ -216,7 +217,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int minExpectedPages = 2;
 
             // Act
-            AsyncPageable<ArtifactTagProperties> tags = artifact.GetAllTagPropertiesAsync();
+            AsyncPageable<ArtifactTagProperties> tags = artifact.GetAllTagPropertiesAsync(cancellationToken: CancellationToken.None);
             var pages = tags.AsPages($"</acr/v1/{_repositoryName}/_tags?last=v1&n={pageSize}>");
 
             int pageCount = 0;
@@ -247,7 +248,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var artifact = client.GetArtifact(_repositoryName, tag);
 
             // Act
-            ArtifactTagProperties properties = await artifact.GetTagPropertiesAsync(tag);
+            ArtifactTagProperties properties = await artifact.GetTagPropertiesAsync(tag, CancellationToken.None);
 
             // Assert
             Assert.AreEqual(tag, properties.Name);
@@ -289,7 +290,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string tag = "latest";
             var artifact = client.GetArtifact(_repositoryName, tag);
 
-            ArtifactTagProperties tagProperties = await artifact.GetTagPropertiesAsync(tag);
+            ArtifactTagProperties tagProperties = await artifact.GetTagPropertiesAsync(tag, CancellationToken.None);
             ArtifactTagProperties originalWriteableProperties = tagProperties;
 
             // Act
@@ -309,7 +310,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.IsFalse(properties.CanWrite);
             Assert.IsFalse(properties.CanDelete);
 
-            ArtifactTagProperties updatedProperties = await artifact.GetTagPropertiesAsync(tag);
+            ArtifactTagProperties updatedProperties = await artifact.GetTagPropertiesAsync(tag, CancellationToken.None);
 
             Assert.IsFalse(updatedProperties.CanList);
             Assert.IsFalse(updatedProperties.CanRead);
@@ -354,10 +355,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Act
-            await artifact.DeleteTagAsync(tag);
+            await artifact.DeleteTagAsync(tag, CancellationToken.None);
 
             // Assert
-            Assert.ThrowsAsync<RequestFailedException>(async () => { await artifact.GetTagPropertiesAsync(tag); });
+            Assert.ThrowsAsync<RequestFailedException>(async () => { await artifact.GetTagPropertiesAsync(tag, CancellationToken.None); });
         }
         #endregion
     }

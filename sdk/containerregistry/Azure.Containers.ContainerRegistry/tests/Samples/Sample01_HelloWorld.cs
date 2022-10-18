@@ -9,6 +9,7 @@ using Azure.Containers.ContainerRegistry;
 #endregion Snippet:ContainerRegistry_Tests_Samples_Namespaces
 using Azure.Identity;
 using NUnit.Framework;
+using System.Threading;
 
 namespace Azure.Containers.ContainerRegistry.Tests.Samples
 {
@@ -32,7 +33,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 });
 
             // Get the collection of repository names from the registry
-            Pageable<string> repositories = client.GetRepositoryNames();
+            Pageable<string> repositories = client.GetRepositoryNames(CancellationToken.None);
             foreach (string repository in repositories)
             {
                 Console.WriteLine(repository);
@@ -58,7 +59,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 });
 
             // Get the collection of repository names from the registry
-            AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
+            AsyncPageable<string> repositories = client.GetRepositoryNamesAsync(CancellationToken.None);
             await foreach (string repository in repositories)
             {
                 Console.WriteLine(repository);
@@ -86,7 +87,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             try
             {
-                repository.GetProperties();
+                repository.GetProperties(CancellationToken.None);
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -115,7 +116,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             try
             {
-                await repository.GetPropertiesAsync();
+                await repository.GetPropertiesAsync(CancellationToken.None);
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
