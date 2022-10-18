@@ -47,6 +47,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Tests
             //Arrange
             _eventHubsTriggerMetrics.PartitionCount = 4;
             _eventHubsTriggerMetrics.EventCount = 1000;
+            _eventHubsTriggerMetrics.EventCountPerPartition = new Dictionary<uint, long>
+            {
+                { 0, 100 },
+                { 1, 100 },
+                { 2, 100 },
+                { 3, 100 }
+            };
             _options.MaxEventBatchSize = 10;
 
             //Act
@@ -64,8 +71,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Tests
         {
             //Arrange
             _eventHubsTriggerMetrics.PartitionCount = 4;
-            _eventHubsTriggerMetrics.EventCount = 10;
-            _options.MaxEventBatchSize = 10;
+            _eventHubsTriggerMetrics.EventCount = 4;
+            _eventHubsTriggerMetrics.EventCountPerPartition = new Dictionary<uint, long>
+            {
+                { 0, 1 }
+            };
+            _options.MaxEventBatchSize = 4;
 
             //Act
             EventHubTargetScaler eventHubTargetScaler = new EventHubTargetScaler(_functionId, _consumerClientMock.Object, _options,
@@ -82,6 +93,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Tests
             //Arrange
             _eventHubsTriggerMetrics.PartitionCount = 4;
             _eventHubsTriggerMetrics.EventCount = 40;
+            _eventHubsTriggerMetrics.EventCountPerPartition = new Dictionary<uint, long>
+            {
+                { 0, 10 }
+            };
             _options.MaxEventBatchSize = 10;
 
             //Act

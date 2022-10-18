@@ -8,6 +8,7 @@ using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -47,17 +48,30 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
         {
             int concurrency = !context.InstanceConcurrency.HasValue ? _options.MaxEventBatchSize : context.InstanceConcurrency.Value;
 
-            int targetWorkerCount = (int)Math.Ceiling(metrics.EventCount / (decimal)concurrency);
+            long maxUnprocessedEventInPartition = metrics.EventCountPerPartition.DefaultIfEmpty().Max(e => e.Value);
+            int desiredWorkerCount = (int)(maxUnprocessedEventInPartition * metrics.PartitionCount / concurrency);
+            List<long> unprocessedEventCounts = metrics.EventCountPerPartition.Values.ToList();
 
-            if (targetWorkerCount >= metrics.PartitionCount)
+            if (unprocessedEventCounts.Count == 0)
             {
-                targetWorkerCount = metrics.PartitionCount;
+                unprocessedEventCounts.AddRange(Enumerable.Repeat(0L, metrics.PartitionCount));
             }
 
-            _logger.LogInformation($"'Target worker count for function '{_functionId}' is '{targetWorkerCount}' (PartitionCount ='{metrics.PartitionCount}', Concurrecny='{concurrency}').");
+            string unprocessedEventsPerPartitionString = string.Join(",", unprocessedEventCounts);
+
+            _logger.LogInformation($"Event Hub unprocessed events per partition are {unprocessedEventsPerPartitionString} " +
+                $"and events processed per worker should be {concurrency}, so we want " +
+                $"{desiredWorkerCount} worker(s) for function '{_functionId}'.");
+
+            if (desiredWorkerCount > metrics.PartitionCount)
+            {
+                desiredWorkerCount = metrics.PartitionCount;
+                _logger.LogInformation($" However, desiredWorkerCount > numPartitions, so modifying desiredWorkerCount to numPartitions. numPartitions: '{metrics.PartitionCount}'.");
+            }
+
             return new TargetScalerResult
             {
-                TargetWorkerCount = targetWorkerCount
+                TargetWorkerCount = desiredWorkerCount
             };
         }
     }
