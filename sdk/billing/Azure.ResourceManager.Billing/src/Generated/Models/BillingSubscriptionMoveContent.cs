@@ -5,19 +5,21 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Request parameters to transfer billing subscription. </summary>
-    public partial class MoveBillingSubscriptionRequest
+    public partial class BillingSubscriptionMoveContent
     {
-        /// <summary> Initializes a new instance of MoveBillingSubscriptionRequest. </summary>
-        public MoveBillingSubscriptionRequest()
+        /// <summary> Initializes a new instance of BillingSubscriptionMoveContent. </summary>
+        public BillingSubscriptionMoveContent()
         {
         }
 
         /// <summary> The destination enrollment account id. </summary>
         public string DestinationEnrollmentAccountId { get; set; }
         /// <summary> The destination invoice section id. </summary>
-        public string DestinationInvoiceSectionId { get; set; }
+        public ResourceIdentifier DestinationInvoiceSectionId { get; set; }
     }
 }

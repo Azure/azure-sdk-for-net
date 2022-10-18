@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class RenewalTermDetails
+    public partial class SubscriptionRenewalTermDetails
     {
-        internal static RenewalTermDetails DeserializeRenewalTermDetails(JsonElement element)
+        internal static SubscriptionRenewalTermDetails DeserializeSubscriptionRenewalTermDetails(JsonElement element)
         {
             Optional<string> billingFrequency = default;
             Optional<string> productTypeId = default;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Billing.Models
                     continue;
                 }
             }
-            return new RenewalTermDetails(billingFrequency.Value, productTypeId.Value, Optional.ToNullable(quantity), skuId.Value, Optional.ToNullable(termDuration));
+            return new SubscriptionRenewalTermDetails(billingFrequency.Value, productTypeId.Value, Optional.ToNullable(quantity), skuId.Value, Optional.ToNullable(termDuration));
         }
     }
 }

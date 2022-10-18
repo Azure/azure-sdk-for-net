@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The amount. </summary>
-    public partial class Amount
+    public partial class BillingAmount
     {
-        /// <summary> Initializes a new instance of Amount. </summary>
-        internal Amount()
+        /// <summary> Initializes a new instance of BillingAmount. </summary>
+        internal BillingAmount()
         {
         }
 
-        /// <summary> Initializes a new instance of Amount. </summary>
+        /// <summary> Initializes a new instance of BillingAmount. </summary>
         /// <param name="currency"> The currency for the amount value. </param>
         /// <param name="value"> Amount value. </param>
-        internal Amount(string currency, float? value)
+        internal BillingAmount(string currency, float? value)
         {
             Currency = currency;
             Value = value;

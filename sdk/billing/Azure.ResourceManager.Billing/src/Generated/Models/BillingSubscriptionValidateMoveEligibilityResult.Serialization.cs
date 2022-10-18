@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class ValidateMoveBillingSubscriptionEligibilityResult
+    public partial class BillingSubscriptionValidateMoveEligibilityResult
     {
-        internal static ValidateMoveBillingSubscriptionEligibilityResult DeserializeValidateMoveBillingSubscriptionEligibilityResult(JsonElement element)
+        internal static BillingSubscriptionValidateMoveEligibilityResult DeserializeBillingSubscriptionValidateMoveEligibilityResult(JsonElement element)
         {
             Optional<bool> isMoveEligible = default;
-            Optional<ValidateMoveBillingSubscriptionEligibilityError> errorDetails = default;
+            Optional<BillingSubscriptionValidateMoveEligibilityError> errorDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isMoveEligible"))
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Billing.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    errorDetails = ValidateMoveBillingSubscriptionEligibilityError.DeserializeValidateMoveBillingSubscriptionEligibilityError(property.Value);
+                    errorDetails = BillingSubscriptionValidateMoveEligibilityError.DeserializeBillingSubscriptionValidateMoveEligibilityError(property.Value);
                     continue;
                 }
             }
-            return new ValidateMoveBillingSubscriptionEligibilityResult(Optional.ToNullable(isMoveEligible), errorDetails.Value);
+            return new BillingSubscriptionValidateMoveEligibilityResult(Optional.ToNullable(isMoveEligible), errorDetails.Value);
         }
     }
 }

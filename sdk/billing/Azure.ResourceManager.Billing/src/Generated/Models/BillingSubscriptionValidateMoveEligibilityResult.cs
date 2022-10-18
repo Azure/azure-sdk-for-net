@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Result of the transfer eligibility validation. </summary>
-    public partial class ValidateMoveBillingSubscriptionEligibilityResult
+    public partial class BillingSubscriptionValidateMoveEligibilityResult
     {
-        /// <summary> Initializes a new instance of ValidateMoveBillingSubscriptionEligibilityResult. </summary>
-        internal ValidateMoveBillingSubscriptionEligibilityResult()
+        /// <summary> Initializes a new instance of BillingSubscriptionValidateMoveEligibilityResult. </summary>
+        internal BillingSubscriptionValidateMoveEligibilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ValidateMoveBillingSubscriptionEligibilityResult. </summary>
+        /// <summary> Initializes a new instance of BillingSubscriptionValidateMoveEligibilityResult. </summary>
         /// <param name="isMoveEligible"> Specifies whether the subscription is eligible to move. </param>
         /// <param name="errorDetails"> Validation error details. </param>
-        internal ValidateMoveBillingSubscriptionEligibilityResult(bool? isMoveEligible, ValidateMoveBillingSubscriptionEligibilityError errorDetails)
+        internal BillingSubscriptionValidateMoveEligibilityResult(bool? isMoveEligible, BillingSubscriptionValidateMoveEligibilityError errorDetails)
         {
             IsMoveEligible = isMoveEligible;
             ErrorDetails = errorDetails;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Specifies whether the subscription is eligible to move. </summary>
         public bool? IsMoveEligible { get; }
         /// <summary> Validation error details. </summary>
-        public ValidateMoveBillingSubscriptionEligibilityError ErrorDetails { get; }
+        public BillingSubscriptionValidateMoveEligibilityError ErrorDetails { get; }
     }
 }

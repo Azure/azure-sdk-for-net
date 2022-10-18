@@ -11,21 +11,21 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    /// <summary> A class representing the PaymentMethodLink data model. </summary>
-    public partial class PaymentMethodLinkData : ResourceData
+    /// <summary> A class representing the BillingPaymentMethodLink data model. </summary>
+    public partial class BillingPaymentMethodLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of PaymentMethodLinkData. </summary>
-        public PaymentMethodLinkData()
+        /// <summary> Initializes a new instance of BillingPaymentMethodLinkData. </summary>
+        public BillingPaymentMethodLinkData()
         {
         }
 
-        /// <summary> Initializes a new instance of PaymentMethodLinkData. </summary>
+        /// <summary> Initializes a new instance of BillingPaymentMethodLinkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="paymentMethod"> Projection of a payment method. </param>
-        internal PaymentMethodLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PaymentMethodProjectionProperties paymentMethod) : base(id, name, resourceType, systemData)
+        internal BillingPaymentMethodLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PaymentMethodProjectionProperties paymentMethod) : base(id, name, resourceType, systemData)
         {
             PaymentMethod = paymentMethod;
         }

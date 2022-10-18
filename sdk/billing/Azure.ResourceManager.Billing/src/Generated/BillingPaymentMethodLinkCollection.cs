@@ -21,36 +21,36 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PaymentMethodLinkResource" /> and their operations.
-    /// Each <see cref="PaymentMethodLinkResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="PaymentMethodLinkCollection" /> instance call the GetPaymentMethodLinks method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="BillingPaymentMethodLinkResource" /> and their operations.
+    /// Each <see cref="BillingPaymentMethodLinkResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
+    /// To get a <see cref="BillingPaymentMethodLinkCollection" /> instance call the GetBillingPaymentMethodLinks method from an instance of <see cref="TenantResource" />.
     /// </summary>
-    public partial class PaymentMethodLinkCollection : ArmCollection, IEnumerable<PaymentMethodLinkResource>, IAsyncEnumerable<PaymentMethodLinkResource>
+    public partial class BillingPaymentMethodLinkCollection : ArmCollection, IEnumerable<BillingPaymentMethodLinkResource>, IAsyncEnumerable<BillingPaymentMethodLinkResource>
     {
-        private readonly ClientDiagnostics _paymentMethodLinkPaymentMethodsClientDiagnostics;
-        private readonly PaymentMethodsRestOperations _paymentMethodLinkPaymentMethodsRestClient;
+        private readonly ClientDiagnostics _billingPaymentMethodLinkPaymentMethodsClientDiagnostics;
+        private readonly PaymentMethodsRestOperations _billingPaymentMethodLinkPaymentMethodsRestClient;
         private readonly string _billingAccountName;
         private readonly string _billingProfileName;
 
-        /// <summary> Initializes a new instance of the <see cref="PaymentMethodLinkCollection"/> class for mocking. </summary>
-        protected PaymentMethodLinkCollection()
+        /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodLinkCollection"/> class for mocking. </summary>
+        protected BillingPaymentMethodLinkCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PaymentMethodLinkCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodLinkCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal PaymentMethodLinkCollection(ArmClient client, ResourceIdentifier id, string billingAccountName, string billingProfileName) : base(client, id)
+        internal BillingPaymentMethodLinkCollection(ArmClient client, ResourceIdentifier id, string billingAccountName, string billingProfileName) : base(client, id)
         {
             _billingAccountName = billingAccountName;
             _billingProfileName = billingProfileName;
-            _paymentMethodLinkPaymentMethodsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", PaymentMethodLinkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(PaymentMethodLinkResource.ResourceType, out string paymentMethodLinkPaymentMethodsApiVersion);
-            _paymentMethodLinkPaymentMethodsRestClient = new PaymentMethodsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, paymentMethodLinkPaymentMethodsApiVersion);
+            _billingPaymentMethodLinkPaymentMethodsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingPaymentMethodLinkResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(BillingPaymentMethodLinkResource.ResourceType, out string billingPaymentMethodLinkPaymentMethodsApiVersion);
+            _billingPaymentMethodLinkPaymentMethodsRestClient = new PaymentMethodsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingPaymentMethodLinkPaymentMethodsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,18 +71,18 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
-        public virtual async Task<Response<PaymentMethodLinkResource>> GetAsync(string paymentMethodName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingPaymentMethodLinkResource>> GetAsync(string paymentMethodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
 
-            using var scope = _paymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("PaymentMethodLinkCollection.Get");
+            using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkCollection.Get");
             scope.Start();
             try
             {
-                var response = await _paymentMethodLinkPaymentMethodsRestClient.GetByBillingProfileAsync(_billingAccountName, _billingProfileName, paymentMethodName, cancellationToken).ConfigureAwait(false);
+                var response = await _billingPaymentMethodLinkPaymentMethodsRestClient.GetByBillingProfileAsync(_billingAccountName, _billingProfileName, paymentMethodName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PaymentMethodLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingPaymentMethodLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -100,18 +100,18 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
-        public virtual Response<PaymentMethodLinkResource> Get(string paymentMethodName, CancellationToken cancellationToken = default)
+        public virtual Response<BillingPaymentMethodLinkResource> Get(string paymentMethodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
 
-            using var scope = _paymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("PaymentMethodLinkCollection.Get");
+            using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkCollection.Get");
             scope.Start();
             try
             {
-                var response = _paymentMethodLinkPaymentMethodsRestClient.GetByBillingProfile(_billingAccountName, _billingProfileName, paymentMethodName, cancellationToken);
+                var response = _billingPaymentMethodLinkPaymentMethodsRestClient.GetByBillingProfile(_billingAccountName, _billingProfileName, paymentMethodName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PaymentMethodLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingPaymentMethodLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,17 +126,17 @@ namespace Azure.ResourceManager.Billing
         /// Operation Id: PaymentMethods_ListByBillingProfile
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PaymentMethodLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PaymentMethodLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BillingPaymentMethodLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingPaymentMethodLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PaymentMethodLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<BillingPaymentMethodLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _paymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("PaymentMethodLinkCollection.GetAll");
+                using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _paymentMethodLinkPaymentMethodsRestClient.ListByBillingProfileAsync(_billingAccountName, _billingProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PaymentMethodLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _billingPaymentMethodLinkPaymentMethodsRestClient.ListByBillingProfileAsync(_billingAccountName, _billingProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new BillingPaymentMethodLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -144,14 +144,14 @@ namespace Azure.ResourceManager.Billing
                     throw;
                 }
             }
-            async Task<Page<PaymentMethodLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<BillingPaymentMethodLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _paymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("PaymentMethodLinkCollection.GetAll");
+                using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _paymentMethodLinkPaymentMethodsRestClient.ListByBillingProfileNextPageAsync(nextLink, _billingAccountName, _billingProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PaymentMethodLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _billingPaymentMethodLinkPaymentMethodsRestClient.ListByBillingProfileNextPageAsync(nextLink, _billingAccountName, _billingProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new BillingPaymentMethodLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -168,17 +168,17 @@ namespace Azure.ResourceManager.Billing
         /// Operation Id: PaymentMethods_ListByBillingProfile
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PaymentMethodLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PaymentMethodLinkResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingPaymentMethodLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingPaymentMethodLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PaymentMethodLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<BillingPaymentMethodLinkResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _paymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("PaymentMethodLinkCollection.GetAll");
+                using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _paymentMethodLinkPaymentMethodsRestClient.ListByBillingProfile(_billingAccountName, _billingProfileName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PaymentMethodLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _billingPaymentMethodLinkPaymentMethodsRestClient.ListByBillingProfile(_billingAccountName, _billingProfileName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new BillingPaymentMethodLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -186,14 +186,14 @@ namespace Azure.ResourceManager.Billing
                     throw;
                 }
             }
-            Page<PaymentMethodLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<BillingPaymentMethodLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _paymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("PaymentMethodLinkCollection.GetAll");
+                using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _paymentMethodLinkPaymentMethodsRestClient.ListByBillingProfileNextPage(nextLink, _billingAccountName, _billingProfileName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PaymentMethodLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _billingPaymentMethodLinkPaymentMethodsRestClient.ListByBillingProfileNextPage(nextLink, _billingAccountName, _billingProfileName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new BillingPaymentMethodLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
 
-            using var scope = _paymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("PaymentMethodLinkCollection.Exists");
+            using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _paymentMethodLinkPaymentMethodsRestClient.GetByBillingProfileAsync(_billingAccountName, _billingProfileName, paymentMethodName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _billingPaymentMethodLinkPaymentMethodsRestClient.GetByBillingProfileAsync(_billingAccountName, _billingProfileName, paymentMethodName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,11 +244,11 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
 
-            using var scope = _paymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("PaymentMethodLinkCollection.Exists");
+            using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkCollection.Exists");
             scope.Start();
             try
             {
-                var response = _paymentMethodLinkPaymentMethodsRestClient.GetByBillingProfile(_billingAccountName, _billingProfileName, paymentMethodName, cancellationToken: cancellationToken);
+                var response = _billingPaymentMethodLinkPaymentMethodsRestClient.GetByBillingProfile(_billingAccountName, _billingProfileName, paymentMethodName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        IEnumerator<PaymentMethodLinkResource> IEnumerable<PaymentMethodLinkResource>.GetEnumerator()
+        IEnumerator<BillingPaymentMethodLinkResource> IEnumerable<BillingPaymentMethodLinkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Billing
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<PaymentMethodLinkResource> IAsyncEnumerable<PaymentMethodLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<BillingPaymentMethodLinkResource> IAsyncEnumerable<BillingPaymentMethodLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

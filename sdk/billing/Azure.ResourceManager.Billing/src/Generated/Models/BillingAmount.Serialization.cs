@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class Amount
+    public partial class BillingAmount
     {
-        internal static Amount DeserializeAmount(JsonElement element)
+        internal static BillingAmount DeserializeBillingAmount(JsonElement element)
         {
             Optional<string> currency = default;
             Optional<float> value = default;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Billing.Models
                     continue;
                 }
             }
-            return new Amount(currency.Value, Optional.ToNullable(value));
+            return new BillingAmount(currency.Value, Optional.ToNullable(value));
         }
     }
 }

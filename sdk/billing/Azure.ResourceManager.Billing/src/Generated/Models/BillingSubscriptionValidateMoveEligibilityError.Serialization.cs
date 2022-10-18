@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class ValidateMoveBillingSubscriptionEligibilityError
+    public partial class BillingSubscriptionValidateMoveEligibilityError
     {
-        internal static ValidateMoveBillingSubscriptionEligibilityError DeserializeValidateMoveBillingSubscriptionEligibilityError(JsonElement element)
+        internal static BillingSubscriptionValidateMoveEligibilityError DeserializeBillingSubscriptionValidateMoveEligibilityError(JsonElement element)
         {
             Optional<SubscriptionTransferValidationErrorCode> code = default;
             Optional<string> message = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing.Models
                     continue;
                 }
             }
-            return new ValidateMoveBillingSubscriptionEligibilityError(Optional.ToNullable(code), message.Value, details.Value);
+            return new BillingSubscriptionValidateMoveEligibilityError(Optional.ToNullable(code), message.Value, details.Value);
         }
     }
 }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class Reseller
+    public partial class CreatedSubscriptionReseller
     {
-        internal static Reseller DeserializeReseller(JsonElement element)
+        internal static CreatedSubscriptionReseller DeserializeCreatedSubscriptionReseller(JsonElement element)
         {
             Optional<string> resellerId = default;
             Optional<string> description = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Billing.Models
                     continue;
                 }
             }
-            return new Reseller(resellerId.Value, description.Value);
+            return new CreatedSubscriptionReseller(resellerId.Value, description.Value);
         }
     }
 }
