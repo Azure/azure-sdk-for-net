@@ -438,7 +438,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task AnalyzeHealthcareEntitiesBatchWithFhirTest()
+        public async Task AnalyzeHealthcareEntitiesBatchWithFhirVersionTest()
         {
             TextAnalyticsClient client = GetClient();
 
@@ -466,7 +466,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
-        public void AnalyzeHealthcareEntitiesBatchWithFhirThrows()
+        public void AnalyzeHealthcareEntitiesBatchWithFhirVersionThrows()
         {
             TestDiagnostics = false;
 
@@ -478,6 +478,22 @@ namespace Azure.AI.TextAnalytics.Tests
             }));
 
             Assert.AreEqual("AnalyzeHealthcareEntitiesOptions.FhirVersion is not available in API version 2022-05-01. Use service API version 2022-10-01-preview or newer.", ex.Message);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public void AnalyzeHealthcareEntitiesBatchWithDocumentTypeThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
+            {
+                DocumentType = HealthcareDocumentType.DischargeSummary
+            }));
+
+            Assert.AreEqual("AnalyzeHealthcareEntitiesOptions.DocumentType is not available in API version 2022-05-01. Use service API version 2022-10-01-preview or newer.", ex.Message);
         }
 
         private void ValidateInDocumenResult(IReadOnlyCollection<HealthcareEntity> entities, List<string> minimumExpectedOutput)
