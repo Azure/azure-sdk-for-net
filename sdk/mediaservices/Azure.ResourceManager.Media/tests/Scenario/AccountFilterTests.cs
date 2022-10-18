@@ -16,7 +16,8 @@ namespace Azure.ResourceManager.Media.Tests
 
         private MediaServicesAccountFilterCollection accountFilterCollection => _mediaService.GetMediaServicesAccountFilters();
 
-        public AccountFilterTests(bool isAsync) : base(isAsync)
+        public AccountFilterTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

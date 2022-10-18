@@ -51,7 +51,7 @@ Once you have a connection string, you can authenticate your client with it.
 ```C# Snippet:ServiceBusAuthConnString
 // Create a ServiceBusClient that will authenticate using a connection string
 string connectionString = "<connection_string>";
-ServiceBusClient client = new ServiceBusClient(connectionString);
+await using var client = new ServiceBusClient(connectionString);
 ```
 
 To see how to authenticate using Azure.Identity, view this [example](#authenticating-with-azureidentity).
@@ -415,7 +415,7 @@ The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/mai
 ```C# Snippet:ServiceBusAuthAAD
 // Create a ServiceBusClient that will authenticate through Active Directory
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
-ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 ```
 
 ### Working with Sessions

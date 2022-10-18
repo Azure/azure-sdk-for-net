@@ -16,7 +16,8 @@ namespace Azure.ResourceManager.Media.Tests
 
         private MediaAssetCollection mediaAssetCollection => _mediaService.GetMediaAssets();
 
-        public MediaAssetTests(bool isAsync) : base(isAsync)
+        public MediaAssetTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
