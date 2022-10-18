@@ -275,17 +275,14 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentException"> Thrown when <paramref name="tagOrDigest"/> is empty. </exception>
         public virtual RegistryArtifact GetArtifact(string repositoryName, string tagOrDigest)
         {
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
+            Argument.AssertNotNullOrEmpty(tagOrDigest, nameof(tagOrDigest));
 
-            //Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
-            //Argument.AssertNotNullOrEmpty(tagOrDigest, nameof(tagOrDigest));
-
-            //return new RegistryArtifact(
-            //    _endpoint,
-            //    repositoryName,
-            //    tagOrDigest,
-            //    _clientDiagnostics,
-            //    _restClient);
+            return new RegistryArtifact(
+                _endpoint,
+                repositoryName,
+                tagOrDigest,
+                ClientDiagnostics);
         }
     }
 }

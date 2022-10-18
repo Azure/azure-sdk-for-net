@@ -189,7 +189,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 Response response = CreateManifest(tagOrDigest, content, ManifestMediaType.OciManifest.ToString(), context);
                 var responseDigest = response.Headers.TryGetValue(ContainerRegistryHeaders.DockerContentDigest, out string value) ? value : null;
 
-                if (!ValidateDigest(stream, responseDigest))
+                if (!ValidateDigest(manifestStream, responseDigest))
                 {
                     throw ClientDiagnostics.CreateRequestFailedException(response,
                         new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
@@ -313,7 +313,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 Response uploadChunkResponse = UploadChunk(startLocation, content, context);
 
                 string uploadLocation = uploadChunkResponse.Headers.TryGetValue(ContainerRegistryHeaders.Location, out string location) ? location : null;
-                Response completeUploadResponse = CompleteUpload(blobDigest, uploadLocation, null, context);
+                Response completeUploadResponse = CompleteUpload(uploadLocation, blobDigest, null, context);
                 string responseDigest = completeUploadResponse.Headers.TryGetValue(ContainerRegistryHeaders.DockerContentDigest, out string digest) ? digest : null;
 
                 return Response.FromValue(new UploadBlobResult(responseDigest), completeUploadResponse);
