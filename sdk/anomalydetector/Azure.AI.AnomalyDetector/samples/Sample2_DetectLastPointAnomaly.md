@@ -30,7 +30,7 @@ Call `File.ReadAllLines` with the file path and create a list of `TimeSeriesPoin
 
 Make a `DetectRequest` object with the series of points, and `TimeGranularity.Daily` for the granularity (or periodicity) of the data points.
 
-```C# Snippet:ReadSeriesData
+```C# Snippet:ReadSeriesDataLast
 //read data
 List<JsonElement> data_points = new List<JsonElement>();
 using (StreamReader reader = new StreamReader("./samples/data/request-data.csv"))

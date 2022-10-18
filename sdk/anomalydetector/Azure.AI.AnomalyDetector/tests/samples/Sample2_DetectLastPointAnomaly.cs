@@ -35,7 +35,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
             #endregion
 
-            #region Snippet:ReadSeriesData
+            #region Snippet:ReadSeriesDataLast
             //read data
             List<JsonElement> data_points = new List<JsonElement>();
             using (StreamReader reader = new StreamReader("./samples/data/request-data.csv"))
