@@ -79,7 +79,6 @@ namespace Azure.Identity.Samples
         [Test]
         public void AuthenticatingWithManagedIdentityCredentialUserAssigned()
         {
-
             string userAssignedClientId = "";
 
             #region Snippet:AuthenticatingWithManagedIdentityCredentialUserAssigned
