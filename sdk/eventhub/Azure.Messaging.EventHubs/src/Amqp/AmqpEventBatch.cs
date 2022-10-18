@@ -9,7 +9,6 @@ using System.Runtime.CompilerServices;
 using Azure.Core;
 using Azure.Core.Amqp;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.Amqp;
 
@@ -42,9 +41,6 @@ namespace Azure.Messaging.EventHubs.Amqp
 
         /// <summary>The set of events that have been added to the batch, in their <see cref="AmqpMessage" /> serialized format.</summary>
         private readonly List<AmqpMessage> _batchMessages = new();
-
-        /// <summary>The set of buffers rented from the shared array pool which must be returned on disposal.</summary>
-        private readonly List<byte[]> _rentedBuffers = new();
 
         /// <summary>The first sequence number of the batch; if not sequenced, <c>null</c>.</summary>
         private int? _startingSequenceNumber;
@@ -178,9 +174,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                        var bodyArraySegment = (ArraySegment<byte>)bodySegment.Value;
                        var buffer = ArrayPool<byte>.Shared.Rent(bodyArraySegment.Count);
 
-                       _rentedBuffers.Add(buffer);
                        CopyArraySegmentTo(bodyArraySegment, buffer);
-
                        bodySegment.Value = new ArraySegment<byte>(buffer, 0, bodyArraySegment.Count);
                    }
                 }
@@ -200,15 +194,10 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public override void Clear()
         {
-            foreach (var message in _batchMessages)
-            {
-                message.Dispose();
-            }
+            FreeBatchMessages(_batchMessages, true);
 
             _batchMessages.Clear();
             _sizeBytes = _reservedOverheadBytes;
-
-            ReturnRentedBuffers(_rentedBuffers);
         }
 
         /// <summary>
@@ -284,8 +273,8 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             _disposed = true;
 
-            // Rented buffers are returned when the batch is
-            // cleared.
+            // Clearing the batch will free its messages and perform any other
+            // necessary cleanup of their state.
 
             Clear();
             GC.SuppressFinalize(this);
@@ -297,43 +286,49 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         ~AmqpEventBatch()
         {
-            ReturnRentedBuffers(_rentedBuffers);
+            FreeBatchMessages(_batchMessages, false);
         }
 
         /// <summary>
-        ///   Returns any rented buffers held by the batch back into the
-        ///   shared array pool.
+        ///   Returns any rented buffers held by the AMQP messages in the batch back into the
+        ///   shared array pool and optionally disposes the messages.
         /// </summary>
         ///
-        /// <param name="rentedBuffers">The set of rented buffers to return.</param>
-        ///
-        /// <remarks>
-        ///   If an attempt is made to return a buffer that is no longer rented, the
-        ///   failure will be ignored and the remaining buffers returned.
-        /// </remarks>
+        /// <param name="batchMessages">The set of messages to free and, optionally, dispose.</param>
+        /// <param name="disposeMessages"><c>true</c> to dispose messages after freeing; otherwise. <c>false</c>.</param>
         ///
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void ReturnRentedBuffers(List<byte[]> rentedBuffers)
+        private static void FreeBatchMessages(List<AmqpMessage> batchMessages,
+                                              bool disposeMessages)
         {
-            foreach (var rentedBuffer in rentedBuffers)
+            foreach (var message in batchMessages)
             {
-                try
+                if (((message.BodyType & SectionFlag.Data) > 0) && (message.DataBody != null))
                 {
-                    ArrayPool<byte>.Shared.Return(rentedBuffer);
+                    foreach (var segment in message.DataBody)
+                    {
+                        try
+                        {
+                            ArrayPool<byte>.Shared.Return(((ArraySegment<byte>)segment.Value).Array);
+                        }
+                        catch (ArgumentException)
+                        {
+                            // Ignore.
+                            //
+                            // This occurs when the buffer passed is not rented. If this scenario
+                            // is encountered, it likely indicates an error happened during TryAdd
+                            // when renting the buffer or at Dispose.  The remainder of the rented
+                            // buffers should still be returned.
+                        }
+                    }
                 }
-                catch (ArgumentException)
+
+                if (disposeMessages)
                 {
-                    // Ignore.
-                    //
-                    // This occurs when the buffer passed is not rented. If this scenario
-                    // is encountered, it likely indicates an error happened during TryAdd
-                    // when renting the buffer or at Dispose.  The remainder of the rented
-                    // buffers should still be returned.
+                    message.Dispose();
                 }
             }
-
-            rentedBuffers.Clear();
-        }
+}
 
         /// <summary>
         ///   Calculates the next sequence number based on the current sequence number.
