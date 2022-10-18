@@ -22,6 +22,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         [Test]
         public void DetectChangePoint()
         {
+            #region Snippet:CreateAnomalyDetectorClient
             //read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -32,9 +33,9 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             //create client
             AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
+            #endregion
 
             #region Snippet:ReadSeriesDataForChangePoint
-
             //read data
             List<JsonElement> data_points = new List<JsonElement>();
             using (StreamReader reader = new StreamReader("./samples/data/request-data.csv"))
@@ -54,7 +55,6 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             #endregion
 
             #region Snippet:DetectChangePoint
-
             //detect
             Console.WriteLine("Detecting the change point in the series.");
             var data = new
@@ -86,7 +86,6 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             {
                 Console.WriteLine("No change point detected in the series.");
             }
-
             #endregion
         }
     }

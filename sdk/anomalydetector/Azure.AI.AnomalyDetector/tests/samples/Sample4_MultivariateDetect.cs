@@ -26,6 +26,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         [Test]
         public void MultivariateDetect()
         {
+            #region Snippet:CreateAnomalyDetectorClient
             //read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -37,6 +38,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             //create client
             AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
+            #endregion
 
             // train
             TimeSpan offset = new TimeSpan(0);

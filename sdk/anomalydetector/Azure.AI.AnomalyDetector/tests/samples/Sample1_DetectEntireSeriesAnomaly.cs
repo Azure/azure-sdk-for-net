@@ -22,7 +22,6 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         public void DetectEntireSeriesAnomaly()
         {
             #region Snippet:CreateAnomalyDetectorClient
-
             //read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -33,7 +32,6 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             //create client
             AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
-
             #endregion
 
             #region Snippet:ReadSeriesData
@@ -56,7 +54,6 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             #endregion
 
             #region Snippet:DetectEntireSeriesAnomaly
-
             //detect
             Console.WriteLine("Detecting anomalies in the entire time series.");
 

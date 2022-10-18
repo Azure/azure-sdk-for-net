@@ -22,6 +22,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         [Test]
         public void DetectLastPointAnomaly()
         {
+            #region Snippet:CreateAnomalyDetectorClient
             //read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -32,7 +33,9 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             //create client
             AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
+            #endregion
 
+            #region Snippet:ReadSeriesData
             //read data
             List<JsonElement> data_points = new List<JsonElement>();
             using (StreamReader reader = new StreamReader("./samples/data/request-data.csv"))
@@ -49,9 +52,9 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                     }
                 }
             }
+            #endregion
 
             #region Snippet:DetectLastPointAnomaly
-
             //detect
             Console.WriteLine("Detecting the anomaly status of the latest point in the series.");
             try

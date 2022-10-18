@@ -16,9 +16,10 @@ string apiKey = TestEnvironment.ApiKey;
 
 var endpointUri = new Uri(endpoint);
 var credential = new AzureKeyCredential(apiKey);
+String apiVersion = "v1.1";
 
 //create client
-AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
+AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
 ```
 
 ## Load time series and create DetectRequest
@@ -31,19 +32,21 @@ Make a `DetectRequest` object with the series of points, and `TimeGranularity.Da
 
 ```C# Snippet:ReadSeriesData
 //read data
-string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "samples", "data", "request-data.csv");
-
-List<TimeSeriesPoint> list = File.ReadAllLines(datapath, Encoding.UTF8)
-    .Where(e => e.Trim().Length != 0)
-    .Select(e => e.Split(','))
-    .Where(e => e.Length == 2)
-    .Select(e => new TimeSeriesPoint(float.Parse(e[1])){ Timestamp = DateTime.Parse(e[0])}).ToList();
-
-//create request
-DetectRequest request = new DetectRequest(list)
+List<JsonElement> data_points = new List<JsonElement>();
+using (StreamReader reader = new StreamReader("./samples/data/request-data.csv"))
 {
-    Granularity = TimeGranularity.Daily
-};
+    while (!reader.EndOfStream)
+    {
+        var values = reader.ReadLine().Split(',');
+        if (values.Length == 2)
+        {
+            dynamic obj = new JObject();
+            obj.timestamp = values[0];
+            obj.value = values[1];
+            data_points.Add(JsonDocument.Parse(Newtonsoft.Json.JsonConvert.SerializeObject(obj)).RootElement);
+        }
+    }
+}
 ```
 
 ## Detect anomalies of the entire series
@@ -55,12 +58,17 @@ Console.WriteLine("Detecting anomalies in the entire time series.");
 
 try
 {
-    EntireDetectResponse result = await client.DetectEntireSeriesAsync(request).ConfigureAwait(false);
-
-    bool hasAnomaly = false;
-    for (int i = 0; i < request.Series.Count; ++i)
+    var data = new
     {
-        if (result.IsAnomaly[i])
+        series = data_points,
+        granularity = "daily"
+    };
+    Response response = client.DetectEntireSeries(RequestContent.Create(data));
+    JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+    bool hasAnomaly = false;
+    for (int i = 0; i < result.GetProperty("isAnomaly").GetArrayLength(); ++i)
+    {
+        if (bool.Parse(result.GetProperty("isAnomaly")[i].ToString()))
         {
             Console.WriteLine("An anomaly was detected at index: {0}.", i);
             hasAnomaly = true;

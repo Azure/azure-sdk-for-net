@@ -16,9 +16,10 @@ string apiKey = TestEnvironment.ApiKey;
 
 var endpointUri = new Uri(endpoint);
 var credential = new AzureKeyCredential(apiKey);
+String apiVersion = "v1.1";
 
 //create client
-AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
+AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
 ```
 
 ## Load time series and create ChangePointDetectRequest
@@ -31,16 +32,21 @@ Make a `ChangePointDetectRequest` object with the series of points, and `TimeGra
 
 ```C# Snippet:ReadSeriesDataForChangePoint
 //read data
-string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "samples", "data", "request-data.csv");
-
-List<TimeSeriesPoint> list = File.ReadAllLines(datapath, Encoding.UTF8)
-    .Where(e => e.Trim().Length != 0)
-    .Select(e => e.Split(','))
-    .Where(e => e.Length == 2)
-    .Select(e => new TimeSeriesPoint(float.Parse(e[1])){ Timestamp = DateTime.Parse(e[0])}).ToList();
-
-//create request
-ChangePointDetectRequest request = new ChangePointDetectRequest(list, TimeGranularity.Daily);
+List<JsonElement> data_points = new List<JsonElement>();
+using (StreamReader reader = new StreamReader("./samples/data/request-data.csv"))
+{
+    while (!reader.EndOfStream)
+    {
+        var values = reader.ReadLine().Split(',');
+        if (values.Length == 2)
+        {
+            dynamic obj = new JObject();
+            obj.timestamp = values[0];
+            obj.value = values[1];
+            data_points.Add(JsonDocument.Parse(Newtonsoft.Json.JsonConvert.SerializeObject(obj)).RootElement);
+        }
+    }
+}
 ```
 
 ## Detect change point
@@ -49,19 +55,28 @@ Call the client's `DetectChangePointAsync` method with the `ChangePointDetectReq
 ```C# Snippet:DetectChangePoint
 //detect
 Console.WriteLine("Detecting the change point in the series.");
+var data = new
+{
+    series = data_points,
+    granularity = "daily"
+};
+Response response = client.DetectChangePoint(RequestContent.Create(data));
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
-ChangePointDetectResponse result = await client.DetectChangePointAsync(request).ConfigureAwait(false);
-
-if (result.IsChangePoint.Contains(true))
+List<int> change_point_indexs = new List<int>();
+for (int i = 0; i < result.GetProperty("isChangePoint").GetArrayLength(); ++i)
+{
+    if (bool.Parse(result.GetProperty("isChangePoint")[i].ToString().ToLower()))
+    {
+        change_point_indexs.Add(i);
+    }
+}
+if (change_point_indexs.Count > 0)
 {
     Console.WriteLine("A change point was detected at index:");
-    for (int i = 0; i < request.Series.Count; ++i)
-    {
-        if (result.IsChangePoint[i])
-        {
-            Console.Write(i);
-            Console.Write(" ");
-        }
+    foreach (var index in change_point_indexs) {
+        Console.Write(index);
+        Console.Write(", ");
     }
     Console.WriteLine();
 }
