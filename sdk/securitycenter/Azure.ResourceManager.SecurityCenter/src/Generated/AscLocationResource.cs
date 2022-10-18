@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly LocationsRestOperations _ascLocationLocationsRestClient;
         private readonly ClientDiagnostics _allowedConnectionsResourceAllowedConnectionsClientDiagnostics;
         private readonly AllowedConnectionsRestOperations _allowedConnectionsResourceAllowedConnectionsRestClient;
-        private readonly ClientDiagnostics _topologyResourceTopologyClientDiagnostics;
-        private readonly TopologyRestOperations _topologyResourceTopologyRestClient;
+        private readonly ClientDiagnostics _securityTopologyResourceTopologyClientDiagnostics;
+        private readonly TopologyRestOperations _securityTopologyResourceTopologyRestClient;
         private readonly ClientDiagnostics _jitNetworkAccessPolicyClientDiagnostics;
         private readonly JitNetworkAccessPoliciesRestOperations _jitNetworkAccessPolicyRestClient;
         private readonly ClientDiagnostics _discoveredSecuritySolutionClientDiagnostics;
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.SecurityCenter
             _allowedConnectionsResourceAllowedConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", AllowedConnectionsResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(AllowedConnectionsResource.ResourceType, out string allowedConnectionsResourceAllowedConnectionsApiVersion);
             _allowedConnectionsResourceAllowedConnectionsRestClient = new AllowedConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, allowedConnectionsResourceAllowedConnectionsApiVersion);
-            _topologyResourceTopologyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", TopologyResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(TopologyResource.ResourceType, out string topologyResourceTopologyApiVersion);
-            _topologyResourceTopologyRestClient = new TopologyRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, topologyResourceTopologyApiVersion);
+            _securityTopologyResourceTopologyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityTopologyResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SecurityTopologyResource.ResourceType, out string securityTopologyResourceTopologyApiVersion);
+            _securityTopologyResourceTopologyRestClient = new TopologyRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityTopologyResourceTopologyApiVersion);
             _jitNetworkAccessPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", JitNetworkAccessPolicyResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(JitNetworkAccessPolicyResource.ResourceType, out string jitNetworkAccessPolicyApiVersion);
             _jitNetworkAccessPolicyRestClient = new JitNetworkAccessPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jitNetworkAccessPolicyApiVersion);
@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.SecurityCenter
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of AscLocationLocationTaskResources in the AscLocation. </summary>
-        /// <returns> An object representing collection of AscLocationLocationTaskResources and their operations over a AscLocationLocationTaskResource. </returns>
-        public virtual AscLocationLocationTaskCollection GetAscLocationLocationTasks()
+        /// <summary> Gets a collection of SubscriptionSecurityTaskResources in the AscLocation. </summary>
+        /// <returns> An object representing collection of SubscriptionSecurityTaskResources and their operations over a SubscriptionSecurityTaskResource. </returns>
+        public virtual SubscriptionSecurityTaskCollection GetSubscriptionSecurityTasks()
         {
-            return GetCachedClient(Client => new AscLocationLocationTaskCollection(Client, Id));
+            return GetCachedClient(Client => new SubscriptionSecurityTaskCollection(Client, Id));
         }
 
         /// <summary>
@@ -139,9 +139,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AscLocationLocationTaskResource>> GetAscLocationLocationTaskAsync(string taskName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionSecurityTaskResource>> GetSubscriptionSecurityTaskAsync(string taskName, CancellationToken cancellationToken = default)
         {
-            return await GetAscLocationLocationTasks().GetAsync(taskName, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionSecurityTasks().GetAsync(taskName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AscLocationLocationTaskResource> GetAscLocationLocationTask(string taskName, CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionSecurityTaskResource> GetSubscriptionSecurityTask(string taskName, CancellationToken cancellationToken = default)
         {
-            return GetAscLocationLocationTasks().Get(taskName, cancellationToken);
+            return GetSubscriptionSecurityTasks().Get(taskName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AdaptiveApplicationControlGroupResources in the AscLocation. </summary>
@@ -196,11 +196,11 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetAdaptiveApplicationControlGroups().Get(groupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AscLocationLocationAlertResources in the AscLocation. </summary>
-        /// <returns> An object representing collection of AscLocationLocationAlertResources and their operations over a AscLocationLocationAlertResource. </returns>
-        public virtual AscLocationLocationAlertCollection GetAscLocationLocationAlerts()
+        /// <summary> Gets a collection of SubscriptionSecurityAlertResources in the AscLocation. </summary>
+        /// <returns> An object representing collection of SubscriptionSecurityAlertResources and their operations over a SubscriptionSecurityAlertResource. </returns>
+        public virtual SubscriptionSecurityAlertCollection GetSubscriptionSecurityAlerts()
         {
-            return GetCachedClient(Client => new AscLocationLocationAlertCollection(Client, Id));
+            return GetCachedClient(Client => new SubscriptionSecurityAlertCollection(Client, Id));
         }
 
         /// <summary>
@@ -213,9 +213,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AscLocationLocationAlertResource>> GetAscLocationLocationAlertAsync(string alertName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionSecurityAlertResource>> GetSubscriptionSecurityAlertAsync(string alertName, CancellationToken cancellationToken = default)
         {
-            return await GetAscLocationLocationAlerts().GetAsync(alertName, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionSecurityAlerts().GetAsync(alertName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -228,9 +228,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AscLocationLocationAlertResource> GetAscLocationLocationAlert(string alertName, CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionSecurityAlertResource> GetSubscriptionSecurityAlert(string alertName, CancellationToken cancellationToken = default)
         {
-            return GetAscLocationLocationAlerts().Get(alertName, cancellationToken);
+            return GetSubscriptionSecurityAlerts().Get(alertName, cancellationToken);
         }
 
         /// <summary>
@@ -371,17 +371,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Topology_ListByHomeRegion
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TopologyResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TopologyResource> GetTopologiesByHomeRegionAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityTopologyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityTopologyResource> GetTopologiesByHomeRegionAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<TopologyResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SecurityTopologyResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _topologyResourceTopologyClientDiagnostics.CreateScope("AscLocationResource.GetTopologiesByHomeRegion");
+                using var scope = _securityTopologyResourceTopologyClientDiagnostics.CreateScope("AscLocationResource.GetTopologiesByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = await _topologyResourceTopologyRestClient.ListByHomeRegionAsync(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopologyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _securityTopologyResourceTopologyRestClient.ListByHomeRegionAsync(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityTopologyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -389,14 +389,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            async Task<Page<TopologyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SecurityTopologyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _topologyResourceTopologyClientDiagnostics.CreateScope("AscLocationResource.GetTopologiesByHomeRegion");
+                using var scope = _securityTopologyResourceTopologyClientDiagnostics.CreateScope("AscLocationResource.GetTopologiesByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = await _topologyResourceTopologyRestClient.ListByHomeRegionNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopologyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _securityTopologyResourceTopologyRestClient.ListByHomeRegionNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityTopologyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -413,17 +413,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Topology_ListByHomeRegion
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TopologyResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TopologyResource> GetTopologiesByHomeRegion(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityTopologyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityTopologyResource> GetTopologiesByHomeRegion(CancellationToken cancellationToken = default)
         {
-            Page<TopologyResource> FirstPageFunc(int? pageSizeHint)
+            Page<SecurityTopologyResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _topologyResourceTopologyClientDiagnostics.CreateScope("AscLocationResource.GetTopologiesByHomeRegion");
+                using var scope = _securityTopologyResourceTopologyClientDiagnostics.CreateScope("AscLocationResource.GetTopologiesByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = _topologyResourceTopologyRestClient.ListByHomeRegion(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopologyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _securityTopologyResourceTopologyRestClient.ListByHomeRegion(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityTopologyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -431,14 +431,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            Page<TopologyResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SecurityTopologyResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _topologyResourceTopologyClientDiagnostics.CreateScope("AscLocationResource.GetTopologiesByHomeRegion");
+                using var scope = _securityTopologyResourceTopologyClientDiagnostics.CreateScope("AscLocationResource.GetTopologiesByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = _topologyResourceTopologyRestClient.ListByHomeRegionNextPage(nextLink, Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopologyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _securityTopologyResourceTopologyRestClient.ListByHomeRegionNextPage(nextLink, Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityTopologyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static MdeOnboardingDataList DeserializeMdeOnboardingDataList(JsonElement element)
         {
-            Optional<IReadOnlyList<MdeOnboardingDataData>> value = default;
+            Optional<IReadOnlyList<MdeOnboardingData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MdeOnboardingDataData> array = new List<MdeOnboardingDataData>();
+                    List<MdeOnboardingData> array = new List<MdeOnboardingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MdeOnboardingDataData.DeserializeMdeOnboardingDataData(item));
+                        array.Add(MdeOnboardingData.DeserializeMdeOnboardingData(item));
                     }
                     value = array;
                     continue;

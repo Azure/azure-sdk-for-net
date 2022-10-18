@@ -61,26 +61,26 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetCachedClient(Client => new CustomEntityStoreAssignmentCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of IotSecuritySolutionModelResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of IotSecuritySolutionModelResources and their operations over a IotSecuritySolutionModelResource. </returns>
-        public virtual IotSecuritySolutionModelCollection GetIotSecuritySolutionModels()
+        /// <summary> Gets a collection of IotSecuritySolutionResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of IotSecuritySolutionResources and their operations over a IotSecuritySolutionResource. </returns>
+        public virtual IotSecuritySolutionCollection GetIotSecuritySolutions()
         {
-            return GetCachedClient(Client => new IotSecuritySolutionModelCollection(Client, Id));
+            return GetCachedClient(Client => new IotSecuritySolutionCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ResourceGroupLocationTaskResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ResourceGroupSecurityTaskResources in the ResourceGroupResource. </summary>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <returns> An object representing collection of ResourceGroupLocationTaskResources and their operations over a ResourceGroupLocationTaskResource. </returns>
-        public virtual ResourceGroupLocationTaskCollection GetResourceGroupLocationTasks(string ascLocation)
+        /// <returns> An object representing collection of ResourceGroupSecurityTaskResources and their operations over a ResourceGroupSecurityTaskResource. </returns>
+        public virtual ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(string ascLocation)
         {
-            return new ResourceGroupLocationTaskCollection(Client, Id, ascLocation);
+            return new ResourceGroupSecurityTaskCollection(Client, Id, ascLocation);
         }
 
-        /// <summary> Gets a collection of AutomationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AutomationResources and their operations over a AutomationResource. </returns>
-        public virtual AutomationCollection GetAutomations()
+        /// <summary> Gets a collection of SecurityAutomationResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of SecurityAutomationResources and their operations over a SecurityAutomationResource. </returns>
+        public virtual SecurityAutomationCollection GetSecurityAutomations()
         {
-            return GetCachedClient(Client => new AutomationCollection(Client, Id));
+            return GetCachedClient(Client => new SecurityAutomationCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ServerVulnerabilityAssessmentResources in the ResourceGroupResource. </summary>
@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetCachedClient(Client => new AllowedConnectionsResourceCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of TopologyResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of TopologyResources and their operations over a TopologyResource. </returns>
-        public virtual TopologyResourceCollection GetTopologyResources()
+        /// <summary> Gets a collection of SecurityTopologyResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of SecurityTopologyResources and their operations over a SecurityTopologyResource. </returns>
+        public virtual SecurityTopologyResourceCollection GetSecurityTopologyResources()
         {
-            return GetCachedClient(Client => new TopologyResourceCollection(Client, Id));
+            return GetCachedClient(Client => new SecurityTopologyResourceCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of JitNetworkAccessPolicyResources in the ResourceGroupResource. </summary>
@@ -146,22 +146,22 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetCachedClient(Client => new SecuritySolutionCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ResourceGroupLocationAlertResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ResourceGroupSecurityAlertResources in the ResourceGroupResource. </summary>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <returns> An object representing collection of ResourceGroupLocationAlertResources and their operations over a ResourceGroupLocationAlertResource. </returns>
-        public virtual ResourceGroupLocationAlertCollection GetResourceGroupLocationAlerts(string ascLocation)
+        /// <returns> An object representing collection of ResourceGroupSecurityAlertResources and their operations over a ResourceGroupSecurityAlertResource. </returns>
+        public virtual ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(string ascLocation)
         {
-            return new ResourceGroupLocationAlertCollection(Client, Id, ascLocation);
+            return new ResourceGroupSecurityAlertCollection(Client, Id, ascLocation);
         }
 
-        /// <summary> Gets a collection of SoftwareResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of SoftwareInventoryResources in the ResourceGroupResource. </summary>
         /// <param name="resourceNamespace"> The namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
-        /// <returns> An object representing collection of SoftwareResources and their operations over a SoftwareResource. </returns>
-        public virtual SoftwareCollection GetSoftwares(string resourceNamespace, string resourceType, string resourceName)
+        /// <returns> An object representing collection of SoftwareInventoryResources and their operations over a SoftwareInventoryResource. </returns>
+        public virtual SoftwareInventoryCollection GetSoftwareInventories(string resourceNamespace, string resourceType, string resourceName)
         {
-            return new SoftwareCollection(Client, Id, resourceNamespace, resourceType, resourceName);
+            return new SoftwareInventoryCollection(Client, Id, resourceNamespace, resourceType, resourceName);
         }
 
         /// <summary> Gets a collection of SecurityConnectorResources in the ResourceGroupResource. </summary>
@@ -261,10 +261,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Alerts_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AlertData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AlertData> GetAlertsByResourceGroupAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityAlertData> GetAlertsByResourceGroupAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AlertData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SecurityAlertData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAlertsByResourceGroup");
                 scope.Start();
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            async Task<Page<AlertData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SecurityAlertData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAlertsByResourceGroup");
                 scope.Start();
@@ -303,10 +303,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: Alerts_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AlertData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AlertData> GetAlertsByResourceGroup(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityAlertData> GetAlertsByResourceGroup(CancellationToken cancellationToken = default)
         {
-            Page<AlertData> FirstPageFunc(int? pageSizeHint)
+            Page<SecurityAlertData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAlertsByResourceGroup");
                 scope.Start();
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            Page<AlertData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SecurityAlertData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAlertsByResourceGroup");
                 scope.Start();

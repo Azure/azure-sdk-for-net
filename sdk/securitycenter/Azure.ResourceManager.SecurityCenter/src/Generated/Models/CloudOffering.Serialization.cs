@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "CspmMonitorGithub": return CspmMonitorGithubOffering.DeserializeCspmMonitorGithubOffering(element);
                     case "DefenderForContainersAws": return DefenderForContainersAwsOffering.DeserializeDefenderForContainersAwsOffering(element);
                     case "DefenderForContainersGcp": return DefenderForContainersGcpOffering.DeserializeDefenderForContainersGcpOffering(element);
-                    case "DefenderForDatabasesAws": return DefenderFoDatabasesAwsOffering.DeserializeDefenderFoDatabasesAwsOffering(element);
+                    case "DefenderForDatabasesAws": return DefenderForDatabasesAwsOffering.DeserializeDefenderForDatabasesAwsOffering(element);
                     case "DefenderForDatabasesGcp": return DefenderForDatabasesGcpOffering.DeserializeDefenderForDatabasesGcpOffering(element);
                     case "DefenderForServersAws": return DefenderForServersAwsOffering.DeserializeDefenderForServersAwsOffering(element);
                     case "DefenderForServersGcp": return DefenderForServersGcpOffering.DeserializeDefenderForServersGcpOffering(element);

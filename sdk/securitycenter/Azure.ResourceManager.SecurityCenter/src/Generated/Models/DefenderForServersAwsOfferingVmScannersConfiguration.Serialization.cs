@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal static DefenderForServersAwsOfferingVmScannersConfiguration DeserializeDefenderForServersAwsOfferingVmScannersConfiguration(JsonElement element)
         {
             Optional<string> cloudRoleArn = default;
-            Optional<ScanningMode> scanningMode = default;
+            Optional<DefenderForServersScanningMode> scanningMode = default;
             Optional<BinaryData> exclusionTags = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scanningMode = new ScanningMode(property.Value.GetString());
+                    scanningMode = new DefenderForServersScanningMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("exclusionTags"))

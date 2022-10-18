@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExpiryDate))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryDate");
-                writer.WriteStringValue(ExpiryDate);
+                writer.WriteStringValue(ExpireOn);
             }
             if (Optional.IsDefined(ParameterStoreRegion))
             {

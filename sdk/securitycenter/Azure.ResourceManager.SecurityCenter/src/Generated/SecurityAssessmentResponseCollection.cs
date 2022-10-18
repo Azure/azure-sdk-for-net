@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
-        public virtual async Task<Response<SecurityAssessmentResponseResource>> GetAsync(string assessmentName, ExpandEnum? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityAssessmentResponseResource>> GetAsync(string assessmentName, SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
-        public virtual Response<SecurityAssessmentResponseResource> Get(string assessmentName, ExpandEnum? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityAssessmentResponseResource> Get(string assessmentName, SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string assessmentName, ExpandEnum? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string assessmentName, SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
-        public virtual Response<bool> Exists(string assessmentName, ExpandEnum? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string assessmentName, SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 

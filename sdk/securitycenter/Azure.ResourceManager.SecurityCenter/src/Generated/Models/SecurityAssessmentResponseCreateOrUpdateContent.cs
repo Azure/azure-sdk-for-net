@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="metadata"> Describes properties of an assessment metadata. </param>
         /// <param name="partnersData"> Data regarding 3rd party partner integration. </param>
         /// <param name="status"> The result of the assessment. </param>
-        internal SecurityAssessmentResponseCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceDetails resourceDetails, string displayName, IDictionary<string, string> additionalData, AssessmentLinks links, SecurityAssessmentMetadataProperties metadata, SecurityAssessmentPartnerData partnersData, AssessmentStatus status) : base(id, name, resourceType, systemData)
+        internal SecurityAssessmentResponseCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceDetails resourceDetails, string displayName, IDictionary<string, string> additionalData, AssessmentLinks links, SecurityAssessmentMetadataProperties metadata, SecurityAssessmentPartner partnersData, AssessmentStatus status) : base(id, name, resourceType, systemData)
         {
             ResourceDetails = resourceDetails;
             DisplayName = displayName;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Describes properties of an assessment metadata. </summary>
         public SecurityAssessmentMetadataProperties Metadata { get; set; }
         /// <summary> Data regarding 3rd party partner integration. </summary>
-        public SecurityAssessmentPartnerData PartnersData { get; set; }
+        public SecurityAssessmentPartner PartnersData { get; set; }
         /// <summary> The result of the assessment. </summary>
         public AssessmentStatus Status { get; set; }
     }

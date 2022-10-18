@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of MdeOnboardingDataList. </summary>
         internal MdeOnboardingDataList()
         {
-            Value = new ChangeTrackingList<MdeOnboardingDataData>();
+            Value = new ChangeTrackingList<MdeOnboardingData>();
         }
 
         /// <summary> Initializes a new instance of MdeOnboardingDataList. </summary>
         /// <param name="value"> List of the resources of the configuration or data needed to onboard the machine to MDE. </param>
-        internal MdeOnboardingDataList(IReadOnlyList<MdeOnboardingDataData> value)
+        internal MdeOnboardingDataList(IReadOnlyList<MdeOnboardingData> value)
         {
             Value = value;
         }
 
         /// <summary> List of the resources of the configuration or data needed to onboard the machine to MDE. </summary>
-        public IReadOnlyList<MdeOnboardingDataData> Value { get; }
+        public IReadOnlyList<MdeOnboardingData> Value { get; }
     }
 }

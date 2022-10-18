@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="cause"> Programmatic code for the cause of the assessment status. </param>
         /// <param name="description"> Human readable description of the assessment status. </param>
         /// <param name="severity"> The sub-assessment severity level. </param>
-        internal SubAssessmentStatus(SubAssessmentStatusCode? code, string cause, string description, Severity? severity)
+        internal SubAssessmentStatus(SubAssessmentStatusCode? code, string cause, string description, SecurityAssessmentSeverity? severity)
         {
             Code = code;
             Cause = cause;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Human readable description of the assessment status. </summary>
         public string Description { get; }
         /// <summary> The sub-assessment severity level. </summary>
-        public Severity? Severity { get; }
+        public SecurityAssessmentSeverity? Severity { get; }
     }
 }

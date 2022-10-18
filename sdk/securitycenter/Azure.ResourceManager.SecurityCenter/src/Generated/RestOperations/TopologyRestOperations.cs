@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="topologyResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TopologyResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityTopologyResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -220,13 +220,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        TopologyResourceData value = default;
+                        SecurityTopologyResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TopologyResourceData.DeserializeTopologyResourceData(document.RootElement);
+                        value = SecurityTopologyResourceData.DeserializeSecurityTopologyResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TopologyResourceData)null, message.Response);
+                    return Response.FromValue((SecurityTopologyResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="topologyResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TopologyResourceData> Get(string subscriptionId, string resourceGroupName, string ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
+        public Response<SecurityTopologyResourceData> Get(string subscriptionId, string resourceGroupName, string ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -253,13 +253,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        TopologyResourceData value = default;
+                        SecurityTopologyResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TopologyResourceData.DeserializeTopologyResourceData(document.RootElement);
+                        value = SecurityTopologyResourceData.DeserializeSecurityTopologyResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TopologyResourceData)null, message.Response);
+                    return Response.FromValue((SecurityTopologyResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

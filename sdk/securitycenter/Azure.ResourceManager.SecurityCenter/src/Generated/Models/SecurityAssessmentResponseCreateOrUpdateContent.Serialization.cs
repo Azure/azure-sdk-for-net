@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<IDictionary<string, string>> additionalData = default;
             Optional<AssessmentLinks> links = default;
             Optional<SecurityAssessmentMetadataProperties> metadata = default;
-            Optional<SecurityAssessmentPartnerData> partnersData = default;
+            Optional<SecurityAssessmentPartner> partnersData = default;
             Optional<AssessmentStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            partnersData = SecurityAssessmentPartnerData.DeserializeSecurityAssessmentPartnerData(property0.Value);
+                            partnersData = SecurityAssessmentPartner.DeserializeSecurityAssessmentPartner(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"))

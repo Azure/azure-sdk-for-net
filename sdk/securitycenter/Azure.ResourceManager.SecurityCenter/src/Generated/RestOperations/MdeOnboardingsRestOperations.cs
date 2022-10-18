@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MdeOnboardingDataData>> GetAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<MdeOnboardingData>> GetAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -136,13 +136,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        MdeOnboardingDataData value = default;
+                        MdeOnboardingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MdeOnboardingDataData.DeserializeMdeOnboardingDataData(document.RootElement);
+                        value = MdeOnboardingData.DeserializeMdeOnboardingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MdeOnboardingDataData)null, message.Response);
+                    return Response.FromValue((MdeOnboardingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MdeOnboardingDataData> Get(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<MdeOnboardingData> Get(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -163,13 +163,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        MdeOnboardingDataData value = default;
+                        MdeOnboardingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MdeOnboardingDataData.DeserializeMdeOnboardingDataData(document.RootElement);
+                        value = MdeOnboardingData.DeserializeMdeOnboardingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MdeOnboardingDataData)null, message.Response);
+                    return Response.FromValue((MdeOnboardingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

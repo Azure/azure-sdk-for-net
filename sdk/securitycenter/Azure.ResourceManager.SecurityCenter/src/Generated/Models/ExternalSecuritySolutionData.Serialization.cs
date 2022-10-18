@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static ExternalSecuritySolutionData DeserializeExternalSecuritySolutionData(JsonElement element)
         {
-            Optional<ExternalSecuritySolutionKindType> kind = default;
+            Optional<ExternalSecuritySolutionKind> kind = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    kind = new ExternalSecuritySolutionKindType(property.Value.GetString());
+                    kind = new ExternalSecuritySolutionKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"))

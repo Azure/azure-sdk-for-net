@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<SecurityFamily> securityFamily = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<SecurityFamilyProvisioningState> provisioningState = default;
             Optional<string> template = default;
             Optional<string> protectionStatus = default;
             foreach (var property in element.EnumerateObject())
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new SecurityFamilyProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("template"))

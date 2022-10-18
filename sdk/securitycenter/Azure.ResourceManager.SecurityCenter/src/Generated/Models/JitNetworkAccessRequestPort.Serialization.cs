@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> allowedSourceAddressPrefix = default;
             Optional<IList<string>> allowedSourceAddressPrefixes = default;
             DateTimeOffset endTimeUtc = default;
-            Status status = default;
-            StatusReason statusReason = default;
+            JitNetworkAccessPortStatus status = default;
+            JitNetworkAccessPortStatusReason statusReason = default;
             Optional<int> mappedPort = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new Status(property.Value.GetString());
+                    status = new JitNetworkAccessPortStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("statusReason"))
                 {
-                    statusReason = new StatusReason(property.Value.GetString());
+                    statusReason = new JitNetworkAccessPortStatusReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("mappedPort"))

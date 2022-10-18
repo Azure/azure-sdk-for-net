@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static TopologyList DeserializeTopologyList(JsonElement element)
         {
-            Optional<IReadOnlyList<TopologyResourceData>> value = default;
+            Optional<IReadOnlyList<SecurityTopologyResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TopologyResourceData> array = new List<TopologyResourceData>();
+                    List<SecurityTopologyResourceData> array = new List<SecurityTopologyResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TopologyResourceData.DeserializeTopologyResourceData(item));
+                        array.Add(SecurityTopologyResourceData.DeserializeSecurityTopologyResourceData(item));
                     }
                     value = array;
                     continue;

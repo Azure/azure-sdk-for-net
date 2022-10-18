@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the external solution. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal ExternalSecuritySolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalSecuritySolutionKindType? kind, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal ExternalSecuritySolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalSecuritySolutionKind? kind, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
         }
 
         /// <summary> The kind of the external solution. </summary>
-        public ExternalSecuritySolutionKindType? Kind { get; set; }
+        public ExternalSecuritySolutionKind? Kind { get; set; }
         /// <summary> Location where the resource is stored. </summary>
         public AzureLocation? Location { get; }
     }

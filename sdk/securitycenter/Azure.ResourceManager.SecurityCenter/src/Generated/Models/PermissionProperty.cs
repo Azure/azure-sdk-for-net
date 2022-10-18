@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AWSAWSSecurityHubReadOnlyAccessValue = "AWS::AWSSecurityHubReadOnlyAccess";
-        private const string AWSSecurityAuditValue = "AWS::SecurityAudit";
-        private const string AWSAmazonSSMAutomationRoleValue = "AWS::AmazonSSMAutomationRole";
-        private const string GCPSecurityCenterAdminViewerValue = "GCP::Security Center Admin Viewer";
+        private const string AwsAwsSecurityHubReadOnlyAccessValue = "AWS::AWSSecurityHubReadOnlyAccess";
+        private const string AwsSecurityAuditValue = "AWS::SecurityAudit";
+        private const string AwsAmazonSsmAutomationRoleValue = "AWS::AmazonSSMAutomationRole";
+        private const string GcpSecurityCenterAdminViewerValue = "GCP::Security Center Admin Viewer";
 
         /// <summary> This permission provides read only access to AWS Security Hub resources. </summary>
-        public static PermissionProperty AWSAWSSecurityHubReadOnlyAccess { get; } = new PermissionProperty(AWSAWSSecurityHubReadOnlyAccessValue);
+        public static PermissionProperty AwsAwsSecurityHubReadOnlyAccess { get; } = new PermissionProperty(AwsAwsSecurityHubReadOnlyAccessValue);
         /// <summary> This permission grants access to read security configuration metadata. </summary>
-        public static PermissionProperty AWSSecurityAudit { get; } = new PermissionProperty(AWSSecurityAuditValue);
+        public static PermissionProperty AwsSecurityAudit { get; } = new PermissionProperty(AwsSecurityAuditValue);
         /// <summary> The permission provides for EC2 Automation service to execute activities defined within Automation documents. </summary>
-        public static PermissionProperty AWSAmazonSSMAutomationRole { get; } = new PermissionProperty(AWSAmazonSSMAutomationRoleValue);
+        public static PermissionProperty AwsAmazonSsmAutomationRole { get; } = new PermissionProperty(AwsAmazonSsmAutomationRoleValue);
         /// <summary> This permission provides read only access to GCP Security Command Center. </summary>
-        public static PermissionProperty GCPSecurityCenterAdminViewer { get; } = new PermissionProperty(GCPSecurityCenterAdminViewerValue);
+        public static PermissionProperty GcpSecurityCenterAdminViewer { get; } = new PermissionProperty(GcpSecurityCenterAdminViewerValue);
         /// <summary> Determines if two <see cref="PermissionProperty"/> values are the same. </summary>
         public static bool operator ==(PermissionProperty left, PermissionProperty right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PermissionProperty"/> values are not the same. </summary>

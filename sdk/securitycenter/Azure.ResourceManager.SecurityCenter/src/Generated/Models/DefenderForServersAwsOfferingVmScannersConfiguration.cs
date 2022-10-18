@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
         /// <param name="scanningMode"> The scanning mode for the vm scan. </param>
         /// <param name="exclusionTags"> VM tags that indicates that VM should not be scanned. </param>
-        internal DefenderForServersAwsOfferingVmScannersConfiguration(string cloudRoleArn, ScanningMode? scanningMode, BinaryData exclusionTags)
+        internal DefenderForServersAwsOfferingVmScannersConfiguration(string cloudRoleArn, DefenderForServersScanningMode? scanningMode, BinaryData exclusionTags)
         {
             CloudRoleArn = cloudRoleArn;
             ScanningMode = scanningMode;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> The cloud role ARN in AWS for this feature. </summary>
         public string CloudRoleArn { get; set; }
         /// <summary> The scanning mode for the vm scan. </summary>
-        public ScanningMode? ScanningMode { get; set; }
+        public DefenderForServersScanningMode? ScanningMode { get; set; }
         /// <summary>
         /// VM tags that indicates that VM should not be scanned
         /// <para>

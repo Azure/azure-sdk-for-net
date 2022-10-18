@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/>, <paramref name="jitNetworkAccessPolicyName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="jitNetworkAccessPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JitNetworkAccessRequest>> InitiateAsync(string subscriptionId, string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName, JitNetworkAccessPolicyInitiateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<JitNetworkAccessRequestInfo>> InitiateAsync(string subscriptionId, string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName, JitNetworkAccessPolicyInitiateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -636,9 +636,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 202:
                     {
-                        JitNetworkAccessRequest value = default;
+                        JitNetworkAccessRequestInfo value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JitNetworkAccessRequest.DeserializeJitNetworkAccessRequest(document.RootElement);
+                        value = JitNetworkAccessRequestInfo.DeserializeJitNetworkAccessRequestInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/>, <paramref name="jitNetworkAccessPolicyName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="jitNetworkAccessPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JitNetworkAccessRequest> Initiate(string subscriptionId, string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName, JitNetworkAccessPolicyInitiateContent content, CancellationToken cancellationToken = default)
+        public Response<JitNetworkAccessRequestInfo> Initiate(string subscriptionId, string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName, JitNetworkAccessPolicyInitiateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -669,9 +669,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 202:
                     {
-                        JitNetworkAccessRequest value = default;
+                        JitNetworkAccessRequestInfo value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JitNetworkAccessRequest.DeserializeJitNetworkAccessRequest(document.RootElement);
+                        value = JitNetworkAccessRequestInfo.DeserializeJitNetworkAccessRequestInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AlertData>> GetSubscriptionLevelAsync(string subscriptionId, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityAlertData>> GetSubscriptionLevelAsync(string subscriptionId, string ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
@@ -368,13 +368,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        AlertData value = default;
+                        SecurityAlertData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AlertData.DeserializeAlertData(document.RootElement);
+                        value = SecurityAlertData.DeserializeSecurityAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AlertData)null, message.Response);
+                    return Response.FromValue((SecurityAlertData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AlertData> GetSubscriptionLevel(string subscriptionId, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        public Response<SecurityAlertData> GetSubscriptionLevel(string subscriptionId, string ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
@@ -399,13 +399,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        AlertData value = default;
+                        SecurityAlertData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AlertData.DeserializeAlertData(document.RootElement);
+                        value = SecurityAlertData.DeserializeSecurityAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AlertData)null, message.Response);
+                    return Response.FromValue((SecurityAlertData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AlertData>> GetResourceGroupLevelAsync(string subscriptionId, string resourceGroupName, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityAlertData>> GetResourceGroupLevelAsync(string subscriptionId, string resourceGroupName, string ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -454,13 +454,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        AlertData value = default;
+                        SecurityAlertData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AlertData.DeserializeAlertData(document.RootElement);
+                        value = SecurityAlertData.DeserializeSecurityAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AlertData)null, message.Response);
+                    return Response.FromValue((SecurityAlertData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AlertData> GetResourceGroupLevel(string subscriptionId, string resourceGroupName, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        public Response<SecurityAlertData> GetResourceGroupLevel(string subscriptionId, string resourceGroupName, string ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -487,13 +487,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        AlertData value = default;
+                        SecurityAlertData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AlertData.DeserializeAlertData(document.RootElement);
+                        value = SecurityAlertData.DeserializeSecurityAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AlertData)null, message.Response);
+                    return Response.FromValue((SecurityAlertData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

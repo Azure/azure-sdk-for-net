@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static PricingList DeserializePricingList(JsonElement element)
         {
-            IReadOnlyList<PricingData> value = default;
+            IReadOnlyList<SecurityPricingData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<PricingData> array = new List<PricingData>();
+                    List<SecurityPricingData> array = new List<SecurityPricingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PricingData.DeserializePricingData(item));
+                        array.Add(SecurityPricingData.DeserializeSecurityPricingData(item));
                     }
                     value = array;
                     continue;

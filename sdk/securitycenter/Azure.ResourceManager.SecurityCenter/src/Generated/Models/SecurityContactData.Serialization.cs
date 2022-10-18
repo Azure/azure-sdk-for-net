@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<SystemData> systemData = default;
             Optional<string> email = default;
             Optional<string> phone = default;
-            Optional<AlertNotification> alertNotifications = default;
-            Optional<AlertsToAdmin> alertsToAdmins = default;
+            Optional<SecurityAlertNotificationState> alertNotifications = default;
+            Optional<AlertsToAdminsState> alertsToAdmins = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            alertNotifications = new AlertNotification(property0.Value.GetString());
+                            alertNotifications = new SecurityAlertNotificationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("alertsToAdmins"))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            alertsToAdmins = new AlertsToAdmin(property0.Value.GetString());
+                            alertsToAdmins = new AlertsToAdminsState(property0.Value.GetString());
                             continue;
                         }
                     }

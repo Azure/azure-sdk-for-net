@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="phone"> The phone number of this security contact. </param>
         /// <param name="alertNotifications"> Whether to send security alerts notifications to the security contact. </param>
         /// <param name="alertsToAdmins"> Whether to send security alerts notifications to subscription admins. </param>
-        internal SecurityContactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string email, string phone, AlertNotification? alertNotifications, AlertsToAdmin? alertsToAdmins) : base(id, name, resourceType, systemData)
+        internal SecurityContactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string email, string phone, SecurityAlertNotificationState? alertNotifications, AlertsToAdminsState? alertsToAdmins) : base(id, name, resourceType, systemData)
         {
             Email = email;
             Phone = phone;
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> The phone number of this security contact. </summary>
         public string Phone { get; set; }
         /// <summary> Whether to send security alerts notifications to the security contact. </summary>
-        public AlertNotification? AlertNotifications { get; set; }
+        public SecurityAlertNotificationState? AlertNotifications { get; set; }
         /// <summary> Whether to send security alerts notifications to subscription admins. </summary>
-        public AlertsToAdmin? AlertsToAdmins { get; set; }
+        public AlertsToAdminsState? AlertsToAdmins { get; set; }
     }
 }

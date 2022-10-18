@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of SecurityAssessmentMetadataResponseData. </summary>
         public SecurityAssessmentMetadataResponseData()
         {
-            Categories = new ChangeTrackingList<Category>();
-            Threats = new ChangeTrackingList<Threat>();
-            Tactics = new ChangeTrackingList<Tactic>();
-            Techniques = new ChangeTrackingList<Technique>();
+            Categories = new ChangeTrackingList<SecurityAssessmentResourceCategory>();
+            Threats = new ChangeTrackingList<SecurityThreat>();
+            Tactics = new ChangeTrackingList<SecurityAssessmentTactic>();
+            Techniques = new ChangeTrackingList<SecurityAssessmentTechnique>();
         }
 
         /// <summary> Initializes a new instance of SecurityAssessmentMetadataResponseData. </summary>
@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="userImpact"> The user impact of the assessment. </param>
         /// <param name="implementationEffort"> The implementation effort required to remediate this assessment. </param>
         /// <param name="threats"></param>
-        /// <param name="preview"> True if this assessment is in preview release status. </param>
+        /// <param name="isPreview"> True if this assessment is in preview release status. </param>
         /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
         /// <param name="partnerData"> Describes the partner that created the assessment. </param>
         /// <param name="publishDates"></param>
         /// <param name="plannedDeprecationDate"></param>
         /// <param name="tactics"></param>
         /// <param name="techniques"></param>
-        internal SecurityAssessmentMetadataResponseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string policyDefinitionId, string description, string remediationDescription, IList<Category> categories, Severity? severity, UserImpact? userImpact, ImplementationEffort? implementationEffort, IList<Threat> threats, bool? preview, AssessmentType? assessmentType, SecurityAssessmentMetadataPartnerData partnerData, SecurityAssessmentMetadataPropertiesResponsePublishDates publishDates, string plannedDeprecationDate, IList<Tactic> tactics, IList<Technique> techniques) : base(id, name, resourceType, systemData)
+        internal SecurityAssessmentMetadataResponseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, ResourceIdentifier policyDefinitionId, string description, string remediationDescription, IList<SecurityAssessmentResourceCategory> categories, SecurityAssessmentSeverity? severity, SecurityAssessmentUserImpact? userImpact, ImplementationEffort? implementationEffort, IList<SecurityThreat> threats, bool? isPreview, AssessmentType? assessmentType, SecurityAssessmentMetadataPartner partnerData, SecurityAssessmentPublishDates publishDates, string plannedDeprecationDate, IList<SecurityAssessmentTactic> tactics, IList<SecurityAssessmentTechnique> techniques) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter
             UserImpact = userImpact;
             ImplementationEffort = implementationEffort;
             Threats = threats;
-            Preview = preview;
+            IsPreview = isPreview;
             AssessmentType = assessmentType;
             PartnerData = partnerData;
             PublishDates = publishDates;
@@ -68,34 +68,34 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> User friendly display name of the assessment. </summary>
         public string DisplayName { get; set; }
         /// <summary> Azure resource ID of the policy definition that turns this assessment calculation on. </summary>
-        public string PolicyDefinitionId { get; }
+        public ResourceIdentifier PolicyDefinitionId { get; }
         /// <summary> Human readable description of the assessment. </summary>
         public string Description { get; set; }
         /// <summary> Human readable description of what you should do to mitigate this security issue. </summary>
         public string RemediationDescription { get; set; }
         /// <summary> Gets the categories. </summary>
-        public IList<Category> Categories { get; }
+        public IList<SecurityAssessmentResourceCategory> Categories { get; }
         /// <summary> The severity level of the assessment. </summary>
-        public Severity? Severity { get; set; }
+        public SecurityAssessmentSeverity? Severity { get; set; }
         /// <summary> The user impact of the assessment. </summary>
-        public UserImpact? UserImpact { get; set; }
+        public SecurityAssessmentUserImpact? UserImpact { get; set; }
         /// <summary> The implementation effort required to remediate this assessment. </summary>
         public ImplementationEffort? ImplementationEffort { get; set; }
         /// <summary> Gets the threats. </summary>
-        public IList<Threat> Threats { get; }
+        public IList<SecurityThreat> Threats { get; }
         /// <summary> True if this assessment is in preview release status. </summary>
-        public bool? Preview { get; set; }
+        public bool? IsPreview { get; set; }
         /// <summary> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </summary>
         public AssessmentType? AssessmentType { get; set; }
         /// <summary> Describes the partner that created the assessment. </summary>
-        public SecurityAssessmentMetadataPartnerData PartnerData { get; set; }
+        public SecurityAssessmentMetadataPartner PartnerData { get; set; }
         /// <summary> Gets or sets the publish dates. </summary>
-        public SecurityAssessmentMetadataPropertiesResponsePublishDates PublishDates { get; set; }
+        public SecurityAssessmentPublishDates PublishDates { get; set; }
         /// <summary> Gets or sets the planned deprecation date. </summary>
         public string PlannedDeprecationDate { get; set; }
         /// <summary> Gets the tactics. </summary>
-        public IList<Tactic> Tactics { get; }
+        public IList<SecurityAssessmentTactic> Tactics { get; }
         /// <summary> Gets the techniques. </summary>
-        public IList<Technique> Techniques { get; }
+        public IList<SecurityAssessmentTechnique> Techniques { get; }
     }
 }

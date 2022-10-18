@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="template"> The security solutions&apos; template. </param>
         /// <param name="protectionStatus"> The security solutions&apos; status. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal SecuritySolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityFamily? securityFamily, ProvisioningState? provisioningState, string template, string protectionStatus, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal SecuritySolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityFamily? securityFamily, SecurityFamilyProvisioningState? provisioningState, string template, string protectionStatus, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             SecurityFamily = securityFamily;
             ProvisioningState = provisioningState;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> The security family of the security solution. </summary>
         public SecurityFamily? SecurityFamily { get; set; }
         /// <summary> The security family provisioning State. </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        public SecurityFamilyProvisioningState? ProvisioningState { get; set; }
         /// <summary> The security solutions&apos; template. </summary>
         public string Template { get; set; }
         /// <summary> The security solutions&apos; status. </summary>

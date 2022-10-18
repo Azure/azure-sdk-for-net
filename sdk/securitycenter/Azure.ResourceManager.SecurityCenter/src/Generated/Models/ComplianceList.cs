@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of ComplianceList. </summary>
         internal ComplianceList()
         {
-            Value = new ChangeTrackingList<ComplianceData>();
+            Value = new ChangeTrackingList<SecurityComplianceData>();
         }
 
         /// <summary> Initializes a new instance of ComplianceList. </summary>
         /// <param name="value"> List of Compliance objects. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal ComplianceList(IReadOnlyList<ComplianceData> value, string nextLink)
+        internal ComplianceList(IReadOnlyList<SecurityComplianceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Compliance objects. </summary>
-        public IReadOnlyList<ComplianceData> Value { get; }
+        public IReadOnlyList<SecurityComplianceData> Value { get; }
         /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }

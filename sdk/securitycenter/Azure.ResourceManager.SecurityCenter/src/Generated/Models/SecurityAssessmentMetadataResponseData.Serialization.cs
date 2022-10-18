@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Preview))
+            if (Optional.IsDefined(IsPreview))
             {
                 writer.WritePropertyName("preview");
-                writer.WriteBooleanValue(Preview.Value);
+                writer.WriteBooleanValue(IsPreview.Value);
             }
             if (Optional.IsDefined(AssessmentType))
             {
@@ -126,21 +126,21 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
-            Optional<string> policyDefinitionId = default;
+            Optional<ResourceIdentifier> policyDefinitionId = default;
             Optional<string> description = default;
             Optional<string> remediationDescription = default;
-            Optional<IList<Category>> categories = default;
-            Optional<Severity> severity = default;
-            Optional<UserImpact> userImpact = default;
+            Optional<IList<SecurityAssessmentResourceCategory>> categories = default;
+            Optional<SecurityAssessmentSeverity> severity = default;
+            Optional<SecurityAssessmentUserImpact> userImpact = default;
             Optional<ImplementationEffort> implementationEffort = default;
-            Optional<IList<Threat>> threats = default;
+            Optional<IList<SecurityThreat>> threats = default;
             Optional<bool> preview = default;
             Optional<AssessmentType> assessmentType = default;
-            Optional<SecurityAssessmentMetadataPartnerData> partnerData = default;
-            Optional<SecurityAssessmentMetadataPropertiesResponsePublishDates> publishDates = default;
+            Optional<SecurityAssessmentMetadataPartner> partnerData = default;
+            Optional<SecurityAssessmentPublishDates> publishDates = default;
             Optional<string> plannedDeprecationDate = default;
-            Optional<IList<Tactic>> tactics = default;
-            Optional<IList<Technique>> techniques = default;
+            Optional<IList<SecurityAssessmentTactic>> tactics = default;
+            Optional<IList<SecurityAssessmentTechnique>> techniques = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -184,7 +184,12 @@ namespace Azure.ResourceManager.SecurityCenter
                         }
                         if (property0.NameEquals("policyDefinitionId"))
                         {
-                            policyDefinitionId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            policyDefinitionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("description"))
@@ -204,10 +209,10 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Category> array = new List<Category>();
+                            List<SecurityAssessmentResourceCategory> array = new List<SecurityAssessmentResourceCategory>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Category(item.GetString()));
+                                array.Add(new SecurityAssessmentResourceCategory(item.GetString()));
                             }
                             categories = array;
                             continue;
@@ -219,7 +224,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            severity = new Severity(property0.Value.GetString());
+                            severity = new SecurityAssessmentSeverity(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("userImpact"))
@@ -229,7 +234,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            userImpact = new UserImpact(property0.Value.GetString());
+                            userImpact = new SecurityAssessmentUserImpact(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("implementationEffort"))
@@ -249,10 +254,10 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Threat> array = new List<Threat>();
+                            List<SecurityThreat> array = new List<SecurityThreat>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Threat(item.GetString()));
+                                array.Add(new SecurityThreat(item.GetString()));
                             }
                             threats = array;
                             continue;
@@ -284,7 +289,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            partnerData = SecurityAssessmentMetadataPartnerData.DeserializeSecurityAssessmentMetadataPartnerData(property0.Value);
+                            partnerData = SecurityAssessmentMetadataPartner.DeserializeSecurityAssessmentMetadataPartner(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publishDates"))
@@ -294,7 +299,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publishDates = SecurityAssessmentMetadataPropertiesResponsePublishDates.DeserializeSecurityAssessmentMetadataPropertiesResponsePublishDates(property0.Value);
+                            publishDates = SecurityAssessmentPublishDates.DeserializeSecurityAssessmentPublishDates(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("plannedDeprecationDate"))
@@ -309,10 +314,10 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Tactic> array = new List<Tactic>();
+                            List<SecurityAssessmentTactic> array = new List<SecurityAssessmentTactic>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Tactic(item.GetString()));
+                                array.Add(new SecurityAssessmentTactic(item.GetString()));
                             }
                             tactics = array;
                             continue;
@@ -324,10 +329,10 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Technique> array = new List<Technique>();
+                            List<SecurityAssessmentTechnique> array = new List<SecurityAssessmentTechnique>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Technique(item.GetString()));
+                                array.Add(new SecurityAssessmentTechnique(item.GetString()));
                             }
                             techniques = array;
                             continue;

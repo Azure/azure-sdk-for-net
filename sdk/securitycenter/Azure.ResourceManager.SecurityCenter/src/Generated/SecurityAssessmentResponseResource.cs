@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SecurityAssessmentResponseResource>> GetAsync(ExpandEnum? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityAssessmentResponseResource>> GetAsync(SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _securityAssessmentResponseAssessmentsClientDiagnostics.CreateScope("SecurityAssessmentResponseResource.Get");
             scope.Start();
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SecurityAssessmentResponseResource> Get(ExpandEnum? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityAssessmentResponseResource> Get(SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _securityAssessmentResponseAssessmentsClientDiagnostics.CreateScope("SecurityAssessmentResponseResource.Get");
             scope.Start();

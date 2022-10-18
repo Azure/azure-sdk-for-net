@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="content"> The JitNetworkAccessPolicyInitiateContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<JitNetworkAccessRequest>> InitiateAsync(JitNetworkAccessPolicyInitiateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JitNetworkAccessRequestInfo>> InitiateAsync(JitNetworkAccessPolicyInitiateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="content"> The JitNetworkAccessPolicyInitiateContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<JitNetworkAccessRequest> Initiate(JitNetworkAccessPolicyInitiateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<JitNetworkAccessRequestInfo> Initiate(JitNetworkAccessPolicyInitiateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
