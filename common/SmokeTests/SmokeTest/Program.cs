@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -53,7 +54,7 @@ foreach (var assembly in LoadAssemblies(Assembly.GetEntryAssembly(), AssemblyFil
             ProcessType(type);
         }
     }
-    catch (ReflectionTypeLoadException ex) when (ex.Message.Contains("does not have an implementation"))
+    catch (ReflectionTypeLoadException ex) when (ex.LoaderExceptions.All(lex => lex.Message.Contains("does not have an implementation")))
     {
         // Expected for some assemblies that serve as runtime shims or type-forwarding
         // assemblies.
