@@ -7,9 +7,12 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.AnomalyDetector.Models;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.AI.AnomalyDetector.Tests.Samples
@@ -17,7 +20,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
     public partial class AnomalyDetectorSamples : SamplesBase<AnomalyDetectorTestEnvironment>
     {
         [Test]
-        public async Task DetectLastPointAnomaly()
+        public void DetectLastPointAnomaly()
         {
             //read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
@@ -25,35 +28,43 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             var endpointUri = new Uri(endpoint);
             var credential = new AzureKeyCredential(apiKey);
+            String apiVersion = "v1.1";
 
             //create client
-            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
+            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
 
             //read data
-            string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "samples", "data", "request-data.csv");
-
-            List<TimeSeriesPoint> list = File.ReadAllLines(datapath, Encoding.UTF8)
-                .Where(e => e.Trim().Length != 0)
-                .Select(e => e.Split(','))
-                .Where(e => e.Length == 2)
-                .Select(e => new TimeSeriesPoint(float.Parse(e[1])){ Timestamp = DateTime.Parse(e[0])}).ToList();
-
-            //create request
-            DetectRequest request = new DetectRequest(list)
+            List<JsonElement> data_points = new List<JsonElement>();
+            using (StreamReader reader = new StreamReader("./samples/data/request-data.csv"))
             {
-                Granularity = TimeGranularity.Daily
-            };
+                while (!reader.EndOfStream)
+                {
+                    var values = reader.ReadLine().Split(',');
+                    if (values.Length == 2)
+                    {
+                        dynamic obj = new JObject();
+                        obj.timestamp = values[0];
+                        obj.value = values[1];
+                        data_points.Add(JsonDocument.Parse(Newtonsoft.Json.JsonConvert.SerializeObject(obj)).RootElement);
+                    }
+                }
+            }
 
             #region Snippet:DetectLastPointAnomaly
 
             //detect
             Console.WriteLine("Detecting the anomaly status of the latest point in the series.");
-
             try
             {
-                LastDetectResponse result = await client.DetectLastPointAsync(request).ConfigureAwait(false);
+                var data = new
+                {
+                    series = data_points,
+                    granularity = "daily"
+                };
+                Response response = client.DetectLastPoint(RequestContent.Create(data));
+                JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
-                if (result.IsAnomaly)
+                if (bool.Parse(result.GetProperty("isAnomaly").ToString()))
                 {
                     Console.WriteLine("The latest point was detected as an anomaly.");
                 }
