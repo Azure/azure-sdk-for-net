@@ -1,245 +1,247 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://test-maga-ppe-we.ppe.cognitiveservices.azure.com/anomalydetector/v1.1-preview.1/timeseries/last/detect",
+      "RequestUri": "https://multi-ad-test-uscx.cognitiveservices.azure.com/anomalydetector/v1.1/timeseries/last/detect",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "2813",
+        "Content-Length": "2429",
         "Content-Type": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-32b845258c8fd5458d3802b4162d92c8-cf1ff5c85838134d-00",
-        "User-Agent": "azsdk-net-AI.AnomalyDetector/3.0.0-alpha.20220113.1 (.NET Framework 4.8.4430.0; Microsoft Windows 10.0.14393 )",
-        "x-ms-client-request-id": "e08ae85045d9a0a54172a843a1997c3d",
+        "Ocp-Apim-Subscription-Key": "7fbc448065f54affa3515f2affb979d5",
+        "traceparent": "00-c043006a53914c4599e5f00e67dc98c3-7af07f5f478d9c48-00",
+        "User-Agent": "azsdk-net-AI.AnomalyDetector/3.0.0-alpha.20221018.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "befea0f460a9b4c2917718953479bcac",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "series": [
           {
-            "timestamp": "1972-01-01T00:00:00.0000000Z",
-            "value": 826
+            "value": 826,
+            "timestamp": "1972-01-01T00:00:00Z"
           },
           {
-            "timestamp": "1972-02-01T00:00:00.0000000Z",
-            "value": 799
+            "value": 826,
+            "timestamp": "1972-02-01T00:00:00Z"
           },
           {
-            "timestamp": "1972-03-01T00:00:00.0000000Z",
-            "value": 890
+            "value": 890,
+            "timestamp": "1972-03-01T00:00:00Z"
           },
           {
-            "timestamp": "1972-04-01T00:00:00.0000000Z",
-            "value": 900
+            "value": 900,
+            "timestamp": "1972-04-01T00:00:00Z"
           },
           {
-            "timestamp": "1972-05-01T00:00:00.0000000Z",
-            "value": 961
+            "value": 961,
+            "timestamp": "1972-05-01T00:00:00Z"
           },
           {
-            "timestamp": "1972-06-01T00:00:00.0000000Z",
-            "value": 935
+            "value": 935,
+            "timestamp": "1972-06-01T00:00:00Z"
           },
           {
-            "timestamp": "1972-07-01T00:00:00.0000000Z",
-            "value": 894
+            "value": 894,
+            "timestamp": "1972-07-01T00:00:00Z"
           },
           {
-            "timestamp": "1972-08-01T00:00:00.0000000Z",
-            "value": 855
+            "value": 855,
+            "timestamp": "1972-08-01T00:00:00Z"
           },
           {
-            "timestamp": "1972-09-01T00:00:00.0000000Z",
-            "value": 809
+            "value": 809,
+            "timestamp": "1972-09-01T00:00:00Z"
           },
           {
-            "timestamp": "1972-10-01T00:00:00.0000000Z",
-            "value": 810
+            "value": 810,
+            "timestamp": "1972-10-01T00:00:00Z"
           },
           {
-            "timestamp": "1972-11-01T00:00:00.0000000Z",
-            "value": 766
+            "value": 766,
+            "timestamp": "1972-11-01T00:00:00Z"
           },
           {
-            "timestamp": "1972-12-01T00:00:00.0000000Z",
-            "value": 805
+            "value": 805,
+            "timestamp": "1972-12-01T00:00:00Z"
           },
           {
-            "timestamp": "1973-01-01T00:00:00.0000000Z",
-            "value": 821
+            "value": 821,
+            "timestamp": "1973-01-01T00:00:00Z"
           },
           {
-            "timestamp": "1973-02-01T00:00:00.0000000Z",
-            "value": 773
+            "value": 773,
+            "timestamp": "1973-02-01T00:00:00Z"
           },
           {
-            "timestamp": "1973-03-01T00:00:00.0000000Z",
-            "value": 883
+            "value": 883,
+            "timestamp": "1973-03-01T00:00:00Z"
           },
           {
-            "timestamp": "1973-04-01T00:00:00.0000000Z",
-            "value": 898
+            "value": 898,
+            "timestamp": "1973-04-01T00:00:00Z"
           },
           {
-            "timestamp": "1973-05-01T00:00:00.0000000Z",
-            "value": 957
+            "value": 957,
+            "timestamp": "1973-05-01T00:00:00Z"
           },
           {
-            "timestamp": "1973-06-01T00:00:00.0000000Z",
-            "value": 924
+            "value": 924,
+            "timestamp": "1973-06-01T00:00:00Z"
           },
           {
-            "timestamp": "1973-07-01T00:00:00.0000000Z",
-            "value": 881
+            "value": 881,
+            "timestamp": "1973-07-01T00:00:00Z"
           },
           {
-            "timestamp": "1973-08-01T00:00:00.0000000Z",
-            "value": 837
+            "value": 837,
+            "timestamp": "1973-08-01T00:00:00Z"
           },
           {
-            "timestamp": "1973-09-01T00:00:00.0000000Z",
-            "value": 784
+            "value": 784,
+            "timestamp": "1973-09-01T00:00:00Z"
           },
           {
-            "timestamp": "1973-10-01T00:00:00.0000000Z",
-            "value": 791
+            "value": 791,
+            "timestamp": "1973-10-01T00:00:00Z"
           },
           {
-            "timestamp": "1973-11-01T00:00:00.0000000Z",
-            "value": 760
+            "value": 760,
+            "timestamp": "1973-11-01T00:00:00Z"
           },
           {
-            "timestamp": "1973-12-01T00:00:00.0000000Z",
-            "value": 802
+            "value": 802,
+            "timestamp": "1973-12-01T00:00:00Z"
           },
           {
-            "timestamp": "1974-01-01T00:00:00.0000000Z",
-            "value": 828
+            "value": 828,
+            "timestamp": "1974-01-01T00:00:00Z"
           },
           {
-            "timestamp": "1974-02-01T00:00:00.0000000Z",
-            "value": 1030
+            "value": 1030,
+            "timestamp": "1974-02-01T00:00:00Z"
           },
           {
-            "timestamp": "1974-03-01T00:00:00.0000000Z",
-            "value": 889
+            "value": 889,
+            "timestamp": "1974-03-01T00:00:00Z"
           },
           {
-            "timestamp": "1974-04-01T00:00:00.0000000Z",
-            "value": 902
+            "value": 902,
+            "timestamp": "1974-04-01T00:00:00Z"
           },
           {
-            "timestamp": "1974-05-01T00:00:00.0000000Z",
-            "value": 969
+            "value": 969,
+            "timestamp": "1974-05-01T00:00:00Z"
           },
           {
-            "timestamp": "1974-06-01T00:00:00.0000000Z",
-            "value": 947
+            "value": 947,
+            "timestamp": "1974-06-01T00:00:00Z"
           },
           {
-            "timestamp": "1974-07-01T00:00:00.0000000Z",
-            "value": 908
+            "value": 908,
+            "timestamp": "1974-07-01T00:00:00Z"
           },
           {
-            "timestamp": "1974-08-01T00:00:00.0000000Z",
-            "value": 867
+            "value": 867,
+            "timestamp": "1974-08-01T00:00:00Z"
           },
           {
-            "timestamp": "1974-09-01T00:00:00.0000000Z",
-            "value": 815
+            "value": 815,
+            "timestamp": "1974-09-01T00:00:00Z"
           },
           {
-            "timestamp": "1974-10-01T00:00:00.0000000Z",
-            "value": 812
+            "value": 812,
+            "timestamp": "1974-10-01T00:00:00Z"
           },
           {
-            "timestamp": "1974-11-01T00:00:00.0000000Z",
-            "value": 773
+            "value": 773,
+            "timestamp": "1974-11-01T00:00:00Z"
           },
           {
-            "timestamp": "1974-12-01T00:00:00.0000000Z",
-            "value": 813
+            "value": 813,
+            "timestamp": "1974-12-01T00:00:00Z"
           },
           {
-            "timestamp": "1975-01-01T00:00:00.0000000Z",
-            "value": 834
+            "value": 834,
+            "timestamp": "1975-01-01T00:00:00Z"
           },
           {
-            "timestamp": "1975-02-01T00:00:00.0000000Z",
-            "value": 782
+            "value": 782,
+            "timestamp": "1975-02-01T00:00:00Z"
           },
           {
-            "timestamp": "1975-03-01T00:00:00.0000000Z",
-            "value": 892
+            "value": 892,
+            "timestamp": "1975-03-01T00:00:00Z"
           },
           {
-            "timestamp": "1975-04-01T00:00:00.0000000Z",
-            "value": 903
+            "value": 903,
+            "timestamp": "1975-04-01T00:00:00Z"
           },
           {
-            "timestamp": "1975-05-01T00:00:00.0000000Z",
-            "value": 966
+            "value": 966,
+            "timestamp": "1975-05-01T00:00:00Z"
           },
           {
-            "timestamp": "1975-06-01T00:00:00.0000000Z",
-            "value": 937
+            "value": 937,
+            "timestamp": "1975-06-01T00:00:00Z"
           },
           {
-            "timestamp": "1975-07-01T00:00:00.0000000Z",
-            "value": 896
+            "value": 896,
+            "timestamp": "1975-07-01T00:00:00Z"
           },
           {
-            "timestamp": "1975-08-01T00:00:00.0000000Z",
-            "value": 858
+            "value": 858,
+            "timestamp": "1975-08-01T00:00:00Z"
           },
           {
-            "timestamp": "1975-09-01T00:00:00.0000000Z",
-            "value": 817
+            "value": 817,
+            "timestamp": "1975-09-01T00:00:00Z"
           },
           {
-            "timestamp": "1975-10-01T00:00:00.0000000Z",
-            "value": 827
+            "value": 827,
+            "timestamp": "1975-10-01T00:00:00Z"
           },
           {
-            "timestamp": "1975-11-01T00:00:00.0000000Z",
-            "value": 797
+            "value": 797,
+            "timestamp": "1975-11-01T00:00:00Z"
           },
           {
-            "timestamp": "1975-12-01T00:00:00.0000000Z",
-            "value": 843
+            "value": 843,
+            "timestamp": "1975-12-01T00:00:00Z"
           }
         ],
         "granularity": "monthly",
-        "maxAnomalyRatio": 0.25,
-        "sensitivity": 95
+        "MaxAnomalyRatio": 0.25,
+        "Sensitivity": 95
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "0c6076ba-d5f9-4638-821b-eb9cbb055394",
-        "Content-Length": "218",
+        "apim-request-id": "f1e7bc83-86dc-4574-abe6-5153d95a3d08",
+        "Content-Length": "221",
         "Content-Type": "application/json",
         "csp-billing-usage": "CognitiveServices.AnomalyDetector.DataPoints=1",
-        "Date": "Thu, 13 Jan 2022 09:22:44 GMT",
+        "Date": "Tue, 18 Oct 2022 07:40:33 GMT",
         "model-id": "10",
+        "Server": "istio-envoy",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "24"
+        "x-envoy-upstream-service-time": "31",
+        "x-ms-region": "Central US EUAP"
       },
       "ResponseBody": {
-        "expectedValue": 809.5658016931228,
-        "isAnomaly": false,
+        "expectedValue": 809.5398165567476,
+        "isAnomaly": true,
         "isNegativeAnomaly": false,
-        "isPositiveAnomaly": false,
-        "lowerMargin": 40.47829008465612,
+        "isPositiveAnomaly": true,
+        "lowerMargin": 0.25751987544093097,
         "period": 12,
-        "severity": 0.0,
+        "severity": 0.01,
         "suggestedWindow": 49,
-        "upperMargin": 40.47829008465612
+        "upperMargin": 0.25751987544093097
       }
     }
   ],
   "Variables": {
     "ANOMALY_DETECTOR_API_KEY": "Sanitized",
-    "ANOMALY_DETECTOR_ENDPOINT": "https://test-maga-ppe-we.ppe.cognitiveservices.azure.com/",
-    "RandomSeed": "909664795"
+    "ANOMALY_DETECTOR_ENDPOINT": "https://multi-ad-test-uscx.cognitiveservices.azure.com",
+    "RandomSeed": "1327730177"
   }
 }
