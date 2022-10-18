@@ -1,0 +1,4 @@
+Compat issues with assembly Azure.ResourceManager.Redis:
+MembersMustExist : Member 'public Azure.Response<Azure.ResourceManager.Redis.RedisResource> Azure.ResourceManager.Redis.RedisResource.Update(Azure.ResourceManager.Redis.Models.RedisPatch, System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Redis.RedisResource>> Azure.ResourceManager.Redis.RedisResource.UpdateAsync(Azure.ResourceManager.Redis.Models.RedisPatch, System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.
+Total Issues: 2
