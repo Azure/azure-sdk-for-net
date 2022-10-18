@@ -274,7 +274,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 Response response = await CreateManifestAsync(tagOrDigest, content, ManifestMediaType.OciManifest.ToString(), context).ConfigureAwait(false);
                 var responseDigest = response.Headers.TryGetValue(ContainerRegistryHeaders.DockerContentDigest, out string value) ? value : null;
 
-                if (!ValidateDigest(stream, responseDigest))
+                if (!ValidateDigest(manifestStream, responseDigest))
                 {
                     throw ClientDiagnostics.CreateRequestFailedException(response,
                         new ResponseError(null, "The digest in the response does not match the digest of the uploaded manifest."));
