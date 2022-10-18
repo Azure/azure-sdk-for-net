@@ -77,7 +77,7 @@ namespace Azure.Containers.ContainerRegistry
             _endpoint = endpoint;
             _apiVersion = options.Version;
             _registryName = endpoint.Host.Split('.')[0];
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
 
             string defaultScope = options.Audience + "/.default";
             var authClient = new AuthenticationClient(endpoint, options);

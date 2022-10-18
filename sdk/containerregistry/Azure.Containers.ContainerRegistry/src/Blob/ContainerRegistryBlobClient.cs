@@ -97,7 +97,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             _endpoint = endpoint;
             _registryName = endpoint.Host.Split('.')[0];
             _repository = repository;
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
 
             string defaultScope = options.Audience + "/.default";
             var authClient = authenticationClient ?? new AuthenticationClient(endpoint, options);
@@ -349,7 +349,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 Response uploadChunkResponse = await UploadChunkAsync(startLocation, content, context).ConfigureAwait(false);
 
                 string uploadLocation = uploadChunkResponse.Headers.TryGetValue(ContainerRegistryHeaders.Location, out string location) ? location : null;
-                Response completeUploadResponse = await CompleteUploadAsync(blobDigest, uploadLocation, null, context).ConfigureAwait(false);
+                Response completeUploadResponse = await CompleteUploadAsync(uploadLocation, blobDigest, null, context).ConfigureAwait(false);
                 string responseDigest = completeUploadResponse.Headers.TryGetValue(ContainerRegistryHeaders.DockerContentDigest, out string digest) ? digest : null;
 
                 return Response.FromValue(new UploadBlobResult(responseDigest), uploadChunkResponse);
