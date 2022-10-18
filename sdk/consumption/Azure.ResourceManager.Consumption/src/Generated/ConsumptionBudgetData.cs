@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="notifications"> Dictionary of notifications associated with the budget. Budget can have up to five notifications. </param>
         /// <param name="forecastSpend"> The forecasted cost which is being tracked for a budget. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal ConsumptionBudgetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BudgetCategoryType? category, decimal? amount, BudgetTimeGrainType? timeGrain, BudgetTimePeriod timePeriod, ConsumptionBudgetFilter filter, BudgetCurrentSpend currentSpend, IDictionary<string, BudgetAssociatedNotification> notifications, BudgetForecastSpend forecastSpend, ETag? etag) : base(id, name, resourceType, systemData)
+        internal ConsumptionBudgetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BudgetCategory? category, decimal? amount, BudgetTimeGrainType? timeGrain, BudgetTimePeriod timePeriod, ConsumptionBudgetFilter filter, BudgetCurrentSpend currentSpend, IDictionary<string, BudgetAssociatedNotification> notifications, BudgetForecastSpend forecastSpend, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Category = category;
             Amount = amount;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary> The category of the budget, whether the budget tracks cost or usage. </summary>
-        public BudgetCategoryType? Category { get; set; }
+        public BudgetCategory? Category { get; set; }
         /// <summary> The total amount of cost to track with the budget. </summary>
         public decimal? Amount { get; set; }
         /// <summary> The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers. </summary>

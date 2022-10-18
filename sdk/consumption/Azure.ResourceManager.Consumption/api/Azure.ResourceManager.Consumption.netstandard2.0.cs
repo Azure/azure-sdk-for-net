@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Consumption
     {
         public ConsumptionBudgetData() { }
         public decimal? Amount { get { throw null; } set { } }
-        public Azure.ResourceManager.Consumption.Models.BudgetCategoryType? Category { get { throw null; } set { } }
+        public Azure.ResourceManager.Consumption.Models.BudgetCategory? Category { get { throw null; } set { } }
         public Azure.ResourceManager.Consumption.Models.BudgetCurrentSpend CurrentSpend { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.Consumption.Models.ConsumptionBudgetFilter Filter { get { throw null; } set { } }
@@ -149,20 +149,20 @@ namespace Azure.ResourceManager.Consumption.Models
         public Azure.ResourceManager.Consumption.Models.NotificationThresholdType? ThresholdType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BudgetCategoryType : System.IEquatable<Azure.ResourceManager.Consumption.Models.BudgetCategoryType>
+    public readonly partial struct BudgetCategory : System.IEquatable<Azure.ResourceManager.Consumption.Models.BudgetCategory>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public BudgetCategoryType(string value) { throw null; }
-        public static Azure.ResourceManager.Consumption.Models.BudgetCategoryType Cost { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Consumption.Models.BudgetCategoryType other) { throw null; }
+        public BudgetCategory(string value) { throw null; }
+        public static Azure.ResourceManager.Consumption.Models.BudgetCategory Cost { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Consumption.Models.BudgetCategory other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Consumption.Models.BudgetCategoryType left, Azure.ResourceManager.Consumption.Models.BudgetCategoryType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Consumption.Models.BudgetCategoryType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Consumption.Models.BudgetCategoryType left, Azure.ResourceManager.Consumption.Models.BudgetCategoryType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Consumption.Models.BudgetCategory left, Azure.ResourceManager.Consumption.Models.BudgetCategory right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Consumption.Models.BudgetCategory (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Consumption.Models.BudgetCategory left, Azure.ResourceManager.Consumption.Models.BudgetCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class BudgetComparisonExpression

@@ -79,7 +79,7 @@ rename-rules:
 
 rename-mapping:
   Budget: ConsumptionBudget
-  CategoryType: BudgetCategoryType
+  CategoryType: BudgetCategory
   CurrentSpend: BudgetCurrentSpend
   BudgetFilter: ConsumptionBudgetFilter
   ForecastSpend: BudgetForecastSpend

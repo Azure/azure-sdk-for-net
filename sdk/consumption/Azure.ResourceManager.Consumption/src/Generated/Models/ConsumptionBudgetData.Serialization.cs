@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Consumption
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<BudgetCategoryType> category = default;
+            Optional<BudgetCategory> category = default;
             Optional<decimal> amount = default;
             Optional<BudgetTimeGrainType> timeGrain = default;
             Optional<BudgetTimePeriod> timePeriod = default;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Consumption
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            category = new BudgetCategoryType(property0.Value.GetString());
+                            category = new BudgetCategory(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("amount"))
