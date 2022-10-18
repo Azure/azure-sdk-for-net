@@ -123,5 +123,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 return DeserializeOciManifest(document.RootElement);
             }
         }
+
+        internal RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
     }
 }
