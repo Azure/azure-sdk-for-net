@@ -88,7 +88,7 @@ namespace Azure.Storage.DataMovement
                 return;
             }
 
-            string operationName = $"{nameof(BlobDataController.StartTransferAsync)}";
+            string operationName = $"{nameof(TransferManager.StartTransferAsync)}";
             await OnTransferStatusChanged(StorageTransferStatus.InProgress).ConfigureAwait(false);
             if (fileLength.HasValue)
             {

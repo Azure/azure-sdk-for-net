@@ -66,7 +66,7 @@ namespace Azure.Storage.DataMovement.Tests
             long size = Constants.KB,
             int waitTimeInSec = 10,
             int blobCount = 1,
-            DataControllerOptions transferManagerOptions = default,
+            TransferManagerOptions transferManagerOptions = default,
             List<string> blobNames = default,
             List<SingleTransferOptions> options = default)
         {
@@ -100,7 +100,7 @@ namespace Azure.Storage.DataMovement.Tests
                 Assert.AreEqual(blobCount, options.Count);
             }
 
-            transferManagerOptions ??= new DataControllerOptions()
+            transferManagerOptions ??= new TransferManagerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
@@ -109,7 +109,7 @@ namespace Azure.Storage.DataMovement.Tests
             try
             {
                 // Initialize BlobDataController
-                BlobDataController BlobDataController = new BlobDataController(transferManagerOptions);
+                TransferManager BlobDataController = new TransferManager(transferManagerOptions);
 
                 // Upload set of VerifyCopyFromUriInfo blobs to Copy
                 for (int i = 0; i < blobCount; i++)

@@ -32,13 +32,13 @@ namespace Azure.Storage.DataMovement.Tests
             var containerName = GetNewContainerName();
             var directoryName = GetNewBlobDirectoryName();
 
-            DataControllerOptions managerOptions = new DataControllerOptions()
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
 
-            BlobDataController blobTransferManager1 = new BlobDataController(managerOptions);
+            TransferManager blobTransferManager1 = new TransferManager(managerOptions);
         }
     }
 }

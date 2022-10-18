@@ -1,26 +1,5 @@
 namespace Azure.Storage.DataMovement
 {
-    public partial class BlobDataController : Azure.Storage.DataMovement.DataController
-    {
-        public BlobDataController(Azure.Storage.DataMovement.DataControllerOptions options) { }
-        public System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartTransferAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.Storage.DataMovement.StorageResource destinationResource, Azure.Storage.DataMovement.Models.SingleTransferOptions transferOptions = null) { throw null; }
-        public System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartTransferAsync(Azure.Storage.DataMovement.StorageResourceContainer sourceResource, Azure.Storage.DataMovement.StorageResourceContainer destinationResource, Azure.Storage.DataMovement.Models.ContainerTransferOptions transferOptions = null) { throw null; }
-    }
-    public abstract partial class DataController
-    {
-        protected DataController() { }
-        public System.Buffers.ArrayPool<byte> UploadArrayPool { get { throw null; } }
-        public System.Threading.Tasks.Task<bool> TryPauseAllTransfersAsync() { throw null; }
-        public System.Threading.Tasks.Task<bool> TryPauseTransferAsync(string id) { throw null; }
-        public System.Threading.Tasks.Task<bool> TryRemoveTransferAsync(string id) { throw null; }
-    }
-    public partial class DataControllerOptions
-    {
-        public DataControllerOptions() { }
-        public string CheckPointFolderPath { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.ErrorHandlingOptions ErrorHandling { get { throw null; } set { } }
-        public int? MaximumConcurrency { get { throw null; } set { } }
-    }
     public partial class DataTransfer
     {
         internal DataTransfer() { }
@@ -38,16 +17,32 @@ namespace Azure.Storage.DataMovement
         PauseOnAllFailures = -1,
         ContinueOnFailure = 1,
     }
-    public enum ListStorageResourcesType
+    public partial class LocalDirectoryStorageResourceContainer : Azure.Storage.DataMovement.StorageResourceContainer
     {
-        ListingUnavailable = -1,
-        SingleListCall = 1,
-        PageableListCall = 2,
+        public LocalDirectoryStorageResourceContainer(string path) { }
+        public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri() { throw null; }
+        public string GetFullPath() { throw null; }
+        public override System.Collections.Generic.List<string> GetPath() { throw null; }
+        public override Azure.Storage.DataMovement.StorageResource GetStorageResource(System.Collections.Generic.List<string> path) { throw null; }
+        public override Azure.Storage.DataMovement.StorageResourceContainer GetStorageResourceContainer(System.Collections.Generic.List<string> path) { throw null; }
+        public override System.Uri GetUri() { throw null; }
+        public override System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.StorageResource> ListStorageResources(Azure.Storage.DataMovement.Models.ListStorageResourceOptions options = null, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public static partial class LocalStorageResourceFactory
+    public partial class LocalFileStorageResource : Azure.Storage.DataMovement.StorageResource
     {
-        public static Azure.Storage.DataMovement.StorageResourceContainer GetDirectory(string path) { throw null; }
-        public static Azure.Storage.DataMovement.StorageResource GetFile(string path) { throw null; }
+        public LocalFileStorageResource(string path) { }
+        public override Azure.Storage.DataMovement.Models.CanCommitListType CanCommitBlockListType() { throw null; }
+        public override Azure.Storage.DataMovement.StreamConsumableType CanConsumeReadableStream() { throw null; }
+        public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri() { throw null; }
+        public override System.Threading.Tasks.Task CommitBlockList(System.Collections.Generic.IEnumerable<string> base64BlockIds, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.Task ConsumePartialOffsetReadableStream(long offset, long length, System.IO.Stream stream, Azure.Storage.DataMovement.Models.ConsumePartialReadableStreamOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task ConsumeReadableStream(System.IO.Stream stream, Azure.Storage.DataMovement.Models.ConsumeReadableStreamOptions options, System.Threading.CancellationToken token = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task ConsumeUri(System.Uri uri) { throw null; }
+        public override System.IO.Stream GetConsumableStream() { throw null; }
+        public override System.Collections.Generic.List<string> GetPath() { throw null; }
+        public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.StorageResourceProperties> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.IO.Stream GetReadableInputStream() { throw null; }
+        public override System.Uri GetUri() { throw null; }
     }
     [System.FlagsAttribute]
     public enum ProduceUriType
@@ -74,7 +69,6 @@ namespace Azure.Storage.DataMovement
     public abstract partial class StorageResourceContainer
     {
         protected StorageResourceContainer() { }
-        public abstract Azure.Storage.DataMovement.ListStorageResourcesType CanList();
         public abstract Azure.Storage.DataMovement.ProduceUriType CanProduceUri();
         public abstract System.Collections.Generic.List<string> GetPath();
         public abstract Azure.Storage.DataMovement.StorageResource GetStorageResource(System.Collections.Generic.List<string> path);
@@ -105,6 +99,24 @@ namespace Azure.Storage.DataMovement
     {
         NotConsumable = -1,
         Consumable = 1,
+    }
+    public partial class TransferManager
+    {
+        protected TransferManager() { }
+        public TransferManager(Azure.Storage.DataMovement.TransferManagerOptions options) { }
+        public System.Buffers.ArrayPool<byte> UploadArrayPool { get { throw null; } }
+        public System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartTransferAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.Storage.DataMovement.StorageResource destinationResource, Azure.Storage.DataMovement.Models.SingleTransferOptions transferOptions = null) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartTransferAsync(Azure.Storage.DataMovement.StorageResourceContainer sourceResource, Azure.Storage.DataMovement.StorageResourceContainer destinationResource, Azure.Storage.DataMovement.Models.ContainerTransferOptions transferOptions = null) { throw null; }
+        public System.Threading.Tasks.Task<bool> TryPauseAllTransfersAsync() { throw null; }
+        public System.Threading.Tasks.Task<bool> TryPauseTransferAsync(string id) { throw null; }
+        public System.Threading.Tasks.Task<bool> TryRemoveTransferAsync(string id) { throw null; }
+    }
+    public partial class TransferManagerOptions
+    {
+        public TransferManagerOptions() { }
+        public string CheckPointFolderPath { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.ErrorHandlingOptions ErrorHandling { get { throw null; } set { } }
+        public int? MaximumConcurrency { get { throw null; } set { } }
     }
 }
 namespace Azure.Storage.DataMovement.Models

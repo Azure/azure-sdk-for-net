@@ -111,7 +111,7 @@ namespace Azure.Storage.DataMovement.Tests
             long size = Constants.KB,
             int waitTimeInSec = 10,
             int blobCount = 1,
-            DataControllerOptions transferManagerOptions = default,
+            TransferManagerOptions transferManagerOptions = default,
             List<string> blobNames = default,
             List<SingleTransferOptions> options = default)
         {
@@ -145,7 +145,7 @@ namespace Azure.Storage.DataMovement.Tests
                 Assert.AreEqual(blobCount, options.Count);
             }
 
-            transferManagerOptions ??= new DataControllerOptions()
+            transferManagerOptions ??= new TransferManagerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
@@ -154,7 +154,7 @@ namespace Azure.Storage.DataMovement.Tests
             try
             {
                 // Initialize BlobDataController
-                BlobDataController BlobDataController = new BlobDataController(transferManagerOptions);
+                TransferManager BlobDataController = new TransferManager(transferManagerOptions);
 
                 // Upload set of VerifyDownloadBlobContentInfo blobs to download
                 for (int i = 0; i < blobCount; i++)
@@ -410,7 +410,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             AutoResetEvent CompletedProgressBytesWait = new AutoResetEvent(false);
 
-            DataControllerOptions managerOptions = new DataControllerOptions()
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = concurrency,

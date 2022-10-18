@@ -130,15 +130,6 @@ namespace Azure.Storage.Blobs.DataMovement
         }
 
         /// <summary>
-        /// Lists the child storage resources in the container resource.
-        /// </summary>
-        /// <returns><see cref="ListStorageResourcesType"/></returns>
-        public override ListStorageResourcesType CanList()
-        {
-            return ListStorageResourcesType.PageableListCall;
-        }
-
-        /// <summary>
         /// Lists the child paths in the resource
         /// </summary>
         /// <param name="options"></param>

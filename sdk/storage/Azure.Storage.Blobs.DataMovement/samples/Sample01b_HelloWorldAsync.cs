@@ -65,8 +65,8 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 BlockBlobClient destinationBlob2 = container.GetBlockBlobClient(Randomize("sample-blob"));
 
                 // Upload file data
-                DataControllerOptions options = new DataControllerOptions();
-                BlobDataController dataController = new BlobDataController(default);
+                TransferManagerOptions options = new TransferManagerOptions();
+                TransferManager dataController = new TransferManager(options);
 
                 // Create simple transfer single blob upload job
                 StorageResource sourceResource = new LocalFileStorageResource(originalPath);
@@ -137,11 +137,11 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 }
 
                 // Create Blob Data Controller with concurrency limited to 4
-                DataControllerOptions options = new DataControllerOptions()
+                TransferManagerOptions options = new TransferManagerOptions()
                 {
                     MaximumConcurrency = 4
                 };
-                BlobDataController dataController = new BlobDataController(options);
+                TransferManager dataController = new TransferManager(options);
 
                 // Simple Download Single Blob Job
                 StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
@@ -222,7 +222,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 StorageResourceContainer directoryDestination2 = new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory"));
 
                 // Create BlobDataController with event handler in Options bag
-                DataControllerOptions options = new DataControllerOptions();
+                TransferManagerOptions options = new TransferManagerOptions();
                 ContainerTransferOptions uploadOptions = new ContainerTransferOptions();
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
                 uploadOptions.TransferFailedEventHandler += async (TransferFailedEventArgs args) =>
@@ -230,7 +230,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                     //await LogFailedFileAsync(args.SourcePath, args.DestinationBlobClient.Uri, args.Exception.Message);
                 };
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
-                BlobDataController transferManager = new BlobDataController(options);
+                TransferManager transferManager = new TransferManager(options);
 
                 // Create simple transfer directory upload job which uploads the directory and the contents of that directory
                 DataTransfer uploadDirectoryJobId = await transferManager.StartTransferAsync(
@@ -310,7 +310,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 await container.UploadBlobAsync("third", File.OpenRead(CreateTempFile()));
 
                 // Create BlobDataController with event handler in Options bag
-                DataControllerOptions options = new DataControllerOptions();
+                TransferManagerOptions options = new TransferManagerOptions();
                 ContainerTransferOptions downloadOptions = new ContainerTransferOptions();
                 downloadOptions.TransferFailedEventHandler += async (TransferFailedEventArgs args) =>
                 {
@@ -325,7 +325,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                     // Remove stub
                     await Task.CompletedTask;
                 };
-                BlobDataController transferManager = new BlobDataController(options);
+                TransferManager transferManager = new TransferManager(options);
 
                 // Simple Download Directory Job where we upload the directory and it's contents
                 await transferManager.StartTransferAsync(
@@ -379,7 +379,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 StorageResource destinationResource = new BlockBlobStorageResource(sourceBlob);
 
                 // Upload file data
-                BlobDataController transferManager = new BlobDataController(default);
+                TransferManager transferManager = new TransferManager(default);
 
                 // Create simple transfer single blob upload job
                 DataTransfer job = await transferManager.StartTransferAsync(sourceResource, destinationResource).ConfigureAwait(false);
@@ -449,7 +449,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
                 await container.UploadBlobAsync($"{sourceDirectoryName2}/ninth", File.OpenRead(originalPath));
 
                 // Create Blob Transfer Manager
-                BlobDataController dataController = new BlobDataController(default);
+                TransferManager dataController = new TransferManager(default);
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
                 ContainerTransferOptions options = new ContainerTransferOptions();
                 options.TransferFailedEventHandler += async (TransferFailedEventArgs args) =>
@@ -529,13 +529,13 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
 
                 // Set configurations up to continue to on storage failures
                 // but not on local filesystem errors
-                DataControllerOptions options = new DataControllerOptions()
+                TransferManagerOptions options = new TransferManagerOptions()
                 {
                     MaximumConcurrency = 4
                 };
 
                 // Create Blob Transfer Manager
-                BlobDataController transferManager = new BlobDataController(default);
+                TransferManager transferManager = new TransferManager(default);
 
                 CancellationTokenSource cts = new CancellationTokenSource();
                 // Create transfer single blob upload job with transfer options concurrency specified
@@ -623,13 +623,13 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
 
                 // Set configurations up to continue to on storage failures
                 // but not on local filesystem errors
-                DataControllerOptions options = new DataControllerOptions()
+                TransferManagerOptions options = new TransferManagerOptions()
                 {
                     MaximumConcurrency = 4
                 };
 
                 // Create Blob Transfer Manager
-                BlobDataController transferManager = new BlobDataController(options);
+                TransferManager transferManager = new TransferManager(options);
 
                 CancellationTokenSource cts = new CancellationTokenSource();
 
@@ -723,13 +723,13 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
 
                 // Set configurations up to continue to on storage failures
                 // but not on local filesystem errors
-                DataControllerOptions options = new DataControllerOptions()
+                TransferManagerOptions options = new TransferManagerOptions()
                 {
                     MaximumConcurrency = 4,
                 };
 
                 // Create Blob Transfer Manager
-                BlobDataController transferManager = new BlobDataController(options);
+                TransferManager transferManager = new TransferManager(options);
 
                 CancellationTokenSource cts = new CancellationTokenSource();
 
@@ -834,13 +834,13 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
 
                 // Set configurations up to continue to on storage failures
                 // but not on local filesystem errors
-                DataControllerOptions options = new DataControllerOptions()
+                TransferManagerOptions options = new TransferManagerOptions()
                 {
                     MaximumConcurrency = 4,
                 };
 
                 // Create Blob Transfer Manager
-                BlobDataController dataController = new BlobDataController(options);
+                TransferManager dataController = new TransferManager(options);
 
                 // Create transfer single blob upload job with transfer options concurrency specified
                 // i.e. it's a bigger blob so it maybe need more help uploading fast

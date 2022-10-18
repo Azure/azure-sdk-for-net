@@ -11,7 +11,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Options for the StorageTransferManager.
     /// </summary>
-    public class DataControllerOptions
+    public class TransferManagerOptions
     {
         /// <summary>
         /// Optional event handler containing all possible status event status holders

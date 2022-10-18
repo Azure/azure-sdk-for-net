@@ -111,7 +111,7 @@ namespace Azure.Storage.DataMovement.Tests
             long size = Constants.KB,
             int waitTimeInSec = 10,
             int blobCount = 1,
-            DataControllerOptions transferManagerOptions = default,
+            TransferManagerOptions transferManagerOptions = default,
             List<string> blobNames = default,
             List<SingleTransferOptions> options = default)
         {
@@ -145,7 +145,7 @@ namespace Azure.Storage.DataMovement.Tests
                 Assert.AreEqual(blobCount, options.Count);
             }
 
-            transferManagerOptions ??= new DataControllerOptions()
+            transferManagerOptions ??= new TransferManagerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
@@ -154,7 +154,7 @@ namespace Azure.Storage.DataMovement.Tests
             try
             {
                 // Initialize BlobDataController
-                BlobDataController BlobDataController = new BlobDataController(transferManagerOptions);
+                TransferManager BlobDataController = new TransferManager(transferManagerOptions);
 
                 // Set up blob to upload
                 for (int i = 0; i < blobCount; i++)
@@ -363,7 +363,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             List<string> blobNames = new List<string>() { blobName };
 
-            DataControllerOptions managerOptions = new DataControllerOptions()
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
@@ -421,12 +421,12 @@ namespace Azure.Storage.DataMovement.Tests
             ContainerTransferOptions options = new ContainerTransferOptions();
 
             // Act
-            DataControllerOptions managerOptions = new DataControllerOptions()
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
-            BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
+            TransferManager BlobDataController = InstrumentClient(new TransferManager(managerOptions));
 
             await BlobDataController.StartTransferAsync(sourceResource, destinationResource).ConfigureAwait(false);
 
@@ -462,12 +462,12 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName);
             StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(folder);
 
-            DataControllerOptions managerOptions = new DataControllerOptions()
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
-            BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
+            TransferManager BlobDataController = InstrumentClient(new TransferManager(managerOptions));
 
             // Act
             await BlobDataController.StartTransferAsync(sourceResource, destinationResource).ConfigureAwait(false);
@@ -497,12 +497,12 @@ namespace Azure.Storage.DataMovement.Tests
 
             ContainerTransferOptions options = new ContainerTransferOptions();
 
-            DataControllerOptions managerOptions = new DataControllerOptions()
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
-            BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
+            TransferManager BlobDataController = InstrumentClient(new TransferManager(managerOptions));
 
             // Act
             await BlobDataController.StartTransferAsync(sourceResource, destinationResource, options).ConfigureAwait(false);
@@ -537,12 +537,12 @@ namespace Azure.Storage.DataMovement.Tests
             string openSubchild3 = await CreateRandomFileAsync(openSubfolder).ConfigureAwait(false);
 
             ContainerTransferOptions options = new ContainerTransferOptions();
-            DataControllerOptions managerOptions = new DataControllerOptions()
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
-            BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
+            TransferManager BlobDataController = InstrumentClient(new TransferManager(managerOptions));
 
             // Act
             await BlobDataController.StartTransferAsync(sourceResource, destinationResource, options).ConfigureAwait(false);
@@ -594,12 +594,12 @@ namespace Azure.Storage.DataMovement.Tests
             string openSubChild4_3 = await CreateRandomFileAsync(openSubfolder2).ConfigureAwait(false);
 
             ContainerTransferOptions options = new ContainerTransferOptions();
-            DataControllerOptions managerOptions = new DataControllerOptions()
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
-            BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
+            TransferManager BlobDataController = InstrumentClient(new TransferManager(managerOptions));
 
             // Act
             await BlobDataController.StartTransferAsync(sourceResource, destinationResource, options).ConfigureAwait(false);
@@ -651,12 +651,12 @@ namespace Azure.Storage.DataMovement.Tests
             }
 
             ContainerTransferOptions options = new ContainerTransferOptions();
-            DataControllerOptions managerOptions = new DataControllerOptions()
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
-            BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
+            TransferManager BlobDataController = InstrumentClient(new TransferManager(managerOptions));
 
             // Act
             await BlobDataController.StartTransferAsync(sourceResource, destinationResource, options).ConfigureAwait(false);
@@ -698,12 +698,12 @@ namespace Azure.Storage.DataMovement.Tests
             string openSubfolder4 = CreateRandomDirectory(folder);
 
             ContainerTransferOptions options = new ContainerTransferOptions();
-            DataControllerOptions managerOptions = new DataControllerOptions()
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
-            BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
+            TransferManager BlobDataController = InstrumentClient(new TransferManager(managerOptions));
 
             // Act
             await BlobDataController.StartTransferAsync(sourceResource, destinationResource, options).ConfigureAwait(false);
@@ -765,12 +765,12 @@ namespace Azure.Storage.DataMovement.Tests
             };
 
             // Act
-            DataControllerOptions managerOptions = new DataControllerOptions()
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
-            BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
+            TransferManager BlobDataController = InstrumentClient(new TransferManager(managerOptions));
 
             // Act
             await BlobDataController.StartTransferAsync(sourceResource, destinationResource, options).ConfigureAwait(false);
@@ -816,12 +816,12 @@ namespace Azure.Storage.DataMovement.Tests
             await blobClient.UploadAsync(openChild);
 
             // Act
-            DataControllerOptions managerOptions = new DataControllerOptions()
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
-            BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
+            TransferManager BlobDataController = InstrumentClient(new TransferManager(managerOptions));
             await BlobDataController.StartTransferAsync(sourceResource, destinationResource, options).ConfigureAwait(false);
 
             // Assert - Check Response
@@ -861,12 +861,12 @@ namespace Azure.Storage.DataMovement.Tests
             ContainerTransferOptions options = new ContainerTransferOptions();
 
             // Act
-            DataControllerOptions managerOptions = new DataControllerOptions()
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
-            BlobDataController BlobDataController = InstrumentClient(new BlobDataController(managerOptions));
+            TransferManager BlobDataController = InstrumentClient(new TransferManager(managerOptions));
             await BlobDataController.StartTransferAsync(sourceResource, destinationResource, options).ConfigureAwait(false);
 
             // Assert - Check Response
@@ -895,12 +895,12 @@ namespace Azure.Storage.DataMovement.Tests
             ContainerTransferOptions options = new ContainerTransferOptions();
 
             // Act
-            DataControllerOptions controllerOptions = new DataControllerOptions()
+            TransferManagerOptions controllerOptions = new TransferManagerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
-            BlobDataController BlobDataController = InstrumentClient(new BlobDataController(controllerOptions));
+            TransferManager BlobDataController = InstrumentClient(new TransferManager(controllerOptions));
             await BlobDataController.StartTransferAsync(sourceResource, destinationResource, options).ConfigureAwait(false);
 
             List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())

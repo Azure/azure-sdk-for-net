@@ -93,16 +93,6 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Can list the files and directories in the parent container.
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public override ListStorageResourcesType CanList()
-        {
-            return ListStorageResourcesType.SingleListCall;
-        }
-
-        /// <summary>
         /// Lists storage resource in the filesystem.
         /// </summary>
         /// <param name="options"></param>

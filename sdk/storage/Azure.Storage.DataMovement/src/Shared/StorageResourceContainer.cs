@@ -40,12 +40,6 @@ namespace Azure.Storage.DataMovement
         public abstract List<string> GetPath();
 
         /// <summary>
-        /// Lists the child storage resources in the container resource.
-        /// </summary>
-        /// <returns></returns>
-        public abstract ListStorageResourcesType CanList();
-
-        /// <summary>
         /// Lists all the child storage resources in the path.
         /// </summary>
         /// <returns></returns>

@@ -7,13 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Channels;
 using System.Buffers;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Base class for data cotnroller
     /// </summary>
-    public abstract class DataController
+    public class TransferManager
     {
         // Indicates whether the current thread is processing Jobs.
         private static Task _currentTaskIsProcessingJob;
@@ -54,12 +55,12 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Transfer Manager options
         /// </summary>
-        private DataControllerOptions _options;
+        private TransferManagerOptions _options;
 
         /// <summary>
         /// Transfer Manager options
         /// </summary>
-        internal DataControllerOptions Options => _options;
+        internal TransferManagerOptions Options => _options;
 
         /// <summary>
         /// Ongoing transfers
@@ -75,10 +76,14 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Constructor
         /// </summary>
-        protected DataController()
+        protected TransferManager()
         { }
 
-        internal DataController(DataControllerOptions options)
+        /// <summary>
+        /// Constructor to create a DataController
+        /// </summary>
+        /// <param name="options"></param>
+        public TransferManager(TransferManagerOptions options)
         {
             _jobsToProcessChannel = Channel.CreateUnbounded<TransferJobInternal>(
                 new UnboundedChannelOptions()
@@ -100,7 +105,7 @@ namespace Azure.Storage.DataMovement
             _currentTaskIsProcessingJob = Task.Run(() => NotifyOfPendingJobProcessing());
             _currentTaskIsProcessingJobPart = Task.Run(() => NotifyOfPendingJobPartProcessing());
             _currentTaskIsProcessingJobChunk = Task.Run(() => NotifyOfPendingJobChunkProcessing());
-            _options = options == default ? new DataControllerOptions() : options;
+            _options = options == default ? new TransferManagerOptions() : options;
             _maxJobChunkTasks = options?.MaximumConcurrency ?? Constants.DataMovement.MaxJobChunkTasks;
             _dataTransfers = new List<DataTransfer>();
             _arrayPool = ArrayPool<byte>.Shared;
@@ -230,5 +235,144 @@ namespace Azure.Storage.DataMovement
             throw new NotImplementedException();
         }
         #endregion Transfer Job Management
+
+        #region Start Transfer
+
+        /// <summary>
+        /// Intiate transfer
+        /// </summary>
+        /// <param name="sourceResource"></param>
+        /// <param name="destinationResource"></param>
+        /// <param name="transferOptions"></param>
+        /// <returns></returns>
+        public async Task<DataTransfer> StartTransferAsync(
+            StorageResource sourceResource,
+            StorageResource destinationResource,
+            SingleTransferOptions transferOptions = default)
+        {
+            if (sourceResource == default)
+            {
+                throw Errors.ArgumentNull(nameof(sourceResource));
+            }
+            if (destinationResource == default)
+            {
+                throw Errors.ArgumentNull(nameof(destinationResource));
+            }
+
+            transferOptions = transferOptions == default ? new SingleTransferOptions() : transferOptions;
+
+            // If the resource cannot produce a Uri, it means it can only produce a local path
+            // From here we only support an upload job
+            DataTransfer dataTransfer = new DataTransfer();
+            TransferJobInternal transferJobInternal;
+            if (sourceResource.CanProduceUri() == ProduceUriType.NoUri)
+            {
+                if (destinationResource.CanProduceUri() == ProduceUriType.ProducesUri)
+                {
+                    // Stream to Uri job (Upload Job)
+                    transferJobInternal = new StreamToUriTransferJob(
+                        dataTransfer: dataTransfer,
+                        sourceResource: sourceResource,
+                        destinationResource: destinationResource,
+                        transferOptions: transferOptions,
+                        queueChunkTask: QueueJobChunkAsync,
+                        CheckPointFolderPath: Options.CheckPointFolderPath,
+                        errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
+                        arrayPool: _arrayPool);
+                    // Queue Job
+                    await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
+                    _dataTransfers.Add(dataTransfer);
+                }
+                else // Invalid argument that both resources do not produce a Uri
+                {
+                    throw Errors.InvalidSourceDestinationParams();
+                }
+            }
+            else if (sourceResource.CanProduceUri() == ProduceUriType.ProducesUri)
+            {
+                // Source is remote
+                if (destinationResource.CanProduceUri() == ProduceUriType.ProducesUri)
+                {
+                    // Most likely a copy operation.
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    // Download to local operation
+                    // BlobDownloadJob();
+                    throw new NotImplementedException();
+                }
+            }
+            return dataTransfer;
+        }
+
+        /// <summary>
+        /// Intiate transfer
+        /// </summary>
+        /// <param name="sourceResource"></param>
+        /// <param name="destinationResource"></param>
+        /// <param name="transferOptions"></param>
+        /// <returns></returns>
+        public async Task<DataTransfer> StartTransferAsync(
+            StorageResourceContainer sourceResource,
+            StorageResourceContainer destinationResource,
+            ContainerTransferOptions transferOptions = default)
+        {
+            if (sourceResource == default)
+            {
+                throw Errors.ArgumentNull(nameof(sourceResource));
+            }
+            if (destinationResource == default)
+            {
+                throw Errors.ArgumentNull(nameof(destinationResource));
+            }
+
+            transferOptions = transferOptions == default ? new ContainerTransferOptions() : transferOptions;
+
+            // If the resource cannot produce a Uri, it means it can only produce a local path
+            // From here we only support an upload job
+            DataTransfer dataTransfer = new DataTransfer();
+            TransferJobInternal transferJobInternal;
+            if (sourceResource.CanProduceUri() == ProduceUriType.NoUri)
+            {
+                if (destinationResource.CanProduceUri() == ProduceUriType.ProducesUri)
+                {
+                    // Stream to Uri job (Upload Job)
+                    transferJobInternal = new StreamToUriTransferJob(
+                        dataTransfer: dataTransfer,
+                        sourceResource: sourceResource,
+                        destinationResource: destinationResource,
+                        transferOptions: transferOptions,
+                        queueChunkTask: QueueJobChunkAsync,
+                        CheckPointFolderPath: Options.CheckPointFolderPath,
+                        errorHandling: Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
+                        arrayPool: _arrayPool);
+                    // Queue Job
+                    await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
+                    _dataTransfers.Add(dataTransfer);
+                }
+                else // Invalid argument that both resources do not produce a Uri
+                {
+                    throw Errors.InvalidSourceDestinationParams();
+                }
+            }
+            else if (sourceResource.CanProduceUri() == ProduceUriType.ProducesUri)
+            {
+                // Source is remote
+                if (destinationResource.CanProduceUri() == ProduceUriType.ProducesUri)
+                {
+                    // Most likely a copy operation.
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    // Download to local operation
+                    // BlobDownloadJob();
+                    throw new NotImplementedException();
+                }
+            }
+            return dataTransfer;
+        }
+        #endregion
     }
 }

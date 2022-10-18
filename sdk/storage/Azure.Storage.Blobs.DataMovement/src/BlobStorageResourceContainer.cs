@@ -85,15 +85,6 @@ namespace Azure.Storage.Blobs.DataMovement
         }
 
         /// <summary>
-        /// Lists the child storage resources in the container resource.
-        /// </summary>
-        /// <returns><see cref="ListStorageResourcesType"/></returns>
-        public override ListStorageResourcesType CanList()
-        {
-            return ListStorageResourcesType.PageableListCall;
-        }
-
-        /// <summary>
         /// Lists the blob resources in the storage blob container.
         ///
         /// Because blobs is a flat namespace, virtual directories will not be returned.
