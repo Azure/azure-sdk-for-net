@@ -78,7 +78,7 @@ namespace Azure.Containers.ContainerRegistry
                 // TODO: don't new RequestContext every time.
                 var context = new RequestContext { CancellationToken = cancellationToken };
 
-                var response = await GetManifestPropertiesAsync(_repositoryName, digest, context).ConfigureAwait(false);
+                var response = await GetManifestPropertiesAsync(digest, context).ConfigureAwait(false);
                 JsonDocument document = JsonDocument.Parse(response.Content);
                 ArtifactManifestProperties properties = ArtifactManifestProperties.DeserializeArtifactManifestProperties(document.RootElement);
                 return Response.FromValue(properties, response);

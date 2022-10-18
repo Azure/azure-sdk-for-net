@@ -80,6 +80,10 @@ namespace Azure.Containers.ContainerRegistry
             _registryName = endpoint.Host.Split('.')[0];
             _clientDiagnostics = new ClientDiagnostics(options);
 
+            // temp
+            _pipeline = HttpPipelineBuilder.Build(options);
+            _apiVersion = options.Version;
+
             //_acrAuthPipeline = HttpPipelineBuilder.Build(options);
             //_acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
 

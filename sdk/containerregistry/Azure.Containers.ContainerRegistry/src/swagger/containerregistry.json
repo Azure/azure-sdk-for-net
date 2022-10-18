@@ -6,7 +6,7 @@
         "version": "2021-07-01"
     },
     "x-ms-parameterized-host": {
-        "hostTemplate": "{url}",
+        "hostTemplate": "{endpoint}",
         "useSchemePrefix": false,
         "positionInOperation": "first",
         "parameters": [
@@ -2890,11 +2890,12 @@
     },
     "parameters": {
         "Url": {
-            "name": "url",
+            "name": "endpoint",
             "x-ms-client-name": "loginUri",
             "description": "Registry login URL",
             "required": true,
             "type": "string",
+            "format": "url",
             "in": "path",
             "x-ms-skip-url-encoding": true,
             "x-ms-parameter-location": "client"
@@ -3070,7 +3071,8 @@
             "description": "Name of the image (including the namespace)",
             "required": true,
             "type": "string",
-            "x-ms-parameter-location": "method"
+            "x-ms-client-name": "repository",
+            "x-ms-parameter-location": "client"
         },
         "ManifestBody": {
             "description": "Manifest body, can take v1 or v2 values depending on accept header",

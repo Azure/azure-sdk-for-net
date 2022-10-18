@@ -19,8 +19,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     {
         private readonly Uri _endpoint;
         private readonly string _registryName;
-        private readonly string _repositoryName;
-        //private readonly HttpPipeline _pipeline;
+        private readonly string _repository;
+        private readonly HttpPipeline _pipeline;
         private readonly HttpPipeline _acrAuthPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         //private readonly IContainerRegistryAuthenticationClient _acrAuthClient;
@@ -101,8 +101,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
             _endpoint = endpoint;
             _registryName = endpoint.Host.Split('.')[0];
-            _repositoryName = repository;
+            _repository = repository;
             _clientDiagnostics = new ClientDiagnostics(options);
+
+            // temp
+            _pipeline = HttpPipelineBuilder.Build(options);
 
             _acrAuthPipeline = HttpPipelineBuilder.Build(options);
             //_acrAuthClient = authenticationClient ?? new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
@@ -126,7 +129,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <summary>
         /// Gets the name of the repository that logically groups the artifact parts.
         /// </summary>
-        public virtual string RepositoryName => _repositoryName;
+        public virtual string RepositoryName => _repository;
 
         /// <summary>
         /// Uploads a manifest for an OCI Artifact.
@@ -152,7 +155,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 string tagOrDigest = options.Tag ?? manifestDigest;
                 RequestContext context = FromCancellationToken(cancellationToken);
 
-                Response response = CreateManifest(_repositoryName, tagOrDigest, content, ManifestMediaType.OciManifest.ToString(), context);
+                Response response = CreateManifest(tagOrDigest, content, ManifestMediaType.OciManifest.ToString(), context);
                 var responseDigest = response.Headers.TryGetValue(ContainerRegistryHeaders.DockerContentDigest, out string value) ? value : null;
 
                 if (!manifestDigest.Equals(responseDigest, StringComparison.Ordinal))
@@ -195,7 +198,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 RequestContext context = FromCancellationToken(cancellationToken);
 
                 string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(manifestStream);
-                Response response = CreateManifest(_repositoryName, tagOrDigest, content, ManifestMediaType.OciManifest.ToString(), context);
+                Response response = CreateManifest(tagOrDigest, content, ManifestMediaType.OciManifest.ToString(), context);
                 var responseDigest = response.Headers.TryGetValue(ContainerRegistryHeaders.DockerContentDigest, out string value) ? value : null;
 
                 if (!ValidateDigest(stream, responseDigest))
@@ -237,7 +240,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 string tagOrDigest = options.Tag ?? manifestDigest;
                 RequestContext context = FromCancellationToken(cancellationToken);
 
-                Response response = await CreateManifestAsync(_repositoryName, tagOrDigest, content, ManifestMediaType.OciManifest.ToString(), context).ConfigureAwait(false);
+                Response response = await CreateManifestAsync(tagOrDigest, content, ManifestMediaType.OciManifest.ToString(), context).ConfigureAwait(false);
                 var responseDigest = response.Headers.TryGetValue(ContainerRegistryHeaders.DockerContentDigest, out string value) ? value : null;
 
                 if (!manifestDigest.Equals(responseDigest, StringComparison.Ordinal))
@@ -280,7 +283,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 RequestContext context = FromCancellationToken(cancellationToken);
 
                 string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(manifestStream);
-                Response response = await CreateManifestAsync(_repositoryName, tagOrDigest, content, ManifestMediaType.OciManifest.ToString(), context).ConfigureAwait(false);
+                Response response = await CreateManifestAsync(tagOrDigest, content, ManifestMediaType.OciManifest.ToString(), context).ConfigureAwait(false);
                 var responseDigest = response.Headers.TryGetValue(ContainerRegistryHeaders.DockerContentDigest, out string value) ? value : null;
 
                 if (!ValidateDigest(stream, responseDigest))
@@ -315,7 +318,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 string blobDigest = OciBlobDescriptor.ComputeDigest(stream);
                 RequestContext context = FromCancellationToken(cancellationToken);
 
-                Response startUploadResponse = StartUpload(_repositoryName, context);
+                Response startUploadResponse = StartUpload(context);
 
                 string startLocation = startUploadResponse.Headers.TryGetValue(ContainerRegistryHeaders.Location, out string value) ? value : null;
                 RequestContent content = RequestContent.Create(stream);
@@ -351,7 +354,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 string blobDigest = OciBlobDescriptor.ComputeDigest(stream);
                 RequestContext context = FromCancellationToken(cancellationToken);
 
-                Response startUploadResponse = await StartUploadAsync(_repositoryName, context).ConfigureAwait(false);
+                Response startUploadResponse = await StartUploadAsync(context).ConfigureAwait(false);
 
                 string startLocation = startUploadResponse.Headers.TryGetValue(ContainerRegistryHeaders.Location, out string value) ? value : null;
                 RequestContent content = RequestContent.Create(stream);
@@ -385,7 +388,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             try
             {
                 RequestContext context = FromCancellationToken(cancellationToken);
-                Response response = GetManifest(_repositoryName, options.Tag ?? options.Digest, ManifestMediaType.OciManifest.ToString(), context);
+                Response response = GetManifest(options.Tag ?? options.Digest, ManifestMediaType.OciManifest.ToString(), context);
 
                 var digest = response.Headers.TryGetValue(ContainerRegistryHeaders.DockerContentDigest, out string value) ? value : null;
 
@@ -424,7 +427,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             try
             {
                 RequestContext context = FromCancellationToken(cancellationToken);
-                Response response = await GetManifestAsync(_repositoryName, options.Tag ?? options.Digest, ManifestMediaType.OciManifest.ToString(), context).ConfigureAwait(false);
+                Response response = await GetManifestAsync(options.Tag ?? options.Digest, ManifestMediaType.OciManifest.ToString(), context).ConfigureAwait(false);
 
                 var digest = response.Headers.TryGetValue(ContainerRegistryHeaders.DockerContentDigest, out string value) ? value : null;
 
@@ -473,7 +476,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             try
             {
                 RequestContext context = FromCancellationToken(cancellationToken);
-                Response response = GetBlob(_repositoryName, digest, context);
+                Response response = GetBlob(digest, context);
 
                 if (!ValidateDigest(response.ContentStream, digest))
                 {
@@ -505,7 +508,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             try
             {
                 RequestContext context = FromCancellationToken(cancellationToken);
-                Response response = await GetBlobAsync(_repositoryName, digest, context).ConfigureAwait(false);
+                Response response = await GetBlobAsync(digest, context).ConfigureAwait(false);
 
                 if (!ValidateDigest(response.ContentStream, digest))
                 {
@@ -537,7 +540,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             try
             {
                 RequestContext context = FromCancellationToken(cancellationToken);
-                return DeleteBlob(_repositoryName, digest, context);
+                return DeleteBlob(digest, context);
             }
             catch (Exception e)
             {
@@ -561,7 +564,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             try
             {
                 RequestContext context = FromCancellationToken(cancellationToken);
-                return await DeleteBlobAsync(_repositoryName, digest, context).ConfigureAwait(false);
+                return await DeleteBlobAsync(digest, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -585,7 +588,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             try
             {
                 RequestContext context = FromCancellationToken(cancellationToken);
-                return DeleteManifest(_repositoryName, digest, context);
+                return DeleteManifest(digest, context);
             }
             catch (Exception e)
             {
@@ -609,7 +612,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             try
             {
                 RequestContext context = FromCancellationToken(cancellationToken);
-                return await DeleteManifestAsync(_repositoryName, digest, context).ConfigureAwait(false);
+                return await DeleteManifestAsync(digest, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

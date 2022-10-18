@@ -21,7 +21,8 @@ namespace Azure.Containers.ContainerRegistry
     public partial class RegistryArtifact
     {
         private readonly HttpPipeline _pipeline;
-        private readonly string _url;
+        private readonly Uri _endpoint;
+        private readonly string _repository;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -33,30 +34,32 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of RegistryArtifact. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="url"> Registry login URL. </param>
+        /// <param name="endpoint"> Registry login URL. </param>
+        /// <param name="repository"> Name of the image (including the namespace). </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal RegistryArtifact(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string apiVersion)
+        internal RegistryArtifact(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string repository, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-            _url = url;
+            _endpoint = endpoint;
+            _repository = repository;
             _apiVersion = apiVersion;
         }
 
         /// <summary> Get tag attributes by tag. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Tag name. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reference"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetTagPropertiesAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint).GetRegistryArtifactClient("<repository>");
         /// 
-        /// Response response = await client.GetTagPropertiesAsync("<name>", "<reference>");
+        /// Response response = await client.GetTagPropertiesAsync("<reference>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("registry").ToString());
@@ -96,16 +99,15 @@ namespace Azure.Containers.ContainerRegistry
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetTagPropertiesAsync(string name, string reference, RequestContext context = null)
+        public virtual async Task<Response> GetTagPropertiesAsync(string reference, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(reference, nameof(reference));
 
             using var scope = ClientDiagnostics.CreateScope("RegistryArtifact.GetTagProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTagPropertiesRequest(name, reference, context);
+                using HttpMessage message = CreateGetTagPropertiesRequest(reference, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -116,19 +118,19 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Get tag attributes by tag. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Tag name. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reference"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetTagProperties with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint).GetRegistryArtifactClient("<repository>");
         /// 
-        /// Response response = client.GetTagProperties("<name>", "<reference>");
+        /// Response response = client.GetTagProperties("<reference>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("registry").ToString());
@@ -168,16 +170,15 @@ namespace Azure.Containers.ContainerRegistry
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetTagProperties(string name, string reference, RequestContext context = null)
+        public virtual Response GetTagProperties(string reference, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(reference, nameof(reference));
 
             using var scope = ClientDiagnostics.CreateScope("RegistryArtifact.GetTagProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTagPropertiesRequest(name, reference, context);
+                using HttpMessage message = CreateGetTagPropertiesRequest(reference, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -188,22 +189,22 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Update tag attributes. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Tag name. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reference"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call UpdateTagPropertiesAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint).GetRegistryArtifactClient("<repository>");
         /// 
         /// var data = new {};
         /// 
-        /// Response response = await client.UpdateTagPropertiesAsync("<name>", "<reference>", RequestContent.Create(data));
+        /// Response response = await client.UpdateTagPropertiesAsync("<reference>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("registry").ToString());
@@ -216,7 +217,8 @@ namespace Azure.Containers.ContainerRegistry
         /// ]]></code>
         /// This sample shows how to call UpdateTagPropertiesAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint).GetRegistryArtifactClient("<repository>");
         /// 
         /// var data = new {
         ///     deleteEnabled = true,
@@ -225,7 +227,7 @@ namespace Azure.Containers.ContainerRegistry
         ///     readEnabled = true,
         /// };
         /// 
-        /// Response response = await client.UpdateTagPropertiesAsync("<name>", "<reference>", RequestContent.Create(data));
+        /// Response response = await client.UpdateTagPropertiesAsync("<reference>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("registry").ToString());
@@ -276,16 +278,15 @@ namespace Azure.Containers.ContainerRegistry
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> UpdateTagPropertiesAsync(string name, string reference, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> UpdateTagPropertiesAsync(string reference, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(reference, nameof(reference));
 
             using var scope = ClientDiagnostics.CreateScope("RegistryArtifact.UpdateTagProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateTagPropertiesRequest(name, reference, content, context);
+                using HttpMessage message = CreateUpdateTagPropertiesRequest(reference, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -296,22 +297,22 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Update tag attributes. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Tag name. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reference"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call UpdateTagProperties with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint).GetRegistryArtifactClient("<repository>");
         /// 
         /// var data = new {};
         /// 
-        /// Response response = client.UpdateTagProperties("<name>", "<reference>", RequestContent.Create(data));
+        /// Response response = client.UpdateTagProperties("<reference>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("registry").ToString());
@@ -324,7 +325,8 @@ namespace Azure.Containers.ContainerRegistry
         /// ]]></code>
         /// This sample shows how to call UpdateTagProperties with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint).GetRegistryArtifactClient("<repository>");
         /// 
         /// var data = new {
         ///     deleteEnabled = true,
@@ -333,7 +335,7 @@ namespace Azure.Containers.ContainerRegistry
         ///     readEnabled = true,
         /// };
         /// 
-        /// Response response = client.UpdateTagProperties("<name>", "<reference>", RequestContent.Create(data));
+        /// Response response = client.UpdateTagProperties("<reference>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("registry").ToString());
@@ -384,16 +386,15 @@ namespace Azure.Containers.ContainerRegistry
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response UpdateTagProperties(string name, string reference, RequestContent content, RequestContext context = null)
+        public virtual Response UpdateTagProperties(string reference, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(reference, nameof(reference));
 
             using var scope = ClientDiagnostics.CreateScope("RegistryArtifact.UpdateTagProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateTagPropertiesRequest(name, reference, content, context);
+                using HttpMessage message = CreateUpdateTagPropertiesRequest(reference, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -404,32 +405,31 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Delete tag. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Tag name. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reference"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call DeleteTagAsync with required parameters.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint).GetRegistryArtifactClient("<repository>");
         /// 
-        /// Response response = await client.DeleteTagAsync("<name>", "<reference>");
+        /// Response response = await client.DeleteTagAsync("<reference>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual async Task<Response> DeleteTagAsync(string name, string reference, RequestContext context = null)
+        public virtual async Task<Response> DeleteTagAsync(string reference, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(reference, nameof(reference));
 
             using var scope = ClientDiagnostics.CreateScope("RegistryArtifact.DeleteTag");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTagRequest(name, reference, context);
+                using HttpMessage message = CreateDeleteTagRequest(reference, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -440,32 +440,31 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Delete tag. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Tag name. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reference"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call DeleteTag with required parameters.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint).GetRegistryArtifactClient("<repository>");
         /// 
-        /// Response response = client.DeleteTag("<name>", "<reference>");
+        /// Response response = client.DeleteTag("<reference>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual Response DeleteTag(string name, string reference, RequestContext context = null)
+        public virtual Response DeleteTag(string reference, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(reference, nameof(reference));
 
             using var scope = ClientDiagnostics.CreateScope("RegistryArtifact.DeleteTag");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTagRequest(name, reference, context);
+                using HttpMessage message = CreateDeleteTagRequest(reference, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -476,19 +475,19 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Get manifest attributes. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetManifestPropertiesAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint).GetRegistryArtifactClient("<repository>");
         /// 
-        /// Response response = await client.GetManifestPropertiesAsync("<name>", "<digest>");
+        /// Response response = await client.GetManifestPropertiesAsync("<digest>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("registry").ToString());
@@ -544,16 +543,15 @@ namespace Azure.Containers.ContainerRegistry
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetManifestPropertiesAsync(string name, string digest, RequestContext context = null)
+        public virtual async Task<Response> GetManifestPropertiesAsync(string digest, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
 
             using var scope = ClientDiagnostics.CreateScope("RegistryArtifact.GetManifestProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetManifestPropertiesRequest(name, digest, context);
+                using HttpMessage message = CreateGetManifestPropertiesRequest(digest, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -564,19 +562,19 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Get manifest attributes. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetManifestProperties with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint).GetRegistryArtifactClient("<repository>");
         /// 
-        /// Response response = client.GetManifestProperties("<name>", "<digest>");
+        /// Response response = client.GetManifestProperties("<digest>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("registry").ToString());
@@ -632,16 +630,15 @@ namespace Azure.Containers.ContainerRegistry
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetManifestProperties(string name, string digest, RequestContext context = null)
+        public virtual Response GetManifestProperties(string digest, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
 
             using var scope = ClientDiagnostics.CreateScope("RegistryArtifact.GetManifestProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetManifestPropertiesRequest(name, digest, context);
+                using HttpMessage message = CreateGetManifestPropertiesRequest(digest, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -652,22 +649,22 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Update properties of a manifest. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call UpdateManifestPropertiesAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint).GetRegistryArtifactClient("<repository>");
         /// 
         /// var data = new {};
         /// 
-        /// Response response = await client.UpdateManifestPropertiesAsync("<name>", "<digest>", RequestContent.Create(data));
+        /// Response response = await client.UpdateManifestPropertiesAsync("<digest>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("manifest").GetProperty("digest").ToString());
@@ -676,7 +673,8 @@ namespace Azure.Containers.ContainerRegistry
         /// ]]></code>
         /// This sample shows how to call UpdateManifestPropertiesAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint).GetRegistryArtifactClient("<repository>");
         /// 
         /// var data = new {
         ///     deleteEnabled = true,
@@ -685,7 +683,7 @@ namespace Azure.Containers.ContainerRegistry
         ///     readEnabled = true,
         /// };
         /// 
-        /// Response response = await client.UpdateManifestPropertiesAsync("<name>", "<digest>", RequestContent.Create(data));
+        /// Response response = await client.UpdateManifestPropertiesAsync("<digest>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("registry").ToString());
@@ -752,16 +750,15 @@ namespace Azure.Containers.ContainerRegistry
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> UpdateManifestPropertiesAsync(string name, string digest, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> UpdateManifestPropertiesAsync(string digest, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
 
             using var scope = ClientDiagnostics.CreateScope("RegistryArtifact.UpdateManifestProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateManifestPropertiesRequest(name, digest, content, context);
+                using HttpMessage message = CreateUpdateManifestPropertiesRequest(digest, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -772,22 +769,22 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Update properties of a manifest. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call UpdateManifestProperties with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint).GetRegistryArtifactClient("<repository>");
         /// 
         /// var data = new {};
         /// 
-        /// Response response = client.UpdateManifestProperties("<name>", "<digest>", RequestContent.Create(data));
+        /// Response response = client.UpdateManifestProperties("<digest>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("manifest").GetProperty("digest").ToString());
@@ -796,7 +793,8 @@ namespace Azure.Containers.ContainerRegistry
         /// ]]></code>
         /// This sample shows how to call UpdateManifestProperties with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint).GetRegistryArtifactClient("<repository>");
         /// 
         /// var data = new {
         ///     deleteEnabled = true,
@@ -805,7 +803,7 @@ namespace Azure.Containers.ContainerRegistry
         ///     readEnabled = true,
         /// };
         /// 
-        /// Response response = client.UpdateManifestProperties("<name>", "<digest>", RequestContent.Create(data));
+        /// Response response = client.UpdateManifestProperties("<digest>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("registry").ToString());
@@ -872,16 +870,15 @@ namespace Azure.Containers.ContainerRegistry
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response UpdateManifestProperties(string name, string digest, RequestContent content, RequestContext context = null)
+        public virtual Response UpdateManifestProperties(string digest, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
 
             using var scope = ClientDiagnostics.CreateScope("RegistryArtifact.UpdateManifestProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateManifestPropertiesRequest(name, digest, content, context);
+                using HttpMessage message = CreateUpdateManifestPropertiesRequest(digest, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -892,22 +889,20 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> List tags of a repository. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
         /// <param name="n"> query parameter for max number of items. </param>
         /// <param name="orderby"> orderby query parameter. </param>
         /// <param name="digest"> filter by digest. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetAllTagPropertiesAsync with required parameters and parse the result.
+        /// This sample shows how to call GetAllTagPropertiesAsync and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint).GetRegistryArtifactClient("<repository>");
         /// 
-        /// await foreach (var data in client.GetAllTagPropertiesAsync("<name>"))
+        /// await foreach (var data in client.GetAllTagPropertiesAsync())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("name").ToString());
@@ -919,9 +914,10 @@ namespace Azure.Containers.ContainerRegistry
         /// ]]></code>
         /// This sample shows how to call GetAllTagPropertiesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint).GetRegistryArtifactClient("<repository>");
         /// 
-        /// await foreach (var data in client.GetAllTagPropertiesAsync("<name>", "<last>", 1234, "<orderby>", "<digest>"))
+        /// await foreach (var data in client.GetAllTagPropertiesAsync("<last>", 1234, "<orderby>", "<digest>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("name").ToString());
@@ -935,14 +931,12 @@ namespace Azure.Containers.ContainerRegistry
         /// }
         /// ]]></code>
         /// </example>
-        public virtual AsyncPageable<BinaryData> GetAllTagPropertiesAsync(string name, string last = null, int? n = null, string orderby = null, string digest = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetAllTagPropertiesAsync(string last = null, int? n = null, string orderby = null, string digest = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return GetAllTagPropertiesImplementationAsync("RegistryArtifact.GetAllTagProperties", name, last, n, orderby, digest, context);
+            return GetAllTagPropertiesImplementationAsync("RegistryArtifact.GetAllTagProperties", last, n, orderby, digest, context);
         }
 
-        private AsyncPageable<BinaryData> GetAllTagPropertiesImplementationAsync(string diagnosticsScopeName, string name, string last, int? n, string orderby, string digest, RequestContext context)
+        private AsyncPageable<BinaryData> GetAllTagPropertiesImplementationAsync(string diagnosticsScopeName, string last, int? n, string orderby, string digest, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -950,8 +944,8 @@ namespace Azure.Containers.ContainerRegistry
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllTagPropertiesRequest(name, last, n, orderby, digest, context)
-                        : CreateGetAllTagPropertiesNextPageRequest(nextLink, name, last, n, orderby, digest, context);
+                        ? CreateGetAllTagPropertiesRequest(last, n, orderby, digest, context)
+                        : CreateGetAllTagPropertiesNextPageRequest(nextLink, last, n, orderby, digest, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "tags", "link", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -960,22 +954,20 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> List tags of a repository. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
         /// <param name="n"> query parameter for max number of items. </param>
         /// <param name="orderby"> orderby query parameter. </param>
         /// <param name="digest"> filter by digest. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetAllTagProperties with required parameters and parse the result.
+        /// This sample shows how to call GetAllTagProperties and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint).GetRegistryArtifactClient("<repository>");
         /// 
-        /// foreach (var data in client.GetAllTagProperties("<name>"))
+        /// foreach (var data in client.GetAllTagProperties())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("name").ToString());
@@ -987,9 +979,10 @@ namespace Azure.Containers.ContainerRegistry
         /// ]]></code>
         /// This sample shows how to call GetAllTagProperties with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>").GetRegistryArtifactClient();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint).GetRegistryArtifactClient("<repository>");
         /// 
-        /// foreach (var data in client.GetAllTagProperties("<name>", "<last>", 1234, "<orderby>", "<digest>"))
+        /// foreach (var data in client.GetAllTagProperties("<last>", 1234, "<orderby>", "<digest>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("name").ToString());
@@ -1003,14 +996,12 @@ namespace Azure.Containers.ContainerRegistry
         /// }
         /// ]]></code>
         /// </example>
-        public virtual Pageable<BinaryData> GetAllTagProperties(string name, string last = null, int? n = null, string orderby = null, string digest = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetAllTagProperties(string last = null, int? n = null, string orderby = null, string digest = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return GetAllTagPropertiesImplementation("RegistryArtifact.GetAllTagProperties", name, last, n, orderby, digest, context);
+            return GetAllTagPropertiesImplementation("RegistryArtifact.GetAllTagProperties", last, n, orderby, digest, context);
         }
 
-        private Pageable<BinaryData> GetAllTagPropertiesImplementation(string diagnosticsScopeName, string name, string last, int? n, string orderby, string digest, RequestContext context)
+        private Pageable<BinaryData> GetAllTagPropertiesImplementation(string diagnosticsScopeName, string last, int? n, string orderby, string digest, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1018,8 +1009,8 @@ namespace Azure.Containers.ContainerRegistry
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllTagPropertiesRequest(name, last, n, orderby, digest, context)
-                        : CreateGetAllTagPropertiesNextPageRequest(nextLink, name, last, n, orderby, digest, context);
+                        ? CreateGetAllTagPropertiesRequest(last, n, orderby, digest, context)
+                        : CreateGetAllTagPropertiesNextPageRequest(nextLink, last, n, orderby, digest, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "tags", "link");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1027,15 +1018,15 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateGetAllTagPropertiesRequest(string name, string last, int? n, string orderby, string digest, RequestContext context)
+        internal HttpMessage CreateGetAllTagPropertiesRequest(string last, int? n, string orderby, string digest, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/acr/v1/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(_repository, true);
             uri.AppendPath("/_tags", false);
             if (last != null)
             {
@@ -1062,15 +1053,15 @@ namespace Azure.Containers.ContainerRegistry
             return message;
         }
 
-        internal HttpMessage CreateGetTagPropertiesRequest(string name, string reference, RequestContext context)
+        internal HttpMessage CreateGetTagPropertiesRequest(string reference, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/acr/v1/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(_repository, true);
             uri.AppendPath("/_tags/", false);
             uri.AppendPath(reference, true);
             if (_apiVersion != null)
@@ -1082,15 +1073,15 @@ namespace Azure.Containers.ContainerRegistry
             return message;
         }
 
-        internal HttpMessage CreateUpdateTagPropertiesRequest(string name, string reference, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateTagPropertiesRequest(string reference, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/acr/v1/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(_repository, true);
             uri.AppendPath("/_tags/", false);
             uri.AppendPath(reference, true);
             if (_apiVersion != null)
@@ -1104,15 +1095,15 @@ namespace Azure.Containers.ContainerRegistry
             return message;
         }
 
-        internal HttpMessage CreateDeleteTagRequest(string name, string reference, RequestContext context)
+        internal HttpMessage CreateDeleteTagRequest(string reference, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202404);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/acr/v1/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(_repository, true);
             uri.AppendPath("/_tags/", false);
             uri.AppendPath(reference, true);
             if (_apiVersion != null)
@@ -1124,15 +1115,15 @@ namespace Azure.Containers.ContainerRegistry
             return message;
         }
 
-        internal HttpMessage CreateGetManifestPropertiesRequest(string name, string digest, RequestContext context)
+        internal HttpMessage CreateGetManifestPropertiesRequest(string digest, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/acr/v1/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(_repository, true);
             uri.AppendPath("/_manifests/", false);
             uri.AppendPath(digest, true);
             if (_apiVersion != null)
@@ -1144,15 +1135,15 @@ namespace Azure.Containers.ContainerRegistry
             return message;
         }
 
-        internal HttpMessage CreateUpdateManifestPropertiesRequest(string name, string digest, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateManifestPropertiesRequest(string digest, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/acr/v1/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(_repository, true);
             uri.AppendPath("/_manifests/", false);
             uri.AppendPath(digest, true);
             if (_apiVersion != null)
@@ -1166,13 +1157,13 @@ namespace Azure.Containers.ContainerRegistry
             return message;
         }
 
-        internal HttpMessage CreateGetAllTagPropertiesNextPageRequest(string nextLink, string name, string last, int? n, string orderby, string digest, RequestContext context)
+        internal HttpMessage CreateGetAllTagPropertiesNextPageRequest(string nextLink, string last, int? n, string orderby, string digest, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

@@ -18,7 +18,7 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class AuthenticationClient
     {
         private readonly HttpPipeline _pipeline;
-        private readonly string _url;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -33,24 +33,24 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Initializes a new instance of AuthenticationClient. </summary>
-        /// <param name="url"> Registry login URL. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public AuthenticationClient(string url) : this(url, new ContainerRegistryClientOptions())
+        /// <param name="endpoint"> Registry login URL. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public AuthenticationClient(Uri endpoint) : this(endpoint, new ContainerRegistryClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of AuthenticationClient. </summary>
-        /// <param name="url"> Registry login URL. </param>
+        /// <param name="endpoint"> Registry login URL. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public AuthenticationClient(string url, ContainerRegistryClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public AuthenticationClient(Uri endpoint, ContainerRegistryClientOptions options)
         {
-            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new ContainerRegistryClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
-            _url = url;
+            _endpoint = endpoint;
             _apiVersion = options.Version;
         }
 
@@ -62,7 +62,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <example>
         /// This sample shows how to call ExchangeAadAccessTokenForAcrRefreshTokenAsync with required request content and parse the result.
         /// <code><![CDATA[
-        /// var client = new AuthenticationClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new AuthenticationClient(endpoint);
         /// 
         /// var data = "access_token_refresh_token";
         /// 
@@ -108,7 +109,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <example>
         /// This sample shows how to call ExchangeAadAccessTokenForAcrRefreshToken with required request content and parse the result.
         /// <code><![CDATA[
-        /// var client = new AuthenticationClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new AuthenticationClient(endpoint);
         /// 
         /// var data = "access_token_refresh_token";
         /// 
@@ -155,7 +157,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <example>
         /// This sample shows how to call ExchangeAcrRefreshTokenForAcrAccessTokenAsync with required request content and parse the result.
         /// <code><![CDATA[
-        /// var client = new AuthenticationClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new AuthenticationClient(endpoint);
         /// 
         /// var data = "<String>";
         /// 
@@ -204,7 +207,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <example>
         /// This sample shows how to call ExchangeAcrRefreshTokenForAcrAccessToken with required request content and parse the result.
         /// <code><![CDATA[
-        /// var client = new AuthenticationClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new AuthenticationClient(endpoint);
         /// 
         /// var data = "<String>";
         /// 
@@ -250,7 +254,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/oauth2/exchange", false);
             if (_apiVersion != null)
             {
@@ -269,7 +273,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/oauth2/token", false);
             if (_apiVersion != null)
             {

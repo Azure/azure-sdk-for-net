@@ -20,7 +20,6 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> The ContainerRegistry service client. </summary>
     public partial class ContainerRegistryClient
     {
-        private readonly string _url;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -29,28 +28,6 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ContainerRegistryClient. </summary>
-        /// <param name="url"> Registry login URL. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public ContainerRegistryClient(string url) : this(url, new ContainerRegistryClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryClient. </summary>
-        /// <param name="url"> Registry login URL. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public ContainerRegistryClient(string url, ContainerRegistryClientOptions options)
-        {
-            Argument.AssertNotNull(url, nameof(url));
-            options ??= new ContainerRegistryClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
-            _url = url;
-            _apiVersion = options.Version;
-        }
-
         /// <summary> Tells whether this Docker Registry instance supports Docker Registry HTTP API v2. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -58,7 +35,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <example>
         /// This sample shows how to call CheckDockerV2SupportAsync.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint);
         /// 
         /// Response response = await client.CheckDockerV2SupportAsync();
         /// Console.WriteLine(response.Status);
@@ -87,7 +65,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <example>
         /// This sample shows how to call CheckDockerV2Support.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint);
         /// 
         /// Response response = client.CheckDockerV2Support();
         /// Console.WriteLine(response.Status);
@@ -118,7 +97,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <example>
         /// This sample shows how to call GetRepositoryNamesAsync and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint);
         /// 
         /// await foreach (var data in client.GetRepositoryNamesAsync())
         /// {
@@ -128,7 +108,8 @@ namespace Azure.Containers.ContainerRegistry
         /// ]]></code>
         /// This sample shows how to call GetRepositoryNamesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint);
         /// 
         /// await foreach (var data in client.GetRepositoryNamesAsync("<last>", 1234))
         /// {
@@ -168,7 +149,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <example>
         /// This sample shows how to call GetRepositoryNames and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint);
         /// 
         /// foreach (var data in client.GetRepositoryNames())
         /// {
@@ -178,7 +160,8 @@ namespace Azure.Containers.ContainerRegistry
         /// ]]></code>
         /// This sample shows how to call GetRepositoryNames with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryClient(endpoint);
         /// 
         /// foreach (var data in client.GetRepositoryNames("<last>", 1234))
         /// {
@@ -209,19 +192,26 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        private ContainerRepository _cachedContainerRepository;
-        private RegistryArtifact _cachedRegistryArtifact;
-
         /// <summary> Initializes a new instance of ContainerRepository. </summary>
-        public virtual ContainerRepository GetContainerRepositoryClient()
+        /// <param name="repository"> Name of the image (including the namespace). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="repository"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="repository"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ContainerRepository GetContainerRepositoryClient(string repository)
         {
-            return Volatile.Read(ref _cachedContainerRepository) ?? Interlocked.CompareExchange(ref _cachedContainerRepository, new ContainerRepository(ClientDiagnostics, _pipeline, _url, _apiVersion), null) ?? _cachedContainerRepository;
+            Argument.AssertNotNullOrEmpty(repository, nameof(repository));
+
+            return new ContainerRepository(ClientDiagnostics, _pipeline, _endpoint, repository, _apiVersion);
         }
 
         /// <summary> Initializes a new instance of RegistryArtifact. </summary>
-        public virtual RegistryArtifact GetRegistryArtifactClient()
+        /// <param name="repository"> Name of the image (including the namespace). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="repository"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="repository"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual RegistryArtifact GetRegistryArtifactClient(string repository)
         {
-            return Volatile.Read(ref _cachedRegistryArtifact) ?? Interlocked.CompareExchange(ref _cachedRegistryArtifact, new RegistryArtifact(ClientDiagnostics, _pipeline, _url, _apiVersion), null) ?? _cachedRegistryArtifact;
+            Argument.AssertNotNullOrEmpty(repository, nameof(repository));
+
+            return new RegistryArtifact(ClientDiagnostics, _pipeline, _endpoint, repository, _apiVersion);
         }
 
         internal HttpMessage CreateCheckDockerV2SupportRequest(RequestContext context)
@@ -230,7 +220,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/v2/", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -243,7 +233,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/acr/v1/_catalog", false);
             if (last != null)
             {
@@ -268,7 +258,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

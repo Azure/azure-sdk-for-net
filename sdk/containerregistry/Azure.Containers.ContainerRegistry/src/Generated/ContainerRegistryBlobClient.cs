@@ -18,8 +18,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     /// <summary> The ContainerRegistryBlob service client. </summary>
     public partial class ContainerRegistryBlobClient
     {
-        private readonly HttpPipeline _pipeline;
-        private readonly string _url;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -27,51 +25,31 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ContainerRegistryBlobClient. </summary>
-        /// <param name="url"> Registry login URL. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public ContainerRegistryBlobClient(string url) : this(url, new ContainerRegistryClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryBlobClient. </summary>
-        /// <param name="url"> Registry login URL. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public ContainerRegistryBlobClient(string url, ContainerRegistryClientOptions options)
-        {
-            Argument.AssertNotNull(url, nameof(url));
-            options ??= new ContainerRegistryClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
-            _url = url;
-        }
-
         /// <summary> Get the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="accept"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reference"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetManifestAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = await client.GetManifestAsync("<name>", "<reference>");
+        /// Response response = await client.GetManifestAsync("<reference>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetManifestAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = await client.GetManifestAsync("<name>", "<reference>", "<accept>");
+        /// Response response = await client.GetManifestAsync("<reference>", "<accept>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("mediaType").ToString());
@@ -223,16 +201,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetManifestAsync(string name, string reference, string accept = null, RequestContext context = null)
+        public virtual async Task<Response> GetManifestAsync(string reference, string accept = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(reference, nameof(reference));
 
             using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetManifest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetManifestRequest(name, reference, accept, context);
+                using HttpMessage message = CreateGetManifestRequest(reference, accept, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -243,29 +220,30 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Get the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="accept"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reference"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetManifest with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = client.GetManifest("<name>", "<reference>");
+        /// Response response = client.GetManifest("<reference>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetManifest with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = client.GetManifest("<name>", "<reference>", "<accept>");
+        /// Response response = client.GetManifest("<reference>", "<accept>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("mediaType").ToString());
@@ -417,16 +395,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetManifest(string name, string reference, string accept = null, RequestContext context = null)
+        public virtual Response GetManifest(string reference, string accept = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(reference, nameof(reference));
 
             using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetManifest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetManifestRequest(name, reference, accept, context);
+                using HttpMessage message = CreateGetManifestRequest(reference, accept, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -437,38 +414,38 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Put the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="contentType"> The manifest&apos;s Content-Type. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reference"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call CreateManifestAsync with required parameters and request content.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
-        /// Response response = await client.CreateManifestAsync("<name>", "<reference>", RequestContent.Create(data));
+        /// Response response = await client.CreateManifestAsync("<reference>", RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// This sample shows how to call CreateManifestAsync with all parameters and request content.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
-        /// Response response = await client.CreateManifestAsync("<name>", "<reference>", RequestContent.Create(data), "<contentType>");
+        /// Response response = await client.CreateManifestAsync("<reference>", RequestContent.Create(data), "<contentType>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual async Task<Response> CreateManifestAsync(string name, string reference, RequestContent content, string contentType = null, RequestContext context = null)
+        public virtual async Task<Response> CreateManifestAsync(string reference, RequestContent content, string contentType = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(reference, nameof(reference));
             Argument.AssertNotNull(content, nameof(content));
 
@@ -476,7 +453,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateManifestRequest(name, reference, content, contentType, context);
+                using HttpMessage message = CreateCreateManifestRequest(reference, content, contentType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -487,38 +464,38 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Put the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="contentType"> The manifest&apos;s Content-Type. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reference"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call CreateManifest with required parameters and request content.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
-        /// Response response = client.CreateManifest("<name>", "<reference>", RequestContent.Create(data));
+        /// Response response = client.CreateManifest("<reference>", RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// This sample shows how to call CreateManifest with all parameters and request content.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
-        /// Response response = client.CreateManifest("<name>", "<reference>", RequestContent.Create(data), "<contentType>");
+        /// Response response = client.CreateManifest("<reference>", RequestContent.Create(data), "<contentType>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual Response CreateManifest(string name, string reference, RequestContent content, string contentType = null, RequestContext context = null)
+        public virtual Response CreateManifest(string reference, RequestContent content, string contentType = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(reference, nameof(reference));
             Argument.AssertNotNull(content, nameof(content));
 
@@ -526,7 +503,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateManifestRequest(name, reference, content, contentType, context);
+                using HttpMessage message = CreateCreateManifestRequest(reference, content, contentType, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -537,32 +514,31 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Delete the manifest identified by `name` and `reference`. Note that a manifest can _only_ be deleted by `digest`. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Digest of a BLOB. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reference"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call DeleteManifestAsync with required parameters.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = await client.DeleteManifestAsync("<name>", "<reference>");
+        /// Response response = await client.DeleteManifestAsync("<reference>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual async Task<Response> DeleteManifestAsync(string name, string reference, RequestContext context = null)
+        public virtual async Task<Response> DeleteManifestAsync(string reference, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(reference, nameof(reference));
 
             using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.DeleteManifest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteManifestRequest(name, reference, context);
+                using HttpMessage message = CreateDeleteManifestRequest(reference, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -573,32 +549,31 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Delete the manifest identified by `name` and `reference`. Note that a manifest can _only_ be deleted by `digest`. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Digest of a BLOB. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reference"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reference"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call DeleteManifest with required parameters.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = client.DeleteManifest("<name>", "<reference>");
+        /// Response response = client.DeleteManifest("<reference>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual Response DeleteManifest(string name, string reference, RequestContext context = null)
+        public virtual Response DeleteManifest(string reference, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(reference, nameof(reference));
 
             using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.DeleteManifest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteManifestRequest(name, reference, context);
+                using HttpMessage message = CreateDeleteManifestRequest(reference, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -609,19 +584,19 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Retrieve the blob from the registry identified by digest. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call GetBlobAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = await client.GetBlobAsync("<name>", "<digest>");
+        /// Response response = await client.GetBlobAsync("<digest>");
         /// if (response.ContentStream != null)
         /// {
         ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
@@ -631,16 +606,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// }
         /// ]]></code>
         /// </example>
-        public virtual async Task<Response> GetBlobAsync(string name, string digest, RequestContext context = null)
+        public virtual async Task<Response> GetBlobAsync(string digest, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
 
             using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetBlob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBlobRequest(name, digest, context);
+                using HttpMessage message = CreateGetBlobRequest(digest, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -651,19 +625,19 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Retrieve the blob from the registry identified by digest. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call GetBlob with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = client.GetBlob("<name>", "<digest>");
+        /// Response response = client.GetBlob("<digest>");
         /// if (response.ContentStream != null)
         /// {
         ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
@@ -673,16 +647,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// }
         /// ]]></code>
         /// </example>
-        public virtual Response GetBlob(string name, string digest, RequestContext context = null)
+        public virtual Response GetBlob(string digest, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
 
             using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetBlob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBlobRequest(name, digest, context);
+                using HttpMessage message = CreateGetBlobRequest(digest, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -693,32 +666,31 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Same as GET, except only the headers are returned. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call CheckBlobExistsAsync with required parameters.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = await client.CheckBlobExistsAsync("<name>", "<digest>");
+        /// Response response = await client.CheckBlobExistsAsync("<digest>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual async Task<Response> CheckBlobExistsAsync(string name, string digest, RequestContext context = null)
+        public virtual async Task<Response> CheckBlobExistsAsync(string digest, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
 
             using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.CheckBlobExists");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckBlobExistsRequest(name, digest, context);
+                using HttpMessage message = CreateCheckBlobExistsRequest(digest, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -729,32 +701,31 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Same as GET, except only the headers are returned. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call CheckBlobExists with required parameters.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = client.CheckBlobExists("<name>", "<digest>");
+        /// Response response = client.CheckBlobExists("<digest>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual Response CheckBlobExists(string name, string digest, RequestContext context = null)
+        public virtual Response CheckBlobExists(string digest, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
 
             using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.CheckBlobExists");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckBlobExistsRequest(name, digest, context);
+                using HttpMessage message = CreateCheckBlobExistsRequest(digest, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -765,19 +736,19 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Removes an already uploaded blob. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call DeleteBlobAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = await client.DeleteBlobAsync("<name>", "<digest>");
+        /// Response response = await client.DeleteBlobAsync("<digest>");
         /// if (response.ContentStream != null)
         /// {
         ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
@@ -787,16 +758,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// }
         /// ]]></code>
         /// </example>
-        public virtual async Task<Response> DeleteBlobAsync(string name, string digest, RequestContext context = null)
+        public virtual async Task<Response> DeleteBlobAsync(string digest, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
 
             using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.DeleteBlob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteBlobRequest(name, digest, context);
+                using HttpMessage message = CreateDeleteBlobRequest(digest, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -807,19 +777,19 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Removes an already uploaded blob. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call DeleteBlob with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = client.DeleteBlob("<name>", "<digest>");
+        /// Response response = client.DeleteBlob("<digest>");
         /// if (response.ContentStream != null)
         /// {
         ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
@@ -829,16 +799,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// }
         /// ]]></code>
         /// </example>
-        public virtual Response DeleteBlob(string name, string digest, RequestContext context = null)
+        public virtual Response DeleteBlob(string digest, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
 
             using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.DeleteBlob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteBlobRequest(name, digest, context);
+                using HttpMessage message = CreateDeleteBlobRequest(digest, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -849,26 +818,24 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Mount a blob identified by the `mount` parameter from another repository. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="from"> Name of the source repository. </param>
         /// <param name="mount"> Digest of blob to mount from the source repository. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="from"/> or <paramref name="mount"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="from"/> or <paramref name="mount"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call MountBlobAsync with required parameters.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = await client.MountBlobAsync("<name>", "<from>", "<mount>");
+        /// Response response = await client.MountBlobAsync("<from>", "<mount>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual async Task<Response> MountBlobAsync(string name, string @from, string mount, RequestContext context = null)
+        public virtual async Task<Response> MountBlobAsync(string @from, string mount, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(mount, nameof(mount));
 
@@ -876,7 +843,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                using HttpMessage message = CreateMountBlobRequest(name, @from, mount, context);
+                using HttpMessage message = CreateMountBlobRequest(@from, mount, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -887,26 +854,24 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Mount a blob identified by the `mount` parameter from another repository. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="from"> Name of the source repository. </param>
         /// <param name="mount"> Digest of blob to mount from the source repository. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="from"/> or <paramref name="mount"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="from"/> or <paramref name="mount"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call MountBlob with required parameters.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = client.MountBlob("<name>", "<from>", "<mount>");
+        /// Response response = client.MountBlob("<from>", "<mount>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual Response MountBlob(string name, string @from, string mount, RequestContext context = null)
+        public virtual Response MountBlob(string @from, string mount, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(mount, nameof(mount));
 
@@ -914,7 +879,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                using HttpMessage message = CreateMountBlobRequest(name, @from, mount, context);
+                using HttpMessage message = CreateMountBlobRequest(@from, mount, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -933,7 +898,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <example>
         /// This sample shows how to call GetUploadStatusAsync with required parameters.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
         /// Response response = await client.GetUploadStatusAsync("<nextLink>");
         /// Console.WriteLine(response.Status);
@@ -966,7 +932,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <example>
         /// This sample shows how to call GetUploadStatus with required parameters.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
         /// Response response = client.GetUploadStatus("<nextLink>");
         /// Console.WriteLine(response.Status);
@@ -1000,7 +967,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <example>
         /// This sample shows how to call UploadChunkAsync with required parameters and request content.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -1037,7 +1005,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <example>
         /// This sample shows how to call UploadChunk with required parameters and request content.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -1075,7 +1044,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <example>
         /// This sample shows how to call CompleteUploadAsync with required parameters and request content.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -1113,7 +1083,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <example>
         /// This sample shows how to call CompleteUpload with required parameters and request content.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -1149,7 +1120,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <example>
         /// This sample shows how to call CancelUploadAsync with required parameters.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
         /// Response response = await client.CancelUploadAsync("<nextLink>");
         /// Console.WriteLine(response.Status);
@@ -1182,7 +1154,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <example>
         /// This sample shows how to call CancelUpload with required parameters.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
         /// Response response = client.CancelUpload("<nextLink>");
         /// Console.WriteLine(response.Status);
@@ -1207,30 +1180,26 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Initiate a resumable blob upload with an empty request body. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call StartUploadAsync with required parameters.
+        /// This sample shows how to call StartUploadAsync.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = await client.StartUploadAsync("<name>");
+        /// Response response = await client.StartUploadAsync();
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual async Task<Response> StartUploadAsync(string name, RequestContext context = null)
+        public virtual async Task<Response> StartUploadAsync(RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
             using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.StartUpload");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartUploadRequest(name, context);
+                using HttpMessage message = CreateStartUploadRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1241,30 +1210,26 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Initiate a resumable blob upload with an empty request body. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call StartUpload with required parameters.
+        /// This sample shows how to call StartUpload.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = client.StartUpload("<name>");
+        /// Response response = client.StartUpload();
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual Response StartUpload(string name, RequestContext context = null)
+        public virtual Response StartUpload(RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
             using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlobClient.StartUpload");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartUploadRequest(name, context);
+                using HttpMessage message = CreateStartUploadRequest(context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1275,20 +1240,20 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Retrieve the blob from the registry identified by `digest`. This endpoint may also support RFC7233 compliant range requests. Support can be detected by issuing a HEAD request. If the header `Accept-Range: bytes` is returned, range requests can be used to fetch partial content. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="digest"/> or <paramref name="range"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> or <paramref name="range"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call GetChunkAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = await client.GetChunkAsync("<name>", "<digest>", "<range>");
+        /// Response response = await client.GetChunkAsync("<digest>", "<range>");
         /// if (response.ContentStream != null)
         /// {
         ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
@@ -1298,9 +1263,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// }
         /// ]]></code>
         /// </example>
-        public virtual async Task<Response> GetChunkAsync(string name, string digest, string range, RequestContext context = null)
+        public virtual async Task<Response> GetChunkAsync(string digest, string range, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
             Argument.AssertNotNull(range, nameof(range));
 
@@ -1308,7 +1272,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetChunkRequest(name, digest, range, context);
+                using HttpMessage message = CreateGetChunkRequest(digest, range, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1319,20 +1283,20 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Retrieve the blob from the registry identified by `digest`. This endpoint may also support RFC7233 compliant range requests. Support can be detected by issuing a HEAD request. If the header `Accept-Range: bytes` is returned, range requests can be used to fetch partial content. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="digest"/> or <paramref name="range"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> or <paramref name="range"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call GetChunk with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = client.GetChunk("<name>", "<digest>", "<range>");
+        /// Response response = client.GetChunk("<digest>", "<range>");
         /// if (response.ContentStream != null)
         /// {
         ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
@@ -1342,9 +1306,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// }
         /// ]]></code>
         /// </example>
-        public virtual Response GetChunk(string name, string digest, string range, RequestContext context = null)
+        public virtual Response GetChunk(string digest, string range, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
             Argument.AssertNotNull(range, nameof(range));
 
@@ -1352,7 +1315,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetChunkRequest(name, digest, range, context);
+                using HttpMessage message = CreateGetChunkRequest(digest, range, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1363,26 +1326,25 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Same as GET, except only the headers are returned. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="digest"/> or <paramref name="range"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> or <paramref name="range"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call CheckChunkExistsAsync with required parameters.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = await client.CheckChunkExistsAsync("<name>", "<digest>", "<range>");
+        /// Response response = await client.CheckChunkExistsAsync("<digest>", "<range>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual async Task<Response> CheckChunkExistsAsync(string name, string digest, string range, RequestContext context = null)
+        public virtual async Task<Response> CheckChunkExistsAsync(string digest, string range, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
             Argument.AssertNotNull(range, nameof(range));
 
@@ -1390,7 +1352,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckChunkExistsRequest(name, digest, range, context);
+                using HttpMessage message = CreateCheckChunkExistsRequest(digest, range, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1401,26 +1363,25 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Same as GET, except only the headers are returned. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="digest"/> or <paramref name="range"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> or <paramref name="range"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call CheckChunkExists with required parameters.
         /// <code><![CDATA[
-        /// var client = new ContainerRegistryBlobClient("<url>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ContainerRegistryBlobClient(endpoint, "<repository>");
         /// 
-        /// Response response = client.CheckChunkExists("<name>", "<digest>", "<range>");
+        /// Response response = client.CheckChunkExists("<digest>", "<range>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual Response CheckChunkExists(string name, string digest, string range, RequestContext context = null)
+        public virtual Response CheckChunkExists(string digest, string range, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(digest, nameof(digest));
             Argument.AssertNotNull(range, nameof(range));
 
@@ -1428,7 +1389,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckChunkExistsRequest(name, digest, range, context);
+                using HttpMessage message = CreateCheckChunkExistsRequest(digest, range, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1438,15 +1399,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             }
         }
 
-        internal HttpMessage CreateGetManifestRequest(string name, string reference, string accept, RequestContext context)
+        internal HttpMessage CreateGetManifestRequest(string reference, string accept, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/v2/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(_repository, true);
             uri.AppendPath("/manifests/", false);
             uri.AppendPath(reference, true);
             request.Uri = uri;
@@ -1458,15 +1419,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             return message;
         }
 
-        internal HttpMessage CreateCreateManifestRequest(string name, string reference, RequestContent content, string contentType, RequestContext context)
+        internal HttpMessage CreateCreateManifestRequest(string reference, RequestContent content, string contentType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/v2/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(_repository, true);
             uri.AppendPath("/manifests/", false);
             uri.AppendPath(reference, true);
             request.Uri = uri;
@@ -1479,15 +1440,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             return message;
         }
 
-        internal HttpMessage CreateDeleteManifestRequest(string name, string reference, RequestContext context)
+        internal HttpMessage CreateDeleteManifestRequest(string reference, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202404);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/v2/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(_repository, true);
             uri.AppendPath("/manifests/", false);
             uri.AppendPath(reference, true);
             request.Uri = uri;
@@ -1495,15 +1456,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             return message;
         }
 
-        internal HttpMessage CreateGetBlobRequest(string name, string digest, RequestContext context)
+        internal HttpMessage CreateGetBlobRequest(string digest, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200307);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/v2/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(_repository, true);
             uri.AppendPath("/blobs/", false);
             uri.AppendPath(digest, true);
             request.Uri = uri;
@@ -1511,15 +1472,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             return message;
         }
 
-        internal HttpMessage CreateCheckBlobExistsRequest(string name, string digest, RequestContext context)
+        internal HttpMessage CreateCheckBlobExistsRequest(string digest, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200307);
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/v2/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(_repository, true);
             uri.AppendPath("/blobs/", false);
             uri.AppendPath(digest, true);
             request.Uri = uri;
@@ -1527,15 +1488,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             return message;
         }
 
-        internal HttpMessage CreateDeleteBlobRequest(string name, string digest, RequestContext context)
+        internal HttpMessage CreateDeleteBlobRequest(string digest, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/v2/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(_repository, true);
             uri.AppendPath("/blobs/", false);
             uri.AppendPath(digest, true);
             request.Uri = uri;
@@ -1543,15 +1504,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             return message;
         }
 
-        internal HttpMessage CreateMountBlobRequest(string name, string @from, string mount, RequestContext context)
+        internal HttpMessage CreateMountBlobRequest(string @from, string mount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/v2/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(_repository, true);
             uri.AppendPath("/blobs/uploads/", false);
             uri.AppendQuery("from", @from, true);
             uri.AppendQuery("mount", mount, true);
@@ -1566,7 +1527,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -1580,7 +1541,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -1596,7 +1557,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendRawNextLink(nextLink, false);
             uri.AppendQuery("digest", digest, true);
@@ -1613,7 +1574,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -1621,30 +1582,30 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             return message;
         }
 
-        internal HttpMessage CreateStartUploadRequest(string name, RequestContext context)
+        internal HttpMessage CreateStartUploadRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/v2/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(_repository, true);
             uri.AppendPath("/blobs/uploads/", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetChunkRequest(string name, string digest, string range, RequestContext context)
+        internal HttpMessage CreateGetChunkRequest(string digest, string range, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier206);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/v2/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(_repository, true);
             uri.AppendPath("/blobs/", false);
             uri.AppendPath(digest, true);
             request.Uri = uri;
@@ -1653,15 +1614,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             return message;
         }
 
-        internal HttpMessage CreateCheckChunkExistsRequest(string name, string digest, string range, RequestContext context)
+        internal HttpMessage CreateCheckChunkExistsRequest(string digest, string range, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/v2/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(_repository, true);
             uri.AppendPath("/blobs/", false);
             uri.AppendPath(digest, true);
             request.Uri = uri;
