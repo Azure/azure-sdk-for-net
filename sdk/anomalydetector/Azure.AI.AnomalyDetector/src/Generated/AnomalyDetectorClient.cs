@@ -2298,7 +2298,6 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Detect Multivariate Anomaly. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2319,10 +2318,9 @@ namespace Azure.AI.AnomalyDetector
         ///     endTime = "2022-05-10T18:57:31.2311892Z",
         /// };
         /// 
-        /// var operation = await client.BatchDetectAnomalyAsync(WaitUntil.Completed, Guid.NewGuid(), RequestContent.Create(data));
+        /// Response response = await client.BatchDetectAnomalyAsync(Guid.NewGuid(), RequestContent.Create(data));
         /// 
-        /// BinaryData data = await operation.WaitForCompletionAsync();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("resultId").ToString());
         /// Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("summary").GetProperty("errors")[0].GetProperty("code").ToString());
@@ -2416,7 +2414,7 @@ namespace Azure.AI.AnomalyDetector
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> BatchDetectAnomalyAsync(WaitUntil waitUntil, Guid modelId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> BatchDetectAnomalyAsync(Guid modelId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2425,7 +2423,7 @@ namespace Azure.AI.AnomalyDetector
             try
             {
                 using HttpMessage message = CreateBatchDetectAnomalyRequest(modelId, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "AnomalyDetectorClient.BatchDetectAnomaly", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2435,7 +2433,6 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Detect Multivariate Anomaly. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2456,10 +2453,9 @@ namespace Azure.AI.AnomalyDetector
         ///     endTime = "2022-05-10T18:57:31.2311892Z",
         /// };
         /// 
-        /// var operation = client.BatchDetectAnomaly(WaitUntil.Completed, Guid.NewGuid(), RequestContent.Create(data));
+        /// Response response = client.BatchDetectAnomaly(Guid.NewGuid(), RequestContent.Create(data));
         /// 
-        /// BinaryData data = operation.WaitForCompletion();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("resultId").ToString());
         /// Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("summary").GetProperty("errors")[0].GetProperty("code").ToString());
@@ -2553,7 +2549,7 @@ namespace Azure.AI.AnomalyDetector
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> BatchDetectAnomaly(WaitUntil waitUntil, Guid modelId, RequestContent content, RequestContext context = null)
+        public virtual Response BatchDetectAnomaly(Guid modelId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2562,7 +2558,7 @@ namespace Azure.AI.AnomalyDetector
             try
             {
                 using HttpMessage message = CreateBatchDetectAnomalyRequest(modelId, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "AnomalyDetectorClient.BatchDetectAnomaly", OperationFinalStateVia.Location, context, waitUntil);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {

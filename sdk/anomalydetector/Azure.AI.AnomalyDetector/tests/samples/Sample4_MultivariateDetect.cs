@@ -166,14 +166,13 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 };
 
                 TestContext.Progress.WriteLine("Start batch detection, this might take a few minutes...");
-                var operation = client.BatchDetectAnomaly(WaitUntil.Completed, model_id, RequestContent.Create(data));
-                BinaryData rawResult= operation.WaitForCompletion();
-                JsonElement result = JsonDocument.Parse(rawResult.ToStream()).RootElement;
+                Response response = client.BatchDetectAnomaly(model_id, RequestContent.Create(data));
+                JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
                 Guid result_id = Guid.Parse(result.GetProperty("resultId").ToString());
                 TestContext.Progress.WriteLine(String.Format("result id is: {0}", result_id));
 
                 // get detection result
-                Response response = client.GetBatchDetectionResult(result_id);
+                response = client.GetBatchDetectionResult(result_id);
                 JsonElement detection_result = JsonDocument.Parse(response.ContentStream).RootElement;
                 String result_status = result.GetProperty("summary").GetProperty("status").ToString();
                 int tryout_count = 0;
