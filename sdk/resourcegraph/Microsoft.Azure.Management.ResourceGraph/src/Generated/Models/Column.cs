@@ -32,7 +32,8 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         /// </summary>
         /// <param name="name">Column name.</param>
         /// <param name="type">Column data type. Possible values include:
-        /// 'string', 'integer', 'number', 'boolean', 'object'</param>
+        /// 'string', 'integer', 'number', 'boolean', 'object',
+        /// 'datetime'</param>
         public Column(string name, ColumnDataType type)
         {
             Name = name;
@@ -53,7 +54,7 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
 
         /// <summary>
         /// Gets or sets column data type. Possible values include: 'string',
-        /// 'integer', 'number', 'boolean', 'object'
+        /// 'integer', 'number', 'boolean', 'object', 'datetime'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public ColumnDataType Type { get; set; }

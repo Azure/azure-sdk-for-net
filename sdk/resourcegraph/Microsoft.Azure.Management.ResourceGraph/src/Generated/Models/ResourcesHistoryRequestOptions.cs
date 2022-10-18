@@ -15,49 +15,43 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
     using System.Linq;
 
     /// <summary>
-    /// The options for query evaluation
+    /// The options for history request evaluation
     /// </summary>
-    public partial class QueryRequestOptions
+    public partial class ResourcesHistoryRequestOptions
     {
         /// <summary>
-        /// Initializes a new instance of the QueryRequestOptions class.
+        /// Initializes a new instance of the ResourcesHistoryRequestOptions
+        /// class.
         /// </summary>
-        public QueryRequestOptions()
+        public ResourcesHistoryRequestOptions()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the QueryRequestOptions class.
+        /// Initializes a new instance of the ResourcesHistoryRequestOptions
+        /// class.
         /// </summary>
-        /// <param name="skipToken">Continuation token for pagination,
-        /// capturing the next page size and offset, as well as the context of
-        /// the query.</param>
+        /// <param name="interval">The time interval used to fetch
+        /// history.</param>
         /// <param name="top">The maximum number of rows that the query should
         /// return. Overrides the page size when ```$skipToken``` property is
         /// present.</param>
         /// <param name="skip">The number of rows to skip from the beginning of
         /// the results. Overrides the next page offset when ```$skipToken```
         /// property is present.</param>
+        /// <param name="skipToken">Continuation token for pagination,
+        /// capturing the next page size and offset, as well as the context of
+        /// the query.</param>
         /// <param name="resultFormat">Defines in which format query result
         /// returned. Possible values include: 'table', 'objectArray'</param>
-        /// <param name="allowPartialScopes">Only applicable for tenant and
-        /// management group level queries to decide whether to allow partial
-        /// scopes for result in case the number of subscriptions exceed
-        /// allowed limits.</param>
-        /// <param name="authorizationScopeFilter">Defines what level of
-        /// authorization resources should be returned based on the which
-        /// subscriptions and management groups are passed as scopes. Possible
-        /// values include: 'AtScopeAndBelow', 'AtScopeAndAbove',
-        /// 'AtScopeExact', 'AtScopeAboveAndBelow'</param>
-        public QueryRequestOptions(string skipToken = default(string), int? top = default(int?), int? skip = default(int?), ResultFormat? resultFormat = default(ResultFormat?), bool? allowPartialScopes = default(bool?), AuthorizationScopeFilter? authorizationScopeFilter = default(AuthorizationScopeFilter?))
+        public ResourcesHistoryRequestOptions(DateTimeInterval interval = default(DateTimeInterval), int? top = default(int?), int? skip = default(int?), string skipToken = default(string), ResultFormat? resultFormat = default(ResultFormat?))
         {
-            SkipToken = skipToken;
+            Interval = interval;
             Top = top;
             Skip = skip;
+            SkipToken = skipToken;
             ResultFormat = resultFormat;
-            AllowPartialScopes = allowPartialScopes;
-            AuthorizationScopeFilter = authorizationScopeFilter;
             CustomInit();
         }
 
@@ -67,11 +61,10 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets continuation token for pagination, capturing the next
-        /// page size and offset, as well as the context of the query.
+        /// Gets or sets the time interval used to fetch history.
         /// </summary>
-        [JsonProperty(PropertyName = "$skipToken")]
-        public string SkipToken { get; set; }
+        [JsonProperty(PropertyName = "interval")]
+        public DateTimeInterval Interval { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of rows that the query should
@@ -90,28 +83,18 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         public int? Skip { get; set; }
 
         /// <summary>
+        /// Gets or sets continuation token for pagination, capturing the next
+        /// page size and offset, as well as the context of the query.
+        /// </summary>
+        [JsonProperty(PropertyName = "$skipToken")]
+        public string SkipToken { get; set; }
+
+        /// <summary>
         /// Gets or sets defines in which format query result returned.
         /// Possible values include: 'table', 'objectArray'
         /// </summary>
         [JsonProperty(PropertyName = "resultFormat")]
         public ResultFormat? ResultFormat { get; set; }
-
-        /// <summary>
-        /// Gets or sets only applicable for tenant and management group level
-        /// queries to decide whether to allow partial scopes for result in
-        /// case the number of subscriptions exceed allowed limits.
-        /// </summary>
-        [JsonProperty(PropertyName = "allowPartialScopes")]
-        public bool? AllowPartialScopes { get; set; }
-
-        /// <summary>
-        /// Gets or sets defines what level of authorization resources should
-        /// be returned based on the which subscriptions and management groups
-        /// are passed as scopes. Possible values include: 'AtScopeAndBelow',
-        /// 'AtScopeAndAbove', 'AtScopeExact', 'AtScopeAboveAndBelow'
-        /// </summary>
-        [JsonProperty(PropertyName = "authorizationScopeFilter")]
-        public AuthorizationScopeFilter? AuthorizationScopeFilter { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -121,6 +104,10 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Interval != null)
+            {
+                Interval.Validate();
+            }
             if (Top > 1000)
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "Top", 1000);
