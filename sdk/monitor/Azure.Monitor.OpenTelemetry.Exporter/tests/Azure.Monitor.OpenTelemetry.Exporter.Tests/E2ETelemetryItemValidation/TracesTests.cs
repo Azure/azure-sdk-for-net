@@ -49,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             var activitySourceName = $"activitySourceName{uniqueTestId}";
             using var activitySource = new ActivitySource(activitySourceName);
 
-            var tracerProvider = Sdk.CreateTracerProviderBuilder()
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(activitySourceName)
                 .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems)
                 .Build();
@@ -68,7 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             }
 
             // CLEANUP
-            tracerProvider.Dispose();
+            //tracerProvider.Dispose();
 
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
@@ -94,7 +94,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             var activitySourceName = $"activitySourceName{uniqueTestId}";
             using var activitySource = new ActivitySource(activitySourceName);
 
-            var tracerProvider = Sdk.CreateTracerProviderBuilder()
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(activitySourceName)
                 .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems)
                 .Build();
@@ -113,7 +113,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             }
 
             // CLEANUP
-            tracerProvider.Dispose();
+            //tracerProvider.Dispose();
 
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
@@ -151,7 +151,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             ConcurrentBag<TelemetryItem> logTelemetryItems = null;
             List<Activity> inMemoryActivities = new List<Activity>();
 
-            var tracerProvider = Sdk.CreateTracerProviderBuilder()
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(activitySourceName)
                 .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> activityTelemetryItems)
                 .AddInMemoryExporter(inMemoryActivities)
@@ -187,7 +187,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             }
 
             // CLEANUP
-            tracerProvider.Dispose();
+            //tracerProvider.Dispose();
             loggerFactory.Dispose();
 
             // ASSERT
@@ -276,7 +276,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             List<Activity> exportedActivities = new List<Activity>();
             List<LogRecord> exportedLogs = new List<LogRecord>();
 
-            var tracerProvider = Sdk.CreateTracerProviderBuilder()
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(activitySourceName)
                 .AddInMemoryExporter(exportedActivities)
                 .Build();
@@ -311,7 +311,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             }
 
             // CLEANUP
-            tracerProvider.Dispose();
+            //tracerProvider.Dispose();
             loggerFactory.Dispose();
 
             // ASSERT
@@ -375,7 +375,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             var activityLogs = new List<string>();
 
-            var listener = new ActivityListener
+            using var listener = new ActivityListener
             {
                 ActivityStarted = activity => activityLogs.Add($"ActivityStarted: {activity.OperationName}, {activity.Id}"),
                 ActivityStopped = activity => activityLogs.Add($"ActivityStopped: {activity.OperationName}, {activity.Id}"),
@@ -411,7 +411,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             }
 
             // CLEANUP
-            listener.Dispose();
+            //listener.Dispose();
             loggerFactory.Dispose();
 
             // ASSERT
