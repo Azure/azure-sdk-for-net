@@ -12,7 +12,7 @@
     <PackageReleaseNotes>
       [Breaking changes included]
         1. Deleting a linked server is now a long running operation. 
-        2. Updating a cache is now a long running operation`
+        2. Updating a cache is now a long running operation.
       [New Features]
         1. New operation group AsyncOperationStatusOperations
         2. ExportRDBParameters has a new parameter preferredDataArchiveAuthMethod
