@@ -5,10 +5,13 @@
 
 #nullable disable
 
+using Azure.Core;
+using Azure.ResourceManager.Models;
+
 namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary> A class representing the DppBaseResource data model. </summary>
-    public partial class DppBaseResourceData
+    public partial class DppBaseResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of DppBaseResourceData. </summary>
         internal DppBaseResourceData()
@@ -16,21 +19,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> Initializes a new instance of DppBaseResourceData. </summary>
-        /// <param name="id"> Resource Id represents the complete path to the resource. </param>
-        /// <param name="name"> Resource name associated with the resource. </param>
-        /// <param name="resourceType"> Resource type represents the complete path of the form Namespace/ResourceType/ResourceType/... </param>
-        internal DppBaseResourceData(string id, string name, string resourceType)
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        internal DppBaseResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            Name = name;
-            ResourceType = resourceType;
         }
-
-        /// <summary> Resource Id represents the complete path to the resource. </summary>
-        public string Id { get; }
-        /// <summary> Resource name associated with the resource. </summary>
-        public string Name { get; }
-        /// <summary> Resource type represents the complete path of the form Namespace/ResourceType/ResourceType/... </summary>
-        public string ResourceType { get; }
     }
 }
