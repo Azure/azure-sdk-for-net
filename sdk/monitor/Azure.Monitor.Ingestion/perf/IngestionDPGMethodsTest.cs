@@ -12,29 +12,30 @@ using CommandLine;
 
 namespace Azure.Monitor.Ingestion.Perf
 {
-    public class IngestionClientTest : PerfTest<IngestionClientTest.IngestionClientPerfOptions>
+    public class IngestionDPGMethodsTest : PerfTest<IngestionDPGMethodsTest.IngestionClientPerfOptions>
     {
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/perf/TemplateClientTest.cs to write perf test. */
 
         protected static MonitorIngestionTestEnvironment TestEnvironment = new MonitorIngestionTestEnvironment();
         protected readonly LogsIngestionClient LogsIngestionClient;
-        protected static List<object> GenerateEntries(int numEntries)
-        {
-            var entries = new List<object>();
-            for (int i = 0; i < numEntries; i++)
-            {
-                entries.Add(new object[] {
-                    new {
+        protected BinaryData data = BinaryData.FromObjectAsJson(
+            // Use an anonymous type to create the payload
+            new[] {
+                    new
+                    {
                         Time = DateTime.UtcNow,
-                        Computer = "Computer" + i.ToString(),
-                        AdditionalContext = i
-                    }
-                });
-            }
-            return entries;
-        }
+                        Computer = "Computer1",
+                        AdditionalContext = 2,
+                    },
+                    new
+                    {
+                        Time = DateTime.Today,
+                        Computer = "Computer2",
+                        AdditionalContext = 3
+                    },
+            });
 
-        public IngestionClientTest(IngestionClientPerfOptions options) : base(options)
+        public IngestionDPGMethodsTest(IngestionClientPerfOptions options) : base(options)
         {
             LogsIngestionClient = new LogsIngestionClient(new Uri(TestEnvironment.DCREndpoint), TestEnvironment.Credential, ConfigureClientOptions(new LogsIngestionClientOptions()));
         }
@@ -44,12 +45,12 @@ namespace Azure.Monitor.Ingestion.Perf
 
         public override void Run(CancellationToken cancellationToken)
         {
-            LogsIngestionClient.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(100), null, cancellationToken);
+            LogsIngestionClient.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, data);
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            await LogsIngestionClient.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(100), null, cancellationToken).ConfigureAwait(false);
+            await LogsIngestionClient.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, data).ConfigureAwait(false);
         }
     }
 }
