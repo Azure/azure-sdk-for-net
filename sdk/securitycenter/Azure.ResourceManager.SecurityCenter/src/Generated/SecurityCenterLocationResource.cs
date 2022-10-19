@@ -48,8 +48,6 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly SecuritySolutionsReferenceDataRestOperations _securitySolutionsReferenceDataRestClient;
         private readonly ClientDiagnostics _externalSecuritySolutionClientDiagnostics;
         private readonly ExternalSecuritySolutionsRestOperations _externalSecuritySolutionRestClient;
-        private readonly ClientDiagnostics _alertsClientDiagnostics;
-        private readonly AlertsRestOperations _alertsRestClient;
         private readonly SecurityCenterLocationData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SecurityCenterLocationResource"/> class for mocking. </summary>
@@ -91,8 +89,6 @@ namespace Azure.ResourceManager.SecurityCenter
             _externalSecuritySolutionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ExternalSecuritySolutionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ExternalSecuritySolutionResource.ResourceType, out string externalSecuritySolutionApiVersion);
             _externalSecuritySolutionRestClient = new ExternalSecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, externalSecuritySolutionApiVersion);
-            _alertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _alertsRestClient = new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -753,66 +749,6 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Simulate security alerts
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/default/simulate
-        /// Operation Id: Alerts_Simulate
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="alertSimulatorRequestBody"> Alert Simulator Request Properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertSimulatorRequestBody"/> is null. </exception>
-        public virtual async Task<ArmOperation> SimulateAlertAsync(WaitUntil waitUntil, AlertSimulatorRequestBody alertSimulatorRequestBody, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(alertSimulatorRequestBody, nameof(alertSimulatorRequestBody));
-
-            using var scope = _alertsClientDiagnostics.CreateScope("SecurityCenterLocationResource.SimulateAlert");
-            scope.Start();
-            try
-            {
-                var response = await _alertsRestClient.SimulateAsync(Id.SubscriptionId, new AzureLocation(Id.Name), alertSimulatorRequestBody, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation(_alertsClientDiagnostics, Pipeline, _alertsRestClient.CreateSimulateRequest(Id.SubscriptionId, new AzureLocation(Id.Name), alertSimulatorRequestBody).Request, response, OperationFinalStateVia.OriginalUri);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Simulate security alerts
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/default/simulate
-        /// Operation Id: Alerts_Simulate
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="alertSimulatorRequestBody"> Alert Simulator Request Properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertSimulatorRequestBody"/> is null. </exception>
-        public virtual ArmOperation SimulateAlert(WaitUntil waitUntil, AlertSimulatorRequestBody alertSimulatorRequestBody, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(alertSimulatorRequestBody, nameof(alertSimulatorRequestBody));
-
-            using var scope = _alertsClientDiagnostics.CreateScope("SecurityCenterLocationResource.SimulateAlert");
-            scope.Start();
-            try
-            {
-                var response = _alertsRestClient.Simulate(Id.SubscriptionId, new AzureLocation(Id.Name), alertSimulatorRequestBody, cancellationToken);
-                var operation = new SecurityCenterArmOperation(_alertsClientDiagnostics, Pipeline, _alertsRestClient.CreateSimulateRequest(Id.SubscriptionId, new AzureLocation(Id.Name), alertSimulatorRequestBody).Request, response, OperationFinalStateVia.OriginalUri);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

@@ -249,12 +249,14 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/providers/Microsoft.Security/applications/{applicationId}: SubscriptionSecurityApplication
   /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}: SubscriptionSecurityTask
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}: ResourceGroupSecurityTask
-#   /{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/baselineRules/{ruleId}: SqlVulnerabilityAssessmentBaselineRule
-#   /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}: SecureScore
 
 request-path-is-non-resource:
   - /{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/scans/{scanId}/scanResults/{scanResultId}
 
+request-path-to-parent:
+  /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/default/simulate: /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}
+operation-positions:
+  Alerts_Simulate: collection
 
 list-exception:
   - /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}
