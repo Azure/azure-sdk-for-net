@@ -16,9 +16,9 @@ namespace Azure.Monitor.Ingestion.Perf
     {
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/perf/TemplateClientTest.cs to write perf test. */
 
-        protected static MonitorIngestionTestEnvironment TestEnvironment = new MonitorIngestionTestEnvironment();
-        protected readonly LogsIngestionClient LogsIngestionClient;
-        protected BinaryData data = BinaryData.FromObjectAsJson(
+        private static MonitorIngestionTestEnvironment TestEnvironment = new MonitorIngestionTestEnvironment();
+        private readonly LogsIngestionClient LogsIngestionClient;
+        private BinaryData data = BinaryData.FromObjectAsJson(
             // Use an anonymous type to create the payload
             new[] {
                     new
