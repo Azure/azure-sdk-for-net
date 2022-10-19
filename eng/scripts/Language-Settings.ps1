@@ -262,12 +262,6 @@ function GetExistingPackageVersions ($PackageName, $GroupId=$null)
 }
 
 function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
-  $suffix = ''
-  $parsedVersion = [AzureEngSemanticVersion]::ParseVersionString($PackageInfo.Version)
-  if ($parsedVersion.IsPrerelease) { 
-    $suffix = '-pre'
-  }
-
   $readmeName = $PackageInfo.Name.ToLower()
 
   # Readme names (which are used in the URL) should not include redundant terms
@@ -284,9 +278,9 @@ function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
 
   New-Object PSObject -Property @{
     DocsMsReadMeName = $readmeName
-    LatestReadMeLocation = 'api/overview/azure'
-    PreviewReadMeLocation = 'api/overview/azure'
-    Suffix = $suffix
+    LatestReadMeLocation = 'api/overview/azure/latest'
+    PreviewReadMeLocation = 'api/overview/azure/preview'
+    Suffix = ''
   }
 }
 
@@ -462,7 +456,7 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
     }
 
     if ($updatedVersion -ne $package.Versions[0]) {
-      Write-Host "Update tracked package: $($package.Name) to version $($updatedVersions)"
+      Write-Host "Update tracked package: $($package.Name) to version $updatedVersion"
       $package.Versions = @($updatedVersion)
       $package = EnsureCustomSource $package
     } else {

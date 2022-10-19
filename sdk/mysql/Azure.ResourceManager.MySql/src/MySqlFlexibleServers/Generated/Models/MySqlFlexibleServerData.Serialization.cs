@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         internal static MySqlFlexibleServerData DeserializeMySqlFlexibleServerData(JsonElement element)
         {
-            Optional<Identity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<MySqlFlexibleServerSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = Identity.DeserializeIdentity(property.Value);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     continue;
                 }
             }
-            return new MySqlFlexibleServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, sku.Value, administratorLogin.Value, administratorLoginPassword.Value, Optional.ToNullable(version), availabilityZone.Value, Optional.ToNullable(createMode), sourceServerResourceId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(replicationRole), Optional.ToNullable(replicaCapacity), dataEncryption.Value, Optional.ToNullable(state), fullyQualifiedDomainName.Value, storage.Value, backup.Value, highAvailability.Value, network.Value, maintenanceWindow.Value);
+            return new MySqlFlexibleServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, administratorLogin.Value, administratorLoginPassword.Value, Optional.ToNullable(version), availabilityZone.Value, Optional.ToNullable(createMode), sourceServerResourceId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(replicationRole), Optional.ToNullable(replicaCapacity), dataEncryption.Value, Optional.ToNullable(state), fullyQualifiedDomainName.Value, storage.Value, backup.Value, highAvailability.Value, network.Value, maintenanceWindow.Value);
         }
     }
 }

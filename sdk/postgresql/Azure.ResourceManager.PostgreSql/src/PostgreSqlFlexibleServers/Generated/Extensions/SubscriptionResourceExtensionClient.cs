@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PostgreSqlFlexibleServerCapabilityProperties> ExecuteLocationBasedCapabilitiesAsync(string locationName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PostgreSqlFlexibleServerCapabilityProperties> ExecuteLocationBasedCapabilitiesAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             async Task<Page<PostgreSqlFlexibleServerCapabilityProperties>> FirstPageFunc(int? pageSizeHint)
             {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PostgreSqlFlexibleServerCapabilityProperties> ExecuteLocationBasedCapabilities(string locationName, CancellationToken cancellationToken = default)
+        public virtual Pageable<PostgreSqlFlexibleServerCapabilityProperties> ExecuteLocationBasedCapabilities(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             Page<PostgreSqlFlexibleServerCapabilityProperties> FirstPageFunc(int? pageSizeHint)
             {
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteVirtualNetworkSubnetUsageAsync(string locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteVirtualNetworkSubnetUsageAsync(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualNetworkSubnetUsageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteVirtualNetworkSubnetUsage");
             scope.Start();
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> ExecuteVirtualNetworkSubnetUsage(string locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> ExecuteVirtualNetworkSubnetUsage(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualNetworkSubnetUsageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteVirtualNetworkSubnetUsage");
             scope.Start();

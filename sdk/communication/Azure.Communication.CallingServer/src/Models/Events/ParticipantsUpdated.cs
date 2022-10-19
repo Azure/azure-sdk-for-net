@@ -11,7 +11,7 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// The participants updated event.
     /// </summary>
-    public class ParticipantsUpdated : CallingServerEventBase
+    public class ParticipantsUpdated : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of ParticipantsUpdatedEvent. </summary>
         internal ParticipantsUpdated()
@@ -23,21 +23,32 @@ namespace Azure.Communication.CallingServer
         /// <param name="internalEvent"> Internal Representation of the ParticipantsUpdatedEvent. </param>
         internal ParticipantsUpdated(ParticipantsUpdatedInternal internalEvent)
         {
+            EventSource = internalEvent.EventSource;
+            OperationContext = internalEvent.OperationContext;
+            ResultInformation = internalEvent.ResultInformation;
             Participants = internalEvent.Participants.Select(t => CommunicationIdentifierSerializer.Deserialize(t)).ToList();
-            EventType = internalEvent.EventType;
+            Version = internalEvent.Version;
             CallConnectionId = internalEvent.CallConnectionId;
             ServerCallId = internalEvent.ServerCallId;
             CorrelationId = internalEvent.CorrelationId;
+            PublicEventType = internalEvent.PublicEventType;
         }
+
+        /// <summary> EventSource. </summary>
+        public string EventSource { get; }
+        /// <summary> Operation context. </summary>
+        public string OperationContext { get; }
+        /// <summary> Gets the result info. </summary>
+        public ResultInformation ResultInformation { get; }
+        /// <summary> Participants failed to be added. </summary>
 
         /// <summary> List of current participants in the call. </summary>
         public IReadOnlyList<CommunicationIdentifier> Participants { get; }
-        /// <summary> Call connection ID. </summary>
-        public string CallConnectionId { get; }
-        /// <summary> Server call ID. </summary>
-        public string ServerCallId { get; }
-        /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
-        public string CorrelationId { get; }
+        /// <summary> Used to determine the version of the event. </summary>
+        public string Version { get; }
+        /// <summary> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </summary>
+        public string PublicEventType { get; }
+
         /// <summary>
         /// Deserialize <see cref="ParticipantsUpdated"/> event.
         /// </summary>

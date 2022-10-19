@@ -39,6 +39,8 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        // TODO: Temporarily setting max version to V2022-05-01 since V2022-10-01-preview does not support AAD yet (https://github.com/Azure/azure-sdk-for-net/issues/31854).
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         public async Task AnalyzeSentimentWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -470,6 +472,60 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IList<string> expected = new List<string> { "AnalyzeSentiment", "AnalyzeSentimentWithDisabledServiceLogs" };
             CollectionAssert.AreEquivalent(expected, AnalyzeSentimentActionsResults.Select(result => result.ActionName));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public async Task AnalyzeSentimentBatchDisableServiceLogs()
+        {
+            TextAnalyticsClient client = GetClient();
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(batchConvenienceDocuments, "en", options: new TextAnalyticsRequestOptions { DisableServiceLogs = true });
+
+            foreach (AnalyzeSentimentResult docs in results)
+            {
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
+            }
+
+            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_0)]
+        public void AnalyzeSentimentBatchDisableServiceLogsThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeSentimentBatchAsync(batchConvenienceDocuments, "en", options: new TextAnalyticsRequestOptions { DisableServiceLogs = true }));
+            Assert.AreEqual("AnalyzeSentimentOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public async Task AnalyzeSentimentBatchIncludeOpinionMining()
+        {
+            TextAnalyticsClient client = GetClient();
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(batchConvenienceDocuments, "en", options: new AnalyzeSentimentOptions { IncludeOpinionMining = true });
+
+            foreach (AnalyzeSentimentResult docs in results)
+            {
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
+            }
+
+            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_0)]
+        public void AnalyzeSentimentBatchIncludeOpinionMiningThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeSentimentBatchAsync(batchConvenienceDocuments, "en", options: new AnalyzeSentimentOptions { IncludeOpinionMining = true }));
+            Assert.AreEqual("AnalyzeSentimentOptions.IncludeOpinionMining is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
         }
 
         private void CheckAnalyzeSentimentProperties(DocumentSentiment doc, bool opinionMining = false)

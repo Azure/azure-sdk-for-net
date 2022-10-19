@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SsisdbValue = "SSISDB";
+        private const string SsisDBValue = "SSISDB";
         private const string FileValue = "File";
         private const string InlinePackageValue = "InlinePackage";
         private const string PackageStoreValue = "PackageStore";
 
         /// <summary> SSISDB. </summary>
-        public static SsisPackageLocationType Ssisdb { get; } = new SsisPackageLocationType(SsisdbValue);
+        public static SsisPackageLocationType SsisDB { get; } = new SsisPackageLocationType(SsisDBValue);
         /// <summary> File. </summary>
         public static SsisPackageLocationType File { get; } = new SsisPackageLocationType(FileValue);
         /// <summary> InlinePackage. </summary>

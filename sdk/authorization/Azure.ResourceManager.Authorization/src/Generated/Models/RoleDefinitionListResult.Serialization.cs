@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal static RoleDefinitionListResult DeserializeRoleDefinitionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RoleDefinitionData>> value = default;
+            Optional<IReadOnlyList<AuthorizationRoleDefinitionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RoleDefinitionData> array = new List<RoleDefinitionData>();
+                    List<AuthorizationRoleDefinitionData> array = new List<AuthorizationRoleDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleDefinitionData.DeserializeRoleDefinitionData(item));
+                        array.Add(AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(item));
                     }
                     value = array;
                     continue;

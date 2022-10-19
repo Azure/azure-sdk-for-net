@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// WebClientCertificateAuthentication class.
         /// </summary>
         /// <param name="url">The URL of the web service endpoint, e.g.
-        /// http://www.microsoft.com . Type: string (or Expression with
+        /// https://www.microsoft.com . Type: string (or Expression with
         /// resultType string).</param>
         /// <param name="pfx">Base64-encoded contents of a PFX file.</param>
         /// <param name="password">Password for the PFX file.</param>

@@ -6,19 +6,35 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.MediaComposition;
 using Azure.Core;
 
-namespace Azure.Communication.MediaComposition
+namespace Azure.Communication
 {
-    public partial class CommunicationIdentifierModel : IUtf8JsonSerializable
+    internal partial class CommunicationIdentifierModel : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind");
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
+            if (Optional.IsDefined(RawId))
+            {
+                writer.WritePropertyName("rawId");
+                writer.WriteStringValue(RawId);
+            }
             if (Optional.IsDefined(CommunicationUser))
             {
                 writer.WritePropertyName("communicationUser");
                 writer.WriteObjectValue(CommunicationUser);
+            }
+            if (Optional.IsDefined(PhoneNumber))
+            {
+                writer.WritePropertyName("phoneNumber");
+                writer.WriteObjectValue(PhoneNumber);
             }
             if (Optional.IsDefined(MicrosoftTeamsUser))
             {
@@ -30,10 +46,28 @@ namespace Azure.Communication.MediaComposition
 
         internal static CommunicationIdentifierModel DeserializeCommunicationIdentifierModel(JsonElement element)
         {
+            Optional<CommunicationIdentifierModelKind> kind = default;
+            Optional<string> rawId = default;
             Optional<CommunicationUserIdentifierModel> communicationUser = default;
+            Optional<PhoneNumberIdentifierModel> phoneNumber = default;
             Optional<MicrosoftTeamsUserIdentifierModel> microsoftTeamsUser = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    kind = new CommunicationIdentifierModelKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("rawId"))
+                {
+                    rawId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("communicationUser"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -42,6 +76,16 @@ namespace Azure.Communication.MediaComposition
                         continue;
                     }
                     communicationUser = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("phoneNumber"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    phoneNumber = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("microsoftTeamsUser"))
@@ -55,7 +99,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new CommunicationIdentifierModel(communicationUser.Value, microsoftTeamsUser.Value);
+            return new CommunicationIdentifierModel(Optional.ToNullable(kind), rawId.Value, communicationUser.Value, phoneNumber.Value, microsoftTeamsUser.Value);
         }
     }
 }

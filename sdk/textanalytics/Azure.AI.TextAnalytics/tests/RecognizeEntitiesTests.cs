@@ -53,6 +53,8 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        // TODO: Temporarily setting max version to V2022-05-01 since V2022-10-01-preview does not support AAD yet (https://github.com/Azure/azure-sdk-for-net/issues/31854).
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         public async Task RecognizeEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -275,6 +277,33 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IList<string> expected = new List<string> { "RecognizeEntities", "RecognizeEntitiesWithDisabledServiceLogs" };
             CollectionAssert.AreEquivalent(expected, RecognizeEntitiesActionsResults.Select(result => result.ActionName));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public async Task RecognizeEntitiesBatchDisableServiceLogs()
+        {
+            TextAnalyticsClient client = GetClient();
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(s_batchConvenienceDocuments, options: new TextAnalyticsRequestOptions { DisableServiceLogs = true });
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "0", s_document1ExpectedOutput },
+                { "1", s_document2ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_0)]
+        public void RecognizeEntitiesBatchDisableServiceLogsThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.RecognizeEntitiesBatchAsync(s_batchConvenienceDocuments, options: new TextAnalyticsRequestOptions { DisableServiceLogs = true }));
+            Assert.AreEqual("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
         }
 
         private void ValidateInDocumenResult(CategorizedEntityCollection entities, List<string> minimumExpectedOutput)

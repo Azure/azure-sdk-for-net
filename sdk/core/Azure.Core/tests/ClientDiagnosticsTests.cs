@@ -44,6 +44,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("ActivityName.Stop", stopEvent.Key);
 
             Assert.AreEqual(ActivityIdFormat.W3C, activity.IdFormat);
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("kind", "internal"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute1", "Value1"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute2", "2"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute3", "3"));

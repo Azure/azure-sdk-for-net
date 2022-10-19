@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// that should be made available to the VM/VMSS</param>
         /// <param name="timeCreated">Specifies the time at which the Virtual
         /// Machine resource was created.&lt;br&gt;&lt;br&gt;Minimum
-        /// api-version: 2022-03-01.</param>
+        /// api-version: 2021-11-01.</param>
         /// <param name="resources">The virtual machine child extension
         /// resources.</param>
         /// <param name="identity">The identity of the virtual machine, if
@@ -472,7 +472,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets specifies the time at which the Virtual Machine resource was
         /// created.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2022-03-01.
+        /// 2021-11-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeCreated")]
         public System.DateTime? TimeCreated { get; private set; }
@@ -513,6 +513,16 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (StorageProfile != null)
             {
                 StorageProfile.Validate();
+            }
+            if (Resources != null)
+            {
+                foreach (var element in Resources)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

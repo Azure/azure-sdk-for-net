@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ManagedClusterListResult. </summary>
         internal ManagedClusterListResult()
         {
-            Value = new ChangeTrackingList<ManagedClusterData>();
+            Value = new ChangeTrackingList<ContainerServiceManagedClusterData>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterListResult. </summary>
         /// <param name="value"> The list of managed clusters. </param>
         /// <param name="nextLink"> The URL to get the next set of managed cluster results. </param>
-        internal ManagedClusterListResult(IReadOnlyList<ManagedClusterData> value, string nextLink)
+        internal ManagedClusterListResult(IReadOnlyList<ContainerServiceManagedClusterData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of managed clusters. </summary>
-        public IReadOnlyList<ManagedClusterData> Value { get; }
+        public IReadOnlyList<ContainerServiceManagedClusterData> Value { get; }
         /// <summary> The URL to get the next set of managed cluster results. </summary>
         public string NextLink { get; }
     }

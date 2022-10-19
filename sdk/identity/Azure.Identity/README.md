@@ -76,7 +76,7 @@ The `DefaultAzureCredential` will attempt to authenticate via the following mech
 1. **Environment** - The `DefaultAzureCredential` will read account information specified via [environment variables](#environment-variables) and use it to authenticate.
 2. **Managed Identity** - If the application is deployed to an Azure host with Managed Identity enabled, the `DefaultAzureCredential` will authenticate with that account.
 3. **Visual Studio** - If the developer has authenticated via Visual Studio, the `DefaultAzureCredential` will authenticate with that account.
-4. **Visual Studio Code** - If the developer has authenticated via the Visual Studio Code Azure Account plugin, the `DefaultAzureCredential` will authenticate with that account.
+4. **Visual Studio Code** - Currently excluded by default as SDK authentication via Visual Studio Code is broken due to issue [#27263](https://github.com/Azure/azure-sdk-for-net/issues/27263). The `VisualStudioCodeCredential` will be re-enabled in the `DefaultAzureCredential` flow once a fix is in place. Issue [#30525](https://github.com/Azure/azure-sdk-for-net/issues/30525) tracks this. In the meantime Visual Studio Code users can authenticate their development environment using the [Azure CLI](https://learn.microsoft.com/cli/azure/).
 5. **Azure CLI** - If the developer has authenticated an account via the Azure CLI `az login` command, the `DefaultAzureCredential` will authenticate with that account.
 6. **Azure PowerShell** - If the developer has authenticated an account via the Azure PowerShell `Connect-AzAccount` command, the `DefaultAzureCredential` will authenticate with that account.
 7. **Interactive browser** - If enabled, the `DefaultAzureCredential` will interactively authenticate the developer via the current system's default browser. By default, this credential type is disabled.
@@ -194,7 +194,8 @@ The [Managed identity authentication](https://docs.microsoft.com/azure/active-di
 |-|-
 |`AZURE_CLIENT_ID`|id of an Azure Active Directory application
 |`AZURE_TENANT_ID`|id of the application's Azure Active Directory tenant
-|`AZURE_CLIENT_CERTIFICATE_PATH`|path to a PEM-encoded certificate file including private key (without password protection)
+|`AZURE_CLIENT_CERTIFICATE_PATH`|path to a PFX or PEM-encoded certificate file including private key
+|`AZURE_CLIENT_CERTIFICATE_PASSWORD`|(optional) the password protecting the certificate file (currently only supported for PFX (PKCS12) certificates)
 |`AZURE_CLIENT_SEND_CERTIFICATE_CHAIN`|(optional) send certificate chain in x5c header to support subject name / issuer based authentication
 
 #### Username and password

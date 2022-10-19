@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> The IP access control properties. </summary>
         internal IPAccessControl IP { get; set; }
         /// <summary> The IP allow list. </summary>
-        public IList<IPRange> IPAllow
+        public IList<IPRange> IPAllowedIPs
         {
             get
             {
                 if (IP is null)
                     IP = new IPAccessControl();
-                return IP.Allow;
+                return IP.AllowedIPs;
             }
         }
     }

@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Ask != null)
+            if (ApplicationSecretKey != null)
             {
                 writer.WritePropertyName("ask");
-                writer.WriteBase64StringValue(Ask, "D");
+                writer.WriteBase64StringValue(ApplicationSecretKey, "D");
             }
             else
             {

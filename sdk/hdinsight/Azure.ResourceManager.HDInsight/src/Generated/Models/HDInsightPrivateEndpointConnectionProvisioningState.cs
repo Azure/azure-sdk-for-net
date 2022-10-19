@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The provisioning state, which only appears in the response.
-    /// Serialized Name: PrivateEndpointConnectionProvisioningState
-    /// </summary>
+    /// <summary> The provisioning state, which only appears in the response. </summary>
     public readonly partial struct HDInsightPrivateEndpointConnectionProvisioningState : IEquatable<HDInsightPrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         private const string CanceledValue = "Canceled";
         private const string DeletingValue = "Deleting";
 
-        /// <summary>
-        /// InProgress
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.InProgress
-        /// </summary>
+        /// <summary> InProgress. </summary>
         public static HDInsightPrivateEndpointConnectionProvisioningState InProgress { get; } = new HDInsightPrivateEndpointConnectionProvisioningState(InProgressValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static HDInsightPrivateEndpointConnectionProvisioningState Updating { get; } = new HDInsightPrivateEndpointConnectionProvisioningState(UpdatingValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static HDInsightPrivateEndpointConnectionProvisioningState Failed { get; } = new HDInsightPrivateEndpointConnectionProvisioningState(FailedValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static HDInsightPrivateEndpointConnectionProvisioningState Succeeded { get; } = new HDInsightPrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static HDInsightPrivateEndpointConnectionProvisioningState Canceled { get; } = new HDInsightPrivateEndpointConnectionProvisioningState(CanceledValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static HDInsightPrivateEndpointConnectionProvisioningState Deleting { get; } = new HDInsightPrivateEndpointConnectionProvisioningState(DeletingValue);
         /// <summary> Determines if two <see cref="HDInsightPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(HDInsightPrivateEndpointConnectionProvisioningState left, HDInsightPrivateEndpointConnectionProvisioningState right) => left.Equals(right);

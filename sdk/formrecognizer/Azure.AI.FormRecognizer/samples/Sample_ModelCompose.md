@@ -30,27 +30,27 @@ In our case, we will be writing an application that collects the expenses a comp
 // https://aka.ms/azsdk/formrecognizer/buildtrainingset
 
 Uri officeSuppliesUri = new Uri("<purchaseOrderOfficeSuppliesUri>");
-var officeSupplieOptions = new BuildModelOptions() { Description = "Purchase order - Office supplies" };
+var officeSupplieOptions = new BuildDocumentModelOptions() { Description = "Purchase order - Office supplies" };
 
-BuildModelOperation suppliesOperation = await client.BuildModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: officeSupplieOptions);
+BuildDocumentModelOperation suppliesOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: officeSupplieOptions);
 DocumentModelDetails officeSuppliesModel = suppliesOperation.Value;
 
 Uri officeEquipmentUri = new Uri("<purchaseOrderOfficeEquipmentUri>");
-var equipmentOptions = new BuildModelOptions() { Description = "Purchase order - Office Equipment" };
+var equipmentOptions = new BuildDocumentModelOptions() { Description = "Purchase order - Office Equipment" };
 
-BuildModelOperation equipmentOperation = await client.BuildModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
+BuildDocumentModelOperation equipmentOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
 DocumentModelDetails officeEquipmentModel = equipmentOperation.Value;
 
 Uri furnitureUri = new Uri("<purchaseOrderFurnitureUri>");
-var furnitureOptions = new BuildModelOptions() { Description = "Purchase order - Furniture" };
+var furnitureOptions = new BuildDocumentModelOptions() { Description = "Purchase order - Furniture" };
 
-BuildModelOperation furnitureOperation = await client.BuildModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
+BuildDocumentModelOperation furnitureOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
 DocumentModelDetails furnitureModel = furnitureOperation.Value;
 
 Uri cleaningSuppliesUri = new Uri("<purchaseOrderCleaningSuppliesUri>");
-var cleaningOptions = new BuildModelOptions() { Description = "Purchase order - Cleaning Supplies" };
+var cleaningOptions = new BuildDocumentModelOptions() { Description = "Purchase order - Cleaning Supplies" };
 
-BuildModelOperation cleaningOperation = await client.BuildModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
+BuildDocumentModelOperation cleaningOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
 DocumentModelDetails cleaningSuppliesModel = cleaningOperation.Value;
 ```
 
@@ -65,7 +65,7 @@ List<string> modelIds = new List<string>()
     cleaningSuppliesModel.ModelId
 };
 
-BuildModelOperation operation = await client.ComposeModelAsync(WaitUntil.Completed, modelIds, description: "Composed Purchase order");
+ComposeDocumentModelOperation operation = await client.ComposeDocumentModelAsync(WaitUntil.Completed, modelIds, description: "Composed Purchase order");
 DocumentModelDetails purchaseOrderModel = operation.Value;
 
 Console.WriteLine($"  Model Id: {purchaseOrderModel.ModelId}");

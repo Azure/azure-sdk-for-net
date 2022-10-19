@@ -15,6 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Administration
 {
+    // Data plane generated client. The PurviewMetadataRoles service client.
     /// <summary> The PurviewMetadataRoles service client. </summary>
     public partial class PurviewMetadataRolesClient
     {

@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("cpuManagerPolicy");
                 writer.WriteStringValue(CpuManagerPolicy);
             }
-            if (Optional.IsDefined(CpuCfsQuota))
+            if (Optional.IsDefined(IsCpuCfsQuotaEnabled))
             {
                 writer.WritePropertyName("cpuCfsQuota");
-                writer.WriteBooleanValue(CpuCfsQuota.Value);
+                writer.WriteBooleanValue(IsCpuCfsQuotaEnabled.Value);
             }
             if (Optional.IsDefined(CpuCfsQuotaPeriod))
             {
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FailSwapOn))
+            if (Optional.IsDefined(FailStartWithSwapOn))
             {
                 writer.WritePropertyName("failSwapOn");
-                writer.WriteBooleanValue(FailSwapOn.Value);
+                writer.WriteBooleanValue(FailStartWithSwapOn.Value);
             }
             if (Optional.IsDefined(ContainerLogMaxSizeInMB))
             {

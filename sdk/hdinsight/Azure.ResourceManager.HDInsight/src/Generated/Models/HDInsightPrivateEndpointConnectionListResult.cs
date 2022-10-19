@@ -11,10 +11,7 @@ using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The list private endpoint connections response.
-    /// Serialized Name: PrivateEndpointConnectionListResult
-    /// </summary>
+    /// <summary> The list private endpoint connections response. </summary>
     internal partial class HDInsightPrivateEndpointConnectionListResult
     {
         /// <summary> Initializes a new instance of HDInsightPrivateEndpointConnectionListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightPrivateEndpointConnectionListResult. </summary>
-        /// <param name="value">
-        /// The list of private endpoint connections.
-        /// Serialized Name: PrivateEndpointConnectionListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link (url) to the next page of results.
-        /// Serialized Name: PrivateEndpointConnectionListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of private endpoint connections. </param>
+        /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal HDInsightPrivateEndpointConnectionListResult(IReadOnlyList<HDInsightPrivateEndpointConnectionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of private endpoint connections.
-        /// Serialized Name: PrivateEndpointConnectionListResult.value
-        /// </summary>
+        /// <summary> The list of private endpoint connections. </summary>
         public IReadOnlyList<HDInsightPrivateEndpointConnectionData> Value { get; }
-        /// <summary>
-        /// The link (url) to the next page of results.
-        /// Serialized Name: PrivateEndpointConnectionListResult.nextLink
-        /// </summary>
+        /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }
 }

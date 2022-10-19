@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightAutoScaleSchedule DeserializeHDInsightAutoScaleSchedule(JsonElement element)
         {
-            Optional<IList<DaysOfWeek>> days = default;
+            Optional<IList<HDInsightDayOfWeek>> days = default;
             Optional<HDInsightAutoScaleTimeAndCapacity> timeAndCapacity = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DaysOfWeek> array = new List<DaysOfWeek>();
+                    List<HDInsightDayOfWeek> array = new List<HDInsightDayOfWeek>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new DaysOfWeek(item.GetString()));
+                        array.Add(new HDInsightDayOfWeek(item.GetString()));
                     }
                     days = array;
                     continue;

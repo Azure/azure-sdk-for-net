@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<double> length = default;
             Optional<double> height = default;
             Optional<double> width = default;
-            Optional<LengthHeightUnit> lengthHeightUnit = default;
+            Optional<ProductLengthHeightWidthUnit> lengthHeightUnit = default;
             Optional<double> weight = default;
             Optional<double> depth = default;
-            Optional<WeightMeasurementUnit> weightUnit = default;
+            Optional<ProductWeightMeasurementUnit> weightUnit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("length"))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    lengthHeightUnit = new LengthHeightUnit(property.Value.GetString());
+                    lengthHeightUnit = new ProductLengthHeightWidthUnit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("weight"))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    weightUnit = new WeightMeasurementUnit(property.Value.GetString());
+                    weightUnit = new ProductWeightMeasurementUnit(property.Value.GetString());
                     continue;
                 }
             }

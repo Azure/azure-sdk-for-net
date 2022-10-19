@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 writer.WritePropertyName("sizeInKB");
                 writer.WriteNumberValue(SizeInKB.Value);
             }
-            if (Optional.IsDefined(TypePropertiesType))
+            if (Optional.IsDefined(LogFileType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(TypePropertiesType);
+                writer.WriteStringValue(LogFileType);
             }
             if (Optional.IsDefined(Uri))
             {

@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Allow))
+            if (Optional.IsCollectionDefined(AllowedIPs))
             {
                 writer.WritePropertyName("allow");
                 writer.WriteStartArray();
-                foreach (var item in Allow)
+                foreach (var item in AllowedIPs)
                 {
                     writer.WriteObjectValue(item);
                 }

@@ -95,13 +95,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <returns> An async collection of <see cref="MySqlFlexibleServerCapabilityProperties" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilitiesAsync(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
+        public static AsyncPageable<MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilitiesAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             return GetExtensionClient(subscriptionResource).GetLocationBasedCapabilitiesAsync(locationName, cancellationToken);
         }
 
@@ -113,13 +109,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <returns> A collection of <see cref="MySqlFlexibleServerCapabilityProperties" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilities(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
+        public static Pageable<MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilities(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             return GetExtensionClient(subscriptionResource).GetLocationBasedCapabilities(locationName, cancellationToken);
         }
 
@@ -132,11 +124,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="mySqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="mySqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
-        public static async Task<Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteCheckVirtualNetworkSubnetUsageAsync(this SubscriptionResource subscriptionResource, string locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="mySqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
+        public static async Task<Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteCheckVirtualNetworkSubnetUsageAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
             return await GetExtensionClient(subscriptionResource).ExecuteCheckVirtualNetworkSubnetUsageAsync(locationName, mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, cancellationToken).ConfigureAwait(false);
@@ -151,11 +141,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="mySqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="mySqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
-        public static Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult> ExecuteCheckVirtualNetworkSubnetUsage(this SubscriptionResource subscriptionResource, string locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="mySqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
+        public static Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult> ExecuteCheckVirtualNetworkSubnetUsage(this SubscriptionResource subscriptionResource, AzureLocation locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
             return GetExtensionClient(subscriptionResource).ExecuteCheckVirtualNetworkSubnetUsage(locationName, mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, cancellationToken);
@@ -170,11 +158,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="content"> The required parameters for checking if server name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<MySqlFlexibleServerNameAvailabilityResult>> CheckMySqlFlexibleServerNameAvailabilityAsync(this SubscriptionResource subscriptionResource, string locationName, MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<MySqlFlexibleServerNameAvailabilityResult>> CheckMySqlFlexibleServerNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
             return await GetExtensionClient(subscriptionResource).CheckMySqlFlexibleServerNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
@@ -189,11 +175,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="content"> The required parameters for checking if server name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        public static Response<MySqlFlexibleServerNameAvailabilityResult> CheckMySqlFlexibleServerNameAvailability(this SubscriptionResource subscriptionResource, string locationName, MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<MySqlFlexibleServerNameAvailabilityResult> CheckMySqlFlexibleServerNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation locationName, MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
             return GetExtensionClient(subscriptionResource).CheckMySqlFlexibleServerNameAvailability(locationName, content, cancellationToken);

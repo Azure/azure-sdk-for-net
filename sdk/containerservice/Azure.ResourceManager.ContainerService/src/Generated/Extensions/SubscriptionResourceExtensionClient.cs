@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ContainerService
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _managedClusterClientDiagnostics;
-        private ManagedClustersRestOperations _managedClusterRestClient;
+        private ClientDiagnostics _containerServiceManagedClusterManagedClustersClientDiagnostics;
+        private ManagedClustersRestOperations _containerServiceManagedClusterManagedClustersRestClient;
         private ClientDiagnostics _agentPoolSnapshotSnapshotsClientDiagnostics;
         private SnapshotsRestOperations _agentPoolSnapshotSnapshotsRestClient;
 
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.ContainerService
         {
         }
 
-        private ClientDiagnostics ManagedClusterClientDiagnostics => _managedClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService", ManagedClusterResource.ResourceType.Namespace, Diagnostics);
-        private ManagedClustersRestOperations ManagedClusterRestClient => _managedClusterRestClient ??= new ManagedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedClusterResource.ResourceType));
+        private ClientDiagnostics ContainerServiceManagedClusterManagedClustersClientDiagnostics => _containerServiceManagedClusterManagedClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService", ContainerServiceManagedClusterResource.ResourceType.Namespace, Diagnostics);
+        private ManagedClustersRestOperations ContainerServiceManagedClusterManagedClustersRestClient => _containerServiceManagedClusterManagedClustersRestClient ??= new ManagedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerServiceManagedClusterResource.ResourceType));
         private ClientDiagnostics AgentPoolSnapshotSnapshotsClientDiagnostics => _agentPoolSnapshotSnapshotsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService", AgentPoolSnapshotResource.ResourceType.Namespace, Diagnostics);
         private SnapshotsRestOperations AgentPoolSnapshotSnapshotsRestClient => _agentPoolSnapshotSnapshotsRestClient ??= new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AgentPoolSnapshotResource.ResourceType));
 
@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: ManagedClusters_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedClusterResource> GetManagedClustersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerServiceManagedClusterResource> GetContainerServiceManagedClustersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedClusterResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ContainerServiceManagedClusterResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ManagedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusters");
+                using var scope = ContainerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerServiceManagedClusters");
                 scope.Start();
                 try
                 {
-                    var response = await ManagedClusterRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await ContainerServiceManagedClusterManagedClustersRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ContainerServiceManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.ContainerService
                     throw;
                 }
             }
-            async Task<Page<ManagedClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ContainerServiceManagedClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ManagedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusters");
+                using var scope = ContainerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerServiceManagedClusters");
                 scope.Start();
                 try
                 {
-                    var response = await ManagedClusterRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await ContainerServiceManagedClusterManagedClustersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ContainerServiceManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -95,17 +95,17 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: ManagedClusters_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedClusterResource> GetManagedClusters(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerServiceManagedClusterResource> GetContainerServiceManagedClusters(CancellationToken cancellationToken = default)
         {
-            Page<ManagedClusterResource> FirstPageFunc(int? pageSizeHint)
+            Page<ContainerServiceManagedClusterResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ManagedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusters");
+                using var scope = ContainerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerServiceManagedClusters");
                 scope.Start();
                 try
                 {
-                    var response = ManagedClusterRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = ContainerServiceManagedClusterManagedClustersRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ContainerServiceManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -113,14 +113,14 @@ namespace Azure.ResourceManager.ContainerService
                     throw;
                 }
             }
-            Page<ManagedClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ContainerServiceManagedClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ManagedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusters");
+                using var scope = ContainerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerServiceManagedClusters");
                 scope.Start();
                 try
                 {
-                    var response = ManagedClusterRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = ContainerServiceManagedClusterManagedClustersRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ContainerServiceManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
