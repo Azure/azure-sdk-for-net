@@ -131,7 +131,7 @@ var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.wi
 
 ## Managed identity support
 
-The [Managed identity authentication](https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview) is supported via either the `DefaultAzureCredential` or the `ManagedIdentityCredential` directly for the following Azure services:
+[Managed identity authentication](https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview) is supported via either the `DefaultAzureCredential` or the `ManagedIdentityCredential` directly for the following Azure services:
 
 * [Azure App Service and Azure Functions](https://learn.microsoft.com/azure/app-service/overview-managed-identity?tabs=dotnet)
 * [Azure Arc](https://learn.microsoft.com/azure/azure-arc/servers/managed-identity-authentication)
