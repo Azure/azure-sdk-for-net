@@ -11,27 +11,31 @@
 namespace Microsoft.Azure.Management.SignalR.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Extra Operation properties.
+    /// Resource log configuration of a Microsoft.SignalRService resource.
     /// </summary>
-    public partial class OperationProperties
+    public partial class ResourceLogConfiguration
     {
         /// <summary>
-        /// Initializes a new instance of the OperationProperties class.
+        /// Initializes a new instance of the ResourceLogConfiguration class.
         /// </summary>
-        public OperationProperties()
+        public ResourceLogConfiguration()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the OperationProperties class.
+        /// Initializes a new instance of the ResourceLogConfiguration class.
         /// </summary>
-        public OperationProperties(ServiceSpecification serviceSpecification = default(ServiceSpecification))
+        /// <param name="categories">Gets or sets the list of category
+        /// configurations.</param>
+        public ResourceLogConfiguration(IList<ResourceLogCategory> categories = default(IList<ResourceLogCategory>))
         {
-            ServiceSpecification = serviceSpecification;
+            Categories = categories;
             CustomInit();
         }
 
@@ -41,9 +45,10 @@ namespace Microsoft.Azure.Management.SignalR.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the list of category configurations.
         /// </summary>
-        [JsonProperty(PropertyName = "serviceSpecification")]
-        public ServiceSpecification ServiceSpecification { get; set; }
+        [JsonProperty(PropertyName = "categories")]
+        public IList<ResourceLogCategory> Categories { get; set; }
 
     }
 }

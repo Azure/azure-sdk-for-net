@@ -31,8 +31,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <summary>
         /// Initializes a new instance of the ManagedIdentity class.
         /// </summary>
-        /// <param name="type">Represent the identity type: systemAssigned,
-        /// userAssigned, None. Possible values include: 'None',
+        /// <param name="type">Possible values include: 'None',
         /// 'SystemAssigned', 'UserAssigned'</param>
         /// <param name="userAssignedIdentities">Get or set the user assigned
         /// identities</param>
@@ -57,9 +56,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets represent the identity type: systemAssigned,
-        /// userAssigned, None. Possible values include: 'None',
-        /// 'SystemAssigned', 'UserAssigned'
+        /// Gets or sets possible values include: 'None', 'SystemAssigned',
+        /// 'UserAssigned'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

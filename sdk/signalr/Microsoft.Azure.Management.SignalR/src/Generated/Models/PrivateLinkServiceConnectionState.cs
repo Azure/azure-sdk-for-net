@@ -31,10 +31,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// Initializes a new instance of the PrivateLinkServiceConnectionState
         /// class.
         /// </summary>
-        /// <param name="status">Indicates whether the connection has been
-        /// Approved/Rejected/Removed by the owner of the service. Possible
-        /// values include: 'Pending', 'Approved', 'Rejected',
-        /// 'Disconnected'</param>
+        /// <param name="status">Possible values include: 'Pending',
+        /// 'Approved', 'Rejected', 'Disconnected'</param>
         /// <param name="description">The reason for approval/rejection of the
         /// connection.</param>
         /// <param name="actionsRequired">A message indicating if changes on
@@ -53,9 +51,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets indicates whether the connection has been
-        /// Approved/Rejected/Removed by the owner of the service. Possible
-        /// values include: 'Pending', 'Approved', 'Rejected', 'Disconnected'
+        /// Gets or sets possible values include: 'Pending', 'Approved',
+        /// 'Rejected', 'Disconnected'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }

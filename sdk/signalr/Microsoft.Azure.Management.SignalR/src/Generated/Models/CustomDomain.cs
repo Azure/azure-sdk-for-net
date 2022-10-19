@@ -13,27 +13,26 @@ namespace Microsoft.Azure.Management.SignalR.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// A private endpoint connection to an azure resource
+    /// A custom domain
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class PrivateEndpointConnection : ProxyResource
+    public partial class CustomDomain : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the PrivateEndpointConnection class.
+        /// Initializes a new instance of the CustomDomain class.
         /// </summary>
-        public PrivateEndpointConnection()
+        public CustomDomain()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PrivateEndpointConnection class.
+        /// Initializes a new instance of the CustomDomain class.
         /// </summary>
+        /// <param name="domainName">The custom domain name.</param>
         /// <param name="id">Fully qualified resource Id for the
         /// resource.</param>
         /// <param name="name">The name of the resource.</param>
@@ -42,15 +41,13 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <param name="provisioningState">Possible values include: 'Unknown',
         /// 'Succeeded', 'Failed', 'Canceled', 'Running', 'Creating',
         /// 'Updating', 'Deleting', 'Moving'</param>
-        /// <param name="groupIds">Group IDs</param>
-        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string provisioningState = default(string), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), IList<string> groupIds = default(IList<string>), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState))
+        public CustomDomain(string domainName, ResourceReference customCertificate, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string provisioningState = default(string))
             : base(id, name, type)
         {
             SystemData = systemData;
             ProvisioningState = provisioningState;
-            PrivateEndpoint = privateEndpoint;
-            GroupIds = groupIds;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            DomainName = domainName;
+            CustomCertificate = customCertificate;
             CustomInit();
         }
 
@@ -72,20 +69,32 @@ namespace Microsoft.Azure.Management.SignalR.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
+        /// Gets or sets the custom domain name.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.privateEndpoint")]
-        public PrivateEndpoint PrivateEndpoint { get; set; }
-
-        /// <summary>
-        /// Gets group IDs
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.groupIds")]
-        public IList<string> GroupIds { get; private set; }
+        [JsonProperty(PropertyName = "properties.domainName")]
+        public string DomainName { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.privateLinkServiceConnectionState")]
-        public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        [JsonProperty(PropertyName = "properties.customCertificate")]
+        public ResourceReference CustomCertificate { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (DomainName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "DomainName");
+            }
+            if (CustomCertificate == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "CustomCertificate");
+            }
+        }
     }
 }

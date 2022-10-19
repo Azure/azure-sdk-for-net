@@ -34,8 +34,6 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         /// <param name="name">The name of the resource type that has been
         /// onboarded to private link service</param>
-        /// <param name="properties">Describes the properties of a resource
-        /// type that has been onboarded to private link service</param>
         public ShareablePrivateLinkResourceType(string name = default(string), ShareablePrivateLinkResourceProperties properties = default(ShareablePrivateLinkResourceProperties))
         {
             Name = name;
@@ -56,8 +54,6 @@ namespace Microsoft.Azure.Management.SignalR.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets describes the properties of a resource type that has
-        /// been onboarded to private link service
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public ShareablePrivateLinkResourceProperties Properties { get; set; }

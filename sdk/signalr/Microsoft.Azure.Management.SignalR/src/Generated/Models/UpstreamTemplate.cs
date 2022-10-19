@@ -44,30 +44,28 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <param name="hubPattern">Gets or sets the matching pattern for hub
         /// names. If not set, it matches any hub.
         /// There are 3 kind of patterns supported:
-        /// 1. "*", it to matches any hub name
+        /// 1. "*", it to matches any hub name.
         /// 2. Combine multiple hubs with ",", for example "hub1,hub2", it
-        /// matches "hub1" and "hub2"
+        /// matches "hub1" and "hub2".
         /// 3. The single hub name, for example, "hub1", it matches
-        /// "hub1"</param>
+        /// "hub1".</param>
         /// <param name="eventPattern">Gets or sets the matching pattern for
         /// event names. If not set, it matches any event.
         /// There are 3 kind of patterns supported:
-        /// 1. "*", it to matches any event name
+        /// 1. "*", it to matches any event name.
         /// 2. Combine multiple events with ",", for example
-        /// "connect,disconnect", it matches event "connect" and "disconnect"
+        /// "connect,disconnect", it matches event "connect" and "disconnect".
         /// 3. The single event name, for example, "connect", it matches
-        /// "connect"</param>
+        /// "connect".</param>
         /// <param name="categoryPattern">Gets or sets the matching pattern for
         /// category names. If not set, it matches any category.
         /// There are 3 kind of patterns supported:
-        /// 1. "*", it to matches any category name
+        /// 1. "*", it to matches any category name.
         /// 2. Combine multiple categories with ",", for example
         /// "connections,messages", it matches category "connections" and
-        /// "messages"
+        /// "messages".
         /// 3. The single category name, for example, "connections", it matches
-        /// the category "connections"</param>
-        /// <param name="auth">Gets or sets the auth settings for an upstream.
-        /// If not set, no auth is used for upstream messages.</param>
+        /// the category "connections".</param>
         public UpstreamTemplate(string urlTemplate, string hubPattern = default(string), string eventPattern = default(string), string categoryPattern = default(string), UpstreamAuthSettings auth = default(UpstreamAuthSettings))
         {
             HubPattern = hubPattern;
@@ -87,10 +85,10 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// Gets or sets the matching pattern for hub names. If not set, it
         /// matches any hub.
         /// There are 3 kind of patterns supported:
-        /// 1. "*", it to matches any hub name
+        /// 1. "*", it to matches any hub name.
         /// 2. Combine multiple hubs with ",", for example "hub1,hub2", it
-        /// matches "hub1" and "hub2"
-        /// 3. The single hub name, for example, "hub1", it matches "hub1"
+        /// matches "hub1" and "hub2".
+        /// 3. The single hub name, for example, "hub1", it matches "hub1".
         /// </summary>
         [JsonProperty(PropertyName = "hubPattern")]
         public string HubPattern { get; set; }
@@ -99,11 +97,11 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// Gets or sets the matching pattern for event names. If not set, it
         /// matches any event.
         /// There are 3 kind of patterns supported:
-        /// 1. "*", it to matches any event name
+        /// 1. "*", it to matches any event name.
         /// 2. Combine multiple events with ",", for example
-        /// "connect,disconnect", it matches event "connect" and "disconnect"
+        /// "connect,disconnect", it matches event "connect" and "disconnect".
         /// 3. The single event name, for example, "connect", it matches
-        /// "connect"
+        /// "connect".
         /// </summary>
         [JsonProperty(PropertyName = "eventPattern")]
         public string EventPattern { get; set; }
@@ -112,12 +110,12 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// Gets or sets the matching pattern for category names. If not set,
         /// it matches any category.
         /// There are 3 kind of patterns supported:
-        /// 1. "*", it to matches any category name
+        /// 1. "*", it to matches any category name.
         /// 2. Combine multiple categories with ",", for example
         /// "connections,messages", it matches category "connections" and
-        /// "messages"
+        /// "messages".
         /// 3. The single category name, for example, "connections", it matches
-        /// the category "connections"
+        /// the category "connections".
         /// </summary>
         [JsonProperty(PropertyName = "categoryPattern")]
         public string CategoryPattern { get; set; }
@@ -136,8 +134,6 @@ namespace Microsoft.Azure.Management.SignalR.Models
         public string UrlTemplate { get; set; }
 
         /// <summary>
-        /// Gets or sets the auth settings for an upstream. If not set, no auth
-        /// is used for upstream messages.
         /// </summary>
         [JsonProperty(PropertyName = "auth")]
         public UpstreamAuthSettings Auth { get; set; }

@@ -31,10 +31,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <summary>
         /// Initializes a new instance of the SignalRNetworkACLs class.
         /// </summary>
-        /// <param name="defaultAction">Default action when no other rule
-        /// matches. Possible values include: 'Allow', 'Deny'</param>
-        /// <param name="publicNetwork">ACL for requests from public
-        /// network</param>
+        /// <param name="defaultAction">Possible values include: 'Allow',
+        /// 'Deny'</param>
         /// <param name="privateEndpoints">ACLs for requests from private
         /// endpoints</param>
         public SignalRNetworkACLs(string defaultAction = default(string), NetworkACL publicNetwork = default(NetworkACL), IList<PrivateEndpointACL> privateEndpoints = default(IList<PrivateEndpointACL>))
@@ -51,14 +49,12 @@ namespace Microsoft.Azure.Management.SignalR.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets default action when no other rule matches. Possible
-        /// values include: 'Allow', 'Deny'
+        /// Gets or sets possible values include: 'Allow', 'Deny'
         /// </summary>
         [JsonProperty(PropertyName = "defaultAction")]
         public string DefaultAction { get; set; }
 
         /// <summary>
-        /// Gets or sets ACL for requests from public network
         /// </summary>
         [JsonProperty(PropertyName = "publicNetwork")]
         public NetworkACL PublicNetwork { get; set; }

@@ -14,24 +14,25 @@ namespace Microsoft.Azure.Management.SignalR.Models
     using System.Linq;
 
     /// <summary>
-    /// Extra Operation properties.
+    /// Reference to a resource.
     /// </summary>
-    public partial class OperationProperties
+    public partial class ResourceReference
     {
         /// <summary>
-        /// Initializes a new instance of the OperationProperties class.
+        /// Initializes a new instance of the ResourceReference class.
         /// </summary>
-        public OperationProperties()
+        public ResourceReference()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the OperationProperties class.
+        /// Initializes a new instance of the ResourceReference class.
         /// </summary>
-        public OperationProperties(ServiceSpecification serviceSpecification = default(ServiceSpecification))
+        /// <param name="id">Resource ID.</param>
+        public ResourceReference(string id = default(string))
         {
-            ServiceSpecification = serviceSpecification;
+            Id = id;
             CustomInit();
         }
 
@@ -41,9 +42,10 @@ namespace Microsoft.Azure.Management.SignalR.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets resource ID.
         /// </summary>
-        [JsonProperty(PropertyName = "serviceSpecification")]
-        public ServiceSpecification ServiceSpecification { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
     }
 }

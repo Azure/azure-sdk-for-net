@@ -29,9 +29,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <summary>
         /// Initializes a new instance of the RegenerateKeyParameters class.
         /// </summary>
-        /// <param name="keyType">The keyType to regenerate. Must be either
-        /// 'primary' or 'secondary'(case-insensitive). Possible values
-        /// include: 'Primary', 'Secondary'</param>
+        /// <param name="keyType">Possible values include: 'Primary',
+        /// 'Secondary', 'Salt'</param>
         public RegenerateKeyParameters(string keyType = default(string))
         {
             KeyType = keyType;
@@ -44,9 +43,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the keyType to regenerate. Must be either 'primary' or
-        /// 'secondary'(case-insensitive). Possible values include: 'Primary',
-        /// 'Secondary'
+        /// Gets or sets possible values include: 'Primary', 'Secondary',
+        /// 'Salt'
         /// </summary>
         [JsonProperty(PropertyName = "keyType")]
         public string KeyType { get; set; }

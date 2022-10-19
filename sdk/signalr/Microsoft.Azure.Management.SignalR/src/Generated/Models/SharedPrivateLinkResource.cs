@@ -41,17 +41,13 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource - e.g.
         /// "Microsoft.SignalRService/SignalR"</param>
-        /// <param name="systemData">Metadata pertaining to creation and last
-        /// modification of the resource.</param>
-        /// <param name="provisioningState">Provisioning state of the shared
-        /// private link resource. Possible values include: 'Unknown',
+        /// <param name="provisioningState">Possible values include: 'Unknown',
         /// 'Succeeded', 'Failed', 'Canceled', 'Running', 'Creating',
         /// 'Updating', 'Deleting', 'Moving'</param>
         /// <param name="requestMessage">The request message for requesting
         /// approval of the shared private link resource</param>
-        /// <param name="status">Status of the shared private link resource.
-        /// Possible values include: 'Pending', 'Approved', 'Rejected',
-        /// 'Disconnected', 'Timeout'</param>
+        /// <param name="status">Possible values include: 'Pending',
+        /// 'Approved', 'Rejected', 'Disconnected', 'Timeout'</param>
         public SharedPrivateLinkResource(string groupId, string privateLinkResourceId, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string provisioningState = default(string), string requestMessage = default(string), string status = default(string))
             : base(id, name, type)
         {
@@ -70,8 +66,6 @@ namespace Microsoft.Azure.Management.SignalR.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets metadata pertaining to creation and last modification of the
-        /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "systemData")]
         public SystemData SystemData { get; private set; }
@@ -91,8 +85,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
         public string PrivateLinkResourceId { get; set; }
 
         /// <summary>
-        /// Gets provisioning state of the shared private link resource.
-        /// Possible values include: 'Unknown', 'Succeeded', 'Failed',
+        /// Gets possible values include: 'Unknown', 'Succeeded', 'Failed',
         /// 'Canceled', 'Running', 'Creating', 'Updating', 'Deleting', 'Moving'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
@@ -106,9 +99,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
         public string RequestMessage { get; set; }
 
         /// <summary>
-        /// Gets status of the shared private link resource. Possible values
-        /// include: 'Pending', 'Approved', 'Rejected', 'Disconnected',
-        /// 'Timeout'
+        /// Gets possible values include: 'Pending', 'Approved', 'Rejected',
+        /// 'Disconnected', 'Timeout'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }

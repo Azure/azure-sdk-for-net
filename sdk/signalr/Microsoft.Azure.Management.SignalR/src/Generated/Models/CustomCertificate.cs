@@ -13,27 +13,28 @@ namespace Microsoft.Azure.Management.SignalR.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// A private endpoint connection to an azure resource
+    /// A custom certificate.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class PrivateEndpointConnection : ProxyResource
+    public partial class CustomCertificate : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the PrivateEndpointConnection class.
+        /// Initializes a new instance of the CustomCertificate class.
         /// </summary>
-        public PrivateEndpointConnection()
+        public CustomCertificate()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PrivateEndpointConnection class.
+        /// Initializes a new instance of the CustomCertificate class.
         /// </summary>
+        /// <param name="keyVaultBaseUri">Base uri of the KeyVault that stores
+        /// certificate.</param>
+        /// <param name="keyVaultSecretName">Certificate secret name.</param>
         /// <param name="id">Fully qualified resource Id for the
         /// resource.</param>
         /// <param name="name">The name of the resource.</param>
@@ -42,15 +43,16 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <param name="provisioningState">Possible values include: 'Unknown',
         /// 'Succeeded', 'Failed', 'Canceled', 'Running', 'Creating',
         /// 'Updating', 'Deleting', 'Moving'</param>
-        /// <param name="groupIds">Group IDs</param>
-        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string provisioningState = default(string), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), IList<string> groupIds = default(IList<string>), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState))
+        /// <param name="keyVaultSecretVersion">Certificate secret
+        /// version.</param>
+        public CustomCertificate(string keyVaultBaseUri, string keyVaultSecretName, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string provisioningState = default(string), string keyVaultSecretVersion = default(string))
             : base(id, name, type)
         {
             SystemData = systemData;
             ProvisioningState = provisioningState;
-            PrivateEndpoint = privateEndpoint;
-            GroupIds = groupIds;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            KeyVaultBaseUri = keyVaultBaseUri;
+            KeyVaultSecretName = keyVaultSecretName;
+            KeyVaultSecretVersion = keyVaultSecretVersion;
             CustomInit();
         }
 
@@ -72,20 +74,39 @@ namespace Microsoft.Azure.Management.SignalR.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
+        /// Gets or sets base uri of the KeyVault that stores certificate.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.privateEndpoint")]
-        public PrivateEndpoint PrivateEndpoint { get; set; }
+        [JsonProperty(PropertyName = "properties.keyVaultBaseUri")]
+        public string KeyVaultBaseUri { get; set; }
 
         /// <summary>
-        /// Gets group IDs
+        /// Gets or sets certificate secret name.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.groupIds")]
-        public IList<string> GroupIds { get; private set; }
+        [JsonProperty(PropertyName = "properties.keyVaultSecretName")]
+        public string KeyVaultSecretName { get; set; }
 
         /// <summary>
+        /// Gets or sets certificate secret version.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.privateLinkServiceConnectionState")]
-        public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        [JsonProperty(PropertyName = "properties.keyVaultSecretVersion")]
+        public string KeyVaultSecretVersion { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (KeyVaultBaseUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "KeyVaultBaseUri");
+            }
+            if (KeyVaultSecretName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "KeyVaultSecretName");
+            }
+        }
     }
 }

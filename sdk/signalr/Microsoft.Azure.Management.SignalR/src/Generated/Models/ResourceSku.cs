@@ -32,20 +32,18 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         /// <param name="name">The name of the SKU. Required.
         ///
-        /// Allowed values: Standard_S1, Free_F1</param>
-        /// <param name="tier">Optional tier of this particular SKU. 'Standard'
-        /// or 'Free'.
-        ///
-        /// `Basic` is deprecated, use `Standard` instead. Possible values
-        /// include: 'Free', 'Basic', 'Standard', 'Premium'</param>
+        /// Allowed values: Standard_S1, Free_F1, Premium_P1</param>
+        /// <param name="tier">Possible values include: 'Free', 'Basic',
+        /// 'Standard', 'Premium'</param>
         /// <param name="size">Not used. Retained for future use.</param>
         /// <param name="family">Not used. Retained for future use.</param>
         /// <param name="capacity">Optional, integer. The unit count of the
         /// resource. 1 by default.
         ///
         /// If present, following values are allowed:
-        /// Free: 1
-        /// Standard: 1,2,5,10,20,50,100</param>
+        /// Free: 1;
+        /// Standard: 1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
+        /// Premium:  1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;</param>
         public ResourceSku(string name, string tier = default(string), string size = default(string), string family = default(string), int? capacity = default(int?))
         {
             Name = name;
@@ -64,17 +62,14 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <summary>
         /// Gets or sets the name of the SKU. Required.
         ///
-        /// Allowed values: Standard_S1, Free_F1
+        /// Allowed values: Standard_S1, Free_F1, Premium_P1
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets optional tier of this particular SKU. 'Standard' or
-        /// 'Free'.
-        ///
-        /// `Basic` is deprecated, use `Standard` instead. Possible values
-        /// include: 'Free', 'Basic', 'Standard', 'Premium'
+        /// Gets or sets possible values include: 'Free', 'Basic', 'Standard',
+        /// 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
@@ -96,8 +91,9 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// by default.
         ///
         /// If present, following values are allowed:
-        /// Free: 1
-        /// Standard: 1,2,5,10,20,50,100
+        /// Free: 1;
+        /// Standard: 1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
+        /// Premium:  1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
         public int? Capacity { get; set; }

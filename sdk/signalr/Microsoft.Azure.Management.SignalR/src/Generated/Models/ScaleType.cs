@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.SignalR.Models
 {
 
     /// <summary>
-    /// Defines values for KeyType.
+    /// Defines values for ScaleType.
     /// </summary>
-    public static class KeyType
+    public static class ScaleType
     {
-        public const string Primary = "Primary";
-        public const string Secondary = "Secondary";
-        public const string Salt = "Salt";
+        public const string None = "None";
+        public const string Manual = "Manual";
+        public const string Automatic = "Automatic";
     }
 }

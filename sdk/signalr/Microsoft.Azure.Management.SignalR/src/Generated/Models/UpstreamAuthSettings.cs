@@ -14,7 +14,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
     using System.Linq;
 
     /// <summary>
-    /// Upstream auth settings.
+    /// Upstream auth settings. If not set, no auth is used for upstream
+    /// messages.
     /// </summary>
     public partial class UpstreamAuthSettings
     {
@@ -29,12 +30,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <summary>
         /// Initializes a new instance of the UpstreamAuthSettings class.
         /// </summary>
-        /// <param name="type">Gets or sets the type of auth. None or
-        /// ManagedIdentity is supported now. Possible values include: 'None',
+        /// <param name="type">Possible values include: 'None',
         /// 'ManagedIdentity'</param>
-        /// <param name="managedIdentity">Gets or sets the managed identity
-        /// settings. It's required if the auth type is set to
-        /// ManagedIdentity.</param>
         public UpstreamAuthSettings(string type = default(string), ManagedIdentitySettings managedIdentity = default(ManagedIdentitySettings))
         {
             Type = type;
@@ -48,15 +45,12 @@ namespace Microsoft.Azure.Management.SignalR.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the type of auth. None or ManagedIdentity is supported
-        /// now. Possible values include: 'None', 'ManagedIdentity'
+        /// Gets or sets possible values include: 'None', 'ManagedIdentity'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the managed identity settings. It's required if the
-        /// auth type is set to ManagedIdentity.
         /// </summary>
         [JsonProperty(PropertyName = "managedIdentity")]
         public ManagedIdentitySettings ManagedIdentity { get; set; }
