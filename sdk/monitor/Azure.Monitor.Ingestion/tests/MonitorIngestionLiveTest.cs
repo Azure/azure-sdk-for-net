@@ -104,7 +104,7 @@ namespace Azure.Monitor.Ingestion.Tests
         [Test]
         public async Task ValidInputFromArrayAsJsonWithSingleBatchWithGzip()
         {
-            LogsIngestionClient client = CreateClient();
+           LogsIngestionClient client = CreateClient();
 
            // Make the request
            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10, Recording.Now.DateTime)).ConfigureAwait(false);
@@ -119,9 +119,10 @@ namespace Azure.Monitor.Ingestion.Tests
         public async Task ValidInputFromArrayAsJsonWithMultiBatchWithGzip()
         {
             LogsIngestionClient client = CreateClient();
+            LogsIngestionClient.SingleUploadThreshold = 500; // make batch size smaller for Uploads for test recording size
 
             // Make the request
-            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10000, Recording.Now.DateTime)).ConfigureAwait(false);
+            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(1000, Recording.Now.DateTime)).ConfigureAwait(false);
 
             // Check the response
             Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
