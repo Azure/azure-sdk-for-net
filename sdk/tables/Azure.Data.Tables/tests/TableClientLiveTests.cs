@@ -1266,7 +1266,7 @@ namespace Azure.Data.Tables.Tests
 
             Assert.AreEqual((int)HttpStatusCode.NotFound, result.GetRawResponse().Status);
             Exception ex = Assert.Catch(() => { var x = result.Value; });
-            Assert.AreEqual("Not Found", ex.Message);
+            Assert.That(ex.Message, Does.Contain(result.GetRawResponse().Status.ToString()));
         }
 
         [RecordedTest]

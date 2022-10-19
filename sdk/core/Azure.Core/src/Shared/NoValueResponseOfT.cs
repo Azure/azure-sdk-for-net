@@ -13,11 +13,7 @@ namespace Azure
 
         public NoValueResponse(Response response)
         {
-            if (response == null)
-            {
-                throw new ArgumentNullException(nameof(response));
-            }
-            _response = response;
+            _response = response ?? throw new ArgumentNullException(nameof(response));
         }
 
         /// <inheritdoc />
@@ -27,7 +23,7 @@ namespace Azure
         {
             get
             {
-                throw new ResponseBodyNotFoundException(_response.Status, _response.ReasonPhrase);
+                throw new InvalidOperationException(GetStatusMessage());
             }
         }
 
@@ -35,20 +31,9 @@ namespace Azure
 
         public override string ToString()
         {
-            return $"Status: {GetRawResponse().Status}, Service returned no content";
+            return GetStatusMessage();
         }
 
-#pragma warning disable CA1064 // Exceptions should be public
-        private class ResponseBodyNotFoundException : Exception
-#pragma warning restore CA1064 // Exceptions should be public
-        {
-            public int Status { get; }
-
-            public ResponseBodyNotFoundException(int status, string message)
-                : base(message)
-            {
-                Status = status;
-            }
-        }
+        internal string GetStatusMessage() => $"Status: {GetRawResponse().Status}, Service returned no content";
     }
 }
