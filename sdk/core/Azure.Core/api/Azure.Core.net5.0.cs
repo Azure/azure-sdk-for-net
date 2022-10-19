@@ -199,6 +199,7 @@ namespace Azure
         public void AddClassifier(int statusCode, bool isError) { }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
+        public void ReplacePolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.PipelinePolicyReplacement replace) { }
     }
     public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
     {
@@ -362,6 +363,7 @@ namespace Azure.Core
         public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+        public void ReplacePolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.PipelinePolicyReplacement replace) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
     }
@@ -451,6 +453,7 @@ namespace Azure.Core
         public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public bool HasResponse { get { throw null; } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
+        public Azure.Core.PipelineContext PipelineContext { get { throw null; } }
         public Azure.Core.Request Request { get { throw null; } }
         public Azure.Response Response { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
@@ -469,6 +472,16 @@ namespace Azure.Core
     {
         public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public partial class PipelineContext
+    {
+        internal PipelineContext() { }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public int RetryAttempt { get { throw null; } set { } }
+    }
+    public enum PipelinePolicyReplacement
+    {
+        RetryPolicy = 0,
     }
     public abstract partial class Request : System.IDisposable
     {
@@ -649,6 +662,11 @@ namespace Azure.Core
         public bool TryGetValue(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value) { throw null; }
         public bool TryGetValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
     }
+    public abstract partial class RetryCondition
+    {
+        protected RetryCondition() { }
+        public abstract bool TryGetShouldRetry(Azure.Core.HttpMessage message, out bool shouldRetry);
+    }
     public enum RetryMode
     {
         Fixed = 0,
@@ -662,6 +680,7 @@ namespace Azure.Core
         public int MaxRetries { get { throw null; } set { } }
         public Azure.Core.RetryMode Mode { get { throw null; } set { } }
         public System.TimeSpan NetworkTimeout { get { throw null; } set { } }
+        public void AddRetryCondition(Azure.Core.RetryCondition condition) { }
     }
     public partial class StatusCodeClassifier : Azure.Core.ResponseClassifier
     {
@@ -958,6 +977,8 @@ namespace Azure.Core.Pipeline
         public System.Collections.Generic.IList<Azure.Core.Pipeline.HttpPipelinePolicy> PerRetryPolicies { get { throw null; } }
         public Azure.Core.RequestFailedDetailsParser RequestFailedDetailsParser { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier? ResponseClassifier { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.RetryCondition> RetryConditions { get { throw null; } }
+        public Azure.Core.Pipeline.HttpPipelinePolicy? RetryPolicy { get { throw null; } set { } }
     }
     public abstract partial class HttpPipelinePolicy
     {
