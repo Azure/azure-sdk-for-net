@@ -1,14 +1,25 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2022-10-14)
 
 ### Features Added
 
+- Ability to exclude caller from being an admin on Database create/update.
+- EH and IoT hub data connection new property for lookback – start collecting data that was generated a while ago.
+- Follower name override/prefix – ability to define either different name for Read-Only-Following DB, or define prefix name for all DBs (in case of full cluster following scenario).
+- Enhancing Follower GET-related APIs to improve demonstration of follower-leader linage in Azure portal.
+
 ### Breaking Changes
+
+None
 
 ### Bugs Fixed
 
+None
+
 ### Other Changes
+
+- New API has the following new SKUs: Standard_L8s_v3, Standard_L16s_v3, Standard_L8as_v3, Standard_L16as_v3, Standard_E16s_v5+4TB_PS, Standard_E2d_v4, Standard_E4d_v4, Standard_E8d_v4, Standard_E16d_v4, Standard_E2d_v5, Standard_E4d_v5, Standard_E8d_v5, Standard_E16d_v5.
 
 ## 1.0.0 (2022-09-19)
 
