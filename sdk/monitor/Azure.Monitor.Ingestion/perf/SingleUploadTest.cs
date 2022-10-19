@@ -12,7 +12,7 @@ using CommandLine;
 
 namespace Azure.Monitor.Ingestion.Perf
 {
-    public class IngestionDPGMethodsTest : PerfTest<IngestionDPGMethodsTest.IngestionClientPerfOptions>
+    public class SingleUploadTest : PerfTest<SingleUploadTest.IngestionClientPerfOptions>
     {
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/perf/TemplateClientTest.cs to write perf test. */
 
@@ -35,7 +35,7 @@ namespace Azure.Monitor.Ingestion.Perf
                     },
             });
 
-        public IngestionDPGMethodsTest(IngestionClientPerfOptions options) : base(options)
+        public SingleUploadTest(IngestionClientPerfOptions options) : base(options)
         {
             LogsIngestionClient = new LogsIngestionClient(new Uri(TestEnvironment.DCREndpoint), TestEnvironment.Credential, ConfigureClientOptions(new LogsIngestionClientOptions()));
         }
