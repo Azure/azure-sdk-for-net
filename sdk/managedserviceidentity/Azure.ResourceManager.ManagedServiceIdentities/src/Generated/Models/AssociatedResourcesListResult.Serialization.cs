@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         internal static AssociatedResourcesListResult DeserializeAssociatedResourcesListResult(JsonElement element)
         {
             Optional<float> totalCount = default;
-            Optional<IReadOnlyList<AssociatedResourceData>> value = default;
+            Optional<IReadOnlyList<IdentityAssociatedResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AssociatedResourceData> array = new List<AssociatedResourceData>();
+                    List<IdentityAssociatedResourceData> array = new List<IdentityAssociatedResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssociatedResourceData.DeserializeAssociatedResourceData(item));
+                        array.Add(IdentityAssociatedResourceData.DeserializeIdentityAssociatedResourceData(item));
                     }
                     value = array;
                     continue;

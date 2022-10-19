@@ -11,9 +11,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
-    public partial class AssociatedResourceData
+    public partial class IdentityAssociatedResourceData
     {
-        internal static AssociatedResourceData DeserializeAssociatedResourceData(JsonElement element)
+        internal static IdentityAssociatedResourceData DeserializeIdentityAssociatedResourceData(JsonElement element)
         {
             Optional<string> resourceGroup = default;
             Optional<string> subscriptionId = default;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                     continue;
                 }
             }
-            return new AssociatedResourceData(id, name, type, systemData.Value, resourceGroup.Value, subscriptionId.Value, subscriptionDisplayName.Value);
+            return new IdentityAssociatedResourceData(id, name, type, systemData.Value, resourceGroup.Value, subscriptionId.Value, subscriptionDisplayName.Value);
         }
     }
 }

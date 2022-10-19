@@ -289,10 +289,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="skiptoken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AssociatedResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AssociatedResourceData> GetAssociatedResourcesAsync(string filter = null, string orderby = null, int? top = null, int? skip = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IdentityAssociatedResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IdentityAssociatedResourceData> GetAssociatedResourcesAsync(string filter = null, string orderby = null, int? top = null, int? skip = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AssociatedResourceData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<IdentityAssociatedResourceData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.GetAssociatedResources");
                 scope.Start();
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                     throw;
                 }
             }
-            async Task<Page<AssociatedResourceData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<IdentityAssociatedResourceData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.GetAssociatedResources");
                 scope.Start();
@@ -336,10 +336,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="skiptoken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AssociatedResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AssociatedResourceData> GetAssociatedResources(string filter = null, string orderby = null, int? top = null, int? skip = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IdentityAssociatedResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IdentityAssociatedResourceData> GetAssociatedResources(string filter = null, string orderby = null, int? top = null, int? skip = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<AssociatedResourceData> FirstPageFunc(int? pageSizeHint)
+            Page<IdentityAssociatedResourceData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.GetAssociatedResources");
                 scope.Start();
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                     throw;
                 }
             }
-            Page<AssociatedResourceData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<IdentityAssociatedResourceData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.GetAssociatedResources");
                 scope.Start();

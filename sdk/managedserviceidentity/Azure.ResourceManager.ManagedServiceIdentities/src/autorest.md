@@ -48,7 +48,7 @@ rename-rules:
 
 rename-mapping:
   Identity: UserAssignedIdentity
-  AzureResource: AssociatedResourceData
+  AzureResource: IdentityAssociatedResourceData
 
 generate-arm-resource-extensions:
   - /{scope}/providers/Microsoft.ManagedIdentity/identities/default
