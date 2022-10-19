@@ -136,6 +136,32 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeHealthcareEntitiesWithConfidenceScoreTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments);
+            await operation.WaitForCompletionAsync();
+            ValidateOperationProperties(operation);
+
+            // Take the first page.
+            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            AnalyzeHealthcareEntitiesResult result1 = resultCollection[0];
+            Assert.AreEqual(s_document1ExpectedEntitiesOutput.Count, result1.Entities.Count);
+            Assert.IsNotNull(result1.Id);
+            Assert.AreEqual("1", result1.Id);
+            Assert.AreEqual(2, result1.EntityRelations.Count());
+
+            foreach (HealthcareEntityRelation relation in result1.EntityRelations)
+            {
+                Assert.GreaterOrEqual(relation.ConfidenceScore, 0.0);
+                Assert.LessOrEqual(relation.ConfidenceScore, 1.0);
+            }
+        }
+
+        [RecordedTest]
         public async Task AnalyzeHealthcareEntitiesTestWithAssertions()
         {
             TextAnalyticsClient client = GetClient();
@@ -459,9 +485,36 @@ namespace Azure.AI.TextAnalytics.Tests
             var resultCollection = resultInPages.FirstOrDefault();
             Assert.AreEqual(s_batchDocuments.Count, resultCollection.Count);
 
-            // Check that the FhirBundle has content.
+            // Check the FHIR bundle.
             Assert.IsNotNull(resultCollection[0].FhirBundle);
             Assert.Greater(resultCollection[0].FhirBundle.Count, 0);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeHealthcareEntitiesBatchWithoutFhirVersionTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
+            {
+                DocumentType = HealthcareDocumentType.DischargeSummary
+            });
+
+            await operation.WaitForCompletionAsync();
+
+            ValidateOperationProperties(operation);
+
+            List<AnalyzeHealthcareEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
+
+            // Take the first page.
+            var resultCollection = resultInPages.FirstOrDefault();
+            Assert.AreEqual(s_batchDocuments.Count, resultCollection.Count);
+
+            // Check that the FHIR bundle is empty.
+            Assert.IsNotNull(resultCollection[0].FhirBundle);
+            Assert.AreEqual(resultCollection[0].FhirBundle.Count, 0);
         }
 
         [RecordedTest]

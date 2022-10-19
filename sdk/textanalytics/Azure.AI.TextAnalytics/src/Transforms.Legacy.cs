@@ -705,8 +705,9 @@ namespace Azure.AI.TextAnalytics
             foreach (var relation in healthcareRelations)
             {
                 result.Add(new HealthcareEntityRelation(
-                                    relation.RelationType.ToString(),
-                                    ConvertToHealthcareEntityRelationRoleCollection(relation.Entities, healthcareEntities)));
+                    relation.RelationType.ToString(),
+                    ConvertToHealthcareEntityRelationRoleCollection(relation.Entities, healthcareEntities),
+                    default));
             }
             return result;
         }

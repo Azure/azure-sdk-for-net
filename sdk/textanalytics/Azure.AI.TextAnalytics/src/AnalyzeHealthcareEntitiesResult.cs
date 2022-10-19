@@ -71,9 +71,6 @@ namespace Azure.AI.TextAnalytics
         /// Gets the FHIR bundle that was produced for this result according to the specified <see cref="AnalyzeHealthcareEntitiesOptions.FhirVersion"/>.
         /// For additional information, see <see href="https://www.hl7.org/fhir/overview.html"/>.
         /// </summary>
-        /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
-        /// </remarks>
         public IReadOnlyDictionary<string, object> FhirBundle { get; }
     }
 }

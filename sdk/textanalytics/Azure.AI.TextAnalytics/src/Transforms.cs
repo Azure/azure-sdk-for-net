@@ -344,7 +344,10 @@ namespace Azure.AI.TextAnalytics
             List<HealthcareEntityRelation> result = new List<HealthcareEntityRelation>();
             foreach (HealthcareRelationInternal relation in healthcareRelations)
             {
-                result.Add(new HealthcareEntityRelation(relation.RelationType, ConvertToHealthcareEntityRelationRoleCollection(relation.Entities, healthcareEntities)));
+                result.Add(new HealthcareEntityRelation(
+                    relation.RelationType,
+                    ConvertToHealthcareEntityRelationRoleCollection(relation.Entities, healthcareEntities),
+                    relation.ConfidenceScore));
             }
             return result;
         }
