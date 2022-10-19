@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string scope, string eventSubscriptionName, EventSubscriptionPatch patch)
+        internal HttpMessage CreateUpdateRequest(string scope, string eventSubscriptionName, EventGridSubscriptionPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="eventSubscriptionName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string scope, string eventSubscriptionName, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string scope, string eventSubscriptionName, EventGridSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="eventSubscriptionName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string scope, string eventSubscriptionName, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string scope, string eventSubscriptionName, EventGridSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
