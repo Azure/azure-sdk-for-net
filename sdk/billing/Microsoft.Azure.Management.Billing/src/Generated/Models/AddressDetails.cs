@@ -34,6 +34,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="country">Country code uses ISO2, 2-digit
         /// format.</param>
         /// <param name="firstName">First name.</param>
+        /// <param name="middleName">Middle name.</param>
         /// <param name="lastName">Last name.</param>
         /// <param name="companyName">Company name.</param>
         /// <param name="addressLine2">Address line 2.</param>
@@ -44,9 +45,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="postalCode">Postal code.</param>
         /// <param name="email">Email address.</param>
         /// <param name="phoneNumber">Phone number.</param>
-        public AddressDetails(string addressLine1, string country, string firstName = default(string), string lastName = default(string), string companyName = default(string), string addressLine2 = default(string), string addressLine3 = default(string), string city = default(string), string district = default(string), string region = default(string), string postalCode = default(string), string email = default(string), string phoneNumber = default(string))
+        public AddressDetails(string addressLine1, string country, string firstName = default(string), string middleName = default(string), string lastName = default(string), string companyName = default(string), string addressLine2 = default(string), string addressLine3 = default(string), string city = default(string), string district = default(string), string region = default(string), string postalCode = default(string), string email = default(string), string phoneNumber = default(string))
         {
             FirstName = firstName;
+            MiddleName = middleName;
             LastName = lastName;
             CompanyName = companyName;
             AddressLine1 = addressLine1;
@@ -72,6 +74,12 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "firstName")]
         public string FirstName { get; set; }
+
+        /// <summary>
+        /// Gets or sets middle name.
+        /// </summary>
+        [JsonProperty(PropertyName = "middleName")]
+        public string MiddleName { get; set; }
 
         /// <summary>
         /// Gets or sets last name.

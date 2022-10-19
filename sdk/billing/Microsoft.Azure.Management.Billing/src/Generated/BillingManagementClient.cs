@@ -53,11 +53,6 @@ namespace Microsoft.Azure.Management.Billing
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Azure Subscription ID.
-        /// </summary>
-        public string SubscriptionId1 { get; set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -146,11 +141,6 @@ namespace Microsoft.Azure.Management.Billing
         public virtual IBillingPropertyOperations BillingProperty { get; private set; }
 
         /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        public virtual IOperations Operations { get; private set; }
-
-        /// <summary>
         /// Gets the IBillingRoleDefinitionsOperations.
         /// </summary>
         public virtual IBillingRoleDefinitionsOperations BillingRoleDefinitions { get; private set; }
@@ -166,6 +156,11 @@ namespace Microsoft.Azure.Management.Billing
         public virtual IAgreementsOperations Agreements { get; private set; }
 
         /// <summary>
+        /// Gets the IReservationsOperations.
+        /// </summary>
+        public virtual IReservationsOperations Reservations { get; private set; }
+
+        /// <summary>
         /// Gets the IEnrollmentAccountsOperations.
         /// </summary>
         public virtual IEnrollmentAccountsOperations EnrollmentAccounts { get; private set; }
@@ -174,6 +169,11 @@ namespace Microsoft.Azure.Management.Billing
         /// Gets the IBillingPeriodsOperations.
         /// </summary>
         public virtual IBillingPeriodsOperations BillingPeriods { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the BillingManagementClient class.
@@ -430,12 +430,13 @@ namespace Microsoft.Azure.Management.Billing
             Transactions = new TransactionsOperations(this);
             Policies = new PoliciesOperations(this);
             BillingProperty = new BillingPropertyOperations(this);
-            Operations = new Operations(this);
             BillingRoleDefinitions = new BillingRoleDefinitionsOperations(this);
             BillingRoleAssignments = new BillingRoleAssignmentsOperations(this);
             Agreements = new AgreementsOperations(this);
+            Reservations = new ReservationsOperations(this);
             EnrollmentAccounts = new EnrollmentAccountsOperations(this);
             BillingPeriods = new BillingPeriodsOperations(this);
+            Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

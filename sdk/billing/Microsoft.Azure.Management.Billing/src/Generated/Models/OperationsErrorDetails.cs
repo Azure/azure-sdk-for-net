@@ -11,37 +11,33 @@
 namespace Microsoft.Azure.Management.Billing.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// The details of the error.
     /// </summary>
-    public partial class ErrorDetails
+    public partial class OperationsErrorDetails
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorDetails class.
+        /// Initializes a new instance of the OperationsErrorDetails class.
         /// </summary>
-        public ErrorDetails()
+        public OperationsErrorDetails()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorDetails class.
+        /// Initializes a new instance of the OperationsErrorDetails class.
         /// </summary>
         /// <param name="code">Error code.</param>
         /// <param name="message">Error message indicating why the operation
         /// failed.</param>
         /// <param name="target">The target of the particular error.</param>
-        /// <param name="details">The sub details of the error.</param>
-        public ErrorDetails(string code = default(string), string message = default(string), string target = default(string), IList<ErrorSubDetailsItem> details = default(IList<ErrorSubDetailsItem>))
+        public OperationsErrorDetails(string code = default(string), string message = default(string), string target = default(string))
         {
             Code = code;
             Message = message;
             Target = target;
-            Details = details;
             CustomInit();
         }
 
@@ -67,12 +63,6 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "target")]
         public string Target { get; private set; }
-
-        /// <summary>
-        /// Gets the sub details of the error.
-        /// </summary>
-        [JsonProperty(PropertyName = "details")]
-        public IList<ErrorSubDetailsItem> Details { get; private set; }
 
     }
 }

@@ -32,12 +32,20 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// ValidateSubscriptionTransferEligibilityError class.
         /// </summary>
         /// <param name="code">Error code for the product transfer validation.
-        /// Possible values include: 'InvalidSource', 'SubscriptionNotActive',
-        /// 'InsufficientPermissionOnSource',
-        /// 'InsufficientPermissionOnDestination',
-        /// 'DestinationBillingProfilePastDue', 'SubscriptionTypeNotSupported',
+        /// Possible values include: 'BillingAccountInactive',
         /// 'CrossBillingAccountNotAllowed',
-        /// 'NotAvailableForDestinationMarket'</param>
+        /// 'DestinationBillingProfileInactive',
+        /// 'DestinationBillingProfileNotFound',
+        /// 'DestinationBillingProfilePastDue',
+        /// 'DestinationInvoiceSectionInactive',
+        /// 'DestinationInvoiceSectionNotFound',
+        /// 'InsufficientPermissionOnDestination',
+        /// 'InsufficientPermissionOnSource', 'InvalidDestination',
+        /// 'InvalidSource', 'MarketplaceNotEnabledOnDestination',
+        /// 'NotAvailableForDestinationMarket', 'ProductInactive',
+        /// 'ProductNotFound', 'ProductTypeNotSupported',
+        /// 'SourceBillingProfilePastDue', 'SourceInvoiceSectionInactive',
+        /// 'SubscriptionNotActive', 'SubscriptionTypeNotSupported'</param>
         /// <param name="message">The error message.</param>
         /// <param name="details">Detailed error message explaining the
         /// error.</param>
@@ -56,11 +64,20 @@ namespace Microsoft.Azure.Management.Billing.Models
 
         /// <summary>
         /// Gets or sets error code for the product transfer validation.
-        /// Possible values include: 'InvalidSource', 'SubscriptionNotActive',
-        /// 'InsufficientPermissionOnSource',
+        /// Possible values include: 'BillingAccountInactive',
+        /// 'CrossBillingAccountNotAllowed',
+        /// 'DestinationBillingProfileInactive',
+        /// 'DestinationBillingProfileNotFound',
+        /// 'DestinationBillingProfilePastDue',
+        /// 'DestinationInvoiceSectionInactive',
+        /// 'DestinationInvoiceSectionNotFound',
         /// 'InsufficientPermissionOnDestination',
-        /// 'DestinationBillingProfilePastDue', 'SubscriptionTypeNotSupported',
-        /// 'CrossBillingAccountNotAllowed', 'NotAvailableForDestinationMarket'
+        /// 'InsufficientPermissionOnSource', 'InvalidDestination',
+        /// 'InvalidSource', 'MarketplaceNotEnabledOnDestination',
+        /// 'NotAvailableForDestinationMarket', 'ProductInactive',
+        /// 'ProductNotFound', 'ProductTypeNotSupported',
+        /// 'SourceBillingProfilePastDue', 'SourceInvoiceSectionInactive',
+        /// 'SubscriptionNotActive', 'SubscriptionTypeNotSupported'
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }

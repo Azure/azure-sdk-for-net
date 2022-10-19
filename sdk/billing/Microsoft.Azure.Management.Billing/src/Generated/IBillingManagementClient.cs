@@ -47,11 +47,6 @@ namespace Microsoft.Azure.Management.Billing
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Azure Subscription ID.
-        /// </summary>
-        string SubscriptionId1 { get; set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -141,11 +136,6 @@ namespace Microsoft.Azure.Management.Billing
         IBillingPropertyOperations BillingProperty { get; }
 
         /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
-
-        /// <summary>
         /// Gets the IBillingRoleDefinitionsOperations.
         /// </summary>
         IBillingRoleDefinitionsOperations BillingRoleDefinitions { get; }
@@ -161,6 +151,11 @@ namespace Microsoft.Azure.Management.Billing
         IAgreementsOperations Agreements { get; }
 
         /// <summary>
+        /// Gets the IReservationsOperations.
+        /// </summary>
+        IReservationsOperations Reservations { get; }
+
+        /// <summary>
         /// Gets the IEnrollmentAccountsOperations.
         /// </summary>
         IEnrollmentAccountsOperations EnrollmentAccounts { get; }
@@ -169,6 +164,11 @@ namespace Microsoft.Azure.Management.Billing
         /// Gets the IBillingPeriodsOperations.
         /// </summary>
         IBillingPeriodsOperations BillingPeriods { get; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
 
     }
 }

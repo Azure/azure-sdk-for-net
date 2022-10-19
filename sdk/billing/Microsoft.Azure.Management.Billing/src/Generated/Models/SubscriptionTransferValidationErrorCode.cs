@@ -16,13 +16,25 @@ namespace Microsoft.Azure.Management.Billing.Models
     /// </summary>
     public static class SubscriptionTransferValidationErrorCode
     {
-        public const string InvalidSource = "InvalidSource";
-        public const string SubscriptionNotActive = "SubscriptionNotActive";
-        public const string InsufficientPermissionOnSource = "InsufficientPermissionOnSource";
-        public const string InsufficientPermissionOnDestination = "InsufficientPermissionOnDestination";
-        public const string DestinationBillingProfilePastDue = "DestinationBillingProfilePastDue";
-        public const string SubscriptionTypeNotSupported = "SubscriptionTypeNotSupported";
+        public const string BillingAccountInactive = "BillingAccountInactive";
         public const string CrossBillingAccountNotAllowed = "CrossBillingAccountNotAllowed";
+        public const string DestinationBillingProfileInactive = "DestinationBillingProfileInactive";
+        public const string DestinationBillingProfileNotFound = "DestinationBillingProfileNotFound";
+        public const string DestinationBillingProfilePastDue = "DestinationBillingProfilePastDue";
+        public const string DestinationInvoiceSectionInactive = "DestinationInvoiceSectionInactive";
+        public const string DestinationInvoiceSectionNotFound = "DestinationInvoiceSectionNotFound";
+        public const string InsufficientPermissionOnDestination = "InsufficientPermissionOnDestination";
+        public const string InsufficientPermissionOnSource = "InsufficientPermissionOnSource";
+        public const string InvalidDestination = "InvalidDestination";
+        public const string InvalidSource = "InvalidSource";
+        public const string MarketplaceNotEnabledOnDestination = "MarketplaceNotEnabledOnDestination";
         public const string NotAvailableForDestinationMarket = "NotAvailableForDestinationMarket";
+        public const string ProductInactive = "ProductInactive";
+        public const string ProductNotFound = "ProductNotFound";
+        public const string ProductTypeNotSupported = "ProductTypeNotSupported";
+        public const string SourceBillingProfilePastDue = "SourceBillingProfilePastDue";
+        public const string SourceInvoiceSectionInactive = "SourceInvoiceSectionInactive";
+        public const string SubscriptionNotActive = "SubscriptionNotActive";
+        public const string SubscriptionTypeNotSupported = "SubscriptionTypeNotSupported";
     }
 }
