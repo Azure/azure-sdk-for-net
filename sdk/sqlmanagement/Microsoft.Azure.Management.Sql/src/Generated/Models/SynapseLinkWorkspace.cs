@@ -13,36 +13,35 @@ namespace Microsoft.Azure.Management.Sql.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// A recoverable managed database resource.
+    /// Synapse link workspace resource
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class UpdateManagedInstanceDnsServersOperation : ProxyResource
+    public partial class SynapseLinkWorkspace : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// UpdateManagedInstanceDnsServersOperation class.
+        /// Initializes a new instance of the SynapseLinkWorkspace class.
         /// </summary>
-        public UpdateManagedInstanceDnsServersOperation()
+        public SynapseLinkWorkspace()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// UpdateManagedInstanceDnsServersOperation class.
+        /// Initializes a new instance of the SynapseLinkWorkspace class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="status">The status of the DNS refresh operation.
-        /// Possible values include: 'Succeeded', 'Failed'</param>
-        public UpdateManagedInstanceDnsServersOperation(string id = default(string), string name = default(string), string type = default(string), string status = default(string))
+        /// <param name="workspaces">List of all synapselink workspaces</param>
+        public SynapseLinkWorkspace(string id = default(string), string name = default(string), string type = default(string), IList<SynapseLinkWorkspaceInfoProperties> workspaces = default(IList<SynapseLinkWorkspaceInfoProperties>))
             : base(id, name, type)
         {
-            Status = status;
+            Workspaces = workspaces;
             CustomInit();
         }
 
@@ -52,11 +51,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the status of the DNS refresh operation. Possible values
-        /// include: 'Succeeded', 'Failed'
+        /// Gets or sets list of all synapselink workspaces
         /// </summary>
-        [JsonProperty(PropertyName = "properties.status")]
-        public string Status { get; private set; }
+        [JsonProperty(PropertyName = "properties.workspaces")]
+        public IList<SynapseLinkWorkspaceInfoProperties> Workspaces { get; set; }
 
     }
 }

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// An update request for an Azure SQL Database virtual cluster.
+    /// An update request for virtual cluster.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class VirtualClusterUpdate
@@ -36,19 +36,15 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         /// <param name="subnetId">Subnet resource ID for the virtual
         /// cluster.</param>
-        /// <param name="family">If the service has different generations of
-        /// hardware, for the same SKU, then that can be captured here.</param>
+        /// <param name="version">Virtual cluster version.</param>
         /// <param name="childResources">List of resources in this virtual
         /// cluster.</param>
-        /// <param name="maintenanceConfigurationId">Specifies maintenance
-        /// configuration id to apply to this virtual cluster.</param>
         /// <param name="tags">Resource tags.</param>
-        public VirtualClusterUpdate(string subnetId = default(string), string family = default(string), IList<string> childResources = default(IList<string>), string maintenanceConfigurationId = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public VirtualClusterUpdate(string subnetId = default(string), string version = default(string), IList<string> childResources = default(IList<string>), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             SubnetId = subnetId;
-            Family = family;
+            Version = version;
             ChildResources = childResources;
-            MaintenanceConfigurationId = maintenanceConfigurationId;
             Tags = tags;
             CustomInit();
         }
@@ -65,24 +61,16 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string SubnetId { get; private set; }
 
         /// <summary>
-        /// Gets or sets if the service has different generations of hardware,
-        /// for the same SKU, then that can be captured here.
+        /// Gets or sets virtual cluster version.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.family")]
-        public string Family { get; set; }
+        [JsonProperty(PropertyName = "properties.version")]
+        public string Version { get; set; }
 
         /// <summary>
         /// Gets list of resources in this virtual cluster.
         /// </summary>
         [JsonProperty(PropertyName = "properties.childResources")]
         public IList<string> ChildResources { get; private set; }
-
-        /// <summary>
-        /// Gets or sets specifies maintenance configuration id to apply to
-        /// this virtual cluster.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.maintenanceConfigurationId")]
-        public string MaintenanceConfigurationId { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.

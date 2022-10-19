@@ -508,11 +508,6 @@ namespace Microsoft.Azure.Management.Sql
         ITimeZonesOperations TimeZones { get; }
 
         /// <summary>
-        /// Gets the IVirtualClustersOperations.
-        /// </summary>
-        IVirtualClustersOperations VirtualClusters { get; }
-
-        /// <summary>
         /// Gets the IVirtualNetworkRulesOperations.
         /// </summary>
         IVirtualNetworkRulesOperations VirtualNetworkRules { get; }
@@ -708,14 +703,19 @@ namespace Microsoft.Azure.Management.Sql
         IDatabaseSqlVulnerabilityAssessmentsSettingsOperations DatabaseSqlVulnerabilityAssessmentsSettings { get; }
 
         /// <summary>
-        /// Gets the IManagedInstanceDtcsOperations.
-        /// </summary>
-        IManagedInstanceDtcsOperations ManagedInstanceDtcs { get; }
-
-        /// <summary>
         /// Gets the IManagedDatabaseAdvancedThreatProtectionSettingsOperations.
         /// </summary>
         IManagedDatabaseAdvancedThreatProtectionSettingsOperations ManagedDatabaseAdvancedThreatProtectionSettings { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseRestoreDetailsOperations.
+        /// </summary>
+        IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabasesOperations.
+        /// </summary>
+        IManagedDatabasesOperations ManagedDatabases { get; }
 
         /// <summary>
         /// Gets the IManagedInstanceAdvancedThreatProtectionSettingsOperations.
@@ -773,14 +773,24 @@ namespace Microsoft.Azure.Management.Sql
         ISqlVulnerabilityAssessmentsOperations SqlVulnerabilityAssessments { get; }
 
         /// <summary>
-        /// Gets the IManagedDatabaseRestoreDetailsOperations.
+        /// Gets the IManagedDatabaseMoveOperations.
         /// </summary>
-        IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; }
+        IManagedDatabaseMoveOperations ManagedDatabaseMoveOperations { get; }
 
         /// <summary>
-        /// Gets the IManagedDatabasesOperations.
+        /// Gets the IManagedInstanceDtcsOperations.
         /// </summary>
-        IManagedDatabasesOperations ManagedDatabases { get; }
+        IManagedInstanceDtcsOperations ManagedInstanceDtcs { get; }
+
+        /// <summary>
+        /// Gets the ISynapseLinkWorkspacesOperations.
+        /// </summary>
+        ISynapseLinkWorkspacesOperations SynapseLinkWorkspaces { get; }
+
+        /// <summary>
+        /// Gets the IVirtualClustersOperations.
+        /// </summary>
+        IVirtualClustersOperations VirtualClusters { get; }
 
     }
 }

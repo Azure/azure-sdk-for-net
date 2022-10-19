@@ -513,11 +513,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual ITimeZonesOperations TimeZones { get; private set; }
 
         /// <summary>
-        /// Gets the IVirtualClustersOperations.
-        /// </summary>
-        public virtual IVirtualClustersOperations VirtualClusters { get; private set; }
-
-        /// <summary>
         /// Gets the IVirtualNetworkRulesOperations.
         /// </summary>
         public virtual IVirtualNetworkRulesOperations VirtualNetworkRules { get; private set; }
@@ -713,14 +708,19 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IDatabaseSqlVulnerabilityAssessmentsSettingsOperations DatabaseSqlVulnerabilityAssessmentsSettings { get; private set; }
 
         /// <summary>
-        /// Gets the IManagedInstanceDtcsOperations.
-        /// </summary>
-        public virtual IManagedInstanceDtcsOperations ManagedInstanceDtcs { get; private set; }
-
-        /// <summary>
         /// Gets the IManagedDatabaseAdvancedThreatProtectionSettingsOperations.
         /// </summary>
         public virtual IManagedDatabaseAdvancedThreatProtectionSettingsOperations ManagedDatabaseAdvancedThreatProtectionSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseRestoreDetailsOperations.
+        /// </summary>
+        public virtual IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedDatabasesOperations.
+        /// </summary>
+        public virtual IManagedDatabasesOperations ManagedDatabases { get; private set; }
 
         /// <summary>
         /// Gets the IManagedInstanceAdvancedThreatProtectionSettingsOperations.
@@ -778,14 +778,24 @@ namespace Microsoft.Azure.Management.Sql
         public virtual ISqlVulnerabilityAssessmentsOperations SqlVulnerabilityAssessments { get; private set; }
 
         /// <summary>
-        /// Gets the IManagedDatabaseRestoreDetailsOperations.
+        /// Gets the IManagedDatabaseMoveOperations.
         /// </summary>
-        public virtual IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; private set; }
+        public virtual IManagedDatabaseMoveOperations ManagedDatabaseMoveOperations { get; private set; }
 
         /// <summary>
-        /// Gets the IManagedDatabasesOperations.
+        /// Gets the IManagedInstanceDtcsOperations.
         /// </summary>
-        public virtual IManagedDatabasesOperations ManagedDatabases { get; private set; }
+        public virtual IManagedInstanceDtcsOperations ManagedInstanceDtcs { get; private set; }
+
+        /// <summary>
+        /// Gets the ISynapseLinkWorkspacesOperations.
+        /// </summary>
+        public virtual ISynapseLinkWorkspacesOperations SynapseLinkWorkspaces { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualClustersOperations.
+        /// </summary>
+        public virtual IVirtualClustersOperations VirtualClusters { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -1116,7 +1126,6 @@ namespace Microsoft.Azure.Management.Sql
             SyncMembers = new SyncMembersOperations(this);
             TdeCertificates = new TdeCertificatesOperations(this);
             TimeZones = new TimeZonesOperations(this);
-            VirtualClusters = new VirtualClustersOperations(this);
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
             WorkloadClassifiers = new WorkloadClassifiersOperations(this);
             WorkloadGroups = new WorkloadGroupsOperations(this);
@@ -1156,8 +1165,9 @@ namespace Microsoft.Azure.Management.Sql
             DatabaseSqlVulnerabilityAssessmentScanResult = new DatabaseSqlVulnerabilityAssessmentScanResultOperations(this);
             DatabaseSqlVulnerabilityAssessmentScans = new DatabaseSqlVulnerabilityAssessmentScansOperations(this);
             DatabaseSqlVulnerabilityAssessmentsSettings = new DatabaseSqlVulnerabilityAssessmentsSettingsOperations(this);
-            ManagedInstanceDtcs = new ManagedInstanceDtcsOperations(this);
             ManagedDatabaseAdvancedThreatProtectionSettings = new ManagedDatabaseAdvancedThreatProtectionSettingsOperations(this);
+            ManagedDatabaseRestoreDetails = new ManagedDatabaseRestoreDetailsOperations(this);
+            ManagedDatabases = new ManagedDatabasesOperations(this);
             ManagedInstanceAdvancedThreatProtectionSettings = new ManagedInstanceAdvancedThreatProtectionSettingsOperations(this);
             ReplicationLinks = new ReplicationLinksOperations(this);
             SqlVulnerabilityAssessmentBaseline = new SqlVulnerabilityAssessmentBaselineOperations(this);
@@ -1169,8 +1179,10 @@ namespace Microsoft.Azure.Management.Sql
             SqlVulnerabilityAssessmentScans = new SqlVulnerabilityAssessmentScansOperations(this);
             SqlVulnerabilityAssessmentsSettings = new SqlVulnerabilityAssessmentsSettingsOperations(this);
             SqlVulnerabilityAssessments = new SqlVulnerabilityAssessmentsOperations(this);
-            ManagedDatabaseRestoreDetails = new ManagedDatabaseRestoreDetailsOperations(this);
-            ManagedDatabases = new ManagedDatabasesOperations(this);
+            ManagedDatabaseMoveOperations = new ManagedDatabaseMoveOperations(this);
+            ManagedInstanceDtcs = new ManagedInstanceDtcsOperations(this);
+            SynapseLinkWorkspaces = new SynapseLinkWorkspacesOperations(this);
+            VirtualClusters = new VirtualClustersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

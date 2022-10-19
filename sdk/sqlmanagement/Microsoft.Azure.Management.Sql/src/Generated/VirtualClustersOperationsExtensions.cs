@@ -22,50 +22,6 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class VirtualClustersOperationsExtensions
     {
             /// <summary>
-            /// Synchronizes the DNS server settings used by the managed instances inside
-            /// the given virtual cluster.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='virtualClusterName'>
-            /// The name of the virtual cluster.
-            /// </param>
-            public static UpdateManagedInstanceDnsServersOperation UpdateDnsServers(this IVirtualClustersOperations operations, string resourceGroupName, string virtualClusterName)
-            {
-                return operations.UpdateDnsServersAsync(resourceGroupName, virtualClusterName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Synchronizes the DNS server settings used by the managed instances inside
-            /// the given virtual cluster.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='virtualClusterName'>
-            /// The name of the virtual cluster.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<UpdateManagedInstanceDnsServersOperation> UpdateDnsServersAsync(this IVirtualClustersOperations operations, string resourceGroupName, string virtualClusterName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UpdateDnsServersWithHttpMessagesAsync(resourceGroupName, virtualClusterName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets a list of all virtualClusters in the subscription.
             /// </summary>
             /// <param name='operations'>
@@ -211,7 +167,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Updates a virtual cluster.
+            /// Updates an existing virtual cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -232,7 +188,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Updates a virtual cluster.
+            /// Updates an existing virtual cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -253,6 +209,50 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<VirtualCluster> UpdateAsync(this IVirtualClustersOperations operations, string resourceGroupName, string virtualClusterName, VirtualClusterUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, virtualClusterName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Synchronizes the DNS server settings used by the managed instances inside
+            /// the given virtual cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='virtualClusterName'>
+            /// The name of the virtual cluster.
+            /// </param>
+            public static UpdateVirtualClusterDnsServersOperation UpdateDnsServers(this IVirtualClustersOperations operations, string resourceGroupName, string virtualClusterName)
+            {
+                return operations.UpdateDnsServersAsync(resourceGroupName, virtualClusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Synchronizes the DNS server settings used by the managed instances inside
+            /// the given virtual cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='virtualClusterName'>
+            /// The name of the virtual cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<UpdateVirtualClusterDnsServersOperation> UpdateDnsServersAsync(this IVirtualClustersOperations operations, string resourceGroupName, string virtualClusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateDnsServersWithHttpMessagesAsync(resourceGroupName, virtualClusterName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -298,7 +298,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Updates a virtual cluster.
+            /// Updates an existing virtual cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Updates a virtual cluster.
+            /// Updates an existing virtual cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -340,6 +340,50 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<VirtualCluster> BeginUpdateAsync(this IVirtualClustersOperations operations, string resourceGroupName, string virtualClusterName, VirtualClusterUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, virtualClusterName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Synchronizes the DNS server settings used by the managed instances inside
+            /// the given virtual cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='virtualClusterName'>
+            /// The name of the virtual cluster.
+            /// </param>
+            public static UpdateVirtualClusterDnsServersOperation BeginUpdateDnsServers(this IVirtualClustersOperations operations, string resourceGroupName, string virtualClusterName)
+            {
+                return operations.BeginUpdateDnsServersAsync(resourceGroupName, virtualClusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Synchronizes the DNS server settings used by the managed instances inside
+            /// the given virtual cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='virtualClusterName'>
+            /// The name of the virtual cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<UpdateVirtualClusterDnsServersOperation> BeginUpdateDnsServersAsync(this IVirtualClustersOperations operations, string resourceGroupName, string virtualClusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateDnsServersWithHttpMessagesAsync(resourceGroupName, virtualClusterName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

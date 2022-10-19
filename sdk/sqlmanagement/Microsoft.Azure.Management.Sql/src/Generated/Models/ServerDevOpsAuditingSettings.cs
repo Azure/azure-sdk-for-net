@@ -60,6 +60,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// or [Diagnostic Settings
         /// PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
         /// </param>
+        /// <param name="isManagedIdentityInUse">Specifies whether Managed
+        /// Identity is used to access blob storage</param>
         /// <param name="storageEndpoint">Specifies the blob storage endpoint
         /// (e.g. https://MyAccount.blob.core.windows.net). If state is
         /// Enabled, storageEndpoint or isAzureMonitorTargetEnabled is
@@ -80,11 +82,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// authentication](https://go.microsoft.com/fwlink/?linkid=2114355)</param>
         /// <param name="storageAccountSubscriptionId">Specifies the blob
         /// storage subscription Id.</param>
-        public ServerDevOpsAuditingSettings(BlobAuditingPolicyState state, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), bool? isAzureMonitorTargetEnabled = default(bool?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), System.Guid? storageAccountSubscriptionId = default(System.Guid?))
+        public ServerDevOpsAuditingSettings(BlobAuditingPolicyState state, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), bool? isAzureMonitorTargetEnabled = default(bool?), bool? isManagedIdentityInUse = default(bool?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), System.Guid? storageAccountSubscriptionId = default(System.Guid?))
             : base(id, name, type)
         {
             SystemData = systemData;
             IsAzureMonitorTargetEnabled = isAzureMonitorTargetEnabled;
+            IsManagedIdentityInUse = isManagedIdentityInUse;
             State = state;
             StorageEndpoint = storageEndpoint;
             StorageAccountAccessKey = storageAccountAccessKey;
@@ -125,6 +128,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isAzureMonitorTargetEnabled")]
         public bool? IsAzureMonitorTargetEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether Managed Identity is used to access
+        /// blob storage
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isManagedIdentityInUse")]
+        public bool? IsManagedIdentityInUse { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the state of the audit. If state is Enabled,

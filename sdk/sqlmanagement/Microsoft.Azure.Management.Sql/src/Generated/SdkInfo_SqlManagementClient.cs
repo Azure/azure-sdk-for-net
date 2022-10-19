@@ -82,6 +82,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "ManagedBackupShortTermRetentionPolicies", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedDatabaseAdvancedThreatProtectionSettings", "2022-02-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedDatabaseColumns", "2020-11-01-preview"),
+                new Tuple<string, string, string>("Sql", "ManagedDatabaseMoveOperations", "2022-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedDatabaseQueries", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedDatabaseRecommendedSensitivityLabels", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedDatabaseRestoreDetails", "2022-02-01-preview"),
@@ -98,7 +99,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "ManagedInstanceAdministrators", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceAdvancedThreatProtectionSettings", "2022-02-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceAzureADOnlyAuthentications", "2020-11-01-preview"),
-                new Tuple<string, string, string>("Sql", "ManagedInstanceDtcs", "2022-02-01-preview"),
+                new Tuple<string, string, string>("Sql", "ManagedInstanceDtcs", "2022-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceEncryptionProtectors", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceKeys", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceLongTermRetentionPolicies", "2020-11-01-preview"),
@@ -131,7 +132,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "ServerBlobAuditingPolicies", "2021-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServerCommunicationLinks", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ServerConnectionPolicies", "2021-05-01-preview"),
-                new Tuple<string, string, string>("Sql", "ServerDevOpsAuditSettings", "2020-11-01-preview"),
+                new Tuple<string, string, string>("Sql", "ServerDevOpsAuditSettings", "2022-02-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServerDnsAliases", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServerKeys", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServerOperations", "2020-11-01-preview"),
@@ -153,6 +154,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "SqlVulnerabilityAssessments", "2022-02-01-preview"),
                 new Tuple<string, string, string>("Sql", "SqlVulnerabilityAssessmentsSettings", "2022-02-01-preview"),
                 new Tuple<string, string, string>("Sql", "SubscriptionUsages", "2020-11-01-preview"),
+                new Tuple<string, string, string>("Sql", "SynapseLinkWorkspaces", "2022-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "SyncAgents", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "SyncGroups", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "SyncMembers", "2020-11-01-preview"),
@@ -160,7 +162,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "TimeZones", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "TransparentDataEncryptions", "2021-02-01-preview"),
                 new Tuple<string, string, string>("Sql", "Usages", "2021-02-01-preview"),
-                new Tuple<string, string, string>("Sql", "VirtualClusters", "2020-11-01-preview"),
+                new Tuple<string, string, string>("Sql", "VirtualClusters", "2022-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "VirtualNetworkRules", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "WorkloadClassifiers", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "WorkloadGroups", "2020-11-01-preview"),
@@ -168,15 +170,20 @@ namespace Microsoft.Azure.Management.Sql
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@3.5.1";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/sql/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\vs\\gh_repos\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestVersion = "2.0.4421";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/sql/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=D:\\Projects\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "522786522aee460711e33bab6a2c69f1b43e7122";
-      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubCommidId = "02892fba4474afacce6fc8a76c08d395dc5c8f26";
+      public static readonly String CodeGenerationErrors = "npm notice 
+npm notice New minor version of npm available! 8.5.5 -> 8.19.2
+npm notice Changelog: <https://github.com/npm/cli/releases/tag/v8.19.2>
+npm notice Run `npm install -g npm@8.19.2` to update!
+npm notice"
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
   }
 }
+
 
