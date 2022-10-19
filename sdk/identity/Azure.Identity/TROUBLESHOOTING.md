@@ -241,7 +241,7 @@ az account get-access-token --output json --resource https://management.core.win
 |Please run 'Connect-AzAccount' to set up account.|No account is currently logged into Azure PowerShell.|<ul><li>Login to Azure PowerShell using the `Connect-AzAccount` command. More instructions for authenticating Azure PowerShell can be found [here](https://learn.microsoft.com/powershell/azure/authenticate-azureps)</li><li>Validate that Azure PowerShell can obtain tokens. See [below](#verify-azure-powershell-can-obtain-tokens) for instructions.</li></ul>|
 
 #### __Verify Azure PowerShell can obtain tokens__
-You can manually verify that Azure PowerShell is properly authenticated, and can obtain tokens. First use the `Get-AzContext` command to verify the account which is currently logged in to the Azure CLI.
+You can manually verify that Azure PowerShell is properly authenticated, and can obtain tokens. First, use the `Get-AzContext` command to verify the account which is currently logged in to the Azure CLI.
 
 ```
 PS C:\> Get-AzContext
@@ -251,7 +251,7 @@ Name                                     Account             SubscriptionName   
 Subscription1 (xxxxxxxx-xxxx-xxxx-xxx... test@outlook.com    Subscription1       AzureCloud          xxxxxxxx-x...
 ```
 
-Once you've verified Azure PowerShell is using correct account, you can validate that it's able to obtain tokens for this account.
+Once you've verified Azure PowerShell is using correct account, validate that it's able to obtain tokens for this account:
 
 ```bash
 Get-AzAccessToken -ResourceUrl "https://management.core.windows.net"

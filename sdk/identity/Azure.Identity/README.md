@@ -2,7 +2,7 @@
 
 The Azure Identity library provides [Azure Active Directory (Azure AD)](https://learn.microsoft.com/azure/active-directory/fundamentals/active-directory-whatis) token authentication support across the Azure SDK. It provides a set of [`TokenCredential`](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) implementations which can be used to construct Azure SDK clients which support Azure AD token authentication.
 
-  [Source code][source] | [Package (nuget)][package] | [API reference documentation][identity_api_docs] | [Azure AD documentation][aad_doc]
+  [Source code][source] | [Package (NuGet)][package] | [API reference documentation][identity_api_docs] | [Azure AD documentation][aad_doc]
 
 ## Getting started
 
@@ -26,7 +26,7 @@ When debugging and executing code locally it is typical for a developer to use t
 
 Developers using Visual Studio 2017 or later can authenticate an Azure AD account through the IDE. Applications using the `DefaultAzureCredential` or the `VisualStudioCredential` can then use this account to authenticate calls in their application when running locally.
 
-To authenticate in Visual Studio select the `Tools > Options` menu to launch the Options dialog. Then navigate to the `Azure Service Authentication` options to sign in with your Azure AD account.
+To authenticate in Visual Studio, select the **Tools** > **Options** menu to launch the Options dialog. Then navigate to the `Azure Service Authentication` options to sign in with your Azure AD account.
 
 ![Visual Studio Account Selection][vs_login_image]
 
@@ -161,18 +161,13 @@ var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), crede
 
 ## Cloud configuration
 
-Credentials default to authenticating to the Azure AD endpoint for
-Azure Public Cloud. To access resources in other clouds, such as Azure Government
-or a private cloud, configure credentials with the `authority` argument.
-[AzureAuthorityHosts](https://learn.microsoft.com/dotnet/api/azure.identity.azureauthorityhosts?view=azure-dotnet)
-defines authorities for well-known clouds:
+Credentials default to authenticating to the Azure AD endpoint for the Azure public cloud. To access resources in other clouds, such as Azure Government or a private cloud, configure credentials with the `authority` argument. [AzureAuthorityHosts](https://learn.microsoft.com/dotnet/api/azure.identity.azureauthorityhosts?view=azure-dotnet) defines authorities for well-known clouds:
 
 ```C# Snippet:AuthenticatingWithAuthorityHost
 var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { AuthorityHost = AzureAuthorityHosts.AzureGovernment });
 ```
-Not all credentials require this configuration. Credentials which authenticate
-through a development tool, such as `AzureCliCredential`, use that tool's
-configuration.
+
+Not all credentials require this configuration. Credentials which authenticate through a development tool, such as `AzureCliCredential`, use that tool's configuration.
 
 ## Credential classes
 
@@ -331,9 +326,9 @@ There you will also find links where you can learn more about their use, includi
 
 ### Known Issues
 
-This library does not currently support scenarios relating to the [AAD B2C](https://learn.microsoft.com/azure/active-directory-b2c/overview) service.
+This library doesn't currently support scenarios relating to the [Azure AD B2C](https://learn.microsoft.com/azure/active-directory-b2c/overview) service.
 
-Currently open issues for the Azure.Identity library can be found [here](https://github.com/Azure/azure-sdk-for-net/issues?q=is%3Aissue+is%3Aopen+label%3AAzure.Identity).
+Open issues for the `Azure.Identity` library can be found [here](https://github.com/Azure/azure-sdk-for-net/issues?q=is%3Aissue+is%3Aopen+label%3AAzure.Identity).
 
 ## Contributing
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
