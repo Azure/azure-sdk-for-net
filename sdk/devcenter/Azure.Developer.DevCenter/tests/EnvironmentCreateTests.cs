@@ -54,7 +54,7 @@ namespace Azure.Developer.DevCenter.Tests
             Console.WriteLine($"Started provisioning for environment with status {environment.GetProperty("provisioningState")}.");
             Console.WriteLine($"Completed provisioning for environment with status {environment.GetProperty("provisioningState")}.");
 
-            //Assert.IsTrue(environment.GetProperty("provisioningState").ToString().Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
+            Assert.IsTrue(environment.GetProperty("provisioningState").ToString().Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
 
             // Delete the dev box
             Operation environmentDeleteOperation = await environmentsClient.DeleteEnvironmentAsync(WaitUntil.Started, "DevTestEnv");
