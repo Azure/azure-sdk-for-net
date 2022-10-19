@@ -161,7 +161,7 @@ var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), crede
 
 ## Cloud configuration
 
-Credentials default to authenticating to the Azure AD endpoint for the Azure public cloud. To access resources in other clouds, such as Azure Government or a private cloud, configure credentials with the `authority` argument. [AzureAuthorityHosts](https://learn.microsoft.com/dotnet/api/azure.identity.azureauthorityhosts?view=azure-dotnet) defines authorities for well-known clouds:
+Credentials default to authenticating to the Azure AD endpoint for the Azure public cloud. To access resources in other clouds, such as Azure Government or a private cloud, configure credentials with the `AuthorityHost` argument. [AzureAuthorityHosts](https://learn.microsoft.com/dotnet/api/azure.identity.azureauthorityhosts?view=azure-dotnet) defines authorities for well-known clouds:
 
 ```C# Snippet:AuthenticatingWithAuthorityHost
 var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { AuthorityHost = AzureAuthorityHosts.AzureGovernment });
