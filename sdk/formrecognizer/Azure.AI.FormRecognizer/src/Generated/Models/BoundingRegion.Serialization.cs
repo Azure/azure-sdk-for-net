@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class BoundingRegion
+    public partial struct BoundingRegion
     {
         internal static BoundingRegion DeserializeBoundingRegion(JsonElement element)
         {

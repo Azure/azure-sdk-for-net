@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media
     /// A Class representing a MediaTransform along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MediaTransformResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetMediaTransformResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaServiceResource" /> using the GetMediaTransform method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaServicesAccountResource" /> using the GetMediaTransform method.
     /// </summary>
     public partial class MediaTransformResource : ArmResource
     {
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.Media
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of MediaTransformJobResources in the MediaTransform. </summary>
-        /// <returns> An object representing collection of MediaTransformJobResources and their operations over a MediaTransformJobResource. </returns>
-        public virtual MediaTransformJobCollection GetMediaTransformJobs()
+        /// <summary> Gets a collection of MediaJobResources in the MediaTransform. </summary>
+        /// <returns> An object representing collection of MediaJobResources and their operations over a MediaJobResource. </returns>
+        public virtual MediaJobCollection GetMediaJobs()
         {
-            return GetCachedClient(Client => new MediaTransformJobCollection(Client, Id));
+            return GetCachedClient(Client => new MediaJobCollection(Client, Id));
         }
 
         /// <summary>
@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MediaTransformJobResource>> GetMediaTransformJobAsync(string jobName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaJobResource>> GetMediaJobAsync(string jobName, CancellationToken cancellationToken = default)
         {
-            return await GetMediaTransformJobs().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
+            return await GetMediaJobs().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MediaTransformJobResource> GetMediaTransformJob(string jobName, CancellationToken cancellationToken = default)
+        public virtual Response<MediaJobResource> GetMediaJob(string jobName, CancellationToken cancellationToken = default)
         {
-            return GetMediaTransformJobs().Get(jobName, cancellationToken);
+            return GetMediaJobs().Get(jobName, cancellationToken);
         }
 
         /// <summary>

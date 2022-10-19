@@ -64,6 +64,11 @@ namespace Azure.Storage
         /// </summary>
         public const int DefaultDownloadCopyBufferSize = 16384;
 
+        /// <summary>
+        /// Backwards compatible default value for trimming slashes on object name.
+        /// </summary>
+        public const bool DefaultTrimBlobNameSlashes = true;
+
         public const string CloseAllHandles = "*";
         public const string Wildcard = "*";
 

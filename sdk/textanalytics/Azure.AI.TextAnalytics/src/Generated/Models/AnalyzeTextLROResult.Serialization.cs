@@ -37,11 +37,13 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "AbstractiveSummarizationLROResults": return AbstractiveSummarizationLROResult.DeserializeAbstractiveSummarizationLROResult(element);
                     case "CustomEntityRecognitionLROResults": return CustomEntityRecognitionLROResult.DeserializeCustomEntityRecognitionLROResult(element);
                     case "CustomMultiLabelClassificationLROResults": return CustomMultiLabelClassificationLROResult.DeserializeCustomMultiLabelClassificationLROResult(element);
                     case "CustomSingleLabelClassificationLROResults": return CustomSingleLabelClassificationLROResult.DeserializeCustomSingleLabelClassificationLROResult(element);
                     case "EntityLinkingLROResults": return EntityLinkingLROResult.DeserializeEntityLinkingLROResult(element);
                     case "EntityRecognitionLROResults": return EntityRecognitionLROResult.DeserializeEntityRecognitionLROResult(element);
+                    case "ExtractiveSummarizationLROResults": return ExtractiveSummarizationLROResult.DeserializeExtractiveSummarizationLROResult(element);
                     case "HealthcareLROResults": return HealthcareLROResult.DeserializeHealthcareLROResult(element);
                     case "KeyPhraseExtractionLROResults": return KeyPhraseExtractionLROResult.DeserializeKeyPhraseExtractionLROResult(element);
                     case "PiiEntityRecognitionLROResults": return PiiEntityRecognitionLROResult.DeserializePiiEntityRecognitionLROResult(element);

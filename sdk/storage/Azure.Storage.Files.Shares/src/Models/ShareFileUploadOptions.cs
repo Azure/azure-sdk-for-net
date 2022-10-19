@@ -21,8 +21,16 @@ namespace Azure.Storage.Files.Shares.Models
         public ShareFileRequestConditions Conditions { get; set; }
 
         /// <summary>
-        /// Options for transactional hash content verification.
+        /// Optional override settings for this client's <see cref="ShareClientOptions.TransferValidation"/> settings.
         /// </summary>
-        public UploadTransferValidationOptions TransferValidationOptions { get; set; }
+        public UploadTransferValidationOptions TransferValidation { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="StorageTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// <para/>
+        /// Share files do not support concurrent upload.
+        /// </summary>
+        public StorageTransferOptions TransferOptions { get; set; }
     }
 }

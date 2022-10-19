@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vpnConnectionTime = property.Value.GetDateTimeOffset();
+                    vpnConnectionTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("publicIpAddress"))

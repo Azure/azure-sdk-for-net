@@ -2,6 +2,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 {
     public static partial class ManagedServiceIdentitiesExtensions
     {
+        public static Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource GetSystemAssignedIdentity(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource GetSystemAssignedIdentity(this Azure.ResourceManager.ArmResource armResource) { throw null; }
         public static Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource GetSystemAssignedIdentityResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityCollection GetUserAssignedIdentities(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
@@ -25,14 +26,26 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         protected SystemAssignedIdentityResource() { }
         public virtual Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class UserAssignedIdentityCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource>, System.Collections.IEnumerable

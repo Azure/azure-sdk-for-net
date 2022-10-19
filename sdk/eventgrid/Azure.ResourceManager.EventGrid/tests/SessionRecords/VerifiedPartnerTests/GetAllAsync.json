@@ -1,0 +1,152 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f8eda827fc6d2b439cb4963034ce1e57-b24c3b0da848b347-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "473d38a25658dbd40f4d0133bdfc01d8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 23 Sep 2022 07:25:07 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "05ac4fd2-8f12-40d0-a232-5d0a31a0f9fe",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "05ac4fd2-8f12-40d0-a232-5d0a31a0f9fe",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220923T072507Z:05ac4fd2-8f12-40d0-a232-5d0a31a0f9fe"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/tenants?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e2bdf6717d09a741b4fb0fb7e2e7736e-35f96a6b46d3a54b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "c1b08ecfb55f8974efe7544db6b5b3f2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "140",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 23 Sep 2022 07:25:08 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7bd2cd04-8ab7-44e2-98e7-d081e4856be0",
+        "x-ms-ratelimit-remaining-tenant-reads": "11995",
+        "x-ms-request-id": "7bd2cd04-8ab7-44e2-98e7-d081e4856be0",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220923T072508Z:7bd2cd04-8ab7-44e2-98e7-d081e4856be0"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/tenants/72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantCategory": "Home"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.EventGrid/verifiedPartners?api-version=2022-06-15",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-85e946a514e5994082aaf9f916a977cf-cccca2952250b346-00",
+        "User-Agent": "azsdk-net-ResourceManager.EventGrid/1.0.0-alpha.20220923.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "19efbb602792df01f32df9c33e0b5e6e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1684",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 23 Sep 2022 07:25:08 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c3980682-e36b-406f-a787-56e70129ab93",
+        "x-ms-ratelimit-remaining-tenant-reads": "11994",
+        "x-ms-request-id": "2c07f6c0-bc9f-4e19-8368-0fdabddb9430",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220923T072508Z:c3980682-e36b-406f-a787-56e70129ab93"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "partnerRegistrationImmutableId": "804a11ca-ce9b-4158-8e94-3c8dc7a072ec",
+              "organizationName": "Auth0, Inc.",
+              "partnerDisplayName": "Auth0",
+              "partnerTopicDetails": {
+                "description": "Auth0, the identity platform for application builders, provides developers and enterprises with the building blocks they need to secure their applications.",
+                "longDescription": "Partnering with Event Grid allows our customers to leverage events emitted by Auth0\u2019s system to accomplish a number of use cases, from engaging with users in meaningful and custom ways after the authentication to automating security and infrastructure tasks.\nThe Auth0 Partner Topic integration allows you to stream your Auth0 log events with high reliability into Azure for consumption with any of your favorite Azure resources. This will allow you to react to events, gain insights, monitor for security issues, and interact with other powerful data pipelines. In order to create an Auth0 Partner topic:\n1. Note the Azure Subscription and Resource Group you want the Partner Topic to be created in.\n2.Log in to your Auth0 account dashboard.\n3.Navigate to Logs \u003E Streams, click \u201CCreate Stream\u201D and select the \u201CAzure Event Grid\u201D event stream.\n4. Provide the Azure Subscription ID, Resource Group and other required information and click \u201CSave\u201D.\n5. View your pending Partner Topics in Azure and activate the topic to allow events to flow.",
+                "setupUri": "https://marketplace.auth0.com/integrations/azure-log-streaming"
+              },
+              "provisioningState": "Succeeded"
+            },
+            "systemData": null,
+            "id": "/providers/Microsoft.EventGrid/verifiedPartners/Auth0",
+            "name": "Auth0",
+            "type": "Microsoft.EventGrid/verifiedPartners"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1599663003",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

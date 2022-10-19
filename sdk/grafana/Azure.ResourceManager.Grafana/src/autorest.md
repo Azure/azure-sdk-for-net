@@ -8,8 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Grafana
 namespace: Azure.ResourceManager.Grafana
-require: https://github.com/Azure/azure-rest-api-specs/blob/80e53647ee8d8dbea0451689dbfde01977de5fdf/specification/dashboard/resource-manager/readme.md
-tag: package-2022-08-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/6080b0126065467abbb3e096b25ed4ad6c22fa1f/specification/dashboard/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -17,8 +16,12 @@ modelerfour:
   flatten-payloads: false
 
 rename-mapping:
-  ResourceSku: ManagedGrafanaSku
+  AzureMonitorWorkspaceIntegration: MonitorWorkspaceIntegration
+  AzureMonitorWorkspaceIntegration.azureMonitorWorkspaceResourceId: MonitorWorkspaceResourceId|arm-id
+  GrafanaIntegrations.azureMonitorWorkspaceIntegrations: MonitorWorkspaceIntegrations
   ManagedGrafanaPropertiesUpdateParameters: ManagedGrafanaPatchProperties
+
+  ResourceSku: ManagedGrafanaSku
 
 prepend-rp-prefix:
   - ApiKey

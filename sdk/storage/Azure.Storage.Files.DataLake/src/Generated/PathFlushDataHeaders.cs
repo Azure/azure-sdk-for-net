@@ -28,5 +28,7 @@ namespace Azure.Storage.Files.DataLake
         public bool? IsServerEncrypted => _response.Headers.TryGetValue("x-ms-request-server-encrypted", out bool? value) ? value : null;
         /// <summary> The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted with a customer-provided key. </summary>
         public string EncryptionKeySha256 => _response.Headers.TryGetValue("x-ms-encryption-key-sha256", out string value) ? value : null;
+        /// <summary> If the lease was auto-renewed with this request. </summary>
+        public bool? LeaseRenewed => _response.Headers.TryGetValue("x-ms-lease-renewed", out bool? value) ? value : null;
     }
 }

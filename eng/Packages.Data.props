@@ -81,25 +81,25 @@
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
 
     <!-- Azure SDK packages -->
-	   <PackageReference Update="Azure.Communication.Identity" Version="1.1.0" />
-    <PackageReference Update="Azure.Communication.Common" Version="1.1.0" />
+	  <PackageReference Update="Azure.Communication.Identity" Version="1.2.0" />
+    <PackageReference Update="Azure.Communication.Common" Version="1.2.0" />
     <PackageReference Update="Azure.Core" Version="1.25.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.2.0" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.21" />
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.2.0" />
     <PackageReference Update="Azure.Data.Tables" Version="12.5.0" />
-    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.7.2" />
+    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.7.3" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.10.0" />
-    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.10.0" />
+    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.11.0" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.0.0" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
-    <PackageReference Update="Azure.Identity" Version="1.6.0" />
+    <PackageReference Update="Azure.Identity" Version="1.7.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
-    <PackageReference Update="Azure.Storage.Blobs" Version="12.12.0" />
-    <PackageReference Update="Azure.Storage.Queues" Version="12.10.0" />
-    <PackageReference Update="Azure.ResourceManager" Version="1.3.0" />
+    <PackageReference Update="Azure.Storage.Blobs" Version="12.13.1" />
+    <PackageReference Update="Azure.Storage.Queues" Version="12.11.1" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.3.1" />
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.5.10" />
@@ -116,8 +116,8 @@
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.5.0" />
 
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
-    <PackageReference Update="OpenTelemetry" Version="1.2.0"  Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
-    <PackageReference Update="OpenTelemetry.Extensions.PersistentStorage" Version="1.0.0-alpha.4" Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
+    <PackageReference Update="OpenTelemetry" Version="1.3.1"  Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
+    <PackageReference Update="OpenTelemetry.Extensions.PersistentStorage" Version="1.0.0-beta.1" Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
   </ItemGroup>
 
   <!--
@@ -142,7 +142,7 @@
 
   <!-- Packages intended for Extensions libraries only -->
   <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
-    <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="2.1.0" />
+    <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="3.1.28" />
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.1.22" />
     <PackageReference Update="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
     <PackageReference Update="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
@@ -160,7 +160,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20220810.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20221014.3" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20220111.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />
@@ -182,13 +182,13 @@
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.2.0" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.0.0" />
-    <PackageReference Update="Azure.ResourceManager.Compute" Version="1.0.0-beta.8" />
-    <PackageReference Update="Azure.ResourceManager.Network" Version="1.0.0-beta.7" />
-    <PackageReference Update="Azure.ResourceManager.Resources" Version="1.1.0" />
-    <PackageReference Update="Azure.ResourceManager.Storage" Version="1.0.0-beta.8" />
+    <PackageReference Update="Azure.ResourceManager.Compute" Version="1.0.0" />
+    <PackageReference Update="Azure.ResourceManager.Network" Version="1.0.1" />
+    <PackageReference Update="Azure.ResourceManager.Resources" Version="1.3.0" />
+    <PackageReference Update="Azure.ResourceManager.Storage" Version="1.0.0" />
     <PackageReference Update="Azure.Search.Documents" Version="11.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0-beta.4" />
-    <PackageReference Update="Azure.Storage.Blobs" Version="12.12.0" />
+    <PackageReference Update="Azure.Storage.Blobs" Version="12.13.1" />
     <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.8.0" />
     <PackageReference Update="BenchmarkDotNet" Version="0.13.1" />
     <PackageReference Update="Castle.Core" Version="4.4.0" />
@@ -245,12 +245,13 @@
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Update="NSubstitute" Version="3.1.0" />
     <PackageReference Update="NUnit" Version="3.13.2" />
-    <PackageReference Update="NUnit3TestAdapter" Version="4.2.1" />
+    <PackageReference Update="NUnit3TestAdapter" Version="4.3.0-alpha-net7.4" />
     <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.0.0-rc9.3" />
     <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.3" />
     <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.3" />
-    <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.3.0-beta.1" />
+    <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.3.1" />
     <PackageReference Update="Polly" Version="7.1.0" />
+    <PackageReference Update="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Update="PublicApiGenerator" Version="10.0.1" />
     <PackageReference Update="System.Diagnostics.TraceSource" Version="4.3.0" />
@@ -276,7 +277,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TestProxyVersion>1.0.0-dev.20220719.1</TestProxyVersion>
+    <TestProxyVersion>1.0.0-dev.20221007.3</TestProxyVersion>
   </PropertyGroup>
 
 </Project>

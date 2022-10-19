@@ -9,7 +9,6 @@ csharp: true
 library-name: CognitiveServices
 namespace: Azure.ResourceManager.CognitiveServices
 require: https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/cognitiveservices/resource-manager/readme.md
-tag: package-2022-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -119,6 +118,10 @@ rename-rules:
 
 directive:
   - from: cognitiveservices.json
+    where: $.paths
+    transform: >
+      delete $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}"]["put"]
+  - from: cognitiveservices.json
     where: $.definitions
     transform: >
       $.CheckDomainAvailabilityParameter.properties.type['x-ms-format'] = 'resource-type';
@@ -126,7 +129,6 @@ directive:
       $.Encryption.properties.keyVaultProperties['x-ms-client-flatten'] = true;
       $.PrivateEndpointConnection.properties.properties['x-ms-client-flatten'] = true;
       delete $.AccountProperties.properties.internalId;
-
   # TODO, these configs will be replaced by the new rename-mapping
   - from: cognitiveservices.json
     where: $.definitions
@@ -149,5 +151,4 @@ directive:
       $.SkuChangeInfo.properties.lastChangeDate['x-ms-client-name'] = 'lastChangedOn';
       $.VirtualNetworkRule.properties.id['x-ms-format'] = 'arm-id';
       $.ApiProperties.properties.qnaAzureSearchEndpointId['x-ms-format'] = 'arm-id';
-
 ```

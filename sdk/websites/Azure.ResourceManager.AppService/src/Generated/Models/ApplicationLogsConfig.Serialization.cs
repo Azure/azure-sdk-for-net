@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.AppService.Models
         internal static ApplicationLogsConfig DeserializeApplicationLogsConfig(JsonElement element)
         {
             Optional<FileSystemApplicationLogsConfig> fileSystem = default;
-            Optional<AzureTableStorageApplicationLogsConfig> azureTableStorage = default;
-            Optional<AzureBlobStorageApplicationLogsConfig> azureBlobStorage = default;
+            Optional<AppServiceTableStorageApplicationLogsConfig> azureTableStorage = default;
+            Optional<AppServiceBlobStorageApplicationLogsConfig> azureBlobStorage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileSystem"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    azureTableStorage = AzureTableStorageApplicationLogsConfig.DeserializeAzureTableStorageApplicationLogsConfig(property.Value);
+                    azureTableStorage = AppServiceTableStorageApplicationLogsConfig.DeserializeAppServiceTableStorageApplicationLogsConfig(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureBlobStorage"))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    azureBlobStorage = AzureBlobStorageApplicationLogsConfig.DeserializeAzureBlobStorageApplicationLogsConfig(property.Value);
+                    azureBlobStorage = AppServiceBlobStorageApplicationLogsConfig.DeserializeAppServiceBlobStorageApplicationLogsConfig(property.Value);
                     continue;
                 }
             }

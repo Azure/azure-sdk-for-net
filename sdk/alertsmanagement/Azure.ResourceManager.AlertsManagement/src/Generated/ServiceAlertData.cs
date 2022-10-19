@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 using Azure.ResourceManager.AlertsManagement.Models;
 using Azure.ResourceManager.Models;
@@ -25,21 +24,13 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="essentials"> This object contains consistent fields across different monitor services. </param>
-        /// <param name="context"> Information specific to the monitor service that gives more contextual details about the alert. </param>
-        /// <param name="egressConfig"> Config which would be used for displaying the data in portal. </param>
-        internal ServiceAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceAlertEssentials essentials, BinaryData context, BinaryData egressConfig) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Alert property bag. </param>
+        internal ServiceAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceAlertProperties properties) : base(id, name, resourceType, systemData)
         {
-            Essentials = essentials;
-            Context = context;
-            EgressConfig = egressConfig;
+            Properties = properties;
         }
 
-        /// <summary> This object contains consistent fields across different monitor services. </summary>
-        public ServiceAlertEssentials Essentials { get; set; }
-        /// <summary> Information specific to the monitor service that gives more contextual details about the alert. </summary>
-        public BinaryData Context { get; }
-        /// <summary> Config which would be used for displaying the data in portal. </summary>
-        public BinaryData EgressConfig { get; }
+        /// <summary> Alert property bag. </summary>
+        public ServiceAlertProperties Properties { get; set; }
     }
 }

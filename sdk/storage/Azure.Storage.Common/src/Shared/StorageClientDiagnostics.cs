@@ -59,7 +59,7 @@ namespace Azure.Core.Pipeline
                 // Json body
                 else if (responseHeaders.ContentType.Contains(Constants.ContentTypeApplicationJson))
                 {
-                    JsonDocument json = JsonDocument.Parse(content);
+                    using JsonDocument json = JsonDocument.Parse(content);
                     JsonElement error = json.RootElement.GetProperty(Constants.ErrorPropertyKey);
 
                     IDictionary<string, string>? details = default;

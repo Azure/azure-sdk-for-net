@@ -48,4 +48,7 @@ rename-rules:
 
 rename-mapping:
   Identity: UserAssignedIdentity
+
+generate-arm-resource-extensions:
+  - /{scope}/providers/Microsoft.ManagedIdentity/identities/default
 ```

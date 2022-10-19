@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: ContainerRegistry
 namespace: Azure.ResourceManager.ContainerRegistry
-require: https://github.com/Azure/azure-rest-api-specs/blob/b9b91929c304f8fb44002267b6c98d9fb9dde014/specification/containerregistry/resource-manager/readme.md
-tag: package-2021-09
+# default tag is a preview version
+require: https://github.com/Azure/azure-rest-api-specs/blob/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/containerregistry/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -24,6 +24,8 @@ format-by-name-rules:
   '*ResourceId': 'arm-id'
   'PrincipalId': 'uuid'
   'taskId': 'arm-id'
+  'tokenId': 'arm-id'
+  'scopeMapId': 'arm-id'
 
 rename-rules:
   CPU: Cpu
@@ -123,17 +125,29 @@ prepend-rp-prefix:
   - BaseImageTrigger
   - BaseImageTriggerType
   - Credentials
+  - Token
+  - TokenCertificate
+  - TokenCertificateName
+  - TokenListResult
+  - TokenPassword
+  - TokenPasswordName
+  - TokenStatus
+  - PipelineRun
+  - GenerateCredentialsResult
+  - SoftDeletePolicy
 
 rename-mapping:
   OS: ContainerRegistryOS
   KeyVaultProperties.keyRotationEnabled: IsKeyRotationEnabled
   RegistryNameStatus: ContainerRegistryNameAvailableResult
   RegistryNameStatus.nameAvailable: IsNameAvailable
-  RegistryPatch: ContainerRegistryPatch
+  RegistryUpdateParameters: ContainerRegistryPatch
+  RegistryUpdateParameters.properties.anonymousPullEnabled: IsAnonymousPullEnabled
   RegistryUpdateParameters.properties.adminUserEnabled: IsAdminUserEnabled
   Registry.properties.adminUserEnabled: IsAdminUserEnabled
   RegistryUpdateParameters.properties.dataEndpointEnabled: IsDataEndpointEnabled
   Registry.properties.dataEndpointEnabled: IsDataEndpointEnabled
+  Registry.properties.anonymousPullEnabled: IsAnonymousPullEnabled
   ReplicationUpdateParameters.properties.regionEndpointEnabled: IsRegionEndpointEnabled
   Replication.properties.regionEndpointEnabled: IsRegionEndpointEnabled
   Registry: ContainerRegistry
@@ -200,6 +214,29 @@ rename-mapping:
   Event.id: -|uuid
   EventInfo.id: -|uuid
   Request.id: -|uuid
+  ActivationProperties: ConnectedRegistryActivation
+  ActivationStatus: ConnectedRegistryActivationStatus
+  ConnectionState: ConnectedRegistryConnectionState
+  ParentProperties: ConnectedRegistryParent
+  ParentProperties.id: -|arm-id
+  LoginServerProperties: ConnectedRegistryLoginServer
+  LoggingProperties: ConnectedRegistryLogging
+  StatusDetailProperties: ConnectedRegistryStatusDetail
+  StatusDetailProperties.type: StatusDetailType
+  AuditLogStatus: ConnectedRegistryAuditLogStatus
+  CertificateType: TlsCertificateLocationType
+  GenerateCredentialsParameters: ContainerRegistryGenerateCredentialsContent
+  LogLevel: ConnectedRegistryLogLevel
+  PipelineRunRequest: PipelineRunContent
+  PipelineRunResponse: PipelineRunResult
+  ProgressProperties: PipelineProgress
+  SyncProperties: ConnectedRegistrySyncProperties
+  SyncUpdateProperties: ConnectedRegistrySyncUpdateProperties
+  TokenUpdateParameters: ContainerRegistryTokenPatch
+  ScopeMap.properties.type: ScopeMapType
+  ExportPipelineTargetProperties.type: PipelineTargetType
+  TlsCertificateProperties.location: CertificateLocation
+  TokenCredentialsProperties: ContainerRegistryTokenCredentials
 
 override-operation-name:
   Schedules_ScheduleRun: ScheduleRun
@@ -220,4 +257,13 @@ directive:
       $.IdentityProperties.properties.tenantId.readOnly = true;
       $.UserIdentityProperties.properties.principalId.readOnly = true;
       $.UserIdentityProperties.properties.clientId.readOnly = true;
+  - from: containerregistry.json
+    where: $.definitions
+    transform: >
+      $.ConnectedRegistryProperties.properties.clientTokenIds.items['x-ms-format'] = 'arm-id';
+      $.ConnectedRegistryUpdateProperties.properties.clientTokenIds.items['x-ms-format'] = 'arm-id';
+  - from: swagger-document
+    where: $.definitions..expiry
+    transform: >
+      $['x-ms-client-name'] = 'ExpireOn';
 ```

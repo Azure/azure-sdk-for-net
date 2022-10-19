@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Class to specify DRM configurations of CommonEncryptionCbcs scheme in Streaming Policy. </summary>
@@ -35,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Widevine configurations. </summary>
         internal StreamingPolicyWidevineConfiguration Widevine { get; set; }
         /// <summary> Template for the URL of the custom service delivering licenses to end user players.  Not required when using Azure Media Services for issuing licenses.  The template supports replaceable tokens that the service will update at runtime with the value specific to the request.  The currently supported token values are {AlternativeMediaId}, which is replaced with the value of StreamingLocatorId.AlternativeMediaId, and {ContentKeyId}, which is replaced with the value of identifier of the key being requested. </summary>
-        public Uri WidevineCustomLicenseAcquisitionUriTemplate
+        public string WidevineCustomLicenseAcquisitionUriTemplate
         {
             get => Widevine is null ? default : Widevine.CustomLicenseAcquisitionUriTemplate;
             set

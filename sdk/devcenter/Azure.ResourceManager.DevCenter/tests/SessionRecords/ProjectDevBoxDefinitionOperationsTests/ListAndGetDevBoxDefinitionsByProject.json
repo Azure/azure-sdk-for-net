@@ -1,0 +1,142 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/projects/sdk-default-project/devboxdefinitions?api-version=2022-08-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-853150df9c70984db17a9458f1f049c6-05602f4201795040-00",
+        "User-Agent": "azsdk-net-ResourceManager.DevCenter/1.0.0-alpha.20220903.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "9c5e450850305bdf6a60dccc6f0cbe1b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1278",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 04 Sep 2022 05:57:25 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9c5e450850305bdf6a60dccc6f0cbe1b",
+        "x-ms-correlation-request-id": "5f99f99e-7ec3-4394-bdcb-9339eaaa4333",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "8909936a-c030-4e8e-95e0-b956904bf144",
+        "x-ms-routing-request-id": "AUSTRALIAEAST:20220904T055725Z:5f99f99e-7ec3-4394-bdcb-9339eaaa4333",
+        "X-Rate-Limit-Limit": "1m",
+        "X-Rate-Limit-Remaining": "299",
+        "X-Rate-Limit-Reset": "2022-09-04T05:58:21.0148807Z"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/projects/sdk-default-project/devboxdefinitions/sdk-default-devboxdefinition",
+            "name": "sdk-default-devboxdefinition",
+            "type": "Microsoft.DevCenter/projects/devboxdefinitions",
+            "location": "australiaeast",
+            "systemData": {
+              "createdBy": "tbyfield@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-08-30T18:12:13.471415Z",
+              "lastModifiedBy": "8788af82-a59e-490f-ba2a-2b05bf776033",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-30T22:05:33.413232Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "imageValidationStatus": "Succeeded",
+              "activeImageReference": {
+                "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter/galleries/Default/images/MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365",
+                "exactVersion": "1.0.0"
+              },
+              "imageReference": {
+                "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter/galleries/Default/images/MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365",
+                "exactVersion": "1.0.0"
+              },
+              "sku": {
+                "name": "general_a_8c32gb_v1"
+              },
+              "osStorageType": "ssd_1024gb"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/projects/sdk-default-project/devboxdefinitions/sdk-default-devboxdefinition?api-version=2022-08-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e79da8e2e8c9b2409f1b9ef890ee9968-688e4d107072f04d-00",
+        "User-Agent": "azsdk-net-ResourceManager.DevCenter/1.0.0-alpha.20220903.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "d14dad6ba907feccc2a0928ef152258b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1266",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 04 Sep 2022 05:57:38 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d14dad6ba907feccc2a0928ef152258b",
+        "x-ms-correlation-request-id": "ec2a7f8b-7d74-4c77-b890-d39766207887",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "255081c2-632b-4b86-9681-3c570567e57d",
+        "x-ms-routing-request-id": "AUSTRALIAEAST:20220904T055739Z:ec2a7f8b-7d74-4c77-b890-d39766207887",
+        "X-Rate-Limit-Limit": "1m",
+        "X-Rate-Limit-Remaining": "299",
+        "X-Rate-Limit-Reset": "2022-09-04T05:58:36.8222989Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/projects/sdk-default-project/devboxdefinitions/sdk-default-devboxdefinition",
+        "name": "sdk-default-devboxdefinition",
+        "type": "Microsoft.DevCenter/projects/devboxdefinitions",
+        "location": "australiaeast",
+        "systemData": {
+          "createdBy": "tbyfield@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2022-08-30T18:12:13.471415Z",
+          "lastModifiedBy": "8788af82-a59e-490f-ba2a-2b05bf776033",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-08-30T22:05:33.413232Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "imageValidationStatus": "Succeeded",
+          "activeImageReference": {
+            "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter/galleries/Default/images/MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365",
+            "exactVersion": "1.0.0"
+          },
+          "imageReference": {
+            "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter/galleries/Default/images/MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365",
+            "exactVersion": "1.0.0"
+          },
+          "sku": {
+            "name": "general_a_8c32gb_v1"
+          },
+          "osStorageType": "ssd_1024gb"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "DEFAULT_PROJECT_ID": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/projects/sdk-default-project",
+    "RandomSeed": "1581070465",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "SUBSCRIPTION_ID": "62e47139-66d0-4b0b-a000-1e8a412890c1"
+  }
+}

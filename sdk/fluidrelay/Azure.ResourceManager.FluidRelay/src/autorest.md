@@ -9,7 +9,6 @@ csharp: true
 library-name: FluidRelay
 namespace: Azure.ResourceManager.FluidRelay
 require: https://github.com/Azure/azure-rest-api-specs/blob/fbe071bba84e3e724573b3fc4efdeb041174d547/specification/fluidrelay/resource-manager/readme.md
-tag: package-2022-06-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -22,6 +21,11 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'UserAssignedIdentityResourceId': 'arm-id'
+
+prepend-rp-prefix:
+  - ProvisioningState
+  - KeyName
 
 rename-rules:
   CPU: Cpu
@@ -47,10 +51,20 @@ rename-rules:
   Etag: ETag|etag
 
 rename-mapping:
-  StorageSKU: StorageSku
+  StorageSKU: FluidRelayStorageSku
   FluidRelayServer.properties.storagesku: StorageSku
-  
+  CustomerManagedKeyEncryptionPropertiesKeyEncryptionKeyIdentity: CmkIdentity
+  CustomerManagedKeyEncryptionProperties: CmkEncryptionProperties
+  FluidRelayServerKeys.key1: PrimaryKey
+  FluidRelayServerKeys.key2: SecondaryKey
+  KeyName.key1: PrimaryKey
+  KeyName.key2: SecondaryKey
+
+override-operation-name:
+  FluidRelayServers_RegenerateKey: RegenerateKeys
+
 directive:
+  - remove-operation: FluidRelayOperations_List
   - from: fluidrelay.json
     where: "$.definitions"
     transform: >
