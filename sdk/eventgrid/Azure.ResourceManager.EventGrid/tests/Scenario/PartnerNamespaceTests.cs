@@ -19,7 +19,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
         private ResourceGroupResource _resourceGroup;
         private PartnerNamespaceCollection _partnerNamespaceCollection;
 
-        public PartnerNamespaceTests(bool isAsync) : base(isAsync)
+        public PartnerNamespaceTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

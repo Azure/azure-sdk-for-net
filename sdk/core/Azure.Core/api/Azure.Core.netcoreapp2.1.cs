@@ -554,11 +554,15 @@ namespace Azure.Core
         public string? Host { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public string PathAndQuery { get { throw null; } }
+        protected int PathLength { get { throw null; } }
         public int Port { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
+        protected int QueryLength { get { throw null; } }
         public string? Scheme { get { throw null; } set { } }
+        public void AppendPath(System.ReadOnlySpan<char> value, bool escape) { }
         public void AppendPath(string value) { }
         public void AppendPath(string value, bool escape) { }
+        public void AppendQuery(System.ReadOnlySpan<char> name, System.ReadOnlySpan<char> value, bool escapeValue) { }
         public void AppendQuery(string name, string value) { }
         public void AppendQuery(string name, string value, bool escapeValue) { }
         public void Reset(System.Uri value) { }
