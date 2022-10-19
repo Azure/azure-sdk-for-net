@@ -84,6 +84,7 @@ class MatrixParameter {
     }
 }
 
+. (Join-Path $PSScriptRoot "../Helpers" PSModule-Helpers.ps1)
 $IMPORT_KEYWORD = '$IMPORT'
 
 function GenerateMatrix(
