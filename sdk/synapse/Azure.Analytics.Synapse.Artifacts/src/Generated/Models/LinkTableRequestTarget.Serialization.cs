@@ -33,6 +33,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("distributionOptions");
                 writer.WriteObjectValue(DistributionOptions);
             }
+            if (Optional.IsDefined(StructureOptions))
+            {
+                writer.WritePropertyName("structureOptions");
+                writer.WriteObjectValue(StructureOptions);
+            }
             writer.WriteEndObject();
         }
 
@@ -41,6 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> tableName = default;
             Optional<string> schemaName = default;
             Optional<LinkTableRequestTargetDistributionOptions> distributionOptions = default;
+            Optional<LinkTableRequestTargetStructureOptions> structureOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tableName"))
@@ -63,8 +69,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     distributionOptions = LinkTableRequestTargetDistributionOptions.DeserializeLinkTableRequestTargetDistributionOptions(property.Value);
                     continue;
                 }
+                if (property.NameEquals("structureOptions"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    structureOptions = LinkTableRequestTargetStructureOptions.DeserializeLinkTableRequestTargetStructureOptions(property.Value);
+                    continue;
+                }
             }
-            return new LinkTableRequestTarget(tableName.Value, schemaName.Value, distributionOptions.Value);
+            return new LinkTableRequestTarget(tableName.Value, schemaName.Value, distributionOptions.Value, structureOptions.Value);
         }
 
         internal partial class LinkTableRequestTargetConverter : JsonConverter<LinkTableRequestTarget>

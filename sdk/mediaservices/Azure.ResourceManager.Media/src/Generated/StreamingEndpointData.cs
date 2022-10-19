@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="freeTrialEndOn"> The free trial expiration time. </param>
         /// <param name="createdOn"> The exact time the streaming endpoint was created. </param>
         /// <param name="lastModifiedOn"> The exact time the streaming endpoint was last modified. </param>
-        internal StreamingEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ArmStreamingEndpointCurrentSku sku, string description, int? scaleUnits, string availabilitySetName, StreamingEndpointAccessControl accessControl, long? maxCacheAge, IList<string> customHostNames, string hostName, bool? isCdnEnabled, string cdnProvider, string cdnProfile, string provisioningState, StreamingEndpointResourceState? resourceState, CrossSiteAccessPolicies crossSiteAccessPolicies, DateTimeOffset? freeTrialEndOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData, tags, location)
+        internal StreamingEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StreamingEndpointCurrentSku sku, string description, int? scaleUnits, string availabilitySetName, StreamingEndpointAccessControl accessControl, long? maxCacheAge, IList<string> customHostNames, string hostName, bool? isCdnEnabled, string cdnProvider, string cdnProfile, string provisioningState, StreamingEndpointResourceState? resourceState, CrossSiteAccessPolicies crossSiteAccessPolicies, DateTimeOffset? freeTrialEndOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Description = description;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary> The streaming endpoint sku. </summary>
-        public ArmStreamingEndpointCurrentSku Sku { get; set; }
+        public StreamingEndpointCurrentSku Sku { get; set; }
         /// <summary> The streaming endpoint description. </summary>
         public string Description { get; set; }
         /// <summary> The number of scale units. Use the Scale operation to adjust this value. </summary>

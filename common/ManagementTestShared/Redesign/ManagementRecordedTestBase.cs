@@ -9,6 +9,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.TestFramework
@@ -23,6 +24,8 @@ namespace Azure.ResourceManager.TestFramework
         protected ManagementGroupCleanupPolicy ManagementGroupCleanupPolicy = new ManagementGroupCleanupPolicy();
 
         protected ManagementGroupCleanupPolicy OneTimeManagementGroupCleanupPolicy = new ManagementGroupCleanupPolicy();
+
+        protected ResponseNullFilterPolicy NullFilterPolicy = new ResponseNullFilterPolicy();
 
         protected ArmClient GlobalClient { get; private set; }
 
@@ -52,6 +55,12 @@ namespace Azure.ResourceManager.TestFramework
             ApiVersion = apiVersion;
         }
 
+        protected void SetTagResourceUsage(ArmClient client, bool? useTagResource)
+        {
+            var target = client.GetType().GetField("__target", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(client);
+            target.GetType().GetField("_canUseTagResource", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(target, useTagResource);
+        }
+
         private void Initialize()
         {
             _waitForCleanup = Mode == RecordedTestMode.Live ? WaitUntil.Completed : WaitUntil.Started;
@@ -71,12 +80,18 @@ namespace Azure.ResourceManager.TestFramework
 
         protected TClient InstrumentClientExtension<TClient>(TClient client) => (TClient)InstrumentClient(typeof(TClient), client, new IInterceptor[] { new ManagementInterceptor(this) });
 
-        protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default)
+        protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default, bool enableDeleteAfter = false)
         {
             var options = InstrumentClientOptions(clientOptions ?? new ArmClientOptions());
             options.Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl);
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
+            options.AddPolicy(NullFilterPolicy, HttpPipelinePosition.PerRetry);
+            if (enableDeleteAfter)
+            {
+                AddDeleteAfterTagPolicy deleteAfterTagPolicy = new AddDeleteAfterTagPolicy(Recording.UtcNow);
+                options.AddPolicy(deleteAfterTagPolicy, HttpPipelinePosition.PerCall);
+            }
             if (ApiVersion is not null)
                 options.SetApiVersion(_resourceType, ApiVersion);
 

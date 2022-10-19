@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Media
             Optional<DateTimeOffset> created = default;
             Optional<string> description = default;
             Optional<DateTimeOffset> lastModified = default;
-            Optional<IList<TransformOutput>> outputs = default;
+            Optional<IList<MediaTransformOutput>> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.Media
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<TransformOutput> array = new List<TransformOutput>();
+                            List<MediaTransformOutput> array = new List<MediaTransformOutput>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TransformOutput.DeserializeTransformOutput(item));
+                                array.Add(MediaTransformOutput.DeserializeMediaTransformOutput(item));
                             }
                             outputs = array;
                             continue;

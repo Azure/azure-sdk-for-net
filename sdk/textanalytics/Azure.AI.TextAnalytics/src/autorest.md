@@ -7,7 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e59b6449e6613c0e4ecb73daacacdff320d65f67/specification/cognitiveservices/data-plane/Language/stable/2022-05-01/textanalytics.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e8c6875f27c041292848c6b6f072e9387575e5ad/specification/cognitiveservices/data-plane/Language/preview/2022-10-01-preview/analyzetext.json
 generation1-convenience-client: true
 ```
 
@@ -35,6 +35,10 @@ directive:
 directive:
 - from: swagger-document
   where: $.definitions.*
+  transform: >
+    $["x-accessibility"] = "internal"
+- from: swagger-document
+  where: $.definitions..properties.*
   transform: >
     $["x-accessibility"] = "internal"
 ```

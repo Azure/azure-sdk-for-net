@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<string> format = default;
             Optional<string> name = default;
             Optional<string> version = default;
+            Optional<ServiceAccountCallRateLimit> callRateLimit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseModel"))
@@ -143,8 +144,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     version = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("callRateLimit"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value);
+                    continue;
+                }
             }
-            return new CognitiveServicesAccountModel(format.Value, name.Value, version.Value, baseModel.Value, Optional.ToNullable(maxCapacity), Optional.ToDictionary(capabilities), deprecation.Value, systemData);
+            return new CognitiveServicesAccountModel(format.Value, name.Value, version.Value, callRateLimit.Value, baseModel.Value, Optional.ToNullable(maxCapacity), Optional.ToDictionary(capabilities), deprecation.Value, systemData);
         }
     }
 }

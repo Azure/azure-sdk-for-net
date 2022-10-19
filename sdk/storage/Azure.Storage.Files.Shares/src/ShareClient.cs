@@ -3525,6 +3525,7 @@ namespace Azure.Storage.Files.Shares
                 ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri)
                 {
                     // erase parameters unrelated to container
+                    ShareName = null,
                     DirectoryOrFilePath = null,
                     Snapshot = null,
                 };

@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.ResourceMover.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.Network" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\MoverResourceTests\" />
+  </ItemGroup>
+</Project>

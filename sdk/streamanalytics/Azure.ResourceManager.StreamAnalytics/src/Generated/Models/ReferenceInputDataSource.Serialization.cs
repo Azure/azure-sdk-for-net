@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Microsoft.Sql/Server/Database": return AzureSqlReferenceInputDataSource.DeserializeAzureSqlReferenceInputDataSource(element);
+                    case "Microsoft.Sql/Server/Database": return SqlReferenceInputDataSource.DeserializeSqlReferenceInputDataSource(element);
                     case "Microsoft.Storage/Blob": return BlobReferenceInputDataSource.DeserializeBlobReferenceInputDataSource(element);
                     case "Raw": return RawReferenceInputDataSource.DeserializeRawReferenceInputDataSource(element);
                 }
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new ReferenceInputDataSource(type);
+            return new UnknownReferenceInputDataSource(type);
         }
     }
 }

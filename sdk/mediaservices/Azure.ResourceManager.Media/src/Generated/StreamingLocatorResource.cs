@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Media
     /// A Class representing a StreamingLocator along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StreamingLocatorResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetStreamingLocatorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaServiceResource" /> using the GetStreamingLocator method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaServicesAccountResource" /> using the GetStreamingLocator method.
     /// </summary>
     public partial class StreamingLocatorResource : ArmResource
     {
@@ -307,9 +307,9 @@ namespace Azure.ResourceManager.Media
         /// Operation Id: StreamingLocators_ListPaths
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GetPathsResult>> GetSupportedPathsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StreamingPathsResult>> GetStreamingPathsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetSupportedPaths");
+            using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetStreamingPaths");
             scope.Start();
             try
             {
@@ -329,9 +329,9 @@ namespace Azure.ResourceManager.Media
         /// Operation Id: StreamingLocators_ListPaths
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GetPathsResult> GetSupportedPaths(CancellationToken cancellationToken = default)
+        public virtual Response<StreamingPathsResult> GetStreamingPaths(CancellationToken cancellationToken = default)
         {
-            using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetSupportedPaths");
+            using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetStreamingPaths");
             scope.Start();
             try
             {

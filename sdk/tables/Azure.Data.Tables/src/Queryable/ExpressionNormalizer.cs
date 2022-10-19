@@ -15,6 +15,8 @@ namespace Azure.Data.Tables.Queryable
 
         private readonly Dictionary<Expression, Pattern> _patterns = new Dictionary<Expression, Pattern>(ReferenceEqualityComparer<Expression>.Instance);
 
+        private bool _underEqualityOperation;
+
         private ExpressionNormalizer(Dictionary<Expression, Expression> normalizerRewrites)
         {
             Debug.Assert(normalizerRewrites != null, "normalizerRewrites != null");
@@ -35,6 +37,8 @@ namespace Azure.Data.Tables.Queryable
 
         internal override Expression VisitBinary(BinaryExpression b)
         {
+            _underEqualityOperation = b.NodeType == ExpressionType.Equal || b.NodeType == ExpressionType.NotEqual;
+
             BinaryExpression visited = (BinaryExpression)base.VisitBinary(b);
 
             switch (visited.NodeType)
@@ -64,19 +68,59 @@ namespace Azure.Data.Tables.Queryable
                 }
             }
 
+            _underEqualityOperation = false;
+
             RecordRewrite(b, visited);
+
+            return visited;
+        }
+
+        internal override Expression VisitMemberAccess(MemberExpression m)
+        {
+            Expression visited;
+            if (IsImplicitBooleanComparison(m))
+            {
+                visited = CreateExplicitBooleanComparison(m);
+            }
+            else
+            {
+                visited = base.VisitMemberAccess(m);
+            }
+
+            RecordRewrite(m, visited);
 
             return visited;
         }
 
         internal override Expression VisitUnary(UnaryExpression u)
         {
-            UnaryExpression visited = (UnaryExpression)base.VisitUnary(u);
-            Expression result = visited;
+            Expression result;
+            if (u.NodeType == ExpressionType.Convert && IsImplicitBooleanComparison(u))
+            {
+                BinaryExpression expandedBooleanComparison = CreateExplicitBooleanComparison(u);
+                result = VisitBinary(expandedBooleanComparison);
+            }
+            else
+            {
+                result = base.VisitUnary(u);
 
-            RecordRewrite(u, result);
+                RecordRewrite(u, result);
+            }
 
             return result;
+        }
+
+        private bool IsImplicitBooleanComparison(Expression expression)
+        {
+            return !_underEqualityOperation && typeof(bool?).IsAssignableFrom(expression.Type);
+        }
+
+        private static BinaryExpression CreateExplicitBooleanComparison(Expression expression)
+        {
+            var isNullable = expression.Type == typeof(bool?);
+            ConstantExpression constant = isNullable ? Expression.Constant(true, typeof(bool?)) : Expression.Constant(true, typeof(bool));
+
+            return CreateRelationalOperator(ExpressionType.Equal, expression, constant);
         }
 
         private static Expression UnwrapObjectConvert(Expression input)

@@ -1258,17 +1258,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: ResourceHealthMetadata_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebSiteResourceHealthMetadataResource> GetAllResourceHealthMetadataAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebSiteResourceHealthMetadataResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ResourceHealthMetadataData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = await ResourceHealthMetadataRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1276,14 +1276,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<WebSiteResourceHealthMetadataResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ResourceHealthMetadataData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = await ResourceHealthMetadataRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1300,17 +1300,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: ResourceHealthMetadata_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebSiteResourceHealthMetadataResource> GetAllResourceHealthMetadata(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceHealthMetadataData> GetAllResourceHealthMetadata(CancellationToken cancellationToken = default)
         {
-            Page<WebSiteResourceHealthMetadataResource> FirstPageFunc(int? pageSizeHint)
+            Page<ResourceHealthMetadataData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = ResourceHealthMetadataRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1318,14 +1318,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<WebSiteResourceHealthMetadataResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ResourceHealthMetadataData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = ResourceHealthMetadataRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1344,10 +1344,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingMeter" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingMeter> GetBillingMetersAsync(string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceBillingMeter" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceBillingMeter> GetBillingMetersAsync(string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<BillingMeter>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServiceBillingMeter>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBillingMeters");
                 scope.Start();
@@ -1362,7 +1362,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<BillingMeter>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppServiceBillingMeter>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBillingMeters");
                 scope.Start();
@@ -1388,10 +1388,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingMeter" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingMeter> GetBillingMeters(string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceBillingMeter" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceBillingMeter> GetBillingMeters(string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
-            Page<BillingMeter> FirstPageFunc(int? pageSizeHint)
+            Page<AppServiceBillingMeter> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBillingMeters");
                 scope.Start();
@@ -1406,7 +1406,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<BillingMeter> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppServiceBillingMeter> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBillingMeters");
                 scope.Start();
@@ -1476,7 +1476,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: GetSubscriptionDeploymentLocations
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeploymentLocations>> GetAppServiceDeploymentLocationsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceDeploymentLocations>> GetAppServiceDeploymentLocationsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppServiceDeploymentLocations");
             scope.Start();
@@ -1498,7 +1498,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: GetSubscriptionDeploymentLocations
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeploymentLocations> GetAppServiceDeploymentLocations(CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceDeploymentLocations> GetAppServiceDeploymentLocations(CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppServiceDeploymentLocations");
             scope.Start();
@@ -1524,10 +1524,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="xenonWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Xenon workers. </param>
         /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GeoRegion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GeoRegion> GetGeoRegionsAsync(AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceGeoRegion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceGeoRegion> GetGeoRegionsAsync(AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<GeoRegion>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServiceGeoRegion>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGeoRegions");
                 scope.Start();
@@ -1542,7 +1542,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<GeoRegion>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppServiceGeoRegion>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGeoRegions");
                 scope.Start();
@@ -1570,10 +1570,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="xenonWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Xenon workers. </param>
         /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GeoRegion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GeoRegion> GetGeoRegions(AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceGeoRegion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceGeoRegion> GetGeoRegions(AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
-            Page<GeoRegion> FirstPageFunc(int? pageSizeHint)
+            Page<AppServiceGeoRegion> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGeoRegions");
                 scope.Start();
@@ -1588,7 +1588,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<GeoRegion> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppServiceGeoRegion> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGeoRegions");
                 scope.Start();
@@ -1596,92 +1596,6 @@ namespace Azure.ResourceManager.AppService
                 {
                     var response = DefaultRestClient.ListGeoRegionsNextPage(nextLink, Id.SubscriptionId, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Description for List all apps that are assigned to a hostname.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
-        /// Operation Id: ListSiteIdentifiersAssignedToHostName
-        /// </summary>
-        /// <param name="nameIdentifier"> Hostname information. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteDomainOwnershipIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteDomainOwnershipIdentifierResource> GetSiteIdentifiersAssignedToHostNameAsync(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<SiteDomainOwnershipIdentifierResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSiteIdentifiersAssignedToHostName");
-                scope.Start();
-                try
-                {
-                    var response = await DefaultRestClient.ListSiteIdentifiersAssignedToHostNameAsync(Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDomainOwnershipIdentifierResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SiteDomainOwnershipIdentifierResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSiteIdentifiersAssignedToHostName");
-                scope.Start();
-                try
-                {
-                    var response = await DefaultRestClient.ListSiteIdentifiersAssignedToHostNameNextPageAsync(nextLink, Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDomainOwnershipIdentifierResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Description for List all apps that are assigned to a hostname.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
-        /// Operation Id: ListSiteIdentifiersAssignedToHostName
-        /// </summary>
-        /// <param name="nameIdentifier"> Hostname information. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteDomainOwnershipIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteDomainOwnershipIdentifierResource> GetSiteIdentifiersAssignedToHostName(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
-        {
-            Page<SiteDomainOwnershipIdentifierResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSiteIdentifiersAssignedToHostName");
-                scope.Start();
-                try
-                {
-                    var response = DefaultRestClient.ListSiteIdentifiersAssignedToHostName(Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDomainOwnershipIdentifierResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SiteDomainOwnershipIdentifierResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSiteIdentifiersAssignedToHostName");
-                scope.Start();
-                try
-                {
-                    var response = DefaultRestClient.ListSiteIdentifiersAssignedToHostNameNextPage(nextLink, Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDomainOwnershipIdentifierResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1827,7 +1741,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(VnetContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualNetworkValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.VerifyHostingEnvironmentVnet");
             scope.Start();
@@ -1850,7 +1764,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VnetValidationFailureDetails> VerifyHostingEnvironmentVnet(VnetContent content, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualNetworkValidationFailureDetails> VerifyHostingEnvironmentVnet(AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.VerifyHostingEnvironmentVnet");
             scope.Start();

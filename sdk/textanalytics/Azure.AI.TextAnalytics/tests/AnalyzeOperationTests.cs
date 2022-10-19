@@ -38,6 +38,8 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        // TODO: Temporarily setting max version to V2022-05-01 since V2022-10-01-preview does not support AAD yet (https://github.com/Azure/azure-sdk-for-net/issues/31854).
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         public async Task AnalyzeOperationWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -208,9 +210,8 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(5, operation.ActionsSucceeded);
             Assert.AreEqual(0, operation.ActionsInProgress);
             Assert.AreEqual(5, operation.ActionsTotal);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn);
+
+            ValidateOperationProperties(operation);
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -394,9 +395,8 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(18, operation.ActionsSucceeded);
             Assert.AreEqual(0, operation.ActionsInProgress);
             Assert.AreEqual(18, operation.ActionsTotal);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn);
+
+            ValidateOperationProperties(operation);
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -741,6 +741,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         public async Task AnalyzeOperationAnalyzeHealthcareEntities()
         {
             TextAnalyticsClient client = GetClient();
@@ -775,8 +776,99 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
             Assert.That(analyzeHealthcareEntitiesActionResults, Has.Some.Matches<AnalyzeHealthcareEntitiesActionResult>(result => result.DocumentsResults.SelectMany(doc => doc.Entities).Any(e => e.Category == HealthcareEntityCategory.Dosage && e.Text == "100mg")));
 
-            // BUGBUG: HealthcareEntityCategory is returned as PascalCase though both the 3.1 and 2022-05-01 swaggers define them as SCREAMING_SNAKE_CASE: https://github.com/Azure/azure-rest-api-specs/issues/20024
-            // Assert.That(analyzeHealthcareEntitiesActionResults, Has.Some.Matches<AnalyzeHealthcareEntitiesActionResult>(result => result.DocumentsResults.SelectMany(doc => doc.Entities).Any(e => e.Category == HealthcareEntityCategory.MedicationName && e.Text == "ibuprofen")));
+            Assert.That(analyzeHealthcareEntitiesActionResults, Has.Some.Matches<AnalyzeHealthcareEntitiesActionResult>(result => result.DocumentsResults.SelectMany(doc => doc.Entities).Any(e => e.Category == HealthcareEntityCategory.MedicationName && e.Text == "ibuprofen")));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public void AnalyzeOperationAnalyzeHealthcareEntitiesActionNotSupported()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new()
+            {
+                AnalyzeHealthcareEntitiesActions = new[]
+                {
+                    new AnalyzeHealthcareEntitiesAction(),
+                },
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
+            Assert.AreEqual("AnalyzeHealthcareEntitiesAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public void AnalyzeOperationMultiLabelClassifyActionNotSupported()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new()
+            {
+                MultiLabelClassifyActions = new[]
+                {
+                    new MultiLabelClassifyAction(TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName),
+                },
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
+            Assert.AreEqual("MultiLabelClassifyAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public void AnalyzeOperationRecognizeCustomEntitiesActionNotSupported()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new()
+            {
+                RecognizeCustomEntitiesActions = new[]
+                {
+                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName),
+                },
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
+            Assert.AreEqual("RecognizeCustomEntitiesAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public void AnalyzeOperationSingleLabelClassifyActionNotSupported()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new()
+            {
+                SingleLabelClassifyActions = new[]
+                {
+                    new SingleLabelClassifyAction(TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName),
+                },
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
+            Assert.AreEqual("SingleLabelClassifyAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
+        }
+
+        private void ValidateOperationProperties(AnalyzeActionsOperation operation)
+        {
+            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
+            // TODO: Re-enable this check (https://github.com/Azure/azure-sdk-for-net/issues/31855).
+            // Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
+
+            if (operation.ExpiresOn.HasValue)
+            {
+                Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn.Value);
+            }
         }
     }
 }

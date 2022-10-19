@@ -157,6 +157,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "SapCloudForCustomerResource": return SapCloudForCustomerResourceDataset.DeserializeSapCloudForCustomerResourceDataset(element);
                     case "SapEccResource": return SapEccResourceDataset.DeserializeSapEccResourceDataset(element);
                     case "SapHanaTable": return SapHanaTableDataset.DeserializeSapHanaTableDataset(element);
+                    case "SapOdpResource": return SapOdpResourceDataset.DeserializeSapOdpResourceDataset(element);
                     case "SapOpenHubTable": return SapOpenHubTableDataset.DeserializeSapOpenHubTableDataset(element);
                     case "SapTableResource": return SapTableResourceDataset.DeserializeSapTableResourceDataset(element);
                     case "ServiceNowObject": return ServiceNowObjectDataset.DeserializeServiceNowObjectDataset(element);

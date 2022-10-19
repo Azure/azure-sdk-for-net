@@ -6,14 +6,12 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// Gets the application HTTP endpoints.
-    /// Serialized Name: ApplicationGetHttpsEndpoint
-    /// </summary>
+    /// <summary> Gets the application HTTP endpoints. </summary>
     public partial class HDInsightApplicationHttpsEndpoint
     {
         /// <summary> Initializes a new instance of HDInsightApplicationHttpsEndpoint. </summary>
@@ -23,38 +21,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightApplicationHttpsEndpoint. </summary>
-        /// <param name="accessModes">
-        /// The list of access modes for the application.
-        /// Serialized Name: ApplicationGetHttpsEndpoint.accessModes
-        /// </param>
-        /// <param name="location">
-        /// The location of the endpoint.
-        /// Serialized Name: ApplicationGetHttpsEndpoint.location
-        /// </param>
-        /// <param name="destinationPort">
-        /// The destination port to connect to.
-        /// Serialized Name: ApplicationGetHttpsEndpoint.destinationPort
-        /// </param>
-        /// <param name="publicPort">
-        /// The public port to connect to.
-        /// Serialized Name: ApplicationGetHttpsEndpoint.publicPort
-        /// </param>
-        /// <param name="privateIPAddress">
-        /// The private ip address of the endpoint.
-        /// Serialized Name: ApplicationGetHttpsEndpoint.privateIPAddress
-        /// </param>
-        /// <param name="subDomainSuffix">
-        /// The subdomain suffix of the application.
-        /// Serialized Name: ApplicationGetHttpsEndpoint.subDomainSuffix
-        /// </param>
-        /// <param name="disableGatewayAuth">
-        /// The value indicates whether to disable GatewayAuth.
-        /// Serialized Name: ApplicationGetHttpsEndpoint.disableGatewayAuth
-        /// </param>
-        internal HDInsightApplicationHttpsEndpoint(IList<string> accessModes, AzureLocation? location, int? destinationPort, int? publicPort, string privateIPAddress, string subDomainSuffix, bool? disableGatewayAuth)
+        /// <param name="accessModes"> The list of access modes for the application. </param>
+        /// <param name="endpointLocation"> The location of the endpoint. </param>
+        /// <param name="destinationPort"> The destination port to connect to. </param>
+        /// <param name="publicPort"> The public port to connect to. </param>
+        /// <param name="privateIPAddress"> The private ip address of the endpoint. </param>
+        /// <param name="subDomainSuffix"> The subdomain suffix of the application. </param>
+        /// <param name="disableGatewayAuth"> The value indicates whether to disable GatewayAuth. </param>
+        internal HDInsightApplicationHttpsEndpoint(IList<string> accessModes, string endpointLocation, int? destinationPort, int? publicPort, IPAddress privateIPAddress, string subDomainSuffix, bool? disableGatewayAuth)
         {
             AccessModes = accessModes;
-            Location = location;
+            EndpointLocation = endpointLocation;
             DestinationPort = destinationPort;
             PublicPort = publicPort;
             PrivateIPAddress = privateIPAddress;
@@ -62,40 +39,19 @@ namespace Azure.ResourceManager.HDInsight.Models
             DisableGatewayAuth = disableGatewayAuth;
         }
 
-        /// <summary>
-        /// The list of access modes for the application.
-        /// Serialized Name: ApplicationGetHttpsEndpoint.accessModes
-        /// </summary>
+        /// <summary> The list of access modes for the application. </summary>
         public IList<string> AccessModes { get; }
-        /// <summary>
-        /// The location of the endpoint.
-        /// Serialized Name: ApplicationGetHttpsEndpoint.location
-        /// </summary>
-        public AzureLocation? Location { get; }
-        /// <summary>
-        /// The destination port to connect to.
-        /// Serialized Name: ApplicationGetHttpsEndpoint.destinationPort
-        /// </summary>
+        /// <summary> The location of the endpoint. </summary>
+        public string EndpointLocation { get; }
+        /// <summary> The destination port to connect to. </summary>
         public int? DestinationPort { get; set; }
-        /// <summary>
-        /// The public port to connect to.
-        /// Serialized Name: ApplicationGetHttpsEndpoint.publicPort
-        /// </summary>
+        /// <summary> The public port to connect to. </summary>
         public int? PublicPort { get; }
-        /// <summary>
-        /// The private ip address of the endpoint.
-        /// Serialized Name: ApplicationGetHttpsEndpoint.privateIPAddress
-        /// </summary>
-        public string PrivateIPAddress { get; set; }
-        /// <summary>
-        /// The subdomain suffix of the application.
-        /// Serialized Name: ApplicationGetHttpsEndpoint.subDomainSuffix
-        /// </summary>
+        /// <summary> The private ip address of the endpoint. </summary>
+        public IPAddress PrivateIPAddress { get; set; }
+        /// <summary> The subdomain suffix of the application. </summary>
         public string SubDomainSuffix { get; set; }
-        /// <summary>
-        /// The value indicates whether to disable GatewayAuth.
-        /// Serialized Name: ApplicationGetHttpsEndpoint.disableGatewayAuth
-        /// </summary>
+        /// <summary> The value indicates whether to disable GatewayAuth. </summary>
         public bool? DisableGatewayAuth { get; set; }
     }
 }

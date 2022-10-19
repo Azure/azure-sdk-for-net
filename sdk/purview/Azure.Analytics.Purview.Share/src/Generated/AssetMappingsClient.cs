@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Share
 {
+    // Data plane generated client. The AssetMappings service client.
     /// <summary> The AssetMappings service client. </summary>
     public partial class AssetMappingsClient
     {

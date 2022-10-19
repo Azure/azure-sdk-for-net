@@ -18,6 +18,11 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("allowTestDevices");
             writer.WriteBooleanValue(AllowTestDevices);
+            if (Optional.IsDefined(SecurityLevel))
+            {
+                writer.WritePropertyName("securityLevel");
+                writer.WriteStringValue(SecurityLevel.Value.ToString());
+            }
             if (Optional.IsDefined(BeginOn))
             {
                 writer.WritePropertyName("beginDate");
@@ -60,6 +65,7 @@ namespace Azure.ResourceManager.Media.Models
         internal static ContentKeyPolicyPlayReadyLicense DeserializeContentKeyPolicyPlayReadyLicense(JsonElement element)
         {
             bool allowTestDevices = default;
+            Optional<PlayReadySecurityLevel> securityLevel = default;
             Optional<DateTimeOffset> beginDate = default;
             Optional<DateTimeOffset> expirationDate = default;
             Optional<TimeSpan> relativeBeginDate = default;
@@ -74,6 +80,16 @@ namespace Azure.ResourceManager.Media.Models
                 if (property.NameEquals("allowTestDevices"))
                 {
                     allowTestDevices = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("securityLevel"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    securityLevel = new PlayReadySecurityLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("beginDate"))
@@ -152,7 +168,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new ContentKeyPolicyPlayReadyLicense(allowTestDevices, Optional.ToNullable(beginDate), Optional.ToNullable(expirationDate), Optional.ToNullable(relativeBeginDate), Optional.ToNullable(relativeExpirationDate), Optional.ToNullable(gracePeriod), playRight.Value, licenseType, contentKeyLocation, contentType);
+            return new ContentKeyPolicyPlayReadyLicense(allowTestDevices, Optional.ToNullable(securityLevel), Optional.ToNullable(beginDate), Optional.ToNullable(expirationDate), Optional.ToNullable(relativeBeginDate), Optional.ToNullable(relativeExpirationDate), Optional.ToNullable(gracePeriod), playRight.Value, licenseType, contentKeyLocation, contentType);
         }
     }
 }

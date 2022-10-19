@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new IdentityConfiguration(identityType);
+            return new UnknownIdentityConfiguration(identityType);
         }
     }
 }

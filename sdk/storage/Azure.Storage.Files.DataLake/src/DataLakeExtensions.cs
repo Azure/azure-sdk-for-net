@@ -412,7 +412,8 @@ namespace Azure.Storage.Files.DataLake
                 ColumnSeparator = options.ColumnSeparator,
                 QuotationCharacter = options.QuotationCharacter,
                 EscapeCharacter = options.EscapeCharacter,
-                HasHeaders = options.HasHeaders
+                HasHeaders = options.HasHeaders,
+                RecordSeparator = options.RecordSeparator,
             };
 
         internal static BlobQueryArrowOptions ToBlobQueryArrowOptions(this DataLakeQueryArrowOptions options)
@@ -507,7 +508,7 @@ namespace Azure.Storage.Files.DataLake
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 Position = options.Position,
-                TransferValidationOptions = options.TransferValidationOptions
+                TransferValidation = options.TransferValidation
             };
         }
 
@@ -522,7 +523,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 Range = options.Range,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
-                TransferValidationOptions = options.TransferValidationOptions
+                TransferValidation = options.TransferValidation
             };
         }
 
@@ -536,7 +537,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 TransferOptions = options.TransferOptions,
-                TransferValidationOptions = options.TransferValidationOptions
+                TransferValidation = options.TransferValidation
             };
         }
 
@@ -569,7 +570,7 @@ namespace Azure.Storage.Files.DataLake
                 Name = path.Name,
                 IsDirectory = path.IsDirectory != null && bool.Parse(path.IsDirectory),
                 LastModified = path.LastModified.GetValueOrDefault(),
-                ETag = new ETag(path.ETag),
+                ETag = new ETag(path.Etag),
                 ContentLength = path.ContentLength == null ? 0 : long.Parse(path.ContentLength, CultureInfo.InvariantCulture),
                 Owner = path.Owner,
                 Group = path.Group,

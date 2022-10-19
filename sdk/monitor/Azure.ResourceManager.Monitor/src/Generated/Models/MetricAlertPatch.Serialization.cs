@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(TargetResourceType))
             {
                 writer.WritePropertyName("targetResourceType");
-                writer.WriteStringValue(TargetResourceType);
+                writer.WriteStringValue(TargetResourceType.Value);
             }
             if (Optional.IsDefined(TargetResourceRegion))
             {
                 writer.WritePropertyName("targetResourceRegion");
-                writer.WriteStringValue(TargetResourceRegion);
+                writer.WriteStringValue(TargetResourceRegion.Value);
             }
             if (Optional.IsDefined(Criteria))
             {
                 writer.WritePropertyName("criteria");
                 writer.WriteObjectValue(Criteria);
             }
-            if (Optional.IsDefined(IsAutoMitigate))
+            if (Optional.IsDefined(IsAutoMitigateEnabled))
             {
                 writer.WritePropertyName("autoMitigate");
-                writer.WriteBooleanValue(IsAutoMitigate.Value);
+                writer.WriteBooleanValue(IsAutoMitigateEnabled.Value);
             }
             if (Optional.IsCollectionDefined(Actions))
             {

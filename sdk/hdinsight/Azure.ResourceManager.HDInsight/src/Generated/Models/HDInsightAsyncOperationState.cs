@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The async operation state.
-    /// Serialized Name: AsyncOperationState
-    /// </summary>
+    /// <summary> The async operation state. </summary>
     public readonly partial struct HDInsightAsyncOperationState : IEquatable<HDInsightAsyncOperationState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.HDInsight.Models
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// InProgress
-        /// Serialized Name: AsyncOperationState.InProgress
-        /// </summary>
+        /// <summary> InProgress. </summary>
         public static HDInsightAsyncOperationState InProgress { get; } = new HDInsightAsyncOperationState(InProgressValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: AsyncOperationState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static HDInsightAsyncOperationState Succeeded { get; } = new HDInsightAsyncOperationState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: AsyncOperationState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static HDInsightAsyncOperationState Failed { get; } = new HDInsightAsyncOperationState(FailedValue);
         /// <summary> Determines if two <see cref="HDInsightAsyncOperationState"/> values are the same. </summary>
         public static bool operator ==(HDInsightAsyncOperationState left, HDInsightAsyncOperationState right) => left.Equals(right);

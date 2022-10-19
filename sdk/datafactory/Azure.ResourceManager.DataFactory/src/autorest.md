@@ -9,7 +9,6 @@ csharp: true
 library-name: DataFactory
 namespace: Azure.ResourceManager.DataFactory
 require: https://github.com/Azure/azure-rest-api-specs/blob/de400f7204d30d25543ac967636180728d52a88f/specification/datafactory/resource-manager/readme.md
-tag: package-2018-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -58,6 +57,8 @@ rename-rules:
   ETA: Eta
   GET: Get
   PUT: Put
+  GZip: Gzip
+  Pwd: Password
 
 rename-mapping:
   # Property
@@ -102,6 +103,16 @@ rename-mapping:
   SsisParameter.sensitive: IsSensitive
   SsisParameter.valueSet: HasValueSet
   SsisVariable.sensitive: IsSensitive
+  AvroDataset.typeProperties.location: DataLocation
+  BinaryDataset.typeProperties.location: DataLocation
+  DelimitedTextDataset.typeProperties.location: DataLocation
+  ExcelDataset.typeProperties.location: DataLocation
+  JsonDataset.typeProperties.location: DataLocation
+  OrcDataset.typeProperties.location: DataLocation
+  ParquetDataset.typeProperties.location: DataLocation
+  XmlDataset.typeProperties.location: DataLocation
+  IntegrationRuntimeDataFlowProperties.cleanup: ShouldCleanupAfterTtl
+  SsisPackageLocationType.SSISDB: SsisDB
   # Factory
   Factory: DataFactory
   FactoryListResponse: FactoryListResult
@@ -202,6 +213,7 @@ rename-mapping:
   AccessPolicyResponse: FactoryDataPlaneAccessPolicyResult
   CredentialReference: FactoryCredentialReference
   CredentialReferenceType: FactoryCredentialReferenceType
+  DaysOfWeek: FactoryDayOfWeek
   EncryptionConfiguration: FactoryEncryptionConfiguration
   ExposureControlBatchResponse: ExposureControlBatchResult
   ExposureControlResponse: ExposureControlResult
@@ -217,7 +229,7 @@ rename-mapping:
   SsisObjectMetadataStatusResponse: SsisObjectMetadataStatusResult
   SsisParameter: SsisParameterInfo
   IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse: IntegrationRuntimeOutboundNetworkDependenciesResult
-  
+
 override-operation-name:
   ActivityRuns_QueryByPipelineRun: GetActivityRun
   PipelineRuns_QueryByFactory: GetPipelineRuns
@@ -235,7 +247,7 @@ directive:
   - from: datafactory.json
     where: $.parameters
     transform: >
-      $.locationId['x-ms-format'] = 'arm-id';
+      $.locationId['x-ms-format'] = 'azure-location';
   - from: datafactory.json
     where: $.definitions
     transform: >
@@ -251,4 +263,9 @@ directive:
     transform: >
       $.SelfHostedIntegrationRuntimeStatusTypeProperties.properties.updateDelayOffset['format'] = 'duration';
       $.SelfHostedIntegrationRuntimeStatusTypeProperties.properties.localTimeZoneOffset['format'] = 'duration';
+  # The definition of userAssignedIdentities is not same as the ManagedServiceIdentity, but the actual json text is same, so remove this property here to normalize with shared ManagedServiceIdentity.
+  - from: datafactory.json
+    where: $.definitions
+    transform: >
+      delete $.FactoryIdentity.properties.userAssignedIdentities;
 ```

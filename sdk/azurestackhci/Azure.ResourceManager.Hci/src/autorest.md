@@ -9,7 +9,6 @@ csharp: true
 library-name: Hci
 namespace: Azure.ResourceManager.Hci
 require: https://github.com/Azure/azure-rest-api-specs/blob/324a148497f28ef7588eee7bdb61dcd28b74f505/specification/azurestackhci/resource-manager/readme.md
-tag: package-2022-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -17,11 +16,14 @@ modelerfour:
   flatten-payloads: false
 
 format-by-name-rules:
-  'tenantId': 'uuid'
+  '*TenantId': 'uuid'
   'etag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  '*ClientId': 'uuid'
+  '*ApplicationObjectId': 'uuid'
+  '*ServicePrincipalObjectId': 'uuid'
 
 rename-rules:
   CPU: Cpu
@@ -46,47 +48,34 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+prepend-rp-prefix:
+  - Cluster
+  - ProvisioningState
+  - ClusterDesiredProperties
+  - ClusterNode
+  - ClusterReportedProperties
+rename-mapping:
+  Extension: ArcExtension
+  Extension.properties.extensionParameters.autoUpgradeMinorVersion: ShouldAutoUpgradeMinorVersion
+  Extension.properties.extensionParameters.type: ArcExtensionType
+  Status: HciClusterStatus
+  ClusterReportedProperties.clusterId: -|uuid
+  Cluster.properties.cloudId: -|uuid
+  ArcIdentityResponse: ArcIdentityResult
+  ClusterIdentityResponse: HciClusterIdentityResult
+  ClusterReportedProperties.lastUpdated: LastUpdatedOn
+  ClusterList: HciClusterListResult
+  DiagnosticLevel: HciClusterDiagnosticLevel
+  ExtensionAggregateState: ArcExtensionAggregateState
+  ExtensionList: ArcExtensionListResult
+  ImdsAttestation: ImdsAttestationState
+  PasswordCredential: ArcPasswordCredential
+  UploadCertificateRequest: HciClusterCertificateContent
+  RawCertificateData: HciClusterRawCertificate
+  PerNodeState: PerNodeArcState
+
 directive:
-  - from: extensions.json
-    where: $.definitions.Extension
-    transform: $["x-ms-client-name"] = "ArcExtension"
-  - from: extensions.json
-    where: $.definitions.Extension.properties.systemData
+  - from: swagger-document
+    where: $.definitions..systemData
     transform: $["x-ms-client-flatten"] = false
-  - from: clusters.json
-    where: $.definitions.Cluster
-    transform: $["x-ms-client-name"] = "HciCluster"
-  - from: clusters.json
-    where: $.definitions.ClusterProperties.properties.status["x-ms-enum"]
-    transform: $.name = "HciClusterStatus"
-  - from: clusters.json
-    where: $.definitions.ClusterProperties.properties
-    transform: >
-      $.aadClientId.format = "uuid";
-      $.aadTenantId.format = "uuid";
-      $.cloudId.format = "uuid";
-      $.aadApplicationObjectId.format = "uuid";
-      $.aadServicePrincipalObjectId.format = "uuid";
-  - from: clusters.json
-    where: $.definitions.ClusterPatchProperties.properties
-    transform: >
-      $.aadClientId.format = "uuid";
-      $.aadTenantId.format = "uuid";
-  - from: clusters.json
-    where: $.definitions.ClusterReportedProperties.properties.clusterId
-    transform: >
-      $.format = "uuid"
-  - from: clusters.json
-    where: $.definitions.Cluster.properties.systemData
-    transform: $["x-ms-client-flatten"] = false
-  - from: arcSettings.json
-    where: $.definitions.ArcSetting.properties.systemData
-    transform: $["x-ms-client-flatten"] = false
-  - from: arcSettings.json
-    where: $.definitions.ArcSettingProperties.properties
-    transform: >
-      $.arcApplicationClientId.format = "uuid";
-      $.arcApplicationTenantId.format = "uuid";
-      $.arcServicePrincipalObjectId.format = "uuid";
-      $.arcApplicationObjectId.format = "uuid";
 ```

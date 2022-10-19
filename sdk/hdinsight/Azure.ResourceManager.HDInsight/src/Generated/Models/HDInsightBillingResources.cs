@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The billing resources.
-    /// Serialized Name: BillingResources
-    /// </summary>
+    /// <summary> The billing resources. </summary>
     public partial class HDInsightBillingResources
     {
         /// <summary> Initializes a new instance of HDInsightBillingResources. </summary>
@@ -24,39 +21,21 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightBillingResources. </summary>
-        /// <param name="region">
-        /// The region or location.
-        /// Serialized Name: BillingResources.region
-        /// </param>
-        /// <param name="billingMeters">
-        /// The billing meter information.
-        /// Serialized Name: BillingResources.billingMeters
-        /// </param>
-        /// <param name="diskBillingMeters">
-        /// The managed disk billing information.
-        /// Serialized Name: BillingResources.diskBillingMeters
-        /// </param>
-        internal HDInsightBillingResources(string region, IReadOnlyList<HDInsightBillingMeters> billingMeters, IReadOnlyList<HDInsightDiskBillingMeters> diskBillingMeters)
+        /// <param name="region"> The region or location. </param>
+        /// <param name="billingMeters"> The billing meter information. </param>
+        /// <param name="diskBillingMeters"> The managed disk billing information. </param>
+        internal HDInsightBillingResources(AzureLocation? region, IReadOnlyList<HDInsightBillingMeters> billingMeters, IReadOnlyList<HDInsightDiskBillingMeters> diskBillingMeters)
         {
             Region = region;
             BillingMeters = billingMeters;
             DiskBillingMeters = diskBillingMeters;
         }
 
-        /// <summary>
-        /// The region or location.
-        /// Serialized Name: BillingResources.region
-        /// </summary>
-        public string Region { get; }
-        /// <summary>
-        /// The billing meter information.
-        /// Serialized Name: BillingResources.billingMeters
-        /// </summary>
+        /// <summary> The region or location. </summary>
+        public AzureLocation? Region { get; }
+        /// <summary> The billing meter information. </summary>
         public IReadOnlyList<HDInsightBillingMeters> BillingMeters { get; }
-        /// <summary>
-        /// The managed disk billing information.
-        /// Serialized Name: BillingResources.diskBillingMeters
-        /// </summary>
+        /// <summary> The managed disk billing information. </summary>
         public IReadOnlyList<HDInsightDiskBillingMeters> DiskBillingMeters { get; }
     }
 }
