@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             string scope = $"/subscriptions/{DefaultSubscription.Data.SubscriptionId}/resourceGroups/{ResourceGroup.Data.Name}/providers/Microsoft.EventGrid/topics/{topicName}";
 
             var subscriptionCollection = Client.GetEventSubscriptions(new ResourceIdentifier(scope));
-            var eventSubscription = new EventSubscriptionData()
+            var eventSubscription = new EventGridSubscriptionData()
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             string scope = $"/subscriptions/{DefaultSubscription.Data.SubscriptionId}/resourceGroups/{ResourceGroup.Data.Name}/providers/Microsoft.EventGrid/domains/{domainName}";
 
             var subscriptionCollection = Client.GetEventSubscriptions(new ResourceIdentifier(scope));
-            var eventSubscription = new EventSubscriptionData()
+            var eventSubscription = new EventGridSubscriptionData()
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             scope = $"/subscriptions/{DefaultSubscription.Data.SubscriptionId}/resourceGroups/{ResourceGroup.Data.Name}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}";
 
             subscriptionCollection = Client.GetEventSubscriptions(new ResourceIdentifier(scope));
-            eventSubscription = new EventSubscriptionData()
+            eventSubscription = new EventGridSubscriptionData()
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             string scope = $"/subscriptions/{DefaultSubscription.Data.SubscriptionId}";
             var subscriptionCollection = Client.GetEventSubscriptions(new ResourceIdentifier(scope));
 
-            var eventSubscription = new EventSubscriptionData()
+            var eventSubscription = new EventGridSubscriptionData()
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {

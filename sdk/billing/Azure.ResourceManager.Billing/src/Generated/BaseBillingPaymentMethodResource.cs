@@ -15,26 +15,26 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
 {
-    /// <summary> This is the base client representation of the following resources <see cref="PaymentMethodResource" /> or <see cref="BillingAccountPaymentMethodResource" />. </summary>
-    public abstract partial class BasePaymentMethodResource : ArmResource
+    /// <summary> This is the base client representation of the following resources <see cref="BillingPaymentMethodResource" /> or <see cref="BillingAccountPaymentMethodResource" />. </summary>
+    public abstract partial class BaseBillingPaymentMethodResource : ArmResource
     {
-        internal static BasePaymentMethodResource GetResource(ArmClient client, PaymentMethodData data)
+        internal static BaseBillingPaymentMethodResource GetResource(ArmClient client, BillingPaymentMethodData data)
         {
-            if (IsPaymentMethodResource(data.Id))
+            if (IsBillingPaymentMethodResource(data.Id))
             {
-                return new PaymentMethodResource(client, data);
+                return new BillingPaymentMethodResource(client, data);
             }
             if (IsBillingAccountPaymentMethodResource(data.Id))
             {
                 return new BillingAccountPaymentMethodResource(client, data);
             }
-            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: PaymentMethodResource or BillingAccountPaymentMethodResource");
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: BillingPaymentMethodResource or BillingAccountPaymentMethodResource");
         }
 
-        private static bool IsPaymentMethodResource(ResourceIdentifier id)
+        private static bool IsBillingPaymentMethodResource(ResourceIdentifier id)
         {
             // checking the resource type
-            if (id.ResourceType != PaymentMethodResource.ResourceType)
+            if (id.ResourceType != BillingPaymentMethodResource.ResourceType)
             {
                 return false;
             }
@@ -61,26 +61,26 @@ namespace Azure.ResourceManager.Billing
             return true;
         }
 
-        private readonly PaymentMethodData _data;
+        private readonly BillingPaymentMethodData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="BasePaymentMethodResource"/> class for mocking. </summary>
-        protected BasePaymentMethodResource()
+        /// <summary> Initializes a new instance of the <see cref="BaseBillingPaymentMethodResource"/> class for mocking. </summary>
+        protected BaseBillingPaymentMethodResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BasePaymentMethodResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "BaseBillingPaymentMethodResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BasePaymentMethodResource(ArmClient client, PaymentMethodData data) : this(client, data.Id)
+        internal BaseBillingPaymentMethodResource(ArmClient client, BillingPaymentMethodData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BasePaymentMethodResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BaseBillingPaymentMethodResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BasePaymentMethodResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal BaseBillingPaymentMethodResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual PaymentMethodData Data
+        public virtual BillingPaymentMethodData Data
         {
             get
             {
@@ -101,24 +101,24 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Task<Response<BasePaymentMethodResource>> GetCoreAsync(CancellationToken cancellationToken = default);
+        protected abstract Task<Response<BaseBillingPaymentMethodResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public async Task<Response<BasePaymentMethodResource>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<BaseBillingPaymentMethodResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Response<BasePaymentMethodResource> GetCore(CancellationToken cancellationToken = default);
+        protected abstract Response<BaseBillingPaymentMethodResource> GetCore(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public Response<BasePaymentMethodResource> Get(CancellationToken cancellationToken = default)
+        public Response<BaseBillingPaymentMethodResource> Get(CancellationToken cancellationToken = default)
         {
             return GetCore(cancellationToken);
         }

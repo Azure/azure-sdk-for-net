@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Billing
     /// from an instance of <see cref="ArmClient" /> using the GetBillingPaymentMethodResource method.
     /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetBillingPaymentMethod method.
     /// </summary>
-    public partial class BillingPaymentMethodResource : ArmResource
+    public partial class BillingPaymentMethodResource : BaseBillingPaymentMethodResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BillingPaymentMethodResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string paymentMethodName)
@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.Billing
 
         private readonly ClientDiagnostics _billingPaymentMethodPaymentMethodsClientDiagnostics;
         private readonly PaymentMethodsRestOperations _billingPaymentMethodPaymentMethodsRestClient;
-        private readonly BillingPaymentMethodData _data;
 
         /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodResource"/> class for mocking. </summary>
         protected BillingPaymentMethodResource()
@@ -44,10 +43,14 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Initializes a new instance of the <see cref = "BillingPaymentMethodResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BillingPaymentMethodResource(ArmClient client, BillingPaymentMethodData data) : this(client, data.Id)
+        internal BillingPaymentMethodResource(ArmClient client, BillingPaymentMethodData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _billingPaymentMethodPaymentMethodsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string billingPaymentMethodPaymentMethodsApiVersion);
+            _billingPaymentMethodPaymentMethodsRestClient = new PaymentMethodsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingPaymentMethodPaymentMethodsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodResource"/> class. </summary>
@@ -66,21 +69,6 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Billing/paymentMethods";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual BillingPaymentMethodData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -93,7 +81,7 @@ namespace Azure.ResourceManager.Billing
         /// Operation Id: PaymentMethods_GetByUser
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BillingPaymentMethodResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<BaseBillingPaymentMethodResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _billingPaymentMethodPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodResource.Get");
             scope.Start();
@@ -102,7 +90,7 @@ namespace Azure.ResourceManager.Billing
                 var response = await _billingPaymentMethodPaymentMethodsRestClient.GetByUserAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BillingPaymentMethodResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +105,20 @@ namespace Azure.ResourceManager.Billing
         /// Operation Id: PaymentMethods_GetByUser
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BillingPaymentMethodResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<BillingPaymentMethodResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((BillingPaymentMethodResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Gets a payment method owned by the caller.
+        /// Request Path: /providers/Microsoft.Billing/paymentMethods/{paymentMethodName}
+        /// Operation Id: PaymentMethods_GetByUser
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<BaseBillingPaymentMethodResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _billingPaymentMethodPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodResource.Get");
             scope.Start();
@@ -126,13 +127,26 @@ namespace Azure.ResourceManager.Billing
                 var response = _billingPaymentMethodPaymentMethodsRestClient.GetByUser(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BillingPaymentMethodResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets a payment method owned by the caller.
+        /// Request Path: /providers/Microsoft.Billing/paymentMethods/{paymentMethodName}
+        /// Operation Id: PaymentMethods_GetByUser
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new Response<BillingPaymentMethodResource> Get(CancellationToken cancellationToken = default)
+        {
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((BillingPaymentMethodResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
