@@ -23,6 +23,7 @@ namespace Azure.Core.Pipeline
             PerCallPolicies = new List<HttpPipelinePolicy>();
             PerRetryPolicies = new List<HttpPipelinePolicy>();
             RequestFailedDetailsParser = new DefaultRequestFailedDetailsParser();
+            RetryConditions = new List<RetryCondition>();
         }
 
         /// <summary>
@@ -39,6 +40,16 @@ namespace Azure.Core.Pipeline
         /// Client provided per-retry policies.
         /// </summary>
         public IList<HttpPipelinePolicy> PerRetryPolicies { get; }
+
+        /// <summary>
+        /// Replacement for the default retry policy.
+        /// </summary>
+        public HttpPipelinePolicy? RetryPolicy { get; set; }
+
+        /// <summary>
+        /// Conditions to add to the default retry policy to help it decide whether to retry a request.
+        /// </summary>
+        public IList<RetryCondition> RetryConditions { get;}
 
         /// <summary>
         /// The client provided response classifier.

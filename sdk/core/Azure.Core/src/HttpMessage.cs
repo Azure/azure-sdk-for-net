@@ -33,6 +33,7 @@ namespace Azure.Core
             Request = request;
             ResponseClassifier = responseClassifier;
             BufferResponse = true;
+            PipelineContext = new PipelineContext(DateTimeOffset.UtcNow);
         }
 
         /// <summary>
@@ -84,6 +85,11 @@ namespace Azure.Core
         /// Defaults to <c>null</c>.
         /// </summary>
         public TimeSpan? NetworkTimeout { get; set; }
+
+        /// <summary>
+        /// Gets metadata describing the flow of the message through the pipeline.
+        /// </summary>
+        public PipelineContext PipelineContext { get; internal set; }
 
         internal void ApplyRequestContext(RequestContext? context, ResponseClassifier? classifier)
         {

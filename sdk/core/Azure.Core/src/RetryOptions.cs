@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Core
 {
@@ -31,6 +32,11 @@ namespace Azure.Core
                 MaxDelay = retryOptions.MaxDelay;
                 Mode = retryOptions.Mode;
                 NetworkTimeout = retryOptions.NetworkTimeout;
+                RetryConditions = retryOptions.RetryConditions;
+            }
+            else
+            {
+                RetryConditions = new List<RetryCondition>();
             }
         }
 
@@ -61,5 +67,20 @@ namespace Azure.Core
         /// The timeout applied to an individual network operations.
         /// </summary>
         public TimeSpan NetworkTimeout { get; set; } = TimeSpan.FromSeconds(100);
+
+        /// <summary>
+        /// Adds a condition to help determine whether or not a request should be retried.
+        /// Adding a <see cref="RetryCondition"/> changes the "should retry" behavior of the default
+        /// pipeline RetryPolicy. Conditions are applied in order, so the most recently added
+        /// condition takes precendece over those that were previously added.
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        public void AddRetryCondition(RetryCondition condition)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal IList<RetryCondition> RetryConditions { get; }
     }
 }

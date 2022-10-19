@@ -110,6 +110,17 @@ namespace Azure.Core
             Policies.Add((position, policy));
         }
 
+        /// <summary>
+        /// Replaces a default <see cref="HttpPipeline"/> policy in the client pipeline.
+        /// The specific policy to replace is specified by <paramref name="replace"/> parameter.
+        /// </summary>
+        /// <param name="policy">The <see cref="HttpPipelinePolicy"/> to replace the default policy with.</param>
+        /// <param name="replace">Identifies which default policy to replace.</param>
+        public void ReplacePolicy(HttpPipelinePolicy policy, PipelinePolicyReplacement replace)
+        {
+            throw new NotImplementedException();
+        }
+
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
         /// <inheritdoc />

@@ -17,15 +17,22 @@ namespace Azure.Core.Pipeline
         private readonly TimeSpan _delay;
         private readonly TimeSpan _maxDelay;
         private readonly int _maxRetries;
+        private readonly List<RetryCondition> _retryConditions;
 
         private readonly Random _random = new ThreadSafeRandom();
 
-        public RetryPolicy(RetryMode mode, TimeSpan delay, TimeSpan maxDelay, int maxRetries)
+        public RetryPolicy(RetryMode mode, TimeSpan delay, TimeSpan maxDelay, int maxRetries, IEnumerable<RetryCondition> retryConditions)
         {
             _mode = mode;
             _delay = delay;
             _maxDelay = maxDelay;
             _maxRetries = maxRetries;
+
+            _retryConditions = new List<RetryCondition>();
+            _retryConditions.AddRange(retryConditions);
+
+            // Add the Max Attempts retry condition to the end of the list to ensure we have a default condition.
+            _retryConditions.Add(new MaxAttemptsRetryCondition(maxRetries));
         }
 
         private const string RetryAfterHeaderName = "Retry-After";
@@ -44,7 +51,7 @@ namespace Azure.Core.Pipeline
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            int attempt = 0;
+            message.PipelineContext.RetryAttempt = 0;
             List<Exception>? exceptions = null;
             while (true)
             {
@@ -78,15 +85,14 @@ namespace Azure.Core.Pipeline
 
                 TimeSpan delay;
 
-                attempt++;
-
-                var shouldRetry = attempt <= _maxRetries;
+                message.PipelineContext.RetryAttempt++;
+                bool shouldRetry = EvaluateRetryConditions(message);
 
                 if (lastException != null)
                 {
                     if (shouldRetry && message.ResponseClassifier.IsRetriable(message, lastException))
                     {
-                        GetDelay(attempt, out delay);
+                        GetDelay(message.PipelineContext.RetryAttempt, out delay);
                     }
                     else
                     {
@@ -96,14 +102,14 @@ namespace Azure.Core.Pipeline
                             ExceptionDispatchInfo.Capture(lastException).Throw();
                         }
 
-                        throw new AggregateException($"Retry failed after {attempt} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.", exceptions);
+                        throw new AggregateException($"Retry failed after {message.PipelineContext.RetryAttempt} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.", exceptions);
                     }
                 }
                 else if (message.Response.IsError)
                 {
                     if (shouldRetry && message.ResponseClassifier.IsRetriableResponse(message))
                     {
-                        GetDelay(message, attempt, out delay);
+                        GetDelay(message, message.PipelineContext.RetryAttempt, out delay);
                     }
                     else
                     {
@@ -133,8 +139,23 @@ namespace Azure.Core.Pipeline
                     message.Response.ContentStream?.Dispose();
                 }
 
-                AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, attempt, elapsed);
+                AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, message.PipelineContext.RetryAttempt, elapsed);
             }
+        }
+
+        private bool EvaluateRetryConditions(HttpMessage message)
+        {
+            foreach (RetryCondition condition in _retryConditions)
+            {
+                if (condition.TryGetShouldRetry(message, out bool shouldRetry))
+                {
+                    return shouldRetry;
+                }
+            }
+
+            // We added a default retry condition that always returns true at the end of the list,
+            // so we should never get here.
+            return false;
         }
 
         internal virtual async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
@@ -210,6 +231,30 @@ namespace Azure.Core.Pipeline
                 Math.Min(
                     (1 << (attempted - 1)) * _random.Next((int)(_delay.TotalMilliseconds * 0.8), (int)(_delay.TotalMilliseconds * 1.2)),
                     _maxDelay.TotalMilliseconds));
+        }
+    }
+
+#pragma warning disable SA1402 // File may only contain a single type
+    internal class MaxAttemptsRetryCondition : RetryCondition
+#pragma warning restore SA1402 // File may only contain a single type
+    {
+        private int _maxAttempts;
+
+        internal MaxAttemptsRetryCondition(int maxAttempts)
+        {
+            _maxAttempts = maxAttempts;
+        }
+
+        public override bool TryGetShouldRetry(HttpMessage message, out bool shouldRetry)
+        {
+            if (message.PipelineContext.RetryAttempt <= _maxAttempts)
+            {
+                shouldRetry = false;
+                return true;
+            }
+
+            shouldRetry = true;
+            return true;
         }
     }
 }

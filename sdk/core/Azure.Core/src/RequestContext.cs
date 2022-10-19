@@ -62,6 +62,18 @@ namespace Azure
         }
 
         /// <summary>
+        /// Replaces a default <see cref="HttpPipeline"/> policy in the client pipeline
+        /// for the given method invocation.
+        /// The specific policy to replace is specified by <paramref name="replace"/> parameter.
+        /// </summary>
+        /// <param name="policy">The <see cref="HttpPipelinePolicy"/> to replace the default policy with.</param>
+        /// <param name="replace">Identifies which default policy to replace.</param>
+        public void ReplacePolicy(HttpPipelinePolicy policy, PipelinePolicyReplacement replace)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Customizes the <see cref="ResponseClassifier"/> for this operation to change
         /// the default <see cref="Response"/> classification behavior so that it considers
         /// the passed-in status code to be an error or not, as specified.
