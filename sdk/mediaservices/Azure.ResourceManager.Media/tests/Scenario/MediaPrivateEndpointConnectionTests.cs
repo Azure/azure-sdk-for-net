@@ -16,7 +16,8 @@ namespace Azure.ResourceManager.Media.Tests
 
         private MediaServicesPrivateEndpointConnectionCollection mediaPrivateEndpointConnectionCollection => _mediaService.GetMediaServicesPrivateEndpointConnections();
 
-        public MediaPrivateEndpointConnectionTests(bool isAsync) : base(isAsync)
+        public MediaPrivateEndpointConnectionTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static Events DeserializeEvents(JsonElement element)
         {
-            Optional<IReadOnlyList<EventSummary>> value = default;
+            Optional<IReadOnlyList<ConsumptionEventSummary>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Consumption.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EventSummary> array = new List<EventSummary>();
+                    List<ConsumptionEventSummary> array = new List<ConsumptionEventSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventSummary.DeserializeEventSummary(item));
+                        array.Add(ConsumptionEventSummary.DeserializeConsumptionEventSummary(item));
                     }
                     value = array;
                     continue;

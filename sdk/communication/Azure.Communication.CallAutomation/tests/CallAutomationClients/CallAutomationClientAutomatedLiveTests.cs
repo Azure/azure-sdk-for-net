@@ -130,7 +130,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 Assert.IsNotNull(incomingCallContext);
 
                 // answer the call
-                var rejectCallOptions = new RejectCallOptions(incomingCallContext, CallRejectReason.None) {
+                var rejectCallOptions = new RejectCallOptions(incomingCallContext) {
                     RepeatabilityHeaders = new RepeatabilityHeaders(new Guid("fed6e917-f1df-4e21-b7de-c26d0947124b"), new DateTimeOffset(2022, 9, 19, 22, 20, 00, new TimeSpan(0, 0, 0)))
                 };
                 Response rejectResponse = await client.RejectCallAsync(rejectCallOptions);

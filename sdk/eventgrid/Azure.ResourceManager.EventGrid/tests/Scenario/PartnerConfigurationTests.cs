@@ -17,7 +17,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
     {
         private ResourceGroupResource _resourceGroup;
 
-        public PartnerConfigurationTests(bool isAsync) : base(isAsync)
+        public PartnerConfigurationTests(bool isAsync)
+            : base(isAsync)// RecordedTestMode.Record)
         {
         }
 

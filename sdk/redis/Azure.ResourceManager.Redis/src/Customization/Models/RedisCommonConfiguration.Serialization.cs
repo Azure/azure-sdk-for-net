@@ -122,7 +122,11 @@ namespace Azure.ResourceManager.Redis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rdbBackupEnabled = property.Value.GetBoolean();
+
+                    rdbBackupEnabled = property.Value.ValueKind == JsonValueKind.String
+                        ? string.Equals(property.Value.GetString(), "true", StringComparison.InvariantCultureIgnoreCase)
+                        : property.Value.GetBoolean();
+
                     continue;
                 }
                 if (property.NameEquals("rdb-backup-frequency"))
@@ -156,7 +160,11 @@ namespace Azure.ResourceManager.Redis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    aofBackupEnabled = property.Value.GetBoolean();
+
+                    aofBackupEnabled = property.Value.ValueKind == JsonValueKind.String
+                        ? string.Equals(property.Value.GetString(), "true", StringComparison.InvariantCultureIgnoreCase)
+                        : property.Value.GetBoolean();
+
                     continue;
                 }
                 if (property.NameEquals("aof-storage-connection-string-0"))
