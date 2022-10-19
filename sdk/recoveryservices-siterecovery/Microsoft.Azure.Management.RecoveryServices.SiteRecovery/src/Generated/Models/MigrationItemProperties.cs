@@ -37,22 +37,33 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// item.</param>
         /// <param name="policyFriendlyName">The name of policy governing this
         /// item.</param>
+        /// <param name="recoveryServicesProviderId">The recovery services
+        /// provider ARM Id.</param>
+        /// <param name="replicationStatus">The replication status.</param>
         /// <param name="migrationState">The migration status. Possible values
         /// include: 'None', 'EnableMigrationInProgress',
         /// 'EnableMigrationFailed', 'DisableMigrationInProgress',
         /// 'DisableMigrationFailed', 'InitialSeedingInProgress',
         /// 'InitialSeedingFailed', 'Replicating', 'MigrationInProgress',
-        /// 'MigrationSucceeded', 'MigrationFailed'</param>
+        /// 'MigrationSucceeded', 'MigrationFailed', 'ResumeInProgress',
+        /// 'ResumeInitiated', 'SuspendingProtection', 'ProtectionSuspended',
+        /// 'MigrationCompletedWithInformation',
+        /// 'MigrationPartiallySucceeded'</param>
         /// <param name="migrationStateDescription">The migration state
         /// description.</param>
         /// <param name="lastTestMigrationTime">The last test migration
         /// time.</param>
         /// <param name="lastTestMigrationStatus">The status of the last test
         /// migration.</param>
+        /// <param name="lastMigrationTime">The last migration time.</param>
+        /// <param name="lastMigrationStatus">The status of the last
+        /// migration.</param>
         /// <param name="testMigrateState">The test migrate state. Possible
         /// values include: 'None', 'TestMigrationInProgress',
         /// 'TestMigrationSucceeded', 'TestMigrationFailed',
-        /// 'TestMigrationCleanupInProgress'</param>
+        /// 'TestMigrationCleanupInProgress',
+        /// 'TestMigrationCompletedWithInformation',
+        /// 'TestMigrationPartiallySucceeded'</param>
         /// <param name="testMigrateStateDescription">The test migrate state
         /// description.</param>
         /// <param name="health">The consolidated health. Possible values
@@ -62,25 +73,32 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// migration item based on the current migration state of the
         /// item.</param>
         /// <param name="currentJob">The current job details.</param>
+        /// <param name="criticalJobHistory">The critical past job
+        /// details.</param>
         /// <param name="eventCorrelationId">The correlation Id for events
         /// associated with this migration item.</param>
         /// <param name="providerSpecificDetails">The migration provider custom
         /// settings.</param>
-        public MigrationItemProperties(string machineName = default(string), string policyId = default(string), string policyFriendlyName = default(string), string migrationState = default(string), string migrationStateDescription = default(string), System.DateTime? lastTestMigrationTime = default(System.DateTime?), string lastTestMigrationStatus = default(string), string testMigrateState = default(string), string testMigrateStateDescription = default(string), string health = default(string), IList<HealthError> healthErrors = default(IList<HealthError>), IList<string> allowedOperations = default(IList<string>), CurrentJobDetails currentJob = default(CurrentJobDetails), string eventCorrelationId = default(string), MigrationProviderSpecificSettings providerSpecificDetails = default(MigrationProviderSpecificSettings))
+        public MigrationItemProperties(string machineName = default(string), string policyId = default(string), string policyFriendlyName = default(string), string recoveryServicesProviderId = default(string), string replicationStatus = default(string), string migrationState = default(string), string migrationStateDescription = default(string), System.DateTime? lastTestMigrationTime = default(System.DateTime?), string lastTestMigrationStatus = default(string), System.DateTime? lastMigrationTime = default(System.DateTime?), string lastMigrationStatus = default(string), string testMigrateState = default(string), string testMigrateStateDescription = default(string), string health = default(string), IList<HealthError> healthErrors = default(IList<HealthError>), IList<string> allowedOperations = default(IList<string>), CurrentJobDetails currentJob = default(CurrentJobDetails), IList<CriticalJobHistoryDetails> criticalJobHistory = default(IList<CriticalJobHistoryDetails>), string eventCorrelationId = default(string), MigrationProviderSpecificSettings providerSpecificDetails = default(MigrationProviderSpecificSettings))
         {
             MachineName = machineName;
             PolicyId = policyId;
             PolicyFriendlyName = policyFriendlyName;
+            RecoveryServicesProviderId = recoveryServicesProviderId;
+            ReplicationStatus = replicationStatus;
             MigrationState = migrationState;
             MigrationStateDescription = migrationStateDescription;
             LastTestMigrationTime = lastTestMigrationTime;
             LastTestMigrationStatus = lastTestMigrationStatus;
+            LastMigrationTime = lastMigrationTime;
+            LastMigrationStatus = lastMigrationStatus;
             TestMigrateState = testMigrateState;
             TestMigrateStateDescription = testMigrateStateDescription;
             Health = health;
             HealthErrors = healthErrors;
             AllowedOperations = allowedOperations;
             CurrentJob = currentJob;
+            CriticalJobHistory = criticalJobHistory;
             EventCorrelationId = eventCorrelationId;
             ProviderSpecificDetails = providerSpecificDetails;
             CustomInit();
@@ -110,11 +128,26 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string PolicyFriendlyName { get; private set; }
 
         /// <summary>
+        /// Gets the recovery services provider ARM Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryServicesProviderId")]
+        public string RecoveryServicesProviderId { get; private set; }
+
+        /// <summary>
+        /// Gets the replication status.
+        /// </summary>
+        [JsonProperty(PropertyName = "replicationStatus")]
+        public string ReplicationStatus { get; private set; }
+
+        /// <summary>
         /// Gets the migration status. Possible values include: 'None',
         /// 'EnableMigrationInProgress', 'EnableMigrationFailed',
         /// 'DisableMigrationInProgress', 'DisableMigrationFailed',
         /// 'InitialSeedingInProgress', 'InitialSeedingFailed', 'Replicating',
-        /// 'MigrationInProgress', 'MigrationSucceeded', 'MigrationFailed'
+        /// 'MigrationInProgress', 'MigrationSucceeded', 'MigrationFailed',
+        /// 'ResumeInProgress', 'ResumeInitiated', 'SuspendingProtection',
+        /// 'ProtectionSuspended', 'MigrationCompletedWithInformation',
+        /// 'MigrationPartiallySucceeded'
         /// </summary>
         [JsonProperty(PropertyName = "migrationState")]
         public string MigrationState { get; private set; }
@@ -138,9 +171,23 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string LastTestMigrationStatus { get; private set; }
 
         /// <summary>
+        /// Gets the last migration time.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastMigrationTime")]
+        public System.DateTime? LastMigrationTime { get; private set; }
+
+        /// <summary>
+        /// Gets the status of the last migration.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastMigrationStatus")]
+        public string LastMigrationStatus { get; private set; }
+
+        /// <summary>
         /// Gets the test migrate state. Possible values include: 'None',
         /// 'TestMigrationInProgress', 'TestMigrationSucceeded',
-        /// 'TestMigrationFailed', 'TestMigrationCleanupInProgress'
+        /// 'TestMigrationFailed', 'TestMigrationCleanupInProgress',
+        /// 'TestMigrationCompletedWithInformation',
+        /// 'TestMigrationPartiallySucceeded'
         /// </summary>
         [JsonProperty(PropertyName = "testMigrateState")]
         public string TestMigrateState { get; private set; }
@@ -176,6 +223,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "currentJob")]
         public CurrentJobDetails CurrentJob { get; private set; }
+
+        /// <summary>
+        /// Gets the critical past job details.
+        /// </summary>
+        [JsonProperty(PropertyName = "criticalJobHistory")]
+        public IList<CriticalJobHistoryDetails> CriticalJobHistory { get; private set; }
 
         /// <summary>
         /// Gets the correlation Id for events associated with this migration

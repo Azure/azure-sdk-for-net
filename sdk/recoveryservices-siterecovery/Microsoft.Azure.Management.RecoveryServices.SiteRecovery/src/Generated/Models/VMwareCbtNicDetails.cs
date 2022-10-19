@@ -40,10 +40,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="targetIPAddressType">The target IP address type.
         /// Possible values include: 'Dynamic', 'Static'</param>
         /// <param name="targetSubnetName">Target subnet name.</param>
+        /// <param name="testNetworkId">Source network Id.</param>
+        /// <param name="testSubnetName">Test subnet name.</param>
+        /// <param name="testIPAddress">The test IP address.</param>
+        /// <param name="testIPAddressType">The test IP address type. Possible
+        /// values include: 'Dynamic', 'Static'</param>
         /// <param name="targetNicName">Target NIC name.</param>
         /// <param name="isSelectedForMigration">A value indicating whether
         /// this NIC is selected for migration.</param>
-        public VMwareCbtNicDetails(string nicId = default(string), string isPrimaryNic = default(string), string sourceIPAddress = default(string), string sourceIPAddressType = default(string), string sourceNetworkId = default(string), string targetIPAddress = default(string), string targetIPAddressType = default(string), string targetSubnetName = default(string), string targetNicName = default(string), string isSelectedForMigration = default(string))
+        public VMwareCbtNicDetails(string nicId = default(string), string isPrimaryNic = default(string), string sourceIPAddress = default(string), string sourceIPAddressType = default(string), string sourceNetworkId = default(string), string targetIPAddress = default(string), string targetIPAddressType = default(string), string targetSubnetName = default(string), string testNetworkId = default(string), string testSubnetName = default(string), string testIPAddress = default(string), string testIPAddressType = default(string), string targetNicName = default(string), string isSelectedForMigration = default(string))
         {
             NicId = nicId;
             IsPrimaryNic = isPrimaryNic;
@@ -53,6 +58,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TargetIPAddress = targetIPAddress;
             TargetIPAddressType = targetIPAddressType;
             TargetSubnetName = targetSubnetName;
+            TestNetworkId = testNetworkId;
+            TestSubnetName = testSubnetName;
+            TestIPAddress = testIPAddress;
+            TestIPAddressType = testIPAddressType;
             TargetNicName = targetNicName;
             IsSelectedForMigration = isSelectedForMigration;
             CustomInit();
@@ -112,6 +121,31 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "targetSubnetName")]
         public string TargetSubnetName { get; set; }
+
+        /// <summary>
+        /// Gets or sets source network Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "testNetworkId")]
+        public string TestNetworkId { get; set; }
+
+        /// <summary>
+        /// Gets or sets test subnet name.
+        /// </summary>
+        [JsonProperty(PropertyName = "testSubnetName")]
+        public string TestSubnetName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the test IP address.
+        /// </summary>
+        [JsonProperty(PropertyName = "testIPAddress")]
+        public string TestIPAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets the test IP address type. Possible values include:
+        /// 'Dynamic', 'Static'
+        /// </summary>
+        [JsonProperty(PropertyName = "testIPAddressType")]
+        public string TestIPAddressType { get; set; }
 
         /// <summary>
         /// Gets or sets target NIC name.

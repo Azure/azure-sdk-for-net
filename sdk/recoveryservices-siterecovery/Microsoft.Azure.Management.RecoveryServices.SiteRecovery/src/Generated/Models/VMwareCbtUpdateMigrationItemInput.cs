@@ -47,6 +47,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="targetBootDiagnosticsStorageAccountId">The target boot
         /// diagnostics storage account ARM Id.</param>
         /// <param name="targetNetworkId">The target network ARM Id.</param>
+        /// <param name="testNetworkId">The test network ARM Id.</param>
         /// <param name="vmNics">The list of NIC details.</param>
         /// <param name="vmDisks">The list of disk update properties.</param>
         /// <param name="licenseType">The license type. Possible values
@@ -59,7 +60,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="targetVmTags">The target VM tags.</param>
         /// <param name="targetDiskTags">The tags for the target disks.</param>
         /// <param name="targetNicTags">The tags for the target NICs.</param>
-        public VMwareCbtUpdateMigrationItemInput(string targetVmName = default(string), string targetVmSize = default(string), string targetResourceGroupId = default(string), string targetAvailabilitySetId = default(string), string targetAvailabilityZone = default(string), string targetProximityPlacementGroupId = default(string), string targetBootDiagnosticsStorageAccountId = default(string), string targetNetworkId = default(string), IList<VMwareCbtNicInput> vmNics = default(IList<VMwareCbtNicInput>), IList<VMwareCbtUpdateDiskInput> vmDisks = default(IList<VMwareCbtUpdateDiskInput>), string licenseType = default(string), string sqlServerLicenseType = default(string), string performAutoResync = default(string), IDictionary<string, string> targetVmTags = default(IDictionary<string, string>), IDictionary<string, string> targetDiskTags = default(IDictionary<string, string>), IDictionary<string, string> targetNicTags = default(IDictionary<string, string>))
+        public VMwareCbtUpdateMigrationItemInput(string targetVmName = default(string), string targetVmSize = default(string), string targetResourceGroupId = default(string), string targetAvailabilitySetId = default(string), string targetAvailabilityZone = default(string), string targetProximityPlacementGroupId = default(string), string targetBootDiagnosticsStorageAccountId = default(string), string targetNetworkId = default(string), string testNetworkId = default(string), IList<VMwareCbtNicInput> vmNics = default(IList<VMwareCbtNicInput>), IList<VMwareCbtUpdateDiskInput> vmDisks = default(IList<VMwareCbtUpdateDiskInput>), string licenseType = default(string), string sqlServerLicenseType = default(string), string performAutoResync = default(string), IDictionary<string, string> targetVmTags = default(IDictionary<string, string>), IDictionary<string, string> targetDiskTags = default(IDictionary<string, string>), IDictionary<string, string> targetNicTags = default(IDictionary<string, string>))
         {
             TargetVmName = targetVmName;
             TargetVmSize = targetVmSize;
@@ -69,6 +70,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TargetProximityPlacementGroupId = targetProximityPlacementGroupId;
             TargetBootDiagnosticsStorageAccountId = targetBootDiagnosticsStorageAccountId;
             TargetNetworkId = targetNetworkId;
+            TestNetworkId = testNetworkId;
             VmNics = vmNics;
             VmDisks = vmDisks;
             LicenseType = licenseType;
@@ -132,6 +134,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "targetNetworkId")]
         public string TargetNetworkId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the test network ARM Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "testNetworkId")]
+        public string TestNetworkId { get; set; }
 
         /// <summary>
         /// Gets or sets the list of NIC details.

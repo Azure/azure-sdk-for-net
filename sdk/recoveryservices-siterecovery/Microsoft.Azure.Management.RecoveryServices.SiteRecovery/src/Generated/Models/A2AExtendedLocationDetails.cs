@@ -14,32 +14,27 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Recovery plan A2A specific details.
+    /// ExtendedLocation details data.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("A2A")]
-    public partial class RecoveryPlanA2ADetails : RecoveryPlanProviderSpecificDetails
+    public partial class A2AExtendedLocationDetails
     {
         /// <summary>
-        /// Initializes a new instance of the RecoveryPlanA2ADetails class.
+        /// Initializes a new instance of the A2AExtendedLocationDetails class.
         /// </summary>
-        public RecoveryPlanA2ADetails()
+        public A2AExtendedLocationDetails()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RecoveryPlanA2ADetails class.
+        /// Initializes a new instance of the A2AExtendedLocationDetails class.
         /// </summary>
-        /// <param name="primaryZone">The primary zone.</param>
-        /// <param name="recoveryZone">The recovery zone.</param>
-        /// <param name="primaryExtendedLocation">The primary extended
-        /// location.</param>
-        /// <param name="recoveryExtendedLocation">The recovery extended
-        /// location.</param>
-        public RecoveryPlanA2ADetails(string primaryZone = default(string), string recoveryZone = default(string), ExtendedLocation primaryExtendedLocation = default(ExtendedLocation), ExtendedLocation recoveryExtendedLocation = default(ExtendedLocation))
+        /// <param name="primaryExtendedLocation">The primary
+        /// ExtendedLocation.</param>
+        /// <param name="recoveryExtendedLocation">The recovery
+        /// ExtendedLocation.</param>
+        public A2AExtendedLocationDetails(ExtendedLocation primaryExtendedLocation = default(ExtendedLocation), ExtendedLocation recoveryExtendedLocation = default(ExtendedLocation))
         {
-            PrimaryZone = primaryZone;
-            RecoveryZone = recoveryZone;
             PrimaryExtendedLocation = primaryExtendedLocation;
             RecoveryExtendedLocation = recoveryExtendedLocation;
             CustomInit();
@@ -51,25 +46,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the primary zone.
-        /// </summary>
-        [JsonProperty(PropertyName = "primaryZone")]
-        public string PrimaryZone { get; set; }
-
-        /// <summary>
-        /// Gets or sets the recovery zone.
-        /// </summary>
-        [JsonProperty(PropertyName = "recoveryZone")]
-        public string RecoveryZone { get; set; }
-
-        /// <summary>
-        /// Gets or sets the primary extended location.
+        /// Gets or sets the primary ExtendedLocation.
         /// </summary>
         [JsonProperty(PropertyName = "primaryExtendedLocation")]
         public ExtendedLocation PrimaryExtendedLocation { get; set; }
 
         /// <summary>
-        /// Gets or sets the recovery extended location.
+        /// Gets or sets the recovery ExtendedLocation.
         /// </summary>
         [JsonProperty(PropertyName = "recoveryExtendedLocation")]
         public ExtendedLocation RecoveryExtendedLocation { get; set; }

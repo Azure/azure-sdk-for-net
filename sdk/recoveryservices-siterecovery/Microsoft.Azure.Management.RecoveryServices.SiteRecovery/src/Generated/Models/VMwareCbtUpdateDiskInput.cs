@@ -32,10 +32,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         /// <param name="diskId">The disk Id.</param>
         /// <param name="targetDiskName">The target disk name.</param>
-        public VMwareCbtUpdateDiskInput(string diskId, string targetDiskName = default(string))
+        /// <param name="isOSDisk">A value indicating whether the disk is the
+        /// OS disk.</param>
+        public VMwareCbtUpdateDiskInput(string diskId, string targetDiskName = default(string), string isOSDisk = default(string))
         {
             DiskId = diskId;
             TargetDiskName = targetDiskName;
+            IsOSDisk = isOSDisk;
             CustomInit();
         }
 
@@ -55,6 +58,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "targetDiskName")]
         public string TargetDiskName { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the disk is the OS disk.
+        /// </summary>
+        [JsonProperty(PropertyName = "isOSDisk")]
+        public string IsOSDisk { get; set; }
 
         /// <summary>
         /// Validate the object.

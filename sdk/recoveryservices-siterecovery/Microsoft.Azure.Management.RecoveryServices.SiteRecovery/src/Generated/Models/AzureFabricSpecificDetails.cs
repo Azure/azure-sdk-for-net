@@ -36,11 +36,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="containerIds">The container Ids for the Azure
         /// fabric.</param>
         /// <param name="zones">The zones.</param>
-        public AzureFabricSpecificDetails(string location = default(string), IList<string> containerIds = default(IList<string>), IList<A2AZoneDetails> zones = default(IList<A2AZoneDetails>))
+        /// <param name="extendedLocations">The ExtendedLocations.</param>
+        public AzureFabricSpecificDetails(string location = default(string), IList<string> containerIds = default(IList<string>), IList<A2AZoneDetails> zones = default(IList<A2AZoneDetails>), IList<A2AExtendedLocationDetails> extendedLocations = default(IList<A2AExtendedLocationDetails>))
         {
             Location = location;
             ContainerIds = containerIds;
             Zones = zones;
+            ExtendedLocations = extendedLocations;
             CustomInit();
         }
 
@@ -66,6 +68,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "zones")]
         public IList<A2AZoneDetails> Zones { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ExtendedLocations.
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedLocations")]
+        public IList<A2AExtendedLocationDetails> ExtendedLocations { get; set; }
 
     }
 }

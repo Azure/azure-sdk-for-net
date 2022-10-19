@@ -45,6 +45,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Id.</param>
         /// <param name="snapshotRunAsAccountId">The snapshot run as account
         /// Id.</param>
+        /// <param name="storageAccountId">The replication storage account ARM
+        /// Id. This is applicable only for the blob based replication test
+        /// hook.</param>
         /// <param name="targetVmName">Target VM name.</param>
         /// <param name="targetVmSize">The target VM size.</param>
         /// <param name="targetLocation">The target location.</param>
@@ -61,6 +64,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="targetVmTags">The target VM tags.</param>
         /// <param name="protectedDisks">The list of protected disks.</param>
         /// <param name="targetNetworkId">The target network Id.</param>
+        /// <param name="testNetworkId">The test network Id.</param>
         /// <param name="vmNics">The network details.</param>
         /// <param name="targetNicTags">The tags for the target NICs.</param>
         /// <param name="migrationRecoveryPointId">The recovery point Id to
@@ -75,9 +79,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// percentage.</param>
         /// <param name="resyncProgressPercentage">The resync progress
         /// percentage.</param>
+        /// <param name="resumeProgressPercentage">The resume progress
+        /// percentage.</param>
         /// <param name="initialSeedingRetryCount">The initial seeding retry
         /// count.</param>
         /// <param name="resyncRetryCount">The resync retry count.</param>
+        /// <param name="resumeRetryCount">The resume retry count.</param>
         /// <param name="resyncRequired">A value indicating whether resync is
         /// required.</param>
         /// <param name="resyncState">The resync state. Possible values
@@ -87,7 +94,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// resync is to be done.</param>
         /// <param name="seedDiskTags">The tags for the seed disks.</param>
         /// <param name="targetDiskTags">The tags for the target disks.</param>
-        public VMwareCbtMigrationDetails(string vmwareMachineId = default(string), string osType = default(string), string firmwareType = default(string), string targetGeneration = default(string), string licenseType = default(string), string sqlServerLicenseType = default(string), string dataMoverRunAsAccountId = default(string), string snapshotRunAsAccountId = default(string), string targetVmName = default(string), string targetVmSize = default(string), string targetLocation = default(string), string targetResourceGroupId = default(string), string targetAvailabilitySetId = default(string), string targetAvailabilityZone = default(string), string targetProximityPlacementGroupId = default(string), string targetBootDiagnosticsStorageAccountId = default(string), IDictionary<string, string> targetVmTags = default(IDictionary<string, string>), IList<VMwareCbtProtectedDiskDetails> protectedDisks = default(IList<VMwareCbtProtectedDiskDetails>), string targetNetworkId = default(string), IList<VMwareCbtNicDetails> vmNics = default(IList<VMwareCbtNicDetails>), IDictionary<string, string> targetNicTags = default(IDictionary<string, string>), string migrationRecoveryPointId = default(string), System.DateTime? lastRecoveryPointReceived = default(System.DateTime?), string lastRecoveryPointId = default(string), int? initialSeedingProgressPercentage = default(int?), int? migrationProgressPercentage = default(int?), int? resyncProgressPercentage = default(int?), long? initialSeedingRetryCount = default(long?), long? resyncRetryCount = default(long?), string resyncRequired = default(string), string resyncState = default(string), string performAutoResync = default(string), IDictionary<string, string> seedDiskTags = default(IDictionary<string, string>), IDictionary<string, string> targetDiskTags = default(IDictionary<string, string>))
+        public VMwareCbtMigrationDetails(string vmwareMachineId = default(string), string osType = default(string), string firmwareType = default(string), string targetGeneration = default(string), string licenseType = default(string), string sqlServerLicenseType = default(string), string dataMoverRunAsAccountId = default(string), string snapshotRunAsAccountId = default(string), string storageAccountId = default(string), string targetVmName = default(string), string targetVmSize = default(string), string targetLocation = default(string), string targetResourceGroupId = default(string), string targetAvailabilitySetId = default(string), string targetAvailabilityZone = default(string), string targetProximityPlacementGroupId = default(string), string targetBootDiagnosticsStorageAccountId = default(string), IDictionary<string, string> targetVmTags = default(IDictionary<string, string>), IList<VMwareCbtProtectedDiskDetails> protectedDisks = default(IList<VMwareCbtProtectedDiskDetails>), string targetNetworkId = default(string), string testNetworkId = default(string), IList<VMwareCbtNicDetails> vmNics = default(IList<VMwareCbtNicDetails>), IDictionary<string, string> targetNicTags = default(IDictionary<string, string>), string migrationRecoveryPointId = default(string), System.DateTime? lastRecoveryPointReceived = default(System.DateTime?), string lastRecoveryPointId = default(string), int? initialSeedingProgressPercentage = default(int?), int? migrationProgressPercentage = default(int?), int? resyncProgressPercentage = default(int?), int? resumeProgressPercentage = default(int?), long? initialSeedingRetryCount = default(long?), long? resyncRetryCount = default(long?), long? resumeRetryCount = default(long?), string resyncRequired = default(string), string resyncState = default(string), string performAutoResync = default(string), IDictionary<string, string> seedDiskTags = default(IDictionary<string, string>), IDictionary<string, string> targetDiskTags = default(IDictionary<string, string>))
         {
             VmwareMachineId = vmwareMachineId;
             OsType = osType;
@@ -97,6 +104,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             SqlServerLicenseType = sqlServerLicenseType;
             DataMoverRunAsAccountId = dataMoverRunAsAccountId;
             SnapshotRunAsAccountId = snapshotRunAsAccountId;
+            StorageAccountId = storageAccountId;
             TargetVmName = targetVmName;
             TargetVmSize = targetVmSize;
             TargetLocation = targetLocation;
@@ -108,6 +116,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TargetVmTags = targetVmTags;
             ProtectedDisks = protectedDisks;
             TargetNetworkId = targetNetworkId;
+            TestNetworkId = testNetworkId;
             VmNics = vmNics;
             TargetNicTags = targetNicTags;
             MigrationRecoveryPointId = migrationRecoveryPointId;
@@ -116,8 +125,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             InitialSeedingProgressPercentage = initialSeedingProgressPercentage;
             MigrationProgressPercentage = migrationProgressPercentage;
             ResyncProgressPercentage = resyncProgressPercentage;
+            ResumeProgressPercentage = resumeProgressPercentage;
             InitialSeedingRetryCount = initialSeedingRetryCount;
             ResyncRetryCount = resyncRetryCount;
+            ResumeRetryCount = resumeRetryCount;
             ResyncRequired = resyncRequired;
             ResyncState = resyncState;
             PerformAutoResync = performAutoResync;
@@ -178,6 +189,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "snapshotRunAsAccountId")]
         public string SnapshotRunAsAccountId { get; private set; }
+
+        /// <summary>
+        /// Gets the replication storage account ARM Id. This is applicable
+        /// only for the blob based replication test hook.
+        /// </summary>
+        [JsonProperty(PropertyName = "storageAccountId")]
+        public string StorageAccountId { get; private set; }
 
         /// <summary>
         /// Gets or sets target VM name.
@@ -246,6 +264,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string TargetNetworkId { get; set; }
 
         /// <summary>
+        /// Gets or sets the test network Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "testNetworkId")]
+        public string TestNetworkId { get; set; }
+
+        /// <summary>
         /// Gets or sets the network details.
         /// </summary>
         [JsonProperty(PropertyName = "vmNics")]
@@ -294,6 +318,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public int? ResyncProgressPercentage { get; private set; }
 
         /// <summary>
+        /// Gets the resume progress percentage.
+        /// </summary>
+        [JsonProperty(PropertyName = "resumeProgressPercentage")]
+        public int? ResumeProgressPercentage { get; private set; }
+
+        /// <summary>
         /// Gets the initial seeding retry count.
         /// </summary>
         [JsonProperty(PropertyName = "initialSeedingRetryCount")]
@@ -304,6 +334,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "resyncRetryCount")]
         public long? ResyncRetryCount { get; private set; }
+
+        /// <summary>
+        /// Gets the resume retry count.
+        /// </summary>
+        [JsonProperty(PropertyName = "resumeRetryCount")]
+        public long? ResumeRetryCount { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether resync is required.

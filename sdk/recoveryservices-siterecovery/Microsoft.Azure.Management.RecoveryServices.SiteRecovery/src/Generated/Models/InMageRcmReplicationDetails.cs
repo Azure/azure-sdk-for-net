@@ -53,6 +53,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="targetGeneration">The target generation.</param>
         /// <param name="licenseType">License Type of the VM to be
         /// used.</param>
+        /// <param name="storageAccountId">The replication storage account ARM
+        /// Id. This is applicable only for the blob based replication test
+        /// hook.</param>
         /// <param name="targetVmName">Target VM name.</param>
         /// <param name="targetVmSize">The target VM size.</param>
         /// <param name="targetResourceGroupId">The target resource group
@@ -131,7 +134,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="vmNics">The network details.</param>
         /// <param name="discoveredVmDetails">The discovered VM
         /// details.</param>
-        public InMageRcmReplicationDetails(string internalIdentifier = default(string), string fabricDiscoveryMachineId = default(string), string multiVmGroupName = default(string), string discoveryType = default(string), string processServerId = default(string), int? processorCoreCount = default(int?), double? allocatedMemoryInMB = default(double?), string processServerName = default(string), string runAsAccountId = default(string), string osType = default(string), string firmwareType = default(string), string primaryNicIpAddress = default(string), string targetGeneration = default(string), string licenseType = default(string), string targetVmName = default(string), string targetVmSize = default(string), string targetResourceGroupId = default(string), string targetLocation = default(string), string targetAvailabilitySetId = default(string), string targetAvailabilityZone = default(string), string targetProximityPlacementGroupId = default(string), string targetBootDiagnosticsStorageAccountId = default(string), string targetNetworkId = default(string), string testNetworkId = default(string), string failoverRecoveryPointId = default(string), System.DateTime? lastRecoveryPointReceived = default(System.DateTime?), long? lastRpoInSeconds = default(long?), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), string lastRecoveryPointId = default(string), int? initialReplicationProgressPercentage = default(int?), long? initialReplicationProcessedBytes = default(long?), long? initialReplicationTransferredBytes = default(long?), string initialReplicationProgressHealth = default(string), int? resyncProgressPercentage = default(int?), long? resyncProcessedBytes = default(long?), long? resyncTransferredBytes = default(long?), string resyncProgressHealth = default(string), string resyncRequired = default(string), string resyncState = default(string), string agentUpgradeState = default(string), string lastAgentUpgradeType = default(string), string agentUpgradeJobId = default(string), string agentUpgradeAttemptToVersion = default(string), IList<InMageRcmProtectedDiskDetails> protectedDisks = default(IList<InMageRcmProtectedDiskDetails>), string isLastUpgradeSuccessful = default(string), bool? isAgentRegistrationSuccessfulAfterFailover = default(bool?), InMageRcmMobilityAgentDetails mobilityAgentDetails = default(InMageRcmMobilityAgentDetails), IList<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails = default(IList<InMageRcmLastAgentUpgradeErrorDetails>), IList<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails = default(IList<InMageRcmAgentUpgradeBlockingErrorDetails>), IList<InMageRcmNicDetails> vmNics = default(IList<InMageRcmNicDetails>), InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails = default(InMageRcmDiscoveredProtectedVmDetails))
+        public InMageRcmReplicationDetails(string internalIdentifier = default(string), string fabricDiscoveryMachineId = default(string), string multiVmGroupName = default(string), string discoveryType = default(string), string processServerId = default(string), int? processorCoreCount = default(int?), double? allocatedMemoryInMB = default(double?), string processServerName = default(string), string runAsAccountId = default(string), string osType = default(string), string firmwareType = default(string), string primaryNicIpAddress = default(string), string targetGeneration = default(string), string licenseType = default(string), string storageAccountId = default(string), string targetVmName = default(string), string targetVmSize = default(string), string targetResourceGroupId = default(string), string targetLocation = default(string), string targetAvailabilitySetId = default(string), string targetAvailabilityZone = default(string), string targetProximityPlacementGroupId = default(string), string targetBootDiagnosticsStorageAccountId = default(string), string targetNetworkId = default(string), string testNetworkId = default(string), string failoverRecoveryPointId = default(string), System.DateTime? lastRecoveryPointReceived = default(System.DateTime?), long? lastRpoInSeconds = default(long?), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), string lastRecoveryPointId = default(string), int? initialReplicationProgressPercentage = default(int?), long? initialReplicationProcessedBytes = default(long?), long? initialReplicationTransferredBytes = default(long?), string initialReplicationProgressHealth = default(string), int? resyncProgressPercentage = default(int?), long? resyncProcessedBytes = default(long?), long? resyncTransferredBytes = default(long?), string resyncProgressHealth = default(string), string resyncRequired = default(string), string resyncState = default(string), string agentUpgradeState = default(string), string lastAgentUpgradeType = default(string), string agentUpgradeJobId = default(string), string agentUpgradeAttemptToVersion = default(string), IList<InMageRcmProtectedDiskDetails> protectedDisks = default(IList<InMageRcmProtectedDiskDetails>), string isLastUpgradeSuccessful = default(string), bool? isAgentRegistrationSuccessfulAfterFailover = default(bool?), InMageRcmMobilityAgentDetails mobilityAgentDetails = default(InMageRcmMobilityAgentDetails), IList<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails = default(IList<InMageRcmLastAgentUpgradeErrorDetails>), IList<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails = default(IList<InMageRcmAgentUpgradeBlockingErrorDetails>), IList<InMageRcmNicDetails> vmNics = default(IList<InMageRcmNicDetails>), InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails = default(InMageRcmDiscoveredProtectedVmDetails))
         {
             InternalIdentifier = internalIdentifier;
             FabricDiscoveryMachineId = fabricDiscoveryMachineId;
@@ -147,6 +150,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             PrimaryNicIpAddress = primaryNicIpAddress;
             TargetGeneration = targetGeneration;
             LicenseType = licenseType;
+            StorageAccountId = storageAccountId;
             TargetVmName = targetVmName;
             TargetVmSize = targetVmSize;
             TargetResourceGroupId = targetResourceGroupId;
@@ -275,6 +279,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "licenseType")]
         public string LicenseType { get; set; }
+
+        /// <summary>
+        /// Gets the replication storage account ARM Id. This is applicable
+        /// only for the blob based replication test hook.
+        /// </summary>
+        [JsonProperty(PropertyName = "storageAccountId")]
+        public string StorageAccountId { get; private set; }
 
         /// <summary>
         /// Gets or sets target VM name.

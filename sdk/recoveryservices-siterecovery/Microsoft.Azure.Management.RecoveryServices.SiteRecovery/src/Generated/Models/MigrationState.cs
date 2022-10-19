@@ -27,5 +27,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public const string MigrationInProgress = "MigrationInProgress";
         public const string MigrationSucceeded = "MigrationSucceeded";
         public const string MigrationFailed = "MigrationFailed";
+        public const string ResumeInProgress = "ResumeInProgress";
+        public const string ResumeInitiated = "ResumeInitiated";
+        public const string SuspendingProtection = "SuspendingProtection";
+        public const string ProtectionSuspended = "ProtectionSuspended";
+        public const string MigrationCompletedWithInformation = "MigrationCompletedWithInformation";
+        public const string MigrationPartiallySucceeded = "MigrationPartiallySucceeded";
     }
 }

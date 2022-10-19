@@ -492,7 +492,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             ReplicationVaultHealth = new ReplicationVaultHealthOperations(this);
             ReplicationVaultSetting = new ReplicationVaultSettingOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-11-01";
+            ApiVersion = "2022-10-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -603,6 +603,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReplicationProtectionIntentProviderSpecificSettings>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReplicationProviderSpecificUpdateContainerMappingInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReplicationProviderSpecificUpdateContainerMappingInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ResumeReplicationProviderSpecificInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ResumeReplicationProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ResyncProviderSpecificInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ResyncProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReverseReplicationProviderSpecificInput>("instanceType"));

@@ -362,6 +362,122 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
+            /// Pause replication.
+            /// </summary>
+            /// <remarks>
+            /// The operation to initiate pause replication of the item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='migrationItemName'>
+            /// Migration item name.
+            /// </param>
+            /// <param name='pauseReplicationInput'>
+            /// Pause replication input.
+            /// </param>
+            public static MigrationItem PauseReplication(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, string migrationItemName, PauseReplicationInput pauseReplicationInput)
+            {
+                return operations.PauseReplicationAsync(fabricName, protectionContainerName, migrationItemName, pauseReplicationInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Pause replication.
+            /// </summary>
+            /// <remarks>
+            /// The operation to initiate pause replication of the item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='migrationItemName'>
+            /// Migration item name.
+            /// </param>
+            /// <param name='pauseReplicationInput'>
+            /// Pause replication input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<MigrationItem> PauseReplicationAsync(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, string migrationItemName, PauseReplicationInput pauseReplicationInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.PauseReplicationWithHttpMessagesAsync(fabricName, protectionContainerName, migrationItemName, pauseReplicationInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Resume replication.
+            /// </summary>
+            /// <remarks>
+            /// The operation to initiate resume replication of the item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='migrationItemName'>
+            /// Migration item name.
+            /// </param>
+            /// <param name='resumeReplicationInput'>
+            /// Resume replication input.
+            /// </param>
+            public static MigrationItem ResumeReplication(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, string migrationItemName, ResumeReplicationInput resumeReplicationInput)
+            {
+                return operations.ResumeReplicationAsync(fabricName, protectionContainerName, migrationItemName, resumeReplicationInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Resume replication.
+            /// </summary>
+            /// <remarks>
+            /// The operation to initiate resume replication of the item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='migrationItemName'>
+            /// Migration item name.
+            /// </param>
+            /// <param name='resumeReplicationInput'>
+            /// Resume replication input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<MigrationItem> ResumeReplicationAsync(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, string migrationItemName, ResumeReplicationInput resumeReplicationInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ResumeReplicationWithHttpMessagesAsync(fabricName, protectionContainerName, migrationItemName, resumeReplicationInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Resynchronizes replication.
             /// </summary>
             /// <remarks>
@@ -805,6 +921,122 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             public static async Task<MigrationItem> BeginMigrateAsync(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, string migrationItemName, MigrateInput migrateInput, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginMigrateWithHttpMessagesAsync(fabricName, protectionContainerName, migrationItemName, migrateInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Pause replication.
+            /// </summary>
+            /// <remarks>
+            /// The operation to initiate pause replication of the item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='migrationItemName'>
+            /// Migration item name.
+            /// </param>
+            /// <param name='pauseReplicationInput'>
+            /// Pause replication input.
+            /// </param>
+            public static MigrationItem BeginPauseReplication(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, string migrationItemName, PauseReplicationInput pauseReplicationInput)
+            {
+                return operations.BeginPauseReplicationAsync(fabricName, protectionContainerName, migrationItemName, pauseReplicationInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Pause replication.
+            /// </summary>
+            /// <remarks>
+            /// The operation to initiate pause replication of the item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='migrationItemName'>
+            /// Migration item name.
+            /// </param>
+            /// <param name='pauseReplicationInput'>
+            /// Pause replication input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<MigrationItem> BeginPauseReplicationAsync(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, string migrationItemName, PauseReplicationInput pauseReplicationInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginPauseReplicationWithHttpMessagesAsync(fabricName, protectionContainerName, migrationItemName, pauseReplicationInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Resume replication.
+            /// </summary>
+            /// <remarks>
+            /// The operation to initiate resume replication of the item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='migrationItemName'>
+            /// Migration item name.
+            /// </param>
+            /// <param name='resumeReplicationInput'>
+            /// Resume replication input.
+            /// </param>
+            public static MigrationItem BeginResumeReplication(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, string migrationItemName, ResumeReplicationInput resumeReplicationInput)
+            {
+                return operations.BeginResumeReplicationAsync(fabricName, protectionContainerName, migrationItemName, resumeReplicationInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Resume replication.
+            /// </summary>
+            /// <remarks>
+            /// The operation to initiate resume replication of the item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='migrationItemName'>
+            /// Migration item name.
+            /// </param>
+            /// <param name='resumeReplicationInput'>
+            /// Resume replication input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<MigrationItem> BeginResumeReplicationAsync(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, string migrationItemName, ResumeReplicationInput resumeReplicationInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginResumeReplicationWithHttpMessagesAsync(fabricName, protectionContainerName, migrationItemName, resumeReplicationInput, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -40,7 +42,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="serviceBusConnectionStringSecretName">The secret name
         /// of the service bus connection string.</param>
         /// <param name="targetLocation">The target location.</param>
-        public VMwareCbtProtectionContainerMappingDetails(string keyVaultId = default(string), string keyVaultUri = default(string), string storageAccountId = default(string), string storageAccountSasSecretName = default(string), string serviceBusConnectionStringSecretName = default(string), string targetLocation = default(string))
+        /// <param name="roleSizeToNicCountMap">The role size to NIC count
+        /// map.</param>
+        public VMwareCbtProtectionContainerMappingDetails(string keyVaultId = default(string), string keyVaultUri = default(string), string storageAccountId = default(string), string storageAccountSasSecretName = default(string), string serviceBusConnectionStringSecretName = default(string), string targetLocation = default(string), IDictionary<string, int?> roleSizeToNicCountMap = default(IDictionary<string, int?>))
         {
             KeyVaultId = keyVaultId;
             KeyVaultUri = keyVaultUri;
@@ -48,6 +52,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             StorageAccountSasSecretName = storageAccountSasSecretName;
             ServiceBusConnectionStringSecretName = serviceBusConnectionStringSecretName;
             TargetLocation = targetLocation;
+            RoleSizeToNicCountMap = roleSizeToNicCountMap;
             CustomInit();
         }
 
@@ -91,6 +96,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "targetLocation")]
         public string TargetLocation { get; private set; }
+
+        /// <summary>
+        /// Gets the role size to NIC count map.
+        /// </summary>
+        [JsonProperty(PropertyName = "roleSizeToNicCountMap")]
+        public IDictionary<string, int?> RoleSizeToNicCountMap { get; private set; }
 
     }
 }

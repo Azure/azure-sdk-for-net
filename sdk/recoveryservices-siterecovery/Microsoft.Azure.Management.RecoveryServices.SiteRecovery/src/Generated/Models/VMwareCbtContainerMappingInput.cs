@@ -33,15 +33,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the VMwareCbtContainerMappingInput
         /// class.
         /// </summary>
+        /// <param name="storageAccountId">The storage account ARM Id.</param>
+        /// <param name="targetLocation">The target location.</param>
         /// <param name="keyVaultId">The target key vault ARM Id.</param>
         /// <param name="keyVaultUri">The target key vault URL.</param>
-        /// <param name="storageAccountId">The storage account ARM Id.</param>
         /// <param name="storageAccountSasSecretName">The secret name of the
         /// storage account.</param>
         /// <param name="serviceBusConnectionStringSecretName">The secret name
         /// of the service bus connection string.</param>
-        /// <param name="targetLocation">The target location.</param>
-        public VMwareCbtContainerMappingInput(string keyVaultId, string keyVaultUri, string storageAccountId, string storageAccountSasSecretName, string serviceBusConnectionStringSecretName, string targetLocation)
+        public VMwareCbtContainerMappingInput(string storageAccountId, string targetLocation, string keyVaultId = default(string), string keyVaultUri = default(string), string storageAccountSasSecretName = default(string), string serviceBusConnectionStringSecretName = default(string))
         {
             KeyVaultId = keyVaultId;
             KeyVaultUri = keyVaultUri;
@@ -101,25 +101,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (KeyVaultId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "KeyVaultId");
-            }
-            if (KeyVaultUri == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "KeyVaultUri");
-            }
             if (StorageAccountId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "StorageAccountId");
-            }
-            if (StorageAccountSasSecretName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "StorageAccountSasSecretName");
-            }
-            if (ServiceBusConnectionStringSecretName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ServiceBusConnectionStringSecretName");
             }
             if (TargetLocation == null)
             {

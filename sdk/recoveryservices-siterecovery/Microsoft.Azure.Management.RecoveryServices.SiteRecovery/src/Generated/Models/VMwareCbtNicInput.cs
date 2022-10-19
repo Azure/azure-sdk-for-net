@@ -38,7 +38,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="isSelectedForMigration">A value indicating whether
         /// this NIC is selected for migration.</param>
         /// <param name="targetNicName">Target NIC name.</param>
-        public VMwareCbtNicInput(string nicId, string isPrimaryNic, string targetSubnetName = default(string), string targetStaticIPAddress = default(string), string isSelectedForMigration = default(string), string targetNicName = default(string))
+        /// <param name="testSubnetName">The test subnet name.</param>
+        /// <param name="testStaticIPAddress">The test static IP
+        /// address.</param>
+        public VMwareCbtNicInput(string nicId, string isPrimaryNic, string targetSubnetName = default(string), string targetStaticIPAddress = default(string), string isSelectedForMigration = default(string), string targetNicName = default(string), string testSubnetName = default(string), string testStaticIPAddress = default(string))
         {
             NicId = nicId;
             IsPrimaryNic = isPrimaryNic;
@@ -46,6 +49,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TargetStaticIPAddress = targetStaticIPAddress;
             IsSelectedForMigration = isSelectedForMigration;
             TargetNicName = targetNicName;
+            TestSubnetName = testSubnetName;
+            TestStaticIPAddress = testStaticIPAddress;
             CustomInit();
         }
 
@@ -90,6 +95,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "targetNicName")]
         public string TargetNicName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the test subnet name.
+        /// </summary>
+        [JsonProperty(PropertyName = "testSubnetName")]
+        public string TestSubnetName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the test static IP address.
+        /// </summary>
+        [JsonProperty(PropertyName = "testStaticIPAddress")]
+        public string TestStaticIPAddress { get; set; }
 
         /// <summary>
         /// Validate the object.

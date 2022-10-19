@@ -50,9 +50,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="sqlServerLicenseType">The SQL Server license type.
         /// Possible values include: 'NotSpecified', 'NoLicenseType', 'PAYG',
         /// 'AHUB'</param>
+        /// <param name="performSqlBulkRegistration">A value indicating whether
+        /// bulk SQL RP registration to be done.</param>
         /// <param name="targetVmName">The target VM name.</param>
         /// <param name="targetVmSize">The target VM size.</param>
+        /// <param name="testNetworkId">The selected test network ARM
+        /// Id.</param>
         /// <param name="targetSubnetName">The target subnet name.</param>
+        /// <param name="testSubnetName">The selected test subnet name.</param>
         /// <param name="targetAvailabilitySetId">The target availability set
         /// ARM Id.</param>
         /// <param name="targetAvailabilityZone">The target availability
@@ -67,19 +72,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="seedDiskTags">The tags for the seed disks.</param>
         /// <param name="targetDiskTags">The tags for the target disks.</param>
         /// <param name="targetNicTags">The tags for the target NICs.</param>
-        public VMwareCbtEnableMigrationInput(string vmwareMachineId, IList<VMwareCbtDiskInput> disksToInclude, string dataMoverRunAsAccountId, string snapshotRunAsAccountId, string targetResourceGroupId, string targetNetworkId, string licenseType = default(string), string sqlServerLicenseType = default(string), string targetVmName = default(string), string targetVmSize = default(string), string targetSubnetName = default(string), string targetAvailabilitySetId = default(string), string targetAvailabilityZone = default(string), string targetProximityPlacementGroupId = default(string), string targetBootDiagnosticsStorageAccountId = default(string), string performAutoResync = default(string), IDictionary<string, string> targetVmTags = default(IDictionary<string, string>), IDictionary<string, string> seedDiskTags = default(IDictionary<string, string>), IDictionary<string, string> targetDiskTags = default(IDictionary<string, string>), IDictionary<string, string> targetNicTags = default(IDictionary<string, string>))
+        public VMwareCbtEnableMigrationInput(string vmwareMachineId, IList<VMwareCbtDiskInput> disksToInclude, string dataMoverRunAsAccountId, string snapshotRunAsAccountId, string targetResourceGroupId, string targetNetworkId, string licenseType = default(string), string sqlServerLicenseType = default(string), string performSqlBulkRegistration = default(string), string targetVmName = default(string), string targetVmSize = default(string), string testNetworkId = default(string), string targetSubnetName = default(string), string testSubnetName = default(string), string targetAvailabilitySetId = default(string), string targetAvailabilityZone = default(string), string targetProximityPlacementGroupId = default(string), string targetBootDiagnosticsStorageAccountId = default(string), string performAutoResync = default(string), IDictionary<string, string> targetVmTags = default(IDictionary<string, string>), IDictionary<string, string> seedDiskTags = default(IDictionary<string, string>), IDictionary<string, string> targetDiskTags = default(IDictionary<string, string>), IDictionary<string, string> targetNicTags = default(IDictionary<string, string>))
         {
             VmwareMachineId = vmwareMachineId;
             DisksToInclude = disksToInclude;
             LicenseType = licenseType;
             SqlServerLicenseType = sqlServerLicenseType;
+            PerformSqlBulkRegistration = performSqlBulkRegistration;
             DataMoverRunAsAccountId = dataMoverRunAsAccountId;
             SnapshotRunAsAccountId = snapshotRunAsAccountId;
             TargetVmName = targetVmName;
             TargetVmSize = targetVmSize;
             TargetResourceGroupId = targetResourceGroupId;
             TargetNetworkId = targetNetworkId;
+            TestNetworkId = testNetworkId;
             TargetSubnetName = targetSubnetName;
+            TestSubnetName = testSubnetName;
             TargetAvailabilitySetId = targetAvailabilitySetId;
             TargetAvailabilityZone = targetAvailabilityZone;
             TargetProximityPlacementGroupId = targetProximityPlacementGroupId;
@@ -124,6 +132,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string SqlServerLicenseType { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether bulk SQL RP registration to
+        /// be done.
+        /// </summary>
+        [JsonProperty(PropertyName = "performSqlBulkRegistration")]
+        public string PerformSqlBulkRegistration { get; set; }
+
+        /// <summary>
         /// Gets or sets the data mover run as account Id.
         /// </summary>
         [JsonProperty(PropertyName = "dataMoverRunAsAccountId")]
@@ -160,10 +175,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string TargetNetworkId { get; set; }
 
         /// <summary>
+        /// Gets or sets the selected test network ARM Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "testNetworkId")]
+        public string TestNetworkId { get; set; }
+
+        /// <summary>
         /// Gets or sets the target subnet name.
         /// </summary>
         [JsonProperty(PropertyName = "targetSubnetName")]
         public string TargetSubnetName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the selected test subnet name.
+        /// </summary>
+        [JsonProperty(PropertyName = "testSubnetName")]
+        public string TestSubnetName { get; set; }
 
         /// <summary>
         /// Gets or sets the target availability set ARM Id.

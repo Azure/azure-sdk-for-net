@@ -47,11 +47,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Id.</param>
         /// <param name="seedManagedDiskId">The ARM Id of the seed managed
         /// disk.</param>
+        /// <param name="seedBlobUri">The uri of the seed blob.</param>
         /// <param name="targetManagedDiskId">The ARM Id of the target managed
         /// disk.</param>
+        /// <param name="targetBlobUri">The uri of the target blob.</param>
         /// <param name="targetDiskName">The name for the target managed
         /// disk.</param>
-        public VMwareCbtProtectedDiskDetails(string diskId = default(string), string diskName = default(string), string diskType = default(string), string diskPath = default(string), string isOSDisk = default(string), long? capacityInBytes = default(long?), string logStorageAccountId = default(string), string logStorageAccountSasSecretName = default(string), string diskEncryptionSetId = default(string), string seedManagedDiskId = default(string), string targetManagedDiskId = default(string), string targetDiskName = default(string))
+        public VMwareCbtProtectedDiskDetails(string diskId = default(string), string diskName = default(string), string diskType = default(string), string diskPath = default(string), string isOSDisk = default(string), long? capacityInBytes = default(long?), string logStorageAccountId = default(string), string logStorageAccountSasSecretName = default(string), string diskEncryptionSetId = default(string), string seedManagedDiskId = default(string), string seedBlobUri = default(string), string targetManagedDiskId = default(string), string targetBlobUri = default(string), string targetDiskName = default(string))
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -63,7 +65,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             LogStorageAccountSasSecretName = logStorageAccountSasSecretName;
             DiskEncryptionSetId = diskEncryptionSetId;
             SeedManagedDiskId = seedManagedDiskId;
+            SeedBlobUri = seedBlobUri;
             TargetManagedDiskId = targetManagedDiskId;
+            TargetBlobUri = targetBlobUri;
             TargetDiskName = targetDiskName;
             CustomInit();
         }
@@ -135,10 +139,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string SeedManagedDiskId { get; private set; }
 
         /// <summary>
+        /// Gets the uri of the seed blob.
+        /// </summary>
+        [JsonProperty(PropertyName = "seedBlobUri")]
+        public string SeedBlobUri { get; private set; }
+
+        /// <summary>
         /// Gets the ARM Id of the target managed disk.
         /// </summary>
         [JsonProperty(PropertyName = "targetManagedDiskId")]
         public string TargetManagedDiskId { get; private set; }
+
+        /// <summary>
+        /// Gets the uri of the target blob.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetBlobUri")]
+        public string TargetBlobUri { get; private set; }
 
         /// <summary>
         /// Gets or sets the name for the target managed disk.
