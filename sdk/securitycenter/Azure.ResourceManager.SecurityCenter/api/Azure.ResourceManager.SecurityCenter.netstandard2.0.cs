@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public Azure.ResourceManager.SecurityCenter.Models.ReportedSeverity? ReportedSeverity { get { throw null; } }
         public string SystemSource { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.IotSecurityAggregatedAlertPropertiesTopDevicesListItem> TopDevicesList { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.IotSecurityAggregatedAlertTopDevice> TopDevicesList { get { throw null; } }
         public string VendorName { get { throw null; } }
     }
     public partial class IotSecurityAggregatedAlertResource : Azure.ResourceManager.ArmResource
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class IotSecuritySolutionAnalyticsModelData : Azure.ResourceManager.Models.ResourceData
     {
         public IotSecuritySolutionAnalyticsModelData() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem> DevicesMetrics { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionAnalyticsModelDevicesMetrics> DevicesMetrics { get { throw null; } }
         public Azure.ResourceManager.SecurityCenter.Models.IotSeverityMetrics Metrics { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.IotSecurityDeviceAlert> MostPrevalentDeviceAlerts { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.IotSecurityDeviceRecommendation> MostPrevalentDeviceRecommendations { get { throw null; } }
@@ -961,8 +961,8 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         public SecurityAssessmentData() { }
         public System.Collections.Generic.IDictionary<string, string> AdditionalData { get { throw null; } }
+        public System.Uri AzurePortalUri { get { throw null; } }
         public string DisplayName { get { throw null; } }
-        public System.Uri LinksAzurePortalUri { get { throw null; } }
         public Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentMetadataProperties Metadata { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentPartner PartnersData { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityCenter.Models.ResourceDetails ResourceDetails { get { throw null; } set { } }
@@ -2309,19 +2309,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         public AutomationActionEventHub() { }
         public string ConnectionString { get { throw null; } set { } }
-        public string EventHubResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier EventHubResourceId { get { throw null; } set { } }
         public string SasPolicyName { get { throw null; } }
     }
     public partial class AutomationActionLogicApp : Azure.ResourceManager.SecurityCenter.Models.AutomationAction
     {
         public AutomationActionLogicApp() { }
-        public string LogicAppResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LogicAppResourceId { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
     }
     public partial class AutomationActionWorkspace : Azure.ResourceManager.SecurityCenter.Models.AutomationAction
     {
         public AutomationActionWorkspace() { }
-        public string WorkspaceResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier WorkspaceResourceId { get { throw null; } set { } }
     }
     public partial class AutomationRuleSet
     {
@@ -2431,10 +2431,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     }
     public partial class AwsAssumeRoleAuthenticationDetailsProperties : Azure.ResourceManager.SecurityCenter.Models.AuthenticationDetailsProperties
     {
-        public AwsAssumeRoleAuthenticationDetailsProperties(string awsAssumeRoleArn, string awsExternalId) { }
+        public AwsAssumeRoleAuthenticationDetailsProperties(string awsAssumeRoleArn, System.Guid awsExternalId) { }
         public string AccountId { get { throw null; } }
         public string AwsAssumeRoleArn { get { throw null; } set { } }
-        public string AwsExternalId { get { throw null; } set { } }
+        public System.Guid AwsExternalId { get { throw null; } set { } }
     }
     public partial class AwsCredsAuthenticationDetailsProperties : Azure.ResourceManager.SecurityCenter.Models.AuthenticationDetailsProperties
     {
@@ -2572,14 +2572,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class ConnectableResourceInfo
     {
         internal ConnectableResourceInfo() { }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.ConnectedResourceInfo> InboundConnectedResources { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.ConnectedResourceInfo> OutboundConnectedResources { get { throw null; } }
     }
     public partial class ConnectedResourceInfo
     {
         internal ConnectedResourceInfo() { }
-        public string ConnectedResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ConnectedResourceId { get { throw null; } }
         public string TcpPorts { get { throw null; } }
         public string UdpPorts { get { throw null; } }
     }
@@ -2847,7 +2847,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class DefenderForServersAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata
     {
         public DefenderForServersAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata() { }
-        public string ExpireOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public string ParameterNameInStore { get { throw null; } set { } }
         public string ParameterStoreRegion { get { throw null; } set { } }
     }
@@ -3246,9 +3246,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal IngestionSettingToken() { }
         public string Token { get { throw null; } }
     }
-    public partial class IotSecurityAggregatedAlertPropertiesTopDevicesListItem
+    public partial class IotSecurityAggregatedAlertTopDevice
     {
-        internal IotSecurityAggregatedAlertPropertiesTopDevicesListItem() { }
+        internal IotSecurityAggregatedAlertTopDevice() { }
         public long? AlertsCount { get { throw null; } }
         public string DeviceId { get { throw null; } }
         public string LastOccurrence { get { throw null; } }
@@ -3273,11 +3273,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string RecommendationDisplayName { get { throw null; } }
         public Azure.ResourceManager.SecurityCenter.Models.ReportedSeverity? ReportedSeverity { get { throw null; } }
     }
-    public partial class IotSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem
+    public partial class IotSecuritySolutionAnalyticsModelDevicesMetrics
     {
-        internal IotSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem() { }
+        internal IotSecuritySolutionAnalyticsModelDevicesMetrics() { }
+        public System.DateTimeOffset? Date { get { throw null; } }
         public Azure.ResourceManager.SecurityCenter.Models.IotSeverityMetrics DevicesMetrics { get { throw null; } }
-        public System.DateTimeOffset? On { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IotSecuritySolutionExportOption : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionExportOption>
@@ -3324,14 +3324,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     }
     public partial class JitNetworkAccessPolicyInitiateVirtualMachine
     {
-        public JitNetworkAccessPolicyInitiateVirtualMachine(string id, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPolicyInitiatePort> ports) { }
-        public string Id { get { throw null; } }
+        public JitNetworkAccessPolicyInitiateVirtualMachine(Azure.Core.ResourceIdentifier id, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPolicyInitiatePort> ports) { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPolicyInitiatePort> Ports { get { throw null; } }
     }
     public partial class JitNetworkAccessPolicyVirtualMachine
     {
-        public JitNetworkAccessPolicyVirtualMachine(string id, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortRule> ports) { }
-        public string Id { get { throw null; } set { } }
+        public JitNetworkAccessPolicyVirtualMachine(Azure.Core.ResourceIdentifier id, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortRule> ports) { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortRule> Ports { get { throw null; } }
         public string PublicIPAddress { get { throw null; } set { } }
     }
@@ -3421,8 +3421,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     }
     public partial class JitNetworkAccessRequestVirtualMachine
     {
-        public JitNetworkAccessRequestVirtualMachine(string id, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessRequestPort> ports) { }
-        public string Id { get { throw null; } set { } }
+        public JitNetworkAccessRequestVirtualMachine(Azure.Core.ResourceIdentifier id, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessRequestPort> ports) { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessRequestPort> Ports { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -3469,7 +3469,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class LogAnalyticsIdentifier : Azure.ResourceManager.SecurityCenter.Models.AlertResourceIdentifier
     {
         internal LogAnalyticsIdentifier() { }
-        public string AgentId { get { throw null; } }
+        public System.Guid? AgentId { get { throw null; } }
         public string WorkspaceId { get { throw null; } }
         public string WorkspaceResourceGroup { get { throw null; } }
         public string WorkspaceSubscriptionId { get { throw null; } }
@@ -3913,7 +3913,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceCategory Compute { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceCategory Data { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceCategory IdentityAndAccess { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceCategory Iot { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceCategory IoT { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceCategory Networking { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceCategory other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

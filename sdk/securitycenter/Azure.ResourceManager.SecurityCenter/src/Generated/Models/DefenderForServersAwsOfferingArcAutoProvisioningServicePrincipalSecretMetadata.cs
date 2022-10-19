@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Metadata of Service Principal secret for autoprovisioning. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="expireOn"> expiration date of service principal secret. </param>
         /// <param name="parameterStoreRegion"> region of parameter store where secret is kept. </param>
         /// <param name="parameterNameInStore"> name of secret resource in parameter store. </param>
-        internal DefenderForServersAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata(string expireOn, string parameterStoreRegion, string parameterNameInStore)
+        internal DefenderForServersAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata(DateTimeOffset? expireOn, string parameterStoreRegion, string parameterNameInStore)
         {
             ExpireOn = expireOn;
             ParameterStoreRegion = parameterStoreRegion;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> expiration date of service principal secret. </summary>
-        public string ExpireOn { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> region of parameter store where secret is kept. </summary>
         public string ParameterStoreRegion { get; set; }
         /// <summary> name of secret resource in parameter store. </summary>

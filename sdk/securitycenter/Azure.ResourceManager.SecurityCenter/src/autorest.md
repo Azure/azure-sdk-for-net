@@ -122,7 +122,7 @@ rename-mapping:
   DefenderForContainersGcpOffering.policyAgentAutoProvisioningFlag: IsPolicyAgentAutoProvisioningEnabled
   DefenderForDatabasesGcpOfferingArcAutoProvisioning.enabled: IsEnabled
   DefenderForServersAwsOfferingArcAutoProvisioning.enabled: IsEnabled
-  DefenderForServersAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata.expiryDate: ExpireOn
+  DefenderForServersAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata.expiryDate: ExpireOn|date-time
   DefenderForServersAwsOfferingMdeAutoProvisioning.enabled: IsEnabled
   DefenderForServersAwsOfferingVaAutoProvisioning.enabled: IsEnabled
   DefenderForServersAwsOfferingVmScanners.enabled: IsEnabled
@@ -173,6 +173,16 @@ rename-mapping:
   SecurityAssessmentMetadataResponse: SecurityAssessmentMetadata
   RuleResults: SqlVulnerabilityAssessmentBaselineRule
   AscLocation: SecurityCenterLocation
+  AwAssumeRoleAuthenticationDetailsProperties.awsExternalId: -|uuid
+  ConnectableResource.id: -|arm-id
+  IoTSecurityAggregatedAlertPropertiesTopDevicesListItem: IotSecurityAggregatedAlertTopDevice
+  IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem: IotSecuritySolutionAnalyticsModelDevicesMetrics
+  InformationProtectionAwsOfferingInformationProtection: AwsInformationProtection
+  JitNetworkAccessPolicyInitiateVirtualMachine.id: -|arm-id
+  JitNetworkAccessPolicyVirtualMachine.id: -|arm-id
+  JitNetworkAccessRequestVirtualMachine.id: -|arm-id
+  LogAnalyticsIdentifier.agentId: -|uuid
+
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -181,7 +191,7 @@ format-by-name-rules:
   'ascLocation': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
-  'azureResourceId': 'arm-id'
+  '*ResourceId': 'arm-id'
   'policyDefinitionId': 'arm-id'
 
 rename-rules:

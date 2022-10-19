@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of IotSecurityAggregatedAlertData. </summary>
         public IotSecurityAggregatedAlertData()
         {
-            TopDevicesList = new ChangeTrackingList<IotSecurityAggregatedAlertPropertiesTopDevicesListItem>();
+            TopDevicesList = new ChangeTrackingList<IotSecurityAggregatedAlertTopDevice>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="logAnalyticsQuery"> Log analytics query for getting the list of affected devices/alerts. </param>
         /// <param name="topDevicesList"> 10 devices with the highest number of occurrences of this alert type, on this day. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal IotSecurityAggregatedAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string alertType, string alertDisplayName, DateTimeOffset? aggregatedOn, string vendorName, ReportedSeverity? reportedSeverity, string remediationSteps, string description, long? count, string effectedResourceType, string systemSource, string actionTaken, string logAnalyticsQuery, IReadOnlyList<IotSecurityAggregatedAlertPropertiesTopDevicesListItem> topDevicesList, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal IotSecurityAggregatedAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string alertType, string alertDisplayName, DateTimeOffset? aggregatedOn, string vendorName, ReportedSeverity? reportedSeverity, string remediationSteps, string description, long? count, string effectedResourceType, string systemSource, string actionTaken, string logAnalyticsQuery, IReadOnlyList<IotSecurityAggregatedAlertTopDevice> topDevicesList, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             AlertType = alertType;
             AlertDisplayName = alertDisplayName;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Log analytics query for getting the list of affected devices/alerts. </summary>
         public string LogAnalyticsQuery { get; }
         /// <summary> 10 devices with the highest number of occurrences of this alert type, on this day. </summary>
-        public IReadOnlyList<IotSecurityAggregatedAlertPropertiesTopDevicesListItem> TopDevicesList { get; }
+        public IReadOnlyList<IotSecurityAggregatedAlertTopDevice> TopDevicesList { get; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

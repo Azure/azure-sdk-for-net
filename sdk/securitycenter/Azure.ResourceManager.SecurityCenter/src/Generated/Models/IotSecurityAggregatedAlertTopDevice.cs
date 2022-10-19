@@ -7,19 +7,19 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The IotSecurityAggregatedAlertPropertiesTopDevicesListItem. </summary>
-    public partial class IotSecurityAggregatedAlertPropertiesTopDevicesListItem
+    /// <summary> The IotSecurityAggregatedAlertTopDevice. </summary>
+    public partial class IotSecurityAggregatedAlertTopDevice
     {
-        /// <summary> Initializes a new instance of IotSecurityAggregatedAlertPropertiesTopDevicesListItem. </summary>
-        internal IotSecurityAggregatedAlertPropertiesTopDevicesListItem()
+        /// <summary> Initializes a new instance of IotSecurityAggregatedAlertTopDevice. </summary>
+        internal IotSecurityAggregatedAlertTopDevice()
         {
         }
 
-        /// <summary> Initializes a new instance of IotSecurityAggregatedAlertPropertiesTopDevicesListItem. </summary>
+        /// <summary> Initializes a new instance of IotSecurityAggregatedAlertTopDevice. </summary>
         /// <param name="deviceId"> Name of the device. </param>
         /// <param name="alertsCount"> Number of alerts raised for this device. </param>
         /// <param name="lastOccurrence"> Most recent time this alert was raised for this device, on this day. </param>
-        internal IotSecurityAggregatedAlertPropertiesTopDevicesListItem(string deviceId, long? alertsCount, string lastOccurrence)
+        internal IotSecurityAggregatedAlertTopDevice(string deviceId, long? alertsCount, string lastOccurrence)
         {
             DeviceId = deviceId;
             AlertsCount = alertsCount;

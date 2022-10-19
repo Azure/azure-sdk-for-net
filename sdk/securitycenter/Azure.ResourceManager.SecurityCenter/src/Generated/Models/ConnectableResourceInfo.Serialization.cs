@@ -15,14 +15,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static ConnectableResourceInfo DeserializeConnectableResourceInfo(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<IReadOnlyList<ConnectedResourceInfo>> inboundConnectedResources = default;
             Optional<IReadOnlyList<ConnectedResourceInfo>> outboundConnectedResources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("inboundConnectedResources"))

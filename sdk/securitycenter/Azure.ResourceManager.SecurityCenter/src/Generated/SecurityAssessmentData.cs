@@ -61,11 +61,6 @@ namespace Azure.ResourceManager.SecurityCenter
         public IDictionary<string, string> AdditionalData { get; }
         /// <summary> Links relevant to the assessment. </summary>
         internal AssessmentLinks Links { get; }
-        /// <summary> Link to assessment in Azure Portal. </summary>
-        public Uri LinksAzurePortalUri
-        {
-            get => Links?.AzurePortalUri;
-        }
 
         /// <summary> Describes properties of an assessment metadata. </summary>
         public SecurityAssessmentMetadataProperties Metadata { get; set; }

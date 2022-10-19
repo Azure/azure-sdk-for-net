@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class InformationProtectionAwsOfferingInformationProtection : IUtf8JsonSerializable
+    internal partial class AwsInformationProtection : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static InformationProtectionAwsOfferingInformationProtection DeserializeInformationProtectionAwsOfferingInformationProtection(JsonElement element)
+        internal static AwsInformationProtection DeserializeAwsInformationProtection(JsonElement element)
         {
             Optional<string> cloudRoleArn = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new InformationProtectionAwsOfferingInformationProtection(cloudRoleArn.Value);
+            return new AwsInformationProtection(cloudRoleArn.Value);
         }
     }
 }

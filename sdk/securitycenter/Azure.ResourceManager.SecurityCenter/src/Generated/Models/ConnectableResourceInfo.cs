@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="id"> The Azure resource id. </param>
         /// <param name="inboundConnectedResources"> The list of Azure resources that the resource has inbound allowed connection from. </param>
         /// <param name="outboundConnectedResources"> The list of Azure resources that the resource has outbound allowed connection to. </param>
-        internal ConnectableResourceInfo(string id, IReadOnlyList<ConnectedResourceInfo> inboundConnectedResources, IReadOnlyList<ConnectedResourceInfo> outboundConnectedResources)
+        internal ConnectableResourceInfo(ResourceIdentifier id, IReadOnlyList<ConnectedResourceInfo> inboundConnectedResources, IReadOnlyList<ConnectedResourceInfo> outboundConnectedResources)
         {
             Id = id;
             InboundConnectedResources = inboundConnectedResources;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The Azure resource id. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> The list of Azure resources that the resource has inbound allowed connection from. </summary>
         public IReadOnlyList<ConnectedResourceInfo> InboundConnectedResources { get; }
         /// <summary> The list of Azure resources that the resource has outbound allowed connection to. </summary>

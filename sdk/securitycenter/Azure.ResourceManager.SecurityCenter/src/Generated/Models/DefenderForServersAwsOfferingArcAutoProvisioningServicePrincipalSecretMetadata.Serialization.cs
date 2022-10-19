@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryDate");
-                writer.WriteStringValue(ExpireOn);
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(ParameterStoreRegion))
             {
@@ -35,14 +36,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForServersAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata DeserializeDefenderForServersAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata(JsonElement element)
         {
-            Optional<string> expiryDate = default;
+            Optional<DateTimeOffset> expiryDate = default;
             Optional<string> parameterStoreRegion = default;
             Optional<string> parameterNameInStore = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expiryDate"))
                 {
-                    expiryDate = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    expiryDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("parameterStoreRegion"))
@@ -56,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DefenderForServersAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata(expiryDate.Value, parameterStoreRegion.Value, parameterNameInStore.Value);
+            return new DefenderForServersAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata(Optional.ToNullable(expiryDate), parameterStoreRegion.Value, parameterNameInStore.Value);
         }
     }
 }

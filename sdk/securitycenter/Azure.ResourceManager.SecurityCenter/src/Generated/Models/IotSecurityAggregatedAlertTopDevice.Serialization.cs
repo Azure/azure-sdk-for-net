@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class IotSecurityAggregatedAlertPropertiesTopDevicesListItem
+    public partial class IotSecurityAggregatedAlertTopDevice
     {
-        internal static IotSecurityAggregatedAlertPropertiesTopDevicesListItem DeserializeIotSecurityAggregatedAlertPropertiesTopDevicesListItem(JsonElement element)
+        internal static IotSecurityAggregatedAlertTopDevice DeserializeIotSecurityAggregatedAlertTopDevice(JsonElement element)
         {
             Optional<string> deviceId = default;
             Optional<long> alertsCount = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new IotSecurityAggregatedAlertPropertiesTopDevicesListItem(deviceId.Value, Optional.ToNullable(alertsCount), lastOccurrence.Value);
+            return new IotSecurityAggregatedAlertTopDevice(deviceId.Value, Optional.ToNullable(alertsCount), lastOccurrence.Value);
         }
     }
 }

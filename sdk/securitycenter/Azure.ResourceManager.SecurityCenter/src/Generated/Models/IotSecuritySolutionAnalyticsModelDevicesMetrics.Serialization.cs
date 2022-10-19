@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class IotSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem
+    public partial class IotSecuritySolutionAnalyticsModelDevicesMetrics
     {
-        internal static IotSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem DeserializeIotSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem(JsonElement element)
+        internal static IotSecuritySolutionAnalyticsModelDevicesMetrics DeserializeIotSecuritySolutionAnalyticsModelDevicesMetrics(JsonElement element)
         {
             Optional<DateTimeOffset> date = default;
             Optional<IotSeverityMetrics> devicesMetrics = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new IotSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem(Optional.ToNullable(date), devicesMetrics.Value);
+            return new IotSecuritySolutionAnalyticsModelDevicesMetrics(Optional.ToNullable(date), devicesMetrics.Value);
         }
     }
 }

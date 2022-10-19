@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The native cloud connection configuration. </summary>
-    internal partial class InformationProtectionAwsOfferingInformationProtection
+    internal partial class AwsInformationProtection
     {
-        /// <summary> Initializes a new instance of InformationProtectionAwsOfferingInformationProtection. </summary>
-        public InformationProtectionAwsOfferingInformationProtection()
+        /// <summary> Initializes a new instance of AwsInformationProtection. </summary>
+        public AwsInformationProtection()
         {
         }
 
-        /// <summary> Initializes a new instance of InformationProtectionAwsOfferingInformationProtection. </summary>
+        /// <summary> Initializes a new instance of AwsInformationProtection. </summary>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
-        internal InformationProtectionAwsOfferingInformationProtection(string cloudRoleArn)
+        internal AwsInformationProtection(string cloudRoleArn)
         {
             CloudRoleArn = cloudRoleArn;
         }

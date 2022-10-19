@@ -14,14 +14,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static ConnectedResourceInfo DeserializeConnectedResourceInfo(JsonElement element)
         {
-            Optional<string> connectedResourceId = default;
+            Optional<ResourceIdentifier> connectedResourceId = default;
             Optional<string> tcpPorts = default;
             Optional<string> udpPorts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectedResourceId"))
                 {
-                    connectedResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    connectedResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tcpPorts"))

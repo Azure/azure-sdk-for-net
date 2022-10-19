@@ -36,8 +36,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityAssessmentResourceCategory Data { get; } = new SecurityAssessmentResourceCategory(DataValue);
         /// <summary> IdentityAndAccess. </summary>
         public static SecurityAssessmentResourceCategory IdentityAndAccess { get; } = new SecurityAssessmentResourceCategory(IdentityAndAccessValue);
-        /// <summary> IoT. </summary>
-        public static SecurityAssessmentResourceCategory Iot { get; } = new SecurityAssessmentResourceCategory(IotValue);
         /// <summary> Determines if two <see cref="SecurityAssessmentResourceCategory"/> values are the same. </summary>
         public static bool operator ==(SecurityAssessmentResourceCategory left, SecurityAssessmentResourceCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAssessmentResourceCategory"/> values are not the same. </summary>

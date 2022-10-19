@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static JitNetworkAccessPolicyVirtualMachine DeserializeJitNetworkAccessPolicyVirtualMachine(JsonElement element)
         {
-            string id = default;
+            ResourceIdentifier id = default;
             IList<JitNetworkAccessPortRule> ports = default;
             Optional<string> publicIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ports"))

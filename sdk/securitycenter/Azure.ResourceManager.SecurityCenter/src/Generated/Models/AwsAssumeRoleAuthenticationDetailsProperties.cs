@@ -16,16 +16,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AwsAssumeRoleAuthenticationDetailsProperties. </summary>
         /// <param name="awsAssumeRoleArn"> Assumed role ID is an identifier that you can use to create temporary security credentials. </param>
         /// <param name="awsExternalId"> A unique identifier that is required when you assume a role in another account. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="awsAssumeRoleArn"/> or <paramref name="awsExternalId"/> is null. </exception>
-        public AwsAssumeRoleAuthenticationDetailsProperties(string awsAssumeRoleArn, string awsExternalId)
+        /// <exception cref="ArgumentNullException"> <paramref name="awsAssumeRoleArn"/> is null. </exception>
+        public AwsAssumeRoleAuthenticationDetailsProperties(string awsAssumeRoleArn, Guid awsExternalId)
         {
             if (awsAssumeRoleArn == null)
             {
                 throw new ArgumentNullException(nameof(awsAssumeRoleArn));
-            }
-            if (awsExternalId == null)
-            {
-                throw new ArgumentNullException(nameof(awsExternalId));
             }
 
             AwsAssumeRoleArn = awsAssumeRoleArn;
@@ -40,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="accountId"> The ID of the cloud account. </param>
         /// <param name="awsAssumeRoleArn"> Assumed role ID is an identifier that you can use to create temporary security credentials. </param>
         /// <param name="awsExternalId"> A unique identifier that is required when you assume a role in another account. </param>
-        internal AwsAssumeRoleAuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<PermissionProperty> grantedPermissions, AuthenticationType authenticationType, string accountId, string awsAssumeRoleArn, string awsExternalId) : base(authenticationProvisioningState, grantedPermissions, authenticationType)
+        internal AwsAssumeRoleAuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<PermissionProperty> grantedPermissions, AuthenticationType authenticationType, string accountId, string awsAssumeRoleArn, Guid awsExternalId) : base(authenticationProvisioningState, grantedPermissions, authenticationType)
         {
             AccountId = accountId;
             AwsAssumeRoleArn = awsAssumeRoleArn;
@@ -53,6 +49,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Assumed role ID is an identifier that you can use to create temporary security credentials. </summary>
         public string AwsAssumeRoleArn { get; set; }
         /// <summary> A unique identifier that is required when you assume a role in another account. </summary>
-        public string AwsExternalId { get; set; }
+        public Guid AwsExternalId { get; set; }
     }
 }

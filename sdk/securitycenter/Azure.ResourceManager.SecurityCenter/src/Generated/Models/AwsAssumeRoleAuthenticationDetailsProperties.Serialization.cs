@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             Optional<string> accountId = default;
             string awsAssumeRoleArn = default;
-            string awsExternalId = default;
+            Guid awsExternalId = default;
             Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
             Optional<IReadOnlyList<PermissionProperty>> grantedPermissions = default;
             AuthenticationType authenticationType = default;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (property.NameEquals("awsExternalId"))
                 {
-                    awsExternalId = property.Value.GetString();
+                    awsExternalId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("authenticationProvisioningState"))
