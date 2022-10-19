@@ -533,6 +533,8 @@ namespace Azure.AI.TextAnalytics
                     ModelVersion = action.ModelVersion,
                     StringIndexType = Constants.DefaultStringIndexType,
                     LoggingOptOut = action.DisableServiceLogs,
+                    FhirVersion = action.FhirVersion,
+                    DocumentType = action.DocumentType,
                 },
                 TaskName = action.ActionName,
             };
