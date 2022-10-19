@@ -37,6 +37,7 @@ namespace Azure.Storage.Blobs.Models
         private const string CoolValue = "Cool";
         private const string ArchiveValue = "Archive";
         private const string PremiumValue = "Premium";
+        private const string ColdValue = "Cold";
 
         /// <summary> P4. </summary>
         public static AccessTier P4 { get; } = new AccessTier(P4Value);
@@ -68,6 +69,8 @@ namespace Azure.Storage.Blobs.Models
         public static AccessTier Archive { get; } = new AccessTier(ArchiveValue);
         /// <summary> Premium. </summary>
         public static AccessTier Premium { get; } = new AccessTier(PremiumValue);
+        /// <summary> Cold. </summary>
+        public static AccessTier Cold { get; } = new AccessTier(ColdValue);
         /// <summary> Determines if two <see cref="AccessTier"/> values are the same. </summary>
         public static bool operator ==(AccessTier left, AccessTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AccessTier"/> values are not the same. </summary>
