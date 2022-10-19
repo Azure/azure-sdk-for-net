@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.TestFramework
                 string content = reader.ReadToEnd();
                 if (content.Contains(":null"))
                 {
+                    // Replace \"\":null, with ,   with any number of \
+                    content = Regex.Replace(content, "(,?)\\s*\\\\+\"[^\\\\+\"]*\\\\+\":null,?|,(})", "$1$2");
                     // Replace "":null, with ,
                     content = Regex.Replace(content, "(,?)\\s*\\\"[^\\\"]*\\\":null,?|,(})", "$1$2");
                     // Remove trailing comma
