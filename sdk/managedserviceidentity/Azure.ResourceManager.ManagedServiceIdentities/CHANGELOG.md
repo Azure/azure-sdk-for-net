@@ -4,11 +4,7 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgrade to API version 2022-01-31-preview.
 
 ## 1.0.0 (2022-07-21)
 
