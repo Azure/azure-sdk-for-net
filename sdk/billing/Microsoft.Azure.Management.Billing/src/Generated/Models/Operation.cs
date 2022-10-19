@@ -31,11 +31,14 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         /// <param name="name">Operation name:
         /// {provider}/{resource}/{operation}.</param>
+        /// <param name="isDataAction">Identifies if the operation is a data
+        /// operation.</param>
         /// <param name="display">The object that represents the
         /// operation.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
+        public Operation(string name = default(string), bool? isDataAction = default(bool?), OperationDisplay display = default(OperationDisplay))
         {
             Name = name;
+            IsDataAction = isDataAction;
             Display = display;
             CustomInit();
         }
@@ -50,6 +53,12 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets identifies if the operation is a data operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; private set; }
 
         /// <summary>
         /// Gets or sets the object that represents the operation.

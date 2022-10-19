@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="OperationsErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -151,11 +151,11 @@ namespace Microsoft.Azure.Management.Billing
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new OperationsErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    OperationsErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationsErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="OperationsErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -320,11 +320,11 @@ namespace Microsoft.Azure.Management.Billing
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new OperationsErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    OperationsErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationsErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;

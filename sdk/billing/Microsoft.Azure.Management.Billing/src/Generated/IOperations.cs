@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="OperationsErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="OperationsErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

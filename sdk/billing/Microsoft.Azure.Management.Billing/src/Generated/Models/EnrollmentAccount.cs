@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// enrollment account.</param>
         /// <param name="accountOwner">The owner of the enrollment
         /// account.</param>
+        /// <param name="accountOwnerEmail">The enrollment account owner email
+        /// address.</param>
         /// <param name="status">The status of the enrollment account.</param>
         /// <param name="startDate">The start date of the enrollment
         /// account.</param>
@@ -48,12 +50,13 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// account.</param>
         /// <param name="department">Associated department. By default this is
         /// not populated, unless it's specified in $expand.</param>
-        public EnrollmentAccount(string id = default(string), string name = default(string), string type = default(string), string accountName = default(string), string costCenter = default(string), string accountOwner = default(string), string status = default(string), System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), Department department = default(Department))
+        public EnrollmentAccount(string id = default(string), string name = default(string), string type = default(string), string accountName = default(string), string costCenter = default(string), string accountOwner = default(string), string accountOwnerEmail = default(string), string status = default(string), System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), Department department = default(Department))
             : base(id, name, type)
         {
             AccountName = accountName;
             CostCenter = costCenter;
             AccountOwner = accountOwner;
+            AccountOwnerEmail = accountOwnerEmail;
             Status = status;
             StartDate = startDate;
             EndDate = endDate;
@@ -84,6 +87,12 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.accountOwner")]
         public string AccountOwner { get; set; }
+
+        /// <summary>
+        /// Gets or sets the enrollment account owner email address.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.accountOwnerEmail")]
+        public string AccountOwnerEmail { get; set; }
 
         /// <summary>
         /// Gets or sets the status of the enrollment account.

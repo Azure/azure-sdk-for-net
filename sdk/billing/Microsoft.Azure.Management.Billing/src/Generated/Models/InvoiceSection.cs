@@ -40,14 +40,28 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="displayName">The name of the invoice section.</param>
         /// <param name="labels">Dictionary of metadata associated with the
         /// invoice section.</param>
+        /// <param name="state">Identifies the state of an invoice section.
+        /// Possible values include: 'Active', 'Restricted'</param>
         /// <param name="systemId">The system generated unique identifier for
         /// an invoice section.</param>
-        public InvoiceSection(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), IDictionary<string, string> labels = default(IDictionary<string, string>), string systemId = default(string))
+        /// <param name="tags">Dictionary of metadata associated with the
+        /// invoice section. Maximum key/value length supported of 256
+        /// characters. Keys/value should not empty value nor null. Keys can
+        /// not contain &lt; &gt; % &amp; \ ? /</param>
+        /// <param name="targetCloud">Identifies the cloud environments that
+        /// are associated with an invoice section. This is a system managed
+        /// optional field and gets updated as the invoice section gets
+        /// associated with accounts in various clouds. Possible values
+        /// include: 'USGov', 'USNat', 'USSec'</param>
+        public InvoiceSection(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), IDictionary<string, string> labels = default(IDictionary<string, string>), string state = default(string), string systemId = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string targetCloud = default(string))
             : base(id, name, type)
         {
             DisplayName = displayName;
             Labels = labels;
+            State = state;
             SystemId = systemId;
+            Tags = tags;
+            TargetCloud = targetCloud;
             CustomInit();
         }
 
@@ -70,10 +84,35 @@ namespace Microsoft.Azure.Management.Billing.Models
         public IDictionary<string, string> Labels { get; set; }
 
         /// <summary>
+        /// Gets identifies the state of an invoice section. Possible values
+        /// include: 'Active', 'Restricted'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.state")]
+        public string State { get; private set; }
+
+        /// <summary>
         /// Gets the system generated unique identifier for an invoice section.
         /// </summary>
         [JsonProperty(PropertyName = "properties.systemId")]
         public string SystemId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets dictionary of metadata associated with the invoice
+        /// section. Maximum key/value length supported of 256 characters.
+        /// Keys/value should not empty value nor null. Keys can not contain
+        /// &amp;lt; &amp;gt; % &amp;amp; \ ? /
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tags")]
+        public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets identifies the cloud environments that are associated with an
+        /// invoice section. This is a system managed optional field and gets
+        /// updated as the invoice section gets associated with accounts in
+        /// various clouds. Possible values include: 'USGov', 'USNat', 'USSec'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.targetCloud")]
+        public string TargetCloud { get; private set; }
 
     }
 }

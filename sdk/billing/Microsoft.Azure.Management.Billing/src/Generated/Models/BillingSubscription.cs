@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Billing.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -64,7 +66,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// subscription.</param>
         /// <param name="skuDescription">The sku description of the Azure plan
         /// for the subscription.</param>
-        public BillingSubscription(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), System.Guid? subscriptionId = default(System.Guid?), string subscriptionBillingStatus = default(string), Amount lastMonthCharges = default(Amount), Amount monthToDateCharges = default(Amount), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string costCenter = default(string), string customerId = default(string), string customerDisplayName = default(string), string invoiceSectionId = default(string), string invoiceSectionDisplayName = default(string), Reseller reseller = default(Reseller), string skuId = default(string), string skuDescription = default(string))
+        /// <param name="suspensionReasons">The suspension reason for a
+        /// subscription. Applies only to subscriptions in Microsoft Online
+        /// Services Program billing accounts.</param>
+        public BillingSubscription(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), System.Guid? subscriptionId = default(System.Guid?), string subscriptionBillingStatus = default(string), Amount lastMonthCharges = default(Amount), Amount monthToDateCharges = default(Amount), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string costCenter = default(string), string customerId = default(string), string customerDisplayName = default(string), string invoiceSectionId = default(string), string invoiceSectionDisplayName = default(string), Reseller reseller = default(Reseller), string skuId = default(string), string skuDescription = default(string), IList<string> suspensionReasons = default(IList<string>))
             : base(id, name, type)
         {
             DisplayName = displayName;
@@ -82,6 +87,7 @@ namespace Microsoft.Azure.Management.Billing.Models
             Reseller = reseller;
             SkuId = skuId;
             SkuDescription = skuDescription;
+            SuspensionReasons = suspensionReasons;
             CustomInit();
         }
 
@@ -189,6 +195,14 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.skuDescription")]
         public string SkuDescription { get; private set; }
+
+        /// <summary>
+        /// Gets the suspension reason for a subscription. Applies only to
+        /// subscriptions in Microsoft Online Services Program billing
+        /// accounts.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.suspensionReasons")]
+        public IList<string> SuspensionReasons { get; private set; }
 
     }
 }

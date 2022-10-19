@@ -45,6 +45,9 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="acceptanceMode">The mode of acceptance for an
         /// agreement. Possible values include: 'ClickToAccept',
         /// 'ESignEmbedded', 'ESignOffline'</param>
+        /// <param name="billingProfileInfo">The list of billing profiles
+        /// associated with agreement and present only for specific
+        /// agreements.</param>
         /// <param name="effectiveDate">The date from which the agreement is
         /// effective.</param>
         /// <param name="expirationDate">The date when the agreement
@@ -52,12 +55,13 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="participants">The list of participants that
         /// participates in acceptance of an agreement.</param>
         /// <param name="status">The current status of the agreement.</param>
-        public Agreement(string id = default(string), string name = default(string), string type = default(string), string agreementLink = default(string), string category = default(string), string acceptanceMode = default(string), System.DateTime? effectiveDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), IList<Participants> participants = default(IList<Participants>), string status = default(string))
+        public Agreement(string id = default(string), string name = default(string), string type = default(string), string agreementLink = default(string), string category = default(string), string acceptanceMode = default(string), BillingProfileInfo billingProfileInfo = default(BillingProfileInfo), System.DateTime? effectiveDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), IList<Participants> participants = default(IList<Participants>), string status = default(string))
             : base(id, name, type)
         {
             AgreementLink = agreementLink;
             Category = category;
             AcceptanceMode = acceptanceMode;
+            BillingProfileInfo = billingProfileInfo;
             EffectiveDate = effectiveDate;
             ExpirationDate = expirationDate;
             Participants = participants;
@@ -90,6 +94,13 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.acceptanceMode")]
         public string AcceptanceMode { get; private set; }
+
+        /// <summary>
+        /// Gets the list of billing profiles associated with agreement and
+        /// present only for specific agreements.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.billingProfileInfo")]
+        public BillingProfileInfo BillingProfileInfo { get; private set; }
 
         /// <summary>
         /// Gets the date from which the agreement is effective.
