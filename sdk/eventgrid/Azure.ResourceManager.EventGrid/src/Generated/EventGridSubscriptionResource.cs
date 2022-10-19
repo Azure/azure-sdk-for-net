@@ -17,9 +17,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary> This is the base client representation of the following resources <see cref="TopicEventSubscriptionResource" />, <see cref="DomainEventSubscriptionResource" />, <see cref="EventSubscriptionResource" />, <see cref="DomainTopicEventSubscriptionResource" />, <see cref="SystemTopicEventSubscriptionResource" /> or <see cref="PartnerTopicEventSubscriptionResource" />. </summary>
-    public abstract partial class BaseEventSubscriptionResource : ArmResource
+    public abstract partial class EventGridSubscriptionResource : ArmResource
     {
-        internal static BaseEventSubscriptionResource GetResource(ArmClient client, EventSubscriptionData data)
+        internal static EventGridSubscriptionResource GetResource(ArmClient client, EventGridSubscriptionData data)
         {
             if (IsTopicEventSubscriptionResource(data.Id))
             {
@@ -133,26 +133,26 @@ namespace Azure.ResourceManager.EventGrid
             return true;
         }
 
-        private readonly EventSubscriptionData _data;
+        private readonly EventGridSubscriptionData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="BaseEventSubscriptionResource"/> class for mocking. </summary>
-        protected BaseEventSubscriptionResource()
+        /// <summary> Initializes a new instance of the <see cref="EventGridSubscriptionResource"/> class for mocking. </summary>
+        protected EventGridSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BaseEventSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "EventGridSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BaseEventSubscriptionResource(ArmClient client, EventSubscriptionData data) : this(client, data.Id)
+        internal EventGridSubscriptionResource(ArmClient client, EventGridSubscriptionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BaseEventSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventGridSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BaseEventSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal EventGridSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual EventSubscriptionData Data
+        public virtual EventGridSubscriptionData Data
         {
             get
             {
@@ -173,24 +173,24 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Task<Response<BaseEventSubscriptionResource>> GetCoreAsync(CancellationToken cancellationToken = default);
+        protected abstract Task<Response<EventGridSubscriptionResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public async Task<Response<BaseEventSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<EventGridSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Response<BaseEventSubscriptionResource> GetCore(CancellationToken cancellationToken = default);
+        protected abstract Response<EventGridSubscriptionResource> GetCore(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public Response<BaseEventSubscriptionResource> Get(CancellationToken cancellationToken = default)
+        public Response<EventGridSubscriptionResource> Get(CancellationToken cancellationToken = default)
         {
             return GetCore(cancellationToken);
         }
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="patch"> Updated event subscription information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        protected abstract Task<ArmOperation<BaseEventSubscriptionResource>> UpdateCoreAsync(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default);
+        protected abstract Task<ArmOperation<EventGridSubscriptionResource>> UpdateCoreAsync(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Update. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [ForwardsClientCalls]
-        public async Task<ArmOperation<BaseEventSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
+        public async Task<ArmOperation<EventGridSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="patch"> Updated event subscription information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        protected abstract ArmOperation<BaseEventSubscriptionResource> UpdateCore(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default);
+        protected abstract ArmOperation<EventGridSubscriptionResource> UpdateCore(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Update. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [ForwardsClientCalls]
-        public ArmOperation<BaseEventSubscriptionResource> Update(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
+        public ArmOperation<EventGridSubscriptionResource> Update(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 

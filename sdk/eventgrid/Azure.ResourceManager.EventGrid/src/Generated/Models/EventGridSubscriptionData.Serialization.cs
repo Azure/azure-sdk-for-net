@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class EventSubscriptionData : IUtf8JsonSerializable
+    public partial class EventGridSubscriptionData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EventGrid
             writer.WriteEndObject();
         }
 
-        internal static EventSubscriptionData DeserializeEventSubscriptionData(JsonElement element)
+        internal static EventGridSubscriptionData DeserializeEventGridSubscriptionData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new EventSubscriptionData(id, name, type, systemData.Value, topic.Value, Optional.ToNullable(provisioningState), destination.Value, deliveryWithResourceIdentity.Value, filter.Value, Optional.ToList(labels), Optional.ToNullable(expirationTimeUtc), Optional.ToNullable(eventDeliverySchema), retryPolicy.Value, deadLetterDestination.Value, deadLetterWithResourceIdentity.Value);
+            return new EventGridSubscriptionData(id, name, type, systemData.Value, topic.Value, Optional.ToNullable(provisioningState), destination.Value, deliveryWithResourceIdentity.Value, filter.Value, Optional.ToList(labels), Optional.ToNullable(expirationTimeUtc), Optional.ToNullable(eventDeliverySchema), retryPolicy.Value, deadLetterDestination.Value, deadLetterWithResourceIdentity.Value);
         }
     }
 }

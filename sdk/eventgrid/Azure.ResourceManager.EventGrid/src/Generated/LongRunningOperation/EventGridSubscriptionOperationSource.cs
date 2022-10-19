@@ -14,27 +14,27 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal class SystemTopicEventSubscriptionOperationSource : IOperationSource<SystemTopicEventSubscriptionResource>
+    internal class EventGridSubscriptionOperationSource : IOperationSource<EventGridSubscriptionResource>
     {
         private readonly ArmClient _client;
 
-        internal SystemTopicEventSubscriptionOperationSource(ArmClient client)
+        internal EventGridSubscriptionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        SystemTopicEventSubscriptionResource IOperationSource<SystemTopicEventSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        EventGridSubscriptionResource IOperationSource<EventGridSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = EventGridSubscriptionData.DeserializeEventGridSubscriptionData(document.RootElement);
-            return new SystemTopicEventSubscriptionResource(_client, data);
+            return EventGridSubscriptionResource.GetResource(_client, data);
         }
 
-        async ValueTask<SystemTopicEventSubscriptionResource> IOperationSource<SystemTopicEventSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EventGridSubscriptionResource> IOperationSource<EventGridSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = EventGridSubscriptionData.DeserializeEventGridSubscriptionData(document.RootElement);
-            return new SystemTopicEventSubscriptionResource(_client, data);
+            return EventGridSubscriptionResource.GetResource(_client, data);
         }
     }
 }

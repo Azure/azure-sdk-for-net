@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventGrid
     /// from an instance of <see cref="ArmClient" /> using the GetEventSubscriptionResource method.
     /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetEventSubscription method.
     /// </summary>
-    public partial class EventSubscriptionResource : BaseEventSubscriptionResource
+    public partial class EventSubscriptionResource : EventGridSubscriptionResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventSubscriptionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string eventSubscriptionName)
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Initializes a new instance of the <see cref = "EventSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EventSubscriptionResource(ArmClient client, EventSubscriptionData data) : base(client, data)
+        internal EventSubscriptionResource(ArmClient client, EventGridSubscriptionData data) : base(client, data)
         {
             _eventSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string eventSubscriptionApiVersion);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EventGrid
         /// Operation Id: EventSubscriptions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override async Task<Response<BaseEventSubscriptionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<EventGridSubscriptionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.Get");
             scope.Start();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EventGrid
         /// Operation Id: EventSubscriptions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override Response<BaseEventSubscriptionResource> GetCore(CancellationToken cancellationToken = default)
+        protected override Response<EventGridSubscriptionResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.Get");
             scope.Start();
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="patch"> Updated event subscription information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        protected override async Task<ArmOperation<BaseEventSubscriptionResource>> UpdateCoreAsync(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation<EventGridSubscriptionResource>> UpdateCoreAsync(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _eventSubscriptionRestClient.UpdateAsync(Id.Parent, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<BaseEventSubscriptionResource>(new BaseEventSubscriptionOperationSource(Client), _eventSubscriptionClientDiagnostics, Pipeline, _eventSubscriptionRestClient.CreateUpdateRequest(Id.Parent, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<EventGridSubscriptionResource>(new EventGridSubscriptionOperationSource(Client), _eventSubscriptionClientDiagnostics, Pipeline, _eventSubscriptionRestClient.CreateUpdateRequest(Id.Parent, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="patch"> Updated event subscription information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        protected override ArmOperation<BaseEventSubscriptionResource> UpdateCore(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
+        protected override ArmOperation<EventGridSubscriptionResource> UpdateCore(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _eventSubscriptionRestClient.Update(Id.Parent, Id.Name, patch, cancellationToken);
-                var operation = new EventGridArmOperation<BaseEventSubscriptionResource>(new BaseEventSubscriptionOperationSource(Client), _eventSubscriptionClientDiagnostics, Pipeline, _eventSubscriptionRestClient.CreateUpdateRequest(Id.Parent, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<EventGridSubscriptionResource>(new EventGridSubscriptionOperationSource(Client), _eventSubscriptionClientDiagnostics, Pipeline, _eventSubscriptionRestClient.CreateUpdateRequest(Id.Parent, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

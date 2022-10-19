@@ -13,16 +13,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary> A class representing the EventSubscription data model. </summary>
-    public partial class EventSubscriptionData : ResourceData
+    /// <summary> A class representing the EventGridSubscription data model. </summary>
+    public partial class EventGridSubscriptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventSubscriptionData. </summary>
-        public EventSubscriptionData()
+        /// <summary> Initializes a new instance of EventGridSubscriptionData. </summary>
+        public EventGridSubscriptionData()
         {
             Labels = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EventSubscriptionData. </summary>
+        /// <summary> Initializes a new instance of EventGridSubscriptionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventGrid
         /// The dead letter destination of the event subscription. Any event that cannot be delivered to its&apos; destination is sent to the dead letter destination.
         /// Uses the managed identity setup on the parent resource (namely, topic or domain) to acquire the authentication tokens being used during delivery / dead-lettering.
         /// </param>
-        internal EventSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string topic, EventSubscriptionProvisioningState? provisioningState, EventSubscriptionDestination destination, DeliveryWithResourceIdentity deliveryWithResourceIdentity, EventSubscriptionFilter filter, IList<string> labels, DateTimeOffset? expireOn, EventDeliverySchema? eventDeliverySchema, EventSubscriptionRetryPolicy retryPolicy, DeadLetterDestination deadLetterDestination, DeadLetterWithResourceIdentity deadLetterWithResourceIdentity) : base(id, name, resourceType, systemData)
+        internal EventGridSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string topic, EventSubscriptionProvisioningState? provisioningState, EventSubscriptionDestination destination, DeliveryWithResourceIdentity deliveryWithResourceIdentity, EventSubscriptionFilter filter, IList<string> labels, DateTimeOffset? expireOn, EventDeliverySchema? eventDeliverySchema, EventSubscriptionRetryPolicy retryPolicy, DeadLetterDestination deadLetterDestination, DeadLetterWithResourceIdentity deadLetterWithResourceIdentity) : base(id, name, resourceType, systemData)
         {
             Topic = topic;
             ProvisioningState = provisioningState;

@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.EventGrid
         PartnerTopicEventSubscriptionResource IOperationSource<PartnerTopicEventSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = EventSubscriptionData.DeserializeEventSubscriptionData(document.RootElement);
+            var data = EventGridSubscriptionData.DeserializeEventGridSubscriptionData(document.RootElement);
             return new PartnerTopicEventSubscriptionResource(_client, data);
         }
 
         async ValueTask<PartnerTopicEventSubscriptionResource> IOperationSource<PartnerTopicEventSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = EventSubscriptionData.DeserializeEventSubscriptionData(document.RootElement);
+            var data = EventGridSubscriptionData.DeserializeEventGridSubscriptionData(document.RootElement);
             return new PartnerTopicEventSubscriptionResource(_client, data);
         }
     }
