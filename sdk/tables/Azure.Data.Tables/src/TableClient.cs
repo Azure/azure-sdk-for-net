@@ -672,7 +672,10 @@ namespace Azure.Data.Tables
         /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
         public virtual Response<T> GetEntity<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
             where T : class, ITableEntity, new()
-            => GetEntityInternalAsync<T>(false, partitionKey, rowKey, false, select, cancellationToken).EnsureCompleted();
+        {
+            NullableResponse<T> response = GetEntityInternalAsync<T>(false, partitionKey, rowKey, false, select, cancellationToken).EnsureCompleted();
+            return Response.FromValue(response.Value, response.GetRawResponse());
+        }
 
         /// <summary>
         /// Gets the specified table entity of type <typeparamref name="T"/>.
@@ -685,12 +688,12 @@ namespace Azure.Data.Tables
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
-        public virtual async Task<Response<T>> GetEntityAsync<T>(
-            string partitionKey,
-            string rowKey,
-            IEnumerable<string> select = null,
-            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
-            => await GetEntityInternalAsync<T>(true, partitionKey, rowKey, false, select, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response<T>> GetEntityAsync<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+                where T : class, ITableEntity, new()
+        {
+            NullableResponse<T> response = await GetEntityInternalAsync<T>(true, partitionKey, rowKey, false, select, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value, response.GetRawResponse());
+        }
 
         /// <summary>
         /// Gets the specified table entity of type <typeparamref name="T"/>.
@@ -700,10 +703,12 @@ namespace Azure.Data.Tables
         /// <param name="rowKey">The rowKey that identifies the table entity.</param>
         /// <param name="select">Selects which set of entity properties to return in the result set. Pass <c>null</c> to retreive all properties.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
+        /// <returns> The <see cref="NullableResponse{T}"/> whose <c>HasValue</c> property will return <c>true</c> if the entity existed, otherwise <c>false</c>.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if an unexpected error occurs.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
-        public virtual Response<T> GetEntityIfExists<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual NullableResponse<T> GetEntityIfExists<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
             where T : class, ITableEntity, new()
             => GetEntityInternalAsync<T>(false, partitionKey, rowKey, true, select, cancellationToken).EnsureCompleted();
 
@@ -715,14 +720,16 @@ namespace Azure.Data.Tables
         /// <param name="rowKey">The rowKey that identifies the table entity.</param>
         /// <param name="select">Selects which set of entity properties to return in the result set. Pass <c>null</c> to retreive all properties.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        /// <returns> The <see cref="NullableResponse{T}"/> whose <c>HasValue</c> property will return <c>true</c> if the entity existed, otherwise <c>false</c>.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
-        public virtual async Task<Response<T>> GetEntityIfExistsAsync<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<NullableResponse<T>> GetEntityIfExistsAsync<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
             where T : class, ITableEntity, new()
             => await GetEntityInternalAsync<T>(true, partitionKey, rowKey, true, select, cancellationToken).ConfigureAwait(false);
 
-        internal virtual async Task<Response<T>> GetEntityInternalAsync<T>(
+        internal virtual async Task<NullableResponse<T>> GetEntityInternalAsync<T>(
             bool async,
             string partitionKey,
             string rowKey,
@@ -780,16 +787,15 @@ namespace Azure.Data.Tables
                     selectArg,
                     filter: null,
                     context);
-                if (!response.IsError)
+                if (response.Status == (int)HttpStatusCode.NotFound)
+                {
+                    return new NoValueResponse<T>(response);
+                }
+                else
                 {
                     var dictionary = SerializationHelpers.ResponseToDictionary(response);
                     var result = dictionary.ToTableEntity<T>();
                     return Response.FromValue(result, response);
-                }
-                else
-                {
-                    var emptyResponse = new T();
-                    return Response.FromValue(emptyResponse, response);
                 }
             }
             catch (Exception ex)

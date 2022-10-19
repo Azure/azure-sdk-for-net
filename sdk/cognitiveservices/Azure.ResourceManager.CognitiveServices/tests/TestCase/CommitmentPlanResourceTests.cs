@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
         private async Task<CommitmentPlanResource> CreateCommitmentPlanAsync(string planName)
         {
             var accountContainer = (await CreateResourceGroupAsync()).GetCognitiveServicesAccounts();
-            var accountInput = ResourceDataHelper.GetBasicAccountData(AzureLocation.EastUS);
-            accountInput.Sku = new CognitiveServicesSku("s0");
-            accountInput.Kind = "OpenAI";
+            var accountInput = ResourceDataHelper.GetBasicAccountData(DefaultLocation);
+            accountInput.Sku = new CognitiveServicesSku("S");
+            accountInput.Kind = "TextAnalytics";
             var lro = await accountContainer.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testAccount-"), accountInput);
             var account = lro.Value;
             var container = account.GetCommitmentPlans();
@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
         }
 
         [TestCase]
-        [Ignore("The subscription does not have QuotaId/Feature required by SKU 'S0' from kind 'OpenAI'")]
         public async Task CommitmentPlanResourceApiTests()
         {
             //1.Get
