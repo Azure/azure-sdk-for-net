@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
     {
         private AutomationCollection _automationCollection => _resourceGroup.GetAutomations();
         private ResourceGroupResource _resourceGroup;
+        private ResourceIdentifier _workflowId;
 
         public AutomationCollectionTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             // prerequisites
             var workflow = await CreateLogicWorkFlow(_resourceGroup);
+            _workflowId = workflow.Data.Id;
 
             AutomationData data = new AutomationData(_resourceGroup.Data.Location)
             {
@@ -55,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                 {
                     new AutomationActionLogicApp()
                     {
-                        LogicAppResourceId = workflow.Data.Id,
+                        LogicAppResourceId = _workflowId,
                         Uri = new Uri("https://justtestsample.azurewebsites.net"),
                     }
                 }
@@ -111,6 +113,36 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             await automation.DeleteAsync(WaitUntil.Completed);
             flag = await _automationCollection.ExistsAsync(automationName);
             Assert.IsFalse(flag);
+        }
+
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task AddRemoveTag(bool? useTagResource)
+        {
+            SetTagResourceUsage(Client, useTagResource);
+            string automationName = Recording.GenerateAssetName("automation");
+            var automation = await CreateSecurityAutomation(automationName);
+
+            if (useTagResource == false)
+            {
+                // if useTagResource == false, it will call automation's update method and then the uri of Automation.Data.Action is null, will throw 400 bad request
+                Assert.ThrowsAsync<RequestFailedException>(() => automation.AddTagAsync("addtagkey", "addtagvalue"));
+                return;
+            }
+
+            // AddTag
+            await automation.AddTagAsync("addtagkey", "addtagvalue");
+            automation = await _automationCollection.GetAsync(automationName);
+            Assert.AreEqual(1, automation.Data.Tags.Count);
+            KeyValuePair<string, string> tag = automation.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
+            Assert.AreEqual("addtagkey", tag.Key);
+            Assert.AreEqual("addtagvalue", tag.Value);
+
+            // RemoveTag
+            await automation.RemoveTagAsync("addtagkey");
+            automation = await _automationCollection.GetAsync(automationName);
+            Assert.AreEqual(0, automation.Data.Tags.Count);
         }
 
         private void ValidateAutomation(AutomationResource automation, string automationName)

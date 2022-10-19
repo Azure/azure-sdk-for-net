@@ -81,6 +81,36 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.IsFalse(flag);
         }
 
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task AddRemoveTag(bool? useTagResource)
+        {
+            SetTagResourceUsage(Client, useTagResource);
+            string solutionModelName = Recording.GenerateAssetName("solution");
+            var solutionModel = await CreateIotSecuritySolutionModel(_resourceGroup, _iotHub.Data.Id, solutionModelName);
+
+            if (useTagResource == true || useTagResource == null)
+            {
+                // REST api doesn't support [/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}] to add tags.
+                Assert.ThrowsAsync<RequestFailedException>(() => solutionModel.AddTagAsync("addtagkey", "addtagvalue"));
+                return;
+            }
+
+            // AddTag
+            await solutionModel.AddTagAsync("addtagkey", "addtagvalue");
+            solutionModel = await _iotSecuritySolutionModelCollection.GetAsync(solutionModelName);
+            Assert.AreEqual(1, solutionModel.Data.Tags.Count);
+            KeyValuePair<string, string> tag = solutionModel.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
+            Assert.AreEqual("addtagkey", tag.Key);
+            Assert.AreEqual("addtagvalue", tag.Value);
+
+            // RemoveTag
+            await solutionModel.RemoveTagAsync("addtagkey");
+            solutionModel = await _iotSecuritySolutionModelCollection.GetAsync(solutionModelName);
+            Assert.AreEqual(0, solutionModel.Data.Tags.Count);
+        }
+
         private void ValidateIotSecuritySolutionModelResource(IotSecuritySolutionModelResource solutionModel, string solutionModelName)
         {
             Assert.IsNotNull(solutionModel);

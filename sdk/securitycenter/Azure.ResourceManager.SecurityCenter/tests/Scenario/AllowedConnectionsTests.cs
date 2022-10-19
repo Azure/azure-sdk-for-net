@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var network = await CreateNetwork(_resourceGroup, nsg, Recording.GenerateAssetName("vnet"));
             var networkInterface = await CreateNetworkInterface(_resourceGroup, network, Recording.GenerateAssetName("networkInterface"));
             await CreateVirtualMachine(_resourceGroup, networkInterface.Data.Id, Recording.GenerateAssetName("vm"));
-            //if (TestEnvironment.Mode == RecordedTestMode.Record)
-            //{
-            //    Thread.Sleep(20 * 60 * 1000); // wait for vm auto connect, maybe costs 20mins or more
-            //}
+            if (TestEnvironment.Mode == RecordedTestMode.Record)
+            {
+                Thread.Sleep(20 * 60 * 1000); // wait for VM auto connect, costs 20mins or more
+            }
             _allowedConnectionsResourceCollection = _resourceGroup.GetAllowedConnectionsResources();
         }
 
