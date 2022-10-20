@@ -4,7 +4,8 @@ parameters:
   ArtifactName: 'not-specified'
   # Publish to https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
   DevOpsFeedId: '29ec6040-b234-4e31-b139-33dc4287b756/fa8c16a3-dbe0-4de2-a297-03065ec1ba3f'
-
+  TargetDocRepoOwner: 'not-specified'
+  TargetDocRepoName: 'not-specified'
 stages:
   - stage: Signing
     dependsOn: ${{parameters.DependsOn}}
@@ -174,12 +175,13 @@ stages:
                             PackageInfoLocations:
                               - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
                             WorkingDirectory: $(System.DefaultWorkingDirectory)
-                            TargetDocRepoOwner: Azure
-                            TargetDocRepoName: azure-docs-sdk-dotnet
+                            TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
+                            TargetDocRepoName: ${{parameters.TargetDocRepoName}}
                             Language: 'dotnet'
                             SparseCheckoutPaths:
                               - /api/overview/azure/
                               - /metadata/
+
             - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
               - deployment: PublishDocs
                 displayName: Publish Docs to GitHub pages
@@ -300,8 +302,8 @@ stages:
               - ${{ each artifact in parameters.Artifacts }}:
                 - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
             WorkingDirectory: $(System.DefaultWorkingDirectory)
-            TargetDocRepoOwner: Azure
-            TargetDocRepoName: azure-docs-sdk-dotnet
+            TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
+            TargetDocRepoName: ${{parameters.TargetDocRepoName}}
             Language: 'dotnet'
             DailyDocsBuild: true
             SparseCheckoutPaths:
