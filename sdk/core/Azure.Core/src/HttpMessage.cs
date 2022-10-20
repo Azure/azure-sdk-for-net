@@ -33,7 +33,7 @@ namespace Azure.Core
             Request = request;
             ResponseClassifier = responseClassifier;
             BufferResponse = true;
-            ProcessingContext = new ProcessingContext(DateTimeOffset.UtcNow);
+            OperationStartTime = DateTimeOffset.UtcNow;
         }
 
         /// <summary>
@@ -86,10 +86,22 @@ namespace Azure.Core
         /// </summary>
         public TimeSpan? NetworkTimeout { get; set; }
 
+        internal int RetryNumber { get; set; }
+
+        internal Exception? LastException { get; set; }
+
+        internal DateTimeOffset OperationStartTime { get; set; }
+
         /// <summary>
-        /// The retry context for the current message.
+        /// The processing context for the message.
         /// </summary>
-        public ProcessingContext ProcessingContext { get; internal set; }
+        public ProcessingContext ProcessingContext
+        {
+            get => _processingContext ??= new ProcessingContext(this);
+            set => _processingContext = value;
+        }
+
+        private ProcessingContext? _processingContext;
 
         internal void ApplyRequestContext(RequestContext? context, ResponseClassifier? classifier)
         {

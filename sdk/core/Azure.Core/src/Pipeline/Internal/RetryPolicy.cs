@@ -12,7 +12,7 @@ using Azure.Core.Diagnostics;
 namespace Azure.Core.Pipeline
 {
     /// <summary>
-    ///
+    /// Represents a policy that can be overriden to customize whether or not a response will be retried and how long to wait before retrying.
     /// </summary>
     public abstract class RetryPolicy : HttpPipelinePolicy
     {
@@ -28,9 +28,9 @@ namespace Azure.Core.Pipeline
         private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
 
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
         /// </summary>
-        /// <param name="options"></param>
+        /// <param name="options">The set of options to use for configuring the policy.</param>
         protected RetryPolicy(RetryOptions? options = default)
         {
             options ??= ClientOptions.Default.Retry;
@@ -40,13 +40,24 @@ namespace Azure.Core.Pipeline
             _maxRetries = options.MaxRetries;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// This method can be overriden to take full control over the retry policy. If this is overriden, it is the implementers responsibility
+        /// to populated the <see cref="HttpMessage.ProcessingContext"/> property. This method will only be called for async methods.
+        /// </summary>
+        /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
+        /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>
+        /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
         public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             return ProcessAsync(message, pipeline, true);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// This method can be overriden to take full control over the retry policy. If this is overriden, it is the implementers responsibility
+        /// to populated the <see cref="HttpMessage.ProcessingContext"/> property. This method will only be called for sync methods.
+        /// </summary>
+        /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
+        /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessAsync(message, pipeline, false).EnsureCompleted();
@@ -60,11 +71,11 @@ namespace Azure.Core.Pipeline
                 var before = Stopwatch.GetTimestamp();
                 if (async)
                 {
-                    await OnTryRequestAsync(message).ConfigureAwait(false);
+                    await OnSendingRequestAsync(message).ConfigureAwait(false);
                 }
                 else
                 {
-                    OnTryRequest(message);
+                    OnSendingRequest(message);
                 }
                 try
                 {
@@ -79,7 +90,7 @@ namespace Azure.Core.Pipeline
 
                     // This request didn't result in an exception, so reset the LastException property
                     // in case it was set on a previous attempt.
-                    message.ProcessingContext.LastException = null;
+                    message.LastException = null;
                 }
                 catch (Exception ex)
                 {
@@ -90,7 +101,7 @@ namespace Azure.Core.Pipeline
 
                     exceptions.Add(ex);
 
-                    message.ProcessingContext.LastException = ex;
+                    message.LastException = ex;
                 }
 
                 // If we got a response for this request, trigger OnResponse. We can't assume that an exception being thrown means there was no response
@@ -100,11 +111,11 @@ namespace Azure.Core.Pipeline
                 {
                     if (async)
                     {
-                        await OnResponseAsync(message).ConfigureAwait(false);
+                        await OnReceivedResponseAsync(message).ConfigureAwait(false);
                     }
                     else
                     {
-                        OnResponse(message);
+                        OnReceivedResponse(message);
                     }
                 }
                 var after = Stopwatch.GetTimestamp();
@@ -126,16 +137,16 @@ namespace Azure.Core.Pipeline
                         }
                     }
                 }
-                else if (message.ProcessingContext.LastException != null)
+                else if (message.LastException != null)
                 {
                     // Rethrow a singular exception
                     if (exceptions!.Count == 1)
                     {
-                        ExceptionDispatchInfo.Capture(message.ProcessingContext.LastException).Throw();
+                        ExceptionDispatchInfo.Capture(message.LastException).Throw();
                     }
 
                     throw new AggregateException(
-                        $"Retry failed after {message.ProcessingContext.AttemptNumber} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.",
+                        $"Retry failed after {message.RetryNumber} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.",
                         exceptions);
                 }
                 else
@@ -150,9 +161,8 @@ namespace Azure.Core.Pipeline
                     message.Response.ContentStream?.Dispose();
                 }
 
-                AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, message.ProcessingContext.AttemptNumber,
-                    elapsed);
-                message.ProcessingContext.AttemptNumber++;
+                message.RetryNumber++;
+                AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, message.RetryNumber, elapsed);
             }
         }
 
@@ -167,26 +177,26 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        ///
+        /// This method can be overriden to control whether a request should be retried. This method will only be called for sync methods.
         /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="message">The message containing the request and response.</param>
+        /// <returns>Whether or not to retry.</returns>
         protected virtual bool ShouldRetry(HttpMessage message) => ShouldRetryInternal(message);
 
         /// <summary>
-        ///
+        /// This method can be overriden to control whether a request should be retried. This method will only be called for async methods.
         /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="message">The message containing the request and response.</param>
+        /// <returns>Whether or not to retry.</returns>
         protected virtual ValueTask<bool> ShouldRetryAsync(HttpMessage message) => new(ShouldRetryInternal(message));
 
         private bool ShouldRetryInternal(HttpMessage message)
         {
-            if (message.ProcessingContext!.AttemptNumber <= _maxRetries)
+            if (message.RetryNumber <= _maxRetries)
             {
-                if (message.ProcessingContext!.LastException != null)
+                if (message.LastException != null)
                 {
-                    return message.ResponseClassifier.IsRetriable(message, message.ProcessingContext!.LastException);
+                    return message.ResponseClassifier.IsRetriable(message, message.LastException);
                 }
 
                 if (message.Response.IsError)
@@ -200,46 +210,48 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        ///
+        /// This method can be overriden to control how long to delay before retrying. This method will only be called for sync methods.
         /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="message">The message containing the request and response.</param>
+        /// <returns>The amount of time to delay before retrying.</returns>
         protected virtual TimeSpan CalculateNextDelay(HttpMessage message) => CalculateNextDelayInternal(message);
 
         /// <summary>
-        ///
+        /// This method can be overriden to control how long to delay before retrying. This method will only be called for async methods.
         /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="message">The message containing the request and response.</param>
+        /// <returns>The amount of time to delay before retrying.</returns>
         protected virtual ValueTask<TimeSpan> CalculateNextDelayAsync(HttpMessage message) => new(CalculateNextDelayInternal(message));
 
         /// <summary>
-        ///
+        /// This method can be overriden to introduce logic before the request is sent. This will run even for the first attempt.
+        /// This method will only be called for sync methods.
         /// </summary>
-        /// <param name="message"></param>
-        protected virtual void OnTryRequest(HttpMessage message)
+        /// <param name="message">The message containing the request and response.</param>
+        protected virtual void OnSendingRequest(HttpMessage message)
         {
         }
 
         /// <summary>
-        ///
+        /// This method can be overriden to introduce logic that runs before the request is sent. This will run even for the first attempt.
+        /// This method will only be called for async methods.
         /// </summary>
-        /// <param name="message"></param>
-        protected virtual ValueTask OnTryRequestAsync(HttpMessage message) => default;
+        /// <param name="message">The message containing the request and response.</param>
+        protected virtual ValueTask OnSendingRequestAsync(HttpMessage message) => default;
 
         /// <summary>
-        ///
+        /// This method can be overriden to introduce logic that runs after a response is received. This method will only be called for sync methods.
         /// </summary>
-        /// <param name="message"></param>
-        protected virtual void OnResponse(HttpMessage message)
+        /// <param name="message">The message containing the request and response.</param>
+        protected virtual void OnReceivedResponse(HttpMessage message)
         {
         }
 
         /// <summary>
-        ///
+        /// This method can be overriden to introduce logic that runs after a response is received. This method will only be called for async methods.
         /// </summary>
-        /// <param name="message"></param>
-        protected virtual ValueTask OnResponseAsync(HttpMessage message) => default;
+        /// <param name="message">The message containing the request and response.</param>
+        protected virtual ValueTask OnReceivedResponseAsync(HttpMessage message) => default;
 
         private TimeSpan CalculateNextDelayInternal(HttpMessage message)
         {
@@ -251,7 +263,7 @@ namespace Azure.Core.Pipeline
                     delay = _delay;
                     break;
                 case RetryMode.Exponential:
-                    delay = CalculateExponentialDelay(message.ProcessingContext!.AttemptNumber);
+                    delay = CalculateExponentialDelay(message.RetryNumber);
                     break;
             }
 

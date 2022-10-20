@@ -452,7 +452,7 @@ namespace Azure.Core
         public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public bool HasResponse { get { throw null; } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
-        public Azure.Core.ProcessingContext ProcessingContext { get { throw null; } }
+        public Azure.Core.ProcessingContext ProcessingContext { get { throw null; } set { } }
         public Azure.Core.Request Request { get { throw null; } }
         public Azure.Response Response { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
@@ -474,10 +474,10 @@ namespace Azure.Core
     }
     public partial class ProcessingContext
     {
-        internal ProcessingContext() { }
-        public int AttemptNumber { get { throw null; } }
-        public System.Exception? LastException { get { throw null; } }
-        public System.DateTimeOffset OperationStartTime { get { throw null; } }
+        public ProcessingContext() { }
+        public System.Exception? LastException { get { throw null; } set { } }
+        public System.DateTimeOffset OperationStartTime { get { throw null; } set { } }
+        public int RetryNumber { get { throw null; } set { } }
     }
     public abstract partial class Request : System.IDisposable
     {
@@ -998,10 +998,10 @@ namespace Azure.Core.Pipeline
         protected RetryPolicy(Azure.Core.RetryOptions? options = null) { }
         protected virtual System.TimeSpan CalculateNextDelay(Azure.Core.HttpMessage message) { throw null; }
         protected virtual System.Threading.Tasks.ValueTask<System.TimeSpan> CalculateNextDelayAsync(Azure.Core.HttpMessage message) { throw null; }
-        protected virtual void OnResponse(Azure.Core.HttpMessage message) { }
-        protected virtual System.Threading.Tasks.ValueTask OnResponseAsync(Azure.Core.HttpMessage message) { throw null; }
-        protected virtual void OnTryRequest(Azure.Core.HttpMessage message) { }
-        protected virtual System.Threading.Tasks.ValueTask OnTryRequestAsync(Azure.Core.HttpMessage message) { throw null; }
+        protected virtual void OnReceivedResponse(Azure.Core.HttpMessage message) { }
+        protected virtual System.Threading.Tasks.ValueTask OnReceivedResponseAsync(Azure.Core.HttpMessage message) { throw null; }
+        protected virtual void OnSendingRequest(Azure.Core.HttpMessage message) { }
+        protected virtual System.Threading.Tasks.ValueTask OnSendingRequestAsync(Azure.Core.HttpMessage message) { throw null; }
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
         protected virtual bool ShouldRetry(Azure.Core.HttpMessage message) { throw null; }

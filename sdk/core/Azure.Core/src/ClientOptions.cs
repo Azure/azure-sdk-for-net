@@ -92,7 +92,8 @@ namespace Azure.Core
 
         /// <summary>
         /// The policy to use for retries. If a policy is specified, it will be used in place of the <see cref="Retry"/> property.
-        /// If no policy is specified, a default policy respecting the <see cref="Retry"/> property will be used.
+        /// If no policy is specified, a default policy respecting the <see cref="Retry"/> property will be used. The <see cref="RetryPolicy"/> type can be
+        /// derived from to introduce a retry policy that does not require implementing the full retry logic.
         /// </summary>
         public HttpPipelinePolicy? RetryPolicy { get; set; }
 
