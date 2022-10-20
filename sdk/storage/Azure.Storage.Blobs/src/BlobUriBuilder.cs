@@ -163,6 +163,20 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobUriBuilder"/>
+        /// class for the specified Azure Storage Account.
+        /// </summary>
+        /// <param name="accountName">
+        /// The account name of the target storage account.
+        /// </param>
+        /// <remarks>
+        /// This defaults to Azure Public Cloud - i.e. a blob.core.windows.net suffix on the URL to the storage account
+        /// </remarks>
+        public BlobUriBuilder(string accountName) : this(new Uri($"https://{accountName}.blob.core.windows.net"))
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobUriBuilder"/>
         /// class with the specified <see cref="System.Uri"/>.
         /// </summary>
         /// <param name="uri">
