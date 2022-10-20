@@ -59,8 +59,6 @@ namespace Microsoft.Azure.Management.Consumption
         /// <param name='scope'>
         /// The scope associated with marketplace operations. This includes
         /// '/subscriptions/{subscriptionId}/' for subscription scope,
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
-        /// resourceGroup scope,
         /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
         /// Billing Account scope,
         /// '/providers/Microsoft.Billing/departments/{departmentId}' for Department
@@ -207,7 +205,7 @@ namespace Microsoft.Azure.Management.Consumption
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -377,7 +375,7 @@ namespace Microsoft.Azure.Management.Consumption
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try

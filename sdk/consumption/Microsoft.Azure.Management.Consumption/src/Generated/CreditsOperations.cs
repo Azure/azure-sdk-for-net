@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.Consumption
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Azure.OData;
     using Models;
     using Newtonsoft.Json;
     using System.Collections;
@@ -24,12 +23,12 @@ namespace Microsoft.Azure.Management.Consumption
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ForecastsOperations operations.
+    /// CreditsOperations operations.
     /// </summary>
-    internal partial class ForecastsOperations : IServiceOperations<ConsumptionManagementClient>, IForecastsOperations
+    internal partial class CreditsOperations : IServiceOperations<ConsumptionManagementClient>, ICreditsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ForecastsOperations class.
+        /// Initializes a new instance of the CreditsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -37,7 +36,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ForecastsOperations(ConsumptionManagementClient client)
+        internal CreditsOperations(ConsumptionManagementClient client)
         {
             if (client == null)
             {
@@ -52,11 +51,14 @@ namespace Microsoft.Azure.Management.Consumption
         public ConsumptionManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists the forecast charges by subscriptionId.
+        /// The credit summary by billingAccountId and billingProfileId.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
+        /// <param name='billingAccountId'>
+        /// BillingAccount ID
+        /// </param>
+        /// <param name='billingProfileId'>
+        /// Azure Billing Profile ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -79,15 +81,19 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<Forecast>>> ListWithHttpMessagesAsync(ODataQuery<Forecast> odataQuery = default(ODataQuery<Forecast>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CreditSummary>> GetWithHttpMessagesAsync(string billingAccountId, string billingProfileId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (billingAccountId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountId");
+            }
+            if (billingProfileId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingProfileId");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -96,23 +102,17 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("billingAccountId", billingAccountId);
+                tracingParameters.Add("billingProfileId", billingProfileId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Consumption/forecasts").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/credits/balanceSummary").ToString();
+            _url = _url.Replace("{billingAccountId}", System.Uri.EscapeDataString(billingAccountId));
+            _url = _url.Replace("{billingProfileId}", System.Uri.EscapeDataString(billingProfileId));
             List<string> _queryParameters = new List<string>();
-            if (odataQuery != null)
-            {
-                var _odataFilter = odataQuery.ToString();
-                if (!string.IsNullOrEmpty(_odataFilter))
-                {
-                    _queryParameters.Add(_odataFilter);
-                }
-            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Management.Consumption
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -205,7 +205,7 @@ namespace Microsoft.Azure.Management.Consumption
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<Forecast>>();
+            var _result = new AzureOperationResponse<CreditSummary>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Management.Consumption
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<Forecast>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<CreditSummary>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

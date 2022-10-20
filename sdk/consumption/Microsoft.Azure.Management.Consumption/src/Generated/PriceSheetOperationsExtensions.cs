@@ -22,8 +22,8 @@ namespace Microsoft.Azure.Management.Consumption
     public static partial class PriceSheetOperationsExtensions
     {
             /// <summary>
-            /// Gets the price sheet for a scope by subscriptionId. Price sheet is
-            /// available via this API only for May 1, 2014 or later.
+            /// Gets the price sheet for a subscription. Price sheet is available via this
+            /// API only for May 1, 2014 or later.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
@@ -48,8 +48,8 @@ namespace Microsoft.Azure.Management.Consumption
             }
 
             /// <summary>
-            /// Gets the price sheet for a scope by subscriptionId. Price sheet is
-            /// available via this API only for May 1, 2014 or later.
+            /// Gets the price sheet for a subscription. Price sheet is available via this
+            /// API only for May 1, 2014 or later.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>

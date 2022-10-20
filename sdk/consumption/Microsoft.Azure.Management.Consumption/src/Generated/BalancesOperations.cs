@@ -289,7 +289,7 @@ namespace Microsoft.Azure.Management.Consumption
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/balances").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/balances").ToString();
             _url = _url.Replace("{billingAccountId}", System.Uri.EscapeDataString(billingAccountId));
             _url = _url.Replace("{billingPeriodName}", System.Uri.EscapeDataString(billingPeriodName));
             List<string> _queryParameters = new List<string>();

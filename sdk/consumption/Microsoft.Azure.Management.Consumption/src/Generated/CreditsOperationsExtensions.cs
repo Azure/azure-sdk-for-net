@@ -12,49 +12,52 @@ namespace Microsoft.Azure.Management.Consumption
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Azure.OData;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for ForecastsOperations.
+    /// Extension methods for CreditsOperations.
     /// </summary>
-    public static partial class ForecastsOperationsExtensions
+    public static partial class CreditsOperationsExtensions
     {
             /// <summary>
-            /// Lists the forecast charges by subscriptionId.
+            /// The credit summary by billingAccountId and billingProfileId.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
+            /// <param name='billingAccountId'>
+            /// BillingAccount ID
             /// </param>
-            public static IEnumerable<Forecast> List(this IForecastsOperations operations, ODataQuery<Forecast> odataQuery = default(ODataQuery<Forecast>))
+            /// <param name='billingProfileId'>
+            /// Azure Billing Profile ID.
+            /// </param>
+            public static CreditSummary Get(this ICreditsOperations operations, string billingAccountId, string billingProfileId)
             {
-                return operations.ListAsync(odataQuery).GetAwaiter().GetResult();
+                return operations.GetAsync(billingAccountId, billingProfileId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the forecast charges by subscriptionId.
+            /// The credit summary by billingAccountId and billingProfileId.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
+            /// <param name='billingAccountId'>
+            /// BillingAccount ID
+            /// </param>
+            /// <param name='billingProfileId'>
+            /// Azure Billing Profile ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Forecast>> ListAsync(this IForecastsOperations operations, ODataQuery<Forecast> odataQuery = default(ODataQuery<Forecast>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CreditSummary> GetAsync(this ICreditsOperations operations, string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountId, billingProfileId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

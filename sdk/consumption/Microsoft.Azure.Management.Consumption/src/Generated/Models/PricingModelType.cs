@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.Consumption.Models
 {
 
     /// <summary>
-    /// Defines values for Bound.
+    /// Defines values for PricingModelType.
     /// </summary>
-    public static class Bound
+    public static class PricingModelType
     {
-        public const string Upper = "Upper";
-        public const string Lower = "Lower";
+        public const string OnDemand = "On Demand";
+        public const string Reservation = "Reservation";
+        public const string Spot = "Spot";
     }
 }

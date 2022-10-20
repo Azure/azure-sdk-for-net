@@ -160,9 +160,9 @@ namespace Microsoft.Azure.Management.Consumption
             }
 
             /// <summary>
-            /// The operation to create or update a budget. Update operation requires
-            /// latest eTag to be set in the request mandatorily. You may obtain the latest
-            /// eTag by performing a get operation. Create operation does not require eTag.
+            /// The operation to create or update a budget. You can optionally provide an
+            /// eTag if desired as a form of concurrency control. To obtain the latest eTag
+            /// for a given budget, perform a get operation prior to your put operation.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
@@ -198,9 +198,9 @@ namespace Microsoft.Azure.Management.Consumption
             }
 
             /// <summary>
-            /// The operation to create or update a budget. Update operation requires
-            /// latest eTag to be set in the request mandatorily. You may obtain the latest
-            /// eTag by performing a get operation. Create operation does not require eTag.
+            /// The operation to create or update a budget. You can optionally provide an
+            /// eTag if desired as a form of concurrency control. To obtain the latest eTag
+            /// for a given budget, perform a get operation prior to your put operation.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>

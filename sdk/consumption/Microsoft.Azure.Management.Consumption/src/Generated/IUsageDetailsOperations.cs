@@ -31,8 +31,6 @@ namespace Microsoft.Azure.Management.Consumption
         /// <param name='scope'>
         /// The scope associated with usage details operations. This includes
         /// '/subscriptions/{subscriptionId}/' for subscription scope,
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}'
-        /// for resourceGroup scope,
         /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
         /// for Billing Account scope,
         /// '/providers/Microsoft.Billing/departments/{departmentId}' for
@@ -45,7 +43,16 @@ namespace Microsoft.Azure.Management.Consumption
         /// add billing period to the scope using
         /// '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'.
         /// For e.g. to specify billing period at department scope use
-        /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
+        /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'.
+        /// Also, Modern Commerce Account scopes are
+        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
+        /// for billingAccount scope,
+        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+        /// for billingProfile scope,
+        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/invoiceSections/{invoiceSectionId}'
+        /// for invoiceSection scope, and
+        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}'
+        /// specific for partners.
         /// </param>
         /// <param name='expand'>
         /// May be used to expand the properties/additionalInfo or
@@ -55,10 +62,13 @@ namespace Microsoft.Azure.Management.Consumption
         /// <param name='filter'>
         /// May be used to filter usageDetails by properties/resourceGroup,
         /// properties/resourceName, properties/resourceId,
-        /// properties/chargeType, properties/reservationId or tags. The filter
-        /// supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not
-        /// currently support 'ne', 'or', or 'not'. Tag filter is a key value
-        /// pair string where key and value is separated by a colon (:).
+        /// properties/chargeType, properties/reservationId,
+        /// properties/publisherType or tags. The filter supports 'eq', 'lt',
+        /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne',
+        /// 'or', or 'not'. Tag filter is a key value pair string where key and
+        /// value is separated by a colon (:). PublisherType Filter accepts two
+        /// values azure and marketplace and it is currently supported for Web
+        /// Direct Offer Type
         /// </param>
         /// <param name='skiptoken'>
         /// Skiptoken is only used if a previous operation returned a partial
@@ -91,92 +101,6 @@ namespace Microsoft.Azure.Management.Consumption
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<UsageDetail>>> ListWithHttpMessagesAsync(string scope, string expand = default(string), string filter = default(string), string skiptoken = default(string), int? top = default(int?), string metric = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Download usage details data.
-        /// </summary>
-        /// <param name='scope'>
-        /// The scope associated with usage details operations. This includes
-        /// '/subscriptions/{subscriptionId}/' for subscription scope,
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}'
-        /// for resourceGroup scope,
-        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
-        /// for Billing Account scope,
-        /// '/providers/Microsoft.Billing/departments/{departmentId}' for
-        /// Department scope,
-        /// '/providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountId}'
-        /// for EnrollmentAccount scope and
-        /// '/providers/Microsoft.Management/managementGroups/{managementGroupId}'
-        /// for Management Group scope. For subscription, billing account,
-        /// department, enrollment account and management group, you can also
-        /// add billing period to the scope using
-        /// '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'.
-        /// For e.g. to specify billing period at department scope use
-        /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
-        /// </param>
-        /// <param name='metric'>
-        /// Allows to select different type of cost/usage records. Possible
-        /// values include: 'ActualCostMetricType', 'AmortizedCostMetricType',
-        /// 'UsageMetricType'
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<UsageDetailsDownloadResponse,UsageDetailsDownloadHeaders>> DownloadWithHttpMessagesAsync(string scope, string metric = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Download usage details data.
-        /// </summary>
-        /// <param name='scope'>
-        /// The scope associated with usage details operations. This includes
-        /// '/subscriptions/{subscriptionId}/' for subscription scope,
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}'
-        /// for resourceGroup scope,
-        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
-        /// for Billing Account scope,
-        /// '/providers/Microsoft.Billing/departments/{departmentId}' for
-        /// Department scope,
-        /// '/providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountId}'
-        /// for EnrollmentAccount scope and
-        /// '/providers/Microsoft.Management/managementGroups/{managementGroupId}'
-        /// for Management Group scope. For subscription, billing account,
-        /// department, enrollment account and management group, you can also
-        /// add billing period to the scope using
-        /// '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'.
-        /// For e.g. to specify billing period at department scope use
-        /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
-        /// </param>
-        /// <param name='metric'>
-        /// Allows to select different type of cost/usage records. Possible
-        /// values include: 'ActualCostMetricType', 'AmortizedCostMetricType',
-        /// 'UsageMetricType'
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<UsageDetailsDownloadResponse,UsageDetailsDownloadHeaders>> BeginDownloadWithHttpMessagesAsync(string scope, string metric = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the usage details for the defined scope. Usage details are
         /// available via this API only for May 1, 2014 or later.

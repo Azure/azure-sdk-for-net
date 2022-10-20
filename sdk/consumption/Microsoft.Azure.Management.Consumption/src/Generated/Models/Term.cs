@@ -12,12 +12,17 @@ namespace Microsoft.Azure.Management.Consumption.Models
 {
 
     /// <summary>
-    /// Defines values for Grain.
+    /// Defines values for Term.
     /// </summary>
-    public static class Grain
+    public static class Term
     {
-        public const string Daily = "Daily";
-        public const string Monthly = "Monthly";
-        public const string Yearly = "Yearly";
+        /// <summary>
+        /// 1 year reservation term
+        /// </summary>
+        public const string P1Y = "P1Y";
+        /// <summary>
+        /// 3 year reservation term
+        /// </summary>
+        public const string P3Y = "P3Y";
     }
 }

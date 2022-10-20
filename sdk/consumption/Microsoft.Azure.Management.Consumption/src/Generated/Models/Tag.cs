@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.Consumption.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -30,9 +32,11 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// Initializes a new instance of the Tag class.
         /// </summary>
         /// <param name="key">Tag key.</param>
-        public Tag(string key = default(string))
+        /// <param name="value">Tag values.</param>
+        public Tag(string key = default(string), IList<string> value = default(IList<string>))
         {
             Key = key;
+            Value = value;
             CustomInit();
         }
 
@@ -46,6 +50,12 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// </summary>
         [JsonProperty(PropertyName = "key")]
         public string Key { get; set; }
+
+        /// <summary>
+        /// Gets or sets tag values.
+        /// </summary>
+        [JsonProperty(PropertyName = "value")]
+        public IList<string> Value { get; set; }
 
     }
 }

@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Consumption.Models
 {
 
     /// <summary>
-    /// Defines values for CategoryType.
+    /// Defines values for Scope7.
     /// </summary>
-    public static class CategoryType
+    public static class Scope7
     {
-        public const string Cost = "Cost";
-        public const string Usage = "Usage";
+        public const string Single = "Single";
+        public const string Shared = "Shared";
     }
 }

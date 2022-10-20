@@ -12,11 +12,15 @@ namespace Microsoft.Azure.Management.Consumption.Models
 {
 
     /// <summary>
-    /// Defines values for ChargeType.
+    /// Defines values for Status.
     /// </summary>
-    public static class ChargeType
+    public static class Status
     {
-        public const string Actual = "Actual";
-        public const string Forecast = "Forecast";
+        public const string None = "None";
+        public const string Active = "Active";
+        public const string Inactive = "Inactive";
+        public const string Expired = "Expired";
+        public const string Complete = "Complete";
+        public const string Canceled = "Canceled";
     }
 }

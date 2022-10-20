@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Consumption
 
         /// <summary>
         /// Version of the API to be used with the client request. The current version
-        /// is 2019-04-01-preview.
+        /// is 2021-10-01.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -122,14 +122,19 @@ namespace Microsoft.Azure.Management.Consumption
         public virtual IReservationRecommendationsOperations ReservationRecommendations { get; private set; }
 
         /// <summary>
+        /// Gets the IReservationRecommendationDetailsOperations.
+        /// </summary>
+        public virtual IReservationRecommendationDetailsOperations ReservationRecommendationDetails { get; private set; }
+
+        /// <summary>
+        /// Gets the IReservationTransactionsOperations.
+        /// </summary>
+        public virtual IReservationTransactionsOperations ReservationTransactions { get; private set; }
+
+        /// <summary>
         /// Gets the IPriceSheetOperations.
         /// </summary>
         public virtual IPriceSheetOperations PriceSheet { get; private set; }
-
-        /// <summary>
-        /// Gets the IForecastsOperations.
-        /// </summary>
-        public virtual IForecastsOperations Forecasts { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -140,6 +145,21 @@ namespace Microsoft.Azure.Management.Consumption
         /// Gets the IAggregatedCostOperations.
         /// </summary>
         public virtual IAggregatedCostOperations AggregatedCost { get; private set; }
+
+        /// <summary>
+        /// Gets the IEventsOperations.
+        /// </summary>
+        public virtual IEventsOperations Events { get; private set; }
+
+        /// <summary>
+        /// Gets the ILotsOperations.
+        /// </summary>
+        public virtual ILotsOperations Lots { get; private set; }
+
+        /// <summary>
+        /// Gets the ICreditsOperations.
+        /// </summary>
+        public virtual ICreditsOperations Credits { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ConsumptionManagementClient class.
@@ -391,12 +411,16 @@ namespace Microsoft.Azure.Management.Consumption
             ReservationsSummaries = new ReservationsSummariesOperations(this);
             ReservationsDetails = new ReservationsDetailsOperations(this);
             ReservationRecommendations = new ReservationRecommendationsOperations(this);
+            ReservationRecommendationDetails = new ReservationRecommendationDetailsOperations(this);
+            ReservationTransactions = new ReservationTransactionsOperations(this);
             PriceSheet = new PriceSheetOperations(this);
-            Forecasts = new ForecastsOperations(this);
             Operations = new Operations(this);
             AggregatedCost = new AggregatedCostOperations(this);
+            Events = new EventsOperations(this);
+            Lots = new LotsOperations(this);
+            Credits = new CreditsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-04-01-preview";
+            ApiVersion = "2021-10-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -426,6 +450,14 @@ namespace Microsoft.Azure.Management.Consumption
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<UsageDetail>("kind"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<UsageDetail>("kind"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReservationRecommendation>("kind"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReservationRecommendation>("kind"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<LegacyReservationRecommendationProperties>("scope"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<LegacyReservationRecommendationProperties>("scope"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ChargeSummary>("kind"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ChargeSummary>("kind"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

@@ -16,8 +16,24 @@ namespace Microsoft.Azure.Management.Consumption.Models
     /// </summary>
     public static class OperatorType
     {
+        /// <summary>
+        /// Alert will be triggered if the evaluated cost is the same as
+        /// threshold value. Note: It’s not recommended to use this
+        /// OperatorType as there’s low chance of cost being exactly the same
+        /// as threshold value, leading to missing of your alert. This
+        /// OperatorType will be deprecated in future.
+        /// </summary>
         public const string EqualTo = "EqualTo";
+        /// <summary>
+        /// Alert will be triggered if the evaluated cost is greater than the
+        /// threshold value. Note: This is the recommended OperatorType while
+        /// configuring Budget Alert.
+        /// </summary>
         public const string GreaterThan = "GreaterThan";
+        /// <summary>
+        /// Alert will be triggered if the evaluated cost is greater than or
+        /// equal to the threshold value.
+        /// </summary>
         public const string GreaterThanOrEqualTo = "GreaterThanOrEqualTo";
     }
 }

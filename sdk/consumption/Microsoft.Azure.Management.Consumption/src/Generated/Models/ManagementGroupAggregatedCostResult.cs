@@ -36,9 +36,11 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// Initializes a new instance of the
         /// ManagementGroupAggregatedCostResult class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource name.</param>
+        /// <param name="id">The full qualified ARM ID of an event.</param>
+        /// <param name="name">The ID that uniquely identifies an event.
+        /// </param>
         /// <param name="type">Resource type.</param>
+        /// <param name="etag">The etag for the resource.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="billingPeriodId">The id of the billing period resource
         /// that the aggregated cost belongs to.</param>
@@ -57,8 +59,8 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// included in the calculation of aggregated cost</param>
         /// <param name="excludedSubscriptions">List of subscription Guids
         /// excluded from the calculation of aggregated cost</param>
-        public ManagementGroupAggregatedCostResult(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string billingPeriodId = default(string), System.DateTime? usageStart = default(System.DateTime?), System.DateTime? usageEnd = default(System.DateTime?), decimal? azureCharges = default(decimal?), decimal? marketplaceCharges = default(decimal?), decimal? chargesBilledSeparately = default(decimal?), string currency = default(string), IList<ManagementGroupAggregatedCostResult> children = default(IList<ManagementGroupAggregatedCostResult>), IList<string> includedSubscriptions = default(IList<string>), IList<string> excludedSubscriptions = default(IList<string>))
-            : base(id, name, type, tags)
+        public ManagementGroupAggregatedCostResult(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string billingPeriodId = default(string), System.DateTime? usageStart = default(System.DateTime?), System.DateTime? usageEnd = default(System.DateTime?), decimal? azureCharges = default(decimal?), decimal? marketplaceCharges = default(decimal?), decimal? chargesBilledSeparately = default(decimal?), string currency = default(string), IList<ManagementGroupAggregatedCostResult> children = default(IList<ManagementGroupAggregatedCostResult>), IList<string> includedSubscriptions = default(IList<string>), IList<string> excludedSubscriptions = default(IList<string>))
+            : base(id, name, type, etag, tags)
         {
             BillingPeriodId = billingPeriodId;
             UsageStart = usageStart;

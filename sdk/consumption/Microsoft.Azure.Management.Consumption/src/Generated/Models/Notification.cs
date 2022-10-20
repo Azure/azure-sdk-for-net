@@ -41,12 +41,24 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// threshold. It is always percent and has to be between 0 and
         /// 1000.</param>
         /// <param name="contactEmails">Email addresses to send the budget
-        /// notification to when the threshold is exceeded.</param>
+        /// notification to when the threshold is exceeded. Must have at least
+        /// one contact email or contact group specified at the Subscription or
+        /// Resource Group scopes. All other scopes must have at least one
+        /// contact email specified.</param>
         /// <param name="contactRoles">Contact roles to send the budget
         /// notification to when the threshold is exceeded.</param>
         /// <param name="contactGroups">Action groups to send the budget
-        /// notification to when the threshold is exceeded.</param>
-        public Notification(bool enabled, string operatorProperty, decimal threshold, IList<string> contactEmails, IList<string> contactRoles = default(IList<string>), IList<string> contactGroups = default(IList<string>))
+        /// notification to when the threshold is exceeded. Must be provided as
+        /// a fully qualified Azure resource id. Only supported at Subscription
+        /// or Resource Group scopes.</param>
+        /// <param name="thresholdType">The type of threshold. Possible values
+        /// include: 'Actual', 'Forecasted'</param>
+        /// <param name="locale">Language in which the recipient will receive
+        /// the notification. Possible values include: 'en-us', 'ja-jp',
+        /// 'zh-cn', 'de-de', 'es-es', 'fr-fr', 'it-it', 'ko-kr', 'pt-br',
+        /// 'ru-ru', 'zh-tw', 'cs-cz', 'pl-pl', 'tr-tr', 'da-dk', 'en-gb',
+        /// 'hu-hu', 'nb-no', 'nl-nl', 'pt-pt', 'sv-se'</param>
+        public Notification(bool enabled, string operatorProperty, decimal threshold, IList<string> contactEmails, IList<string> contactRoles = default(IList<string>), IList<string> contactGroups = default(IList<string>), string thresholdType = default(string), string locale = default(string))
         {
             Enabled = enabled;
             OperatorProperty = operatorProperty;
@@ -54,6 +66,8 @@ namespace Microsoft.Azure.Management.Consumption.Models
             ContactEmails = contactEmails;
             ContactRoles = contactRoles;
             ContactGroups = contactGroups;
+            ThresholdType = thresholdType;
+            Locale = locale;
             CustomInit();
         }
 
@@ -85,7 +99,10 @@ namespace Microsoft.Azure.Management.Consumption.Models
 
         /// <summary>
         /// Gets or sets email addresses to send the budget notification to
-        /// when the threshold is exceeded.
+        /// when the threshold is exceeded. Must have at least one contact
+        /// email or contact group specified at the Subscription or Resource
+        /// Group scopes. All other scopes must have at least one contact email
+        /// specified.
         /// </summary>
         [JsonProperty(PropertyName = "contactEmails")]
         public IList<string> ContactEmails { get; set; }
@@ -99,10 +116,29 @@ namespace Microsoft.Azure.Management.Consumption.Models
 
         /// <summary>
         /// Gets or sets action groups to send the budget notification to when
-        /// the threshold is exceeded.
+        /// the threshold is exceeded. Must be provided as a fully qualified
+        /// Azure resource id. Only supported at Subscription or Resource Group
+        /// scopes.
         /// </summary>
         [JsonProperty(PropertyName = "contactGroups")]
         public IList<string> ContactGroups { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of threshold. Possible values include:
+        /// 'Actual', 'Forecasted'
+        /// </summary>
+        [JsonProperty(PropertyName = "thresholdType")]
+        public string ThresholdType { get; set; }
+
+        /// <summary>
+        /// Gets or sets language in which the recipient will receive the
+        /// notification. Possible values include: 'en-us', 'ja-jp', 'zh-cn',
+        /// 'de-de', 'es-es', 'fr-fr', 'it-it', 'ko-kr', 'pt-br', 'ru-ru',
+        /// 'zh-tw', 'cs-cz', 'pl-pl', 'tr-tr', 'da-dk', 'en-gb', 'hu-hu',
+        /// 'nb-no', 'nl-nl', 'pt-pt', 'sv-se'
+        /// </summary>
+        [JsonProperty(PropertyName = "locale")]
+        public string Locale { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -126,9 +162,9 @@ namespace Microsoft.Azure.Management.Consumption.Models
                 {
                     throw new ValidationException(ValidationRules.MaxItems, "ContactEmails", 50);
                 }
-                if (ContactEmails.Count < 1)
+                if (ContactEmails.Count < 0)
                 {
-                    throw new ValidationException(ValidationRules.MinItems, "ContactEmails", 1);
+                    throw new ValidationException(ValidationRules.MinItems, "ContactEmails", 0);
                 }
             }
             if (ContactGroups != null)

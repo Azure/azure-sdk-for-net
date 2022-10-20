@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.Consumption
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -20,16 +19,19 @@ namespace Microsoft.Azure.Management.Consumption
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ForecastsOperations operations.
+    /// CreditsOperations operations.
     /// </summary>
-    public partial interface IForecastsOperations
+    public partial interface ICreditsOperations
     {
         /// <summary>
-        /// Lists the forecast charges by subscriptionId.
+        /// The credit summary by billingAccountId and billingProfileId.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
+        /// <param name='billingAccountId'>
+        /// BillingAccount ID
+        /// </param>
+        /// <param name='billingProfileId'>
+        /// Azure Billing Profile ID.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -46,6 +48,6 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<Forecast>>> ListWithHttpMessagesAsync(ODataQuery<Forecast> odataQuery = default(ODataQuery<Forecast>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CreditSummary>> GetWithHttpMessagesAsync(string billingAccountId, string billingProfileId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

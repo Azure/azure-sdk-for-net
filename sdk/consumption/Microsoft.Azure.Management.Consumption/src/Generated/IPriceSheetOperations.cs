@@ -24,8 +24,8 @@ namespace Microsoft.Azure.Management.Consumption
     public partial interface IPriceSheetOperations
     {
         /// <summary>
-        /// Gets the price sheet for a scope by subscriptionId. Price sheet is
-        /// available via this API only for May 1, 2014 or later.
+        /// Gets the price sheet for a subscription. Price sheet is available
+        /// via this API only for May 1, 2014 or later.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
         /// <param name='expand'>
