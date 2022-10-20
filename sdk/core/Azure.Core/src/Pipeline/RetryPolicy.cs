@@ -188,14 +188,18 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// This method can be overriden to control whether a request should be retried. This method will only be called for sync methods.
+        /// This method can be overriden to control whether a request should be retried. It will be called for any response where
+        /// <see cref="Response.IsError"/> is true, or if an exception is thrown from any subsequent pipeline policies or the transport.
+        /// This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
         /// <returns>Whether or not to retry.</returns>
         protected virtual bool ShouldRetry(HttpMessage message) => ShouldRetryInternal(message);
 
         /// <summary>
-        /// This method can be overriden to control whether a request should be retried. This method will only be called for async methods.
+        /// This method can be overriden to control whether a request should be retried.  It will be called for any response where
+        /// <see cref="Response.IsError"/> is true, or if an exception is thrown from any subsequent pipeline policies or the transport.
+        /// This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
         /// <returns>Whether or not to retry.</returns>
@@ -210,10 +214,8 @@ namespace Azure.Core.Pipeline
                     return message.ResponseClassifier.IsRetriable(message, message.LastException);
                 }
 
-                if (message.Response.IsError)
-                {
-                    return message.ResponseClassifier.IsRetriableResponse(message);
-                }
+                // Response.IsError
+                return message.ResponseClassifier.IsRetriableResponse(message);
             }
 
             // out of retries
