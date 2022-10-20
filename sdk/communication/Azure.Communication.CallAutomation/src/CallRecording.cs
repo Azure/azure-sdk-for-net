@@ -22,25 +22,25 @@ namespace Azure.Communication.CallAutomation
         internal readonly ClientDiagnostics _clientDiagnostics;
         internal readonly HttpPipeline _pipeline;
 
-        internal ServerCallsRestClient serverCallsRestClient { get; }
-        internal ContentRestClient contentRestClient { get; }
+        internal ServerCallsRestClient ServerCallsRestClient { get; }
+        internal ContentRestClient ContentRestClient { get; }
 
-        internal CallRecording(string ResourceEndpoint, ServerCallsRestClient ServerCallsRestClient, ContentRestClient ContentRestClient, ClientDiagnostics ClientDiagnostics, HttpPipeline HttpPipeline)
+        internal CallRecording(string resourceEndpoint, ServerCallsRestClient serverCallsRestClient, ContentRestClient contentRestClient, ClientDiagnostics clientDiagnostics, HttpPipeline httpPipeline)
         {
-            _resourceEndpoint = ResourceEndpoint;
-            serverCallsRestClient = ServerCallsRestClient;
-            contentRestClient = ContentRestClient;
+            _resourceEndpoint = resourceEndpoint;
+            this.ServerCallsRestClient = serverCallsRestClient;
+            this.ContentRestClient = contentRestClient;
             _contentDownloader = new(this);
-            _clientDiagnostics = ClientDiagnostics;
-            _pipeline = HttpPipeline;
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = httpPipeline;
         }
 
         /// <summary>Initializes a new instance of <see cref="CallRecording"/> for mocking.</summary>
         protected CallRecording()
         {
             _resourceEndpoint = null;
-            serverCallsRestClient = null;
-            contentRestClient = null;
+            ServerCallsRestClient = null;
+            ContentRestClient = null;
             _contentDownloader = new(this);
             _clientDiagnostics = null;
             _pipeline = null;
@@ -69,19 +69,13 @@ namespace Azure.Communication.CallAutomation
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
                 {
-                    int participantCounter = 0;
                     foreach (var c in options.AudioChannelParticipantOrdering)
                     {
-                        request.ChannelAffinity.Add(new ChannelAffinityInternal
-                        {
-                            Channel = participantCounter,
-                            Participant = CommunicationIdentifierSerializer.Serialize(c)
-                        });
-                        participantCounter++;
+                        request.AudioChannelParticipantOrdering.Add(CommunicationIdentifierSerializer.Serialize(c));
                     }
                 };
 
-                return contentRestClient.Recording(request, cancellationToken: cancellationToken);
+                return ContentRestClient.Recording(request, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -113,19 +107,13 @@ namespace Azure.Communication.CallAutomation
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
                 {
-                    int participantCounter = 0;
                     foreach (var c in options.AudioChannelParticipantOrdering)
                     {
-                        request.ChannelAffinity.Add(new ChannelAffinityInternal
-                        {
-                            Channel = participantCounter,
-                            Participant = CommunicationIdentifierSerializer.Serialize(c)
-                        });
-                        participantCounter++;
+                        request.AudioChannelParticipantOrdering.Add(CommunicationIdentifierSerializer.Serialize(c));
                     }
                 };
 
-                return await contentRestClient.RecordingAsync(request, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await ContentRestClient.RecordingAsync(request, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -145,7 +133,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return serverCallsRestClient.GetRecordingProperties(
+                return ServerCallsRestClient.GetRecordingProperties(
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
                     );
@@ -168,7 +156,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return await serverCallsRestClient.GetRecordingPropertiesAsync(
+                return await ServerCallsRestClient.GetRecordingPropertiesAsync(
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
@@ -191,7 +179,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return serverCallsRestClient.StopRecording(
+                return ServerCallsRestClient.StopRecording(
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
                     );
@@ -214,7 +202,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return await serverCallsRestClient.StopRecordingAsync(
+                return await ServerCallsRestClient.StopRecordingAsync(
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
@@ -237,7 +225,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return await serverCallsRestClient.PauseRecordingAsync(
+                return await ServerCallsRestClient.PauseRecordingAsync(
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
@@ -260,7 +248,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return serverCallsRestClient.PauseRecording(
+                return ServerCallsRestClient.PauseRecording(
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
                     );
@@ -283,7 +271,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return await serverCallsRestClient.ResumeRecordingAsync(
+                return await ServerCallsRestClient.ResumeRecordingAsync(
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
@@ -306,7 +294,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return serverCallsRestClient.ResumeRecording(
+                return ServerCallsRestClient.ResumeRecording(
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
                     );

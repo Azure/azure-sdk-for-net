@@ -36,6 +36,8 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         private ConcurrentDictionary<string, string> _incomingcontextstore;
         private RecordedEventListener _recordedEventListener;
         private HttpPipeline _pipeline;
+        protected string RecordedGuid1 { get; set; }
+        protected DateTimeOffset RecordedDateTimeOffset { get; set; }
 
 #pragma warning disable CS8618
         public CallAutomationClientAutomatedLiveTestsBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
@@ -55,6 +57,8 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         [SetUp]
         public void TestSetup()
         {
+            // RecordedGuid1 = Recording.GetVariable("recorded-guid-1", Guid.NewGuid().ToString());
+            // RecordedDateTimeOffset = DateTimeOffset.Parse(Recording.GetVariable("recorded-datetime-1", DateTimeOffset.UtcNow.ToString()));
             _eventstore = new Dictionary<string, ConcurrentDictionary<Type, CallAutomationEventBase>>();
             _incomingcontextstore = new ConcurrentDictionary<string, string>();
             _recordedEventListener = new RecordedEventListener(Mode, GetSessionFilePath(), CreateServiceBusClient);
@@ -175,6 +179,12 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         {
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             return await communicationIdentityClient.CreateUserAsync().ConfigureAwait(false);
+        }
+
+        protected async Task WaitForOperationCompletion(int milliSeconds = 10000)
+        {
+            if (TestEnvironment.Mode != RecordedTestMode.Playback)
+                await Task.Delay(milliSeconds);
         }
 
         /// <summary>
