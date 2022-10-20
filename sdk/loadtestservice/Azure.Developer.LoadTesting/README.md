@@ -8,9 +8,9 @@ Azure Load Testing provides client library in .NET to the user by which they can
 
 Various documentation is available to help you get started
 
-- [API reference documentation](api_reference_doc)
-- [Product Documentation](product_documentation)
- 
+- [API reference documentation][api_reference_doc]
+- [Product Documentation][product_documentation]
+
 ## Getting started
 
 
