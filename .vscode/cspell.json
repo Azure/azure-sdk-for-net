@@ -408,6 +408,19 @@
       ]
     },
     {
+      "filename": "**/sdk/hybriddatamanager/**/*.cs",
+      "words": [
+        "Centralus",
+        "Eastus",
+        "Southcentralus",
+        "Northcentralus",
+        "Uksouth",
+        "Ukwest",
+        "Westcentralus",
+        "Oaep"
+      ]
+    },
+    {
       "filename": "**/sdk/hybridkubernetes/**/*.cs",
       "words": [
         "kubeconfigs"
