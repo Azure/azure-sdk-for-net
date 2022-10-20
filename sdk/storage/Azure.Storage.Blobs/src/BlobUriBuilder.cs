@@ -5,9 +5,12 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Text;
+
 using Azure.Core;
 using Azure.Storage.Sas;
 using Azure.Storage.Shared;
+
+using static Azure.Storage.Constants;
 
 namespace Azure.Storage.Blobs
 {
@@ -168,10 +171,10 @@ namespace Azure.Storage.Blobs
         /// <param name="accountName">
         /// The account name of the target storage account.
         /// </param>
-        /// <remarks>
-        /// This defaults to Azure Public Cloud - i.e. a blob.core.windows.net suffix on the URL to the storage account
-        /// </remarks>
-        public BlobUriBuilder(string accountName) : this(new Uri($"https://{accountName}.blob.core.windows.net"))
+        /// <param name="storageSuffix">
+        /// The suffix of the storage cloud. Defaults to Azure public cloud (blob.core.windows.net).
+        /// </param>
+        public BlobUriBuilder(string accountName, string storageSuffix = "blob.core.windows.net") : this(new Uri($"https://{accountName}.{storageSuffix.TrimStart('.')}"))
         {
         }
 
