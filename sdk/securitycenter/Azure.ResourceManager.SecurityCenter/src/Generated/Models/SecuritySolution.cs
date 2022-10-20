@@ -7,19 +7,18 @@
 
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityCenter.Models;
 
-namespace Azure.ResourceManager.SecurityCenter
+namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> A class representing the SecuritySolution data model. </summary>
-    public partial class SecuritySolutionData : ResourceData
+    /// <summary> The SecuritySolution. </summary>
+    public partial class SecuritySolution : ResourceData
     {
-        /// <summary> Initializes a new instance of SecuritySolutionData. </summary>
-        public SecuritySolutionData()
+        /// <summary> Initializes a new instance of SecuritySolution. </summary>
+        public SecuritySolution()
         {
         }
 
-        /// <summary> Initializes a new instance of SecuritySolutionData. </summary>
+        /// <summary> Initializes a new instance of SecuritySolution. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="template"> The security solutions&apos; template. </param>
         /// <param name="protectionStatus"> The security solutions&apos; status. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal SecuritySolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityFamily? securityFamily, SecurityFamilyProvisioningState? provisioningState, string template, string protectionStatus, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal SecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityFamily? securityFamily, SecurityFamilyProvisioningState? provisioningState, string template, string protectionStatus, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             SecurityFamily = securityFamily;
             ProvisioningState = provisioningState;

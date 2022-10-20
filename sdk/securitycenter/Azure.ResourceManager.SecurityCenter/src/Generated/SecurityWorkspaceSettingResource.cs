@@ -18,46 +18,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A Class representing a WorkspaceSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkspaceSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWorkspaceSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetWorkspaceSetting method.
+    /// A Class representing a SecurityWorkspaceSetting along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityWorkspaceSettingResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSecurityWorkspaceSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSecurityWorkspaceSetting method.
     /// </summary>
-    public partial class WorkspaceSettingResource : ArmResource
+    public partial class SecurityWorkspaceSettingResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="WorkspaceSettingResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="SecurityWorkspaceSettingResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string workspaceSettingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _workspaceSettingClientDiagnostics;
-        private readonly WorkspaceSettingsRestOperations _workspaceSettingRestClient;
-        private readonly WorkspaceSettingData _data;
+        private readonly ClientDiagnostics _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics;
+        private readonly WorkspaceSettingsRestOperations _securityWorkspaceSettingWorkspaceSettingsRestClient;
+        private readonly SecurityWorkspaceSettingData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspaceSettingResource"/> class for mocking. </summary>
-        protected WorkspaceSettingResource()
+        /// <summary> Initializes a new instance of the <see cref="SecurityWorkspaceSettingResource"/> class for mocking. </summary>
+        protected SecurityWorkspaceSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WorkspaceSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SecurityWorkspaceSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WorkspaceSettingResource(ArmClient client, WorkspaceSettingData data) : this(client, data.Id)
+        internal SecurityWorkspaceSettingResource(ArmClient client, SecurityWorkspaceSettingData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspaceSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityWorkspaceSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal WorkspaceSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SecurityWorkspaceSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _workspaceSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string workspaceSettingApiVersion);
-            _workspaceSettingRestClient = new WorkspaceSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workspaceSettingApiVersion);
+            _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string securityWorkspaceSettingWorkspaceSettingsApiVersion);
+            _securityWorkspaceSettingWorkspaceSettingsRestClient = new WorkspaceSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityWorkspaceSettingWorkspaceSettingsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual WorkspaceSettingData Data
+        public virtual SecurityWorkspaceSettingData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: WorkspaceSettings_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WorkspaceSettingResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityWorkspaceSettingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _workspaceSettingClientDiagnostics.CreateScope("WorkspaceSettingResource.Get");
+            using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingResource.Get");
             scope.Start();
             try
             {
-                var response = await _workspaceSettingRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _securityWorkspaceSettingWorkspaceSettingsRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkspaceSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityWorkspaceSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: WorkspaceSettings_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WorkspaceSettingResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SecurityWorkspaceSettingResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _workspaceSettingClientDiagnostics.CreateScope("WorkspaceSettingResource.Get");
+            using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingResource.Get");
             scope.Start();
             try
             {
-                var response = _workspaceSettingRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
+                var response = _securityWorkspaceSettingWorkspaceSettingsRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkspaceSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityWorkspaceSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,11 +144,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _workspaceSettingClientDiagnostics.CreateScope("WorkspaceSettingResource.Delete");
+            using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingResource.Delete");
             scope.Start();
             try
             {
-                var response = await _workspaceSettingRestClient.DeleteAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _securityWorkspaceSettingWorkspaceSettingsRestClient.DeleteAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new SecurityCenterArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _workspaceSettingClientDiagnostics.CreateScope("WorkspaceSettingResource.Delete");
+            using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingResource.Delete");
             scope.Start();
             try
             {
-                var response = _workspaceSettingRestClient.Delete(Id.SubscriptionId, Id.Name, cancellationToken);
+                var response = _securityWorkspaceSettingWorkspaceSettingsRestClient.Delete(Id.SubscriptionId, Id.Name, cancellationToken);
                 var operation = new SecurityCenterArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -195,16 +195,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> Security data setting object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<WorkspaceSettingResource>> UpdateAsync(WorkspaceSettingData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityWorkspaceSettingResource>> UpdateAsync(SecurityWorkspaceSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _workspaceSettingClientDiagnostics.CreateScope("WorkspaceSettingResource.Update");
+            using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingResource.Update");
             scope.Start();
             try
             {
-                var response = await _workspaceSettingRestClient.UpdateAsync(Id.SubscriptionId, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new WorkspaceSettingResource(Client, response.Value), response.GetRawResponse());
+                var response = await _securityWorkspaceSettingWorkspaceSettingsRestClient.UpdateAsync(Id.SubscriptionId, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SecurityWorkspaceSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,16 +221,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> Security data setting object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<WorkspaceSettingResource> Update(WorkspaceSettingData data, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityWorkspaceSettingResource> Update(SecurityWorkspaceSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _workspaceSettingClientDiagnostics.CreateScope("WorkspaceSettingResource.Update");
+            using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingResource.Update");
             scope.Start();
             try
             {
-                var response = _workspaceSettingRestClient.Update(Id.SubscriptionId, Id.Name, data, cancellationToken);
-                return Response.FromValue(new WorkspaceSettingResource(Client, response.Value), response.GetRawResponse());
+                var response = _securityWorkspaceSettingWorkspaceSettingsRestClient.Update(Id.SubscriptionId, Id.Name, data, cancellationToken);
+                return Response.FromValue(new SecurityWorkspaceSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

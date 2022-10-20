@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DiscoveredSecuritySolutionData>> GetAsync(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
+        public async Task<Response<DiscoveredSecuritySolution>> GetAsync(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -217,13 +217,11 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        DiscoveredSecuritySolutionData value = default;
+                        DiscoveredSecuritySolution value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DiscoveredSecuritySolutionData.DeserializeDiscoveredSecuritySolutionData(document.RootElement);
+                        value = DiscoveredSecuritySolution.DeserializeDiscoveredSecuritySolution(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((DiscoveredSecuritySolutionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -237,7 +235,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DiscoveredSecuritySolutionData> Get(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
+        public Response<DiscoveredSecuritySolution> Get(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -249,13 +247,11 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        DiscoveredSecuritySolutionData value = default;
+                        DiscoveredSecuritySolution value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DiscoveredSecuritySolutionData.DeserializeDiscoveredSecuritySolutionData(document.RootElement);
+                        value = DiscoveredSecuritySolution.DeserializeDiscoveredSecuritySolution(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((DiscoveredSecuritySolutionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

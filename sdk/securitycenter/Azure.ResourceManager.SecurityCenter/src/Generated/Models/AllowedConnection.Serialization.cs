@@ -10,11 +10,10 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityCenter.Models;
 
-namespace Azure.ResourceManager.SecurityCenter
+namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AllowedConnectionsResourceData : IUtf8JsonSerializable
+    public partial class AllowedConnection : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             writer.WriteEndObject();
         }
 
-        internal static AllowedConnectionsResourceData DeserializeAllowedConnectionsResourceData(JsonElement element)
+        internal static AllowedConnection DeserializeAllowedConnection(JsonElement element)
         {
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new AllowedConnectionsResourceData(id, name, type, systemData.Value, Optional.ToNullable(calculatedDateTime), Optional.ToList(connectableResources), Optional.ToNullable(location));
+            return new AllowedConnection(id, name, type, systemData.Value, Optional.ToNullable(calculatedDateTime), Optional.ToList(connectableResources), Optional.ToNullable(location));
         }
     }
 }

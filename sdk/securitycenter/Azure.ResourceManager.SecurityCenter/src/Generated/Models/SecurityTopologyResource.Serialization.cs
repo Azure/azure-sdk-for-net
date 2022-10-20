@@ -5,43 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityCenter.Models;
 
-namespace Azure.ResourceManager.SecurityCenter
+namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DiscoveredSecuritySolutionData : IUtf8JsonSerializable
+    public partial class SecurityTopologyResource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            writer.WritePropertyName("securityFamily");
-            writer.WriteStringValue(SecurityFamily.ToString());
-            writer.WritePropertyName("offer");
-            writer.WriteStringValue(Offer);
-            writer.WritePropertyName("publisher");
-            writer.WriteStringValue(Publisher);
-            writer.WritePropertyName("sku");
-            writer.WriteStringValue(Sku);
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static DiscoveredSecuritySolutionData DeserializeDiscoveredSecuritySolutionData(JsonElement element)
+        internal static SecurityTopologyResource DeserializeSecurityTopologyResource(JsonElement element)
         {
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            SecurityFamily securityFamily = default;
-            string offer = default;
-            string publisher = default;
-            string sku = default;
+            Optional<DateTimeOffset> calculatedDateTime = default;
+            Optional<IReadOnlyList<TopologySingleResource>> topologyResources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -88,31 +79,36 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("securityFamily"))
+                        if (property0.NameEquals("calculatedDateTime"))
                         {
-                            securityFamily = new SecurityFamily(property0.Value.GetString());
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            calculatedDateTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("offer"))
+                        if (property0.NameEquals("topologyResources"))
                         {
-                            offer = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("publisher"))
-                        {
-                            publisher = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sku"))
-                        {
-                            sku = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<TopologySingleResource> array = new List<TopologySingleResource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(TopologySingleResource.DeserializeTopologySingleResource(item));
+                            }
+                            topologyResources = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DiscoveredSecuritySolutionData(id, name, type, systemData.Value, securityFamily, offer, publisher, sku, Optional.ToNullable(location));
+            return new SecurityTopologyResource(id, name, type, systemData.Value, Optional.ToNullable(calculatedDateTime), Optional.ToList(topologyResources), Optional.ToNullable(location));
         }
     }
 }

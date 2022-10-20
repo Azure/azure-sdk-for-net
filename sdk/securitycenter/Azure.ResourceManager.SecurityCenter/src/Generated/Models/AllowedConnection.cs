@@ -9,20 +9,19 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityCenter.Models;
 
-namespace Azure.ResourceManager.SecurityCenter
+namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> A class representing the AllowedConnectionsResource data model. </summary>
-    public partial class AllowedConnectionsResourceData : ResourceData
+    /// <summary> The resource whose properties describes the allowed traffic between Azure resources. </summary>
+    public partial class AllowedConnection : ResourceData
     {
-        /// <summary> Initializes a new instance of AllowedConnectionsResourceData. </summary>
-        public AllowedConnectionsResourceData()
+        /// <summary> Initializes a new instance of AllowedConnection. </summary>
+        public AllowedConnection()
         {
             ConnectableResources = new ChangeTrackingList<ConnectableResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of AllowedConnectionsResourceData. </summary>
+        /// <summary> Initializes a new instance of AllowedConnection. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="calculatedOn"> The UTC time on which the allowed connections resource was calculated. </param>
         /// <param name="connectableResources"> List of connectable resources. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal AllowedConnectionsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? calculatedOn, IReadOnlyList<ConnectableResourceInfo> connectableResources, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal AllowedConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? calculatedOn, IReadOnlyList<ConnectableResourceInfo> connectableResources, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             CalculatedOn = calculatedOn;
             ConnectableResources = connectableResources;

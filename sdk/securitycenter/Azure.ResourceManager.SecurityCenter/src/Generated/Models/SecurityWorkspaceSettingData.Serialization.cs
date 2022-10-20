@@ -5,47 +5,43 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecurityTopologyResourceData : IUtf8JsonSerializable
+    public partial class SecurityWorkspaceSettingData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(WorkspaceId))
+            {
+                writer.WritePropertyName("workspaceId");
+                writer.WriteStringValue(WorkspaceId);
+            }
+            if (Optional.IsDefined(Scope))
+            {
+                writer.WritePropertyName("scope");
+                writer.WriteStringValue(Scope);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static SecurityTopologyResourceData DeserializeSecurityTopologyResourceData(JsonElement element)
+        internal static SecurityWorkspaceSettingData DeserializeSecurityWorkspaceSettingData(JsonElement element)
         {
-            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> calculatedDateTime = default;
-            Optional<IReadOnlyList<TopologySingleResource>> topologyResources = default;
+            Optional<string> workspaceId = default;
+            Optional<string> scope = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -80,36 +76,21 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("calculatedDateTime"))
+                        if (property0.NameEquals("workspaceId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            calculatedDateTime = property0.Value.GetDateTimeOffset("O");
+                            workspaceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("topologyResources"))
+                        if (property0.NameEquals("scope"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<TopologySingleResource> array = new List<TopologySingleResource>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(TopologySingleResource.DeserializeTopologySingleResource(item));
-                            }
-                            topologyResources = array;
+                            scope = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SecurityTopologyResourceData(id, name, type, systemData.Value, Optional.ToNullable(calculatedDateTime), Optional.ToList(topologyResources), Optional.ToNullable(location));
+            return new SecurityWorkspaceSettingData(id, name, type, systemData.Value, workspaceId.Value, scope.Value);
         }
     }
 }

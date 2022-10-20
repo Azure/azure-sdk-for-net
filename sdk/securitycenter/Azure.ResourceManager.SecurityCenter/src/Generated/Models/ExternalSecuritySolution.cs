@@ -7,26 +7,25 @@
 
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityCenter.Models;
 
-namespace Azure.ResourceManager.SecurityCenter
+namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> A class representing the ExternalSecuritySolution data model. </summary>
-    public partial class ExternalSecuritySolutionData : ResourceData
+    /// <summary> Represents a security solution external to Microsoft Defender for Cloud which sends information to an OMS workspace and whose data is displayed by Microsoft Defender for Cloud. </summary>
+    public partial class ExternalSecuritySolution : ResourceData
     {
-        /// <summary> Initializes a new instance of ExternalSecuritySolutionData. </summary>
-        public ExternalSecuritySolutionData()
+        /// <summary> Initializes a new instance of ExternalSecuritySolution. </summary>
+        public ExternalSecuritySolution()
         {
         }
 
-        /// <summary> Initializes a new instance of ExternalSecuritySolutionData. </summary>
+        /// <summary> Initializes a new instance of ExternalSecuritySolution. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the external solution. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal ExternalSecuritySolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalSecuritySolutionKind? kind, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal ExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalSecuritySolutionKind? kind, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;

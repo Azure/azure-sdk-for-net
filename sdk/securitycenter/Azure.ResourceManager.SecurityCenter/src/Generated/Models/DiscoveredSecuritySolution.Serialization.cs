@@ -5,44 +5,54 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.SecurityCenter
+namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class MdeOnboardingData : IUtf8JsonSerializable
+    public partial class DiscoveredSecuritySolution : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(OnboardingPackageWindows))
-            {
-                writer.WritePropertyName("onboardingPackageWindows");
-                writer.WriteBase64StringValue(OnboardingPackageWindows, "D");
-            }
-            if (Optional.IsDefined(OnboardingPackageLinux))
-            {
-                writer.WritePropertyName("onboardingPackageLinux");
-                writer.WriteBase64StringValue(OnboardingPackageLinux, "D");
-            }
+            writer.WritePropertyName("securityFamily");
+            writer.WriteStringValue(SecurityFamily.ToString());
+            writer.WritePropertyName("offer");
+            writer.WriteStringValue(Offer);
+            writer.WritePropertyName("publisher");
+            writer.WriteStringValue(Publisher);
+            writer.WritePropertyName("sku");
+            writer.WriteStringValue(Sku);
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static MdeOnboardingData DeserializeMdeOnboardingData(JsonElement element)
+        internal static DiscoveredSecuritySolution DeserializeDiscoveredSecuritySolution(JsonElement element)
         {
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<byte[]> onboardingPackageWindows = default;
-            Optional<byte[]> onboardingPackageLinux = default;
+            SecurityFamily securityFamily = default;
+            string offer = default;
+            string publisher = default;
+            string sku = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("location"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -77,31 +87,31 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("onboardingPackageWindows"))
+                        if (property0.NameEquals("securityFamily"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            onboardingPackageWindows = property0.Value.GetBytesFromBase64("D");
+                            securityFamily = new SecurityFamily(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("onboardingPackageLinux"))
+                        if (property0.NameEquals("offer"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            onboardingPackageLinux = property0.Value.GetBytesFromBase64("D");
+                            offer = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("publisher"))
+                        {
+                            publisher = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("sku"))
+                        {
+                            sku = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new MdeOnboardingData(id, name, type, systemData.Value, onboardingPackageWindows.Value, onboardingPackageLinux.Value);
+            return new DiscoveredSecuritySolution(id, name, type, systemData.Value, securityFamily, offer, publisher, sku, Optional.ToNullable(location));
         }
     }
 }

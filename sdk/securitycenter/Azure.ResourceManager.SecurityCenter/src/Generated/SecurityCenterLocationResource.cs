@@ -36,18 +36,18 @@ namespace Azure.ResourceManager.SecurityCenter
 
         private readonly ClientDiagnostics _securityCenterLocationLocationsClientDiagnostics;
         private readonly LocationsRestOperations _securityCenterLocationLocationsRestClient;
-        private readonly ClientDiagnostics _allowedConnectionsResourceAllowedConnectionsClientDiagnostics;
-        private readonly AllowedConnectionsRestOperations _allowedConnectionsResourceAllowedConnectionsRestClient;
-        private readonly ClientDiagnostics _securityTopologyResourceTopologyClientDiagnostics;
-        private readonly TopologyRestOperations _securityTopologyResourceTopologyRestClient;
+        private readonly ClientDiagnostics _allowedConnectionsClientDiagnostics;
+        private readonly AllowedConnectionsRestOperations _allowedConnectionsRestClient;
+        private readonly ClientDiagnostics _topologyClientDiagnostics;
+        private readonly TopologyRestOperations _topologyRestClient;
         private readonly ClientDiagnostics _jitNetworkAccessPolicyClientDiagnostics;
         private readonly JitNetworkAccessPoliciesRestOperations _jitNetworkAccessPolicyRestClient;
-        private readonly ClientDiagnostics _discoveredSecuritySolutionClientDiagnostics;
-        private readonly DiscoveredSecuritySolutionsRestOperations _discoveredSecuritySolutionRestClient;
+        private readonly ClientDiagnostics _discoveredSecuritySolutionsClientDiagnostics;
+        private readonly DiscoveredSecuritySolutionsRestOperations _discoveredSecuritySolutionsRestClient;
         private readonly ClientDiagnostics _securitySolutionsReferenceDataClientDiagnostics;
         private readonly SecuritySolutionsReferenceDataRestOperations _securitySolutionsReferenceDataRestClient;
-        private readonly ClientDiagnostics _externalSecuritySolutionClientDiagnostics;
-        private readonly ExternalSecuritySolutionsRestOperations _externalSecuritySolutionRestClient;
+        private readonly ClientDiagnostics _externalSecuritySolutionsClientDiagnostics;
+        private readonly ExternalSecuritySolutionsRestOperations _externalSecuritySolutionsRestClient;
         private readonly SecurityCenterLocationData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SecurityCenterLocationResource"/> class for mocking. </summary>
@@ -72,23 +72,19 @@ namespace Azure.ResourceManager.SecurityCenter
             _securityCenterLocationLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string securityCenterLocationLocationsApiVersion);
             _securityCenterLocationLocationsRestClient = new LocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityCenterLocationLocationsApiVersion);
-            _allowedConnectionsResourceAllowedConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", AllowedConnectionsResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AllowedConnectionsResource.ResourceType, out string allowedConnectionsResourceAllowedConnectionsApiVersion);
-            _allowedConnectionsResourceAllowedConnectionsRestClient = new AllowedConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, allowedConnectionsResourceAllowedConnectionsApiVersion);
-            _securityTopologyResourceTopologyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityTopologyResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityTopologyResource.ResourceType, out string securityTopologyResourceTopologyApiVersion);
-            _securityTopologyResourceTopologyRestClient = new TopologyRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityTopologyResourceTopologyApiVersion);
+            _allowedConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _allowedConnectionsRestClient = new AllowedConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _topologyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _topologyRestClient = new TopologyRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _jitNetworkAccessPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", JitNetworkAccessPolicyResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(JitNetworkAccessPolicyResource.ResourceType, out string jitNetworkAccessPolicyApiVersion);
             _jitNetworkAccessPolicyRestClient = new JitNetworkAccessPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jitNetworkAccessPolicyApiVersion);
-            _discoveredSecuritySolutionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", DiscoveredSecuritySolutionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DiscoveredSecuritySolutionResource.ResourceType, out string discoveredSecuritySolutionApiVersion);
-            _discoveredSecuritySolutionRestClient = new DiscoveredSecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, discoveredSecuritySolutionApiVersion);
+            _discoveredSecuritySolutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _discoveredSecuritySolutionsRestClient = new DiscoveredSecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _securitySolutionsReferenceDataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _securitySolutionsReferenceDataRestClient = new SecuritySolutionsReferenceDataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _externalSecuritySolutionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ExternalSecuritySolutionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ExternalSecuritySolutionResource.ResourceType, out string externalSecuritySolutionApiVersion);
-            _externalSecuritySolutionRestClient = new ExternalSecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, externalSecuritySolutionApiVersion);
+            _externalSecuritySolutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _externalSecuritySolutionsRestClient = new ExternalSecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -283,17 +279,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: AllowedConnections_ListByHomeRegion
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AllowedConnectionsResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AllowedConnectionsResource> GetAllowedConnectionsByHomeRegionAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AllowedConnection" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AllowedConnection> GetAllowedConnectionsByHomeRegionAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AllowedConnectionsResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AllowedConnection>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _allowedConnectionsResourceAllowedConnectionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion");
+                using var scope = _allowedConnectionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = await _allowedConnectionsResourceAllowedConnectionsRestClient.ListByHomeRegionAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AllowedConnectionsResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _allowedConnectionsRestClient.ListByHomeRegionAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -301,14 +297,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            async Task<Page<AllowedConnectionsResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AllowedConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _allowedConnectionsResourceAllowedConnectionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion");
+                using var scope = _allowedConnectionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = await _allowedConnectionsResourceAllowedConnectionsRestClient.ListByHomeRegionNextPageAsync(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AllowedConnectionsResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _allowedConnectionsRestClient.ListByHomeRegionNextPageAsync(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -325,17 +321,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: AllowedConnections_ListByHomeRegion
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AllowedConnectionsResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AllowedConnectionsResource> GetAllowedConnectionsByHomeRegion(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AllowedConnection" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AllowedConnection> GetAllowedConnectionsByHomeRegion(CancellationToken cancellationToken = default)
         {
-            Page<AllowedConnectionsResource> FirstPageFunc(int? pageSizeHint)
+            Page<AllowedConnection> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _allowedConnectionsResourceAllowedConnectionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion");
+                using var scope = _allowedConnectionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = _allowedConnectionsResourceAllowedConnectionsRestClient.ListByHomeRegion(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AllowedConnectionsResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _allowedConnectionsRestClient.ListByHomeRegion(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -343,14 +339,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            Page<AllowedConnectionsResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AllowedConnection> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _allowedConnectionsResourceAllowedConnectionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion");
+                using var scope = _allowedConnectionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = _allowedConnectionsResourceAllowedConnectionsRestClient.ListByHomeRegionNextPage(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AllowedConnectionsResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _allowedConnectionsRestClient.ListByHomeRegionNextPage(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -372,12 +368,12 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             async Task<Page<SecurityTopologyResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _securityTopologyResourceTopologyClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetTopologiesByHomeRegion");
+                using var scope = _topologyClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetTopologiesByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = await _securityTopologyResourceTopologyRestClient.ListByHomeRegionAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityTopologyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _topologyRestClient.ListByHomeRegionAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -387,12 +383,12 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             async Task<Page<SecurityTopologyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _securityTopologyResourceTopologyClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetTopologiesByHomeRegion");
+                using var scope = _topologyClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetTopologiesByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = await _securityTopologyResourceTopologyRestClient.ListByHomeRegionNextPageAsync(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityTopologyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _topologyRestClient.ListByHomeRegionNextPageAsync(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -414,12 +410,12 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Page<SecurityTopologyResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _securityTopologyResourceTopologyClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetTopologiesByHomeRegion");
+                using var scope = _topologyClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetTopologiesByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = _securityTopologyResourceTopologyRestClient.ListByHomeRegion(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityTopologyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _topologyRestClient.ListByHomeRegion(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -429,12 +425,12 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             Page<SecurityTopologyResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _securityTopologyResourceTopologyClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetTopologiesByHomeRegion");
+                using var scope = _topologyClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetTopologiesByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = _securityTopologyResourceTopologyRestClient.ListByHomeRegionNextPage(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityTopologyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _topologyRestClient.ListByHomeRegionNextPage(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -535,17 +531,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: DiscoveredSecuritySolutions_ListByHomeRegion
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiscoveredSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DiscoveredSecuritySolutionResource> GetDiscoveredSecuritySolutionsByHomeRegionAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DiscoveredSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsByHomeRegionAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DiscoveredSecuritySolutionResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DiscoveredSecuritySolution>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _discoveredSecuritySolutionClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion");
+                using var scope = _discoveredSecuritySolutionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = await _discoveredSecuritySolutionRestClient.ListByHomeRegionAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiscoveredSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _discoveredSecuritySolutionsRestClient.ListByHomeRegionAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -553,14 +549,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            async Task<Page<DiscoveredSecuritySolutionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DiscoveredSecuritySolution>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _discoveredSecuritySolutionClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion");
+                using var scope = _discoveredSecuritySolutionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = await _discoveredSecuritySolutionRestClient.ListByHomeRegionNextPageAsync(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiscoveredSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _discoveredSecuritySolutionsRestClient.ListByHomeRegionNextPageAsync(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -577,17 +573,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: DiscoveredSecuritySolutions_ListByHomeRegion
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiscoveredSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DiscoveredSecuritySolutionResource> GetDiscoveredSecuritySolutionsByHomeRegion(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveredSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsByHomeRegion(CancellationToken cancellationToken = default)
         {
-            Page<DiscoveredSecuritySolutionResource> FirstPageFunc(int? pageSizeHint)
+            Page<DiscoveredSecuritySolution> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _discoveredSecuritySolutionClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion");
+                using var scope = _discoveredSecuritySolutionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = _discoveredSecuritySolutionRestClient.ListByHomeRegion(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiscoveredSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _discoveredSecuritySolutionsRestClient.ListByHomeRegion(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -595,14 +591,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            Page<DiscoveredSecuritySolutionResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DiscoveredSecuritySolution> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _discoveredSecuritySolutionClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion");
+                using var scope = _discoveredSecuritySolutionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = _discoveredSecuritySolutionRestClient.ListByHomeRegionNextPage(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiscoveredSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _discoveredSecuritySolutionsRestClient.ListByHomeRegionNextPage(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -673,17 +669,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: ExternalSecuritySolutions_ListByHomeRegion
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExternalSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExternalSecuritySolutionResource> GetExternalSecuritySolutionsByHomeRegionAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ExternalSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ExternalSecuritySolution> GetExternalSecuritySolutionsByHomeRegionAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ExternalSecuritySolutionResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ExternalSecuritySolution>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _externalSecuritySolutionClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion");
+                using var scope = _externalSecuritySolutionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = await _externalSecuritySolutionRestClient.ListByHomeRegionAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExternalSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _externalSecuritySolutionsRestClient.ListByHomeRegionAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -691,14 +687,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            async Task<Page<ExternalSecuritySolutionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ExternalSecuritySolution>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _externalSecuritySolutionClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion");
+                using var scope = _externalSecuritySolutionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = await _externalSecuritySolutionRestClient.ListByHomeRegionNextPageAsync(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExternalSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _externalSecuritySolutionsRestClient.ListByHomeRegionNextPageAsync(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -715,17 +711,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: ExternalSecuritySolutions_ListByHomeRegion
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExternalSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExternalSecuritySolutionResource> GetExternalSecuritySolutionsByHomeRegion(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ExternalSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ExternalSecuritySolution> GetExternalSecuritySolutionsByHomeRegion(CancellationToken cancellationToken = default)
         {
-            Page<ExternalSecuritySolutionResource> FirstPageFunc(int? pageSizeHint)
+            Page<ExternalSecuritySolution> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _externalSecuritySolutionClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion");
+                using var scope = _externalSecuritySolutionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = _externalSecuritySolutionRestClient.ListByHomeRegion(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExternalSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _externalSecuritySolutionsRestClient.ListByHomeRegion(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -733,14 +729,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            Page<ExternalSecuritySolutionResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ExternalSecuritySolution> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _externalSecuritySolutionClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion");
+                using var scope = _externalSecuritySolutionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion");
                 scope.Start();
                 try
                 {
-                    var response = _externalSecuritySolutionRestClient.ListByHomeRegionNextPage(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExternalSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _externalSecuritySolutionsRestClient.ListByHomeRegionNextPage(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -5,41 +5,42 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.SecurityCenter
+namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class WorkspaceSettingData : IUtf8JsonSerializable
+    public partial class MdeOnboarding : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(WorkspaceId))
+            if (Optional.IsDefined(OnboardingPackageWindows))
             {
-                writer.WritePropertyName("workspaceId");
-                writer.WriteStringValue(WorkspaceId);
+                writer.WritePropertyName("onboardingPackageWindows");
+                writer.WriteBase64StringValue(OnboardingPackageWindows, "D");
             }
-            if (Optional.IsDefined(Scope))
+            if (Optional.IsDefined(OnboardingPackageLinux))
             {
-                writer.WritePropertyName("scope");
-                writer.WriteStringValue(Scope);
+                writer.WritePropertyName("onboardingPackageLinux");
+                writer.WriteBase64StringValue(OnboardingPackageLinux, "D");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static WorkspaceSettingData DeserializeWorkspaceSettingData(JsonElement element)
+        internal static MdeOnboarding DeserializeMdeOnboarding(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> workspaceId = default;
-            Optional<string> scope = default;
+            Optional<byte[]> onboardingPackageWindows = default;
+            Optional<byte[]> onboardingPackageLinux = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -76,21 +77,31 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("workspaceId"))
+                        if (property0.NameEquals("onboardingPackageWindows"))
                         {
-                            workspaceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            onboardingPackageWindows = property0.Value.GetBytesFromBase64("D");
                             continue;
                         }
-                        if (property0.NameEquals("scope"))
+                        if (property0.NameEquals("onboardingPackageLinux"))
                         {
-                            scope = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            onboardingPackageLinux = property0.Value.GetBytesFromBase64("D");
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new WorkspaceSettingData(id, name, type, systemData.Value, workspaceId.Value, scope.Value);
+            return new MdeOnboarding(id, name, type, systemData.Value, onboardingPackageWindows.Value, onboardingPackageLinux.Value);
         }
     }
 }

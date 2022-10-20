@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static TopologyList DeserializeTopologyList(JsonElement element)
         {
-            Optional<IReadOnlyList<SecurityTopologyResourceData>> value = default;
+            Optional<IReadOnlyList<SecurityTopologyResource>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +26,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SecurityTopologyResourceData> array = new List<SecurityTopologyResourceData>();
+                    List<SecurityTopologyResource> array = new List<SecurityTopologyResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityTopologyResourceData.DeserializeSecurityTopologyResourceData(item));
+                        array.Add(SecurityTopologyResource.DeserializeSecurityTopologyResource(item));
                     }
                     value = array;
                     continue;

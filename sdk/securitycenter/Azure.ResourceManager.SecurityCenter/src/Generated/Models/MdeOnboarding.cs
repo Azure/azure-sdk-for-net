@@ -9,24 +9,24 @@ using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.SecurityCenter
+namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> A class representing the MdeOnboarding data model. </summary>
-    public partial class MdeOnboardingData : ResourceData
+    /// <summary> The resource of the configuration or data needed to onboard the machine to MDE. </summary>
+    public partial class MdeOnboarding : ResourceData
     {
-        /// <summary> Initializes a new instance of MdeOnboardingData. </summary>
-        public MdeOnboardingData()
+        /// <summary> Initializes a new instance of MdeOnboarding. </summary>
+        public MdeOnboarding()
         {
         }
 
-        /// <summary> Initializes a new instance of MdeOnboardingData. </summary>
+        /// <summary> Initializes a new instance of MdeOnboarding. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="onboardingPackageWindows"> The onboarding package used to onboard Windows machines to MDE, coded in base64. This can also be used for onboarding using the dedicated VM Extension. </param>
         /// <param name="onboardingPackageLinux"> The onboarding package used to onboard Linux machines to MDE, coded in base64. This can also be used for onboarding using the dedicated VM Extension. </param>
-        internal MdeOnboardingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, byte[] onboardingPackageWindows, byte[] onboardingPackageLinux) : base(id, name, resourceType, systemData)
+        internal MdeOnboarding(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, byte[] onboardingPackageWindows, byte[] onboardingPackageLinux) : base(id, name, resourceType, systemData)
         {
             OnboardingPackageWindows = onboardingPackageWindows;
             OnboardingPackageLinux = onboardingPackageLinux;

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -17,20 +16,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of DiscoveredSecuritySolutionList. </summary>
         internal DiscoveredSecuritySolutionList()
         {
-            Value = new ChangeTrackingList<DiscoveredSecuritySolutionData>();
+            Value = new ChangeTrackingList<DiscoveredSecuritySolution>();
         }
 
         /// <summary> Initializes a new instance of DiscoveredSecuritySolutionList. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal DiscoveredSecuritySolutionList(IReadOnlyList<DiscoveredSecuritySolutionData> value, string nextLink)
+        internal DiscoveredSecuritySolutionList(IReadOnlyList<DiscoveredSecuritySolution> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<DiscoveredSecuritySolutionData> Value { get; }
+        public IReadOnlyList<DiscoveredSecuritySolution> Value { get; }
         /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }

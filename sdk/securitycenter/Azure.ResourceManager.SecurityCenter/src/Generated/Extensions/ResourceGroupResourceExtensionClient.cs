@@ -13,14 +13,25 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     internal partial class ResourceGroupResourceExtensionClient : ArmResource
     {
+        private ClientDiagnostics _allowedConnectionsClientDiagnostics;
+        private AllowedConnectionsRestOperations _allowedConnectionsRestClient;
+        private ClientDiagnostics _topologyClientDiagnostics;
+        private TopologyRestOperations _topologyRestClient;
         private ClientDiagnostics _jitNetworkAccessPolicyClientDiagnostics;
         private JitNetworkAccessPoliciesRestOperations _jitNetworkAccessPolicyRestClient;
+        private ClientDiagnostics _discoveredSecuritySolutionsClientDiagnostics;
+        private DiscoveredSecuritySolutionsRestOperations _discoveredSecuritySolutionsRestClient;
+        private ClientDiagnostics _externalSecuritySolutionsClientDiagnostics;
+        private ExternalSecuritySolutionsRestOperations _externalSecuritySolutionsRestClient;
+        private ClientDiagnostics _securitySolutionsClientDiagnostics;
+        private SecuritySolutionsRestOperations _securitySolutionsRestClient;
         private ClientDiagnostics _alertsClientDiagnostics;
         private AlertsRestOperations _alertsRestClient;
 
@@ -36,8 +47,18 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
+        private ClientDiagnostics AllowedConnectionsClientDiagnostics => _allowedConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private AllowedConnectionsRestOperations AllowedConnectionsRestClient => _allowedConnectionsRestClient ??= new AllowedConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics TopologyClientDiagnostics => _topologyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private TopologyRestOperations TopologyRestClient => _topologyRestClient ??= new TopologyRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics JitNetworkAccessPolicyClientDiagnostics => _jitNetworkAccessPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", JitNetworkAccessPolicyResource.ResourceType.Namespace, Diagnostics);
         private JitNetworkAccessPoliciesRestOperations JitNetworkAccessPolicyRestClient => _jitNetworkAccessPolicyRestClient ??= new JitNetworkAccessPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(JitNetworkAccessPolicyResource.ResourceType));
+        private ClientDiagnostics DiscoveredSecuritySolutionsClientDiagnostics => _discoveredSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DiscoveredSecuritySolutionsRestOperations DiscoveredSecuritySolutionsRestClient => _discoveredSecuritySolutionsRestClient ??= new DiscoveredSecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ExternalSecuritySolutionsClientDiagnostics => _externalSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ExternalSecuritySolutionsRestOperations ExternalSecuritySolutionsRestClient => _externalSecuritySolutionsRestClient ??= new ExternalSecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics SecuritySolutionsClientDiagnostics => _securitySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SecuritySolutionsRestOperations SecuritySolutionsRestClient => _securitySolutionsRestClient ??= new SecuritySolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AlertsRestOperations AlertsRestClient => _alertsRestClient ??= new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -103,47 +124,12 @@ namespace Azure.ResourceManager.SecurityCenter
             return new AdaptiveNetworkHardeningCollection(Client, Id, resourceNamespace, resourceType, resourceName);
         }
 
-        /// <summary> Gets a collection of AllowedConnectionsResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AllowedConnectionsResources and their operations over a AllowedConnectionsResource. </returns>
-        public virtual AllowedConnectionsResourceCollection GetAllowedConnectionsResources()
-        {
-            return GetCachedClient(Client => new AllowedConnectionsResourceCollection(Client, Id));
-        }
-
-        /// <summary> Gets a collection of SecurityTopologyResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SecurityTopologyResources and their operations over a SecurityTopologyResource. </returns>
-        public virtual SecurityTopologyResourceCollection GetSecurityTopologyResources()
-        {
-            return GetCachedClient(Client => new SecurityTopologyResourceCollection(Client, Id));
-        }
-
         /// <summary> Gets a collection of JitNetworkAccessPolicyResources in the ResourceGroupResource. </summary>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <returns> An object representing collection of JitNetworkAccessPolicyResources and their operations over a JitNetworkAccessPolicyResource. </returns>
         public virtual JitNetworkAccessPolicyCollection GetJitNetworkAccessPolicies(AzureLocation ascLocation)
         {
             return new JitNetworkAccessPolicyCollection(Client, Id, ascLocation);
-        }
-
-        /// <summary> Gets a collection of DiscoveredSecuritySolutionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DiscoveredSecuritySolutionResources and their operations over a DiscoveredSecuritySolutionResource. </returns>
-        public virtual DiscoveredSecuritySolutionCollection GetDiscoveredSecuritySolutions()
-        {
-            return GetCachedClient(Client => new DiscoveredSecuritySolutionCollection(Client, Id));
-        }
-
-        /// <summary> Gets a collection of ExternalSecuritySolutionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ExternalSecuritySolutionResources and their operations over a ExternalSecuritySolutionResource. </returns>
-        public virtual ExternalSecuritySolutionCollection GetExternalSecuritySolutions()
-        {
-            return GetCachedClient(Client => new ExternalSecuritySolutionCollection(Client, Id));
-        }
-
-        /// <summary> Gets a collection of SecuritySolutionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SecuritySolutionResources and their operations over a SecuritySolutionResource. </returns>
-        public virtual SecuritySolutionCollection GetSecuritySolutions()
-        {
-            return GetCachedClient(Client => new SecuritySolutionCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ResourceGroupSecurityAlertResources in the ResourceGroupResource. </summary>
@@ -169,6 +155,102 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual SecurityConnectorCollection GetSecurityConnectors()
         {
             return GetCachedClient(Client => new SecurityConnectorCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the list of all possible traffic between resources for the subscription and location, based on connection type.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/allowedConnections/{connectionType}
+        /// Operation Id: AllowedConnections_Get
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<AllowedConnection>> GetAllowedConnectionAsync(AzureLocation ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
+        {
+            using var scope = AllowedConnectionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllowedConnection");
+            scope.Start();
+            try
+            {
+                var response = await AllowedConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ascLocation, connectionType, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the list of all possible traffic between resources for the subscription and location, based on connection type.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/allowedConnections/{connectionType}
+        /// Operation Id: AllowedConnections_Get
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<AllowedConnection> GetAllowedConnection(AzureLocation ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
+        {
+            using var scope = AllowedConnectionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllowedConnection");
+            scope.Start();
+            try
+            {
+                var response = AllowedConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ascLocation, connectionType, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a specific topology component.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/topologies/{topologyResourceName}
+        /// Operation Id: Topology_Get
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="topologyResourceName"> Name of a topology resources collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SecurityTopologyResource>> GetTopologyAsync(AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = TopologyClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetTopology");
+            scope.Start();
+            try
+            {
+                var response = await TopologyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ascLocation, topologyResourceName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a specific topology component.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/topologies/{topologyResourceName}
+        /// Operation Id: Topology_Get
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="topologyResourceName"> Name of a topology resources collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SecurityTopologyResource> GetTopology(AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = TopologyClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetTopology");
+            scope.Start();
+            try
+            {
+                var response = TopologyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ascLocation, topologyResourceName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -253,6 +335,150 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets a specific discovered Security Solution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/discoveredSecuritySolutions/{discoveredSecuritySolutionName}
+        /// Operation Id: DiscoveredSecuritySolutions_Get
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="discoveredSecuritySolutionName"> Name of a discovered security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DiscoveredSecuritySolution>> GetDiscoveredSecuritySolutionAsync(AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = DiscoveredSecuritySolutionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDiscoveredSecuritySolution");
+            scope.Start();
+            try
+            {
+                var response = await DiscoveredSecuritySolutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ascLocation, discoveredSecuritySolutionName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a specific discovered Security Solution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/discoveredSecuritySolutions/{discoveredSecuritySolutionName}
+        /// Operation Id: DiscoveredSecuritySolutions_Get
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="discoveredSecuritySolutionName"> Name of a discovered security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DiscoveredSecuritySolution> GetDiscoveredSecuritySolution(AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = DiscoveredSecuritySolutionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDiscoveredSecuritySolution");
+            scope.Start();
+            try
+            {
+                var response = DiscoveredSecuritySolutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ascLocation, discoveredSecuritySolutionName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a specific external Security Solution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/ExternalSecuritySolutions/{externalSecuritySolutionsName}
+        /// Operation Id: ExternalSecuritySolutions_Get
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ExternalSecuritySolution>> GetExternalSecuritySolutionAsync(AzureLocation ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
+        {
+            using var scope = ExternalSecuritySolutionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetExternalSecuritySolution");
+            scope.Start();
+            try
+            {
+                var response = await ExternalSecuritySolutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ascLocation, externalSecuritySolutionsName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a specific external Security Solution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/ExternalSecuritySolutions/{externalSecuritySolutionsName}
+        /// Operation Id: ExternalSecuritySolutions_Get
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ExternalSecuritySolution> GetExternalSecuritySolution(AzureLocation ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
+        {
+            using var scope = ExternalSecuritySolutionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetExternalSecuritySolution");
+            scope.Start();
+            try
+            {
+                var response = ExternalSecuritySolutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ascLocation, externalSecuritySolutionsName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a specific Security Solution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/securitySolutions/{securitySolutionName}
+        /// Operation Id: SecuritySolutions_Get
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="securitySolutionName"> Name of security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SecuritySolution>> GetSecuritySolutionAsync(AzureLocation ascLocation, string securitySolutionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = SecuritySolutionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetSecuritySolution");
+            scope.Start();
+            try
+            {
+                var response = await SecuritySolutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ascLocation, securitySolutionName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a specific Security Solution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/securitySolutions/{securitySolutionName}
+        /// Operation Id: SecuritySolutions_Get
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="securitySolutionName"> Name of security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SecuritySolution> GetSecuritySolution(AzureLocation ascLocation, string securitySolutionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = SecuritySolutionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetSecuritySolution");
+            scope.Start();
+            try
+            {
+                var response = SecuritySolutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ascLocation, securitySolutionName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

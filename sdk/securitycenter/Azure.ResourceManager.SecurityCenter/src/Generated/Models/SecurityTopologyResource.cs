@@ -9,20 +9,19 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityCenter.Models;
 
-namespace Azure.ResourceManager.SecurityCenter
+namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> A class representing the SecurityTopologyResource data model. </summary>
-    public partial class SecurityTopologyResourceData : ResourceData
+    /// <summary> The SecurityTopologyResource. </summary>
+    public partial class SecurityTopologyResource : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityTopologyResourceData. </summary>
-        public SecurityTopologyResourceData()
+        /// <summary> Initializes a new instance of SecurityTopologyResource. </summary>
+        public SecurityTopologyResource()
         {
             TopologyResources = new ChangeTrackingList<TopologySingleResource>();
         }
 
-        /// <summary> Initializes a new instance of SecurityTopologyResourceData. </summary>
+        /// <summary> Initializes a new instance of SecurityTopologyResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="calculatedOn"> The UTC time on which the topology was calculated. </param>
         /// <param name="topologyResources"> Azure resources which are part of this topology resource. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal SecurityTopologyResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? calculatedOn, IReadOnlyList<TopologySingleResource> topologyResources, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal SecurityTopologyResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? calculatedOn, IReadOnlyList<TopologySingleResource> topologyResources, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             CalculatedOn = calculatedOn;
             TopologyResources = topologyResources;

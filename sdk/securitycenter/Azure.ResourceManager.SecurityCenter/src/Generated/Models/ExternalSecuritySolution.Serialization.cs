@@ -8,11 +8,10 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityCenter.Models;
 
-namespace Azure.ResourceManager.SecurityCenter
+namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class ExternalSecuritySolutionData : IUtf8JsonSerializable
+    public partial class ExternalSecuritySolution : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             writer.WriteEndObject();
         }
 
-        internal static ExternalSecuritySolutionData DeserializeExternalSecuritySolutionData(JsonElement element)
+        internal static ExternalSecuritySolution DeserializeExternalSecuritySolution(JsonElement element)
         {
             Optional<ExternalSecuritySolutionKind> kind = default;
             Optional<AzureLocation> location = default;
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new ExternalSecuritySolutionData(id, name, type, systemData.Value, Optional.ToNullable(kind), Optional.ToNullable(location));
+            return new ExternalSecuritySolution(id, name, type, systemData.Value, Optional.ToNullable(kind), Optional.ToNullable(location));
         }
     }
 }

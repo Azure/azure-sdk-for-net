@@ -21,28 +21,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WorkspaceSettingResource" /> and their operations.
-    /// Each <see cref="WorkspaceSettingResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="WorkspaceSettingCollection" /> instance call the GetWorkspaceSettings method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="SecurityWorkspaceSettingResource" /> and their operations.
+    /// Each <see cref="SecurityWorkspaceSettingResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
+    /// To get a <see cref="SecurityWorkspaceSettingCollection" /> instance call the GetSecurityWorkspaceSettings method from an instance of <see cref="SubscriptionResource" />.
     /// </summary>
-    public partial class WorkspaceSettingCollection : ArmCollection, IEnumerable<WorkspaceSettingResource>, IAsyncEnumerable<WorkspaceSettingResource>
+    public partial class SecurityWorkspaceSettingCollection : ArmCollection, IEnumerable<SecurityWorkspaceSettingResource>, IAsyncEnumerable<SecurityWorkspaceSettingResource>
     {
-        private readonly ClientDiagnostics _workspaceSettingClientDiagnostics;
-        private readonly WorkspaceSettingsRestOperations _workspaceSettingRestClient;
+        private readonly ClientDiagnostics _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics;
+        private readonly WorkspaceSettingsRestOperations _securityWorkspaceSettingWorkspaceSettingsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspaceSettingCollection"/> class for mocking. </summary>
-        protected WorkspaceSettingCollection()
+        /// <summary> Initializes a new instance of the <see cref="SecurityWorkspaceSettingCollection"/> class for mocking. </summary>
+        protected SecurityWorkspaceSettingCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspaceSettingCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityWorkspaceSettingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal WorkspaceSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SecurityWorkspaceSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _workspaceSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", WorkspaceSettingResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(WorkspaceSettingResource.ResourceType, out string workspaceSettingApiVersion);
-            _workspaceSettingRestClient = new WorkspaceSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workspaceSettingApiVersion);
+            _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityWorkspaceSettingResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SecurityWorkspaceSettingResource.ResourceType, out string securityWorkspaceSettingWorkspaceSettingsApiVersion);
+            _securityWorkspaceSettingWorkspaceSettingsRestClient = new WorkspaceSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityWorkspaceSettingWorkspaceSettingsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<WorkspaceSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceSettingName, WorkspaceSettingData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityWorkspaceSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceSettingName, SecurityWorkspaceSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _workspaceSettingClientDiagnostics.CreateScope("WorkspaceSettingCollection.CreateOrUpdate");
+            using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _workspaceSettingRestClient.CreateAsync(Id.SubscriptionId, workspaceSettingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<WorkspaceSettingResource>(Response.FromValue(new WorkspaceSettingResource(Client, response), response.GetRawResponse()));
+                var response = await _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateAsync(Id.SubscriptionId, workspaceSettingName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SecurityCenterArmOperation<SecurityWorkspaceSettingResource>(Response.FromValue(new SecurityWorkspaceSettingResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -98,17 +98,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<WorkspaceSettingResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceSettingName, WorkspaceSettingData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityWorkspaceSettingResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceSettingName, SecurityWorkspaceSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _workspaceSettingClientDiagnostics.CreateScope("WorkspaceSettingCollection.CreateOrUpdate");
+            using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _workspaceSettingRestClient.Create(Id.SubscriptionId, workspaceSettingName, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<WorkspaceSettingResource>(Response.FromValue(new WorkspaceSettingResource(Client, response), response.GetRawResponse()));
+                var response = _securityWorkspaceSettingWorkspaceSettingsRestClient.Create(Id.SubscriptionId, workspaceSettingName, data, cancellationToken);
+                var operation = new SecurityCenterArmOperation<SecurityWorkspaceSettingResource>(Response.FromValue(new SecurityWorkspaceSettingResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -129,18 +129,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
-        public virtual async Task<Response<WorkspaceSettingResource>> GetAsync(string workspaceSettingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityWorkspaceSettingResource>> GetAsync(string workspaceSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
 
-            using var scope = _workspaceSettingClientDiagnostics.CreateScope("WorkspaceSettingCollection.Get");
+            using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = await _workspaceSettingRestClient.GetAsync(Id.SubscriptionId, workspaceSettingName, cancellationToken).ConfigureAwait(false);
+                var response = await _securityWorkspaceSettingWorkspaceSettingsRestClient.GetAsync(Id.SubscriptionId, workspaceSettingName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkspaceSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityWorkspaceSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,18 +158,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
-        public virtual Response<WorkspaceSettingResource> Get(string workspaceSettingName, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityWorkspaceSettingResource> Get(string workspaceSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
 
-            using var scope = _workspaceSettingClientDiagnostics.CreateScope("WorkspaceSettingCollection.Get");
+            using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = _workspaceSettingRestClient.Get(Id.SubscriptionId, workspaceSettingName, cancellationToken);
+                var response = _securityWorkspaceSettingWorkspaceSettingsRestClient.Get(Id.SubscriptionId, workspaceSettingName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkspaceSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityWorkspaceSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,17 +184,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: WorkspaceSettings_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceSettingResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkspaceSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityWorkspaceSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityWorkspaceSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WorkspaceSettingResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SecurityWorkspaceSettingResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _workspaceSettingClientDiagnostics.CreateScope("WorkspaceSettingCollection.GetAll");
+                using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _workspaceSettingRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _securityWorkspaceSettingWorkspaceSettingsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityWorkspaceSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -202,14 +202,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            async Task<Page<WorkspaceSettingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SecurityWorkspaceSettingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _workspaceSettingClientDiagnostics.CreateScope("WorkspaceSettingCollection.GetAll");
+                using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _workspaceSettingRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _securityWorkspaceSettingWorkspaceSettingsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityWorkspaceSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -226,17 +226,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: WorkspaceSettings_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceSettingResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkspaceSettingResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityWorkspaceSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityWorkspaceSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WorkspaceSettingResource> FirstPageFunc(int? pageSizeHint)
+            Page<SecurityWorkspaceSettingResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _workspaceSettingClientDiagnostics.CreateScope("WorkspaceSettingCollection.GetAll");
+                using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _workspaceSettingRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _securityWorkspaceSettingWorkspaceSettingsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityWorkspaceSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -244,14 +244,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            Page<WorkspaceSettingResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SecurityWorkspaceSettingResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _workspaceSettingClientDiagnostics.CreateScope("WorkspaceSettingCollection.GetAll");
+                using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _workspaceSettingRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _securityWorkspaceSettingWorkspaceSettingsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityWorkspaceSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -275,11 +275,11 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
 
-            using var scope = _workspaceSettingClientDiagnostics.CreateScope("WorkspaceSettingCollection.Exists");
+            using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _workspaceSettingRestClient.GetAsync(Id.SubscriptionId, workspaceSettingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _securityWorkspaceSettingWorkspaceSettingsRestClient.GetAsync(Id.SubscriptionId, workspaceSettingName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -302,11 +302,11 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
 
-            using var scope = _workspaceSettingClientDiagnostics.CreateScope("WorkspaceSettingCollection.Exists");
+            using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = _workspaceSettingRestClient.Get(Id.SubscriptionId, workspaceSettingName, cancellationToken: cancellationToken);
+                var response = _securityWorkspaceSettingWorkspaceSettingsRestClient.Get(Id.SubscriptionId, workspaceSettingName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        IEnumerator<WorkspaceSettingResource> IEnumerable<WorkspaceSettingResource>.GetEnumerator()
+        IEnumerator<SecurityWorkspaceSettingResource> IEnumerable<SecurityWorkspaceSettingResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<WorkspaceSettingResource> IAsyncEnumerable<WorkspaceSettingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SecurityWorkspaceSettingResource> IAsyncEnumerable<SecurityWorkspaceSettingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
