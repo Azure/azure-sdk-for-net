@@ -32,9 +32,9 @@ To use an [Azure Active Directory (AAD) token credential](authenticate_with_toke
 provide an instance of the desired credential type obtained from the
 [azure-identity](azure_identity_credentials) library.
 
-To authenticate with AAD, you must first use [nuget][nuget] install [`azure-identity`][azure_identity_nuget]
+To authenticate with AAD, you must first use [nuget](nuget) install [`azure-identity`](azure_identity_nuget)
 
-After setup, you can choose which type of [credential][azure_identity_credentials] from Azure.Identity to use.
+After setup, you can choose which type of [credential](azure_identity_credentials) from Azure.Identity to use.
 
 As an example, sign in via the Azure CLI `az login` command and [DefaultAzureCredential](https://learn.microsoft.com/python/api/azure-identity/azure.identity.defaultazurecredential?view=azure-python) will authenticate as that user.
 
