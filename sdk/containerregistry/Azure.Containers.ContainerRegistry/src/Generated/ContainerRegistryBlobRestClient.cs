@@ -117,6 +117,76 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        internal HttpMessage CreateGetBlobRequest(string name, string digest, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200307);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/blobs/", false);
+            uri.AppendPath(digest, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/octet-stream");
+            return message;
+        }
+
+        /// <summary> Retrieve the blob from the registry identified by digest. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="digest"> Digest of a BLOB. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetBlobAsync(string name, string digest, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(digest, nameof(digest));
+
+            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlob.GetBlob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetBlobRequest(name, digest, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieve the blob from the registry identified by digest. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="digest"> Digest of a BLOB. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="digest"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetBlob(string name, string digest, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(digest, nameof(digest));
+
+            using var scope = ClientDiagnostics.CreateScope("ContainerRegistryBlob.GetBlob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetBlobRequest(name, digest, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         internal HttpMessage CreateCheckBlobExistsRequest(string name, string digest)
         {
             var message = _pipeline.CreateMessage();
@@ -852,5 +922,8 @@ namespace Azure.Containers.ContainerRegistry
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
+
+        private static ResponseClassifier _responseClassifier200307;
+        private static ResponseClassifier ResponseClassifier200307 => _responseClassifier200307 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 307 });
     }
 }

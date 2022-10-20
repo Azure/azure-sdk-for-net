@@ -30,6 +30,11 @@ namespace Azure
         public ErrorOptions ErrorOptions { get; set; } = ErrorOptions.Default;
 
         /// <summary>
+        /// Controls whether to follow redirects during the current pipeline invocation.
+        /// </summary>
+        public bool FollowRedirects { get; set; } = true;
+
+        /// <summary>
         /// The token to check for cancellation.
         /// </summary>
         public CancellationToken CancellationToken { get; set; } = CancellationToken.None;

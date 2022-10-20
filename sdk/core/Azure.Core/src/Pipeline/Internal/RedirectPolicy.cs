@@ -36,7 +36,8 @@ namespace Azure.Core.Pipeline
             Request request = message.Request;
             Response response = message.Response;
 
-            while ((redirectUri = GetUriForRedirect(request, message.Response)) != null)
+            while (message.FollowRedirects &&
+                  (redirectUri = GetUriForRedirect(request, message.Response)) != null)
             {
                 redirectCount++;
 

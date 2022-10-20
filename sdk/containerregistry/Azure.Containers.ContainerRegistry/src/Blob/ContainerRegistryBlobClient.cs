@@ -24,7 +24,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         private readonly ContainerRegistryRestClient _restClient;
         private readonly IContainerRegistryAuthenticationClient _acrAuthClient;
         private readonly ContainerRegistryBlobRestClient _blobRestClient;
-        private readonly ContainerRegistryBlobLocationPolicy _blobLocationPolicy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryBlobClient"/> for managing container images and artifacts,
@@ -107,10 +106,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             _acrAuthClient = authenticationClient ?? new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
 
             string defaultScope = options.Audience + "/.default";
-            _blobLocationPolicy = new();
             _pipeline = HttpPipelineBuilder.Build(options,
-                new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient),
-                _blobLocationPolicy);
+                new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
             _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
             _blobRestClient = new ContainerRegistryBlobRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
         }
@@ -537,10 +534,20 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = _blobRestClient.GetBlob(_repositoryName, digest, cancellationToken);
+                // TODO: cache the policy
+                var policy = new ContainerRegistryBlobLocationPolicy();
+                var context = new RequestContext() { CancellationToken = cancellationToken };
+                context.FollowRedirects = false;
+                context.AddPolicy(policy, HttpPipelinePosition.PerRetry);
 
-                // Currently quite inefficient because we follow the redirect...  Can we just return when we get the 307.
-                return Response.FromValue(_blobLocationPolicy.Uri, blobResult.GetRawResponse());
+                Response response = _blobRestClient.GetBlob(_repositoryName, digest, context);
+
+                NullableResponse<Uri> result = policy.Uri != null ?
+                    Response.FromValue(policy.Uri, response) :
+                    new NoValueResponse<Uri>(response);
+
+                // Currently quite inefficient because we follow the redirect...  Can we just return when we get the 307?
+                return result;
             }
             catch (Exception e)
             {
@@ -564,10 +571,20 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
+                // TODO: cache it.
+                var policy = new ContainerRegistryBlobLocationPolicy();
+                var context = new RequestContext() { CancellationToken = cancellationToken };
+                context.FollowRedirects = false;
+                context.AddPolicy(policy, HttpPipelinePosition.PerRetry);
 
-                // Currently quite inefficient because we follow the redirect...  Can we just return when we get the 307.
-                return Response.FromValue(_blobLocationPolicy.Uri, blobResult.GetRawResponse());
+                Response response = await _blobRestClient.GetBlobAsync(_repositoryName, digest, context).ConfigureAwait(false);
+
+                NullableResponse<Uri> result = policy.Uri != null ?
+                    Response.FromValue(policy.Uri, response) :
+                    new NoValueResponse<Uri>(response);
+
+                // Currently quite inefficient because we follow the redirect...  Can we just return when we get the 307?
+                return result;
             }
             catch (Exception e)
             {

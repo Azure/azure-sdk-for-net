@@ -9,6 +9,9 @@ input-file:
  
 model-namespace: false
 generation1-convenience-client: true
+
+protocol-method-list:
+  - ContainerRegistryBlob_GetBlob
 ```
 
 ## Customizations for Code Generator

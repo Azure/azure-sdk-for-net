@@ -33,6 +33,7 @@ namespace Azure.Core
             Request = request;
             ResponseClassifier = responseClassifier;
             BufferResponse = true;
+            FollowRedirects = true;
         }
 
         /// <summary>
@@ -94,6 +95,8 @@ namespace Azure.Core
 
             context.Freeze();
 
+            FollowRedirects = context.FollowRedirects;
+
             if (context.Policies?.Count > 0)
             {
                 Policies ??= new(context.Policies.Count);
@@ -105,6 +108,8 @@ namespace Azure.Core
                 ResponseClassifier = context.Apply(classifier);
             }
         }
+
+        internal bool FollowRedirects { get; private set; }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
 
