@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Compute.Tests
         {
         }
 
+        protected VirtualMachineTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = null)
+            : base(isAsync, resourceType, apiVersion, mode)
+        {
+        }
+
         protected async Task<VirtualMachineCollection> GetVirtualMachineCollectionAsync()
         {
             _genericResourceCollection = Client.GetGenericResources();
