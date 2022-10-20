@@ -12,7 +12,7 @@ using Azure.Core.Diagnostics;
 namespace Azure.Core.Pipeline
 {
     /// <summary>
-    /// Represents a policy that can be overriden to customize whether or not a response will be retried and how long to wait before retrying.
+    /// Represents a policy that can be overriden to customize whether or not a request will be retried and how long to wait before retrying.
     /// </summary>
     public abstract class RetryPolicy : HttpPipelinePolicy
     {
