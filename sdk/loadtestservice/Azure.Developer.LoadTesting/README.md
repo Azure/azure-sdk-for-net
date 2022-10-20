@@ -121,9 +121,11 @@ This is a template, but your SDK readme should include details on how to contrib
 <!-- CLIENT COMMON BAR -->
 
 <!-- LINKS -->
+<!-- LINKS -->
+<!-- [source_code]: https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/loadtesting/azure-developer-loadtesting/src -->
+<!-- [sample_code]: https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/loadtesting/azure-developer-loadtesting/src/samples -->
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/loadtestservice/Azure.Developer.LoadTesting/README.png)
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [authenticate_with_token]: https://learn.microsoft.com/aspnet/core/security/authentication/identity
 [azure_identity_credentials]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#credentials
