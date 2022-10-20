@@ -12,7 +12,7 @@ using CommandLine;
 
 namespace Azure.Monitor.Ingestion.Perf
 {
-    public class BatchUploadTest : PerfTest<BatchUploadTest.IngestionClientPerfOptions>
+    public class BatchUploadTest : PerfTest<PerfOptions>
     {
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/perf/TemplateClientTest.cs to write perf test. */
 
@@ -34,12 +34,9 @@ namespace Azure.Monitor.Ingestion.Perf
             return entries;
         }
 
-        public BatchUploadTest(IngestionClientPerfOptions options) : base(options)
+        public BatchUploadTest(PerfOptions options) : base(options)
         {
             LogsIngestionClient = new LogsIngestionClient(new Uri(TestEnvironment.DCREndpoint), TestEnvironment.Credential, ConfigureClientOptions(new LogsIngestionClientOptions()));
-        }
-        public class IngestionClientPerfOptions : PerfOptions
-        {
         }
 
         public override void Run(CancellationToken cancellationToken)
