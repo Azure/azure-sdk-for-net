@@ -41,7 +41,7 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// This method can be overriden to take full control over the retry policy. If this is overriden, it is the implementers responsibility
+        /// This method can be overriden to take full control over the retry policy. If this is overriden and the base method isn't called, it is the implementers responsibility
         /// to populated the <see cref="HttpMessage.ProcessingContext"/> property. This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
@@ -53,7 +53,7 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// This method can be overriden to take full control over the retry policy. If this is overriden, it is the implementers responsibility
+        /// This method can be overriden to take full control over the retry policy. If this is overriden and the base method isn't called, it is the implementers responsibility
         /// to populated the <see cref="HttpMessage.ProcessingContext"/> property. This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
@@ -121,7 +121,15 @@ namespace Azure.Core.Pipeline
                 var after = Stopwatch.GetTimestamp();
                 double elapsed = (after - before) / (double)Stopwatch.Frequency;
 
-                bool shouldRetry = async ? await ShouldRetryAsync(message).ConfigureAwait(false) : ShouldRetry(message);
+                bool shouldRetry = false;
+
+                // Only invoke should ShouldRetry for errors. If customer needs full control they can override HttpPipelinePolicy directly
+                // or modify the ResponseClassifier.
+                if (message.LastException != null || (message.HasResponse && message.Response.IsError))
+                {
+                    shouldRetry = async ? await ShouldRetryAsync(message).ConfigureAwait(false) : ShouldRetry(message);
+                }
+
                 if (shouldRetry)
                 {
                     TimeSpan delay = async ? await CalculateNextDelayAsync(message).ConfigureAwait(false) : CalculateNextDelay(message);
@@ -146,7 +154,7 @@ namespace Azure.Core.Pipeline
                     }
 
                     throw new AggregateException(
-                        $"Retry failed after {message.RetryNumber} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.",
+                        $"Retry failed after {message.RetryNumber + 1} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.",
                         exceptions);
                 }
                 else
@@ -192,7 +200,7 @@ namespace Azure.Core.Pipeline
 
         private bool ShouldRetryInternal(HttpMessage message)
         {
-            if (message.RetryNumber <= _maxRetries)
+            if (message.RetryNumber < _maxRetries)
             {
                 if (message.LastException != null)
                 {
@@ -205,7 +213,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            // either was a success response or out of retries
+            // out of retries
             return false;
         }
 
@@ -263,7 +271,7 @@ namespace Azure.Core.Pipeline
                     delay = _delay;
                     break;
                 case RetryMode.Exponential:
-                    delay = CalculateExponentialDelay(message.RetryNumber);
+                    delay = CalculateExponentialDelay(message.RetryNumber + 1);
                     break;
             }
 
