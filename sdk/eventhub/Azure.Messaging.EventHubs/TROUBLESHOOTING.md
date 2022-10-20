@@ -227,7 +227,7 @@ The event processor works in a concurrent and highly asynchronous manner.  Each 
 
 When a processor owns too many partitions, it will often experience contention in the thread pool leading to starvation.  During this time, continuations will start to queue while waiting to be scheduled causing stalls in the processor.  Because there is no fairness guarantee in scheduling, some partitions may appear to stop processing or load balancing may not be able to update ownership, causing partitions to "bounce" between owners.
 
-It is generally recommended that an event processor own no more than three partitions for every 1 CPU core of the host.  It is often helpful to start a ratio of 1.5 partitions for each CPU core and test increasing the number of owned partitions gradually to measure what works best for the specific application.
+Generally, it is recommended that an event processor own no more than 3 partitions for every 1 CPU core of the host.  Since the ratio will vary for each application, it is often helpful to start with 1.5 partitions for each CPU core and increase the number of owned partitions gradually to determine what works best for your application.
 
 Further reading:
 - [Debug ThreadPool Starvation][DebugThreadPoolStarvation]

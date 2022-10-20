@@ -1,50 +1,36 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/0ee2a145-4d40-44f4-b764-67b40274f1ac/providers/Microsoft.Cache/redis?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGVlMmExNDUtNGQ0MC00NGY0LWI3NjQtNjdiNDAyNzRmMWFjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXM/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestUri": "/subscriptions/3919658b-68ae-4509-8c17-6a2238340ae7/providers/Microsoft.Cache/redis?api-version=2022-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzkxOTY1OGItNjhhZS00NTA5LThjMTctNmEyMjM4MzQwYWU3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXM/YXBpLXZlcnNpb249MjAyMi0wNi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ea7c14f7-c558-4ef2-9bdb-8e4cbea5a1d1"
+          "922167f0-fa10-4d86-81c1-1a52cf39b09a"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.700.22.47601",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000.",
-          "Microsoft.Azure.Management.Redis.RedisManagementClient/7.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/9.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Fri, 26 Nov 2021 11:37:14 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
-        "x-ms-original-request-ids": [
-          "578e506f-3dac-4803-8b87-c53933082bbb",
-          "157ee1ce-259a-4098-be13-38ce0ec559eb",
-          "e588781e-3ee3-40e7-aea1-92a8252a8d7b"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11933"
-        ],
         "x-ms-request-id": [
-          "6f74b72a-ff72-4036-b961-71fd2298d35a"
+          "00af6bca-93f6-4c45-9df7-88fc691e380c"
         ],
-        "x-ms-correlation-request-id": [
-          "6f74b72a-ff72-4036-b961-71fd2298d35a"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20211126T113714Z:6f74b72a-ff72-4036-b961-71fd2298d35a"
+        "x-rp-server-mvid": [
+          "833439e0-b740-4cd3-bb1d-5515649d1e5a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -52,8 +38,23 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11992"
+        ],
+        "x-ms-correlation-request-id": [
+          "2d582474-14be-4b27-8ffa-97f42d75d6ed"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20221017T194239Z:2d582474-14be-4b27-8ffa-97f42d75d6ed"
+        ],
+        "Date": [
+          "Mon, 17 Oct 2022 19:42:39 GMT"
+        ],
         "Content-Length": [
-          "8354"
+          "725"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -62,12 +63,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/0ee2a145-4d40-44f4-b764-67b40274f1ac/resourceGroups/RedisGetList5682/providers/Microsoft.Cache/Redis/RedisGetList3705\",\r\n      \"location\": \"West US\",\r\n      \"name\": \"RedisGetList3705\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"redisVersion\": \"4.0.14\",\r\n        \"sku\": {\r\n          \"name\": \"Basic\",\r\n          \"family\": \"C\",\r\n          \"capacity\": 0\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"instances\": [\r\n          {\r\n            \"sslPort\": 15000,\r\n            \"isMaster\": true,\r\n            \"isPrimary\": true\r\n          }\r\n        ],\r\n        \"publicNetworkAccess\": \"Enabled\",\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"256\",\r\n          \"maxmemory-reserved\": \"2\",\r\n          \"maxfragmentationmemory-reserved\": \"12\",\r\n          \"maxmemory-delta\": \"2\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"RedisGetList3705.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380,\r\n        \"linkedServers\": []\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/0ee2a145-4d40-44f4-b764-67b40274f1ac/resourceGroups/RedisGeo4764/providers/Microsoft.Cache/Redis/RedisGeo14984\",\r\n      \"location\": \"West US\",\r\n      \"name\": \"RedisGeo14984\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Linking\",\r\n        \"redisVersion\": \"4.0.14\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"family\": \"P\",\r\n          \"capacity\": 1\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"instances\": [\r\n          {\r\n            \"sslPort\": 15000,\r\n            \"isMaster\": true,\r\n            \"isPrimary\": true\r\n          },\r\n          {\r\n            \"sslPort\": 15001,\r\n            \"isMaster\": false,\r\n            \"isPrimary\": false\r\n          }\r\n        ],\r\n        \"publicNetworkAccess\": \"Enabled\",\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"7500\",\r\n          \"maxmemory-reserved\": \"200\",\r\n          \"maxfragmentationmemory-reserved\": \"300\",\r\n          \"maxmemory-delta\": \"200\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"RedisGeo14984.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380,\r\n        \"linkedServers\": [\r\n          {\r\n            \"id\": \"/subscriptions/0ee2a145-4d40-44f4-b764-67b40274f1ac/resourceGroups/RedisGeo4764/providers/Microsoft.Cache/Redis/RedisGeo14984/linkedServers/RedisGeo24695\"\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/0ee2a145-4d40-44f4-b764-67b40274f1ac/resourceGroups/RedisCreateUpdate9078/providers/Microsoft.Cache/Redis/RedisCreateUpdate3895\",\r\n      \"location\": \"West US\",\r\n      \"name\": \"RedisCreateUpdate3895\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Creating\",\r\n        \"redisVersion\": \"4.0.14\",\r\n        \"sku\": {\r\n          \"name\": \"Basic\",\r\n          \"family\": \"C\",\r\n          \"capacity\": 0\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"instances\": [\r\n          {\r\n            \"sslPort\": 15000,\r\n            \"isMaster\": true,\r\n            \"isPrimary\": true\r\n          }\r\n        ],\r\n        \"publicNetworkAccess\": \"Enabled\",\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"256\",\r\n          \"maxmemory-reserved\": \"2\",\r\n          \"maxfragmentationmemory-reserved\": \"12\",\r\n          \"maxmemory-delta\": \"2\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"RedisCreateUpdate3895.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380,\r\n        \"linkedServers\": []\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/0ee2a145-4d40-44f4-b764-67b40274f1ac/resourceGroups/RedisReboot6439/providers/Microsoft.Cache/Redis/RedisReboot6083\",\r\n      \"location\": \"West US\",\r\n      \"name\": \"RedisReboot6083\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Deleting\",\r\n        \"redisVersion\": \"4.0.14\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"family\": \"P\",\r\n          \"capacity\": 1\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"instances\": [\r\n          {\r\n            \"sslPort\": 15000,\r\n            \"isMaster\": true,\r\n            \"isPrimary\": true\r\n          },\r\n          {\r\n            \"sslPort\": 15001,\r\n            \"isMaster\": false,\r\n            \"isPrimary\": false\r\n          }\r\n        ],\r\n        \"publicNetworkAccess\": \"Enabled\",\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"7500\",\r\n          \"maxmemory-reserved\": \"200\",\r\n          \"maxfragmentationmemory-reserved\": \"300\",\r\n          \"maxmemory-delta\": \"200\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"RedisReboot6083.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380,\r\n        \"linkedServers\": []\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/0ee2a145-4d40-44f4-b764-67b40274f1ac/resourceGroups/RedisSchedules5775/providers/Microsoft.Cache/Redis/RedisSchedules1781\",\r\n      \"location\": \"West US\",\r\n      \"name\": \"RedisSchedules1781\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Deleting\",\r\n        \"redisVersion\": \"4.0.14\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"family\": \"P\",\r\n          \"capacity\": 1\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"instances\": [\r\n          {\r\n            \"sslPort\": 15000,\r\n            \"isMaster\": true,\r\n            \"isPrimary\": true\r\n          },\r\n          {\r\n            \"sslPort\": 15001,\r\n            \"isMaster\": false,\r\n            \"isPrimary\": false\r\n          }\r\n        ],\r\n        \"publicNetworkAccess\": \"Enabled\",\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"7500\",\r\n          \"maxmemory-reserved\": \"200\",\r\n          \"maxfragmentationmemory-reserved\": \"300\",\r\n          \"maxmemory-delta\": \"200\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"RedisSchedules1781.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380,\r\n        \"linkedServers\": []\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/0ee2a145-4d40-44f4-b764-67b40274f1ac/resourceGroups/RedisFirewall1160/providers/Microsoft.Cache/Redis/RedisFirewall1103\",\r\n      \"location\": \"West US\",\r\n      \"name\": \"RedisFirewall1103\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Deleting\",\r\n        \"redisVersion\": \"4.0.14\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"family\": \"P\",\r\n          \"capacity\": 1\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"instances\": [\r\n          {\r\n            \"sslPort\": 15000,\r\n            \"isMaster\": true,\r\n            \"isPrimary\": true\r\n          },\r\n          {\r\n            \"sslPort\": 15001,\r\n            \"isMaster\": false,\r\n            \"isPrimary\": false\r\n          }\r\n        ],\r\n        \"publicNetworkAccess\": \"Enabled\",\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"7500\",\r\n          \"maxmemory-reserved\": \"200\",\r\n          \"maxfragmentationmemory-reserved\": \"300\",\r\n          \"maxmemory-delta\": \"200\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"RedisFirewall1103.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380,\r\n        \"linkedServers\": []\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/0ee2a145-4d40-44f4-b764-67b40274f1ac/resourceGroups/RedisBegin7967/providers/Microsoft.Cache/Redis/RedisBegin6958\",\r\n      \"location\": \"West US\",\r\n      \"name\": \"RedisBegin6958\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Deleting\",\r\n        \"redisVersion\": \"4.0.14\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"family\": \"P\",\r\n          \"capacity\": 1\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"instances\": [\r\n          {\r\n            \"sslPort\": 15000,\r\n            \"shardId\": 0,\r\n            \"isMaster\": true,\r\n            \"isPrimary\": true\r\n          },\r\n          {\r\n            \"sslPort\": 15001,\r\n            \"shardId\": 0,\r\n            \"isMaster\": false,\r\n            \"isPrimary\": false\r\n          },\r\n          {\r\n            \"sslPort\": 15002,\r\n            \"shardId\": 0,\r\n            \"isMaster\": false,\r\n            \"isPrimary\": false\r\n          }\r\n        ],\r\n        \"minimumTlsVersion\": \"1.2\",\r\n        \"publicNetworkAccess\": \"Enabled\",\r\n        \"redisConfiguration\": {\r\n          \"maxmemory-policy\": \"allkeys-lru\",\r\n          \"maxmemory-reserved\": \"210\",\r\n          \"maxclients\": \"7500\",\r\n          \"maxfragmentationmemory-reserved\": \"300\",\r\n          \"maxmemory-delta\": \"210\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"RedisBegin6958.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380,\r\n        \"replicasPerMaster\": 2,\r\n        \"linkedServers\": [],\r\n        \"replicasPerPrimary\": 2\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/0ee2a145-4d40-44f4-b764-67b40274f1ac/resourceGroups/RedisGeo4764/providers/Microsoft.Cache/Redis/RedisGeo24695\",\r\n      \"location\": \"East US\",\r\n      \"name\": \"RedisGeo24695\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"redisVersion\": \"4.0.14\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"family\": \"P\",\r\n          \"capacity\": 1\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"instances\": [\r\n          {\r\n            \"sslPort\": 15000,\r\n            \"isMaster\": true,\r\n            \"isPrimary\": true\r\n          },\r\n          {\r\n            \"sslPort\": 15001,\r\n            \"isMaster\": false,\r\n            \"isPrimary\": false\r\n          }\r\n        ],\r\n        \"publicNetworkAccess\": \"Enabled\",\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"7500\",\r\n          \"maxmemory-reserved\": \"200\",\r\n          \"maxfragmentationmemory-reserved\": \"300\",\r\n          \"maxmemory-delta\": \"200\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"RedisGeo24695.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380,\r\n        \"linkedServers\": [\r\n          {\r\n            \"id\": \"/subscriptions/0ee2a145-4d40-44f4-b764-67b40274f1ac/resourceGroups/RedisGeo4764/providers/Microsoft.Cache/Redis/RedisGeo24695/linkedServers/RedisGeo14984\"\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/0ee2a145-4d40-44f4-b764-67b40274f1ac/resourceGroups/RedisSchedules5204/providers/Microsoft.Cache/Redis/RedisSchedules4973\",\r\n      \"location\": \"Central US EUAP\",\r\n      \"name\": \"RedisSchedules4973\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Failed\",\r\n        \"redisVersion\": \"4.0.14\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"family\": \"P\",\r\n          \"capacity\": 1\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"instances\": [\r\n          {\r\n            \"sslPort\": 15000,\r\n            \"isMaster\": false,\r\n            \"isPrimary\": false\r\n          },\r\n          {\r\n            \"sslPort\": 15001,\r\n            \"isMaster\": false,\r\n            \"isPrimary\": false\r\n          }\r\n        ],\r\n        \"publicNetworkAccess\": \"Enabled\",\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"7500\",\r\n          \"maxmemory-reserved\": \"200\",\r\n          \"maxfragmentationmemory-reserved\": \"300\",\r\n          \"maxmemory-delta\": \"200\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"RedisSchedules4973.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380,\r\n        \"linkedServers\": []\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/0ee2a145-4d40-44f4-b764-67b40274f1ac/resourceGroups/RedisBegin7753/providers/Microsoft.Cache/Redis/RedisBegin2569\",\r\n      \"location\": \"Central US EUAP\",\r\n      \"name\": \"RedisBegin2569\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Failed\",\r\n        \"redisVersion\": \"4.0.14\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"family\": \"P\",\r\n          \"capacity\": 1\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"instances\": [\r\n          {\r\n            \"sslPort\": 15000,\r\n            \"isMaster\": false,\r\n            \"isPrimary\": false\r\n          },\r\n          {\r\n            \"sslPort\": 15001,\r\n            \"isMaster\": false,\r\n            \"isPrimary\": false\r\n          },\r\n          {\r\n            \"sslPort\": 15002,\r\n            \"isMaster\": false,\r\n            \"isPrimary\": false\r\n          }\r\n        ],\r\n        \"minimumTlsVersion\": \"1.2\",\r\n        \"publicNetworkAccess\": \"Enabled\",\r\n        \"redisConfiguration\": {\r\n          \"maxmemory-policy\": \"allkeys-lru\",\r\n          \"maxmemory-reserved\": \"210\",\r\n          \"maxclients\": \"7500\",\r\n          \"maxfragmentationmemory-reserved\": \"300\",\r\n          \"maxmemory-delta\": \"210\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"RedisBegin2569.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380,\r\n        \"replicasPerMaster\": 2,\r\n        \"linkedServers\": [],\r\n        \"replicasPerPrimary\": 2\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/3919658b-68ae-4509-8c17-6a2238340ae7/resourceGroups/RedisGetList8057/providers/Microsoft.Cache/Redis/RedisGetList961\",\r\n      \"location\": \"West US\",\r\n      \"name\": \"RedisGetList961\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"redisVersion\": \"6.0\",\r\n        \"sku\": {\r\n          \"name\": \"Basic\",\r\n          \"family\": \"C\",\r\n          \"capacity\": 0\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"instances\": [\r\n          {\r\n            \"sslPort\": 15000,\r\n            \"isMaster\": true,\r\n            \"isPrimary\": true\r\n          }\r\n        ],\r\n        \"publicNetworkAccess\": \"Enabled\",\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"256\",\r\n          \"maxmemory-reserved\": \"30\",\r\n          \"maxfragmentationmemory-reserved\": \"30\",\r\n          \"maxmemory-delta\": \"30\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"RedisGetList961.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380,\r\n        \"linkedServers\": []\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "0ee2a145-4d40-44f4-b764-67b40274f1ac"
+    "SubscriptionId": "3919658b-68ae-4509-8c17-6a2238340ae7"
   }
 }

@@ -12,64 +12,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 {
     internal static class TelemetryItemValidationHelper
     {
-        public static void AssertCounter_As_MetricTelemetry(
-            TelemetryItem telemetryItem,
-            string expectedMetricsName,
-            string expectedMetricsNamespace,
-            double expectedMetricsValue,
-            IDictionary<string, string> expectedMetricsProperties)
-        {
-            Assert.Equal("Metric", telemetryItem.Name); // telemetry type
-            Assert.Equal("MetricData", telemetryItem.Data.BaseType); // telemetry data type
-            Assert.Equal(2, telemetryItem.Data.BaseData.Version); // telemetry api version
-            Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItem.InstrumentationKey);
-
-            Assert.Equal(3, telemetryItem.Tags.Count);
-            Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);
-            Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
-            Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
-
-            var metricsData = (MetricsData)telemetryItem.Data.BaseData;
-            Assert.Equal(expectedMetricsName, metricsData.Metrics[0].Name);
-            Assert.Equal(expectedMetricsNamespace, metricsData.Metrics[0].Namespace);
-            Assert.Equal(expectedMetricsValue, metricsData.Metrics[0].Value);
-
-            foreach (var prop in expectedMetricsProperties)
-            {
-                Assert.Equal(prop.Value, metricsData.Properties[prop.Key]);
-            }
-        }
-
-        public static void AssertHistogram_As_MetricTelemetry(
-            TelemetryItem telemetryItem,
-            string expectedMetricsName,
-            string expectedMetricsNamespace,
-            int expectedMetricsCount,
-            double expectedMetricsValue,
-            IDictionary<string, string> expectedMetricsProperties)
-        {
-            Assert.Equal("Metric", telemetryItem.Name); // telemetry type
-            Assert.Equal("MetricData", telemetryItem.Data.BaseType); // telemetry data type
-            Assert.Equal(2, telemetryItem.Data.BaseData.Version); // telemetry api version
-            Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItem.InstrumentationKey);
-
-            Assert.Equal(3, telemetryItem.Tags.Count);
-            Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);
-            Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
-            Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
-
-            var metricsData = (MetricsData)telemetryItem.Data.BaseData;
-            Assert.Equal(expectedMetricsName, metricsData.Metrics[0].Name);
-            Assert.Equal(expectedMetricsNamespace, metricsData.Metrics[0].Namespace);
-            Assert.Equal(expectedMetricsCount, metricsData.Metrics[0].Count);
-            Assert.Equal(expectedMetricsValue, metricsData.Metrics[0].Value);
-
-            foreach (var prop in expectedMetricsProperties)
-            {
-                Assert.Equal(prop.Value, metricsData.Properties[prop.Key]);
-            }
-        }
-
         public static void AssertLog_As_MessageTelemetry(
             TelemetryItem telemetryItem,
             string expectedSeverityLevel,
@@ -252,6 +194,47 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             Assert.True(telemetryExceptionDetails.HasFullStack);
             Assert.Empty(telemetryExceptionDetails.ParsedStack);
             Assert.False(string.IsNullOrEmpty(telemetryExceptionDetails.Stack));
+        }
+
+        public static void AssertMetricTelemetry(
+            TelemetryItem telemetryItem,
+            string expectedMetricDataPointName,
+            string expectedMetricDataPointNamespace,
+            double expectedMetricDataPointValue,
+            int? expectedMetricDataPointCount = null,
+            double? expectedMetricDataPointMax = null,
+            double? expectedMetricDataPointMin = null,
+            double? expectedMetricDataPointStdDev = null,
+            Dictionary<string, string> expectedMetricsProperties = null)
+        {
+            Assert.Equal("Metric", telemetryItem.Name); // telemetry type
+            Assert.Equal("MetricData", telemetryItem.Data.BaseType); // telemetry data type
+            Assert.Equal(2, telemetryItem.Data.BaseData.Version); // telemetry api version
+            Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItem.InstrumentationKey);
+
+            Assert.Equal(3, telemetryItem.Tags.Count);
+            Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);
+            Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
+            Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
+
+            var metricsData = (MetricsData)telemetryItem.Data.BaseData;
+
+            var metricDataPoint = metricsData.Metrics[0];
+            Assert.Equal(expectedMetricDataPointName, metricDataPoint.Name);
+            Assert.Equal(expectedMetricDataPointNamespace, metricDataPoint.Namespace);
+            Assert.Equal(expectedMetricDataPointCount, metricDataPoint.Count);
+            Assert.Equal(expectedMetricDataPointMax, metricDataPoint.Max);
+            Assert.Equal(expectedMetricDataPointMin, metricDataPoint.Min);
+            Assert.Equal(expectedMetricDataPointStdDev, metricDataPoint.StdDev);
+            Assert.Equal(expectedMetricDataPointValue, metricDataPoint.Value);
+
+            if (expectedMetricsProperties != null)
+            {
+                foreach (var prop in expectedMetricsProperties)
+                {
+                    Assert.Equal(prop.Value, metricsData.Properties[prop.Key]);
+                }
+            }
         }
     }
 }

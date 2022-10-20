@@ -39,6 +39,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Repeatability Headers.
         /// </summary>
-        public RepeatabilityHeaders RepeatabilityHeaders { get; set; } = new RepeatabilityHeaders(Guid.NewGuid(), DateTimeOffset.UtcNow);
+        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
     }
 }

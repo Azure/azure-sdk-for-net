@@ -42,7 +42,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Possible values include: 'Invalid', 'VM', 'FileFolder',
         /// 'AzureSqlDb', 'SQLDB', 'Exchange', 'Sharepoint', 'VMwareVM',
         /// 'SystemState', 'Client', 'GenericDataSource', 'SQLDataBase',
-        /// 'AzureFileShare', 'SAPHanaDatabase', 'SAPAseDatabase'</param>
+        /// 'AzureFileShare', 'SAPHanaDatabase', 'SAPAseDatabase',
+        /// 'SAPHanaDBInstance'</param>
         /// <param name="containerName">Unique name of container</param>
         /// <param name="sourceResourceId">ARM ID of the resource to be backed
         /// up.</param>
@@ -72,6 +73,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// is protected in archive</param>
         /// <param name="policyName">Name of the policy used for
         /// protection</param>
+        /// <param name="softDeleteRetentionPeriod">Soft delete retention
+        /// period in days</param>
         /// <param name="friendlyName">Friendly name of the fileshare
         /// represented by this backup item.</param>
         /// <param name="protectionStatus">Backup status of this backup
@@ -86,8 +89,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="kpisHealths">Health details of different KPIs</param>
         /// <param name="extendedInfo">Additional information with this backup
         /// item.</param>
-        public AzureFileshareProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), IList<string> resourceGuardOperationRequests = default(IList<string>), bool? isArchiveEnabled = default(bool?), string policyName = default(string), string friendlyName = default(string), string protectionStatus = default(string), string protectionState = default(string), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), IDictionary<string, KPIResourceHealthDetails> kpisHealths = default(IDictionary<string, KPIResourceHealthDetails>), AzureFileshareProtectedItemExtendedInfo extendedInfo = default(AzureFileshareProtectedItemExtendedInfo))
-            : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName)
+        public AzureFileshareProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), IList<string> resourceGuardOperationRequests = default(IList<string>), bool? isArchiveEnabled = default(bool?), string policyName = default(string), int? softDeleteRetentionPeriod = default(int?), string friendlyName = default(string), string protectionStatus = default(string), string protectionState = default(string), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), IDictionary<string, KPIResourceHealthDetails> kpisHealths = default(IDictionary<string, KPIResourceHealthDetails>), AzureFileshareProtectedItemExtendedInfo extendedInfo = default(AzureFileshareProtectedItemExtendedInfo))
+            : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriod)
         {
             FriendlyName = friendlyName;
             ProtectionStatus = protectionStatus;

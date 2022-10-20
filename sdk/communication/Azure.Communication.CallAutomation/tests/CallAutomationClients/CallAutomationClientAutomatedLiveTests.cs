@@ -40,10 +40,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 var uniqueId = await ServiceBusWithNewCall(user, target);
 
                 // create call and assert response
-                var createCallOptions = new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"))
-                {
-                    RepeatabilityHeaders = new RepeatabilityHeaders(new Guid("619e45a5-41f2-40bd-a20e-98b13944e146"), new DateTimeOffset(2022, 9, 19, 22, 20, 00, new TimeSpan(0, 0, 0)))
-                };
+                var createCallOptions = new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
                 CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                 callConnectionId = response.CallConnectionProperties.CallConnectionId;
                 Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
@@ -53,10 +50,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 Assert.IsNotNull(incomingCallContext);
 
                 // answer the call
-                var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback))
-                {
-                    RepeatabilityHeaders = new RepeatabilityHeaders(new Guid("1d58fb9f-24a9-4574-86df-6354ce7fa728"), new DateTimeOffset(2022, 9, 19, 22, 20, 00, new TimeSpan(0, 0, 0)))
-                };
+                var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
                 AnswerCallResult answerResponse = await client.AnswerCallAsync(answerCallOptions);
 
                 // wait for callConnected
@@ -70,10 +64,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
 
                 // try hangup
-                var hangUpOptions = new HangUpOptions(true)
-                {
-                    RepeatabilityHeaders = new RepeatabilityHeaders(new Guid("fed6e917-f1df-4e21-b7de-c26d0947124b"), new DateTimeOffset(2022, 9, 19, 22, 20, 00, new TimeSpan(0, 0, 0)))
-                };
+                var hangUpOptions = new HangUpOptions(true);
                 await response.CallConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
                 var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
                 Assert.IsNotNull(disconnectedEvent);
@@ -117,10 +108,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 var uniqueId = await ServiceBusWithNewCall(user, target);
 
                 // create call and assert response
-                var createCallOptions = new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"))
-                {
-                    RepeatabilityHeaders = new RepeatabilityHeaders(new Guid("619e45a5-41f2-40bd-a20e-98b13944e146"), new DateTimeOffset(2022, 9, 19, 22, 20, 00, new TimeSpan(0, 0, 0)))
-                };
+                var createCallOptions = new CreateCallOptions(new CallSource(user),
+                    new CommunicationIdentifier[] { target },
+                    new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
                 CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                 callConnectionId = response.CallConnectionProperties.CallConnectionId;
                 Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
@@ -130,9 +120,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 Assert.IsNotNull(incomingCallContext);
 
                 // answer the call
-                var rejectCallOptions = new RejectCallOptions(incomingCallContext) {
-                    RepeatabilityHeaders = new RepeatabilityHeaders(new Guid("fed6e917-f1df-4e21-b7de-c26d0947124b"), new DateTimeOffset(2022, 9, 19, 22, 20, 00, new TimeSpan(0, 0, 0)))
-                };
+                var rejectCallOptions = new RejectCallOptions(incomingCallContext);
                 Response rejectResponse = await client.RejectCallAsync(rejectCallOptions);
 
                 // check reject response
