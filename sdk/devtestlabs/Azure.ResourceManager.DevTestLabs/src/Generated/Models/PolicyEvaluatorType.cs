@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The evaluator type of the policy (i.e. AllowedValuesPolicy, MaxValuePolicy). </summary>
+    /// <summary>
+    /// The evaluator type of the policy (i.e. AllowedValuesPolicy, MaxValuePolicy).
+    /// Serialized Name: PolicyEvaluatorType
+    /// </summary>
     public readonly partial struct PolicyEvaluatorType : IEquatable<PolicyEvaluatorType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string AllowedValuesPolicyValue = "AllowedValuesPolicy";
         private const string MaxValuePolicyValue = "MaxValuePolicy";
 
-        /// <summary> AllowedValuesPolicy. </summary>
+        /// <summary>
+        /// AllowedValuesPolicy
+        /// Serialized Name: PolicyEvaluatorType.AllowedValuesPolicy
+        /// </summary>
         public static PolicyEvaluatorType AllowedValuesPolicy { get; } = new PolicyEvaluatorType(AllowedValuesPolicyValue);
-        /// <summary> MaxValuePolicy. </summary>
+        /// <summary>
+        /// MaxValuePolicy
+        /// Serialized Name: PolicyEvaluatorType.MaxValuePolicy
+        /// </summary>
         public static PolicyEvaluatorType MaxValuePolicy { get; } = new PolicyEvaluatorType(MaxValuePolicyValue);
         /// <summary> Determines if two <see cref="PolicyEvaluatorType"/> values are the same. </summary>
         public static bool operator ==(PolicyEvaluatorType left, PolicyEvaluatorType right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The artifact source&apos;s type. </summary>
+    /// <summary>
+    /// The artifact source&apos;s type.
+    /// Serialized Name: SourceControlType
+    /// </summary>
     public readonly partial struct SourceControlType : IEquatable<SourceControlType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string GitHubValue = "GitHub";
         private const string StorageAccountValue = "StorageAccount";
 
-        /// <summary> VsoGit. </summary>
+        /// <summary>
+        /// VsoGit
+        /// Serialized Name: SourceControlType.VsoGit
+        /// </summary>
         public static SourceControlType VsoGit { get; } = new SourceControlType(VsoGitValue);
-        /// <summary> GitHub. </summary>
+        /// <summary>
+        /// GitHub
+        /// Serialized Name: SourceControlType.GitHub
+        /// </summary>
         public static SourceControlType GitHub { get; } = new SourceControlType(GitHubValue);
-        /// <summary> StorageAccount. </summary>
+        /// <summary>
+        /// StorageAccount
+        /// Serialized Name: SourceControlType.StorageAccount
+        /// </summary>
         public static SourceControlType StorageAccount { get; } = new SourceControlType(StorageAccountValue);
         /// <summary> Determines if two <see cref="SourceControlType"/> values are the same. </summary>
         public static bool operator ==(SourceControlType left, SourceControlType right) => left.Equals(right);

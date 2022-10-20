@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Properties of a lab&apos;s support banner. </summary>
+    /// <summary>
+    /// Properties of a lab&apos;s support banner
+    /// Serialized Name: LabSupportProperties
+    /// </summary>
     public partial class LabSupportProperties
     {
         /// <summary> Initializes a new instance of LabSupportProperties. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of LabSupportProperties. </summary>
-        /// <param name="enabled"> Is the lab support banner active/enabled at this time?. </param>
-        /// <param name="markdown"> The markdown text (if any) that this lab displays in the UI. If left empty/null, nothing will be shown. </param>
+        /// <param name="enabled">
+        /// Is the lab support banner active/enabled at this time?
+        /// Serialized Name: LabSupportProperties.enabled
+        /// </param>
+        /// <param name="markdown">
+        /// The markdown text (if any) that this lab displays in the UI. If left empty/null, nothing will be shown.
+        /// Serialized Name: LabSupportProperties.markdown
+        /// </param>
         internal LabSupportProperties(EnableStatus? enabled, string markdown)
         {
             Enabled = enabled;
             Markdown = markdown;
         }
 
-        /// <summary> Is the lab support banner active/enabled at this time?. </summary>
+        /// <summary>
+        /// Is the lab support banner active/enabled at this time?
+        /// Serialized Name: LabSupportProperties.enabled
+        /// </summary>
         public EnableStatus? Enabled { get; set; }
-        /// <summary> The markdown text (if any) that this lab displays in the UI. If left empty/null, nothing will be shown. </summary>
+        /// <summary>
+        /// The markdown text (if any) that this lab displays in the UI. If left empty/null, nothing will be shown.
+        /// Serialized Name: LabSupportProperties.markdown
+        /// </summary>
         public string Markdown { get; set; }
     }
 }

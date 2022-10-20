@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ScheduleData> labVmsShutdown = default;
-            Optional<ScheduleData> labVmsStartup = default;
+            Optional<DevTestLabScheduleData> labVmsShutdown = default;
+            Optional<DevTestLabScheduleData> labVmsStartup = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            labVmsShutdown = ScheduleData.DeserializeScheduleData(property0.Value);
+                            labVmsShutdown = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("labVmsStartup"))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            labVmsStartup = ScheduleData.DeserializeScheduleData(property0.Value);
+                            labVmsStartup = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(property0.Value);
                             continue;
                         }
                     }

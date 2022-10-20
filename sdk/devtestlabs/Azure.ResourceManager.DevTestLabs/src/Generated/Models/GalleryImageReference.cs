@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The reference information for an Azure Marketplace image. </summary>
+    /// <summary>
+    /// The reference information for an Azure Marketplace image.
+    /// Serialized Name: GalleryImageReference
+    /// </summary>
     public partial class GalleryImageReference
     {
         /// <summary> Initializes a new instance of GalleryImageReference. </summary>
@@ -16,11 +19,26 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of GalleryImageReference. </summary>
-        /// <param name="offer"> The offer of the gallery image. </param>
-        /// <param name="publisher"> The publisher of the gallery image. </param>
-        /// <param name="sku"> The SKU of the gallery image. </param>
-        /// <param name="osType"> The OS type of the gallery image. </param>
-        /// <param name="version"> The version of the gallery image. </param>
+        /// <param name="offer">
+        /// The offer of the gallery image.
+        /// Serialized Name: GalleryImageReference.offer
+        /// </param>
+        /// <param name="publisher">
+        /// The publisher of the gallery image.
+        /// Serialized Name: GalleryImageReference.publisher
+        /// </param>
+        /// <param name="sku">
+        /// The SKU of the gallery image.
+        /// Serialized Name: GalleryImageReference.sku
+        /// </param>
+        /// <param name="osType">
+        /// The OS type of the gallery image.
+        /// Serialized Name: GalleryImageReference.osType
+        /// </param>
+        /// <param name="version">
+        /// The version of the gallery image.
+        /// Serialized Name: GalleryImageReference.version
+        /// </param>
         internal GalleryImageReference(string offer, string publisher, string sku, string osType, string version)
         {
             Offer = offer;
@@ -30,15 +48,30 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Version = version;
         }
 
-        /// <summary> The offer of the gallery image. </summary>
+        /// <summary>
+        /// The offer of the gallery image.
+        /// Serialized Name: GalleryImageReference.offer
+        /// </summary>
         public string Offer { get; set; }
-        /// <summary> The publisher of the gallery image. </summary>
+        /// <summary>
+        /// The publisher of the gallery image.
+        /// Serialized Name: GalleryImageReference.publisher
+        /// </summary>
         public string Publisher { get; set; }
-        /// <summary> The SKU of the gallery image. </summary>
+        /// <summary>
+        /// The SKU of the gallery image.
+        /// Serialized Name: GalleryImageReference.sku
+        /// </summary>
         public string Sku { get; set; }
-        /// <summary> The OS type of the gallery image. </summary>
+        /// <summary>
+        /// The OS type of the gallery image.
+        /// Serialized Name: GalleryImageReference.osType
+        /// </summary>
         public string OSType { get; set; }
-        /// <summary> The version of the gallery image. </summary>
+        /// <summary>
+        /// The version of the gallery image.
+        /// Serialized Name: GalleryImageReference.version
+        /// </summary>
         public string Version { get; set; }
     }
 }

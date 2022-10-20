@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> An event to be notified for. </summary>
+    /// <summary>
+    /// An event to be notified for.
+    /// Serialized Name: Event
+    /// </summary>
     public partial class Event
     {
         /// <summary> Initializes a new instance of Event. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of Event. </summary>
-        /// <param name="eventName"> The event type for which this notification is enabled (i.e. AutoShutdown, Cost). </param>
+        /// <param name="eventName">
+        /// The event type for which this notification is enabled (i.e. AutoShutdown, Cost)
+        /// Serialized Name: Event.eventName
+        /// </param>
         internal Event(NotificationChannelEventType? eventName)
         {
             EventName = eventName;
         }
 
-        /// <summary> The event type for which this notification is enabled (i.e. AutoShutdown, Cost). </summary>
+        /// <summary>
+        /// The event type for which this notification is enabled (i.e. AutoShutdown, Cost)
+        /// Serialized Name: Event.eventName
+        /// </summary>
         public NotificationChannelEventType? EventName { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The fact name of the policy (e.g. LabVmCount, LabVmSize, MaxVmsAllowedPerLab, etc. </summary>
+    /// <summary>
+    /// The fact name of the policy (e.g. LabVmCount, LabVmSize, MaxVmsAllowedPerLab, etc.
+    /// Serialized Name: PolicyFactName
+    /// </summary>
     public readonly partial struct PolicyFactName : IEquatable<PolicyFactName>
     {
         private readonly string _value;
@@ -33,25 +36,55 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string EnvironmentTemplateValue = "EnvironmentTemplate";
         private const string ScheduleEditPermissionValue = "ScheduleEditPermission";
 
-        /// <summary> UserOwnedLabVmCount. </summary>
+        /// <summary>
+        /// UserOwnedLabVmCount
+        /// Serialized Name: PolicyFactName.UserOwnedLabVmCount
+        /// </summary>
         public static PolicyFactName UserOwnedLabVmCount { get; } = new PolicyFactName(UserOwnedLabVmCountValue);
-        /// <summary> UserOwnedLabPremiumVmCount. </summary>
+        /// <summary>
+        /// UserOwnedLabPremiumVmCount
+        /// Serialized Name: PolicyFactName.UserOwnedLabPremiumVmCount
+        /// </summary>
         public static PolicyFactName UserOwnedLabPremiumVmCount { get; } = new PolicyFactName(UserOwnedLabPremiumVmCountValue);
-        /// <summary> LabVmCount. </summary>
+        /// <summary>
+        /// LabVmCount
+        /// Serialized Name: PolicyFactName.LabVmCount
+        /// </summary>
         public static PolicyFactName LabVmCount { get; } = new PolicyFactName(LabVmCountValue);
-        /// <summary> LabPremiumVmCount. </summary>
+        /// <summary>
+        /// LabPremiumVmCount
+        /// Serialized Name: PolicyFactName.LabPremiumVmCount
+        /// </summary>
         public static PolicyFactName LabPremiumVmCount { get; } = new PolicyFactName(LabPremiumVmCountValue);
-        /// <summary> LabVmSize. </summary>
+        /// <summary>
+        /// LabVmSize
+        /// Serialized Name: PolicyFactName.LabVmSize
+        /// </summary>
         public static PolicyFactName LabVmSize { get; } = new PolicyFactName(LabVmSizeValue);
-        /// <summary> GalleryImage. </summary>
+        /// <summary>
+        /// GalleryImage
+        /// Serialized Name: PolicyFactName.GalleryImage
+        /// </summary>
         public static PolicyFactName GalleryImage { get; } = new PolicyFactName(GalleryImageValue);
-        /// <summary> UserOwnedLabVmCountInSubnet. </summary>
+        /// <summary>
+        /// UserOwnedLabVmCountInSubnet
+        /// Serialized Name: PolicyFactName.UserOwnedLabVmCountInSubnet
+        /// </summary>
         public static PolicyFactName UserOwnedLabVmCountInSubnet { get; } = new PolicyFactName(UserOwnedLabVmCountInSubnetValue);
-        /// <summary> LabTargetCost. </summary>
+        /// <summary>
+        /// LabTargetCost
+        /// Serialized Name: PolicyFactName.LabTargetCost
+        /// </summary>
         public static PolicyFactName LabTargetCost { get; } = new PolicyFactName(LabTargetCostValue);
-        /// <summary> EnvironmentTemplate. </summary>
+        /// <summary>
+        /// EnvironmentTemplate
+        /// Serialized Name: PolicyFactName.EnvironmentTemplate
+        /// </summary>
         public static PolicyFactName EnvironmentTemplate { get; } = new PolicyFactName(EnvironmentTemplateValue);
-        /// <summary> ScheduleEditPermission. </summary>
+        /// <summary>
+        /// ScheduleEditPermission
+        /// Serialized Name: PolicyFactName.ScheduleEditPermission
+        /// </summary>
         public static PolicyFactName ScheduleEditPermission { get; } = new PolicyFactName(ScheduleEditPermissionValue);
         /// <summary> Determines if two <see cref="PolicyFactName"/> values are the same. </summary>
         public static bool operator ==(PolicyFactName left, PolicyFactName right) => left.Equals(right);

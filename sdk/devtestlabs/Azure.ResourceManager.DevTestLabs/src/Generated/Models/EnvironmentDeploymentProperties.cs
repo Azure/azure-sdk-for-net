@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Properties of an environment deployment. </summary>
+    /// <summary>
+    /// Properties of an environment deployment.
+    /// Serialized Name: EnvironmentDeploymentProperties
+    /// </summary>
     public partial class EnvironmentDeploymentProperties
     {
         /// <summary> Initializes a new instance of EnvironmentDeploymentProperties. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of EnvironmentDeploymentProperties. </summary>
-        /// <param name="armTemplateId"> The Azure Resource Manager template&apos;s identifier. </param>
-        /// <param name="parameters"> The parameters of the Azure Resource Manager template. </param>
+        /// <param name="armTemplateId">
+        /// The Azure Resource Manager template&apos;s identifier.
+        /// Serialized Name: EnvironmentDeploymentProperties.armTemplateId
+        /// </param>
+        /// <param name="parameters">
+        /// The parameters of the Azure Resource Manager template.
+        /// Serialized Name: EnvironmentDeploymentProperties.parameters
+        /// </param>
         internal EnvironmentDeploymentProperties(string armTemplateId, IList<ArmTemplateParameterProperties> parameters)
         {
             ArmTemplateId = armTemplateId;
             Parameters = parameters;
         }
 
-        /// <summary> The Azure Resource Manager template&apos;s identifier. </summary>
+        /// <summary>
+        /// The Azure Resource Manager template&apos;s identifier.
+        /// Serialized Name: EnvironmentDeploymentProperties.armTemplateId
+        /// </summary>
         public string ArmTemplateId { get; set; }
-        /// <summary> The parameters of the Azure Resource Manager template. </summary>
+        /// <summary>
+        /// The parameters of the Azure Resource Manager template.
+        /// Serialized Name: EnvironmentDeploymentProperties.parameters
+        /// </summary>
         public IList<ArmTemplateParameterProperties> Parameters { get; }
     }
 }

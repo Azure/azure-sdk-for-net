@@ -11,27 +11,42 @@ using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The response of a list operation. </summary>
+    /// <summary>
+    /// The response of a list operation.
+    /// Serialized Name: NotificationChannelList
+    /// </summary>
     internal partial class NotificationChannelList
     {
         /// <summary> Initializes a new instance of NotificationChannelList. </summary>
         internal NotificationChannelList()
         {
-            Value = new ChangeTrackingList<NotificationChannelData>();
+            Value = new ChangeTrackingList<DevTestLabNotificationChannelData>();
         }
 
         /// <summary> Initializes a new instance of NotificationChannelList. </summary>
-        /// <param name="value"> Results of the list operation. </param>
-        /// <param name="nextLink"> Link for next set of results. </param>
-        internal NotificationChannelList(IReadOnlyList<NotificationChannelData> value, string nextLink)
+        /// <param name="value">
+        /// Results of the list operation.
+        /// Serialized Name: NotificationChannelList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link for next set of results.
+        /// Serialized Name: NotificationChannelList.nextLink
+        /// </param>
+        internal NotificationChannelList(IReadOnlyList<DevTestLabNotificationChannelData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<NotificationChannelData> Value { get; }
-        /// <summary> Link for next set of results. </summary>
+        /// <summary>
+        /// Results of the list operation.
+        /// Serialized Name: NotificationChannelList.value
+        /// </summary>
+        public IReadOnlyList<DevTestLabNotificationChannelData> Value { get; }
+        /// <summary>
+        /// Link for next set of results.
+        /// Serialized Name: NotificationChannelList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

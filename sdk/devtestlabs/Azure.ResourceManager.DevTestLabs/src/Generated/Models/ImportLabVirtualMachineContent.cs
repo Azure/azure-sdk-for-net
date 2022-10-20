@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> This represents the payload required to import a virtual machine from a different lab into the current one. </summary>
+    /// <summary>
+    /// This represents the payload required to import a virtual machine from a different lab into the current one
+    /// Serialized Name: ImportLabVirtualMachineRequest
+    /// </summary>
     public partial class ImportLabVirtualMachineContent
     {
         /// <summary> Initializes a new instance of ImportLabVirtualMachineContent. </summary>
@@ -15,9 +18,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
         }
 
-        /// <summary> The full resource ID of the virtual machine to be imported. </summary>
+        /// <summary>
+        /// The full resource ID of the virtual machine to be imported.
+        /// Serialized Name: ImportLabVirtualMachineRequest.sourceVirtualMachineResourceId
+        /// </summary>
         public string SourceVirtualMachineResourceId { get; set; }
-        /// <summary> The name of the virtual machine in the destination lab. </summary>
+        /// <summary>
+        /// The name of the virtual machine in the destination lab
+        /// Serialized Name: ImportLabVirtualMachineRequest.destinationVirtualMachineName
+        /// </summary>
         public string DestinationVirtualMachineName { get; set; }
     }
 }

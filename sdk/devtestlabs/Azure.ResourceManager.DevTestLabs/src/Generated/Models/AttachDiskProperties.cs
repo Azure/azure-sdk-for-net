@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Properties of the disk to attach. </summary>
+    /// <summary>
+    /// Properties of the disk to attach.
+    /// Serialized Name: AttachDiskProperties
+    /// </summary>
     public partial class AttachDiskProperties
     {
         /// <summary> Initializes a new instance of AttachDiskProperties. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
         }
 
-        /// <summary> The resource ID of the Lab virtual machine to which the disk is attached. </summary>
+        /// <summary>
+        /// The resource ID of the Lab virtual machine to which the disk is attached.
+        /// Serialized Name: AttachDiskProperties.leasedByLabVmId
+        /// </summary>
         public string LeasedByLabVmId { get; set; }
     }
 }

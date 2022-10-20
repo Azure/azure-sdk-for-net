@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Request body for applying artifacts to a virtual machine. </summary>
+    /// <summary>
+    /// Request body for applying artifacts to a virtual machine.
+    /// Serialized Name: ApplyArtifactsRequest
+    /// </summary>
     public partial class ApplyArtifactsContent
     {
         /// <summary> Initializes a new instance of ApplyArtifactsContent. </summary>
@@ -19,7 +22,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Artifacts = new ChangeTrackingList<ArtifactInstallProperties>();
         }
 
-        /// <summary> The list of artifacts to apply. </summary>
+        /// <summary>
+        /// The list of artifacts to apply.
+        /// Serialized Name: ApplyArtifactsRequest.artifacts
+        /// </summary>
         public IList<ArtifactInstallProperties> Artifacts { get; }
     }
 }

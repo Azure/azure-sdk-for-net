@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Properties for plan on a custom image. </summary>
+    /// <summary>
+    /// Properties for plan on a custom image.
+    /// Serialized Name: CustomImagePropertiesFromPlan
+    /// </summary>
     public partial class CustomImagePropertiesFromPlan
     {
         /// <summary> Initializes a new instance of CustomImagePropertiesFromPlan. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of CustomImagePropertiesFromPlan. </summary>
-        /// <param name="id"> The id of the plan, equivalent to name of the plan. </param>
-        /// <param name="publisher"> The publisher for the plan from the marketplace image the custom image is derived from. </param>
-        /// <param name="offer"> The offer for the plan from the marketplace image the custom image is derived from. </param>
+        /// <param name="id">
+        /// The id of the plan, equivalent to name of the plan
+        /// Serialized Name: CustomImagePropertiesFromPlan.id
+        /// </param>
+        /// <param name="publisher">
+        /// The publisher for the plan from the marketplace image the custom image is derived from
+        /// Serialized Name: CustomImagePropertiesFromPlan.publisher
+        /// </param>
+        /// <param name="offer">
+        /// The offer for the plan from the marketplace image the custom image is derived from
+        /// Serialized Name: CustomImagePropertiesFromPlan.offer
+        /// </param>
         internal CustomImagePropertiesFromPlan(string id, string publisher, string offer)
         {
             Id = id;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Offer = offer;
         }
 
-        /// <summary> The id of the plan, equivalent to name of the plan. </summary>
+        /// <summary>
+        /// The id of the plan, equivalent to name of the plan
+        /// Serialized Name: CustomImagePropertiesFromPlan.id
+        /// </summary>
         public string Id { get; set; }
-        /// <summary> The publisher for the plan from the marketplace image the custom image is derived from. </summary>
+        /// <summary>
+        /// The publisher for the plan from the marketplace image the custom image is derived from
+        /// Serialized Name: CustomImagePropertiesFromPlan.publisher
+        /// </summary>
         public string Publisher { get; set; }
-        /// <summary> The offer for the plan from the marketplace image the custom image is derived from. </summary>
+        /// <summary>
+        /// The offer for the plan from the marketplace image the custom image is derived from
+        /// Serialized Name: CustomImagePropertiesFromPlan.offer
+        /// </summary>
         public string Offer { get; set; }
     }
 }

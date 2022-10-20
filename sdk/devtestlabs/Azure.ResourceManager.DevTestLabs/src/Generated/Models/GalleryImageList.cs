@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The response of a list operation. </summary>
+    /// <summary>
+    /// The response of a list operation.
+    /// Serialized Name: GalleryImageList
+    /// </summary>
     internal partial class GalleryImageList
     {
         /// <summary> Initializes a new instance of GalleryImageList. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of GalleryImageList. </summary>
-        /// <param name="value"> Results of the list operation. </param>
-        /// <param name="nextLink"> Link for next set of results. </param>
+        /// <param name="value">
+        /// Results of the list operation.
+        /// Serialized Name: GalleryImageList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link for next set of results.
+        /// Serialized Name: GalleryImageList.nextLink
+        /// </param>
         internal GalleryImageList(IReadOnlyList<GalleryImage> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Results of the list operation. </summary>
+        /// <summary>
+        /// Results of the list operation.
+        /// Serialized Name: GalleryImageList.value
+        /// </summary>
         public IReadOnlyList<GalleryImage> Value { get; }
-        /// <summary> Link for next set of results. </summary>
+        /// <summary>
+        /// Link for next set of results.
+        /// Serialized Name: GalleryImageList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

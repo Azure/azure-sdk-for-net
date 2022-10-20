@@ -11,27 +11,42 @@ using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The response of a list operation. </summary>
+    /// <summary>
+    /// The response of a list operation.
+    /// Serialized Name: LabList
+    /// </summary>
     internal partial class LabList
     {
         /// <summary> Initializes a new instance of LabList. </summary>
         internal LabList()
         {
-            Value = new ChangeTrackingList<LabData>();
+            Value = new ChangeTrackingList<DevTestLabData>();
         }
 
         /// <summary> Initializes a new instance of LabList. </summary>
-        /// <param name="value"> Results of the list operation. </param>
-        /// <param name="nextLink"> Link for next set of results. </param>
-        internal LabList(IReadOnlyList<LabData> value, string nextLink)
+        /// <param name="value">
+        /// Results of the list operation.
+        /// Serialized Name: LabList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link for next set of results.
+        /// Serialized Name: LabList.nextLink
+        /// </param>
+        internal LabList(IReadOnlyList<DevTestLabData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<LabData> Value { get; }
-        /// <summary> Link for next set of results. </summary>
+        /// <summary>
+        /// Results of the list operation.
+        /// Serialized Name: LabList.value
+        /// </summary>
+        public IReadOnlyList<DevTestLabData> Value { get; }
+        /// <summary>
+        /// Link for next set of results.
+        /// Serialized Name: LabList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

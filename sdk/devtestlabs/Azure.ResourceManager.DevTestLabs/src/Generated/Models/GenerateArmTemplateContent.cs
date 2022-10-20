@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Parameters for generating an ARM template for deploying artifacts. </summary>
+    /// <summary>
+    /// Parameters for generating an ARM template for deploying artifacts.
+    /// Serialized Name: GenerateArmTemplateRequest
+    /// </summary>
     public partial class GenerateArmTemplateContent
     {
         /// <summary> Initializes a new instance of GenerateArmTemplateContent. </summary>
@@ -19,13 +22,25 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Parameters = new ChangeTrackingList<ParameterInfo>();
         }
 
-        /// <summary> The resource name of the virtual machine. </summary>
+        /// <summary>
+        /// The resource name of the virtual machine.
+        /// Serialized Name: GenerateArmTemplateRequest.virtualMachineName
+        /// </summary>
         public string VirtualMachineName { get; set; }
-        /// <summary> The parameters of the ARM template. </summary>
+        /// <summary>
+        /// The parameters of the ARM template.
+        /// Serialized Name: GenerateArmTemplateRequest.parameters
+        /// </summary>
         public IList<ParameterInfo> Parameters { get; }
-        /// <summary> The location of the virtual machine. </summary>
+        /// <summary>
+        /// The location of the virtual machine.
+        /// Serialized Name: GenerateArmTemplateRequest.location
+        /// </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary> Options for uploading the files for the artifact. UploadFilesAndGenerateSasTokens is the default value. </summary>
+        /// <summary>
+        /// Options for uploading the files for the artifact. UploadFilesAndGenerateSasTokens is the default value.
+        /// Serialized Name: GenerateArmTemplateRequest.fileUploadOptions
+        /// </summary>
         public FileUploadOption? FileUploadOptions { get; set; }
     }
 }

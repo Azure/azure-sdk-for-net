@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Response body for generating an upload URI. </summary>
+    /// <summary>
+    /// Response body for generating an upload URI.
+    /// Serialized Name: GenerateUploadUriResponse
+    /// </summary>
     public partial class GenerateUploadUriResponse
     {
         /// <summary> Initializes a new instance of GenerateUploadUriResponse. </summary>
@@ -18,13 +21,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of GenerateUploadUriResponse. </summary>
-        /// <param name="uploadUri"> The upload URI for the VHD. </param>
+        /// <param name="uploadUri">
+        /// The upload URI for the VHD.
+        /// Serialized Name: GenerateUploadUriResponse.uploadUri
+        /// </param>
         internal GenerateUploadUriResponse(Uri uploadUri)
         {
             UploadUri = uploadUri;
         }
 
-        /// <summary> The upload URI for the VHD. </summary>
+        /// <summary>
+        /// The upload URI for the VHD.
+        /// Serialized Name: GenerateUploadUriResponse.uploadUri
+        /// </summary>
         public Uri UploadUri { get; }
     }
 }

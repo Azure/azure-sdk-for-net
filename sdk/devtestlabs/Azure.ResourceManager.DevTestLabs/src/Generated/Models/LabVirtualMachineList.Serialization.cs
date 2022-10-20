@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static LabVirtualMachineList DeserializeLabVirtualMachineList(JsonElement element)
         {
-            Optional<IReadOnlyList<LabVirtualMachineData>> value = default;
+            Optional<IReadOnlyList<DevTestLabVmData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LabVirtualMachineData> array = new List<LabVirtualMachineData>();
+                    List<DevTestLabVmData> array = new List<DevTestLabVmData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LabVirtualMachineData.DeserializeLabVirtualMachineData(item));
+                        array.Add(DevTestLabVmData.DeserializeDevTestLabVmData(item));
                     }
                     value = array;
                     continue;

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Caching option for a data disk (i.e. None, ReadOnly, ReadWrite). </summary>
+    /// <summary>
+    /// Caching option for a data disk (i.e. None, ReadOnly, ReadWrite).
+    /// Serialized Name: HostCachingOptions
+    /// </summary>
     public readonly partial struct HostCachingOption : IEquatable<HostCachingOption>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string ReadOnlyValue = "ReadOnly";
         private const string ReadWriteValue = "ReadWrite";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: HostCachingOptions.None
+        /// </summary>
         public static HostCachingOption None { get; } = new HostCachingOption(NoneValue);
-        /// <summary> ReadOnly. </summary>
+        /// <summary>
+        /// ReadOnly
+        /// Serialized Name: HostCachingOptions.ReadOnly
+        /// </summary>
         public static HostCachingOption ReadOnly { get; } = new HostCachingOption(ReadOnlyValue);
-        /// <summary> ReadWrite. </summary>
+        /// <summary>
+        /// ReadWrite
+        /// Serialized Name: HostCachingOptions.ReadWrite
+        /// </summary>
         public static HostCachingOption ReadWrite { get; } = new HostCachingOption(ReadWriteValue);
         /// <summary> Determines if two <see cref="HostCachingOption"/> values are the same. </summary>
         public static bool operator ==(HostCachingOption left, HostCachingOption right) => left.Equals(right);

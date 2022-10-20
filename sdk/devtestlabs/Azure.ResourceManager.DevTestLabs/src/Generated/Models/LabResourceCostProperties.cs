@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The properties of a resource cost item. </summary>
+    /// <summary>
+    /// The properties of a resource cost item.
+    /// Serialized Name: LabResourceCostProperties
+    /// </summary>
     public partial class LabResourceCostProperties
     {
         /// <summary> Initializes a new instance of LabResourceCostProperties. </summary>
@@ -16,15 +19,42 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of LabResourceCostProperties. </summary>
-        /// <param name="resourcename"> The name of the resource. </param>
-        /// <param name="resourceUId"> The unique identifier of the resource. </param>
-        /// <param name="resourceCost"> The cost component of the resource cost item. </param>
-        /// <param name="resourceType"> The logical resource type (ex. virtualmachine, storageaccount). </param>
-        /// <param name="resourceOwner"> The owner of the resource (ex. janedoe@microsoft.com). </param>
-        /// <param name="resourcePricingTier"> The category of the resource (ex. Premium_LRS, Standard_DS1). </param>
-        /// <param name="resourceStatus"> The status of the resource (ex. Active). </param>
-        /// <param name="resourceId"> The ID of the resource. </param>
-        /// <param name="externalResourceId"> The ID of the external resource. </param>
+        /// <param name="resourcename">
+        /// The name of the resource.
+        /// Serialized Name: LabResourceCostProperties.resourcename
+        /// </param>
+        /// <param name="resourceUId">
+        /// The unique identifier of the resource.
+        /// Serialized Name: LabResourceCostProperties.resourceUId
+        /// </param>
+        /// <param name="resourceCost">
+        /// The cost component of the resource cost item.
+        /// Serialized Name: LabResourceCostProperties.resourceCost
+        /// </param>
+        /// <param name="resourceType">
+        /// The logical resource type (ex. virtualmachine, storageaccount)
+        /// Serialized Name: LabResourceCostProperties.resourceType
+        /// </param>
+        /// <param name="resourceOwner">
+        /// The owner of the resource (ex. janedoe@microsoft.com)
+        /// Serialized Name: LabResourceCostProperties.resourceOwner
+        /// </param>
+        /// <param name="resourcePricingTier">
+        /// The category of the resource (ex. Premium_LRS, Standard_DS1)
+        /// Serialized Name: LabResourceCostProperties.resourcePricingTier
+        /// </param>
+        /// <param name="resourceStatus">
+        /// The status of the resource (ex. Active)
+        /// Serialized Name: LabResourceCostProperties.resourceStatus
+        /// </param>
+        /// <param name="resourceId">
+        /// The ID of the resource
+        /// Serialized Name: LabResourceCostProperties.resourceId
+        /// </param>
+        /// <param name="externalResourceId">
+        /// The ID of the external resource
+        /// Serialized Name: LabResourceCostProperties.externalResourceId
+        /// </param>
         internal LabResourceCostProperties(string resourcename, string resourceUId, double? resourceCost, string resourceType, string resourceOwner, string resourcePricingTier, string resourceStatus, string resourceId, string externalResourceId)
         {
             Resourcename = resourcename;
@@ -38,23 +68,50 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             ExternalResourceId = externalResourceId;
         }
 
-        /// <summary> The name of the resource. </summary>
+        /// <summary>
+        /// The name of the resource.
+        /// Serialized Name: LabResourceCostProperties.resourcename
+        /// </summary>
         public string Resourcename { get; }
-        /// <summary> The unique identifier of the resource. </summary>
+        /// <summary>
+        /// The unique identifier of the resource.
+        /// Serialized Name: LabResourceCostProperties.resourceUId
+        /// </summary>
         public string ResourceUId { get; }
-        /// <summary> The cost component of the resource cost item. </summary>
+        /// <summary>
+        /// The cost component of the resource cost item.
+        /// Serialized Name: LabResourceCostProperties.resourceCost
+        /// </summary>
         public double? ResourceCost { get; }
-        /// <summary> The logical resource type (ex. virtualmachine, storageaccount). </summary>
+        /// <summary>
+        /// The logical resource type (ex. virtualmachine, storageaccount)
+        /// Serialized Name: LabResourceCostProperties.resourceType
+        /// </summary>
         public string ResourceType { get; }
-        /// <summary> The owner of the resource (ex. janedoe@microsoft.com). </summary>
+        /// <summary>
+        /// The owner of the resource (ex. janedoe@microsoft.com)
+        /// Serialized Name: LabResourceCostProperties.resourceOwner
+        /// </summary>
         public string ResourceOwner { get; }
-        /// <summary> The category of the resource (ex. Premium_LRS, Standard_DS1). </summary>
+        /// <summary>
+        /// The category of the resource (ex. Premium_LRS, Standard_DS1)
+        /// Serialized Name: LabResourceCostProperties.resourcePricingTier
+        /// </summary>
         public string ResourcePricingTier { get; }
-        /// <summary> The status of the resource (ex. Active). </summary>
+        /// <summary>
+        /// The status of the resource (ex. Active)
+        /// Serialized Name: LabResourceCostProperties.resourceStatus
+        /// </summary>
         public string ResourceStatus { get; }
-        /// <summary> The ID of the resource. </summary>
+        /// <summary>
+        /// The ID of the resource
+        /// Serialized Name: LabResourceCostProperties.resourceId
+        /// </summary>
         public string ResourceId { get; }
-        /// <summary> The ID of the external resource. </summary>
+        /// <summary>
+        /// The ID of the external resource
+        /// Serialized Name: LabResourceCostProperties.externalResourceId
+        /// </summary>
         public string ExternalResourceId { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Subnet information. </summary>
+    /// <summary>
+    /// Subnet information.
+    /// Serialized Name: Subnet
+    /// </summary>
     public partial class Subnet
     {
         /// <summary> Initializes a new instance of Subnet. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of Subnet. </summary>
-        /// <param name="resourceId"> The resource ID of the subnet. </param>
-        /// <param name="labSubnetName"> The name of the subnet as seen in the lab. </param>
-        /// <param name="allowPublicIP"> The permission policy of the subnet for allowing public IP addresses (i.e. Allow, Deny)). </param>
+        /// <param name="resourceId">
+        /// The resource ID of the subnet.
+        /// Serialized Name: Subnet.resourceId
+        /// </param>
+        /// <param name="labSubnetName">
+        /// The name of the subnet as seen in the lab.
+        /// Serialized Name: Subnet.labSubnetName
+        /// </param>
+        /// <param name="allowPublicIP">
+        /// The permission policy of the subnet for allowing public IP addresses (i.e. Allow, Deny)).
+        /// Serialized Name: Subnet.allowPublicIp
+        /// </param>
         internal Subnet(string resourceId, string labSubnetName, UsagePermissionType? allowPublicIP)
         {
             ResourceId = resourceId;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             AllowPublicIP = allowPublicIP;
         }
 
-        /// <summary> The resource ID of the subnet. </summary>
+        /// <summary>
+        /// The resource ID of the subnet.
+        /// Serialized Name: Subnet.resourceId
+        /// </summary>
         public string ResourceId { get; set; }
-        /// <summary> The name of the subnet as seen in the lab. </summary>
+        /// <summary>
+        /// The name of the subnet as seen in the lab.
+        /// Serialized Name: Subnet.labSubnetName
+        /// </summary>
         public string LabSubnetName { get; set; }
-        /// <summary> The permission policy of the subnet for allowing public IP addresses (i.e. Allow, Deny)). </summary>
+        /// <summary>
+        /// The permission policy of the subnet for allowing public IP addresses (i.e. Allow, Deny)).
+        /// Serialized Name: Subnet.allowPublicIp
+        /// </summary>
         public UsagePermissionType? AllowPublicIP { get; set; }
     }
 }

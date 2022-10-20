@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduleData>> GetAsync(string subscriptionId, string resourceGroupName, string name, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DevTestLabScheduleData>> GetAsync(string subscriptionId, string resourceGroupName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -269,13 +269,13 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        ScheduleData value = default;
+                        DevTestLabScheduleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScheduleData.DeserializeScheduleData(document.RootElement);
+                        value = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ScheduleData)null, message.Response);
+                    return Response.FromValue((DevTestLabScheduleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduleData> Get(string subscriptionId, string resourceGroupName, string name, string expand = null, CancellationToken cancellationToken = default)
+        public Response<DevTestLabScheduleData> Get(string subscriptionId, string resourceGroupName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -301,19 +301,19 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        ScheduleData value = default;
+                        DevTestLabScheduleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScheduleData.DeserializeScheduleData(document.RootElement);
+                        value = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ScheduleData)null, message.Response);
+                    return Response.FromValue((DevTestLabScheduleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string name, ScheduleData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string name, DevTestLabScheduleData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string name, ScheduleData data, CancellationToken cancellationToken = default)
+        public async Task<Response<DevTestLabScheduleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string name, DevTestLabScheduleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -359,9 +359,9 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                 case 201:
                     {
-                        ScheduleData value = default;
+                        DevTestLabScheduleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScheduleData.DeserializeScheduleData(document.RootElement);
+                        value = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string name, ScheduleData data, CancellationToken cancellationToken = default)
+        public Response<DevTestLabScheduleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string name, DevTestLabScheduleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -391,9 +391,9 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                 case 201:
                     {
-                        ScheduleData value = default;
+                        DevTestLabScheduleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScheduleData.DeserializeScheduleData(document.RootElement);
+                        value = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="schedule"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduleData>> UpdateAsync(string subscriptionId, string resourceGroupName, string name, ScheduleFragment schedule, CancellationToken cancellationToken = default)
+        public async Task<Response<DevTestLabScheduleData>> UpdateAsync(string subscriptionId, string resourceGroupName, string name, ScheduleFragment schedule, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -516,9 +516,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        ScheduleData value = default;
+                        DevTestLabScheduleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScheduleData.DeserializeScheduleData(document.RootElement);
+                        value = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="schedule"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduleData> Update(string subscriptionId, string resourceGroupName, string name, ScheduleFragment schedule, CancellationToken cancellationToken = default)
+        public Response<DevTestLabScheduleData> Update(string subscriptionId, string resourceGroupName, string name, ScheduleFragment schedule, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -547,9 +547,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        ScheduleData value = default;
+                        DevTestLabScheduleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScheduleData.DeserializeScheduleData(document.RootElement);
+                        value = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

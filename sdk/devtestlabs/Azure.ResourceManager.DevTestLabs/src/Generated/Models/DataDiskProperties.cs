@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Request body for adding a new or existing data disk to a virtual machine. </summary>
+    /// <summary>
+    /// Request body for adding a new or existing data disk to a virtual machine.
+    /// Serialized Name: DataDiskProperties
+    /// </summary>
     public partial class DataDiskProperties
     {
         /// <summary> Initializes a new instance of DataDiskProperties. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DataDiskProperties. </summary>
-        /// <param name="attachNewDataDiskOptions"> Specifies options to attach a new disk to the virtual machine. </param>
-        /// <param name="existingLabDiskId"> Specifies the existing lab disk id to attach to virtual machine. </param>
-        /// <param name="hostCaching"> Caching option for a data disk (i.e. None, ReadOnly, ReadWrite). </param>
+        /// <param name="attachNewDataDiskOptions">
+        /// Specifies options to attach a new disk to the virtual machine.
+        /// Serialized Name: DataDiskProperties.attachNewDataDiskOptions
+        /// </param>
+        /// <param name="existingLabDiskId">
+        /// Specifies the existing lab disk id to attach to virtual machine.
+        /// Serialized Name: DataDiskProperties.existingLabDiskId
+        /// </param>
+        /// <param name="hostCaching">
+        /// Caching option for a data disk (i.e. None, ReadOnly, ReadWrite).
+        /// Serialized Name: DataDiskProperties.hostCaching
+        /// </param>
         internal DataDiskProperties(AttachNewDataDiskOptions attachNewDataDiskOptions, string existingLabDiskId, HostCachingOption? hostCaching)
         {
             AttachNewDataDiskOptions = attachNewDataDiskOptions;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             HostCaching = hostCaching;
         }
 
-        /// <summary> Specifies options to attach a new disk to the virtual machine. </summary>
+        /// <summary>
+        /// Specifies options to attach a new disk to the virtual machine.
+        /// Serialized Name: DataDiskProperties.attachNewDataDiskOptions
+        /// </summary>
         public AttachNewDataDiskOptions AttachNewDataDiskOptions { get; set; }
-        /// <summary> Specifies the existing lab disk id to attach to virtual machine. </summary>
+        /// <summary>
+        /// Specifies the existing lab disk id to attach to virtual machine.
+        /// Serialized Name: DataDiskProperties.existingLabDiskId
+        /// </summary>
         public string ExistingLabDiskId { get; set; }
-        /// <summary> Caching option for a data disk (i.e. None, ReadOnly, ReadWrite). </summary>
+        /// <summary>
+        /// Caching option for a data disk (i.e. None, ReadOnly, ReadWrite).
+        /// Serialized Name: DataDiskProperties.hostCaching
+        /// </summary>
         public HostCachingOption? HostCaching { get; set; }
     }
 }

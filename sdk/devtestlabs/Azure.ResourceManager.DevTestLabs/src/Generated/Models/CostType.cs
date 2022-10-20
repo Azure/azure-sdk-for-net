@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The type of the cost. </summary>
+    /// <summary>
+    /// The type of the cost.
+    /// Serialized Name: CostType
+    /// </summary>
     public readonly partial struct CostType : IEquatable<CostType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string ReportedValue = "Reported";
         private const string ProjectedValue = "Projected";
 
-        /// <summary> Unavailable. </summary>
+        /// <summary>
+        /// Unavailable
+        /// Serialized Name: CostType.Unavailable
+        /// </summary>
         public static CostType Unavailable { get; } = new CostType(UnavailableValue);
-        /// <summary> Reported. </summary>
+        /// <summary>
+        /// Reported
+        /// Serialized Name: CostType.Reported
+        /// </summary>
         public static CostType Reported { get; } = new CostType(ReportedValue);
-        /// <summary> Projected. </summary>
+        /// <summary>
+        /// Projected
+        /// Serialized Name: CostType.Projected
+        /// </summary>
         public static CostType Projected { get; } = new CostType(ProjectedValue);
         /// <summary> Determines if two <see cref="CostType"/> values are the same. </summary>
         public static bool operator ==(CostType left, CostType right) => left.Equals(right);

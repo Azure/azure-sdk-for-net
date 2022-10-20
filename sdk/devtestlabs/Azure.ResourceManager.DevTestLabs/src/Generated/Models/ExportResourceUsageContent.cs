@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The parameters of the export operation. </summary>
+    /// <summary>
+    /// The parameters of the export operation.
+    /// Serialized Name: ExportResourceUsageParameters
+    /// </summary>
     public partial class ExportResourceUsageContent
     {
         /// <summary> Initializes a new instance of ExportResourceUsageContent. </summary>
@@ -17,9 +20,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
         }
 
-        /// <summary> The blob storage absolute sas uri with write permission to the container which the usage data needs to be uploaded to. </summary>
+        /// <summary>
+        /// The blob storage absolute sas uri with write permission to the container which the usage data needs to be uploaded to.
+        /// Serialized Name: ExportResourceUsageParameters.blobStorageAbsoluteSasUri
+        /// </summary>
         public Uri BlobStorageAbsoluteSasUri { get; set; }
-        /// <summary> The start time of the usage. If not provided, usage will be reported since the beginning of data collection. </summary>
+        /// <summary>
+        /// The start time of the usage. If not provided, usage will be reported since the beginning of data collection.
+        /// Serialized Name: ExportResourceUsageParameters.usageStartDate
+        /// </summary>
         public DateTimeOffset? UsageStartOn { get; set; }
     }
 }

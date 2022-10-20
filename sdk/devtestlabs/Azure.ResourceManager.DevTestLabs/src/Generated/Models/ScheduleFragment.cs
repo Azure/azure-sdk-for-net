@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> A schedule. </summary>
+    /// <summary>
+    /// A schedule.
+    /// Serialized Name: ScheduleFragment
+    /// </summary>
     public partial class ScheduleFragment : UpdateResource
     {
         /// <summary> Initializes a new instance of ScheduleFragment. </summary>

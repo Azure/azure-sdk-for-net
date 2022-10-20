@@ -11,27 +11,42 @@ using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The response of a list operation. </summary>
+    /// <summary>
+    /// The response of a list operation.
+    /// Serialized Name: ScheduleList
+    /// </summary>
     internal partial class ScheduleList
     {
         /// <summary> Initializes a new instance of ScheduleList. </summary>
         internal ScheduleList()
         {
-            Value = new ChangeTrackingList<ScheduleData>();
+            Value = new ChangeTrackingList<DevTestLabScheduleData>();
         }
 
         /// <summary> Initializes a new instance of ScheduleList. </summary>
-        /// <param name="value"> Results of the list operation. </param>
-        /// <param name="nextLink"> Link for next set of results. </param>
-        internal ScheduleList(IReadOnlyList<ScheduleData> value, string nextLink)
+        /// <param name="value">
+        /// Results of the list operation.
+        /// Serialized Name: ScheduleList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link for next set of results.
+        /// Serialized Name: ScheduleList.nextLink
+        /// </param>
+        internal ScheduleList(IReadOnlyList<DevTestLabScheduleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<ScheduleData> Value { get; }
-        /// <summary> Link for next set of results. </summary>
+        /// <summary>
+        /// Results of the list operation.
+        /// Serialized Name: ScheduleList.value
+        /// </summary>
+        public IReadOnlyList<DevTestLabScheduleData> Value { get; }
+        /// <summary>
+        /// Link for next set of results.
+        /// Serialized Name: ScheduleList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

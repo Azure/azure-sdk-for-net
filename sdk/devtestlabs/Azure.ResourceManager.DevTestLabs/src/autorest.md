@@ -15,6 +15,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+mgmt-debug:
+  show-serialized-names: true
+
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/costs/{name}
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}
@@ -49,4 +52,32 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}: DevTestLabSchedule
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}: DevTestLabGlobalSchedule
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}: DevTestLabServiceFabricSchedule
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}: DevTestLabVmSchedule
+
+rename-mapping:
+  ArmTemplate: DevTestLabArmTemplate
+  Artifact: DevTestLabArtifact
+  ArtifactSource: DevTestLabArtifactSource
+  CustomImage: DevTestLabCustomImage
+  Disk: DevTestLabDisk
+  DtlEnvironment: DevTestLabEnvironment
+  Formula: DevTestLabFormula
+  Lab: DevTestLab
+  LabCost: DevTestLabCost
+  Schedule: DevTestLabSchedule
+  LabVirtualMachine: DevTestLabVm
+  LabVirtualMachine.properties.computeId: -|arm-id
+  LabVirtualMachine.properties.labVirtualNetworkId: -|arm-id
+  LabVirtualMachine.properties.environmentId: -|arm-id
+  NotificationChannel: DevTestLabNotificationChannel
+  Policy: DevTestLabPolicy
+  Secret: DevTestLabSecret
+  ServiceFabric: DevTestLabServiceFabric
+  ServiceRunner: DevTestLabServiceRunner
+  User: DevTestLabUser
+  VirtualNetwork: DevTestLabVirtualNetwork
 ```

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Information about a VM from which a formula is to be created. </summary>
+    /// <summary>
+    /// Information about a VM from which a formula is to be created.
+    /// Serialized Name: FormulaPropertiesFromVm
+    /// </summary>
     internal partial class FormulaPropertiesFromVm
     {
         /// <summary> Initializes a new instance of FormulaPropertiesFromVm. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of FormulaPropertiesFromVm. </summary>
-        /// <param name="labVmId"> The identifier of the VM from which a formula is to be created. </param>
+        /// <param name="labVmId">
+        /// The identifier of the VM from which a formula is to be created.
+        /// Serialized Name: FormulaPropertiesFromVm.labVmId
+        /// </param>
         internal FormulaPropertiesFromVm(string labVmId)
         {
             LabVmId = labVmId;
         }
 
-        /// <summary> The identifier of the VM from which a formula is to be created. </summary>
+        /// <summary>
+        /// The identifier of the VM from which a formula is to be created.
+        /// Serialized Name: FormulaPropertiesFromVm.labVmId
+        /// </summary>
         public string LabVmId { get; set; }
     }
 }

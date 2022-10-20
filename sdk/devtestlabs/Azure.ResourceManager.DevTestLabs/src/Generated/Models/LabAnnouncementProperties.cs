@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Properties of a lab&apos;s announcement banner. </summary>
+    /// <summary>
+    /// Properties of a lab&apos;s announcement banner
+    /// Serialized Name: LabAnnouncementProperties
+    /// </summary>
     public partial class LabAnnouncementProperties
     {
         /// <summary> Initializes a new instance of LabAnnouncementProperties. </summary>
@@ -18,13 +21,34 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of LabAnnouncementProperties. </summary>
-        /// <param name="title"> The plain text title for the lab announcement. </param>
-        /// <param name="markdown"> The markdown text (if any) that this lab displays in the UI. If left empty/null, nothing will be shown. </param>
-        /// <param name="enabled"> Is the lab announcement active/enabled at this time?. </param>
-        /// <param name="expireOn"> The time at which the announcement expires (null for never). </param>
-        /// <param name="expired"> Has this announcement expired?. </param>
-        /// <param name="provisioningState"> The provisioning status of the resource. </param>
-        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
+        /// <param name="title">
+        /// The plain text title for the lab announcement
+        /// Serialized Name: LabAnnouncementProperties.title
+        /// </param>
+        /// <param name="markdown">
+        /// The markdown text (if any) that this lab displays in the UI. If left empty/null, nothing will be shown.
+        /// Serialized Name: LabAnnouncementProperties.markdown
+        /// </param>
+        /// <param name="enabled">
+        /// Is the lab announcement active/enabled at this time?
+        /// Serialized Name: LabAnnouncementProperties.enabled
+        /// </param>
+        /// <param name="expireOn">
+        /// The time at which the announcement expires (null for never)
+        /// Serialized Name: LabAnnouncementProperties.expirationDate
+        /// </param>
+        /// <param name="expired">
+        /// Has this announcement expired?
+        /// Serialized Name: LabAnnouncementProperties.expired
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioning status of the resource.
+        /// Serialized Name: LabAnnouncementProperties.provisioningState
+        /// </param>
+        /// <param name="uniqueIdentifier">
+        /// The unique immutable identifier of a resource (Guid).
+        /// Serialized Name: LabAnnouncementProperties.uniqueIdentifier
+        /// </param>
         internal LabAnnouncementProperties(string title, string markdown, EnableStatus? enabled, DateTimeOffset? expireOn, bool? expired, string provisioningState, string uniqueIdentifier)
         {
             Title = title;
@@ -36,19 +60,40 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             UniqueIdentifier = uniqueIdentifier;
         }
 
-        /// <summary> The plain text title for the lab announcement. </summary>
+        /// <summary>
+        /// The plain text title for the lab announcement
+        /// Serialized Name: LabAnnouncementProperties.title
+        /// </summary>
         public string Title { get; set; }
-        /// <summary> The markdown text (if any) that this lab displays in the UI. If left empty/null, nothing will be shown. </summary>
+        /// <summary>
+        /// The markdown text (if any) that this lab displays in the UI. If left empty/null, nothing will be shown.
+        /// Serialized Name: LabAnnouncementProperties.markdown
+        /// </summary>
         public string Markdown { get; set; }
-        /// <summary> Is the lab announcement active/enabled at this time?. </summary>
+        /// <summary>
+        /// Is the lab announcement active/enabled at this time?
+        /// Serialized Name: LabAnnouncementProperties.enabled
+        /// </summary>
         public EnableStatus? Enabled { get; set; }
-        /// <summary> The time at which the announcement expires (null for never). </summary>
+        /// <summary>
+        /// The time at which the announcement expires (null for never)
+        /// Serialized Name: LabAnnouncementProperties.expirationDate
+        /// </summary>
         public DateTimeOffset? ExpireOn { get; set; }
-        /// <summary> Has this announcement expired?. </summary>
+        /// <summary>
+        /// Has this announcement expired?
+        /// Serialized Name: LabAnnouncementProperties.expired
+        /// </summary>
         public bool? Expired { get; set; }
-        /// <summary> The provisioning status of the resource. </summary>
+        /// <summary>
+        /// The provisioning status of the resource.
+        /// Serialized Name: LabAnnouncementProperties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; }
-        /// <summary> The unique immutable identifier of a resource (Guid). </summary>
+        /// <summary>
+        /// The unique immutable identifier of a resource (Guid).
+        /// Serialized Name: LabAnnouncementProperties.uniqueIdentifier
+        /// </summary>
         public string UniqueIdentifier { get; }
     }
 }

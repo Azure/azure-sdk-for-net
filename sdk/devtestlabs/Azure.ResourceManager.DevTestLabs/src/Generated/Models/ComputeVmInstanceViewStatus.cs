@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Status information about a virtual machine. </summary>
+    /// <summary>
+    /// Status information about a virtual machine.
+    /// Serialized Name: ComputeVmInstanceViewStatus
+    /// </summary>
     public partial class ComputeVmInstanceViewStatus
     {
         /// <summary> Initializes a new instance of ComputeVmInstanceViewStatus. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of ComputeVmInstanceViewStatus. </summary>
-        /// <param name="code"> Gets the status Code. </param>
-        /// <param name="displayStatus"> Gets the short localizable label for the status. </param>
-        /// <param name="message"> Gets the message associated with the status. </param>
+        /// <param name="code">
+        /// Gets the status Code.
+        /// Serialized Name: ComputeVmInstanceViewStatus.code
+        /// </param>
+        /// <param name="displayStatus">
+        /// Gets the short localizable label for the status.
+        /// Serialized Name: ComputeVmInstanceViewStatus.displayStatus
+        /// </param>
+        /// <param name="message">
+        /// Gets the message associated with the status.
+        /// Serialized Name: ComputeVmInstanceViewStatus.message
+        /// </param>
         internal ComputeVmInstanceViewStatus(string code, string displayStatus, string message)
         {
             Code = code;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Message = message;
         }
 
-        /// <summary> Gets the status Code. </summary>
+        /// <summary>
+        /// Gets the status Code.
+        /// Serialized Name: ComputeVmInstanceViewStatus.code
+        /// </summary>
         public string Code { get; }
-        /// <summary> Gets the short localizable label for the status. </summary>
+        /// <summary>
+        /// Gets the short localizable label for the status.
+        /// Serialized Name: ComputeVmInstanceViewStatus.displayStatus
+        /// </summary>
         public string DisplayStatus { get; }
-        /// <summary> Gets the message associated with the status. </summary>
+        /// <summary>
+        /// Gets the message associated with the status.
+        /// Serialized Name: ComputeVmInstanceViewStatus.message
+        /// </summary>
         public string Message { get; }
     }
 }

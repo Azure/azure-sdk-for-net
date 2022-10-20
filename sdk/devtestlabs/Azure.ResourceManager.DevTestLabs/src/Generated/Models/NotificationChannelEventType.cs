@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The event type for which this notification is enabled (i.e. AutoShutdown, Cost). </summary>
+    /// <summary>
+    /// The event type for which this notification is enabled (i.e. AutoShutdown, Cost)
+    /// Serialized Name: NotificationChannelEventType
+    /// </summary>
     public readonly partial struct NotificationChannelEventType : IEquatable<NotificationChannelEventType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string AutoShutdownValue = "AutoShutdown";
         private const string CostValue = "Cost";
 
-        /// <summary> AutoShutdown. </summary>
+        /// <summary>
+        /// AutoShutdown
+        /// Serialized Name: NotificationChannelEventType.AutoShutdown
+        /// </summary>
         public static NotificationChannelEventType AutoShutdown { get; } = new NotificationChannelEventType(AutoShutdownValue);
-        /// <summary> Cost. </summary>
+        /// <summary>
+        /// Cost
+        /// Serialized Name: NotificationChannelEventType.Cost
+        /// </summary>
         public static NotificationChannelEventType Cost { get; } = new NotificationChannelEventType(CostValue);
         /// <summary> Determines if two <see cref="NotificationChannelEventType"/> values are the same. </summary>
         public static bool operator ==(NotificationChannelEventType left, NotificationChannelEventType right) => left.Equals(right);

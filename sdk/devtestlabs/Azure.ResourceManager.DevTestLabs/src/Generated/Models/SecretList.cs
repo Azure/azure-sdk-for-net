@@ -11,27 +11,42 @@ using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The response of a list operation. </summary>
+    /// <summary>
+    /// The response of a list operation.
+    /// Serialized Name: SecretList
+    /// </summary>
     internal partial class SecretList
     {
         /// <summary> Initializes a new instance of SecretList. </summary>
         internal SecretList()
         {
-            Value = new ChangeTrackingList<SecretData>();
+            Value = new ChangeTrackingList<DevTestLabSecretData>();
         }
 
         /// <summary> Initializes a new instance of SecretList. </summary>
-        /// <param name="value"> Results of the list operation. </param>
-        /// <param name="nextLink"> Link for next set of results. </param>
-        internal SecretList(IReadOnlyList<SecretData> value, string nextLink)
+        /// <param name="value">
+        /// Results of the list operation.
+        /// Serialized Name: SecretList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link for next set of results.
+        /// Serialized Name: SecretList.nextLink
+        /// </param>
+        internal SecretList(IReadOnlyList<DevTestLabSecretData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<SecretData> Value { get; }
-        /// <summary> Link for next set of results. </summary>
+        /// <summary>
+        /// Results of the list operation.
+        /// Serialized Name: SecretList.value
+        /// </summary>
+        public IReadOnlyList<DevTestLabSecretData> Value { get; }
+        /// <summary>
+        /// Link for next set of results.
+        /// Serialized Name: SecretList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

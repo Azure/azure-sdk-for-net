@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Tells source of creation of lab virtual machine. Output property only. </summary>
+    /// <summary>
+    /// Tells source of creation of lab virtual machine. Output property only.
+    /// Serialized Name: VirtualMachineCreationSource
+    /// </summary>
     public readonly partial struct VirtualMachineCreationSource : IEquatable<VirtualMachineCreationSource>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string FromGalleryImageValue = "FromGalleryImage";
         private const string FromSharedGalleryImageValue = "FromSharedGalleryImage";
 
-        /// <summary> FromCustomImage. </summary>
+        /// <summary>
+        /// FromCustomImage
+        /// Serialized Name: VirtualMachineCreationSource.FromCustomImage
+        /// </summary>
         public static VirtualMachineCreationSource FromCustomImage { get; } = new VirtualMachineCreationSource(FromCustomImageValue);
-        /// <summary> FromGalleryImage. </summary>
+        /// <summary>
+        /// FromGalleryImage
+        /// Serialized Name: VirtualMachineCreationSource.FromGalleryImage
+        /// </summary>
         public static VirtualMachineCreationSource FromGalleryImage { get; } = new VirtualMachineCreationSource(FromGalleryImageValue);
-        /// <summary> FromSharedGalleryImage. </summary>
+        /// <summary>
+        /// FromSharedGalleryImage
+        /// Serialized Name: VirtualMachineCreationSource.FromSharedGalleryImage
+        /// </summary>
         public static VirtualMachineCreationSource FromSharedGalleryImage { get; } = new VirtualMachineCreationSource(FromSharedGalleryImageValue);
         /// <summary> Determines if two <see cref="VirtualMachineCreationSource"/> values are the same. </summary>
         public static bool operator ==(VirtualMachineCreationSource left, VirtualMachineCreationSource right) => left.Equals(right);

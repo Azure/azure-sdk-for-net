@@ -11,27 +11,42 @@ using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The response of a list operation. </summary>
+    /// <summary>
+    /// The response of a list operation.
+    /// Serialized Name: LabVirtualMachineList
+    /// </summary>
     internal partial class LabVirtualMachineList
     {
         /// <summary> Initializes a new instance of LabVirtualMachineList. </summary>
         internal LabVirtualMachineList()
         {
-            Value = new ChangeTrackingList<LabVirtualMachineData>();
+            Value = new ChangeTrackingList<DevTestLabVmData>();
         }
 
         /// <summary> Initializes a new instance of LabVirtualMachineList. </summary>
-        /// <param name="value"> Results of the list operation. </param>
-        /// <param name="nextLink"> Link for next set of results. </param>
-        internal LabVirtualMachineList(IReadOnlyList<LabVirtualMachineData> value, string nextLink)
+        /// <param name="value">
+        /// Results of the list operation.
+        /// Serialized Name: LabVirtualMachineList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link for next set of results.
+        /// Serialized Name: LabVirtualMachineList.nextLink
+        /// </param>
+        internal LabVirtualMachineList(IReadOnlyList<DevTestLabVmData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<LabVirtualMachineData> Value { get; }
-        /// <summary> Link for next set of results. </summary>
+        /// <summary>
+        /// Results of the list operation.
+        /// Serialized Name: LabVirtualMachineList.value
+        /// </summary>
+        public IReadOnlyList<DevTestLabVmData> Value { get; }
+        /// <summary>
+        /// Link for next set of results.
+        /// Serialized Name: LabVirtualMachineList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

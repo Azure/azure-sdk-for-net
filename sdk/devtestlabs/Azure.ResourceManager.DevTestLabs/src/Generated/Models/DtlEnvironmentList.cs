@@ -11,27 +11,42 @@ using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The response of a list operation. </summary>
+    /// <summary>
+    /// The response of a list operation.
+    /// Serialized Name: DtlEnvironmentList
+    /// </summary>
     internal partial class DtlEnvironmentList
     {
         /// <summary> Initializes a new instance of DtlEnvironmentList. </summary>
         internal DtlEnvironmentList()
         {
-            Value = new ChangeTrackingList<DtlEnvironmentData>();
+            Value = new ChangeTrackingList<DevTestLabEnvironmentData>();
         }
 
         /// <summary> Initializes a new instance of DtlEnvironmentList. </summary>
-        /// <param name="value"> Results of the list operation. </param>
-        /// <param name="nextLink"> Link for next set of results. </param>
-        internal DtlEnvironmentList(IReadOnlyList<DtlEnvironmentData> value, string nextLink)
+        /// <param name="value">
+        /// Results of the list operation.
+        /// Serialized Name: DtlEnvironmentList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link for next set of results.
+        /// Serialized Name: DtlEnvironmentList.nextLink
+        /// </param>
+        internal DtlEnvironmentList(IReadOnlyList<DevTestLabEnvironmentData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<DtlEnvironmentData> Value { get; }
-        /// <summary> Link for next set of results. </summary>
+        /// <summary>
+        /// Results of the list operation.
+        /// Serialized Name: DtlEnvironmentList.value
+        /// </summary>
+        public IReadOnlyList<DevTestLabEnvironmentData> Value { get; }
+        /// <summary>
+        /// Link for next set of results.
+        /// Serialized Name: DtlEnvironmentList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

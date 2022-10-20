@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Properties of the disk to detach. </summary>
+    /// <summary>
+    /// Properties of the disk to detach.
+    /// Serialized Name: DetachDiskProperties
+    /// </summary>
     public partial class DetachDiskProperties
     {
         /// <summary> Initializes a new instance of DetachDiskProperties. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
         }
 
-        /// <summary> The resource ID of the Lab VM to which the disk is attached. </summary>
+        /// <summary>
+        /// The resource ID of the Lab VM to which the disk is attached.
+        /// Serialized Name: DetachDiskProperties.leasedByLabVmId
+        /// </summary>
         public string LeasedByLabVmId { get; set; }
     }
 }

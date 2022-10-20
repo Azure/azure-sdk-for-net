@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The access rights to be granted to the user when provisioning an environment. </summary>
+    /// <summary>
+    /// The access rights to be granted to the user when provisioning an environment
+    /// Serialized Name: EnvironmentPermission
+    /// </summary>
     public readonly partial struct EnvironmentPermission : IEquatable<EnvironmentPermission>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string ReaderValue = "Reader";
         private const string ContributorValue = "Contributor";
 
-        /// <summary> Reader. </summary>
+        /// <summary>
+        /// Reader
+        /// Serialized Name: EnvironmentPermission.Reader
+        /// </summary>
         public static EnvironmentPermission Reader { get; } = new EnvironmentPermission(ReaderValue);
-        /// <summary> Contributor. </summary>
+        /// <summary>
+        /// Contributor
+        /// Serialized Name: EnvironmentPermission.Contributor
+        /// </summary>
         public static EnvironmentPermission Contributor { get; } = new EnvironmentPermission(ContributorValue);
         /// <summary> Determines if two <see cref="EnvironmentPermission"/> values are the same. </summary>
         public static bool operator ==(EnvironmentPermission left, EnvironmentPermission right) => left.Equals(right);

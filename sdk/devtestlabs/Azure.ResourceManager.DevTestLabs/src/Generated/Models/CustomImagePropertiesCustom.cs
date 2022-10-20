@@ -7,20 +7,35 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Properties for creating a custom image from a VHD. </summary>
+    /// <summary>
+    /// Properties for creating a custom image from a VHD.
+    /// Serialized Name: CustomImagePropertiesCustom
+    /// </summary>
     public partial class CustomImagePropertiesCustom
     {
         /// <summary> Initializes a new instance of CustomImagePropertiesCustom. </summary>
-        /// <param name="osType"> The OS type of the custom image (i.e. Windows, Linux). </param>
+        /// <param name="osType">
+        /// The OS type of the custom image (i.e. Windows, Linux)
+        /// Serialized Name: CustomImagePropertiesCustom.osType
+        /// </param>
         public CustomImagePropertiesCustom(CustomImageOSType osType)
         {
             OSType = osType;
         }
 
         /// <summary> Initializes a new instance of CustomImagePropertiesCustom. </summary>
-        /// <param name="imageName"> The image name. </param>
-        /// <param name="sysPrep"> Indicates whether sysprep has been run on the VHD. </param>
-        /// <param name="osType"> The OS type of the custom image (i.e. Windows, Linux). </param>
+        /// <param name="imageName">
+        /// The image name.
+        /// Serialized Name: CustomImagePropertiesCustom.imageName
+        /// </param>
+        /// <param name="sysPrep">
+        /// Indicates whether sysprep has been run on the VHD.
+        /// Serialized Name: CustomImagePropertiesCustom.sysPrep
+        /// </param>
+        /// <param name="osType">
+        /// The OS type of the custom image (i.e. Windows, Linux)
+        /// Serialized Name: CustomImagePropertiesCustom.osType
+        /// </param>
         internal CustomImagePropertiesCustom(string imageName, bool? sysPrep, CustomImageOSType osType)
         {
             ImageName = imageName;
@@ -28,11 +43,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             OSType = osType;
         }
 
-        /// <summary> The image name. </summary>
+        /// <summary>
+        /// The image name.
+        /// Serialized Name: CustomImagePropertiesCustom.imageName
+        /// </summary>
         public string ImageName { get; set; }
-        /// <summary> Indicates whether sysprep has been run on the VHD. </summary>
+        /// <summary>
+        /// Indicates whether sysprep has been run on the VHD.
+        /// Serialized Name: CustomImagePropertiesCustom.sysPrep
+        /// </summary>
         public bool? SysPrep { get; set; }
-        /// <summary> The OS type of the custom image (i.e. Windows, Linux). </summary>
+        /// <summary>
+        /// The OS type of the custom image (i.e. Windows, Linux)
+        /// Serialized Name: CustomImagePropertiesCustom.osType
+        /// </summary>
         public CustomImageOSType OSType { get; set; }
     }
 }

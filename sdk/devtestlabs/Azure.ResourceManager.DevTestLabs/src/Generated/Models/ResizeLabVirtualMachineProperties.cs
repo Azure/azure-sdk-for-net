@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Request body for resizing a virtual machine. </summary>
+    /// <summary>
+    /// Request body for resizing a virtual machine.
+    /// Serialized Name: ResizeLabVirtualMachineProperties
+    /// </summary>
     public partial class ResizeLabVirtualMachineProperties
     {
         /// <summary> Initializes a new instance of ResizeLabVirtualMachineProperties. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
         }
 
-        /// <summary> Specifies the size of the virtual machine. </summary>
+        /// <summary>
+        /// Specifies the size of the virtual machine.
+        /// Serialized Name: ResizeLabVirtualMachineProperties.size
+        /// </summary>
         public string Size { get; set; }
     }
 }

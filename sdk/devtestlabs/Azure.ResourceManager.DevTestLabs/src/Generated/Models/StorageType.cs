@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The storage type for the disk (i.e. Standard, Premium). </summary>
+    /// <summary>
+    /// The storage type for the disk (i.e. Standard, Premium).
+    /// Serialized Name: StorageType
+    /// </summary>
     public readonly partial struct StorageType : IEquatable<StorageType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string PremiumValue = "Premium";
         private const string StandardSSDValue = "StandardSSD";
 
-        /// <summary> Standard. </summary>
+        /// <summary>
+        /// Standard
+        /// Serialized Name: StorageType.Standard
+        /// </summary>
         public static StorageType Standard { get; } = new StorageType(StandardValue);
-        /// <summary> Premium. </summary>
+        /// <summary>
+        /// Premium
+        /// Serialized Name: StorageType.Premium
+        /// </summary>
         public static StorageType Premium { get; } = new StorageType(PremiumValue);
-        /// <summary> StandardSSD. </summary>
+        /// <summary>
+        /// StandardSSD
+        /// Serialized Name: StorageType.StandardSSD
+        /// </summary>
         public static StorageType StandardSSD { get; } = new StorageType(StandardSSDValue);
         /// <summary> Determines if two <see cref="StorageType"/> values are the same. </summary>
         public static bool operator ==(StorageType left, StorageType right) => left.Equals(right);

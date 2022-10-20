@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The object that describes the operations. </summary>
+    /// <summary>
+    /// The object that describes the operations
+    /// Serialized Name: OperationMetadataDisplay
+    /// </summary>
     public partial class OperationMetadataDisplay
     {
         /// <summary> Initializes a new instance of OperationMetadataDisplay. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of OperationMetadataDisplay. </summary>
-        /// <param name="provider"> Friendly name of the resource provider. </param>
-        /// <param name="resource"> Resource type on which the operation is performed. </param>
-        /// <param name="operation"> Operation type: read, write, delete, listKeys/action, etc. </param>
-        /// <param name="description"> Friendly name of the operation. </param>
+        /// <param name="provider">
+        /// Friendly name of the resource provider
+        /// Serialized Name: OperationMetadataDisplay.provider
+        /// </param>
+        /// <param name="resource">
+        /// Resource type on which the operation is performed.
+        /// Serialized Name: OperationMetadataDisplay.resource
+        /// </param>
+        /// <param name="operation">
+        /// Operation type: read, write, delete, listKeys/action, etc.
+        /// Serialized Name: OperationMetadataDisplay.operation
+        /// </param>
+        /// <param name="description">
+        /// Friendly name of the operation
+        /// Serialized Name: OperationMetadataDisplay.description
+        /// </param>
         internal OperationMetadataDisplay(string provider, string resource, string operation, string description)
         {
             Provider = provider;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Description = description;
         }
 
-        /// <summary> Friendly name of the resource provider. </summary>
+        /// <summary>
+        /// Friendly name of the resource provider
+        /// Serialized Name: OperationMetadataDisplay.provider
+        /// </summary>
         public string Provider { get; }
-        /// <summary> Resource type on which the operation is performed. </summary>
+        /// <summary>
+        /// Resource type on which the operation is performed.
+        /// Serialized Name: OperationMetadataDisplay.resource
+        /// </summary>
         public string Resource { get; }
-        /// <summary> Operation type: read, write, delete, listKeys/action, etc. </summary>
+        /// <summary>
+        /// Operation type: read, write, delete, listKeys/action, etc.
+        /// Serialized Name: OperationMetadataDisplay.operation
+        /// </summary>
         public string Operation { get; }
-        /// <summary> Friendly name of the operation. </summary>
+        /// <summary>
+        /// Friendly name of the operation
+        /// Serialized Name: OperationMetadataDisplay.description
+        /// </summary>
         public string Description { get; }
     }
 }

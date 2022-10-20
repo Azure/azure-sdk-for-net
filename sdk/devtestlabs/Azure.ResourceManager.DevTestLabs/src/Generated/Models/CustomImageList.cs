@@ -11,27 +11,42 @@ using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The response of a list operation. </summary>
+    /// <summary>
+    /// The response of a list operation.
+    /// Serialized Name: CustomImageList
+    /// </summary>
     internal partial class CustomImageList
     {
         /// <summary> Initializes a new instance of CustomImageList. </summary>
         internal CustomImageList()
         {
-            Value = new ChangeTrackingList<CustomImageData>();
+            Value = new ChangeTrackingList<DevTestLabCustomImageData>();
         }
 
         /// <summary> Initializes a new instance of CustomImageList. </summary>
-        /// <param name="value"> Results of the list operation. </param>
-        /// <param name="nextLink"> Link for next set of results. </param>
-        internal CustomImageList(IReadOnlyList<CustomImageData> value, string nextLink)
+        /// <param name="value">
+        /// Results of the list operation.
+        /// Serialized Name: CustomImageList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link for next set of results.
+        /// Serialized Name: CustomImageList.nextLink
+        /// </param>
+        internal CustomImageList(IReadOnlyList<DevTestLabCustomImageData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<CustomImageData> Value { get; }
-        /// <summary> Link for next set of results. </summary>
+        /// <summary>
+        /// Results of the list operation.
+        /// Serialized Name: CustomImageList.value
+        /// </summary>
+        public IReadOnlyList<DevTestLabCustomImageData> Value { get; }
+        /// <summary>
+        /// Link for next set of results.
+        /// Serialized Name: CustomImageList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

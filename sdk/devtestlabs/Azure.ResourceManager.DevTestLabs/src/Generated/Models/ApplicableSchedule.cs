@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Schedules applicable to a virtual machine. The schedules may have been defined on a VM or on lab level. </summary>
+    /// <summary>
+    /// Schedules applicable to a virtual machine. The schedules may have been defined on a VM or on lab level.
+    /// Serialized Name: ApplicableSchedule
+    /// </summary>
     public partial class ApplicableSchedule : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ApplicableSchedule. </summary>
@@ -28,17 +31,29 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="labVmsShutdown"> The auto-shutdown schedule, if one has been set at the lab or lab resource level. </param>
-        /// <param name="labVmsStartup"> The auto-startup schedule, if one has been set at the lab or lab resource level. </param>
-        internal ApplicableSchedule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ScheduleData labVmsShutdown, ScheduleData labVmsStartup) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="labVmsShutdown">
+        /// The auto-shutdown schedule, if one has been set at the lab or lab resource level.
+        /// Serialized Name: ApplicableSchedule.properties.labVmsShutdown
+        /// </param>
+        /// <param name="labVmsStartup">
+        /// The auto-startup schedule, if one has been set at the lab or lab resource level.
+        /// Serialized Name: ApplicableSchedule.properties.labVmsStartup
+        /// </param>
+        internal ApplicableSchedule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabScheduleData labVmsShutdown, DevTestLabScheduleData labVmsStartup) : base(id, name, resourceType, systemData, tags, location)
         {
             LabVmsShutdown = labVmsShutdown;
             LabVmsStartup = labVmsStartup;
         }
 
-        /// <summary> The auto-shutdown schedule, if one has been set at the lab or lab resource level. </summary>
-        public ScheduleData LabVmsShutdown { get; set; }
-        /// <summary> The auto-startup schedule, if one has been set at the lab or lab resource level. </summary>
-        public ScheduleData LabVmsStartup { get; set; }
+        /// <summary>
+        /// The auto-shutdown schedule, if one has been set at the lab or lab resource level.
+        /// Serialized Name: ApplicableSchedule.properties.labVmsShutdown
+        /// </summary>
+        public DevTestLabScheduleData LabVmsShutdown { get; set; }
+        /// <summary>
+        /// The auto-startup schedule, if one has been set at the lab or lab resource level.
+        /// Serialized Name: ApplicableSchedule.properties.labVmsStartup
+        /// </summary>
+        public DevTestLabScheduleData LabVmsStartup { get; set; }
     }
 }

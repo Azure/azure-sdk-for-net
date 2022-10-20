@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Options for uploading the files for the artifact. UploadFilesAndGenerateSasTokens is the default value. </summary>
+    /// <summary>
+    /// Options for uploading the files for the artifact. UploadFilesAndGenerateSasTokens is the default value.
+    /// Serialized Name: FileUploadOptions
+    /// </summary>
     public readonly partial struct FileUploadOption : IEquatable<FileUploadOption>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string UploadFilesAndGenerateSasTokensValue = "UploadFilesAndGenerateSasTokens";
         private const string NoneValue = "None";
 
-        /// <summary> UploadFilesAndGenerateSasTokens. </summary>
+        /// <summary>
+        /// UploadFilesAndGenerateSasTokens
+        /// Serialized Name: FileUploadOptions.UploadFilesAndGenerateSasTokens
+        /// </summary>
         public static FileUploadOption UploadFilesAndGenerateSasTokens { get; } = new FileUploadOption(UploadFilesAndGenerateSasTokensValue);
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: FileUploadOptions.None
+        /// </summary>
         public static FileUploadOption None { get; } = new FileUploadOption(NoneValue);
         /// <summary> Determines if two <see cref="FileUploadOption"/> values are the same. </summary>
         public static bool operator ==(FileUploadOption left, FileUploadOption right) => left.Equals(right);

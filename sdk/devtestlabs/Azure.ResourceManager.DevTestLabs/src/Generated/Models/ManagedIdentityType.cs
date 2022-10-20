@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Managed identity. </summary>
+    /// <summary>
+    /// Managed identity.
+    /// Serialized Name: ManagedIdentityType
+    /// </summary>
     public readonly partial struct ManagedIdentityType : IEquatable<ManagedIdentityType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string UserAssignedValue = "UserAssigned";
         private const string SystemAssignedUserAssignedValue = "SystemAssigned,UserAssigned";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: ManagedIdentityType.None
+        /// </summary>
         public static ManagedIdentityType None { get; } = new ManagedIdentityType(NoneValue);
-        /// <summary> SystemAssigned. </summary>
+        /// <summary>
+        /// SystemAssigned
+        /// Serialized Name: ManagedIdentityType.SystemAssigned
+        /// </summary>
         public static ManagedIdentityType SystemAssigned { get; } = new ManagedIdentityType(SystemAssignedValue);
-        /// <summary> UserAssigned. </summary>
+        /// <summary>
+        /// UserAssigned
+        /// Serialized Name: ManagedIdentityType.UserAssigned
+        /// </summary>
         public static ManagedIdentityType UserAssigned { get; } = new ManagedIdentityType(UserAssignedValue);
-        /// <summary> SystemAssigned,UserAssigned. </summary>
+        /// <summary>
+        /// SystemAssigned,UserAssigned
+        /// Serialized Name: ManagedIdentityType.SystemAssigned,UserAssigned
+        /// </summary>
         public static ManagedIdentityType SystemAssignedUserAssigned { get; } = new ManagedIdentityType(SystemAssignedUserAssignedValue);
         /// <summary> Determines if two <see cref="ManagedIdentityType"/> values are the same. </summary>
         public static bool operator ==(ManagedIdentityType left, ManagedIdentityType right) => left.Equals(right);

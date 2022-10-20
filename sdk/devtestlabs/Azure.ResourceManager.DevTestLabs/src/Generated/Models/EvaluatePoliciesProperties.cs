@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Properties for evaluating a policy set. </summary>
+    /// <summary>
+    /// Properties for evaluating a policy set.
+    /// Serialized Name: EvaluatePoliciesProperties
+    /// </summary>
     public partial class EvaluatePoliciesProperties
     {
         /// <summary> Initializes a new instance of EvaluatePoliciesProperties. </summary>
@@ -15,13 +18,25 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
         }
 
-        /// <summary> The fact name. </summary>
+        /// <summary>
+        /// The fact name.
+        /// Serialized Name: EvaluatePoliciesProperties.factName
+        /// </summary>
         public string FactName { get; set; }
-        /// <summary> The fact data. </summary>
+        /// <summary>
+        /// The fact data.
+        /// Serialized Name: EvaluatePoliciesProperties.factData
+        /// </summary>
         public string FactData { get; set; }
-        /// <summary> The value offset. </summary>
+        /// <summary>
+        /// The value offset.
+        /// Serialized Name: EvaluatePoliciesProperties.valueOffset
+        /// </summary>
         public string ValueOffset { get; set; }
-        /// <summary> The user for which policies will be evaluated. </summary>
+        /// <summary>
+        /// The user for which policies will be evaluated
+        /// Serialized Name: EvaluatePoliciesProperties.userObjectId
+        /// </summary>
         public string UserObjectId { get; set; }
     }
 }

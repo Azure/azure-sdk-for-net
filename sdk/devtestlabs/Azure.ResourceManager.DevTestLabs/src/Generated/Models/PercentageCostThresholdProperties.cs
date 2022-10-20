@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Properties of a percentage cost threshold. </summary>
+    /// <summary>
+    /// Properties of a percentage cost threshold.
+    /// Serialized Name: PercentageCostThresholdProperties
+    /// </summary>
     internal partial class PercentageCostThresholdProperties
     {
         /// <summary> Initializes a new instance of PercentageCostThresholdProperties. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of PercentageCostThresholdProperties. </summary>
-        /// <param name="thresholdValue"> The cost threshold value. </param>
+        /// <param name="thresholdValue">
+        /// The cost threshold value.
+        /// Serialized Name: PercentageCostThresholdProperties.thresholdValue
+        /// </param>
         internal PercentageCostThresholdProperties(double? thresholdValue)
         {
             ThresholdValue = thresholdValue;
         }
 
-        /// <summary> The cost threshold value. </summary>
+        /// <summary>
+        /// The cost threshold value.
+        /// Serialized Name: PercentageCostThresholdProperties.thresholdValue
+        /// </summary>
         public double? ThresholdValue { get; set; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Storage information about the data disks present in the custom image. </summary>
+    /// <summary>
+    /// Storage information about the data disks present in the custom image
+    /// Serialized Name: DataDiskStorageTypeInfo
+    /// </summary>
     public partial class DataDiskStorageTypeInfo
     {
         /// <summary> Initializes a new instance of DataDiskStorageTypeInfo. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DataDiskStorageTypeInfo. </summary>
-        /// <param name="lun"> Disk Lun. </param>
-        /// <param name="storageType"> Disk Storage Type. </param>
+        /// <param name="lun">
+        /// Disk Lun
+        /// Serialized Name: DataDiskStorageTypeInfo.lun
+        /// </param>
+        /// <param name="storageType">
+        /// Disk Storage Type
+        /// Serialized Name: DataDiskStorageTypeInfo.storageType
+        /// </param>
         internal DataDiskStorageTypeInfo(string lun, StorageType? storageType)
         {
             Lun = lun;
             StorageType = storageType;
         }
 
-        /// <summary> Disk Lun. </summary>
+        /// <summary>
+        /// Disk Lun
+        /// Serialized Name: DataDiskStorageTypeInfo.lun
+        /// </summary>
         public string Lun { get; set; }
-        /// <summary> Disk Storage Type. </summary>
+        /// <summary>
+        /// Disk Storage Type
+        /// Serialized Name: DataDiskStorageTypeInfo.storageType
+        /// </summary>
         public StorageType? StorageType { get; set; }
     }
 }

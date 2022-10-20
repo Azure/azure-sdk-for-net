@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> A rule for NAT - exposing a VM&apos;s port (backendPort) on the public IP address using a load balancer. </summary>
+    /// <summary>
+    /// A rule for NAT - exposing a VM&apos;s port (backendPort) on the public IP address using a load balancer.
+    /// Serialized Name: InboundNatRule
+    /// </summary>
     public partial class InboundNatRule
     {
         /// <summary> Initializes a new instance of InboundNatRule. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of InboundNatRule. </summary>
-        /// <param name="transportProtocol"> The transport protocol for the endpoint. </param>
-        /// <param name="frontendPort"> The external endpoint port of the inbound connection. Possible values range between 1 and 65535, inclusive. If unspecified, a value will be allocated automatically. </param>
-        /// <param name="backendPort"> The port to which the external traffic will be redirected. </param>
+        /// <param name="transportProtocol">
+        /// The transport protocol for the endpoint.
+        /// Serialized Name: InboundNatRule.transportProtocol
+        /// </param>
+        /// <param name="frontendPort">
+        /// The external endpoint port of the inbound connection. Possible values range between 1 and 65535, inclusive. If unspecified, a value will be allocated automatically.
+        /// Serialized Name: InboundNatRule.frontendPort
+        /// </param>
+        /// <param name="backendPort">
+        /// The port to which the external traffic will be redirected.
+        /// Serialized Name: InboundNatRule.backendPort
+        /// </param>
         internal InboundNatRule(TransportProtocol? transportProtocol, int? frontendPort, int? backendPort)
         {
             TransportProtocol = transportProtocol;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             BackendPort = backendPort;
         }
 
-        /// <summary> The transport protocol for the endpoint. </summary>
+        /// <summary>
+        /// The transport protocol for the endpoint.
+        /// Serialized Name: InboundNatRule.transportProtocol
+        /// </summary>
         public TransportProtocol? TransportProtocol { get; set; }
-        /// <summary> The external endpoint port of the inbound connection. Possible values range between 1 and 65535, inclusive. If unspecified, a value will be allocated automatically. </summary>
+        /// <summary>
+        /// The external endpoint port of the inbound connection. Possible values range between 1 and 65535, inclusive. If unspecified, a value will be allocated automatically.
+        /// Serialized Name: InboundNatRule.frontendPort
+        /// </summary>
         public int? FrontendPort { get; set; }
-        /// <summary> The port to which the external traffic will be redirected. </summary>
+        /// <summary>
+        /// The port to which the external traffic will be redirected.
+        /// Serialized Name: InboundNatRule.backendPort
+        /// </summary>
         public int? BackendPort { get; set; }
     }
 }

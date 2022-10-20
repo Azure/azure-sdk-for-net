@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Result of the request to list REST API operations. </summary>
+    /// <summary>
+    /// Result of the request to list REST API operations
+    /// Serialized Name: ProviderOperationResult
+    /// </summary>
     internal partial class ProviderOperationResult
     {
         /// <summary> Initializes a new instance of ProviderOperationResult. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of ProviderOperationResult. </summary>
-        /// <param name="value"> List of operations supported by the resource provider. </param>
-        /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
+        /// <param name="value">
+        /// List of operations supported by the resource provider.
+        /// Serialized Name: ProviderOperationResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of operation list results if there are any.
+        /// Serialized Name: ProviderOperationResult.nextLink
+        /// </param>
         internal ProviderOperationResult(IReadOnlyList<OperationMetadata> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of operations supported by the resource provider. </summary>
+        /// <summary>
+        /// List of operations supported by the resource provider.
+        /// Serialized Name: ProviderOperationResult.value
+        /// </summary>
         public IReadOnlyList<OperationMetadata> Value { get; }
-        /// <summary> URL to get the next set of operation list results if there are any. </summary>
+        /// <summary>
+        /// URL to get the next set of operation list results if there are any.
+        /// Serialized Name: ProviderOperationResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

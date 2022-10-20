@@ -11,27 +11,42 @@ using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The response of a list operation. </summary>
+    /// <summary>
+    /// The response of a list operation.
+    /// Serialized Name: UserList
+    /// </summary>
     internal partial class UserList
     {
         /// <summary> Initializes a new instance of UserList. </summary>
         internal UserList()
         {
-            Value = new ChangeTrackingList<UserData>();
+            Value = new ChangeTrackingList<DevTestLabUserData>();
         }
 
         /// <summary> Initializes a new instance of UserList. </summary>
-        /// <param name="value"> Results of the list operation. </param>
-        /// <param name="nextLink"> Link for next set of results. </param>
-        internal UserList(IReadOnlyList<UserData> value, string nextLink)
+        /// <param name="value">
+        /// Results of the list operation.
+        /// Serialized Name: UserList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link for next set of results.
+        /// Serialized Name: UserList.nextLink
+        /// </param>
+        internal UserList(IReadOnlyList<DevTestLabUserData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<UserData> Value { get; }
-        /// <summary> Link for next set of results. </summary>
+        /// <summary>
+        /// Results of the list operation.
+        /// Serialized Name: UserList.value
+        /// </summary>
+        public IReadOnlyList<DevTestLabUserData> Value { get; }
+        /// <summary>
+        /// Link for next set of results.
+        /// Serialized Name: UserList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

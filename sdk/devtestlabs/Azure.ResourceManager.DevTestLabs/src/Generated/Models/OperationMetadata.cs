@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The REST API operation supported by DevTestLab ResourceProvider. </summary>
+    /// <summary>
+    /// The REST API operation supported by DevTestLab ResourceProvider.
+    /// Serialized Name: OperationMetadata
+    /// </summary>
     public partial class OperationMetadata
     {
         /// <summary> Initializes a new instance of OperationMetadata. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of OperationMetadata. </summary>
-        /// <param name="name"> Operation name: {provider}/{resource}/{operation}. </param>
-        /// <param name="display"> The object that describes the operations. </param>
+        /// <param name="name">
+        /// Operation name: {provider}/{resource}/{operation}
+        /// Serialized Name: OperationMetadata.name
+        /// </param>
+        /// <param name="display">
+        /// The object that describes the operations
+        /// Serialized Name: OperationMetadata.display
+        /// </param>
         internal OperationMetadata(string name, OperationMetadataDisplay display)
         {
             Name = name;
             Display = display;
         }
 
-        /// <summary> Operation name: {provider}/{resource}/{operation}. </summary>
+        /// <summary>
+        /// Operation name: {provider}/{resource}/{operation}
+        /// Serialized Name: OperationMetadata.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The object that describes the operations. </summary>
+        /// <summary>
+        /// The object that describes the operations
+        /// Serialized Name: OperationMetadata.display
+        /// </summary>
         public OperationMetadataDisplay Display { get; }
     }
 }

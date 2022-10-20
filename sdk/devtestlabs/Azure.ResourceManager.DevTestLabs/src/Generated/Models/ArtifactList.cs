@@ -11,27 +11,42 @@ using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The response of a list operation. </summary>
+    /// <summary>
+    /// The response of a list operation.
+    /// Serialized Name: ArtifactList
+    /// </summary>
     internal partial class ArtifactList
     {
         /// <summary> Initializes a new instance of ArtifactList. </summary>
         internal ArtifactList()
         {
-            Value = new ChangeTrackingList<ArtifactData>();
+            Value = new ChangeTrackingList<DevTestLabArtifactData>();
         }
 
         /// <summary> Initializes a new instance of ArtifactList. </summary>
-        /// <param name="value"> Results of the list operation. </param>
-        /// <param name="nextLink"> Link for next set of results. </param>
-        internal ArtifactList(IReadOnlyList<ArtifactData> value, string nextLink)
+        /// <param name="value">
+        /// Results of the list operation.
+        /// Serialized Name: ArtifactList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link for next set of results.
+        /// Serialized Name: ArtifactList.nextLink
+        /// </param>
+        internal ArtifactList(IReadOnlyList<DevTestLabArtifactData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<ArtifactData> Value { get; }
-        /// <summary> Link for next set of results. </summary>
+        /// <summary>
+        /// Results of the list operation.
+        /// Serialized Name: ArtifactList.value
+        /// </summary>
+        public IReadOnlyList<DevTestLabArtifactData> Value { get; }
+        /// <summary>
+        /// Link for next set of results.
+        /// Serialized Name: ArtifactList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> A gallery image. </summary>
+    /// <summary>
+    /// A gallery image.
+    /// Serialized Name: GalleryImage
+    /// </summary>
     public partial class GalleryImage : TrackedResourceData
     {
         /// <summary> Initializes a new instance of GalleryImage. </summary>
@@ -28,14 +31,38 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="author"> The author of the gallery image. </param>
-        /// <param name="createdOn"> The creation date of the gallery image. </param>
-        /// <param name="description"> The description of the gallery image. </param>
-        /// <param name="imageReference"> The image reference of the gallery image. </param>
-        /// <param name="icon"> The icon of the gallery image. </param>
-        /// <param name="enabled"> Indicates whether this gallery image is enabled. </param>
-        /// <param name="planId"> The third party plan that applies to this image. </param>
-        /// <param name="isPlanAuthorized"> Indicates if the plan has been authorized for programmatic deployment. </param>
+        /// <param name="author">
+        /// The author of the gallery image.
+        /// Serialized Name: GalleryImage.properties.author
+        /// </param>
+        /// <param name="createdOn">
+        /// The creation date of the gallery image.
+        /// Serialized Name: GalleryImage.properties.createdDate
+        /// </param>
+        /// <param name="description">
+        /// The description of the gallery image.
+        /// Serialized Name: GalleryImage.properties.description
+        /// </param>
+        /// <param name="imageReference">
+        /// The image reference of the gallery image.
+        /// Serialized Name: GalleryImage.properties.imageReference
+        /// </param>
+        /// <param name="icon">
+        /// The icon of the gallery image.
+        /// Serialized Name: GalleryImage.properties.icon
+        /// </param>
+        /// <param name="enabled">
+        /// Indicates whether this gallery image is enabled.
+        /// Serialized Name: GalleryImage.properties.enabled
+        /// </param>
+        /// <param name="planId">
+        /// The third party plan that applies to this image
+        /// Serialized Name: GalleryImage.properties.planId
+        /// </param>
+        /// <param name="isPlanAuthorized">
+        /// Indicates if the plan has been authorized for programmatic deployment.
+        /// Serialized Name: GalleryImage.properties.isPlanAuthorized
+        /// </param>
         internal GalleryImage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string author, DateTimeOffset? createdOn, string description, GalleryImageReference imageReference, string icon, bool? enabled, string planId, bool? isPlanAuthorized) : base(id, name, resourceType, systemData, tags, location)
         {
             Author = author;
@@ -48,21 +75,45 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             IsPlanAuthorized = isPlanAuthorized;
         }
 
-        /// <summary> The author of the gallery image. </summary>
+        /// <summary>
+        /// The author of the gallery image.
+        /// Serialized Name: GalleryImage.properties.author
+        /// </summary>
         public string Author { get; set; }
-        /// <summary> The creation date of the gallery image. </summary>
+        /// <summary>
+        /// The creation date of the gallery image.
+        /// Serialized Name: GalleryImage.properties.createdDate
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The description of the gallery image. </summary>
+        /// <summary>
+        /// The description of the gallery image.
+        /// Serialized Name: GalleryImage.properties.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The image reference of the gallery image. </summary>
+        /// <summary>
+        /// The image reference of the gallery image.
+        /// Serialized Name: GalleryImage.properties.imageReference
+        /// </summary>
         public GalleryImageReference ImageReference { get; set; }
-        /// <summary> The icon of the gallery image. </summary>
+        /// <summary>
+        /// The icon of the gallery image.
+        /// Serialized Name: GalleryImage.properties.icon
+        /// </summary>
         public string Icon { get; set; }
-        /// <summary> Indicates whether this gallery image is enabled. </summary>
+        /// <summary>
+        /// Indicates whether this gallery image is enabled.
+        /// Serialized Name: GalleryImage.properties.enabled
+        /// </summary>
         public bool? Enabled { get; set; }
-        /// <summary> The third party plan that applies to this image. </summary>
+        /// <summary>
+        /// The third party plan that applies to this image
+        /// Serialized Name: GalleryImage.properties.planId
+        /// </summary>
         public string PlanId { get; set; }
-        /// <summary> Indicates if the plan has been authorized for programmatic deployment. </summary>
+        /// <summary>
+        /// Indicates if the plan has been authorized for programmatic deployment.
+        /// Serialized Name: GalleryImage.properties.isPlanAuthorized
+        /// </summary>
         public bool? IsPlanAuthorized { get; set; }
     }
 }

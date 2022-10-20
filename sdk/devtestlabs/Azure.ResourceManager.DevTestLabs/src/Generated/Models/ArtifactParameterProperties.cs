@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Properties of an artifact parameter. </summary>
+    /// <summary>
+    /// Properties of an artifact parameter.
+    /// Serialized Name: ArtifactParameterProperties
+    /// </summary>
     public partial class ArtifactParameterProperties
     {
         /// <summary> Initializes a new instance of ArtifactParameterProperties. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of ArtifactParameterProperties. </summary>
-        /// <param name="name"> The name of the artifact parameter. </param>
-        /// <param name="value"> The value of the artifact parameter. </param>
+        /// <param name="name">
+        /// The name of the artifact parameter.
+        /// Serialized Name: ArtifactParameterProperties.name
+        /// </param>
+        /// <param name="value">
+        /// The value of the artifact parameter.
+        /// Serialized Name: ArtifactParameterProperties.value
+        /// </param>
         internal ArtifactParameterProperties(string name, string value)
         {
             Name = name;
             Value = value;
         }
 
-        /// <summary> The name of the artifact parameter. </summary>
+        /// <summary>
+        /// The name of the artifact parameter.
+        /// Serialized Name: ArtifactParameterProperties.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The value of the artifact parameter. </summary>
+        /// <summary>
+        /// The value of the artifact parameter.
+        /// Serialized Name: ArtifactParameterProperties.value
+        /// </summary>
         public string Value { get; set; }
     }
 }

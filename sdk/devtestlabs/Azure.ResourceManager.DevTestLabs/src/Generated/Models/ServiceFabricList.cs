@@ -11,27 +11,42 @@ using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The response of a list operation. </summary>
+    /// <summary>
+    /// The response of a list operation.
+    /// Serialized Name: ServiceFabricList
+    /// </summary>
     internal partial class ServiceFabricList
     {
         /// <summary> Initializes a new instance of ServiceFabricList. </summary>
         internal ServiceFabricList()
         {
-            Value = new ChangeTrackingList<ServiceFabricData>();
+            Value = new ChangeTrackingList<DevTestLabServiceFabricData>();
         }
 
         /// <summary> Initializes a new instance of ServiceFabricList. </summary>
-        /// <param name="value"> Results of the list operation. </param>
-        /// <param name="nextLink"> Link for next set of results. </param>
-        internal ServiceFabricList(IReadOnlyList<ServiceFabricData> value, string nextLink)
+        /// <param name="value">
+        /// Results of the list operation.
+        /// Serialized Name: ServiceFabricList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link for next set of results.
+        /// Serialized Name: ServiceFabricList.nextLink
+        /// </param>
+        internal ServiceFabricList(IReadOnlyList<DevTestLabServiceFabricData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<ServiceFabricData> Value { get; }
-        /// <summary> Link for next set of results. </summary>
+        /// <summary>
+        /// Results of the list operation.
+        /// Serialized Name: ServiceFabricList.value
+        /// </summary>
+        public IReadOnlyList<DevTestLabServiceFabricData> Value { get; }
+        /// <summary>
+        /// Link for next set of results.
+        /// Serialized Name: ServiceFabricList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

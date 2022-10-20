@@ -11,27 +11,42 @@ using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The response of a list operation. </summary>
+    /// <summary>
+    /// The response of a list operation.
+    /// Serialized Name: FormulaList
+    /// </summary>
     internal partial class FormulaList
     {
         /// <summary> Initializes a new instance of FormulaList. </summary>
         internal FormulaList()
         {
-            Value = new ChangeTrackingList<FormulaData>();
+            Value = new ChangeTrackingList<DevTestLabFormulaData>();
         }
 
         /// <summary> Initializes a new instance of FormulaList. </summary>
-        /// <param name="value"> Results of the list operation. </param>
-        /// <param name="nextLink"> Link for next set of results. </param>
-        internal FormulaList(IReadOnlyList<FormulaData> value, string nextLink)
+        /// <param name="value">
+        /// Results of the list operation.
+        /// Serialized Name: FormulaList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link for next set of results.
+        /// Serialized Name: FormulaList.nextLink
+        /// </param>
+        internal FormulaList(IReadOnlyList<DevTestLabFormulaData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<FormulaData> Value { get; }
-        /// <summary> Link for next set of results. </summary>
+        /// <summary>
+        /// Results of the list operation.
+        /// Serialized Name: FormulaList.value
+        /// </summary>
+        public IReadOnlyList<DevTestLabFormulaData> Value { get; }
+        /// <summary>
+        /// Link for next set of results.
+        /// Serialized Name: FormulaList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

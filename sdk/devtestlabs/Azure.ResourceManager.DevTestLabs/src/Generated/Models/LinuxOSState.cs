@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The state of the Linux OS (i.e. NonDeprovisioned, DeprovisionRequested, DeprovisionApplied). </summary>
+    /// <summary>
+    /// The state of the Linux OS (i.e. NonDeprovisioned, DeprovisionRequested, DeprovisionApplied).
+    /// Serialized Name: LinuxOsState
+    /// </summary>
     public readonly partial struct LinuxOSState : IEquatable<LinuxOSState>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string DeprovisionRequestedValue = "DeprovisionRequested";
         private const string DeprovisionAppliedValue = "DeprovisionApplied";
 
-        /// <summary> NonDeprovisioned. </summary>
+        /// <summary>
+        /// NonDeprovisioned
+        /// Serialized Name: LinuxOsState.NonDeprovisioned
+        /// </summary>
         public static LinuxOSState NonDeprovisioned { get; } = new LinuxOSState(NonDeprovisionedValue);
-        /// <summary> DeprovisionRequested. </summary>
+        /// <summary>
+        /// DeprovisionRequested
+        /// Serialized Name: LinuxOsState.DeprovisionRequested
+        /// </summary>
         public static LinuxOSState DeprovisionRequested { get; } = new LinuxOSState(DeprovisionRequestedValue);
-        /// <summary> DeprovisionApplied. </summary>
+        /// <summary>
+        /// DeprovisionApplied
+        /// Serialized Name: LinuxOsState.DeprovisionApplied
+        /// </summary>
         public static LinuxOSState DeprovisionApplied { get; } = new LinuxOSState(DeprovisionAppliedValue);
         /// <summary> Determines if two <see cref="LinuxOSState"/> values are the same. </summary>
         public static bool operator ==(LinuxOSState left, LinuxOSState right) => left.Equals(right);

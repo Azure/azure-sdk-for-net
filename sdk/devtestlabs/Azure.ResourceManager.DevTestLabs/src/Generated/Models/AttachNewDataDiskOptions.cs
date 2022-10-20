@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Properties to attach new disk to the Virtual Machine. </summary>
+    /// <summary>
+    /// Properties to attach new disk to the Virtual Machine.
+    /// Serialized Name: AttachNewDataDiskOptions
+    /// </summary>
     public partial class AttachNewDataDiskOptions
     {
         /// <summary> Initializes a new instance of AttachNewDataDiskOptions. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of AttachNewDataDiskOptions. </summary>
-        /// <param name="diskSizeGiB"> Size of the disk to be attached in Gibibytes. </param>
-        /// <param name="diskName"> The name of the disk to be attached. </param>
-        /// <param name="diskType"> The storage type for the disk (i.e. Standard, Premium). </param>
+        /// <param name="diskSizeGiB">
+        /// Size of the disk to be attached in Gibibytes.
+        /// Serialized Name: AttachNewDataDiskOptions.diskSizeGiB
+        /// </param>
+        /// <param name="diskName">
+        /// The name of the disk to be attached.
+        /// Serialized Name: AttachNewDataDiskOptions.diskName
+        /// </param>
+        /// <param name="diskType">
+        /// The storage type for the disk (i.e. Standard, Premium).
+        /// Serialized Name: AttachNewDataDiskOptions.diskType
+        /// </param>
         internal AttachNewDataDiskOptions(int? diskSizeGiB, string diskName, StorageType? diskType)
         {
             DiskSizeGiB = diskSizeGiB;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             DiskType = diskType;
         }
 
-        /// <summary> Size of the disk to be attached in Gibibytes. </summary>
+        /// <summary>
+        /// Size of the disk to be attached in Gibibytes.
+        /// Serialized Name: AttachNewDataDiskOptions.diskSizeGiB
+        /// </summary>
         public int? DiskSizeGiB { get; set; }
-        /// <summary> The name of the disk to be attached. </summary>
+        /// <summary>
+        /// The name of the disk to be attached.
+        /// Serialized Name: AttachNewDataDiskOptions.diskName
+        /// </summary>
         public string DiskName { get; set; }
-        /// <summary> The storage type for the disk (i.e. Standard, Premium). </summary>
+        /// <summary>
+        /// The storage type for the disk (i.e. Standard, Premium).
+        /// Serialized Name: AttachNewDataDiskOptions.diskType
+        /// </summary>
         public StorageType? DiskType { get; set; }
     }
 }

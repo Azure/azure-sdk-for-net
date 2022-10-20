@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Property overrides on a subnet of a virtual network. </summary>
+    /// <summary>
+    /// Property overrides on a subnet of a virtual network.
+    /// Serialized Name: SubnetOverride
+    /// </summary>
     public partial class SubnetOverride
     {
         /// <summary> Initializes a new instance of SubnetOverride. </summary>
@@ -18,12 +21,30 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of SubnetOverride. </summary>
-        /// <param name="resourceId"> The resource ID of the subnet. </param>
-        /// <param name="labSubnetName"> The name given to the subnet within the lab. </param>
-        /// <param name="useInVmCreationPermission"> Indicates whether this subnet can be used during virtual machine creation (i.e. Allow, Deny). </param>
-        /// <param name="usePublicIPAddressPermission"> Indicates whether public IP addresses can be assigned to virtual machines on this subnet (i.e. Allow, Deny). </param>
-        /// <param name="sharedPublicIPAddressConfiguration"> Properties that virtual machines on this subnet will share. </param>
-        /// <param name="virtualNetworkPoolName"> The virtual network pool associated with this subnet. </param>
+        /// <param name="resourceId">
+        /// The resource ID of the subnet.
+        /// Serialized Name: SubnetOverride.resourceId
+        /// </param>
+        /// <param name="labSubnetName">
+        /// The name given to the subnet within the lab.
+        /// Serialized Name: SubnetOverride.labSubnetName
+        /// </param>
+        /// <param name="useInVmCreationPermission">
+        /// Indicates whether this subnet can be used during virtual machine creation (i.e. Allow, Deny).
+        /// Serialized Name: SubnetOverride.useInVmCreationPermission
+        /// </param>
+        /// <param name="usePublicIPAddressPermission">
+        /// Indicates whether public IP addresses can be assigned to virtual machines on this subnet (i.e. Allow, Deny).
+        /// Serialized Name: SubnetOverride.usePublicIpAddressPermission
+        /// </param>
+        /// <param name="sharedPublicIPAddressConfiguration">
+        /// Properties that virtual machines on this subnet will share.
+        /// Serialized Name: SubnetOverride.sharedPublicIpAddressConfiguration
+        /// </param>
+        /// <param name="virtualNetworkPoolName">
+        /// The virtual network pool associated with this subnet.
+        /// Serialized Name: SubnetOverride.virtualNetworkPoolName
+        /// </param>
         internal SubnetOverride(string resourceId, string labSubnetName, UsagePermissionType? useInVmCreationPermission, UsagePermissionType? usePublicIPAddressPermission, SubnetSharedPublicIPAddressConfiguration sharedPublicIPAddressConfiguration, string virtualNetworkPoolName)
         {
             ResourceId = resourceId;
@@ -34,17 +55,35 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             VirtualNetworkPoolName = virtualNetworkPoolName;
         }
 
-        /// <summary> The resource ID of the subnet. </summary>
+        /// <summary>
+        /// The resource ID of the subnet.
+        /// Serialized Name: SubnetOverride.resourceId
+        /// </summary>
         public string ResourceId { get; set; }
-        /// <summary> The name given to the subnet within the lab. </summary>
+        /// <summary>
+        /// The name given to the subnet within the lab.
+        /// Serialized Name: SubnetOverride.labSubnetName
+        /// </summary>
         public string LabSubnetName { get; set; }
-        /// <summary> Indicates whether this subnet can be used during virtual machine creation (i.e. Allow, Deny). </summary>
+        /// <summary>
+        /// Indicates whether this subnet can be used during virtual machine creation (i.e. Allow, Deny).
+        /// Serialized Name: SubnetOverride.useInVmCreationPermission
+        /// </summary>
         public UsagePermissionType? UseInVmCreationPermission { get; set; }
-        /// <summary> Indicates whether public IP addresses can be assigned to virtual machines on this subnet (i.e. Allow, Deny). </summary>
+        /// <summary>
+        /// Indicates whether public IP addresses can be assigned to virtual machines on this subnet (i.e. Allow, Deny).
+        /// Serialized Name: SubnetOverride.usePublicIpAddressPermission
+        /// </summary>
         public UsagePermissionType? UsePublicIPAddressPermission { get; set; }
-        /// <summary> Properties that virtual machines on this subnet will share. </summary>
+        /// <summary>
+        /// Properties that virtual machines on this subnet will share.
+        /// Serialized Name: SubnetOverride.sharedPublicIpAddressConfiguration
+        /// </summary>
         internal SubnetSharedPublicIPAddressConfiguration SharedPublicIPAddressConfiguration { get; set; }
-        /// <summary> Backend ports that virtual machines on this subnet are allowed to expose. </summary>
+        /// <summary>
+        /// Backend ports that virtual machines on this subnet are allowed to expose
+        /// Serialized Name: SubnetSharedPublicIpAddressConfiguration.allowedPorts
+        /// </summary>
         public IList<Port> SharedPublicIPAddressAllowedPorts
         {
             get
@@ -55,7 +94,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
         }
 
-        /// <summary> The virtual network pool associated with this subnet. </summary>
+        /// <summary>
+        /// The virtual network pool associated with this subnet.
+        /// Serialized Name: SubnetOverride.virtualNetworkPoolName
+        /// </summary>
         public string VirtualNetworkPoolName { get; set; }
     }
 }

@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Properties of a network interface. </summary>
+    /// <summary>
+    /// Properties of a network interface.
+    /// Serialized Name: NetworkInterfaceProperties
+    /// </summary>
     public partial class NetworkInterfaceProperties
     {
         /// <summary> Initializes a new instance of NetworkInterfaceProperties. </summary>
@@ -18,15 +21,42 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceProperties. </summary>
-        /// <param name="virtualNetworkId"> The resource ID of the virtual network. </param>
-        /// <param name="subnetId"> The resource ID of the sub net. </param>
-        /// <param name="publicIPAddressId"> The resource ID of the public IP address. </param>
-        /// <param name="publicIPAddress"> The public IP address. </param>
-        /// <param name="privateIPAddress"> The private IP address. </param>
-        /// <param name="dnsName"> The DNS name. </param>
-        /// <param name="rdpAuthority"> The RdpAuthority property is a server DNS host name or IP address followed by the service port number for RDP (Remote Desktop Protocol). </param>
-        /// <param name="sshAuthority"> The SshAuthority property is a server DNS host name or IP address followed by the service port number for SSH. </param>
-        /// <param name="sharedPublicIPAddressConfiguration"> The configuration for sharing a public IP address across multiple virtual machines. </param>
+        /// <param name="virtualNetworkId">
+        /// The resource ID of the virtual network.
+        /// Serialized Name: NetworkInterfaceProperties.virtualNetworkId
+        /// </param>
+        /// <param name="subnetId">
+        /// The resource ID of the sub net.
+        /// Serialized Name: NetworkInterfaceProperties.subnetId
+        /// </param>
+        /// <param name="publicIPAddressId">
+        /// The resource ID of the public IP address.
+        /// Serialized Name: NetworkInterfaceProperties.publicIpAddressId
+        /// </param>
+        /// <param name="publicIPAddress">
+        /// The public IP address.
+        /// Serialized Name: NetworkInterfaceProperties.publicIpAddress
+        /// </param>
+        /// <param name="privateIPAddress">
+        /// The private IP address.
+        /// Serialized Name: NetworkInterfaceProperties.privateIpAddress
+        /// </param>
+        /// <param name="dnsName">
+        /// The DNS name.
+        /// Serialized Name: NetworkInterfaceProperties.dnsName
+        /// </param>
+        /// <param name="rdpAuthority">
+        /// The RdpAuthority property is a server DNS host name or IP address followed by the service port number for RDP (Remote Desktop Protocol).
+        /// Serialized Name: NetworkInterfaceProperties.rdpAuthority
+        /// </param>
+        /// <param name="sshAuthority">
+        /// The SshAuthority property is a server DNS host name or IP address followed by the service port number for SSH.
+        /// Serialized Name: NetworkInterfaceProperties.sshAuthority
+        /// </param>
+        /// <param name="sharedPublicIPAddressConfiguration">
+        /// The configuration for sharing a public IP address across multiple virtual machines.
+        /// Serialized Name: NetworkInterfaceProperties.sharedPublicIpAddressConfiguration
+        /// </param>
         internal NetworkInterfaceProperties(string virtualNetworkId, string subnetId, string publicIPAddressId, string publicIPAddress, string privateIPAddress, string dnsName, string rdpAuthority, string sshAuthority, SharedPublicIPAddressConfiguration sharedPublicIPAddressConfiguration)
         {
             VirtualNetworkId = virtualNetworkId;
@@ -40,25 +70,55 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             SharedPublicIPAddressConfiguration = sharedPublicIPAddressConfiguration;
         }
 
-        /// <summary> The resource ID of the virtual network. </summary>
+        /// <summary>
+        /// The resource ID of the virtual network.
+        /// Serialized Name: NetworkInterfaceProperties.virtualNetworkId
+        /// </summary>
         public string VirtualNetworkId { get; set; }
-        /// <summary> The resource ID of the sub net. </summary>
+        /// <summary>
+        /// The resource ID of the sub net.
+        /// Serialized Name: NetworkInterfaceProperties.subnetId
+        /// </summary>
         public string SubnetId { get; set; }
-        /// <summary> The resource ID of the public IP address. </summary>
+        /// <summary>
+        /// The resource ID of the public IP address.
+        /// Serialized Name: NetworkInterfaceProperties.publicIpAddressId
+        /// </summary>
         public string PublicIPAddressId { get; set; }
-        /// <summary> The public IP address. </summary>
+        /// <summary>
+        /// The public IP address.
+        /// Serialized Name: NetworkInterfaceProperties.publicIpAddress
+        /// </summary>
         public string PublicIPAddress { get; set; }
-        /// <summary> The private IP address. </summary>
+        /// <summary>
+        /// The private IP address.
+        /// Serialized Name: NetworkInterfaceProperties.privateIpAddress
+        /// </summary>
         public string PrivateIPAddress { get; set; }
-        /// <summary> The DNS name. </summary>
+        /// <summary>
+        /// The DNS name.
+        /// Serialized Name: NetworkInterfaceProperties.dnsName
+        /// </summary>
         public string DnsName { get; set; }
-        /// <summary> The RdpAuthority property is a server DNS host name or IP address followed by the service port number for RDP (Remote Desktop Protocol). </summary>
+        /// <summary>
+        /// The RdpAuthority property is a server DNS host name or IP address followed by the service port number for RDP (Remote Desktop Protocol).
+        /// Serialized Name: NetworkInterfaceProperties.rdpAuthority
+        /// </summary>
         public string RdpAuthority { get; set; }
-        /// <summary> The SshAuthority property is a server DNS host name or IP address followed by the service port number for SSH. </summary>
+        /// <summary>
+        /// The SshAuthority property is a server DNS host name or IP address followed by the service port number for SSH.
+        /// Serialized Name: NetworkInterfaceProperties.sshAuthority
+        /// </summary>
         public string SshAuthority { get; set; }
-        /// <summary> The configuration for sharing a public IP address across multiple virtual machines. </summary>
+        /// <summary>
+        /// The configuration for sharing a public IP address across multiple virtual machines.
+        /// Serialized Name: NetworkInterfaceProperties.sharedPublicIpAddressConfiguration
+        /// </summary>
         internal SharedPublicIPAddressConfiguration SharedPublicIPAddressConfiguration { get; set; }
-        /// <summary> The incoming NAT rules. </summary>
+        /// <summary>
+        /// The incoming NAT rules
+        /// Serialized Name: SharedPublicIpAddressConfiguration.inboundNatRules
+        /// </summary>
         public IList<InboundNatRule> SharedPublicIPAddressInboundNatRules
         {
             get

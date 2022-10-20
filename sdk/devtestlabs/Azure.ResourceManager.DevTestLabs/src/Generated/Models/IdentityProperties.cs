@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Properties of a managed identity. </summary>
+    /// <summary>
+    /// Properties of a managed identity
+    /// Serialized Name: IdentityProperties
+    /// </summary>
     public partial class IdentityProperties
     {
         /// <summary> Initializes a new instance of IdentityProperties. </summary>
@@ -18,10 +21,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of IdentityProperties. </summary>
-        /// <param name="managedIdentityType"> Managed identity. </param>
-        /// <param name="principalId"> The principal id of resource identity. </param>
-        /// <param name="tenantId"> The tenant identifier of resource. </param>
-        /// <param name="clientSecretUri"> The client secret URL of the identity. </param>
+        /// <param name="managedIdentityType">
+        /// Managed identity.
+        /// Serialized Name: IdentityProperties.type
+        /// </param>
+        /// <param name="principalId">
+        /// The principal id of resource identity.
+        /// Serialized Name: IdentityProperties.principalId
+        /// </param>
+        /// <param name="tenantId">
+        /// The tenant identifier of resource.
+        /// Serialized Name: IdentityProperties.tenantId
+        /// </param>
+        /// <param name="clientSecretUri">
+        /// The client secret URL of the identity.
+        /// Serialized Name: IdentityProperties.clientSecretUrl
+        /// </param>
         internal IdentityProperties(ManagedIdentityType? managedIdentityType, string principalId, Guid? tenantId, Uri clientSecretUri)
         {
             ManagedIdentityType = managedIdentityType;
@@ -30,13 +45,25 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             ClientSecretUri = clientSecretUri;
         }
 
-        /// <summary> Managed identity. </summary>
+        /// <summary>
+        /// Managed identity.
+        /// Serialized Name: IdentityProperties.type
+        /// </summary>
         public ManagedIdentityType? ManagedIdentityType { get; set; }
-        /// <summary> The principal id of resource identity. </summary>
+        /// <summary>
+        /// The principal id of resource identity.
+        /// Serialized Name: IdentityProperties.principalId
+        /// </summary>
         public string PrincipalId { get; set; }
-        /// <summary> The tenant identifier of resource. </summary>
+        /// <summary>
+        /// The tenant identifier of resource.
+        /// Serialized Name: IdentityProperties.tenantId
+        /// </summary>
         public Guid? TenantId { get; set; }
-        /// <summary> The client secret URL of the identity. </summary>
+        /// <summary>
+        /// The client secret URL of the identity.
+        /// Serialized Name: IdentityProperties.clientSecretUrl
+        /// </summary>
         public Uri ClientSecretUri { get; set; }
     }
 }

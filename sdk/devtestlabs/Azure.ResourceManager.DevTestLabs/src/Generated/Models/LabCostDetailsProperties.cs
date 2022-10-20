@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The properties of a lab cost item. </summary>
+    /// <summary>
+    /// The properties of a lab cost item.
+    /// Serialized Name: LabCostDetailsProperties
+    /// </summary>
     public partial class LabCostDetailsProperties
     {
         /// <summary> Initializes a new instance of LabCostDetailsProperties. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of LabCostDetailsProperties. </summary>
-        /// <param name="on"> The date of the cost item. </param>
-        /// <param name="cost"> The cost component of the cost item. </param>
-        /// <param name="costType"> The type of the cost. </param>
+        /// <param name="on">
+        /// The date of the cost item.
+        /// Serialized Name: LabCostDetailsProperties.date
+        /// </param>
+        /// <param name="cost">
+        /// The cost component of the cost item.
+        /// Serialized Name: LabCostDetailsProperties.cost
+        /// </param>
+        /// <param name="costType">
+        /// The type of the cost.
+        /// Serialized Name: LabCostDetailsProperties.costType
+        /// </param>
         internal LabCostDetailsProperties(DateTimeOffset? @on, double? cost, CostType? costType)
         {
             On = @on;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             CostType = costType;
         }
 
-        /// <summary> The date of the cost item. </summary>
+        /// <summary>
+        /// The date of the cost item.
+        /// Serialized Name: LabCostDetailsProperties.date
+        /// </summary>
         public DateTimeOffset? On { get; }
-        /// <summary> The cost component of the cost item. </summary>
+        /// <summary>
+        /// The cost component of the cost item.
+        /// Serialized Name: LabCostDetailsProperties.cost
+        /// </summary>
         public double? Cost { get; }
-        /// <summary> The type of the cost. </summary>
+        /// <summary>
+        /// The type of the cost.
+        /// Serialized Name: LabCostDetailsProperties.costType
+        /// </summary>
         public CostType? CostType { get; }
     }
 }

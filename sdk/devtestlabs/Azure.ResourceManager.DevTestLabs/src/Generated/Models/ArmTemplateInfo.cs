@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Information about a generated ARM template. </summary>
+    /// <summary>
+    /// Information about a generated ARM template.
+    /// Serialized Name: ArmTemplateInfo
+    /// </summary>
     public partial class ArmTemplateInfo
     {
         /// <summary> Initializes a new instance of ArmTemplateInfo. </summary>
@@ -18,8 +21,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of ArmTemplateInfo. </summary>
-        /// <param name="template"> The template&apos;s contents. </param>
-        /// <param name="parameters"> The parameters of the ARM template. </param>
+        /// <param name="template">
+        /// The template&apos;s contents.
+        /// Serialized Name: ArmTemplateInfo.template
+        /// </param>
+        /// <param name="parameters">
+        /// The parameters of the ARM template.
+        /// Serialized Name: ArmTemplateInfo.parameters
+        /// </param>
         internal ArmTemplateInfo(BinaryData template, BinaryData parameters)
         {
             Template = template;
@@ -28,6 +37,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary>
         /// The template&apos;s contents.
+        /// Serialized Name: ArmTemplateInfo.template
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -59,6 +69,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public BinaryData Template { get; }
         /// <summary>
         /// The parameters of the ARM template.
+        /// Serialized Name: ArmTemplateInfo.parameters
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

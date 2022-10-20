@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The OS type of the custom image (i.e. Windows, Linux). </summary>
+    /// <summary>
+    /// The OS type of the custom image (i.e. Windows, Linux)
+    /// Serialized Name: CustomImageOsType
+    /// </summary>
     public readonly partial struct CustomImageOSType : IEquatable<CustomImageOSType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private const string LinuxValue = "Linux";
         private const string NoneValue = "None";
 
-        /// <summary> Windows. </summary>
+        /// <summary>
+        /// Windows
+        /// Serialized Name: CustomImageOsType.Windows
+        /// </summary>
         public static CustomImageOSType Windows { get; } = new CustomImageOSType(WindowsValue);
-        /// <summary> Linux. </summary>
+        /// <summary>
+        /// Linux
+        /// Serialized Name: CustomImageOsType.Linux
+        /// </summary>
         public static CustomImageOSType Linux { get; } = new CustomImageOSType(LinuxValue);
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: CustomImageOsType.None
+        /// </summary>
         public static CustomImageOSType None { get; } = new CustomImageOSType(NoneValue);
         /// <summary> Determines if two <see cref="CustomImageOSType"/> values are the same. </summary>
         public static bool operator ==(CustomImageOSType left, CustomImageOSType right) => left.Equals(right);

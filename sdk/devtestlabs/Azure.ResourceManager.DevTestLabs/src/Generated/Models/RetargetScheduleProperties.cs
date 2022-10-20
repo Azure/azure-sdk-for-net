@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Properties for retargeting a virtual machine schedule. </summary>
+    /// <summary>
+    /// Properties for retargeting a virtual machine schedule.
+    /// Serialized Name: RetargetScheduleProperties
+    /// </summary>
     public partial class RetargetScheduleProperties
     {
         /// <summary> Initializes a new instance of RetargetScheduleProperties. </summary>
@@ -15,9 +18,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
         }
 
-        /// <summary> The resource Id of the virtual machine on which the schedule operates. </summary>
+        /// <summary>
+        /// The resource Id of the virtual machine on which the schedule operates
+        /// Serialized Name: RetargetScheduleProperties.currentResourceId
+        /// </summary>
         public string CurrentResourceId { get; set; }
-        /// <summary> The resource Id of the virtual machine that the schedule should be retargeted to. </summary>
+        /// <summary>
+        /// The resource Id of the virtual machine that the schedule should be retargeted to
+        /// Serialized Name: RetargetScheduleProperties.targetResourceId
+        /// </summary>
         public string TargetResourceId { get; set; }
     }
 }

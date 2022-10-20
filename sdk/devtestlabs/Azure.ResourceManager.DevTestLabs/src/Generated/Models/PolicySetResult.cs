@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Result of a policy set evaluation. </summary>
+    /// <summary>
+    /// Result of a policy set evaluation.
+    /// Serialized Name: PolicySetResult
+    /// </summary>
     public partial class PolicySetResult
     {
         /// <summary> Initializes a new instance of PolicySetResult. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of PolicySetResult. </summary>
-        /// <param name="hasError"> A value indicating whether this policy set evaluation has discovered violations. </param>
-        /// <param name="policyViolations"> The list of policy violations. </param>
+        /// <param name="hasError">
+        /// A value indicating whether this policy set evaluation has discovered violations.
+        /// Serialized Name: PolicySetResult.hasError
+        /// </param>
+        /// <param name="policyViolations">
+        /// The list of policy violations.
+        /// Serialized Name: PolicySetResult.policyViolations
+        /// </param>
         internal PolicySetResult(bool? hasError, IReadOnlyList<PolicyViolation> policyViolations)
         {
             HasError = hasError;
             PolicyViolations = policyViolations;
         }
 
-        /// <summary> A value indicating whether this policy set evaluation has discovered violations. </summary>
+        /// <summary>
+        /// A value indicating whether this policy set evaluation has discovered violations.
+        /// Serialized Name: PolicySetResult.hasError
+        /// </summary>
         public bool? HasError { get; }
-        /// <summary> The list of policy violations. </summary>
+        /// <summary>
+        /// The list of policy violations.
+        /// Serialized Name: PolicySetResult.policyViolations
+        /// </summary>
         public IReadOnlyList<PolicyViolation> PolicyViolations { get; }
     }
 }

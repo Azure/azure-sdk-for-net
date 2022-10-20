@@ -11,27 +11,42 @@ using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The response of a list operation. </summary>
+    /// <summary>
+    /// The response of a list operation.
+    /// Serialized Name: ArtifactSourceList
+    /// </summary>
     internal partial class ArtifactSourceList
     {
         /// <summary> Initializes a new instance of ArtifactSourceList. </summary>
         internal ArtifactSourceList()
         {
-            Value = new ChangeTrackingList<ArtifactSourceData>();
+            Value = new ChangeTrackingList<DevTestLabArtifactSourceData>();
         }
 
         /// <summary> Initializes a new instance of ArtifactSourceList. </summary>
-        /// <param name="value"> Results of the list operation. </param>
-        /// <param name="nextLink"> Link for next set of results. </param>
-        internal ArtifactSourceList(IReadOnlyList<ArtifactSourceData> value, string nextLink)
+        /// <param name="value">
+        /// Results of the list operation.
+        /// Serialized Name: ArtifactSourceList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link for next set of results.
+        /// Serialized Name: ArtifactSourceList.nextLink
+        /// </param>
+        internal ArtifactSourceList(IReadOnlyList<DevTestLabArtifactSourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<ArtifactSourceData> Value { get; }
-        /// <summary> Link for next set of results. </summary>
+        /// <summary>
+        /// Results of the list operation.
+        /// Serialized Name: ArtifactSourceList.value
+        /// </summary>
+        public IReadOnlyList<DevTestLabArtifactSourceData> Value { get; }
+        /// <summary>
+        /// Link for next set of results.
+        /// Serialized Name: ArtifactSourceList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

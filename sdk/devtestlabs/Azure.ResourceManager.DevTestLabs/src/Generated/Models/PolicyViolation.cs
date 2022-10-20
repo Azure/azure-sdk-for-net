@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Policy violation. </summary>
+    /// <summary>
+    /// Policy violation.
+    /// Serialized Name: PolicyViolation
+    /// </summary>
     public partial class PolicyViolation
     {
         /// <summary> Initializes a new instance of PolicyViolation. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of PolicyViolation. </summary>
-        /// <param name="code"> The code of the policy violation. </param>
-        /// <param name="message"> The message of the policy violation. </param>
+        /// <param name="code">
+        /// The code of the policy violation.
+        /// Serialized Name: PolicyViolation.code
+        /// </param>
+        /// <param name="message">
+        /// The message of the policy violation.
+        /// Serialized Name: PolicyViolation.message
+        /// </param>
         internal PolicyViolation(string code, string message)
         {
             Code = code;
             Message = message;
         }
 
-        /// <summary> The code of the policy violation. </summary>
+        /// <summary>
+        /// The code of the policy violation.
+        /// Serialized Name: PolicyViolation.code
+        /// </summary>
         public string Code { get; }
-        /// <summary> The message of the policy violation. </summary>
+        /// <summary>
+        /// The message of the policy violation.
+        /// Serialized Name: PolicyViolation.message
+        /// </summary>
         public string Message { get; }
     }
 }
