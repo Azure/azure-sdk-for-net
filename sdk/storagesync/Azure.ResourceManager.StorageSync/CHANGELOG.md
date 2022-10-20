@@ -11,7 +11,7 @@
 ### Other Changes
 
 - Upgraded API version to 2022-06-01.
-- Ported Track 1 unit tests 1 over.  
+- Ported Track 1 unit tests over to be compatible with Track 2 changes.  
 
 ## 1.0.0 (2022-09-19)
 
