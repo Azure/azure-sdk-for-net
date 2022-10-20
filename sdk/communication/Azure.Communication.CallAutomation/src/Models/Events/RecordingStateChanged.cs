@@ -12,7 +12,7 @@ namespace Azure.Communication.CallAutomation
     /// The Call Recording state changed event
     /// </summary>
     [CodeGenModel("RecordingStateChanged", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class CallRecordingStateChanged : CallAutomationEventBase
+    public partial class RecordingStateChanged : CallAutomationEventBase
     {
         /// <summary>
         /// THe recording state
@@ -21,16 +21,16 @@ namespace Azure.Communication.CallAutomation
         public RecordingState State { get; set; }
 
         /// <summary>
-        /// Deserialize <see cref="CallRecordingStateChanged"/> event.
+        /// Deserialize <see cref="RecordingStateChanged"/> event.
         /// </summary>
         /// <param name="content">The json content.</param>
-        /// <returns>The new <see cref="CallRecordingStateChanged"/> object.</returns>
-        public static CallRecordingStateChanged Deserialize(string content)
+        /// <returns>The new <see cref="RecordingStateChanged"/> object.</returns>
+        public static RecordingStateChanged Deserialize(string content)
         {
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            return DeserializeCallRecordingStateChanged(element);
+            return DeserializeRecordingStateChanged(element);
         }
     }
 }
