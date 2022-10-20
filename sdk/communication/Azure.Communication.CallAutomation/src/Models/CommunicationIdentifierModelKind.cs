@@ -3,10 +3,10 @@
 
 using Azure.Core;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication
 {
     [CodeGenModel("CommunicationIdentifierModelKind")]
-    internal readonly partial struct CommunicationIdentifierModelKindInternal
+    internal readonly partial struct CommunicationIdentifierModelKind
     {
     }
 }
