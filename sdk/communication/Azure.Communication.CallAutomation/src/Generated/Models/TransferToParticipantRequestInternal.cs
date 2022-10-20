@@ -10,7 +10,7 @@ using Azure.Communication;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The transfer call to participant request. </summary>
+    /// <summary> The request payload for transferring call to a participant. </summary>
     internal partial class TransferToParticipantRequestInternal
     {
         /// <summary> Initializes a new instance of TransferToParticipantRequestInternal. </summary>
@@ -32,7 +32,7 @@ namespace Azure.Communication.CallAutomation
         public PhoneNumberIdentifierModel TransfereeCallerId { get; set; }
         /// <summary> The user to user information. </summary>
         public string UserToUserInformation { get; set; }
-        /// <summary> The operation context. </summary>
+        /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
     }
 }

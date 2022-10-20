@@ -177,6 +177,12 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             return await communicationIdentityClient.CreateUserAsync().ConfigureAwait(false);
         }
 
+        protected async Task WaitForOperationCompletion(int milliSeconds = 10000)
+        {
+            if (TestEnvironment.Mode != RecordedTestMode.Playback)
+                await Task.Delay(milliSeconds);
+        }
+
         /// <summary>
         /// Creates a <see cref="CallAutomationClientOptions" />
         /// </summary>
