@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static ModernReservationTransactionsListResult DeserializeModernReservationTransactionsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ModernReservationTransaction>> value = default;
+            Optional<IReadOnlyList<ConsumptionModernReservationTransaction>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Consumption.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ModernReservationTransaction> array = new List<ModernReservationTransaction>();
+                    List<ConsumptionModernReservationTransaction> array = new List<ConsumptionModernReservationTransaction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModernReservationTransaction.DeserializeModernReservationTransaction(item));
+                        array.Add(ConsumptionModernReservationTransaction.DeserializeConsumptionModernReservationTransaction(item));
                     }
                     value = array;
                     continue;

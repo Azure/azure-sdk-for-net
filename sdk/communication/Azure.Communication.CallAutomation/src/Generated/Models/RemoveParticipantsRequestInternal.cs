@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
     internal partial class RemoveParticipantsRequestInternal
     {
         /// <summary> Initializes a new instance of RemoveParticipantsRequestInternal. </summary>
-        /// <param name="participantsToRemove"> The participants to invite. </param>
+        /// <param name="participantsToRemove"> The participants to be removed from the call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToRemove"/> is null. </exception>
         public RemoveParticipantsRequestInternal(IEnumerable<CommunicationIdentifierModel> participantsToRemove)
         {
@@ -28,9 +28,9 @@ namespace Azure.Communication.CallAutomation
             ParticipantsToRemove = participantsToRemove.ToList();
         }
 
-        /// <summary> The participants to invite. </summary>
+        /// <summary> The participants to be removed from the call. </summary>
         public IList<CommunicationIdentifierModel> ParticipantsToRemove { get; }
-        /// <summary> The operation context. </summary>
+        /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
     }
 }

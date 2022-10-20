@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// time.</param>
         /// <param name="restorePointQueryType">RestorePoint type. Possible
         /// values include: 'Invalid', 'Full', 'Log', 'Differential',
-        /// 'FullAndDifferential', 'All', 'Incremental'</param>
+        /// 'FullAndDifferential', 'All', 'Incremental', 'SnapshotFull',
+        /// 'SnapshotCopyOnlyFull'</param>
         /// <param name="extendedInfo">In Get Recovery Point, it tells whether
         /// extended information about recovery point is asked.</param>
         /// <param name="moveReadyRPOnly">Whether the RP can be moved to
@@ -70,7 +71,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <summary>
         /// Gets or sets restorePoint type. Possible values include: 'Invalid',
         /// 'Full', 'Log', 'Differential', 'FullAndDifferential', 'All',
-        /// 'Incremental'
+        /// 'Incremental', 'SnapshotFull', 'SnapshotCopyOnlyFull'
         /// </summary>
         [JsonProperty(PropertyName = "restorePointQueryType")]
         public string RestorePointQueryType { get; set; }

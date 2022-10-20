@@ -47,6 +47,7 @@ namespace Azure.Search.Documents.Tests.Models
             jsonDoc = JsonDocument.Parse(stream);
             Assert.True(jsonDoc.RootElement.TryGetProperty("@odata.type", out JsonElement odataTypeElem));
             Assert.AreEqual(odataType, odataTypeElem.GetString());
+            jsonDoc.Dispose();
         }
     }
 }

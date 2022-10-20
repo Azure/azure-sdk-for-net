@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -52,6 +53,11 @@ foreach (var assembly in LoadAssemblies(Assembly.GetEntryAssembly(), AssemblyFil
             ++typeCount;
             ProcessType(type);
         }
+    }
+    catch (ReflectionTypeLoadException ex) when (ex.LoaderExceptions.All(lex => lex.Message.Contains("does not have an implementation")))
+    {
+        // Expected for some assemblies that serve as runtime shims or type-forwarding
+        // assemblies.
     }
     catch (ReflectionTypeLoadException) when (assembly.FullName.StartsWith("System."))
     {
@@ -247,7 +253,7 @@ IEnumerable<Assembly> LoadAssemblies(Assembly rootAssembly, string assemblyFileM
     {
         var assembly = assembliesToProcess.Pop();
 
-        if ((!assembly.FullName.StartsWith("System.")) && (!processedAssemblies.Contains(assembly.FullName)))
+        if ((ShouldLoadAssembly(assembly)) && (!processedAssemblies.Contains(assembly.FullName)))
         {
             processedAssemblies.Add(assembly.FullName);
             yield return assembly;
@@ -290,4 +296,11 @@ bool ShouldIgnoreFileLoadException(FileLoadException ex) => ex switch
 
     // By default, do not ignore.
     _ => false
+};
+
+bool ShouldLoadAssembly(Assembly assembly) => assembly.FullName switch
+{
+    string name when name.StartsWith("System.") => false,
+    string name when name.Contains("NativeInterop") => false,
+    _ => true
 };

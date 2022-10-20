@@ -336,6 +336,7 @@
       "RequestUri": "https://sanitized.skype.com/calling/callConnections/421f3500-be8f-4f5e-9669-f12ecd0527b9:terminate?api-version=2022-04-07-preview",
       "RequestMethod": "POST",
         "RequestHeaders": {
+            "Accept": "application/json",
             "Authorization": "Sanitized",
             "Content-Length": "0",
             "Repeatability-First-Sent": "Thu, 06 Oct 2022 00:44:55 GMT",

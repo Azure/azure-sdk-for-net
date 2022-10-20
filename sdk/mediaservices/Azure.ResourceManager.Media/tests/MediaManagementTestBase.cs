@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Tests
         [SetUp]
         public void CreateCommonClient()
         {
-            Client = GetArmClient();
+            Client = GetArmClient(enableDeleteAfter: true);
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(AzureLocation location)
