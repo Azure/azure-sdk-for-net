@@ -2,12 +2,6 @@
 
 ## 1.1.0-beta.1 (2022-10-21)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
 
 - Upgraded API version to 2022-06-01.
