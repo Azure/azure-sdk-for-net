@@ -31,9 +31,6 @@ Output location for unified reference yml file
 
 .PARAMETER ReadmeFolderRoot
 The readme folder root path, use default value here for backward compability. E.g. docs-ref-services in Java, JS, Python, api/overview/azure
-
-.PARAMETER PackageSourceOverride
-The package source override is the devops public feeds which each language published their SDK to.
 #>
 
 param(
@@ -44,10 +41,7 @@ param(
   [string] $OutputLocation,
 
   [Parameter(Mandatory = $false)]
-  [string] $ReadmeFolderRoot = 'docs-ref-services',
-
-  [Parameter(Mandatory = $false)]
-  [string] $PackageSourceOverride
+  [string] $ReadmeFolderRoot = 'docs-ref-services'
 )
 . $PSScriptRoot/common.ps1
 . $PSScriptRoot/Helpers/PSModule-Helpers.ps1
@@ -259,7 +253,7 @@ if ($otherPackages) {
           break
         }
 
-        if ($matchingNode -and ($matchingNode[0].PSObject.Members.Name -contains "items")) {
+        if ($matchingNode) {
           $currentNode = $matchingNode[0].items
         }
         else {
