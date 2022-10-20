@@ -4,14 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
-    /// <summary>
-    /// </summary>
-    public abstract class ArtifactManifest
+    [CodeGenModel("Manifest")]
+    public abstract partial class ArtifactManifest
     {
-        /// <summary> Schema version. </summary>
-        public int? SchemaVersion { get; set; }
     }
 }

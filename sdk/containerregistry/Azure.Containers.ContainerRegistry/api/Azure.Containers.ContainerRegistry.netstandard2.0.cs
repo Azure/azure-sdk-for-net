@@ -222,7 +222,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 {
     public abstract partial class ArtifactManifest
     {
-        protected ArtifactManifest() { }
+        public ArtifactManifest() { }
         public int? SchemaVersion { get { throw null; } set { } }
     }
     public partial class ContainerRegistryBlobClient
@@ -298,7 +298,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     public partial class OciManifest : Azure.Containers.ContainerRegistry.Specialized.ArtifactManifest
     {
         public OciManifest() { }
-        public Azure.Containers.ContainerRegistry.Specialized.OciAnnotations Annotations { get { throw null; } }
+        public Azure.Containers.ContainerRegistry.Specialized.OciAnnotations Annotations { get { throw null; } set { } }
         public Azure.Containers.ContainerRegistry.Specialized.OciBlobDescriptor Config { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Containers.ContainerRegistry.Specialized.OciBlobDescriptor> Layers { get { throw null; } }
     }
