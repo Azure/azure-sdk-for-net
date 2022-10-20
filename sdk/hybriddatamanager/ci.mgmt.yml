@@ -10,8 +10,8 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/hybriddata/ci.mgmt.yml
-    - sdk/hybriddata/Azure.ResourceManager.HybridData/
+    - sdk/hybriddatamanager/ci.mgmt.yml
+    - sdk/hybriddatamanager/Azure.ResourceManager.HybridData/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
