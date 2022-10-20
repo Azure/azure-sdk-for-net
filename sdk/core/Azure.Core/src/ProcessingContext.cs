@@ -95,17 +95,19 @@ namespace Azure.Core
 
         /// <summary>
         /// Initializes a new instance of the processing context. This constructor is intended to be used by customers who override the <see cref="RetryPolicy.Process"/>
-        /// method, or who set their own <see cref="HttpPipelinePolicy"/> implementation in the <see cref="ClientOptions.RetryPolicy"/> property.
+        /// method, or who set their own <see cref="HttpPipelinePolicy"/> implementation in the <see cref="ClientOptions.RetryPolicy"/> property. It can also be used for
+        /// testing purposes.
         /// </summary>
         public ProcessingContext()
         {
         }
 
         /// <summary>
-        /// Internal constructor for use by library. The public constructor can be used by customers who override the <see cref="RetryPolicy.Process"/>
+        /// Internal constructor for use by Azure.Core. The public constructor can be used by customers who override the <see cref="RetryPolicy.Process"/>
         /// method, or who set their own <see cref="HttpPipelinePolicy"/> implementation in the <see cref="ClientOptions.RetryPolicy"/> property.
         /// </summary>
-        /// <param name="message">The message that the context is attached to.</param>
+        /// <param name="message">The message that the context is attached to. The underlying values for the <see cref="ProcessingContext"/> are tracked by internal
+        /// properties of <see cref="HttpMessage"/> so that we don't need to worry about maintaining two sources of truth.</param>
         internal ProcessingContext(HttpMessage message)
         {
             _message = message;
