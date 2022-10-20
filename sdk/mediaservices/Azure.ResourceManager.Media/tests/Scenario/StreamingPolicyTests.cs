@@ -18,7 +18,8 @@ namespace Azure.ResourceManager.Media.Tests
 
         private StreamingPolicyCollection streamingPolicyCollection => _mediaService.GetStreamingPolicies();
 
-        public StreamingPolicyTests(bool isAsync) : base(isAsync)
+        public StreamingPolicyTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

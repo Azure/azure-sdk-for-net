@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static Lots DeserializeLots(JsonElement element)
         {
-            Optional<IReadOnlyList<LotSummary>> value = default;
+            Optional<IReadOnlyList<ConsumptionLotSummary>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Consumption.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LotSummary> array = new List<LotSummary>();
+                    List<ConsumptionLotSummary> array = new List<ConsumptionLotSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LotSummary.DeserializeLotSummary(item));
+                        array.Add(ConsumptionLotSummary.DeserializeConsumptionLotSummary(item));
                     }
                     value = array;
                     continue;

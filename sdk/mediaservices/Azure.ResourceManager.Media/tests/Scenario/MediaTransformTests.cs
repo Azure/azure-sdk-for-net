@@ -18,7 +18,8 @@ namespace Azure.ResourceManager.Media.Tests
 
         private MediaTransformCollection mediaTransformCollection => _mediaService.GetMediaTransforms();
 
-        public MediaTransformTests(bool isAsync) : base(isAsync)
+        public MediaTransformTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

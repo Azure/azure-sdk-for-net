@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static RefundPolicyResult DeserializeRefundPolicyResult(JsonElement element)
         {
-            Optional<RefundPolicyResultProperty> properties = default;
+            Optional<ReservationRefundPolicyResultProperty> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = RefundPolicyResultProperty.DeserializeRefundPolicyResultProperty(property.Value);
+                    properties = ReservationRefundPolicyResultProperty.DeserializeReservationRefundPolicyResultProperty(property.Value);
                     continue;
                 }
             }

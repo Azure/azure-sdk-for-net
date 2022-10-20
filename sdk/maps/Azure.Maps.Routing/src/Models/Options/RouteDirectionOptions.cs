@@ -6,7 +6,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Maps.Routing.Models
+namespace Azure.Maps.Routing
 {
     /// <summary> Options for rendering static images. </summary>
     public class RouteDirectionOptions
@@ -48,9 +48,9 @@ namespace Azure.Maps.Routing.Models
 
         /// <summary>
         /// The language parameter determines the language of the guidance messages. Proper nouns (the names of streets, plazas, etc.) are returned in the specified  language, or if that is not available, they are returned in an available language  that is close to it. Allowed values are (a subset of) the IETF language tags. The currently supported  languages are listed in the <see href="https://docs.microsoft.com/azure/azure-maps/supported-languages">Supported languages  section</see>.
-        /// Default value: en-GB
+        /// Default value: <see cref="RoutingLanguage.EnglishGreatBritain" />
         /// </summary>
-        public string Language { get; set; }
+        public RoutingLanguage Language { get; set; }
 
         /// <summary> Re-order the route waypoints using a fast heuristic algorithm to reduce the route length. Yields best results when used in conjunction with routeType _shortest_. Notice that origin and destination are excluded from the optimized waypoint indices. To include origin and destination in the response, please increase all the indices by 1 to account for the origin, and then add the destination as the final index. Possible values are true or false. True computes a better order if possible, but is not allowed to be used in conjunction with maxAlternatives value greater than 0 or in conjunction with circle waypoints. False will use the locations in the given order and not allowed to be used in conjunction with routeRepresentation _none_. </summary>
         public bool? ComputeBestWaypointOrder { get; set; }
@@ -114,7 +114,7 @@ namespace Azure.Maps.Routing.Models
         /// <item><description> A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour. </description></item>
         /// </list>
         /// </summary>
-        public int? VehicleMaxSpeedInKmPerHour { get; set; }
+        public int? VehicleMaxSpeedInKilometersPerHour { get; set; }
 
         /// <summary>
         /// Weight of the vehicle in kilograms.
@@ -151,7 +151,7 @@ namespace Azure.Maps.Routing.Models
         /// Sensible Values : 50,6.3:130,11.5
         /// Note : This parameter is required for the Combustion Consumption Model
         /// </summary>
-        public string ConstantSpeedConsumptionInLitersPerHundredKm { get; set; }
+        public string ConstantSpeedConsumptionInLitersPerHundredKilometer { get; set; }
 
         /// <summary>
         /// Specifies the current supply of fuel in liters.
@@ -219,30 +219,30 @@ namespace Azure.Maps.Routing.Models
         /// Sensible Values : 50,8.2:130,21.3
         /// This parameter is required for <c>Electric consumption model</c>.
         /// </summary>
-        public string ConstantSpeedConsumptionInKwHPerHundredKm { get; set; }
+        public string ConstantSpeedConsumptionInKilowattHoursPerHundredKilometer { get; set; }
 
         /// <summary>
         /// Specifies the current electric energy supply in kilowatt hours (kWh).
-        /// This parameter co-exists with <c>maxChargeInkWh</c> parameter.
-        /// The range of values allowed are 0.0 to <c>maxChargeInkWh</c>.
+        /// This parameter co-exists with <c>MaxChargeInKilowattHour</c> parameter.
+        /// The range of values allowed are 0.0 to <c>MaxChargeInKilowattHour</c>.
         /// Sensible Values : 43
         /// </summary>
-        public double? CurrentChargeInKwH { get; set; }
+        public double? CurrentChargeInKilowattHours { get; set; }
 
         /// <summary>
         /// Specifies the maximum electric energy supply in kilowatt hours (kWh) that may be stored in the vehicle's battery.
-        /// This parameter co-exists with <c>currentChargeInkWh</c> parameter.
-        /// Minimum value has to be greater than or equal to <c>currentChargeInkWh</c>.
+        /// This parameter co-exists with <c>currentChargeInkilowattHour</c> parameter.
+        /// Minimum value has to be greater than or equal to <c>currentChargeInkilowattHour</c>.
         /// Sensible Values : 85
         /// </summary>
-        public double? MaxChargeInKwH { get; set; }
+        public double? MaxChargeInKilowattHours { get; set; }
 
         /// <summary>
         /// Specifies the amount of power consumed for sustaining auxiliary systems, in kilowatts (kW).
         /// It can be used to specify consumption due to devices and systems such as AC systems, radio, heating, etc.
         /// Sensible Values : 1.7
         /// </summary>
-        public double? AuxiliaryPowerInKw { get; set; }
+        public double? AuxiliaryPowerInKilowatts { get; set; }
 
         /// <summary>
         /// Used for reconstructing a route and for calculating zero or more alternative routes to this reference route.  The provided sequence of coordinates is used as input for route reconstruction. The alternative routes  are calculated between the origin and destination points specified in the base path parameter locations.  If both minDeviationDistance and minDeviationTime are set to zero, then these origin and destination points  are expected to be at (or very near) the beginning and end of the reference route, respectively. Intermediate  locations (waypoints) are not supported when using supportingPoints.

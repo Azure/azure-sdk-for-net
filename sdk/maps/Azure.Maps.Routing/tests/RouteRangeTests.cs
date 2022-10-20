@@ -4,7 +4,6 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Maps.Routing.Models;
 using NUnit.Framework;
 
 namespace Azure.Maps.Routing.Tests

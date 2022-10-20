@@ -2,18 +2,24 @@
 
 ## 5.8.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Adjusted the frequency that a warning logged when the processor owns more partitions than a basic heuristic believes is ideal.  Warnings will no longer log on each load balancing cycle, only when the number of partitions owned changes.
+
+## 5.7.3 (2022-10-11)
+
 ### Acknowledgments
 
 Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
 
 - Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
 - Anshul Mathur _([GitHub](https://github.com/anshmathur))_
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 

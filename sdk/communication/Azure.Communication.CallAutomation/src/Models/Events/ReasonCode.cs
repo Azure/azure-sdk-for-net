@@ -7,7 +7,7 @@ using System;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Failure Reason for incoming webhook events.
+    /// Reason Codes for incoming webhook events.
     /// </summary>
     public readonly partial struct ReasonCode : IEquatable<ReasonCode>
     {
@@ -31,7 +31,6 @@ namespace Azure.Communication.CallAutomation
         private const string PlayInvalidFileFormatValue = "8535";
 
         private const string CompletedSuccessfullyValue = "0";
-        private const string OperationCancelledValue = "8508";
         private const string UnspecifiedErrorValue = "9999";
 
         /// <summary> Action failed, initial silence timeout reached. </summary>
@@ -55,8 +54,6 @@ namespace Azure.Communication.CallAutomation
         public static ReasonCode CompletedSuccessfully { get; } = new ReasonCode (CompletedSuccessfullyValue);
         /// <summary> Unknown internal server error. </summary>
         public static ReasonCode UnspecifiedError { get; } = new ReasonCode(UnspecifiedErrorValue);
-        /// <summary> Action falied, the operation was cancelled. </summary>
-        public static ReasonCode OperationCancelled { get; } = new ReasonCode(OperationCancelledValue);
 
         /// <summary> Determines if two <see cref="ReasonCode"/> values are the same. </summary>
         public static bool operator ==(ReasonCode left, ReasonCode right) => left.Equals(right);

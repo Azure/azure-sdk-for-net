@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Management.AlertsManagement
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/alertsmanagement/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-2021-08 --csharp-sdks-folder=C:\\Repos\\last_sdk_comment\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/alertsmanagement/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-2021-08 --csharp-sdks-folder=C:\\Repos\\sdk_comment\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "e686ed79e9b0bbc10355fd8d7ba36d1a07e4ba28";
+      public static readonly String GithubCommidId = "4b2f5a45a34e351e38e8b075cf1da5a775fd414a";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
