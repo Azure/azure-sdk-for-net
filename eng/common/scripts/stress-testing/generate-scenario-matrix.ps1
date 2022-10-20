@@ -24,6 +24,7 @@ function GenerateScenarioMatrix(
         -Filters $Filters `
         -Replace $Replace `
         -NonSparseParameters $NonSparseParameters
+    Write-Host $prettyMatrix
     $prettyMatrix = $prettyMatrix | ConvertFrom-Json
 
     $scenariosMatrix = @()
