@@ -39,7 +39,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Possible values include: 'Invalid', 'VM', 'FileFolder',
         /// 'AzureSqlDb', 'SQLDB', 'Exchange', 'Sharepoint', 'VMwareVM',
         /// 'SystemState', 'Client', 'GenericDataSource', 'SQLDataBase',
-        /// 'AzureFileShare', 'SAPHanaDatabase', 'SAPAseDatabase'</param>
+        /// 'AzureFileShare', 'SAPHanaDatabase', 'SAPAseDatabase',
+        /// 'SAPHanaDBInstance'</param>
         /// <param name="containerName">Unique name of container</param>
         /// <param name="sourceResourceId">ARM ID of the resource to be backed
         /// up.</param>
@@ -69,7 +70,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// is protected in archive</param>
         /// <param name="policyName">Name of the policy used for
         /// protection</param>
-        public ProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), IList<string> resourceGuardOperationRequests = default(IList<string>), bool? isArchiveEnabled = default(bool?), string policyName = default(string))
+        /// <param name="softDeleteRetentionPeriod">Soft delete retention
+        /// period in days</param>
+        public ProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), IList<string> resourceGuardOperationRequests = default(IList<string>), bool? isArchiveEnabled = default(bool?), string policyName = default(string), int? softDeleteRetentionPeriod = default(int?))
         {
             BackupManagementType = backupManagementType;
             WorkloadType = workloadType;
@@ -87,6 +90,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             ResourceGuardOperationRequests = resourceGuardOperationRequests;
             IsArchiveEnabled = isArchiveEnabled;
             PolicyName = policyName;
+            SoftDeleteRetentionPeriod = softDeleteRetentionPeriod;
             CustomInit();
         }
 
@@ -96,23 +100,23 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets type of backup management for the backed up item.
-        /// Possible values include: 'Invalid', 'AzureIaasVM', 'MAB', 'DPM',
+        /// Gets type of backup management for the backed up item. Possible
+        /// values include: 'Invalid', 'AzureIaasVM', 'MAB', 'DPM',
         /// 'AzureBackupServer', 'AzureSql', 'AzureStorage', 'AzureWorkload',
         /// 'DefaultBackup'
         /// </summary>
         [JsonProperty(PropertyName = "backupManagementType")]
-        public string BackupManagementType { get; set; }
+        public string BackupManagementType { get; private set; }
 
         /// <summary>
-        /// Gets or sets type of workload this item represents. Possible values
+        /// Gets type of workload this item represents. Possible values
         /// include: 'Invalid', 'VM', 'FileFolder', 'AzureSqlDb', 'SQLDB',
         /// 'Exchange', 'Sharepoint', 'VMwareVM', 'SystemState', 'Client',
         /// 'GenericDataSource', 'SQLDataBase', 'AzureFileShare',
-        /// 'SAPHanaDatabase', 'SAPAseDatabase'
+        /// 'SAPHanaDatabase', 'SAPAseDatabase', 'SAPHanaDBInstance'
         /// </summary>
         [JsonProperty(PropertyName = "workloadType")]
-        public string WorkloadType { get; set; }
+        public string WorkloadType { get; private set; }
 
         /// <summary>
         /// Gets or sets unique name of container
@@ -207,6 +211,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "policyName")]
         public string PolicyName { get; set; }
+
+        /// <summary>
+        /// Gets or sets soft delete retention period in days
+        /// </summary>
+        [JsonProperty(PropertyName = "softDeleteRetentionPeriod")]
+        public int? SoftDeleteRetentionPeriod { get; set; }
 
     }
 }

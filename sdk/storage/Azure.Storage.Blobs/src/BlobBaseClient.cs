@@ -567,7 +567,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             if (_name == null || _containerName == null || _accountName == null)
             {
-                var builder = new BlobUriBuilder(Uri);
+                var builder = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes);
                 _name = builder.BlobName;
                 _containerName = builder.BlobContainerName;
                 _accountName = builder.AccountName;
