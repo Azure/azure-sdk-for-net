@@ -174,13 +174,12 @@ stages:
                             PackageInfoLocations:
                               - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
                             WorkingDirectory: $(System.DefaultWorkingDirectory)
-                            TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
+                            TargetDocRepoOwner: Azure
                             TargetDocRepoName: ${{parameters.TargetDocRepoName}}
                             Language: 'dotnet'
                             SparseCheckoutPaths:
                               - /api/overview/azure/
                               - /metadata/
-
             - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
               - deployment: PublishDocs
                 displayName: Publish Docs to GitHub pages
@@ -301,7 +300,7 @@ stages:
               - ${{ each artifact in parameters.Artifacts }}:
                 - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
             WorkingDirectory: $(System.DefaultWorkingDirectory)
-            TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
+            TargetDocRepoOwner: Azure
             TargetDocRepoName: ${{parameters.TargetDocRepoName}}
             Language: 'dotnet'
             DailyDocsBuild: true
