@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
     [NonParallelizable]
     public class ContainerRegistryBlobClientLiveTests : ContainerRegistryRecordedTestBase
     {
-        public ContainerRegistryBlobClientLiveTests(bool isAsync) : base(isAsync)
+        public ContainerRegistryBlobClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -271,6 +272,27 @@ namespace Azure.Containers.ContainerRegistry.Tests
             //// Clean up
             await client.DeleteBlobAsync(digest);
             downloadResult.Value.Dispose();
+        }
+
+        [RecordedTest]
+        public async Task CanGetBlobLocation()
+        {
+            // Arrange
+            var client = CreateBlobClient("oci-artifact");
+            var blob = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact", blob);
+            string digest = default;
+            using (var fs = File.OpenRead(path))
+            {
+                var uploadResult = await client.UploadBlobAsync(fs);
+                digest = uploadResult.Value.Digest;
+            }
+
+            // Act
+            NullableResponse<Uri> response = await client.GetBlobLocationAsync(digest);
+
+            // Clean up
+            await client.DeleteBlobAsync(digest);
         }
     }
 }

@@ -24,6 +24,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         private readonly ContainerRegistryRestClient _restClient;
         private readonly IContainerRegistryAuthenticationClient _acrAuthClient;
         private readonly ContainerRegistryBlobRestClient _blobRestClient;
+        private readonly ContainerRegistryBlobLocationPolicy _blobLocationPolicy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryBlobClient"/> for managing container images and artifacts,
@@ -106,7 +107,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             _acrAuthClient = authenticationClient ?? new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
 
             string defaultScope = options.Audience + "/.default";
-            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
+            _blobLocationPolicy = new();
+            _pipeline = HttpPipelineBuilder.Build(options,
+                new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient),
+                _blobLocationPolicy);
             _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
             _blobRestClient = new ContainerRegistryBlobRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
         }
@@ -510,6 +514,60 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 }
 
                 return Response.FromValue(new DownloadBlobResult(digest, blobResult.Value), blobResult.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="digest"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual NullableResponse<Uri> GetBlobLocation(string digest, CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
+        {
+            Argument.AssertNotNull(digest, nameof(digest));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(GetBlobLocation)}");
+            scope.Start();
+            try
+            {
+                ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = _blobRestClient.GetBlob(_repositoryName, digest, cancellationToken);
+
+                // Currently quite inefficient because we follow the redirect...  Can we just return when we get the 307.
+                return Response.FromValue(_blobLocationPolicy.Uri, blobResult.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="digest"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<NullableResponse<Uri>> GetBlobLocationAsync(string digest, CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
+        {
+            Argument.AssertNotNull(digest, nameof(digest));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(GetBlobLocation)}");
+            scope.Start();
+            try
+            {
+                ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
+
+                // Currently quite inefficient because we follow the redirect...  Can we just return when we get the 307.
+                return Response.FromValue(_blobLocationPolicy.Uri, blobResult.GetRawResponse());
             }
             catch (Exception e)
             {
