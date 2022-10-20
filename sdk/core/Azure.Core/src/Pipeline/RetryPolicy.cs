@@ -214,7 +214,7 @@ namespace Azure.Core.Pipeline
                     return message.ResponseClassifier.IsRetriable(message, message.LastException);
                 }
 
-                // Response.IsError
+                // Response.IsError is true if we get here
                 return message.ResponseClassifier.IsRetriableResponse(message);
             }
 
