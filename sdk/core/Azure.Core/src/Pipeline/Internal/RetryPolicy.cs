@@ -41,8 +41,9 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// This method can be overriden to take full control over the retry policy. If this is overriden and the base method isn't called, it is the implementers responsibility
-        /// to populated the <see cref="HttpMessage.ProcessingContext"/> property. This method will only be called for async methods.
+        /// This method can be overriden to take full control over the retry policy. If this is overriden and the base method isn't called,
+        /// it is the implementer's responsibility to populate the <see cref="HttpMessage.ProcessingContext"/> property.
+        /// This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
         /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>
@@ -53,8 +54,9 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// This method can be overriden to take full control over the retry policy. If this is overriden and the base method isn't called, it is the implementers responsibility
-        /// to populated the <see cref="HttpMessage.ProcessingContext"/> property. This method will only be called for sync methods.
+        /// This method can be overriden to take full control over the retry policy. If this is overriden and the base method isn't called,
+        /// it is the implementer's responsibility to populate the <see cref="HttpMessage.ProcessingContext"/> property.
+        /// This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
         /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>
@@ -154,7 +156,8 @@ namespace Azure.Core.Pipeline
                     }
 
                     throw new AggregateException(
-                        $"Retry failed after {message.RetryNumber + 1} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.",
+                        $"Retry failed after {message.RetryNumber + 1} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}" +
+                        $"or by configuring a custom retry policy in {nameof(ClientOptions)}.{nameof(ClientOptions.RetryPolicy)}.",
                         exceptions);
                 }
                 else
